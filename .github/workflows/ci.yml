@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    name: Engine and published site (py${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # The engine has no third-party dependencies on purpose: a season must be
+      # reproducible years from now without resolving a dependency tree.
+      - name: Standard-library purity
+        run: python scripts/check_purity.py
+
+      - name: Test suite
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name: Memory checksums and data audits
+        run: python -m sim.cli verify
+
+      - name: Irregularity register renders
+        run: python -m sim.cli irregularities
+
+      - name: Source register renders
+        run: python -m sim.cli sources
+
+      - name: Leaderboard renders
+        run: python -m sim.cli leaderboard
+
+  site-is-not-stale:
+    name: Published site matches the code and the run memory
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # docs/ is committed and served by GitHub Pages, so a code change that is
+      # not followed by a rebuild would silently publish stale numbers. This
+      # rebuilds from the committed run memory and diffs the whole tree.
+      - name: Rebuild the site from memory
+        run: python -m sim.cli build-site --out /tmp/rebuilt
+
+      - name: Diff the rebuild against docs/
+        run: |
+          if diff -r docs /tmp/rebuilt; then
+            echo "OK: docs/ is byte-identical to a fresh rebuild"
+          else
+            echo "::error::docs/ is stale - run 'python -m sim.cli build-site' and commit the result"
+            exit 1
+          fi
+
+      # A fresh season must reproduce the committed leaderboard exactly. This is
+      # the determinism guarantee the whole memory store rests on.
+      - name: Re-run the primary season into a scratch memory root
+        run: |
+          python -m sim.cli --memory-root /tmp/scratch-memory run --seeds 20260917
+          python - <<'PY'
+          import json
+          committed = json.load(open("memory/runs/season1-primary-seed20260917/leaderboard.json"))
+          rebuilt = json.load(open("/tmp/scratch-memory/runs/season1-primary-seed20260917/leaderboard.json"))
+          if committed != rebuilt:
+              raise SystemExit("leaderboard is not reproducible from the same seed and config")
+          print("OK: leaderboard reproduced bit-for-bit from seed 20260917")
+          PY

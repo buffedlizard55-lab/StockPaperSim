@@ -1,0 +1,37 @@
+{
+  "_provenance": {
+    "source_name": "Yahoo Finance chart API (v8)",
+    "source_url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y",
+    "retrieved_utc": "2026-09-17",
+    "retrieval_method": "HTTP GET via Arena fetch tool from this sandbox; raw JSON response transcribed verbatim into the arrays below (floats rounded to 2 decimals for OHLC, volumes exact).",
+    "status": "REAL vendor data, transcribed. Not redistributed for commercial use; see research/IRREGULARITIES.json IR-02 (Yahoo Finance terms of use).",
+    "notes": "regularMarketTime 1789671513 corresponds to the in-progress 2026-09-17 session, so the final bar is a partial-day bar, not a monthly close. Bars 0-11 are full monthly closes Oct-2025..Aug-2026 plus the Sep-2026 month-to-date bar."
+  },
+  "meta": {
+    "symbol": "SPY",
+    "currency": "USD",
+    "exchangeName": "PCX",
+    "fullExchangeName": "NYSEArca",
+    "instrumentType": "ETF",
+    "longName": "State Street SPDR S&P 500 ETF Trust",
+    "regularMarketPrice": 762.37,
+    "regularMarketChangePercent": 1.103,
+    "regularMarketDayHigh": 763.41,
+    "regularMarketDayLow": 759.96,
+    "regularMarketVolume": 25131501,
+    "regularMarketTime": 1789671513,
+    "fiftyTwoWeekHigh": 779.37,
+    "fiftyTwoWeekLow": 629.28,
+    "chartPreviousClose": 659.18,
+    "firstTradeDate": 728317800,
+    "timezone": "EDT",
+    "exchangeTimezoneName": "America/New_York"
+  },
+  "timestamp": [1759291200,1761969600,1764565200,1767243600,1769922000,1772341200,1775016000,1777608000,1780286400,1782878400,1785556800,1788235200,1789671513],
+  "open":   [663.17,685.67,678.81,685.71,689.58,678.70,653.90,721.25,755.36,745.00,749.44,762.01,763.15],
+  "high":   [689.70,685.80,691.66,697.84,697.14,688.62,719.79,758.08,760.40,755.58,779.37,774.03,763.41],
+  "low":    [652.84,650.85,671.20,676.57,675.78,629.28,645.11,714.99,716.58,729.10,748.80,749.60,759.96],
+  "close":  [682.06,683.39,681.92,691.97,685.99,650.34,718.66,756.48,746.77,747.03,767.05,754.05,762.37],
+  "volume": [1781815100,1664668300,1656188700,1600537800,1614970000,2237624600,1196537500,945132300,1314920000,1064946100,833955700,463237000,25131501],
+  "adjclose":[676.4556274414062,677.7747192382812,678.3152465820312,688.3120727539062,682.3637084960938,648.6688842773438,716.8132934570312,754.5361328125,746.77001953125,747.030029296875,767.0499877929688,754.0499877929688,762.3699951171875]
+}

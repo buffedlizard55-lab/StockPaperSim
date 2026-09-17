@@ -1,0 +1,398 @@
+{
+ "username": "@PairsArb_ZScore2",
+ "strategy_id": "PairsStatArb",
+ "archetype": "statistical arbitrage",
+ "starting_cash": 100000.0,
+ "final_equity": 100728.94,
+ "net_pnl_usd": 728.94,
+ "total_return_pct": 0.7289,
+ "cagr_pct": 0.7319,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -1.3687,
+  "max_drawdown_usd": -1368.74,
+  "peak_date": "2025-09-17",
+  "peak_equity": 100000.0,
+  "trough_date": "2025-10-29",
+  "trough_equity": 98631.26,
+  "recovery_date": "2026-03-12",
+  "sessions_underwater": 91,
+  "never_recovered": false,
+  "sharpe": 0.447,
+  "sortino": 0.4817,
+  "calmar": 0.5347,
+  "daily_vol_pct": 0.1051,
+  "annualised_vol_pct": 1.669,
+  "skew": 2.3467,
+  "excess_kurtosis": 28.9531,
+  "best_session_pct": 0.9171,
+  "worst_session_pct": -0.5756,
+  "var_95_pct": -0.1003,
+  "cvar_95_pct": -0.2409,
+  "var_99_pct": -0.3059,
+  "cvar_99_pct": -0.4293
+ },
+ "market_relation": {
+  "beta": -0.0504,
+  "alpha_annual_pct": 1.4716,
+  "r_squared": 0.1517,
+  "tracking_error_annual_pct": 1.537,
+  "information_ratio": 0.958,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": -0.726,
+  "residual_return_pct": 1.455
+ },
+ "trades": {
+  "closed_trades": 7,
+  "open_trades": 0,
+  "wins": 3,
+  "losses": 4,
+  "win_rate_pct": 42.857,
+  "gross_win_usd": 7313.87,
+  "gross_loss_usd": 6755.65,
+  "profit_factor": 1.0826,
+  "avg_win_usd": 2437.96,
+  "avg_loss_usd": -1688.91,
+  "expectancy_usd_per_trade": 79.75,
+  "best_trade": {
+   "symbol": "QQQ",
+   "net_pnl": 3316.76,
+   "entry_date": "2026-03-10",
+   "exit_date": "2026-04-08",
+   "direction": "short"
+  },
+  "worst_trade": {
+   "symbol": "QQQ",
+   "net_pnl": -3602.74,
+   "entry_date": "2025-10-13",
+   "exit_date": "2025-11-10",
+   "direction": "short"
+  },
+  "longest_win_streak": 1,
+  "longest_loss_streak": 2,
+  "avg_sessions_held": 34.14,
+  "median_sessions_held": 20.0,
+  "sessions_in_market": 168,
+  "per_symbol_sessions_in_market": {
+   "QQQ": 168,
+   "SPY": 57
+  },
+  "sum_of_tranche_sessions": 239,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 13,
+  "shares_traded": 1868,
+  "traded_notional_usd": 1187496.48,
+  "spread_cost_usd": 9.34,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 7.96,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 5.6,
+  "regulatory_fee_usd": 2.17,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 25.08,
+  "total_cost_bps_of_traded": 0.211,
+  "total_cost_pct_of_starting_cash": 0.0251,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 31.02,
+   "spread_and_impact_pct": 68.98
+  },
+  "avg_execution_cost_bps_per_fill": 0.204,
+  "median_execution_cost_bps_per_fill": 0.195,
+  "worst_execution_cost_bps": 0.392,
+  "intraday_drift_usd": -3.87,
+  "avg_price_difference_bps_per_fill": 0.112,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 13,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 1187494.22,
+  "spread_cost_usd": 9.34,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 7.96,
+  "intraday_drift_usd": -3.87,
+  "fees_usd": 7.78,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 21.21,
+  "shortfall_bps_of_paper": 0.179,
+  "friction_only_bps_of_paper": 0.211,
+  "worst_single_order_drift_usd": 1.16,
+  "best_single_order_drift_usd": -1.2,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 278.58,
+  "borrow_fees_paid_usd": 107.87,
+  "net_carry_usd": 170.71,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 43.01,
+  "max_gross_pct_of_starting_cash": 210.68,
+  "avg_net_pct_of_starting_cash": -0.31,
+  "max_net_pct_of_starting_cash": 1.16,
+  "avg_leverage": 0.431,
+  "max_leverage": 2.136,
+  "sessions_flat": 86,
+  "avg_open_positions": 0.87
+ },
+ "turnover": {
+  "traded_notional_usd": 1187496.48,
+  "annualised_turnover_x": 11.927
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "QQQ",
+   "realized_pnl": 1296.35,
+   "open_pnl": 0.0,
+   "total_pnl": 1296.35,
+   "closed_trades": 4,
+   "fees": 3.04,
+   "all_in_cost_usd": 12.98
+  },
+  {
+   "symbol": "SPY",
+   "realized_pnl": -738.13,
+   "open_pnl": 0.0,
+   "total_pnl": -738.13,
+   "closed_trades": 3,
+   "fees": 4.74,
+   "all_in_cost_usd": 12.1
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100000.0,
+   "end_equity": 98763.66,
+   "return_pct": -1.2363
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 98763.66,
+   "end_equity": 98686.81,
+   "return_pct": -0.0778
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 98686.81,
+   "end_equity": 98686.81,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 98686.81,
+   "end_equity": 99591.85,
+   "return_pct": 0.9171
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 99591.85,
+   "end_equity": 99698.9,
+   "return_pct": 0.1075
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 99698.9,
+   "end_equity": 100595.88,
+   "return_pct": 0.8997
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 100595.88,
+   "end_equity": 100770.56,
+   "return_pct": 0.1736
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 100770.56,
+   "end_equity": 100732.24,
+   "return_pct": -0.038
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 100732.24,
+   "end_equity": 100737.11,
+   "return_pct": 0.0048
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 100737.11,
+   "end_equity": 100737.38,
+   "return_pct": 0.0003
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 100737.38,
+   "end_equity": 100715.21,
+   "return_pct": -0.022
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 100715.21,
+   "end_equity": 100728.94,
+   "return_pct": 0.0136
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 558.22,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 278.58,
+  "borrow_fees_usd": -107.87,
+  "execution_costs_already_netted_usd": -25.08,
+  "total_net_pnl_usd": 728.94,
+  "unexplained_residual_usd": 0.01,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "made money but lagged the index",
+  "headline": "Made money but lagged the index: +0.73% total return vs +14.41% for the index, +1.46pp residual after beta, -1.4% max drawdown, 0.03% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +0.73%, profitable but 13.69pp behind the S&P 500's +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The reversal premium this participant is built to harvest was live (+19.00% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "factor",
+    "text": "The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.73% - the result was driven by something other than this factor."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +0.73% total, about -0.73pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.46pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "QQQ contributed +1,296 USD (178% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 25 USD (0.03% of starting capital, 0.2 bp per fill, 0.2 bp of the 1,187,496 USD traded). 69% of that was spread/depth/impact and 31% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "7 closed round trips, 42.9% winners, profit factor 1.08, average winner +2,438 vs average loser -1,689 USD, median holding 20 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 168 sessions held at least one position (the per-tranche holding periods above sum to 239 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: QQQ short 2025-10-13 to 2025-11-10, -3,603 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -1.37% (-9.10% for the index), trough on 2025-10-29, recovered 2026-03-12. Average gross exposure 43% of starting capital, peak leverage 2.14x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +2.35 skewed with excess kurtosis +28.95; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Correlation is not cointegration: the ratio can trend forever; A market-neutral book still has idiosyncratic event risk on both legs."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 75.5pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@PairsArb_ZScore2 (Pairs Stat Arb) ran the \"statistical arbitrage\" archetype. Declared thesis: Two names in the same sector move together. When their price ratio stretches two standard deviations from its 60-session mean, short the relative winner and buy the relative loser and wait for convergence. Entry: Find the pair with the highest 60-session return correlation inside the same sector; Compute the z-score of log(price_A) - beta * log(price_B) over 60 sessions; Enter when |z| >= 2.0, dollar-neutral, 1.0x gross each leg. Exit: Exit at |z| <= 0.25; Exit unconditionally after 20 sessions. Sizing: dollar neutral, 100% long + 100% short = 200% gross. Leverage: 2.0x gross, ~0 net. Cadence: daily, horizon 1-20 sessions. Aggression 3/5. This participant was built to maximise return, not to manage risk: Leverage, not diversification: a market-neutral book at 2x gross can out-return a long-only book if convergence is fast."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +0.73% over 251 sessions - +729 USD on 100,000 of paper capital, ending at 100,729. Verdict: made money but lagged the index."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The reversal premium this participant is built to harvest was live (+19.00% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.73% - the result was driven by something other than this factor."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +0.73% total, about -0.73pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.46pp is everything else - selection, timing, leverage and cost. QQQ contributed +1,296 USD (178% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 25 USD (0.03% of starting capital, 0.2 bp per fill, 0.2 bp of the 1,187,496 USD traded). 69% of that was spread/depth/impact and 31% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "7 closed round trips, 42.9% winners, profit factor 1.08, average winner +2,438 vs average loser -1,689 USD, median holding 20 sessions. Time in market, measured without double counting: 168 sessions held at least one position (the per-tranche holding periods above sum to 239 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: QQQ short 2025-10-13 to 2025-11-10, -3,603 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -1.37% (-9.10% for the index), trough on 2025-10-29, recovered 2026-03-12. Average gross exposure 43% of starting capital, peak leverage 2.14x. Daily returns were +2.35 skewed with excess kurtosis +28.95; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 75.5pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It made money (+0.73%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +0.73%, profitable but 13.69pp behind the S&P 500's +14.41%."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Correlation is not cointegration: the ratio can trend forever",
+   "A market-neutral book still has idiosyncratic event risk on both legs"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "reversal",
+   "low_vol"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 6
+}

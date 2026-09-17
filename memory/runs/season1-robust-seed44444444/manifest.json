@@ -1,0 +1,398 @@
+{
+ "schema_version": "1.0.0",
+ "run_id": "season1-robust-seed44444444",
+ "created_utc": "2026-09-17T21:56:25Z",
+ "finalised_utc": "2026-09-17T21:56:27Z",
+ "code": {
+  "git": {
+   "commit": "2141acb3b0f956ae58bea0277af7561b638eefab",
+   "branch": "arena/01a0b0af-stockpapersim",
+   "dirty": true,
+   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
+  },
+  "python_module_hashes": {
+   "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
+   "sim/analytics.py": "a7d14255cc244a219cd3d89edcd3c0507f5cb95df0fe6a7d940f1b9c0b743e59",
+   "sim/calendar.py": "aca4c539837ab6ef545bae63a8160d5824cb04fe89a5903a88900164e6f5df16",
+   "sim/cli.py": "0142f6b4d4e870eaa70d8cd85fc896e4f53b20e89c3de26dbe6ae0d816992270",
+   "sim/config.py": "e55d0e946e4568e36729b3b4d8abe69d3b586853557db946cec6085c1da169b9",
+   "sim/engine.py": "9ff3b887efa253ddc5bee2b66664e99147a38c8034e685d9c281924970bf506f",
+   "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
+   "sim/memory.py": "154d28a5f2103bcf12ddcf9b2f5e9d6e2492d9262a529a84adec883327897627",
+   "sim/microstructure.py": "0c402f6cd3814cda4dda60d4de6aacfe17939e2f35afd9c98cfb039c9f52b12f",
+   "sim/portfolio.py": "2c56dd5dc5329d7e1a546fe8273bb300a61c438310d6b62cd430f57244a7e3b9",
+   "sim/strategies.py": "43534cce5e2c8e321eb0e5be1ca879a72744629312ae2f76c238350a47451367",
+   "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
+  }
+ },
+ "files": {
+  "reports/MomentumMax_12x1.json": {
+   "sha256": "3137d0860c3968e5fb8e4b99594ea9474f592bf4be8924c3ab1bbd753c922b31",
+   "bytes": 16397,
+   "kind": "json"
+  },
+  "reports/GapAndGo_YOLO.json": {
+   "sha256": "b657a56478b2930d926622d293a818ff0c59cad3b5d2d4af7adc4ae10f029b6f",
+   "bytes": 17566,
+   "kind": "json"
+  },
+  "reports/TrendSurfer_GoldenX.json": {
+   "sha256": "457f579d2e58f0410b4f295cbec12b1585313aee65b41952bb0eb529f8e74bf1",
+   "bytes": 16660,
+   "kind": "json"
+  },
+  "reports/MeanRev_Z2Sigma.json": {
+   "sha256": "7d2a61a39d0a56e9719432c2e20e2ae555902a0cf98c3410a335d61b813c4ffe",
+   "bytes": 18196,
+   "kind": "json"
+  },
+  "reports/DonchianBreakout_20.json": {
+   "sha256": "b7d16eeeffc53c1a5ec7ce8890216ebb65b19c8039c3afe04f900bbfcfe9187b",
+   "bytes": 16082,
+   "kind": "json"
+  },
+  "reports/DriftRider_PEAD.json": {
+   "sha256": "e9bd2113ee3d02e95b43f50d79194a6c99eb803043fd091c5c12a57fd565ed1c",
+   "bytes": 16536,
+   "kind": "json"
+  },
+  "reports/SqueezeHunter_TF.json": {
+   "sha256": "f056aebad22bb1619f4f084f3a29275f5d5f2f97c8a64a266e635adc1d0ef892",
+   "bytes": 17044,
+   "kind": "json"
+  },
+  "reports/BetaChaser_3xProxy.json": {
+   "sha256": "cc8ae51e4f0014ee52f09bbd848ae7d62bd519b750fa345fbe669bc5bdeb0590",
+   "bytes": 16389,
+   "kind": "json"
+  },
+  "reports/SectorRotator_AlphaX.json": {
+   "sha256": "1b9ad1b71b11de361e8d23e9b73a708449948c233d4f7738aa46ecdd191bd55c",
+   "bytes": 16655,
+   "kind": "json"
+  },
+  "reports/PairsArb_ZScore2.json": {
+   "sha256": "d5b60389cc5e022d864471d874458da150ec49808d92c82eacd885828a0a6fab",
+   "bytes": 15187,
+   "kind": "json"
+  },
+  "reports/SpreadHarvester_MM.json": {
+   "sha256": "82ab4c6de65c635b61ee17e241c10786418822f86301ba162bd72064ebb40c2d",
+   "bytes": 16684,
+   "kind": "json"
+  },
+  "reports/VolCarry_LowHigh.json": {
+   "sha256": "807425e30a9d2f5bbbed5d5c41b49fe0743eefb4bb45b6c81b5f327054851c30",
+   "bytes": 15725,
+   "kind": "json"
+  },
+  "reports/VIXRegime_Timer.json": {
+   "sha256": "7a5186ef0318826d4641d5888ef4413aa881ce4b9737742706775f20e62b7075",
+   "bytes": 15376,
+   "kind": "json"
+  },
+  "reports/OverreactionFade_LT.json": {
+   "sha256": "0ce3e1081eca5ef2ae7177bfcecf220b35ddca71d9eb83eb507d62382328f22b",
+   "bytes": 16457,
+   "kind": "json"
+  },
+  "reports/IlliquidRocket_Degen.json": {
+   "sha256": "98ca326fcb2b70033119a84dad2917d33a6702ec7bd8921f8f58aeab3291a388",
+   "bytes": 15541,
+   "kind": "json"
+  },
+  "reports/BuyHold_MaxBeta.json": {
+   "sha256": "478a2c3eca38f5e0d856582c1f9d1150ac4c532543bab5225761de659ab5de45",
+   "bytes": 15266,
+   "kind": "json"
+  },
+  "reports/OneBigBet_Concentra.json": {
+   "sha256": "e751d8d9adae45bdd71e1e55b616d881a727918d79af8c4d05adbd8e360eada5",
+   "bytes": 15927,
+   "kind": "json"
+  },
+  "reports/OvernightCarry_NO.json": {
+   "sha256": "7ba0aef866183c50c664f481b7191ee111b830d14925b15ac07244b4ab7a3f4c",
+   "bytes": 15444,
+   "kind": "json"
+  },
+  "reports/KitchenSink_AllIn.json": {
+   "sha256": "e47bd66765b04b51fc00743b42eb18dae2b047f8cad59c74f86f1676fc8da300",
+   "bytes": 18761,
+   "kind": "json"
+  },
+  "reports/Contrarian_DeepValue.json": {
+   "sha256": "cd9a0f5474b84a1cde861baba2dcee9cfe748dfe3bae881d7ef6525752a5b777",
+   "bytes": 15950,
+   "kind": "json"
+  },
+  "market_report.json": {
+   "sha256": "8b2dee188dbd2b9811a55c220565897e38a867cf4d0c4f69478844d33bf6f378",
+   "bytes": 2836,
+   "kind": "json"
+  },
+  "factor_report.json": {
+   "sha256": "f18fe10c1d85a6e44c022bee1c0ecaabc019c8253c980b2ddf14105f662e3068",
+   "bytes": 1404,
+   "kind": "json"
+  },
+  "leaderboard.json": {
+   "sha256": "6c2c15aabfd97bba2c66a4562fd5a2ccb5232f3e6848b8a1b8c70d0940a2d593",
+   "bytes": 10913,
+   "kind": "json"
+  },
+  "irregularities.json": {
+   "sha256": "531ae58e51d0dd3ed1cf686bbb19f0b7203ec04a1e3f14543d078562f9e789ed",
+   "bytes": 2984,
+   "kind": "json"
+  },
+  "participants.json": {
+   "sha256": "94043897ccc2c6828200825f95a2faccfc41734f8da3302c296296d044d7ca64",
+   "bytes": 35515,
+   "kind": "json"
+  }
+ },
+ "seed": 44444444,
+ "scenario_index": 4,
+ "full_event_memory": false,
+ "participant_count": 20,
+ "session_count": 251,
+ "competition": {
+  "name": "StockPaperSim Alpha Cup",
+  "season": "Season 1 (2025-2026)",
+  "start": "2025-09-17",
+  "end": "2026-09-16",
+  "starting_cash": 100000.0,
+  "rank_metric": "total_return_pct"
+ },
+ "config_fingerprint": "e563b5e41deb6ad8",
+ "winner": "@BuyHold_MaxBeta",
+ "top3": [
+  {
+   "rank": 1,
+   "username": "@BuyHold_MaxBeta",
+   "total_return_pct": 347.5296
+  },
+  {
+   "rank": 2,
+   "username": "@BetaChaser_3xProxy",
+   "total_return_pct": 174.1984
+  },
+  {
+   "rank": 3,
+   "username": "@SectorRotator_AlphaX",
+   "total_return_pct": 159.1201
+  }
+ ],
+ "market": {
+  "window": {
+   "start": "2025-09-17",
+   "end": "2026-09-16",
+   "sessions": 251
+  },
+  "spx_return_pct": 14.415,
+  "spx_annualised_vol_pct": 12.901,
+  "spy_price_return_pct": 13.948,
+  "vix": {
+   "mean": 18.16,
+   "max": 31.05,
+   "min": 13.47,
+   "max_date": "2026-03-27",
+   "sessions_above_25": 16,
+   "sessions_above_30": 2
+  },
+  "max_drawdown": {
+   "max_drawdown_pct": -9.0975,
+   "max_drawdown_usd": -634.88,
+   "peak_date": "2026-01-27",
+   "peak_equity": 6978.6,
+   "trough_date": "2026-03-30",
+   "trough_equity": 6343.72,
+   "recovery_date": "2026-04-15",
+   "sessions_underwater": 11,
+   "never_recovered": false
+  },
+  "drawdown_episodes": [
+   {
+    "peak_date": "2026-01-27",
+    "trough_date": "2026-03-30",
+    "recovery_date": "2026-04-15",
+    "depth_pct": -9.098,
+    "sessions_peak_to_trough": 43,
+    "sessions_trough_to_recovery": 11,
+    "rebound_pct": 10.707
+   },
+   {
+    "peak_date": "2025-10-28",
+    "trough_date": "2025-11-20",
+    "recovery_date": "2025-12-11",
+    "depth_pct": -5.11,
+    "sessions_peak_to_trough": 17,
+    "sessions_trough_to_recovery": 14,
+    "rebound_pct": 5.54
+   },
+   {
+    "peak_date": "2026-06-02",
+    "trough_date": "2026-06-10",
+    "recovery_date": "2026-08-04",
+    "depth_pct": -4.505,
+    "sessions_peak_to_trough": 6,
+    "sessions_trough_to_recovery": 37,
+    "rebound_pct": 6.461
+   }
+  ],
+  "worst_sessions": [
+   {
+    "date": "2025-10-09",
+    "spx_return_pct": -2.711
+   },
+   {
+    "date": "2026-06-04",
+    "spx_return_pct": -2.645
+   },
+   {
+    "date": "2026-01-16",
+    "spx_return_pct": -2.063
+   },
+   {
+    "date": "2026-03-25",
+    "spx_return_pct": -1.741
+   },
+   {
+    "date": "2026-03-26",
+    "spx_return_pct": -1.672
+   }
+  ],
+  "best_sessions": [
+   {
+    "date": "2026-03-30",
+    "spx_return_pct": 2.913
+   },
+   {
+    "date": "2026-04-07",
+    "spx_return_pct": 2.508
+   },
+   {
+    "date": "2026-02-05",
+    "spx_return_pct": 1.97
+   },
+   {
+    "date": "2026-08-03",
+    "spx_return_pct": 1.79
+   },
+   {
+    "date": "2026-06-10",
+    "spx_return_pct": 1.752
+   }
+  ],
+  "up_sessions": 136,
+  "down_sessions": 114,
+  "cross_section": {
+   "best": [
+    {
+     "symbol": "CVNA",
+     "return_pct": 751.797
+    },
+    {
+     "symbol": "NVDA",
+     "return_pct": 78.008
+    },
+    {
+     "symbol": "META",
+     "return_pct": 64.771
+    }
+   ],
+   "worst": [
+    {
+     "symbol": "TSLA",
+     "return_pct": -10.861
+    },
+    {
+     "symbol": "XOM",
+     "return_pct": -13.899
+    },
+    {
+     "symbol": "RIVN",
+     "return_pct": -41.796
+    }
+   ],
+   "per_symbol_pct": {
+    "SPY": 13.948,
+    "AAPL": 40.435,
+    "QQQ": 18.088,
+    "IWM": 6.062,
+    "MSFT": 5.09,
+    "NVDA": 78.008,
+    "GOOGL": 43.895,
+    "AMZN": 13.748,
+    "META": 64.771,
+    "TSLA": -10.861,
+    "JPM": 35.329,
+    "XOM": -13.899,
+    "UNH": 0.105,
+    "CAT": 3.345,
+    "WMT": 10.444,
+    "RIVN": -41.796,
+    "CVNA": 751.797
+   },
+   "dispersion_stdev_pp": 180.66,
+   "spread_best_minus_worst_pp": 793.59
+  }
+ },
+ "factors": {
+  "market": {
+   "factor": "MKT",
+   "description": "S&P 500 index (real FRED SP500 series)",
+   "cumulative_return_pct": 13.948,
+   "mean_daily_bps": 5.53,
+   "annualised_vol_pct": 12.88,
+   "sharpe": 1.082
+  },
+  "momentum": {
+   "factor": "MOM",
+   "description": "long top tercile / short bottom tercile by 63-session return skipping the last 5, rebalanced monthly",
+   "cumulative_return_pct": -7.036,
+   "mean_daily_bps": -2.52,
+   "annualised_vol_pct": 14.02,
+   "sharpe": -0.452
+  },
+  "reversal": {
+   "factor": "REV",
+   "description": "short top tercile / long bottom tercile by 5-session return, rebalanced weekly",
+   "cumulative_return_pct": -17.242,
+   "mean_daily_bps": -7.12,
+   "annualised_vol_pct": 14.57,
+   "sharpe": -1.231
+  },
+  "beta": {
+   "factor": "BETA",
+   "description": "long high-declared-beta tercile, short low",
+   "cumulative_return_pct": 35.947,
+   "mean_daily_bps": 12.85,
+   "annualised_vol_pct": 17.59,
+   "sharpe": 1.841
+  },
+  "low_vol": {
+   "factor": "VOL",
+   "description": "long low realised-vol tercile, short high (the low-volatility anomaly)",
+   "cumulative_return_pct": -29.728,
+   "mean_daily_bps": -13.47,
+   "annualised_vol_pct": 17.08,
+   "sharpe": -1.988
+  },
+  "liquidity": {
+   "factor": "LIQ",
+   "description": "long illiquid tercile by dollar volume, short liquid",
+   "cumulative_return_pct": -17.102,
+   "mean_daily_bps": -7.15,
+   "annualised_vol_pct": 12.8,
+   "sharpe": -1.407
+  }
+ },
+ "timing": {
+  "started_utc": "2026-09-17T21:56:25Z",
+  "finished_utc": "2026-09-17T21:56:27Z",
+  "elapsed_seconds": 1.69
+ },
+ "irregularity_count": 12
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "priority": "P1",
+    "title": "Automate the Pages deployment instead of committing docs/",
+    "detail": "docs/ is committed and served from main, and CI now fails if it drifts from a fresh build, so the site cannot go stale silently. The remaining step is a workflow that runs the season, rebuilds docs/ and deploys with actions/deploy-pages, so the published site is an artefact of the code rather than a checked-in directory. Keep the byte-diff gate either way: it is the check that caught the stale-number problem this item exists to prevent.",
+    "where": ".github/workflows/pages.yml (new) - ci.yml already runs build-site and diffs it against docs/",
+    "effort": "an hour; the builder is deterministic and dependency-free"
+  },
+  {
+    "priority": "P0",
+    "title": "Connect a real market-data provider and run Season 2 on observed bars",
+    "detail": "The adapters exist and build_from_provider() is written; what is missing is a key and outbound access. Alpaca or Polygon would give real daily bars for all 17 instruments and, on paid tiers, real quotes for spread calibration. That single change removes L-01 and L-02 and lets every simulated number on the data-provenance page be replaced by an observed one.",
+    "where": "sim/marketdata.py (provider classes) · .github/workflows/data-refresh.yml",
+    "effort": "a day, mostly waiting on credentials"
+  },
+  {
+    "priority": "P0",
+    "title": "Verify the two regulatory inputs that are still secondary or uncertain",
+    "detail": "Fetch FINRA Schedule A for the Trade Activity Fee (IR-05) and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04), then pin both constants to the primary text and re-run.",
+    "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
+    "effort": "an hour of reading"
+  },
+  {
+    "priority": "P1",
+    "title": "Minute-bar intraday engine",
+    "detail": "Expose multiple decision points per session on top of the existing intraday path, keep the order book alive across them, and add a closing-auction order type. This is what makes @GapAndGo_YOLO, @OvernightCarry_NO and @SpreadHarvester_MM measurable instead of caveated (L-03, IR-08).",
+    "where": "sim/microstructure.py (IntradayPath, ExecutionEngine) · sim/engine.py (session loop)",
+    "effort": "two to three weeks"
+  },
+  {
+    "priority": "P1",
+    "title": "Real event data: earnings calendar, EPS surprises, short interest",
+    "detail": "Replaces the price/volume proxies behind @DriftRider_PEAD and @SqueezeHunter_TF (IR-07) and lets the post-mortems attribute returns to identifiable events rather than to statistical drift. FINRA publishes short interest twice monthly; earnings dates are available from several vendors.",
+    "where": "sim/universe.py (per-instrument event tables) · data/real/events/",
+    "effort": "a week"
+  },
+  {
+    "priority": "P1",
+    "title": "Formal significance testing on the results",
+    "detail": "Bootstrap confidence intervals for Sharpe, alpha and max drawdown; a Deflated Sharpe Ratio to account for having run twenty strategies; and a cross-scenario test of whether the winner's rank is distinguishable from chance. Right now the robustness panel shows the spread but does not test it (L-08).",
+    "where": "sim/analytics.py · docs/ results pages",
+    "effort": "a few days"
+  },
+  {
+    "priority": "P1",
+    "title": "Multi-season support and a season archive",
+    "detail": "Season 1 is hard-coded into config constants and the site copy. Generalising it needs a season registry, per-season memory namespaces, and an archive page that compares winners across seasons - which is also how the project would accumulate the many independent years that L-08 asks for.",
+    "where": "sim/config.py · sim/memory.py (run index) · scripts/build_site.py",
+    "effort": "a week"
+  },
+  {
+    "priority": "P1",
+    "title": "Financing curve: interest on cash and a margin debit rate",
+    "detail": "Removes the zero-risk-free-rate simplification (L-06). Accrue daily in Account.accrue_carry against a declared SOFR or T-bill series plus a spread, and subtract the same rate in the Sharpe numerator so the ratio stays internally consistent.",
+    "where": "sim/config.py (CostConfig) · sim/portfolio.py (accrue_carry) · sim/analytics.py",
+    "effort": "a day"
+  },
+  {
+    "priority": "P2",
+    "title": "Human participants: auth, order entry, per-user accounts",
+    "detail": "What separates this from the contests it was modelled on (L-07). Needs a web front end, an order-ticket API in front of the engine, and account state per user. The engine already isolates participants, so adding one at runtime is not a redesign.",
+    "where": "new service in front of sim/engine.py · docs/ site becomes an app",
+    "effort": "several weeks"
+  },
+  {
+    "priority": "P2",
+    "title": "Shared-book venue with aggregate participant flow",
+    "detail": "Let the twenty participants move the price for each other instead of trading independent replicas (L-04). Needs a deterministic per-interval clearing step and a new reproducibility argument, since order processing order starts to matter.",
+    "where": "sim/microstructure.py (ParticipantVenue → shared VenueDay state) · sim/engine.py",
+    "effort": "two weeks"
+  },
+  {
+    "priority": "P2",
+    "title": "Declarative strategy format so participants need not write Python",
+    "detail": "A JSON or small-DSL strategy definition interpreted by the engine, with the current twenty classes as reference implementations and a static check that a submitted definition cannot reference future data (L-15).",
+    "where": "sim/strategies.py (interpreter) · strategies/*.json",
+    "effort": "two weeks"
+  },
+  {
+    "priority": "P2",
+    "title": "Richer margin engine: SMA, house calls, PDT enforcement",
+    "detail": "Replace the flat gross-cap-plus-maintenance test with a special memorandum account computation, house-call sequencing, and real pattern-day-trader enforcement (L-11).",
+    "where": "sim/portfolio.py (Account.can_increase, maintenance_breach)",
+    "effort": "a week"
+  },
+  {
+    "priority": "P2",
+    "title": "Database-backed memory with the same query API",
+    "detail": "SQLite or DuckDB behind MemoryStore, keeping gzip JSON Lines as the export format, so the store survives far larger seasons and concurrent writers (L-14).",
+    "where": "sim/memory.py",
+    "effort": "a few days"
+  },
+  {
+    "priority": "P2",
+    "title": "Per-venue fee schedules and observed quote calibration",
+    "detail": "Replace the single blended maker/taker rate with real exchange fee schedules, and calibrate the spread and depth model against published Rule 605 execution-quality statistics rather than against a hand-set tick bound (L-10, IR-24).",
+    "where": "sim/config.py (CostConfig, LiquidityConfig) · sim/microstructure.py",
+    "effort": "a week"
+  },
+  {
+    "priority": "P2",
+    "title": "Explicit ex-date price adjustment for simulated dividends",
+    "detail": "Make the simulated price path step down on each declared ex-date instead of compensating through drift, so charts show what a real chart shows (L-16).",
+    "where": "sim/marketdata.py (build_replay)",
+    "effort": "half a day"
+  },
+  {
+    "priority": "P1",
+    "title": "Publish a venue-parameter sensitivity harness (the IR-29 answer)",
+    "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
+    "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
+    "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
+  }
+]

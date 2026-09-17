@@ -1,0 +1,50 @@
+{
+ "market": {
+  "factor": "MKT",
+  "description": "S&P 500 index (real FRED SP500 series)",
+  "cumulative_return_pct": 14.785,
+  "mean_daily_bps": 5.82,
+  "annualised_vol_pct": 12.88,
+  "sharpe": 1.139
+ },
+ "momentum": {
+  "factor": "MOM",
+  "description": "long top tercile / short bottom tercile by 63-session return skipping the last 5, rebalanced monthly",
+  "cumulative_return_pct": 8.303,
+  "mean_daily_bps": 3.66,
+  "annualised_vol_pct": 15.53,
+  "sharpe": 0.593
+ },
+ "reversal": {
+  "factor": "REV",
+  "description": "short top tercile / long bottom tercile by 5-session return, rebalanced weekly",
+  "cumulative_return_pct": 3.115,
+  "mean_daily_bps": 1.64,
+  "annualised_vol_pct": 14.6,
+  "sharpe": 0.284
+ },
+ "beta": {
+  "factor": "BETA",
+  "description": "long high-declared-beta tercile, short low",
+  "cumulative_return_pct": 12.242,
+  "mean_daily_bps": 5.15,
+  "annualised_vol_pct": 16.61,
+  "sharpe": 0.781
+ },
+ "low_vol": {
+  "factor": "VOL",
+  "description": "long low realised-vol tercile, short high (the low-volatility anomaly)",
+  "cumulative_return_pct": -14.046,
+  "mean_daily_bps": -5.5,
+  "annualised_vol_pct": 16.32,
+  "sharpe": -0.85
+ },
+ "liquidity": {
+  "factor": "LIQ",
+  "description": "long illiquid tercile by dollar volume, short liquid",
+  "cumulative_return_pct": -17.232,
+  "mean_daily_bps": -7.12,
+  "annualised_vol_pct": 14.38,
+  "sharpe": -1.248
+ }
+}

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategies · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="active" href="strategies.html">Strategies</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a></nav>
+</header>
+<main class="wrap">
+
+<h1>The roster: 20 strategies, 20 usernames</h1>
+<p class="lede">Each participant is a distinct, self-contained strategy with its
+own username, its own written rules and its own declared failure modes. The
+brief was explicit: <strong>maximise return, do not build risk management
+in</strong>. Position sizing exists (a competition cannot run without it) but
+there are no stop-loss budgets, no VaR limits, no volatility targets and no
+drawdown brakes anywhere in this roster - except where a strategy's edge
+<em>is</em> a volatility signal.</p>
+<p class="muted small">Archetypes span cross-sectional and time-series momentum,
+short-term and long-horizon reversal, channel breakouts, post-event drift,
+liquidity squeezes, levered beta, sector rotation, statistical arbitrage,
+passive market making, volatility risk premium, VIX regime timing, overnight
+carry, concentration, illiquidity-seeking aggression, buy-and-hold as a control,
+a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
+
+<article class="strategy" id="MomentumMax_12x1">
+  <header>
+    <h3><a href="participants/MomentumMax_12x1.html">@MomentumMax_12x1</a>
+        <span class="muted">· Momentum Max</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">cross-sectional momentum</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 4</span>
+      <span class="pos">+51.21%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Rank the universe by trailing 63-session return with the most recent 5 sessions skipped, buy the top quartile and hold for a month. Winners keep winning because information diffuses slowly and investors under-react then herd.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Momentum has one of the largest documented premia in equities; levered and concentrated it is the highest-expected-return sleeve we can build from a single signal.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>At the first session of each month, rank all 17 instruments by 63-session return, skipping the last 5 sessions</li><li>Buy the top 4 names in equal weight</li><li>Skip any name whose 63-session average dollar volume is below $100m (untradeable size)</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Rebalance to the new top 4 at the next month turn</li><li>No stop loss: the position is only exited at the rebalance</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal weight, 50% of equity per name = 200% gross</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross (Reg T initial margin 50%)</td></tr>
+    <tr><th>Cadence / horizon</th><td>monthly · 1 month</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, momentum +1.0, reversal -1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Momentum crashes when a beaten-down market rebounds sharply (high beta to the losing side)</li><li>Monthly rebalancing means the signal is stale for up to 20 sessions</li><li>2x gross leverage doubles the drawdown in a trend reversal</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.1993.tb04681.x" rel="noopener noreferrer" target="_blank">Jegadeesh &amp; Titman (1993), Journal of Finance 48(1):65-91</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Buying stocks based on a 12-month formation period and holding 3 months earns significant positive returns</span></li><li><a href="https://doi.org/10.1111/0022-1082.00184" rel="noopener noreferrer" target="_blank">Daniel, Hirshleifer &amp; Subrahmanyam (1998)</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Momentum profits are partly explained by behavioural over/under-reaction and persist across markets</span></li></ul></details>
+</article>
+<article class="strategy" id="GapAndGo_YOLO">
+  <header>
+    <h3><a href="participants/GapAndGo_YOLO.html">@GapAndGo_YOLO</a>
+        <span class="muted">· Gap And Go</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">intraday momentum</span>
+      <span class="badge badge-warn">aggression 5</span>
+      <span class="badge badge-ok">rank 20</span>
+      <span class="neg">-86.57%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> A stock that gaps up on the open has absorbed news or imbalanced overnight order flow; continuation in the first hours is common because retail and institutional demand arrives through the session. Take the continuation and be flat before the close so nothing is held overnight.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Turns the whole account over every day, so a small per-trade edge compounds ~250 times a year.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>At the open, compute gap = open / prior close - 1</li><li>Buy any name gapping up more than +1.5%</li><li>Skip names whose quoted spread is wider than 30 bp (costs eat the edge)</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit every position at the same session&#x27;s close (market-on-close order)</li><li>No stop loss intraday</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal 40% of equity across qualifying names, capped at 4 names = up to 160% gross</td></tr>
+    <tr><th>Leverage</th><td>up to 1.6x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · intraday</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, liquidity -0.5, momentum +0.5, reversal -1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Gap-and-fade days: the open print is the high of day</li><li>Pays the spread twice per day, so transaction costs compound at ~250 sessions per year</li><li>Cannot see intraday volume at decision time in a daily-bar simulation (flagged limitation)</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1016/j.jfineco.2019.03.011" rel="noopener noreferrer" target="_blank">Lou, Polk &amp; Skouras (2019), &#x27;A tug of war&#x27;, Journal of Financial Economics</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Overnight and intraday returns behave differently and overnight returns carry a distinct risk/return profile</span></li><li><a href="https://doi.org/10.1016/j.jfineco.2014.04.004" rel="noopener noreferrer" target="_blank">Gao, Han, Li &amp; Zhou (2014), Journal of Financial Economics</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Intraday momentum: the return of the first half hour predicts the return of the last half hour</span></li></ul></details>
+</article>
+<article class="strategy" id="TrendSurfer_GoldenX">
+  <header>
+    <h3><a href="participants/TrendSurfer_GoldenX.html">@TrendSurfer_GoldenX</a>
+        <span class="muted">· Trend Surfer</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">time-series trend</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 8</span>
+      <span class="pos">+30.11%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Prices trend. A 20-session EMA above a 50-session EMA means the intermediate trend is up; stay long and add to winners (pyramid) until the trend breaks.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Riding a full trend with leverage captures the fat right tail of price moves instead of clipping it.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Long when EMA20 &gt; EMA50 on the prior session&#x27;s closes</li><li>Add a second half position when price is also above the 50-session high</li><li>Maximum 5 concurrent names, chosen by strongest EMA20-EMA50 spread normalised by volatility</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit when EMA20 crosses below EMA50</li><li>No trailing stop and no profit target</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>25% of equity initial, +25% on the pyramid = 50% per name</td></tr>
+    <tr><th>Leverage</th><td>up to 2.0x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily check, monthly-ish turnover · weeks to months</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, momentum +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Whipsaw in range-bound markets: repeated small losses</li><li>Moving averages lag, so the exit gives back a meaningful part of every rally</li><li>Pyramiding concentrates the account into whatever already ran</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1016/j.jfineco.2012.02.023" rel="noopener noreferrer" target="_blank">Moskowitz, Ooi &amp; Pedersen (2012), Journal of Financial Economics 104(2):228-250</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Time-series momentum: each instrument&#x27;s own past 12-month return predicts its next month</span></li><li><a href="https://doi.org/10.1111/0022-1082.00108" rel="noopener noreferrer" target="_blank">Brock, Lakonishok &amp; LeBaron (1992), Journal of Finance</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Moving-average rules applied to the Dow earn significant returns in-sample across 1897-1986</span></li></ul></details>
+</article>
+<article class="strategy" id="MeanRev_Z2Sigma">
+  <header>
+    <h3><a href="participants/MeanRev_Z2Sigma.html">@MeanRev_Z2Sigma</a>
+        <span class="muted">· Mean Rev Z2</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">short-term reversal</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 3</span>
+      <span class="pos">+74.85%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Liquidity provision is paid for. A large-cap that trades two standard deviations below its own 20-session mean in a single session has usually been hit by transient order flow, and it snaps back within days.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Buys the panic and is paid the liquidity premium, with turnover high enough to compound the edge.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Compute the z-score of yesterday&#x27;s close against its 20-session mean</li><li>Buy names with z &lt;= -2.0</li><li>Rank by most negative z, take up to 6 names</li><li>Skip names whose quoted spread exceeds 50 bp</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit when z returns to &gt;= -0.25 (back at the mean)</li><li>Exit unconditionally after 10 sessions</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal 30% of equity per name = up to 180% gross</td></tr>
+    <tr><th>Leverage</th><td>up to 1.8x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · 1-10 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>momentum -0.5, reversal +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Catching a falling knife: a genuine fundamental break keeps falling</li><li>The 2-sigma filter fires most often exactly when volatility is rising</li><li>Exits are limit orders at the mean, so the best days can fail to fill</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.1990.tb05088.x" rel="noopener noreferrer" target="_blank">Jegadeesh (1990), &#x27;Evidence of Predictable Behavior of Security Returns&#x27;, Journal of Finance</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Stocks with extreme poor performance over short horizons earn abnormal returns in the following days/weeks</span></li><li><a href="https://doi.org/10.1093/rfs/hhs106" rel="noopener noreferrer" target="_blank">Da, Liu &amp; Schaumburg (2014), Review of Financial Studies</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Short-term reversal is compensation for providing liquidity</span></li></ul></details>
+</article>
+<article class="strategy" id="DonchianBreakout_20">
+  <header>
+    <h3><a href="participants/DonchianBreakout_20.html">@DonchianBreakout_20</a>
+        <span class="muted">· Donchian Breakout</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">channel breakout</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 11</span>
+      <span class="pos">+19.01%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> A close above the 20-session high means the market has accepted a price nobody was willing to sell at for a month. Breakouts from consolidation continue often enough, and when they do they run far, to pay for the many false ones.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Cuts losers mechanically and lets a genuine breakout run without a profit cap.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Enter long when the prior close is above the prior 20-session high</li><li>Enter short when the prior close is below the prior 20-session low</li><li>Maximum 4 concurrent positions</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit longs on a close below the 10-session low; exit shorts on a close above the 10-session high</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>25% of equity per position, up to 100% gross long plus 100% gross short</td></tr>
+    <tr><th>Leverage</th><td>up to 2.0x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · days to weeks</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>momentum +0.5, reversal -1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>False breakouts in choppy markets produce a run of small losses</li><li>Entry at the breakout means paying the widest spread of the day</li><li>Two-sided entries can be whipsawed in both directions in the same week</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1468-036X.2006.00278.x" rel="noopener noreferrer" target="_blank">Fung &amp; Hsieh (1999)/subsequent trend-following literature</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Trend-following systems earn positive risk-adjusted returns across asset classes and decades</span></li></ul></details>
+</article>
+<article class="strategy" id="DriftRider_PEAD">
+  <header>
+    <h3><a href="participants/DriftRider_PEAD.html">@DriftRider_PEAD</a>
+        <span class="muted">· Drift Rider</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">post-event drift</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 10</span>
+      <span class="pos">+21.03%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Markets digest a large information shock over days, not seconds. When a name moves more than 8% in five sessions on at least twice its normal volume, the move continues in the same direction for weeks - the drift that earnings announcement research documents.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Concentrates into the strongest information event in the universe and refuses to take profit early.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>5-session absolute return &gt; 8%</li><li>20-session average volume on the event day &gt;= 2.0x the 63-session average</li><li>Go with the direction of the move, up to 5 names, ranked by |move|</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Hold 15 sessions then exit</li><li>Exit early if the move retraces more than 60%</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal 35% of equity per name = up to 175% gross</td></tr>
+    <tr><th>Leverage</th><td>up to 1.75x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily scan · 15 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>momentum +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>PROXY DATA LIMITATION: no earnings calendar or EPS surprise series is available offline, so the entry uses a price/volume proxy rather than a real announcement (flagged as IR-07)</li><li>A large move on volume is often a reversal candidate, the exact opposite of drift</li><li>Holding 15 sessions through a reversal is expensive without a stop</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.2307/2490899" rel="noopener noreferrer" target="_blank">Bernard &amp; Thomas (1989), Journal of Accounting Research</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Stock prices drift after earnings announcements in the direction of the surprise</span></li><li><a href="https://doi.org/10.2307/2490232" rel="noopener noreferrer" target="_blank">Ball &amp; Brown (1968), &#x27;An Empirical Evaluation of Accounting Income Numbers&#x27;, Journal of Accounting Research 6(2):159-178</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">The first documentation of the drift: after the earnings announcement month, cumulative abnormal returns continued to move in the direction of the earnings surprise</span></li></ul></details>
+</article>
+<article class="strategy" id="SqueezeHunter_TF">
+  <header>
+    <h3><a href="participants/SqueezeHunter_TF.html">@SqueezeHunter_TF</a>
+        <span class="muted">· Squeeze Hunter</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">liquidity squeeze</span>
+      <span class="badge badge-warn">aggression 5</span>
+      <span class="badge badge-ok">rank 17</span>
+      <span class="neg">-1.85%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> When a name&#x27;s daily turnover (volume / shares outstanding) spikes while price is rising, a large fraction of the float is changing hands at higher prices and short covering becomes self-reinforcing. Ride the squeeze for five sessions.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Squeezes produce the largest single-day moves in the whole equity universe; concentration is the point.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Turnover today &gt;= 2.5x its 63-session median</li><li>3-session return &gt; 5%</li><li>Prefer the highest turnover names, up to 3 positions</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit after 5 sessions</li><li>Exit immediately if turnover collapses below its median</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal 50% of equity per name = up to 150% gross</td></tr>
+    <tr><th>Leverage</th><td>up to 1.5x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · 5 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>liquidity -1.0, momentum +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>NO REAL SHORT-INTEREST DATA offline: turnover is a proxy for a squeeze, not a measurement of one (IR-07)</li><li>The most squeezed name is also the one with the widest spread and the deepest impact</li><li>Five-session holds through a reversal with no stop</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1086/261571" rel="noopener noreferrer" target="_blank">Karpoff (1987), &#x27;The Relation Between Price Changes and Trading Volume&#x27;, JFQA</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Abnormal trading volume predicts subsequent short-horizon returns</span></li></ul></details>
+</article>
+<article class="strategy" id="BetaChaser_3xProxy">
+  <header>
+    <h3><a href="participants/BetaChaser_3xProxy.html">@BetaChaser_3xProxy</a>
+        <span class="muted">· Beta Chaser</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">levered beta</span>
+      <span class="badge badge-warn">aggression 5</span>
+      <span class="badge badge-ok">rank 1</span>
+      <span class="pos">+108.39%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> In a rising market the highest-beta names deliver the highest return. This participant is the human equivalent of a 3x levered ETF: hold the top-beta basket at maximum permitted leverage and rebalance weekly.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Maximum market exposure at all times: if the market goes up, this participant should win.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Rank the universe by realised beta to the S&amp;P 500 over 63 sessions</li><li>Hold the top 5 beta names equally weighted at 2.0x gross</li><li>Re-rank weekly</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Only at the weekly rebalance; never de-risks on a drawdown</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>40% of equity per name = 200% gross</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross, always invested</td></tr>
+    <tr><th>Cadence / horizon</th><td>weekly · all season</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +1.0, market +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Volatility decay: repeated rebalancing to a fixed leverage in a choppy market bleeds value</li><li>Beta is estimated on trailing data, so the basket chases whatever was volatile last quarter</li><li>A 2x gross book in a 10% market drawdown is a 20% account drawdown with no brake</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1016/j.jfineco.2014.02.004" rel="noopener noreferrer" target="_blank">Frazzini &amp; Pedersen (2014), &#x27;Betting against beta&#x27;, Journal of Financial Economics</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">High-beta (and levered) portfolios underperform on a risk-adjusted basis - the betting-against-beta anomaly</span></li><li><a href="https://www.sec.gov/investor/alerts/leveraged-etf-alert.pdf" rel="noopener noreferrer" target="_blank">SEC/FINRA investor alert on leveraged and inverse ETFs</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Levered ETF-style daily rebalancing creates volatility decay in choppy markets</span></li></ul></details>
+</article>
+<article class="strategy" id="SectorRotator_AlphaX">
+  <header>
+    <h3><a href="participants/SectorRotator_AlphaX.html">@SectorRotator_AlphaX</a>
+        <span class="muted">· Sector Rotator</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">sector rotation</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 2</span>
+      <span class="pos">+100.92%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Capital rotates between sectors in multi-week waves. Buy the two sectors with the strongest 21-session relative return and hold until the ranking changes.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Concentrates the whole account into the strongest two sleeves of the market instead of diversifying.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Compute each sector&#x27;s equal-weighted 21-session return from its constituents</li><li>Buy the top 2 sectors, split 100% of gross exposure between them</li><li>Use 2.0x gross leverage across the sector baskets</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Rotate at the weekly re-rank; no defensive sleeve and no cash drag by design</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>1.0x of equity per selected sector, spread equally across its constituents</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>weekly · weeks</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, momentum +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Sector labels here come from the declared universe table, not from a licensed GICS feed</li><li>Rotation whipsaws at turning points, buying the top of a sector wave</li><li>Only 9 sectors in a 17-name universe, so the ranking is noisy</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1086/250090" rel="noopener noreferrer" target="_blank">Moskowitz &amp; Grinblatt (1999), Journal of Business 72(4):419-445</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Industry momentum: buying past-winning industries earns significant returns</span></li></ul></details>
+</article>
+<article class="strategy" id="PairsArb_ZScore2">
+  <header>
+    <h3><a href="participants/PairsArb_ZScore2.html">@PairsArb_ZScore2</a>
+        <span class="muted">· Pairs Stat Arb</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">statistical arbitrage</span>
+      <span class="badge badge-warn">aggression 3</span>
+      <span class="badge badge-ok">rank 16</span>
+      <span class="pos">+1.01%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Two names in the same sector move together. When their price ratio stretches two standard deviations from its 60-session mean, short the relative winner and buy the relative loser and wait for convergence.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Leverage, not diversification: a market-neutral book at 2x gross can out-return a long-only book if convergence is fast.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Find the pair with the highest 60-session return correlation inside the same sector</li><li>Compute the z-score of log(price_A) - beta * log(price_B) over 60 sessions</li><li>Enter when |z| &gt;= 2.0, dollar-neutral, 1.0x gross each leg</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit at |z| &lt;= 0.25</li><li>Exit unconditionally after 20 sessions</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>dollar neutral, 100% long + 100% short = 200% gross</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross, ~0 net</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · 1-20 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>low_vol +0.5, reversal +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Correlation is not cointegration: the ratio can trend forever</li><li>Pays borrow fees on the short leg every session</li><li>A market-neutral book still has idiosyncratic event risk on both legs</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1093/rfs/hhj020" rel="noopener noreferrer" target="_blank">Gatev, Goetzmann &amp; Rouwenhorst (2006), Review of Financial Studies 19(3):797-827</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Pairs trading earned significant abnormal returns in the 1960s-1990s and has since decayed</span></li></ul></details>
+</article>
+<article class="strategy" id="SpreadHarvester_MM">
+  <header>
+    <h3><a href="participants/SpreadHarvester_MM.html">@SpreadHarvester_MM</a>
+        <span class="muted">· Spread Harvester</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">market making</span>
+      <span class="badge badge-warn">aggression 2</span>
+      <span class="badge badge-ok">rank 19</span>
+      <span class="neg">-39.07%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Provide liquidity instead of demanding it. Resting limit orders on both sides of the three most liquid names collect the quoted spread and the maker rebate, and pay for themselves as long as inventory does not run away.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Earns the spread and the rebate every session instead of paying them, and reinvests the accrual.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Each session, rest a buy limit one tick below the displayed bid and a sell limit one tick above the displayed offer</li><li>Trade only the three highest dollar-volume instruments</li><li>Size each quote to 10% of the session&#x27;s expected volume, capped so gross inventory stays under 60% of equity per side</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Quotes expire at the end of the session (TIF=DAY)</li><li>If net inventory in a name exceeds the cap, cross the spread with a market order to get back inside it</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>quote size from the liquidity cap, inventory cap 60% of equity per side</td></tr>
+    <tr><th>Leverage</th><td>typically &lt; 1.0x gross; inventory is the exposure</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily quoting · intraday to a few days</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>low_vol +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Adverse selection: the quotes fill precisely when the price is about to move against the book</li><li>DAILY DECISION GRANULARITY: a real market maker requotes in milliseconds; this participant requotes once per session, which understates both its earnings and its risk (flagged limitation)</li><li>Inventory builds in trending markets and the participant ends up long the losers</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1080/14697680701381228" rel="noopener noreferrer" target="_blank">Avellaneda &amp; Stoikov (2008), Quantitative Finance 8(3):217-224</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Optimal quotes around an inventory-adjusted reservation price maximise market-making P&amp;L</span></li><li><a href="https://www.sec.gov/market-structure/research" rel="noopener noreferrer" target="_blank">SEC market structure research on maker-taker pricing</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Maker-taker fees pay rebates to resting liquidity providers</span></li></ul></details>
+</article>
+<article class="strategy" id="VolCarry_LowHigh">
+  <header>
+    <h3><a href="participants/VolCarry_LowHigh.html">@VolCarry_LowHigh</a>
+        <span class="muted">· Vol Carry</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">volatility risk premium</span>
+      <span class="badge badge-warn">aggression 3</span>
+      <span class="badge badge-ok">rank 18</span>
+      <span class="neg">-29.99%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Low-volatility stocks have historically out-returned high-volatility stocks because investors overpay for lottery characteristics. Go long the three lowest-volatility names and short the three highest, dollar-neutral, at 2x gross.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Uses leverage on a market-neutral spread to convert a small annual edge into a large one.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Rank the universe by 63-session realised volatility</li><li>Long the bottom 3, short the top 3, equal dollar weights</li><li>Rebalance monthly</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Monthly rebalance only</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>33% of equity per leg = 100% long + 100% short = 200% gross</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross, ~0 net</td></tr>
+    <tr><th>Cadence / horizon</th><td>monthly · 1 month</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, low_vol +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>In a melt-up the high-volatility short leg explodes upward</li><li>Borrow fees on the short leg accrue daily and are highest exactly on the high-vol names</li><li>The anomaly is weak in a single 12-month window; it is a multi-decade effect</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.2006.00836.x" rel="noopener noreferrer" target="_blank">Ang, Hodrick, Xing &amp; Zhang (2006), Journal of Finance 61(4):1637-1672</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">The cross-section of stock returns is negatively related to idiosyncratic volatility</span></li></ul></details>
+</article>
+<article class="strategy" id="VIXRegime_Timer">
+  <header>
+    <h3><a href="participants/VIXRegime_Timer.html">@VIXRegime_Timer</a>
+        <span class="muted">· VIX Regime Timer</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">volatility regime timing</span>
+      <span class="badge badge-warn">aggression 3</span>
+      <span class="badge badge-ok">rank 9</span>
+      <span class="pos">+28.04%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> This participant trades the one genuinely real exogenous series in Season 1: the daily CBOE VIX close from FRED. Equity returns cluster with volatility regimes, so hold the index ETF at maximum leverage when realised fear is high and the market is falling, and cut leverage when the regime is quiet and extended.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Concentrates the entire account into the index and varies leverage 4x between regimes.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>VIX &gt;= 24 and the index is below its 20-session mean: 2.0x long SPY (distress buying)</li><li>VIX between 18 and 24: 1.5x long SPY</li><li>VIX &lt; 18 and the index is above its 20-session mean: 1.0x long SPY</li><li>VIX &lt; 15 and 21-session index return &gt; 6%: 0.5x (extended, quiet)</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Regime change only; no stop loss</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>leverage set by the regime table</td></tr>
+    <tr><th>Leverage</th><td>0.5x - 2.0x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · all season</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +1.0, low_vol +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>High VIX often marks a falling knife that keeps falling</li><li>Regime thresholds (24 / 18 / 15) are hand-set and could be over-fitted to this window</li><li>Only trades the index ETF, so it forgoes all single-name alpha</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://www.cboe.com/us/indices/dashboard/VIX/" rel="noopener noreferrer" target="_blank">Cboe VIX Index methodology</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">VIX is computed from SPX option prices and measures expected 30-day volatility</span></li><li><a href="https://fred.stlouisfed.org/series/VIXCLS" rel="noopener noreferrer" target="_blank">FRED series VIXCLS, Federal Reserve Bank of St. Louis</a> <span class="badge badge-muted">FETCHED-2026-09-17</span><br><span class="muted small">Daily VIX close observations (real input to this strategy)</span></li></ul></details>
+</article>
+<article class="strategy" id="OverreactionFade_LT">
+  <header>
+    <h3><a href="participants/OverreactionFade_LT.html">@OverreactionFade_LT</a>
+        <span class="muted">· Overreaction Fade</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">contrarian reversal</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 7</span>
+      <span class="pos">+39.90%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Investors over-react to bad news. A large-cap that falls more than 5% in one session without a trend behind it tends to recover part of the move within days.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Buys the day everyone else is forced to sell and holds through the noise with leverage.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Prior session return &lt;= -5%</li><li>The 63-session trend must still be positive (avoids buying structural decliners)</li><li>Up to 4 names, equal weight</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit after 3 sessions</li><li>Exit if the position is up more than 8% (take the snap-back)</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>equal 40% of equity per name = up to 160% gross</td></tr>
+    <tr><th>Leverage</th><td>up to 1.6x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · 3 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>momentum -1.0, reversal +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>A 5% one-day drop is frequently justified and continues</li><li>Three-session holds are too short for the documented multi-year overreaction effect (scale mismatch, flagged)</li><li>Buys into the widest spreads of the day</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.1985.tb05004.x" rel="noopener noreferrer" target="_blank">De Bondt &amp; Thaler (1985), Journal of Finance 40(3):793-805</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Stocks that have performed extremely poorly over 3-5 years subsequently outperform (long-horizon overreaction)</span></li></ul></details>
+</article>
+<article class="strategy" id="IlliquidRocket_Degen">
+  <header>
+    <h3><a href="participants/IlliquidRocket_Degen.html">@IlliquidRocket_Degen</a>
+        <span class="muted">· Illiquid Rocket</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">liquidity-constrained aggression</span>
+      <span class="badge badge-warn">aggression 5</span>
+      <span class="badge badge-ok">rank 13</span>
+      <span class="pos">+15.80%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> The highest theoretical returns live in the least liquid names. This participant deliberately trades the two smallest dollar-volume names in the universe at maximum leverage, chasing 5-session momentum. It exists to measure exactly how much return the microstructure model takes away.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Concentrates everything into the highest-volatility names the competition allows.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Rank the universe by dollar volume, take the two smallest</li><li>Go 2x gross into whichever of the two has the better 5-session momentum</li><li>Rebalance every 5 sessions</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Weekly rotation only</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>200% of equity in a single name</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross, single name</td></tr>
+    <tr><th>Cadence / horizon</th><td>weekly · 5 sessions</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +1.0, liquidity -1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Pays the widest spread and the largest square-root impact of any participant</li><li>Hits the session participation cap and leaves orders unfilled</li><li>Single-name concentration at 2x means one bad week can halve the account</li></ul></details>
+  <details><summary>Academic basis (2 references)</summary>
+    <ul class="refs"><li><a href="https://www.cis.upenn.edu/~mkearns/finread/amihud.pdf" rel="noopener noreferrer" target="_blank">Amihud (2002), &#x27;Illiquidity and stock returns&#x27;, Journal of Financial Markets 5(1):31-56</a> <span class="badge badge-warn">FETCHED-VIA-SEARCH</span><br><span class="muted small">Illiquid stocks earn a return premium, but transaction costs consume a large share of it</span></li><li><a href="https://doi.org/10.21314/JOR.2001.041" rel="noopener noreferrer" target="_blank">Almgren &amp; Chriss (2001), Journal of Risk 3(2):21-40</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Market impact grows with the square root of the participation rate</span></li></ul></details>
+</article>
+<article class="strategy" id="BuyHold_MaxBeta">
+  <header>
+    <h3><a href="participants/BuyHold_MaxBeta.html">@BuyHold_MaxBeta</a>
+        <span class="muted">· Buy And Hold Max Beta</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">buy and hold (control)</span>
+      <span class="badge badge-warn">aggression 3</span>
+      <span class="badge badge-ok">rank 6</span>
+      <span class="pos">+45.29%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> The control participant. Buy the three highest-beta names on the first session at 1.5x gross and never trade again. Everything else on the leaderboard is measured against what doing nothing but holding beta would have produced.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Static high-beta exposure is the honest benchmark for &#x27;highest return with no skill&#x27;.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>On the first session, buy the top 3 names by declared beta at 50% of equity each</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Never (except the mandatory liquidation at the end of the competition period)</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>50% of equity per name = 150% gross</td></tr>
+    <tr><th>Leverage</th><td>1.5x gross, static</td></tr>
+    <tr><th>Cadence / horizon</th><td>once · all season</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +1.0, market +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Zero turnover means zero transaction cost, which is its only structural advantage</li><li>No ability to avoid a drawdown: the account takes the full market move times beta</li><li>Concentration in three declared-high-beta names</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Pages/dataarchived.html" rel="noopener noreferrer" target="_blank">Damodaran historical returns data archive</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Equity indices return roughly 6-8% real per year over the long run; a single year is dominated by the market draw</span></li></ul></details>
+</article>
+<article class="strategy" id="OneBigBet_Concentra">
+  <header>
+    <h3><a href="participants/OneBigBet_Concentra.html">@OneBigBet_Concentra</a>
+        <span class="muted">· One Big Bet</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">concentration</span>
+      <span class="badge badge-warn">aggression 5</span>
+      <span class="badge badge-ok">rank 5</span>
+      <span class="pos">+48.94%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Diversification dilutes return. Put the entire account, at maximum leverage, into the single name with the best risk-scaled 63-session momentum, and switch only when another name is materially better.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     The mathematically highest-variance legal book in the competition, which is what a highest-return-only mandate implies.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Score every name by 63-session momentum divided by realised volatility</li><li>Hold only the top name at 2.0x gross</li><li>Switch only if the runner-up&#x27;s score exceeds the incumbent&#x27;s by more than 0.5</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Switch, or the mandatory end-of-season liquidation</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>200% of equity in one name</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross, one position</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily check, rare switches · weeks to months</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +1.0, momentum +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>A single name can halve; at 2x gross the account can approach a margin call</li><li>The switching threshold creates hysteresis, so it holds losers too long</li><li>No diversification means the outcome is almost entirely one idiosyncratic draw</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.1993.tb04681.x" rel="noopener noreferrer" target="_blank">Jegadeesh &amp; Titman (1993) - momentum magnitude increases with portfolio concentration</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Concentrated portfolios have higher expected return and much higher variance than diversified ones</span></li></ul></details>
+</article>
+<article class="strategy" id="OvernightCarry_NO">
+  <header>
+    <h3><a href="participants/OvernightCarry_NO.html">@OvernightCarry_NO</a>
+        <span class="muted">· Overnight Carry</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">overnight premium</span>
+      <span class="badge badge-warn">aggression 3</span>
+      <span class="badge badge-ok">rank 14</span>
+      <span class="pos">+14.11%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> A large share of the market&#x27;s long-run return arrives overnight rather than during the session. This participant buys the index ETF at the close of every session and sells it at the open of the next, collecting the overnight leg only.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Applies 2x leverage to the leg of the return distribution that the literature says is the paid one.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Buy SPY at the close of every session (simulated as a market order at the next open with the overnight gap already realised)</li><li>Hold only the index ETF; no single-name risk</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Sell at the next session&#x27;s open</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>2.0x gross overnight, flat during the session</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross overnight</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · overnight</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08).</li><li>Pays the spread twice per session, ~500 times per year</li><li>No intraday exposure means it forfeits the whole trend</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1016/j.jfineco.2019.03.011" rel="noopener noreferrer" target="_blank">Lou, Polk &amp; Skouras (2019), Journal of Financial Economics</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Overnight and intraday returns have different distributions and premia</span></li></ul></details>
+</article>
+<article class="strategy" id="KitchenSink_AllIn">
+  <header>
+    <h3><a href="participants/KitchenSink_AllIn.html">@KitchenSink_AllIn</a>
+        <span class="muted">· Kitchen Sink</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">signal stacking</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 15</span>
+      <span class="pos">+5.19%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> Stack the signals instead of choosing between them. A name that is simultaneously above its 50-session EMA, inside 5% of its 63-session high, positive on 21-session momentum and in a rising-market regime gets the full 2x allocation. Names that fail any test get nothing.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Refuses to hold anything that is not confirming on every axis, then sizes the survivors to the cap.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>EMA20 &gt; EMA50 on prior closes</li><li>Close within 5% of the 63-session high</li><li>21-session momentum &gt; 0</li><li>Index above its 50-session mean (regime filter)</li><li>Equal weight across all qualifying names, scaled to 2.0x gross</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>A name is dropped the moment it fails any test</li><li>The whole book goes to cash if the regime filter fails</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>2.0x gross divided equally across qualifying names</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross or 0x</td></tr>
+    <tr><th>Cadence / horizon</th><td>daily · days to weeks</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>beta +0.5, momentum +0.5, reversal -0.5</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>Four filters means it is often flat and misses the move entirely</li><li>The regime filter is a lagging index average, so the book goes to cash after the drop, not before</li><li>Stacking correlated signals is not diversification: they all fail on the same days</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1093/rfs/hhv044" rel="noopener noreferrer" target="_blank">Rapach, Strauss &amp; Zhou (2013)/related forecast-combination literature</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Combining weakly-correlated return predictors improves out-of-sample performance relative to any single predictor</span></li></ul></details>
+</article>
+<article class="strategy" id="Contrarian_DeepValue">
+  <header>
+    <h3><a href="participants/Contrarian_DeepValue.html">@Contrarian_DeepValue</a>
+        <span class="muted">· Contrarian Deep Value</span></h3>
+    <div class="strategy-meta">
+      <span class="badge badge-info">long-horizon reversal</span>
+      <span class="badge badge-warn">aggression 4</span>
+      <span class="badge badge-ok">rank 12</span>
+      <span class="pos">+18.88%</span>
+    </div>
+  </header>
+  <p><strong>Thesis.</strong> The market over-reacts to sustained bad news. Buy the three worst 126-session performers at 2x gross and hold them, betting on the long-horizon reversal that De Bondt and Thaler documented.</p>
+  <p><strong>Why it is return-seeking rather than risk-managed.</strong>
+     Buys the most hated names at double leverage because that is where the reversal payoff is largest.</p>
+  <div class="two-col">
+    <div><h4>Entry rules</h4><ul><li>Rank the universe by trailing 126-session return (or all available history)</li><li>Buy the bottom 3 at 66% of equity each</li><li>Re-rank quarterly</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Quarterly re-rank only</li></ul></div>
+  </div>
+  <table class="data compact">
+    <tr><th>Sizing</th><td>66% of equity per name = 200% gross</td></tr>
+    <tr><th>Leverage</th><td>2.0x gross</td></tr>
+    <tr><th>Cadence / horizon</th><td>quarterly · 3-12 months</td></tr>
+    <tr><th>Declared factor loadings</th><td><code>low_vol +0.5, momentum -1.0, reversal +1.0</code></td></tr>
+  </table>
+  <details><summary>Known failure modes (declared before the season)</summary>
+    <ul><li>A 12-month window is far shorter than the 3-5 years the effect is documented over</li><li>The worst performers are often worst for fundamental reasons (value traps)</li><li>2x leverage on falling knives accelerates the drawdown</li></ul></details>
+  <details><summary>Academic basis (1 references)</summary>
+    <ul class="refs"><li><a href="https://doi.org/10.1111/j.1540-6261.1985.tb05004.x" rel="noopener noreferrer" target="_blank">De Bondt &amp; Thaler (1985), Journal of Finance</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Long-horizon losers outperform long-horizon winners over 3-5 year horizons</span></li></ul></details>
+</article>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

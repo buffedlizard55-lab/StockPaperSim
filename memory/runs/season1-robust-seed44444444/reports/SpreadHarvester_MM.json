@@ -1,0 +1,411 @@
+{
+ "username": "@SpreadHarvester_MM",
+ "strategy_id": "SpreadHarvester",
+ "archetype": "market making",
+ "starting_cash": 100000.0,
+ "final_equity": 28267.03,
+ "net_pnl_usd": -71732.97,
+ "total_return_pct": -71.733,
+ "cagr_pct": -71.8749,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -75.462,
+  "max_drawdown_usd": -75501.33,
+  "peak_date": "2025-09-22",
+  "peak_equity": 100052.17,
+  "trough_date": "2026-08-21",
+  "trough_equity": 24550.84,
+  "recovery_date": null,
+  "sessions_underwater": 17,
+  "never_recovered": true,
+  "sharpe": -1.8085,
+  "sortino": -2.7826,
+  "calmar": 0.9525,
+  "daily_vol_pct": 3.7684,
+  "annualised_vol_pct": 59.822,
+  "skew": 0.3723,
+  "excess_kurtosis": 3.7723,
+  "best_session_pct": 18.7589,
+  "worst_session_pct": -15.3624,
+  "var_95_pct": -5.6,
+  "cvar_95_pct": -8.5815,
+  "var_99_pct": -10.5757,
+  "cvar_99_pct": -12.9704
+ },
+ "market_relation": {
+  "beta": -2.1826,
+  "alpha_annual_pct": -76.7429,
+  "r_squared": 0.2216,
+  "tracking_error_annual_pct": 52.78,
+  "information_ratio": -1.454,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": -31.463,
+  "residual_return_pct": -40.27
+ },
+ "trades": {
+  "closed_trades": 483,
+  "open_trades": 0,
+  "wins": 337,
+  "losses": 146,
+  "win_rate_pct": 69.772,
+  "gross_win_usd": 58946.71,
+  "gross_loss_usd": 129723.07,
+  "profit_factor": 0.4544,
+  "avg_win_usd": 174.92,
+  "avg_loss_usd": -888.51,
+  "expectancy_usd_per_trade": -146.53,
+  "best_trade": {
+   "symbol": "TSLA",
+   "net_pnl": 18197.78,
+   "entry_date": "2025-09-25",
+   "exit_date": "2025-12-18",
+   "direction": "short"
+  },
+  "worst_trade": {
+   "symbol": "TSLA",
+   "net_pnl": -32466.25,
+   "entry_date": "2026-04-02",
+   "exit_date": "2026-05-15",
+   "direction": "short"
+  },
+  "longest_win_streak": 11,
+  "longest_loss_streak": 3,
+  "avg_sessions_held": 4.04,
+  "median_sessions_held": 1.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "SPY": 251,
+   "NVDA": 243,
+   "TSLA": 226
+  },
+  "sum_of_tranche_sessions": 1034,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 549,
+  "shares_traded": 72168,
+  "traded_notional_usd": 18650900.91,
+  "spread_cost_usd": 3.17,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 2.12,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 1.35,
+  "regulatory_fee_usd": 72.8,
+  "rebate_usd": -143.43,
+  "total_cost_usd": -63.98,
+  "total_cost_bps_of_traded": -0.034,
+  "total_cost_pct_of_starting_cash": -0.064,
+  "net_liquidity_provider": true,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": null,
+   "spread_and_impact_pct": null
+  },
+  "avg_execution_cost_bps_per_fill": -0.021,
+  "median_execution_cost_bps_per_fill": -0.069,
+  "worst_execution_cost_bps": 0.479,
+  "intraday_drift_usd": -1196.45,
+  "avg_price_difference_bps_per_fill": -0.627,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 551,
+  "fully_unfilled_orders": 2,
+  "partially_filled_orders": 81,
+  "paper_notional_usd": 19540488.45,
+  "spread_cost_usd": 3.17,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 2.12,
+  "intraday_drift_usd": -1196.45,
+  "fees_usd": -69.28,
+  "missed_trade_cost_usd": 18878.94,
+  "total_shortfall_usd": 17618.5,
+  "shortfall_bps_of_paper": 9.016,
+  "friction_only_bps_of_paper": -0.033,
+  "worst_single_order_drift_usd": 0.66,
+  "best_single_order_drift_usd": -7.55,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 0.0,
+  "borrow_fees_paid_usd": 956.6,
+  "net_carry_usd": -956.6,
+  "margin_calls": [
+   "2026-05-14: equity 47,828.69 < maintenance requirement 49,041.96"
+  ],
+  "margin_call_count": 1,
+  "day_trades": 212
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 123.89,
+  "max_gross_pct_of_starting_cash": 182.97,
+  "avg_net_pct_of_starting_cash": -109.2,
+  "max_net_pct_of_starting_cash": 31.45,
+  "avg_leverage": 1.949,
+  "max_leverage": 3.418,
+  "sessions_flat": 1,
+  "avg_open_positions": 2.78
+ },
+ "turnover": {
+  "traded_notional_usd": 18650900.91,
+  "annualised_turnover_x": 288.093
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "SPY",
+   "realized_pnl": -11586.22,
+   "open_pnl": 0.0,
+   "total_pnl": -11586.22,
+   "closed_trades": 52,
+   "fees": 2.89,
+   "all_in_cost_usd": 4.0
+  },
+  {
+   "symbol": "TSLA",
+   "realized_pnl": -18897.44,
+   "open_pnl": 0.0,
+   "total_pnl": -18897.44,
+   "closed_trades": 57,
+   "fees": 1.66,
+   "all_in_cost_usd": 5.05
+  },
+  {
+   "symbol": "NVDA",
+   "realized_pnl": -40292.7,
+   "open_pnl": 0.0,
+   "total_pnl": -40292.7,
+   "closed_trades": 374,
+   "fees": -73.84,
+   "all_in_cost_usd": -73.06
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 98969.86,
+   "end_equity": 89322.85,
+   "return_pct": -9.7474
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 89322.85,
+   "end_equity": 79532.78,
+   "return_pct": -10.9603
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 79532.78,
+   "end_equity": 82980.55,
+   "return_pct": 4.335
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 82980.55,
+   "end_equity": 87257.18,
+   "return_pct": 5.1538
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 87257.18,
+   "end_equity": 81713.78,
+   "return_pct": -6.353
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 81713.78,
+   "end_equity": 68725.11,
+   "return_pct": -15.8953
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 68725.11,
+   "end_equity": 85859.91,
+   "return_pct": 24.9324
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 85859.91,
+   "end_equity": 58624.37,
+   "return_pct": -31.7209
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 58624.37,
+   "end_equity": 46603.79,
+   "return_pct": -20.5044
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 46603.79,
+   "end_equity": 41592.68,
+   "return_pct": -10.7526
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 41592.68,
+   "end_equity": 36672.66,
+   "return_pct": -11.8291
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 36672.66,
+   "end_equity": 27541.8,
+   "return_pct": -24.8983
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 27541.8,
+   "end_equity": 28267.03,
+   "return_pct": 2.6332
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -70776.36,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 0.0,
+  "borrow_fees_usd": -956.6,
+  "execution_costs_already_netted_usd": 63.98,
+  "total_net_pnl_usd": -71732.97,
+  "unexplained_residual_usd": -0.01,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -71.73% total return vs +14.41% for the index, -40.27pp residual after beta, -75.5% max drawdown, -0.06% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -71.73% - a 71,733 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The low_vol premium it is built to harvest went the wrong way (-29.73% over the season), so the signal was fighting the tape and the account lost 71.73%."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -71.73% total, about -31.46pp is explained by carrying beta -2.18 against a +14.41% market (R^2 0.22); the residual -40.27pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "SPY contributed -11,586 USD across 52 closed trades; NVDA was the biggest drag at -40,293 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-143 USD) exceeded the fees it paid, so all-in execution cost was -64 USD (-0.06% of starting capital) on 18,650,901 USD traded. Gross friction was still real: 3 USD of spread, 2 USD of impact and 74 USD of fees - it simply earned 64 USD back for resting orders."
+   },
+   {
+    "kind": "trades",
+    "text": "483 closed round trips, 69.8% winners, profit factor 0.45, average winner +175 vs average loser -889 USD, median holding 1 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 1034 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: TSLA short 2026-04-02 to 2026-05-15, -32,466 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -75.46% (-9.10% for the index), trough on 2026-08-21, never recovered. Average gross exposure 124% of starting capital, peak leverage 3.42x."
+   },
+   {
+    "kind": "drawdown",
+    "text": "1 maintenance-margin breach(es) triggered forced liquidation: 2026-05-14: equity 47,828.69 < maintenance requirement 49,041.96"
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.37 skewed with excess kurtosis +3.77; historical 95% VaR -5.60%/day with CVaR -8.58%/day. Worst single session -15.36%, best +18.76%."
+   },
+   {
+    "kind": "caveat",
+    "text": "Standing limitations of this simulation that apply to this participant regardless of the regime: DAILY DECISION GRANULARITY: a real market maker requotes in milliseconds; this participant requotes once per session, which understates both its earnings and its risk (flagged limitation)"
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: Adverse selection: the quotes fill precisely when the price is about to move against the book; Inventory builds in trending markets and the participant ends up long the losers."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 180.7pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@SpreadHarvester_MM (Spread Harvester) ran the \"market making\" archetype. Declared thesis: Provide liquidity instead of demanding it. Resting limit orders on both sides of the three most liquid names collect the quoted spread and the maker rebate, and pay for themselves as long as inventory does not run away. Entry: Each session, rest a buy limit one tick below the displayed bid and a sell limit one tick above the displayed offer; Trade only the three highest dollar-volume instruments; Size each quote to 10% of the session's expected volume, capped so gross inventory stays under 60% of equity per side. Exit: Quotes expire at the end of the session (TIF=DAY); If net inventory in a name exceeds the cap, cross the spread with a market order to get back inside it. Sizing: quote size from the liquidity cap, inventory cap 60% of equity per side. Leverage: typically < 1.0x gross; inventory is the exposure. Cadence: daily quoting, horizon intraday to a few days. Aggression 2/5. This participant was built to maximise return, not to manage risk: Earns the spread and the rebate every session instead of paying them, and reinvests the accrual."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -71.73% over 251 sessions - -71,733 USD on 100,000 of paper capital, ending at 28,267. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The low_vol premium it is built to harvest went the wrong way (-29.73% over the season), so the signal was fighting the tape and the account lost 71.73%."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -71.73% total, about -31.46pp is explained by carrying beta -2.18 against a +14.41% market (R^2 0.22); the residual -40.27pp is everything else - selection, timing, leverage and cost. SPY contributed -11,586 USD across 52 closed trades; NVDA was the biggest drag at -40,293 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-143 USD) exceeded the fees it paid, so all-in execution cost was -64 USD (-0.06% of starting capital) on 18,650,901 USD traded. Gross friction was still real: 3 USD of spread, 2 USD of impact and 74 USD of fees - it simply earned 64 USD back for resting orders."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "483 closed round trips, 69.8% winners, profit factor 0.45, average winner +175 vs average loser -889 USD, median holding 1 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 1034 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA short 2026-04-02 to 2026-05-15, -32,466 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -75.46% (-9.10% for the index), trough on 2026-08-21, never recovered. Average gross exposure 124% of starting capital, peak leverage 3.42x. 1 maintenance-margin breach(es) triggered forced liquidation: 2026-05-14: equity 47,828.69 < maintenance requirement 49,041.96 Daily returns were +0.37 skewed with excess kurtosis +3.77; historical 95% VaR -5.60%/day with CVaR -8.58%/day. Worst single session -15.36%, best +18.76%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 180.7pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: Adverse selection: the quotes fill precisely when the price is about to move against the book; Inventory builds in trending markets and the participant ends up long the losers."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "Standing limitations of this simulation that apply to this participant regardless of the regime: DAILY DECISION GRANULARITY: a real market maker requotes in milliseconds; this participant requotes once per session, which understates both its earnings and its risk (flagged limitation) The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -71.73% in a market that returned +14.41%, and a residual of -40.27pp after beta - the trading itself destroyed value, not just the market direction. Finished at -71.73% - a 71,733 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [
+   "Adverse selection: the quotes fill precisely when the price is about to move against the book",
+   "Inventory builds in trending markets and the participant ends up long the losers"
+  ],
+  "failure_modes_untested": [],
+  "structural_caveats": [
+   "DAILY DECISION GRANULARITY: a real market maker requotes in milliseconds; this participant requotes once per session, which understates both its earnings and its risk (flagged limitation)"
+  ],
+  "factors_considered": [
+   "low_vol"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 251
+}

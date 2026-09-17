@@ -1,0 +1,458 @@
+{
+ "username": "@SectorRotator_AlphaX",
+ "strategy_id": "SectorRotator",
+ "archetype": "sector rotation",
+ "starting_cash": 100000.0,
+ "final_equity": 142772.55,
+ "net_pnl_usd": 42772.55,
+ "total_return_pct": 42.7726,
+ "cagr_pct": 42.9752,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -39.0568,
+  "max_drawdown_usd": -55463.58,
+  "peak_date": "2025-12-10",
+  "peak_equity": 142007.64,
+  "trough_date": "2026-03-20",
+  "trough_equity": 86544.06,
+  "recovery_date": "2026-05-13",
+  "sessions_underwater": 37,
+  "never_recovered": false,
+  "sharpe": 0.8862,
+  "sortino": 1.1997,
+  "calmar": 1.1003,
+  "daily_vol_pct": 3.3092,
+  "annualised_vol_pct": 52.532,
+  "skew": -0.6032,
+  "excess_kurtosis": 1.2759,
+  "best_session_pct": 9.0952,
+  "worst_session_pct": -12.1599,
+  "var_95_pct": -5.3468,
+  "cvar_95_pct": -7.6782,
+  "var_99_pct": -9.9587,
+  "cvar_99_pct": -11.9193
+ },
+ "market_relation": {
+  "beta": 2.8386,
+  "alpha_annual_pct": 5.658,
+  "r_squared": 0.486,
+  "tracking_error_annual_pct": 37.662,
+  "information_ratio": 0.15,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 40.918,
+  "residual_return_pct": 1.855
+ },
+ "trades": {
+  "closed_trades": 36,
+  "open_trades": 0,
+  "wins": 28,
+  "losses": 8,
+  "win_rate_pct": 77.778,
+  "gross_win_usd": 92374.83,
+  "gross_loss_usd": 50547.07,
+  "profit_factor": 1.8275,
+  "avg_win_usd": 3299.1,
+  "avg_loss_usd": -6318.38,
+  "expectancy_usd_per_trade": 1161.88,
+  "best_trade": {
+   "symbol": "NVDA",
+   "net_pnl": 21887.56,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "TSLA",
+   "net_pnl": -29160.73,
+   "entry_date": "2025-10-08",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "longest_win_streak": 11,
+  "longest_loss_streak": 1,
+  "avg_sessions_held": 150.56,
+  "median_sessions_held": 172.5,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "UNH": 251,
+   "AAPL": 251,
+   "MSFT": 251,
+   "NVDA": 251,
+   "AMZN": 236,
+   "TSLA": 236,
+   "RIVN": 236,
+   "JPM": 236
+  },
+  "sum_of_tranche_sessions": 5420,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 74,
+  "shares_traded": 23684,
+  "traded_notional_usd": 1131621.01,
+  "spread_cost_usd": 123.48,
+  "depth_cost_usd": 111.48,
+  "impact_cost_usd": 55.46,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 71.05,
+  "regulatory_fee_usd": 12.61,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 374.08,
+  "total_cost_bps_of_traded": 3.306,
+  "total_cost_pct_of_starting_cash": 0.3741,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 22.36,
+   "spread_and_impact_pct": 77.64
+  },
+  "avg_execution_cost_bps_per_fill": 2.255,
+  "median_execution_cost_bps_per_fill": 0.47,
+  "worst_execution_cost_bps": 45.716,
+  "intraday_drift_usd": -85.91,
+  "avg_price_difference_bps_per_fill": 1.26,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 74,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 1131586.54,
+  "spread_cost_usd": 123.48,
+  "depth_cost_usd": 111.48,
+  "impact_cost_usd": 55.46,
+  "intraday_drift_usd": -85.91,
+  "fees_usd": 83.66,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 288.17,
+  "shortfall_bps_of_paper": 2.547,
+  "friction_only_bps_of_paper": 3.306,
+  "worst_single_order_drift_usd": 2.0,
+  "best_single_order_drift_usd": -74.97,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 944.76,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 944.76,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 275.63,
+  "max_gross_pct_of_starting_cash": 451.3,
+  "avg_net_pct_of_starting_cash": 275.63,
+  "max_net_pct_of_starting_cash": 451.3,
+  "avg_leverage": 1.99,
+  "max_leverage": 2.519,
+  "sessions_flat": 1,
+  "avg_open_positions": 7.73
+ },
+ "turnover": {
+  "traded_notional_usd": 1131621.01,
+  "annualised_turnover_x": 8.182
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "NVDA",
+   "realized_pnl": 27769.89,
+   "open_pnl": 0.0,
+   "total_pnl": 27769.89,
+   "closed_trades": 5,
+   "fees": 3.04,
+   "all_in_cost_usd": 8.18
+  },
+  {
+   "symbol": "RIVN",
+   "realized_pnl": 25605.74,
+   "open_pnl": 0.0,
+   "total_pnl": 25605.74,
+   "closed_trades": 4,
+   "fees": 64.91,
+   "all_in_cost_usd": 320.73
+  },
+  {
+   "symbol": "AMZN",
+   "realized_pnl": 23174.99,
+   "open_pnl": 0.0,
+   "total_pnl": 23174.99,
+   "closed_trades": 8,
+   "fees": 4.83,
+   "all_in_cost_usd": 11.15
+  },
+  {
+   "symbol": "AAPL",
+   "realized_pnl": 12345.4,
+   "open_pnl": 0.0,
+   "total_pnl": 12345.4,
+   "closed_trades": 3,
+   "fees": 2.44,
+   "all_in_cost_usd": 6.13
+  },
+  {
+   "symbol": "JPM",
+   "realized_pnl": 126.55,
+   "open_pnl": 0.0,
+   "total_pnl": 126.55,
+   "closed_trades": 1,
+   "fees": 0.02,
+   "all_in_cost_usd": 0.03
+  },
+  {
+   "symbol": "MSFT",
+   "realized_pnl": -5754.45,
+   "open_pnl": 0.0,
+   "total_pnl": -5754.45,
+   "closed_trades": 3,
+   "fees": 1.93,
+   "all_in_cost_usd": 4.62
+  },
+  {
+   "symbol": "UNH",
+   "realized_pnl": -10357.26,
+   "open_pnl": 0.0,
+   "total_pnl": -10357.26,
+   "closed_trades": 4,
+   "fees": 2.33,
+   "all_in_cost_usd": 8.05
+  },
+  {
+   "symbol": "TSLA",
+   "realized_pnl": -31083.1,
+   "open_pnl": 0.0,
+   "total_pnl": -31083.1,
+   "closed_trades": 8,
+   "fees": 4.15,
+   "all_in_cost_usd": 15.16
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 103315.04,
+   "end_equity": 101878.56,
+   "return_pct": -1.3904
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 101878.56,
+   "end_equity": 109514.28,
+   "return_pct": 7.4949
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 109514.28,
+   "end_equity": 134891.05,
+   "return_pct": 23.1721
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 134891.05,
+   "end_equity": 128438.57,
+   "return_pct": -4.7835
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 128438.57,
+   "end_equity": 138217.17,
+   "return_pct": 7.6134
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 138217.17,
+   "end_equity": 131780.02,
+   "return_pct": -4.6573
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 131780.02,
+   "end_equity": 104919.06,
+   "return_pct": -20.3832
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 104919.06,
+   "end_equity": 129112.45,
+   "return_pct": 23.0591
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 129112.45,
+   "end_equity": 162521.66,
+   "return_pct": 25.8761
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 162521.66,
+   "end_equity": 157158.52,
+   "return_pct": -3.3
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 157158.52,
+   "end_equity": 203525.46,
+   "return_pct": 29.5033
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 203525.46,
+   "end_equity": 187473.32,
+   "return_pct": -7.887
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 187473.32,
+   "end_equity": 142772.55,
+   "return_pct": -23.8438
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 41827.76,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 944.76,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -374.08,
+  "total_net_pnl_usd": 42772.55,
+  "unexplained_residual_usd": 0.03,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "beat the market",
+  "headline": "Beat the market: +42.77% total return vs +14.41% for the index, +1.85pp residual after beta, -39.1% max drawdown, 0.37% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +42.77% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +28.36pp."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium this participant is built to harvest was live (+8.30% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium this participant is built to harvest was live (+12.24% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +42.77% total, about +40.92pp is explained by carrying beta 2.84 against a +14.41% market (R^2 0.49); the residual +1.85pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "NVDA contributed +27,770 USD (65% of net P&L) across 5 closed trades; TSLA was the biggest drag at -31,083 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 374 USD (0.37% of starting capital, 2.3 bp per fill, 3.3 bp of the 1,131,621 USD traded). 78% of that was spread/depth/impact and 22% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "36 closed round trips, 77.8% winners, profit factor 1.83, average winner +3,299 vs average loser -6,318 USD, median holding 172 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 5420 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: TSLA long 2025-10-08 to 2026-09-16, -29,161 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -39.06% (-9.10% for the index), trough on 2026-03-20, recovered 2026-05-13. Average gross exposure 276% of starting capital, peak leverage 2.52x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were -0.60 skewed with excess kurtosis +1.28; historical 95% VaR -5.35%/day with CVaR -7.68%/day. Worst single session -12.16%, best +9.10%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Sector labels here come from the declared universe table, not from a licensed GICS feed; Only 9 sectors in a 17-name universe, so the ranking is noisy."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 70.6pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@SectorRotator_AlphaX (Sector Rotator) ran the \"sector rotation\" archetype. Declared thesis: Capital rotates between sectors in multi-week waves. Buy the two sectors with the strongest 21-session relative return and hold until the ranking changes. Entry: Compute each sector's equal-weighted 21-session return from its constituents; Buy the top 2 sectors, split 100% of gross exposure between them; Use 2.0x gross leverage across the sector baskets. Exit: Rotate at the weekly re-rank; no defensive sleeve and no cash drag by design. Sizing: 1.0x of equity per selected sector, spread equally across its constituents. Leverage: 2.0x gross. Cadence: weekly, horizon weeks. Aggression 4/5. This participant was built to maximise return, not to manage risk: Concentrates the whole account into the strongest two sleeves of the market instead of diversifying."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +42.77% over 251 sessions - +42,773 USD on 100,000 of paper capital, ending at 142,773. Verdict: beat the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium this participant is built to harvest was live (+8.30% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The beta premium this participant is built to harvest was live (+12.24% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +42.77% total, about +40.92pp is explained by carrying beta 2.84 against a +14.41% market (R^2 0.49); the residual +1.85pp is everything else - selection, timing, leverage and cost. NVDA contributed +27,770 USD (65% of net P&L) across 5 closed trades; TSLA was the biggest drag at -31,083 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 374 USD (0.37% of starting capital, 2.3 bp per fill, 3.3 bp of the 1,131,621 USD traded). 78% of that was spread/depth/impact and 22% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "36 closed round trips, 77.8% winners, profit factor 1.83, average winner +3,299 vs average loser -6,318 USD, median holding 172 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 5420 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA long 2025-10-08 to 2026-09-16, -29,161 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -39.06% (-9.10% for the index), trough on 2026-03-20, recovered 2026-05-13. Average gross exposure 276% of starting capital, peak leverage 2.52x. Daily returns were -0.60 skewed with excess kurtosis +1.28; historical 95% VaR -5.35%/day with CVaR -7.68%/day. Worst single session -12.16%, best +9.10%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 70.6pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It worked: it beat the index by 28.36pp and the excess survives a beta adjustment (+1.85pp residual), so the outperformance is not simply leverage on a rising market. Finished at +42.77% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +28.36pp."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Sector labels here come from the declared universe table, not from a licensed GICS feed",
+   "Only 9 sectors in a 17-name universe, so the ranking is noisy"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 23
+}

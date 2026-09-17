@@ -15,7 +15,7 @@ audit trail, and a published GitHub Pages site.
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 29 flags this project raised against itself.
+> carries the 30 flags this project raised against itself.
 
 ---
 
@@ -30,10 +30,10 @@ over the same window (FRED `SP500`); **13 of 20 participants beat it**.
 | 1 | `@BetaChaser_3xProxy` | **+108.4%** | −43.5% | 1.40 | 3.92 | 66 | 0.24% | beat the market |
 | 2 | `@SectorRotator_AlphaX` | +100.9% | −32.2% | 1.91 | 2.44 | 25 | 0.05% | beat the market |
 | 3 | `@MeanRev_Z2Sigma` | +74.8% | −7.0% | 3.50 | 0.51 | 53 | 0.24% | beat the market |
-| 4 | `@MomentumMax_12x1` | +51.2% | −45.0% | 1.07 | 3.25 | 9 | 0.03% | beat the market |
-| 5 | `@OneBigBet_Concentra` | +48.9% | −22.1% | 1.22 | 0.55 | 55 | 1.14% | beat the market |
-| 6 | `@BuyHold_MaxBeta` | +45.3% | −32.0% | 0.89 | 3.17 | 3 | 0.11% | beat the market |
-| 7 | `@OverreactionFade_LT` | +39.9% | −14.0% | 1.58 | 0.48 | 71 | 1.18% | beat the market |
+| 4 | `@OverreactionFade_LT` | +73.5% | −12.5% | 2.53 | 0.49 | 70 | 1.24% | beat the market |
+| 5 | `@MomentumMax_12x1` | +51.2% | −45.0% | 1.07 | 3.25 | 9 | 0.03% | beat the market |
+| 6 | `@OneBigBet_Concentra` | +48.9% | −22.1% | 1.22 | 0.55 | 55 | 1.14% | beat the market |
+| 7 | `@BuyHold_MaxBeta` | +45.3% | −32.0% | 0.89 | 3.17 | 3 | 0.11% | beat the market |
 | 8 | `@TrendSurfer_GoldenX` | +30.1% | −26.9% | 0.97 | 2.23 | 55 | 0.04% | beat the market |
 | 9 | `@VIXRegime_Timer` | +28.0% | −14.7% | 1.44 | 1.34 | 35 | 0.06% | beat the market |
 | 10 | `@DriftRider_PEAD` | +21.0% | −14.8% | 0.92 | 0.23 | 40 | 0.35% | beat the market |
@@ -141,10 +141,22 @@ python3 -m unittest discover -s tests   # 327 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
-committed leaderboard **bit for bit**, every memory file is SHA-256 checksummed
-in its run manifest, and a deliberately corrupted stream is detected
-(`tests/test_memory.py`). CI re-runs the primary season and diffs the rebuilt
-site against `docs/` byte for byte.
+committed leaderboard **bit for bit — in a different process, not just a
+different object**, every memory file is SHA-256 checksummed in its run manifest,
+and a deliberately corrupted stream is detected (`tests/test_memory.py`). CI
+re-runs the primary season in a scratch memory root, diffs it against the
+committed leaderboard, and diffs a rebuilt site against `docs/` byte for byte.
+
+That last gate earned its keep immediately: it caught **IR-30**, three strategies
+that iterated a *set* of held positions when building their exit list. CPython
+salts string hashing per process, so the exit order — and therefore the cash
+available to the entries that followed — changed with `PYTHONHASHSEED`. The same
+seed, config and machine produced `@OverreactionFade_LT` at **+39.90%** in one
+process and **+73.46%** in another. The in-process determinism test that had been
+passing all along could not catch it by construction. Fixed by iterating the
+canonical universe order, verified identical across five hash seeds, and now
+guarded by a cross-process reproducibility test plus an AST sweep that fails on
+any `for` loop over a set.
 
 ## Verification stance
 
@@ -170,7 +182,7 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/irregularities.html)
-  — all 29 flags, including the ones raised against this project's own modelling
+  — all 30 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/limitations.html)
   — 16 limitations, 16 items of remaining work in priority order, and what

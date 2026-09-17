@@ -147,6 +147,6 @@ users, trades and P&L. Where each of those lives:
 | Track P&L | daily NAV per participant, realised/unrealised split, per-symbol contribution, Perold implementation shortfall, ledger closure to $0.10 | `docs/leaderboard.html`, `assets/data/leaderboard.json`, `assets/data/factors.json`, and `reports/<strategy_id>.json` in memory |
 | Competition structure | fixed 251-session year, fixed $100k, forced liquidation, ranked table | `docs/index.html`, `docs/methodology.html` (section 1 is this reverse-engineering table, published) |
 | Liquidity / market making / pricing | `sim/microstructure.py` - depth book, U-shaped intraday volume, Avellaneda-Stoikov quoting, dated Rule 612 tick grid, access-fee cap | `docs/methodology.html` sections 2-4, `docs/market.html` |
-| Irregularity flags | `research/IRREGULARITIES.json` (29 entries) | `docs/irregularities.html` |
+| Irregularity flags | `research/IRREGULARITIES.json` (30 entries) | `docs/irregularities.html` |
 | Limitations and remaining work | `research/LIMITATIONS.json` (16 entries), `research/REMAINING_WORK.json` (16 entries) | `docs/limitations.html` - all 16, all 16 in priority order, plus "What success would require" |
 | Verified sources with links | `sim/config.py::all_verified_sources()` (52 rows) plus the 6 live-data adapter entries | `docs/sources.html` - 58 rows, every URL clickable, every row carrying its honesty status badge |

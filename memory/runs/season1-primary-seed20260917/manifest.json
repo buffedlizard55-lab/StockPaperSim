@@ -1,11 +1,11 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season1-primary-seed20260917",
- "created_utc": "2026-09-17T21:56:16Z",
- "finalised_utc": "2026-09-17T21:56:20Z",
+ "created_utc": "2026-09-17T23:05:41Z",
+ "finalised_utc": "2026-09-17T23:05:43Z",
  "code": {
   "git": {
-   "commit": "2141acb3b0f956ae58bea0277af7561b638eefab",
+   "commit": "8be8d60e49b34796a7980ddcede8bac07531982c",
    "branch": "arena/01a0b0af-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
@@ -21,7 +21,7 @@
    "sim/memory.py": "154d28a5f2103bcf12ddcf9b2f5e9d6e2492d9262a529a84adec883327897627",
    "sim/microstructure.py": "0c402f6cd3814cda4dda60d4de6aacfe17939e2f35afd9c98cfb039c9f52b12f",
    "sim/portfolio.py": "2c56dd5dc5329d7e1a546fe8273bb300a61c438310d6b62cd430f57244a7e3b9",
-   "sim/strategies.py": "43534cce5e2c8e321eb0e5be1ca879a72744629312ae2f76c238350a47451367",
+   "sim/strategies.py": "25619b3433d754880d1d42b6c4be172ad71e7c97417ea40b321f8cee8133f27a",
    "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
   }
  },
@@ -57,7 +57,7 @@
    "kind": "json"
   },
   "reports/SqueezeHunter_TF.json": {
-   "sha256": "e18b7381625cff3f4a3e1e456242c6943d5329175a86fdb87a449238e9075f2d",
+   "sha256": "7b95770e55a730e9d5181e687de97d3bc993fa3dc6a270b7ab819b8b7feff27c",
    "bytes": 16936,
    "kind": "json"
   },
@@ -92,8 +92,8 @@
    "kind": "json"
   },
   "reports/OverreactionFade_LT.json": {
-   "sha256": "b5362e870e10060c867c46a686c991b5b62d94a72144f12b5955c0581e3ede4c",
-   "bytes": 16091,
+   "sha256": "5daf7ba905f2787a9e76fdfb9c7674b3465abedba4a9681f71e80992041d1eb2",
+   "bytes": 16118,
    "kind": "json"
   },
   "reports/IlliquidRocket_Degen.json": {
@@ -137,8 +137,8 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "205693a4f9f0157f0daa261b679e635cfab5497df3761ae15708a460c62b21af",
-   "bytes": 10951,
+   "sha256": "badad21eff31cf545a00e17817ce93114bd24016eb7f176c6c6663571d32432f",
+   "bytes": 10952,
    "kind": "json"
   },
   "irregularities.json": {
@@ -157,49 +157,49 @@
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "2298e461a8d20800eb777d1b6fced41ef6f269eed042d64aaa89e55f4293028f",
-   "bytes": 8147,
+   "sha256": "0d8d62538d51a22bab48378f6a7db3bd9bb2ee4a4f77f7cdb042535ecebfb56d",
+   "bytes": 7970,
    "kind": "jsonl.gz",
-   "rows": 1211
+   "rows": 1178
   },
   "events/equity.jsonl.gz": {
-   "sha256": "ff24a49766e9241500b084297c3a1b7029818f56620bcd2e5909c573cc9f951e",
-   "bytes": 191468,
+   "sha256": "8e8f846eaabe2a1a0885fefcfb77748a5ae3979ae3e5eddf8ed2906781458e54",
+   "bytes": 191356,
    "kind": "jsonl.gz",
    "rows": 5020
   },
   "events/fills.jsonl.gz": {
-   "sha256": "8b6ec9ce7a5f8205e5fb18eda35ff4f8df8f2fe2569135e6bdbd7e2f79fdb1fd",
-   "bytes": 238431,
+   "sha256": "bed5f60692c5c2c463c7139ffacb48bb447dbe63f8234d7d27bf37a3f89e4c8a",
+   "bytes": 238724,
    "kind": "jsonl.gz",
-   "rows": 2984
+   "rows": 2985
   },
   "events/margin.jsonl.gz": {
-   "sha256": "9bd55e95da4653ee95cd5388a5aa616fa463dbc4f21dc2f162f93f41b15e33d4",
-   "bytes": 775,
+   "sha256": "5ecffe75ff1561169c2f6c1f5cb3e756a1e9a6fc302875246e399b993c5d013a",
+   "bytes": 773,
    "kind": "jsonl.gz",
    "rows": 22
   },
   "events/orders.jsonl.gz": {
-   "sha256": "4a684f9d5710124ed864745464151663cec78f91ae772eb0bd5afc652b6f10ad",
-   "bytes": 35280,
+   "sha256": "062b41f389456367fae01d1e964f6ef74b26ff0c7a48ebc74932119313b8658a",
+   "bytes": 35290,
    "kind": "jsonl.gz",
-   "rows": 2986
+   "rows": 2987
   },
   "events/positions.jsonl.gz": {
-   "sha256": "5af450faa74d2470b01774223b8de43a3addc337f3c704b17f7d25f0df05a628",
-   "bytes": 481275,
+   "sha256": "04a6aa212f87dafcb2576b090567ac739793bdec805540ca7d9905775ad06e37",
+   "bytes": 480823,
    "kind": "jsonl.gz",
-   "rows": 20510
+   "rows": 20492
   },
   "events/quotes.jsonl.gz": {
-   "sha256": "ec1619095cdf120828470a9e6ac9b4b270e05ce948b18c5663d9ad53e0900465",
+   "sha256": "b322f4af390ef3743e1a1f16ec622ade7b8142b6d89b876dd20c3525e4b06e77",
    "bytes": 85936,
    "kind": "jsonl.gz",
    "rows": 4267
   },
   "events/rejections.jsonl.gz": {
-   "sha256": "e0c105d11d64a5f2261674ee893d1d480bcc3e11aa40c3a04551edf0d7d097f6",
+   "sha256": "810e97bbe429702ae5dc0ad7761abe662034a4ec2737737051dd5d3a8a946ad6",
    "bytes": 538,
    "kind": "jsonl.gz",
    "rows": 2
@@ -443,9 +443,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-17T21:56:16Z",
-  "finished_utc": "2026-09-17T21:56:20Z",
-  "elapsed_seconds": 3.67
+  "started_utc": "2026-09-17T23:05:41Z",
+  "finished_utc": "2026-09-17T23:05:43Z",
+  "elapsed_seconds": 2.42
  },
  "irregularity_count": 12
 }

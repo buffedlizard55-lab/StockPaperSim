@@ -638,7 +638,14 @@ class EventDriftRider(Strategy):
     def on_day(self, ctx: Context) -> List[Order]:
         held = {s for s in ctx.symbols if ctx.position(s)}
         exits = []
-        for s in held:
+        # Iterate the universe order, never the set.  Set iteration order
+        # depends on PYTHONHASHSEED, and the order in which exits are submitted
+        # changes the cash and margin available to the entries that follow - so
+        # the same seed and config produced different seasons in different
+        # processes.  Found by the CI reproducibility gate; see IR-30.
+        for s in ctx.symbols:
+            if s not in held:
+                continue
             age = ctx.t - ctx.account._entry_day.get(s, ctx.t)
             pos = ctx.account.positions[s]
             entry_px = pos.avg_cost
@@ -705,7 +712,14 @@ class SqueezeHunter(Strategy):
     def on_day(self, ctx: Context) -> List[Order]:
         held = {s for s in ctx.symbols if ctx.position(s)}
         exits = []
-        for s in held:
+        # Iterate the universe order, never the set.  Set iteration order
+        # depends on PYTHONHASHSEED, and the order in which exits are submitted
+        # changes the cash and margin available to the entries that follow - so
+        # the same seed and config produced different seasons in different
+        # processes.  Found by the CI reproducibility gate; see IR-30.
+        for s in ctx.symbols:
+            if s not in held:
+                continue
             age = ctx.t - ctx.account._entry_day.get(s, ctx.t)
             vols = ctx.md.history_volume(s, ctx.t, 63)
             med = sorted(vols)[len(vols) // 2] if vols else 0
@@ -1130,7 +1144,14 @@ class OverreactionFade(Strategy):
     def on_day(self, ctx: Context) -> List[Order]:
         held = {s for s in ctx.symbols if ctx.position(s)}
         exits = []
-        for s in held:
+        # Iterate the universe order, never the set.  Set iteration order
+        # depends on PYTHONHASHSEED, and the order in which exits are submitted
+        # changes the cash and margin available to the entries that follow - so
+        # the same seed and config produced different seasons in different
+        # processes.  Found by the CI reproducibility gate; see IR-30.
+        for s in ctx.symbols:
+            if s not in held:
+                continue
             age = ctx.t - ctx.account._entry_day.get(s, ctx.t)
             cost = ctx.account.positions[s].avg_cost
             gain = (ctx.prior_close(s) / cost - 1.0) if cost else 0.0

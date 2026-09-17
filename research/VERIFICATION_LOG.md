@@ -211,21 +211,97 @@ symbol and three intraday intervals, one on the prices actually **written to
 memory** - and the season was re-run and the site rebuilt afterwards, so the
 numbers published here are post-fix.
 
-**What the re-run cost, measured (IR-29).** A change of at most half a tick moved
-one participant by **+28.3pp** (`@OneBigBet_Concentra`, 20.6% → 48.9%, with
-closed trades rising from 36 to 55), moved five others by 4-9pp, changed one
-verdict (`@SqueezeHunter_TF` from +3.8% to −1.8%), left eleven of twenty
-unchanged to within 0.1pp, and reshuffled **9 of 20 ranks**. The headline moved
-from +108.31% to **+108.39%**. The mechanism is discrete: whether a resting limit
-order is marketable depends on which side of the touch it sits, so a fractional
-shift flips fills on and off, and because every strategy is path dependent one
-flipped fill compounds for the rest of the year. Rising trade counts are the
-tell - these are different trades, not the same trades at slightly different
-prices. That is recorded as **IR-29** rather than smoothed over, because it means
-a single-path ranking is not a skill ordering; the six-scenario panel and the
-sensitivity harness in `research/REMAINING_WORK.json` are the answer to it.
-`tests/fixtures.py` now pins the published headline in one place, with a change
-history, so the next engine change shows up as one explicit diff.
+**What the re-run cost, measured (IR-29).** Measured twice, because the first
+measurement was wrong - see §4c. With `PYTHONHASHSEED` pinned to 0 on both sides
+so that the tick snapping is the *only* difference between the two runs, a change
+of at most half a tick produced:
+
+| Participant | off-grid | on-grid | Δ pp | closed trades |
+|---|---|---|---|---|
+| `@OverreactionFade_LT` | +40.58% | +73.46% | **+32.88** | 67 → 70 |
+| `@OneBigBet_Concentra` | +20.63% | +48.94% | **+28.30** | 36 → 55 |
+| `@MeanRev_Z2Sigma` | +65.48% | +74.85% | +9.37 | 53 → 53 |
+| `@IlliquidRocket_Degen` | +23.15% | +15.80% | −7.35 | 16 → 13 |
+| `@SqueezeHunter_TF` | +3.80% | −1.85% | −5.65 | 32 → 30 |
+| `@DriftRider_PEAD` | +15.91% | +21.03% | +5.12 | 41 → 40 |
+| `@KitchenSink_AllIn` | +9.52% | +5.19% | −4.33 | 357 → 354 |
+| `@BetaChaser_3xProxy` (winner) | +108.31% | +108.39% | +0.08 | 66 → 66 |
+
+Ten of the twenty participants were unchanged to within 0.05pp, ten of twenty
+changed rank, and the mean absolute shift was **4.67pp**. One published verdict
+flipped: `@SqueezeHunter_TF` went from "made money but lagged the index" to "lost
+money". The mechanism is discrete: whether a resting limit order is marketable
+depends on which side of the touch it sits, so a fractional shift flips fills on
+and off, and because every strategy is path dependent one flipped fill compounds
+for the rest of the year. Rising trade counts are the tell - these are different
+trades, not the same trades at slightly different prices. That is recorded as
+**IR-29** rather than smoothed over, because it means a single-path ranking is
+not a skill ordering; the six-scenario panel and the sensitivity harness in
+`research/REMAINING_WORK.json` are the answer to it. `tests/fixtures.py` now pins
+the published headline in one place, with a change history, so the next engine
+change shows up as one explicit diff.
+
+## 4c. The published season was not reproducible (**IR-30**, high severity)
+
+The CI gate added in this same pass failed on its first run, and it was right to.
+Re-running the primary seed in a fresh process produced a **different leaderboard**
+from the one committed to `memory/` and published on the site.
+
+Three strategies - `@DriftRider_PEAD`, `@SqueezeHunter_TF`,
+`@OverreactionFade_LT` - built their held-position collection as a **set**
+comprehension and then looped over it to build their exit list:
+
+```python
+held = {s for s in ctx.symbols if ctx.position(s)}   # a set
+for s in held:                                       # salted order
+    ...
+    exits.append(s)
+```
+
+CPython salts string hashing per process (`PYTHONHASHSEED`), so set iteration
+order differs between interpreters. Exit order determines the order sell orders
+are submitted, which determines the cash and margin available to the buy orders
+later in the same session, which determines which entries fill - and because
+every strategy is path dependent, that difference compounds for a year. Measured
+with the pre-fix code, same seed, same config, same machine:
+
+| `PYTHONHASHSEED` | `@OverreactionFade_LT` return | closed trades |
+|---|---|---|
+| 0 | +73.4587% | 70 |
+| 1 | +73.5867% | 70 |
+| 2 | **+39.8994%** | 71 |
+| 3 | +73.4587% | 70 |
+
+The committed Season 1 had been written under whichever salt that process
+happened to get. The in-process determinism test that had been passing all along
+**could not catch this by construction**: everything inside one interpreter
+shares one hash seed.
+
+Fix: all three loops now iterate `ctx.symbols`, the canonical universe order, and
+use the set only for membership. Verified identical across `PYTHONHASHSEED`
+0, 1, 2, 3 and 7 (leaderboard SHA-256 `04ff3a17fd441347…` in all five), and a
+single-seed run now produces a leaderboard identical to the same seed inside the
+six-scenario run - which also cleared an earlier suspicion of cross-scenario
+contamination. That suspicion was this bug, not scenario ordering.
+
+Two tests hold the line, both checked against a deliberately reintroduced copy of
+the bug:
+
+* `test_the_season_is_reproducible_across_processes` runs the short season in two
+  subprocesses with different hash seeds and requires identical leaderboards.
+* `test_no_strategy_iterates_a_set` is an AST sweep over `sim/strategies.py` that
+  fails on any `for` loop over a name bound to a set comprehension or set
+  literal. Dicts are insertion-ordered and remain safe to iterate; the sweep does
+  not flag them.
+
+**Why this entry is high severity and the others are not.** IR-28 published
+quotes no exchange could display, which is a fidelity defect. IR-30 broke the
+project's central claim - that the memory is an audit trail someone can re-run -
+and it was invisible locally. Every number in §4b of this log was re-measured
+after the fix, with hash seeds pinned, and the first (confounded) version of
+IR-29 is preserved in the register text rather than quietly replaced, because
+"we published a plausible number that turned out to be an artefact" is exactly
+the failure mode this log exists to record.
 
 ## 5. What could **not** be verified here
 
@@ -264,9 +340,11 @@ These are internal consistency checks, all reproduced by the test suite
 | Simulated vs real SPY monthly high-low range | mean absolute difference **0.503 pp**, worst **0.993 pp**, over 11 months |
 | P&L ledger closure per participant | residual **≤ $0.10**, total **$0.42** across 20 participants |
 | Final positions | every account **flat** at the season end (forced liquidation costed through the venue) |
-| Executed prices vs the Rule 612 tick grid | **2,984 / 2,984** fills exactly on-grid, and **all 8,534 displayed bid/ask levels** in the quote stream on-grid (`tests/test_memory.py`) |
+| Executed prices vs the Rule 612 tick grid | **2,985 / 2,985** fills exactly on-grid, and **all 8,534 displayed bid/ask levels** in the quote stream on-grid (`tests/test_memory.py`) |
 | Decision prices vs executed prices | the decision mark stays unrounded, so the tick cost is charged rather than handed back (`test_the_decision_price_is_deliberately_off_grid`) |
 | Memory checksums | every file in every run manifest verified; a deliberately corrupted stream is detected |
-| Determinism | the same seed reproduces the same leaderboard bit for bit (CI re-runs the primary season into a scratch memory root and diffs it); a different seed changes ranks |
+| Determinism, in-process | the same seed reproduces the same leaderboard bit for bit; a different seed changes ranks |
+| Determinism, **across processes** | the leaderboard hash is identical under `PYTHONHASHSEED` 0, 1, 2, 3 and 7, and CI re-runs the primary season into a scratch memory root and diffs it against the committed one (IR-30) |
+| Order-of-iteration audit | AST sweep: no `for` loop in `sim/strategies.py` iterates a set |
 | Site freshness | `docs/` is byte-identical to a fresh `build-site` from the committed memory (CI fails if it drifts), and the published config fingerprint equals `CompetitionConfig.fingerprint()` |
 | Look-ahead | strategies see only `t-1` and earlier data when deciding (`tests/test_strategies.py`) |

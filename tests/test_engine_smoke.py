@@ -11,11 +11,13 @@ from __future__ import annotations
 
 import os
 import shutil
+import subprocess
+import sys
 import tempfile
 import time
 import unittest
 
-from fixtures import cfg, short_replay
+from fixtures import REPO_ROOT, cfg, short_replay
 
 from sim import config, engine, memory, microstructure, strategies
 
@@ -305,6 +307,78 @@ class TestEngineSmoke(unittest.TestCase):
                          [r["total_return_pct"] for r in rec_b["leaderboard"]])
         self.assertEqual(rec_a["winner"], rec_b["winner"])
         self.assertEqual(rec_a["irregularities"], rec_b["irregularities"])
+
+    def test_the_season_is_reproducible_across_processes(self):
+        """IR-30: two processes, two PYTHONHASHSEEDs, one answer.
+
+        The in-process test above cannot catch this class of bug, because every
+        object in one interpreter shares one hash seed.  Three strategies used
+        to iterate a *set* of held symbols when building their exit list; set
+        iteration order is salted per process, the exit order changes what cash
+        and margin the following entries see, and the same seed produced a
+        different season in every process - one participant swung from +39.9% to
+        +73.6% on a half-tick of nothing.  This test runs the short season in
+        two subprocesses with different hash seeds and requires identical
+        leaderboards.
+        """
+        runner = (
+            "import hashlib, json, sys\n"
+            "sys.path.insert(0, %r)\n"
+            "sys.path.insert(0, %r)\n"
+            "import fixtures\n"
+            "from sim import engine\n"
+            "c = fixtures.cfg(end='2025-12-31', seed=7)\n"
+            "md = fixtures.short_replay(7)\n"
+            "rec = engine.CompetitionEngine(c, md, seed=7).run()\n"
+            "blob = json.dumps(rec['leaderboard'], sort_keys=True)\n"
+            "print(hashlib.sha256(blob.encode()).hexdigest())\n"
+            "print(json.dumps([r['total_return_pct'] for r in rec['leaderboard']]))\n"
+        ) % (os.path.join(REPO_ROOT, "tests"), REPO_ROOT)
+        digests = []
+        for hash_seed in ("0", "12345"):
+            env = dict(os.environ, PYTHONHASHSEED=hash_seed)
+            out = subprocess.run([sys.executable, "-c", runner], cwd=REPO_ROOT,
+                                 env=env, capture_output=True, text=True,
+                                 timeout=600)
+            self.assertEqual(out.returncode, 0,
+                             f"runner failed under PYTHONHASHSEED={hash_seed}: "
+                             f"{out.stderr[-800:]}")
+            digest, returns = out.stdout.strip().split("\n")
+            digests.append((hash_seed, digest, returns))
+        self.assertEqual(digests[0][1], digests[1][1],
+                         "the leaderboard depends on PYTHONHASHSEED - something "
+                         "in the engine iterates a set: "
+                         f"{digests[0][2]} vs {digests[1][2]}")
+
+    def test_no_strategy_iterates_a_set(self):
+        """Static guard for the same bug: a `for` loop over a set comprehension.
+
+        Dicts are insertion-ordered and safe to iterate; sets are salted per
+        process.  Any strategy that loops over a set is one PYTHONHASHSEED away
+        from publishing a season nobody can reproduce.
+        """
+        import ast
+        path = os.path.join(REPO_ROOT, "sim", "strategies.py")
+        tree = ast.parse(open(path, encoding="utf-8").read(), filename=path)
+        offenders = []
+        for scope in ast.walk(tree):
+            if not isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+            set_names = set()
+            for node in ast.walk(scope):
+                if isinstance(node, ast.Assign) and isinstance(
+                        node.value, (ast.SetComp, ast.Set)):
+                    for target in node.targets:
+                        if isinstance(target, ast.Name):
+                            set_names.add(target.id)
+            for node in ast.walk(scope):
+                if isinstance(node, ast.For) and isinstance(node.iter, ast.Name) \
+                        and node.iter.id in set_names:
+                    offenders.append(f"{scope.name}:{node.lineno} iterates "
+                                     f"'{node.iter.id}'")
+        self.assertEqual(offenders, [],
+                         "set iteration is not reproducible across processes: "
+                         + "; ".join(offenders))
 
     def test_run_scenarios_defaults_are_sane(self):
         self.assertTrue(memory.DEFAULT_ROOT.endswith("memory"))

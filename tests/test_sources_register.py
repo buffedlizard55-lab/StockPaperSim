@@ -41,6 +41,9 @@ ALLOWED_HOSTS = {
     "polygon.io", "finnhub.io", "www.tiingo.com", "www.cboe.com",
     "www.cftc.gov", "ir.thecorporatesecretary.com", "pages.stern.nyu.edu",
     "www.spglobal.com", "help.revolut.com", "www.cis.upenn.edu",
+    # Official CPython documentation - the primary source for the hash
+    # randomisation behaviour that IR-30 turns on.
+    "docs.python.org",
 }
 
 

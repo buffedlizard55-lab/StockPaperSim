@@ -5,7 +5,17 @@ personas**, run on a replay of the **real S&P 500 and VIX path**, with a real
 venue model (depth, spreads, market making, dated tick size, dated fees), a full
 audit trail, and a published GitHub Pages site.
 
-**Live site:** <https://buffedlizard55-lab.github.io/StockPaperSim/>
+**Live site:** <https://buffedlizard55-lab.github.io/StockPaperSim/> →
+[`docs/index.html`](docs/index.html)
+
+Pages for this repository is configured to publish the **root** of `main`, not
+`/docs`, and changing that needs admin rights (the API returns 403 for this
+project's automation). So the root carries an `index.html` that redirects to
+`docs/index.html`, plus a root `.nojekyll`. Nothing is duplicated: every page,
+stylesheet and JSON file is served from under `docs/`, and all internal links are
+relative, so the site works under either base path. Deep links in this README
+include `/docs/` for that reason; an admin can drop it by setting
+**Settings → Pages → source: `main`, `/docs`** and deleting the two root files.
 
 > **Read this first.** Season 1 is a **replay of real anchor data through a
 > calibrated simulated venue**, not a live feed. Two of the seventeen price
@@ -170,7 +180,7 @@ manual review, and flag irregularities rather than paper over them.
   Föllmer & Leukert 2000; a Jegadeesh-Titman DOI that was actually Engle & Ng
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
-* [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/sources.html)
+* [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
   — the 58-row register, every URL clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not
@@ -181,10 +191,10 @@ manual review, and flag irregularities rather than paper over them.
   and [CandleCharts Showdown](https://specials.candlecharts.com/contest/): which
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
-* [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/irregularities.html)
+* [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
   — all 30 flags, including the ones raised against this project's own modelling
   choices.
-* [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/limitations.html)
+* [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
   — 16 limitations, 16 items of remaining work in priority order, and what
   success would require.
 
@@ -195,8 +205,8 @@ manual review, and flag irregularities rather than paper over them.
    the connection, and no bulk daily OHLCV for all 17 names was retrievable. So
    the venue is calibrated, not observed. Six live-data adapters
    (Alpaca, Polygon, Finnhub, Tiingo, Yahoo, Stooq) ship in `sim/marketdata.py`
-   and are
-   the path to a genuinely real-time season — they could not be exercised here.
+   and are the path to a genuinely real-time season — they could not be
+   exercised here.
 2. **One season, six scenarios, one year.** That is not a statistically
    significant sample of anything, and the site says so.
 3. **Declared priors are not measured premia.** Factor returns, borrow rates,

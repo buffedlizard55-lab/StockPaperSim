@@ -1,0 +1,451 @@
+{
+ "schema_version": "1.0.0",
+ "run_id": "season1-primary-seed20260917",
+ "created_utc": "2026-09-17T23:05:41Z",
+ "finalised_utc": "2026-09-17T23:05:43Z",
+ "code": {
+  "git": {
+   "commit": "8be8d60e49b34796a7980ddcede8bac07531982c",
+   "branch": "arena/01a0b0af-stockpapersim",
+   "dirty": true,
+   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
+  },
+  "python_module_hashes": {
+   "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
+   "sim/analytics.py": "a7d14255cc244a219cd3d89edcd3c0507f5cb95df0fe6a7d940f1b9c0b743e59",
+   "sim/calendar.py": "aca4c539837ab6ef545bae63a8160d5824cb04fe89a5903a88900164e6f5df16",
+   "sim/cli.py": "0142f6b4d4e870eaa70d8cd85fc896e4f53b20e89c3de26dbe6ae0d816992270",
+   "sim/config.py": "e55d0e946e4568e36729b3b4d8abe69d3b586853557db946cec6085c1da169b9",
+   "sim/engine.py": "9ff3b887efa253ddc5bee2b66664e99147a38c8034e685d9c281924970bf506f",
+   "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
+   "sim/memory.py": "154d28a5f2103bcf12ddcf9b2f5e9d6e2492d9262a529a84adec883327897627",
+   "sim/microstructure.py": "0c402f6cd3814cda4dda60d4de6aacfe17939e2f35afd9c98cfb039c9f52b12f",
+   "sim/portfolio.py": "2c56dd5dc5329d7e1a546fe8273bb300a61c438310d6b62cd430f57244a7e3b9",
+   "sim/strategies.py": "25619b3433d754880d1d42b6c4be172ad71e7c97417ea40b321f8cee8133f27a",
+   "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
+  }
+ },
+ "files": {
+  "reports/MomentumMax_12x1.json": {
+   "sha256": "f17d31875de4f28bc3cad5713a480529119ba3fd82570870b34be018c32ced3c",
+   "bytes": 16102,
+   "kind": "json"
+  },
+  "reports/GapAndGo_YOLO.json": {
+   "sha256": "a836eb06daecdd2105f8a77ef78e667e6732a5346e9b4d216568d82ca0872d51",
+   "bytes": 17957,
+   "kind": "json"
+  },
+  "reports/TrendSurfer_GoldenX.json": {
+   "sha256": "874d4a0fd6e555be3b8ce8f9eedd3f3613ec11f97a733a65041f9e3c76de6048",
+   "bytes": 16258,
+   "kind": "json"
+  },
+  "reports/MeanRev_Z2Sigma.json": {
+   "sha256": "491abe05cc1bd5bd6058f0bd6b55d7df3ec75c7ff3c118c6fd1fbc5c82d64001",
+   "bytes": 18206,
+   "kind": "json"
+  },
+  "reports/DonchianBreakout_20.json": {
+   "sha256": "d811302a42976855afaaba3d72cbb0d68cb92b7be33c58fec0009a37a96c8fa5",
+   "bytes": 16397,
+   "kind": "json"
+  },
+  "reports/DriftRider_PEAD.json": {
+   "sha256": "bd28792114fbfb9ff8047098b65eb38b464aab36693c58ddf1702f88ce3083b9",
+   "bytes": 16863,
+   "kind": "json"
+  },
+  "reports/SqueezeHunter_TF.json": {
+   "sha256": "7b95770e55a730e9d5181e687de97d3bc993fa3dc6a270b7ab819b8b7feff27c",
+   "bytes": 16936,
+   "kind": "json"
+  },
+  "reports/BetaChaser_3xProxy.json": {
+   "sha256": "6394da1a5baf1ccfec89101ba99b40e9fadcd8acbf08ba4f78915197602f7d54",
+   "bytes": 16183,
+   "kind": "json"
+  },
+  "reports/SectorRotator_AlphaX.json": {
+   "sha256": "f194ea30aa474900a40229508ddb3845ca327a4b3cbea878c44b42477fadd245",
+   "bytes": 15853,
+   "kind": "json"
+  },
+  "reports/PairsArb_ZScore2.json": {
+   "sha256": "0b8a1393082f4cfbcc18fbc4815cae0f44670a258813d07b097739ed0170c462",
+   "bytes": 15183,
+   "kind": "json"
+  },
+  "reports/SpreadHarvester_MM.json": {
+   "sha256": "623b12eef03d2173083b1ffd64a409c254237b4f252e1fef6c8a0fbda4ff2985",
+   "bytes": 16933,
+   "kind": "json"
+  },
+  "reports/VolCarry_LowHigh.json": {
+   "sha256": "12960a4534309e96a4ccd9c730f289bb50078e7d493d76271cebc245216b5e61",
+   "bytes": 15712,
+   "kind": "json"
+  },
+  "reports/VIXRegime_Timer.json": {
+   "sha256": "16b8021df0c0a7dc996b3407493d1afc1cadd84f21e7a86ebda9e378f45c6899",
+   "bytes": 15366,
+   "kind": "json"
+  },
+  "reports/OverreactionFade_LT.json": {
+   "sha256": "5daf7ba905f2787a9e76fdfb9c7674b3465abedba4a9681f71e80992041d1eb2",
+   "bytes": 16118,
+   "kind": "json"
+  },
+  "reports/IlliquidRocket_Degen.json": {
+   "sha256": "8acc0768107dacb82e7688f666ec29155877f556e9b5f3b470285574e4e4e8e6",
+   "bytes": 15687,
+   "kind": "json"
+  },
+  "reports/BuyHold_MaxBeta.json": {
+   "sha256": "4ab532b0aab587e8c6cd07f52f6a1bbf4ace0dac7d9f72f230e524d0c2b374d4",
+   "bytes": 15178,
+   "kind": "json"
+  },
+  "reports/OneBigBet_Concentra.json": {
+   "sha256": "fc8f466a81b537fa32fe2c70a7835be3284335b2b732f92c9253d22662cb5149",
+   "bytes": 15890,
+   "kind": "json"
+  },
+  "reports/OvernightCarry_NO.json": {
+   "sha256": "40d05528df2f1c2378b783951fd4c0c09cad93c4e9a5c7852f26ab7a8b73ece5",
+   "bytes": 15482,
+   "kind": "json"
+  },
+  "reports/KitchenSink_AllIn.json": {
+   "sha256": "e9f9359ab801b84bee0372069c655acf655189d518a78286394b3845cc90c9ef",
+   "bytes": 18698,
+   "kind": "json"
+  },
+  "reports/Contrarian_DeepValue.json": {
+   "sha256": "97e8f1ade178976ccb75416a83572da0b4951cc18c9c48a7b5046b9a0c436d46",
+   "bytes": 15896,
+   "kind": "json"
+  },
+  "market_report.json": {
+   "sha256": "c1b6f83761cc41fd6b5d6d41bbe1ddb9b524bbcafe489413a083dbe740e057ae",
+   "bytes": 2830,
+   "kind": "json"
+  },
+  "factor_report.json": {
+   "sha256": "48d01fd3073a8c5b1013e0ff4ca24dc85bae3cbfec444744dd807b0fbd64db01",
+   "bytes": 1398,
+   "kind": "json"
+  },
+  "leaderboard.json": {
+   "sha256": "badad21eff31cf545a00e17817ce93114bd24016eb7f176c6c6663571d32432f",
+   "bytes": 10952,
+   "kind": "json"
+  },
+  "irregularities.json": {
+   "sha256": "5d49fea5b1255500c9faa33944ea69858548755d0d42e7adf9542347b8070d70",
+   "bytes": 2991,
+   "kind": "json"
+  },
+  "participants.json": {
+   "sha256": "94043897ccc2c6828200825f95a2faccfc41734f8da3302c296296d044d7ca64",
+   "bytes": 35515,
+   "kind": "json"
+  },
+  "market_data.json": {
+   "sha256": "ab02300eee2dbcbd1e171400e9ad95fe459fae29148b2ad96917a94c34b77e45",
+   "bytes": 655828,
+   "kind": "json"
+  },
+  "events/carry.jsonl.gz": {
+   "sha256": "0d8d62538d51a22bab48378f6a7db3bd9bb2ee4a4f77f7cdb042535ecebfb56d",
+   "bytes": 7970,
+   "kind": "jsonl.gz",
+   "rows": 1178
+  },
+  "events/equity.jsonl.gz": {
+   "sha256": "8e8f846eaabe2a1a0885fefcfb77748a5ae3979ae3e5eddf8ed2906781458e54",
+   "bytes": 191356,
+   "kind": "jsonl.gz",
+   "rows": 5020
+  },
+  "events/fills.jsonl.gz": {
+   "sha256": "bed5f60692c5c2c463c7139ffacb48bb447dbe63f8234d7d27bf37a3f89e4c8a",
+   "bytes": 238724,
+   "kind": "jsonl.gz",
+   "rows": 2985
+  },
+  "events/margin.jsonl.gz": {
+   "sha256": "5ecffe75ff1561169c2f6c1f5cb3e756a1e9a6fc302875246e399b993c5d013a",
+   "bytes": 773,
+   "kind": "jsonl.gz",
+   "rows": 22
+  },
+  "events/orders.jsonl.gz": {
+   "sha256": "062b41f389456367fae01d1e964f6ef74b26ff0c7a48ebc74932119313b8658a",
+   "bytes": 35290,
+   "kind": "jsonl.gz",
+   "rows": 2987
+  },
+  "events/positions.jsonl.gz": {
+   "sha256": "04a6aa212f87dafcb2576b090567ac739793bdec805540ca7d9905775ad06e37",
+   "bytes": 480823,
+   "kind": "jsonl.gz",
+   "rows": 20492
+  },
+  "events/quotes.jsonl.gz": {
+   "sha256": "b322f4af390ef3743e1a1f16ec622ade7b8142b6d89b876dd20c3525e4b06e77",
+   "bytes": 85936,
+   "kind": "jsonl.gz",
+   "rows": 4267
+  },
+  "events/rejections.jsonl.gz": {
+   "sha256": "810e97bbe429702ae5dc0ad7761abe662034a4ec2737737051dd5d3a8a946ad6",
+   "bytes": 538,
+   "kind": "jsonl.gz",
+   "rows": 2
+  }
+ },
+ "seed": 20260917,
+ "scenario_index": 0,
+ "full_event_memory": true,
+ "participant_count": 20,
+ "session_count": 251,
+ "competition": {
+  "name": "StockPaperSim Alpha Cup",
+  "season": "Season 1 (2025-2026)",
+  "start": "2025-09-17",
+  "end": "2026-09-16",
+  "starting_cash": 100000.0,
+  "rank_metric": "total_return_pct"
+ },
+ "config_fingerprint": "e563b5e41deb6ad8",
+ "winner": "@BetaChaser_3xProxy",
+ "top3": [
+  {
+   "rank": 1,
+   "username": "@BetaChaser_3xProxy",
+   "total_return_pct": 108.3934
+  },
+  {
+   "rank": 2,
+   "username": "@SectorRotator_AlphaX",
+   "total_return_pct": 100.9211
+  },
+  {
+   "rank": 3,
+   "username": "@MeanRev_Z2Sigma",
+   "total_return_pct": 74.8471
+  }
+ ],
+ "market": {
+  "window": {
+   "start": "2025-09-17",
+   "end": "2026-09-16",
+   "sessions": 251
+  },
+  "spx_return_pct": 14.415,
+  "spx_annualised_vol_pct": 12.901,
+  "spy_price_return_pct": 14.423,
+  "vix": {
+   "mean": 18.16,
+   "max": 31.05,
+   "min": 13.47,
+   "max_date": "2026-03-27",
+   "sessions_above_25": 16,
+   "sessions_above_30": 2
+  },
+  "max_drawdown": {
+   "max_drawdown_pct": -9.0975,
+   "max_drawdown_usd": -634.88,
+   "peak_date": "2026-01-27",
+   "peak_equity": 6978.6,
+   "trough_date": "2026-03-30",
+   "trough_equity": 6343.72,
+   "recovery_date": "2026-04-15",
+   "sessions_underwater": 11,
+   "never_recovered": false
+  },
+  "drawdown_episodes": [
+   {
+    "peak_date": "2026-01-27",
+    "trough_date": "2026-03-30",
+    "recovery_date": "2026-04-15",
+    "depth_pct": -9.098,
+    "sessions_peak_to_trough": 43,
+    "sessions_trough_to_recovery": 11,
+    "rebound_pct": 10.707
+   },
+   {
+    "peak_date": "2025-10-28",
+    "trough_date": "2025-11-20",
+    "recovery_date": "2025-12-11",
+    "depth_pct": -5.11,
+    "sessions_peak_to_trough": 17,
+    "sessions_trough_to_recovery": 14,
+    "rebound_pct": 5.54
+   },
+   {
+    "peak_date": "2026-06-02",
+    "trough_date": "2026-06-10",
+    "recovery_date": "2026-08-04",
+    "depth_pct": -4.505,
+    "sessions_peak_to_trough": 6,
+    "sessions_trough_to_recovery": 37,
+    "rebound_pct": 6.461
+   }
+  ],
+  "worst_sessions": [
+   {
+    "date": "2025-10-09",
+    "spx_return_pct": -2.711
+   },
+   {
+    "date": "2026-06-04",
+    "spx_return_pct": -2.645
+   },
+   {
+    "date": "2026-01-16",
+    "spx_return_pct": -2.063
+   },
+   {
+    "date": "2026-03-25",
+    "spx_return_pct": -1.741
+   },
+   {
+    "date": "2026-03-26",
+    "spx_return_pct": -1.672
+   }
+  ],
+  "best_sessions": [
+   {
+    "date": "2026-03-30",
+    "spx_return_pct": 2.913
+   },
+   {
+    "date": "2026-04-07",
+    "spx_return_pct": 2.508
+   },
+   {
+    "date": "2026-02-05",
+    "spx_return_pct": 1.97
+   },
+   {
+    "date": "2026-08-03",
+    "spx_return_pct": 1.79
+   },
+   {
+    "date": "2026-06-10",
+    "spx_return_pct": 1.752
+   }
+  ],
+  "up_sessions": 136,
+  "down_sessions": 114,
+  "cross_section": {
+   "best": [
+    {
+     "symbol": "META",
+     "return_pct": 102.168
+    },
+    {
+     "symbol": "CVNA",
+     "return_pct": 82.651
+    },
+    {
+     "symbol": "AAPL",
+     "return_pct": 40.435
+    }
+   ],
+   "worst": [
+    {
+     "symbol": "TSLA",
+     "return_pct": -0.176
+    },
+    {
+     "symbol": "WMT",
+     "return_pct": -3.095
+    },
+    {
+     "symbol": "UNH",
+     "return_pct": -61.645
+    }
+   ],
+   "per_symbol_pct": {
+    "SPY": 14.423,
+    "AAPL": 40.435,
+    "QQQ": 18.385,
+    "IWM": 7.162,
+    "MSFT": 26.485,
+    "NVDA": 39.649,
+    "GOOGL": 15.46,
+    "AMZN": 5.161,
+    "META": 102.168,
+    "TSLA": -0.176,
+    "JPM": 0.304,
+    "XOM": -0.143,
+    "UNH": -61.645,
+    "CAT": 23.752,
+    "WMT": -3.095,
+    "RIVN": 8.501,
+    "CVNA": 82.651
+   },
+   "dispersion_stdev_pp": 35.78,
+   "spread_best_minus_worst_pp": 163.81
+  }
+ },
+ "factors": {
+  "market": {
+   "factor": "MKT",
+   "description": "S&P 500 index (real FRED SP500 series)",
+   "cumulative_return_pct": 14.423,
+   "mean_daily_bps": 5.7,
+   "annualised_vol_pct": 12.88,
+   "sharpe": 1.115
+  },
+  "momentum": {
+   "factor": "MOM",
+   "description": "long top tercile / short bottom tercile by 63-session return skipping the last 5, rebalanced monthly",
+   "cumulative_return_pct": 3.824,
+   "mean_daily_bps": 1.86,
+   "annualised_vol_pct": 13.65,
+   "sharpe": 0.344
+  },
+  "reversal": {
+   "factor": "REV",
+   "description": "short top tercile / long bottom tercile by 5-session return, rebalanced weekly",
+   "cumulative_return_pct": -6.014,
+   "mean_daily_bps": -2.08,
+   "annualised_vol_pct": 14.1,
+   "sharpe": -0.371
+  },
+  "beta": {
+   "factor": "BETA",
+   "description": "long high-declared-beta tercile, short low",
+   "cumulative_return_pct": 39.734,
+   "mean_daily_bps": 13.84,
+   "annualised_vol_pct": 16.01,
+   "sharpe": 2.179
+  },
+  "low_vol": {
+   "factor": "VOL",
+   "description": "long low realised-vol tercile, short high (the low-volatility anomaly)",
+   "cumulative_return_pct": -21.859,
+   "mean_daily_bps": -9.37,
+   "annualised_vol_pct": 15.08,
+   "sharpe": -1.566
+  },
+  "liquidity": {
+   "factor": "LIQ",
+   "description": "long illiquid tercile by dollar volume, short liquid",
+   "cumulative_return_pct": -10.837,
+   "mean_daily_bps": -4.15,
+   "annualised_vol_pct": 14.55,
+   "sharpe": -0.719
+  }
+ },
+ "timing": {
+  "started_utc": "2026-09-17T23:05:41Z",
+  "finished_utc": "2026-09-17T23:05:43Z",
+  "elapsed_seconds": 2.42
+ },
+ "irregularity_count": 12
+}

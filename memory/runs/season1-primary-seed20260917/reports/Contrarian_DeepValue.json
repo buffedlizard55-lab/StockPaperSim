@@ -1,0 +1,415 @@
+{
+ "username": "@Contrarian_DeepValue",
+ "strategy_id": "ContrarianValue",
+ "archetype": "long-horizon reversal",
+ "starting_cash": 100000.0,
+ "final_equity": 118876.97,
+ "net_pnl_usd": 18876.97,
+ "total_return_pct": 18.877,
+ "cagr_pct": 18.9589,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -51.1503,
+  "max_drawdown_usd": -70604.76,
+  "peak_date": "2026-01-09",
+  "peak_equity": 138033.82,
+  "trough_date": "2026-03-27",
+  "trough_equity": 67429.06,
+  "recovery_date": null,
+  "sessions_underwater": 118,
+  "never_recovered": true,
+  "sharpe": 0.616,
+  "sortino": 0.975,
+  "calmar": 0.3707,
+  "daily_vol_pct": 3.2238,
+  "annualised_vol_pct": 51.176,
+  "skew": 0.0907,
+  "excess_kurtosis": 0.5111,
+  "best_session_pct": 10.0185,
+  "worst_session_pct": -8.8366,
+  "var_95_pct": -5.4191,
+  "cvar_95_pct": -6.7369,
+  "var_99_pct": -7.3475,
+  "cvar_99_pct": -7.8859
+ },
+ "market_relation": {
+  "beta": 2.777,
+  "alpha_annual_pct": -8.4816,
+  "r_squared": 0.4901,
+  "tracking_error_annual_pct": 36.544,
+  "information_ratio": -0.232,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 40.03,
+  "residual_return_pct": -21.153
+ },
+ "trades": {
+  "closed_trades": 3,
+  "open_trades": 0,
+  "wins": 2,
+  "losses": 1,
+  "win_rate_pct": 66.667,
+  "gross_win_usd": 17204.51,
+  "gross_loss_usd": 84.9,
+  "profit_factor": 202.6444,
+  "avg_win_usd": 8602.26,
+  "avg_loss_usd": -84.9,
+  "expectancy_usd_per_trade": 5706.54,
+  "best_trade": {
+   "symbol": "MSFT",
+   "net_pnl": 17109.47,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "TSLA",
+   "net_pnl": -84.9,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "longest_win_streak": 1,
+  "longest_loss_streak": 1,
+  "avg_sessions_held": 250.0,
+  "median_sessions_held": 250.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "MSFT": 251,
+   "TSLA": 251,
+   "JPM": 251
+  },
+  "sum_of_tranche_sessions": 750,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 6,
+  "shares_traded": 1112,
+  "traded_notional_usd": 416181.72,
+  "spread_cost_usd": 6.54,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 6.36,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 3.34,
+  "regulatory_fee_usd": 4.57,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 20.81,
+  "total_cost_bps_of_traded": 0.5,
+  "total_cost_pct_of_starting_cash": 0.0208,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 37.99,
+   "spread_and_impact_pct": 62.01
+  },
+  "avg_execution_cost_bps_per_fill": 0.504,
+  "median_execution_cost_bps_per_fill": 0.505,
+  "worst_execution_cost_bps": 0.717,
+  "intraday_drift_usd": -0.45,
+  "avg_price_difference_bps_per_fill": 0.303,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 6,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 416180.87,
+  "spread_cost_usd": 6.54,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 6.36,
+  "intraday_drift_usd": -0.45,
+  "fees_usd": 7.91,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 20.36,
+  "shortfall_bps_of_paper": 0.489,
+  "friction_only_bps_of_paper": 0.5,
+  "worst_single_order_drift_usd": 1.21,
+  "best_single_order_drift_usd": -1.73,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 1757.36,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 1757.36,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 210.56,
+  "max_gross_pct_of_starting_cash": 236.79,
+  "avg_net_pct_of_starting_cash": 210.56,
+  "max_net_pct_of_starting_cash": 236.79,
+  "avg_leverage": 1.883,
+  "max_leverage": 2.463,
+  "sessions_flat": 1,
+  "avg_open_positions": 2.99
+ },
+ "turnover": {
+  "traded_notional_usd": 416181.72,
+  "annualised_turnover_x": 3.703
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "MSFT",
+   "realized_pnl": 17109.47,
+   "open_pnl": 0.0,
+   "total_pnl": 17109.47,
+   "closed_trades": 1,
+   "fees": 2.51,
+   "all_in_cost_usd": 5.43
+  },
+  {
+   "symbol": "JPM",
+   "realized_pnl": 95.04,
+   "open_pnl": 0.0,
+   "total_pnl": 95.04,
+   "closed_trades": 1,
+   "fees": 2.82,
+   "all_in_cost_usd": 7.79
+  },
+  {
+   "symbol": "TSLA",
+   "realized_pnl": -84.9,
+   "open_pnl": 0.0,
+   "total_pnl": -84.9,
+   "closed_trades": 1,
+   "fees": 2.58,
+   "all_in_cost_usd": 7.6
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 98946.4,
+   "end_equity": 113412.0,
+   "return_pct": 14.6196
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 113412.0,
+   "end_equity": 119028.14,
+   "return_pct": 4.952
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 119028.14,
+   "end_equity": 127903.74,
+   "return_pct": 7.4567
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 127903.74,
+   "end_equity": 128822.61,
+   "return_pct": 0.7184
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 128822.61,
+   "end_equity": 121347.21,
+   "return_pct": -5.8029
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 121347.21,
+   "end_equity": 117011.68,
+   "return_pct": -3.5728
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 117011.68,
+   "end_equity": 79977.71,
+   "return_pct": -31.6498
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 79977.71,
+   "end_equity": 100143.95,
+   "return_pct": 25.2148
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 100143.95,
+   "end_equity": 116624.21,
+   "return_pct": 16.4566
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 116624.21,
+   "end_equity": 101596.0,
+   "return_pct": -12.886
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 101596.0,
+   "end_equity": 112744.91,
+   "return_pct": 10.9738
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 112744.91,
+   "end_equity": 122014.85,
+   "return_pct": 8.222
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 122014.85,
+   "end_equity": 118876.97,
+   "return_pct": -2.5717
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 17119.61,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 1757.36,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -20.81,
+  "total_net_pnl_usd": 18876.97,
+  "unexplained_residual_usd": 0.0,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "roughly matched the market",
+  "headline": "Roughly matched the market: +18.88% total return vs +14.41% for the index, -21.15pp residual after beta, -51.2% max drawdown, 0.02% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +18.88% versus the S&P 500's +14.41% - effectively in line with simply holding the index."
+   },
+   {
+    "kind": "factor",
+    "text": "The reversal premium went against the declared exposure (-6.01% for a +1.0 loading) yet the account still returned +18.88% - the result was driven by something other than this factor."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium went against the declared exposure (+3.82% for a -1.0 loading) yet the account still returned +18.88% - the result was driven by something other than this factor."
+   },
+   {
+    "kind": "factor",
+    "text": "The low_vol premium went against the declared exposure (-21.86% for a +0.5 loading) yet the account still returned +18.88% - the result was driven by something other than this factor."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +18.88% total, about +40.03pp is explained by carrying beta 2.78 against a +14.41% market (R^2 0.49); the residual -21.15pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "MSFT contributed +17,109 USD (91% of net P&L) across 1 closed trades; TSLA was the biggest drag at -85 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 21 USD (0.02% of starting capital, 0.5 bp per fill, 0.5 bp of the 416,182 USD traded). 62% of that was spread/depth/impact and 38% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "3 closed round trips, 66.7% winners, profit factor 202.64, average winner +8,602 vs average loser -85 USD, median holding 250 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 750 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: TSLA long 2025-09-17 to 2026-09-16, -85 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -51.15% (-9.10% for the index), trough on 2026-03-27, never recovered. Average gross exposure 211% of starting capital, peak leverage 2.46x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.09 skewed with excess kurtosis +0.51; historical 95% VaR -5.42%/day with CVaR -6.74%/day. Worst single session -8.84%, best +10.02%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: 2x leverage on falling knives accelerates the drawdown."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): A 12-month window is far shorter than the 3-5 years the effect is documented over; The worst performers are often worst for fundamental reasons (value traps)."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 35.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@Contrarian_DeepValue (Contrarian Deep Value) ran the \"long-horizon reversal\" archetype. Declared thesis: The market over-reacts to sustained bad news. Buy the three worst 126-session performers at 2x gross and hold them, betting on the long-horizon reversal that De Bondt and Thaler documented. Entry: Rank the universe by trailing 126-session return (or all available history); Buy the bottom 3 at 66% of equity each; Re-rank quarterly. Exit: Quarterly re-rank only. Sizing: 66% of equity per name = 200% gross. Leverage: 2.0x gross. Cadence: quarterly, horizon 3-12 months. Aggression 4/5. This participant was built to maximise return, not to manage risk: Buys the most hated names at double leverage because that is where the reversal payoff is largest."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +18.88% over 251 sessions - +18,877 USD on 100,000 of paper capital, ending at 118,877. Verdict: roughly matched the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The reversal premium went against the declared exposure (-6.01% for a +1.0 loading) yet the account still returned +18.88% - the result was driven by something other than this factor. The momentum premium went against the declared exposure (+3.82% for a -1.0 loading) yet the account still returned +18.88% - the result was driven by something other than this factor. The low_vol premium went against the declared exposure (-21.86% for a +0.5 loading) yet the account still returned +18.88% - the result was driven by something other than this factor."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +18.88% total, about +40.03pp is explained by carrying beta 2.78 against a +14.41% market (R^2 0.49); the residual -21.15pp is everything else - selection, timing, leverage and cost. MSFT contributed +17,109 USD (91% of net P&L) across 1 closed trades; TSLA was the biggest drag at -85 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 21 USD (0.02% of starting capital, 0.5 bp per fill, 0.5 bp of the 416,182 USD traded). 62% of that was spread/depth/impact and 38% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "3 closed round trips, 66.7% winners, profit factor 202.64, average winner +8,602 vs average loser -85 USD, median holding 250 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 750 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA long 2025-09-17 to 2026-09-16, -85 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -51.15% (-9.10% for the index), trough on 2026-03-27, never recovered. Average gross exposure 211% of starting capital, peak leverage 2.46x. Daily returns were +0.09 skewed with excess kurtosis +0.51; historical 95% VaR -5.42%/day with CVaR -6.74%/day. Worst single session -8.84%, best +10.02%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 35.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: 2x leverage on falling knives accelerates the drawdown."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It beat the index by 4.46pp, but after beta the residual is -21.15pp: the win came from carrying more market risk (beta 2.78) in an up market, not from the signal itself. Finished at +18.88% versus the S&P 500's +14.41% - effectively in line with simply holding the index."
+   }
+  ],
+  "failure_modes_fired": [
+   "2x leverage on falling knives accelerates the drawdown"
+  ],
+  "failure_modes_untested": [
+   "A 12-month window is far shorter than the 3-5 years the effect is documented over",
+   "The worst performers are often worst for fundamental reasons (value traps)"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "reversal",
+   "momentum",
+   "low_vol"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 1
+}

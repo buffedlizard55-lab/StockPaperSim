@@ -1,0 +1,389 @@
+{
+ "username": "@OvernightCarry_NO",
+ "strategy_id": "OvernightCarry",
+ "archetype": "overnight premium",
+ "starting_cash": 100000.0,
+ "final_equity": 97399.5,
+ "net_pnl_usd": -2600.5,
+ "total_return_pct": -2.6005,
+ "cagr_pct": -2.6107,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -14.0084,
+  "max_drawdown_usd": -15866.77,
+  "peak_date": "2026-05-14",
+  "peak_equity": 113266.27,
+  "trough_date": "2026-09-16",
+  "trough_equity": 97399.5,
+  "recovery_date": null,
+  "sessions_underwater": 0,
+  "never_recovered": true,
+  "sharpe": -0.0825,
+  "sortino": -0.1241,
+  "calmar": 0.1864,
+  "daily_vol_pct": 1.1669,
+  "annualised_vol_pct": 18.523,
+  "skew": 0.6614,
+  "excess_kurtosis": 3.9231,
+  "best_session_pct": 5.8284,
+  "worst_session_pct": -4.2148,
+  "var_95_pct": -1.8422,
+  "cvar_95_pct": -2.5392,
+  "var_99_pct": -2.6947,
+  "cvar_99_pct": -3.3868
+ },
+ "market_relation": {
+  "beta": 0.9887,
+  "alpha_annual_pct": -15.7737,
+  "r_squared": 0.4742,
+  "tracking_error_annual_pct": 13.431,
+  "information_ratio": -1.174,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 14.252,
+  "residual_return_pct": -16.853
+ },
+ "trades": {
+  "closed_trades": 246,
+  "open_trades": 0,
+  "wins": 139,
+  "losses": 107,
+  "win_rate_pct": 56.504,
+  "gross_win_usd": 93482.97,
+  "gross_loss_usd": 97159.88,
+  "profit_factor": 0.9622,
+  "avg_win_usd": 672.54,
+  "avg_loss_usd": -908.04,
+  "expectancy_usd_per_trade": -14.95,
+  "best_trade": {
+   "symbol": "SPY",
+   "net_pnl": 5870.69,
+   "entry_date": "2026-03-31",
+   "exit_date": "2026-04-01",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "SPY",
+   "net_pnl": -4276.59,
+   "entry_date": "2026-03-27",
+   "exit_date": "2026-03-30",
+   "direction": "long"
+  },
+  "longest_win_streak": 7,
+  "longest_loss_streak": 4,
+  "avg_sessions_held": 1.84,
+  "median_sessions_held": 1.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "SPY": 251
+  },
+  "sum_of_tranche_sessions": 452,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 493,
+  "shares_traded": 75052,
+  "traded_notional_usd": 52857048.35,
+  "spread_cost_usd": 376.85,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 307.32,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 225.16,
+  "regulatory_fee_usd": 259.21,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 1168.55,
+  "total_cost_bps_of_traded": 0.221,
+  "total_cost_pct_of_starting_cash": 1.1685,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 41.45,
+   "spread_and_impact_pct": 58.55
+  },
+  "avg_execution_cost_bps_per_fill": 0.204,
+  "median_execution_cost_bps_per_fill": 0.172,
+  "worst_execution_cost_bps": 0.437,
+  "intraday_drift_usd": -171.93,
+  "avg_price_difference_bps_per_fill": 0.085,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 493,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 52857052.07,
+  "spread_cost_usd": 376.85,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 307.32,
+  "intraday_drift_usd": -171.93,
+  "fees_usd": 484.37,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 996.61,
+  "shortfall_bps_of_paper": 0.189,
+  "friction_only_bps_of_paper": 0.221,
+  "worst_single_order_drift_usd": 2.98,
+  "best_single_order_drift_usd": -2.78,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 1076.42,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 1076.42,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 241
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 104.98,
+  "max_gross_pct_of_starting_cash": 202.25,
+  "avg_net_pct_of_starting_cash": 104.98,
+  "max_net_pct_of_starting_cash": 202.25,
+  "avg_leverage": 0.996,
+  "max_leverage": 2.007,
+  "sessions_flat": 4,
+  "avg_open_positions": 0.98
+ },
+ "turnover": {
+  "traded_notional_usd": 52857048.35,
+  "annualised_turnover_x": 503.887
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "SPY",
+   "realized_pnl": -3676.91,
+   "open_pnl": 0.0,
+   "total_pnl": -3676.91,
+   "closed_trades": 246,
+   "fees": 484.32,
+   "all_in_cost_usd": 1168.49
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100571.22,
+   "end_equity": 100307.56,
+   "return_pct": -0.2622
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100307.56,
+   "end_equity": 104881.95,
+   "return_pct": 4.5604
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 104881.95,
+   "end_equity": 104815.85,
+   "return_pct": -0.063
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 104815.85,
+   "end_equity": 104568.23,
+   "return_pct": -0.2362
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 104568.23,
+   "end_equity": 109531.99,
+   "return_pct": 4.7469
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 109531.99,
+   "end_equity": 107878.92,
+   "return_pct": -1.5092
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 107878.92,
+   "end_equity": 104726.58,
+   "return_pct": -2.9221
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 104726.58,
+   "end_equity": 109088.32,
+   "return_pct": 4.1649
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 109088.32,
+   "end_equity": 110930.29,
+   "return_pct": 1.6885
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 110930.29,
+   "end_equity": 108559.37,
+   "return_pct": -2.1373
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 108559.37,
+   "end_equity": 101198.64,
+   "return_pct": -6.7804
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 101198.64,
+   "end_equity": 100392.64,
+   "return_pct": -0.7965
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 100392.64,
+   "end_equity": 97399.5,
+   "return_pct": -2.9814
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -3676.91,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 1076.42,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -1168.55,
+  "total_net_pnl_usd": -2600.5,
+  "unexplained_residual_usd": -0.01,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -2.60% total return vs +14.41% for the index, -16.85pp residual after beta, -14.0% max drawdown, 1.17% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -2.60% - a 2,600 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+24.72%) and the account STILL lost 2.60% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -2.60% total, about +14.25pp is explained by carrying beta 0.99 against a +14.41% market (R^2 0.47); the residual -16.85pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "SPY contributed -3,677 USD (141% of net P&L) across 246 closed trades; SPY was the biggest drag at -3,677 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 1,169 USD (1.17% of starting capital, 0.2 bp per fill, 0.2 bp of the 52,857,048 USD traded). 59% of that was spread/depth/impact and 41% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "246 closed round trips, 56.5% winners, profit factor 0.96, average winner +673 vs average loser -908 USD, median holding 1 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 452 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: SPY long 2026-03-27 to 2026-03-30, -4,277 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -14.01% (-9.10% for the index), trough on 2026-09-16, never recovered. Average gross exposure 105% of starting capital, peak leverage 2.01x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.66 skewed with excess kurtosis +3.92; historical 95% VaR -1.84%/day with CVaR -2.54%/day. Worst single session -4.21%, best +5.83%."
+   },
+   {
+    "kind": "caveat",
+    "text": "Standing limitations of this simulation that apply to this participant regardless of the regime: TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08)."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Pays the spread twice per session, ~500 times per year; No intraday exposure means it forfeits the whole trend."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 61.5pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@OvernightCarry_NO (Overnight Carry) ran the \"overnight premium\" archetype. Declared thesis: A large share of the market's long-run return arrives overnight rather than during the session. This participant buys the index ETF at the close of every session and sells it at the open of the next, collecting the overnight leg only. Entry: Buy SPY at the close of every session (simulated as a market order at the next open with the overnight gap already realised); Hold only the index ETF; no single-name risk. Exit: Sell at the next session's open. Sizing: 2.0x gross overnight, flat during the session. Leverage: 2.0x gross overnight. Cadence: daily, horizon overnight. Aggression 3/5. This participant was built to maximise return, not to manage risk: Applies 2x leverage to the leg of the return distribution that the literature says is the paid one."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -2.60% over 251 sessions - -2,600 USD on 100,000 of paper capital, ending at 97,400. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The beta premium it is built to harvest was live (+24.72%) and the account STILL lost 2.60% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -2.60% total, about +14.25pp is explained by carrying beta 0.99 against a +14.41% market (R^2 0.47); the residual -16.85pp is everything else - selection, timing, leverage and cost. SPY contributed -3,677 USD (141% of net P&L) across 246 closed trades; SPY was the biggest drag at -3,677 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 1,169 USD (1.17% of starting capital, 0.2 bp per fill, 0.2 bp of the 52,857,048 USD traded). 59% of that was spread/depth/impact and 41% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "246 closed round trips, 56.5% winners, profit factor 0.96, average winner +673 vs average loser -908 USD, median holding 1 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 452 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: SPY long 2026-03-27 to 2026-03-30, -4,277 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -14.01% (-9.10% for the index), trough on 2026-09-16, never recovered. Average gross exposure 105% of starting capital, peak leverage 2.01x. Daily returns were +0.66 skewed with excess kurtosis +3.92; historical 95% VaR -1.84%/day with CVaR -2.54%/day. Worst single session -4.21%, best +5.83%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 61.5pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "Standing limitations of this simulation that apply to this participant regardless of the regime: TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08). The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -2.60% in a market that returned +14.41%, and a residual of -16.85pp after beta - the trading itself destroyed value, not just the market direction. Finished at -2.60% - a 2,600 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Pays the spread twice per session, ~500 times per year",
+   "No intraday exposure means it forfeits the whole trend"
+  ],
+  "structural_caveats": [
+   "TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08)."
+  ],
+  "factors_considered": [
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 251
+}

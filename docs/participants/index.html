@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Participants · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="../assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../index.html">Overview</a><a class="" href="../leaderboard.html">Leaderboard</a><a class="" href="../strategies.html">Strategies</a><a class="" href="../market.html">Market &amp; factors</a><a class="" href="../methodology.html">Methodology</a><a class="" href="../data.html">Data provenance</a><a class="" href="../sources.html">Sources</a><a class="" href="../irregularities.html">Irregularities</a><a class="" href="../limitations.html">Limitations</a><a class="active" href="../participants/index.html">Participants</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Participants</h1>
+<p class="lede">One page per competitor: metrics, charts, per-symbol
+attribution, cost decomposition, scenario robustness, and the generated
+post-mortem that answers <em>why it worked or why it did not</em>.</p>
+<table class="data"><thead><tr><th>Username</th><th>Archetype</th><th>Return</th><th>Max DD</th><th>Sharpe</th><th>Trades</th><th>Verdict</th></tr></thead><tbody><tr><td><a href="BetaChaser_3xProxy.html">@BetaChaser_3xProxy</a></td><td>levered beta</td><td><span class="pos">+108.39%</span></td><td><span class="neg">-43.52%</span></td><td>1.40</td><td>66</td><td>beat the market</td></tr><tr><td><a href="SectorRotator_AlphaX.html">@SectorRotator_AlphaX</a></td><td>sector rotation</td><td><span class="pos">+100.92%</span></td><td><span class="neg">-32.15%</span></td><td>1.91</td><td>25</td><td>beat the market</td></tr><tr><td><a href="MeanRev_Z2Sigma.html">@MeanRev_Z2Sigma</a></td><td>short-term reversal</td><td><span class="pos">+74.85%</span></td><td><span class="neg">-7.01%</span></td><td>3.50</td><td>53</td><td>beat the market</td></tr><tr><td><a href="OverreactionFade_LT.html">@OverreactionFade_LT</a></td><td>contrarian reversal</td><td><span class="pos">+73.46%</span></td><td><span class="neg">-12.47%</span></td><td>2.53</td><td>70</td><td>beat the market</td></tr><tr><td><a href="MomentumMax_12x1.html">@MomentumMax_12x1</a></td><td>cross-sectional momentum</td><td><span class="pos">+51.21%</span></td><td><span class="neg">-45.05%</span></td><td>1.07</td><td>9</td><td>beat the market</td></tr><tr><td><a href="OneBigBet_Concentra.html">@OneBigBet_Concentra</a></td><td>concentration</td><td><span class="pos">+48.94%</span></td><td><span class="neg">-22.15%</span></td><td>1.22</td><td>55</td><td>beat the market</td></tr><tr><td><a href="BuyHold_MaxBeta.html">@BuyHold_MaxBeta</a></td><td>buy and hold (control)</td><td><span class="pos">+45.29%</span></td><td><span class="neg">-31.97%</span></td><td>0.89</td><td>3</td><td>beat the market</td></tr><tr><td><a href="TrendSurfer_GoldenX.html">@TrendSurfer_GoldenX</a></td><td>time-series trend</td><td><span class="pos">+30.11%</span></td><td><span class="neg">-26.86%</span></td><td>0.97</td><td>55</td><td>beat the market</td></tr><tr><td><a href="VIXRegime_Timer.html">@VIXRegime_Timer</a></td><td>volatility regime timing</td><td><span class="pos">+28.04%</span></td><td><span class="neg">-14.67%</span></td><td>1.44</td><td>35</td><td>beat the market</td></tr><tr><td><a href="DriftRider_PEAD.html">@DriftRider_PEAD</a></td><td>post-event drift</td><td><span class="pos">+21.03%</span></td><td><span class="neg">-14.82%</span></td><td>0.92</td><td>40</td><td>beat the market</td></tr><tr><td><a href="DonchianBreakout_20.html">@DonchianBreakout_20</a></td><td>channel breakout</td><td><span class="pos">+19.01%</span></td><td><span class="neg">-19.27%</span></td><td>0.69</td><td>8</td><td>roughly matched the market</td></tr><tr><td><a href="Contrarian_DeepValue.html">@Contrarian_DeepValue</a></td><td>long-horizon reversal</td><td><span class="pos">+18.88%</span></td><td><span class="neg">-51.15%</span></td><td>0.62</td><td>3</td><td>roughly matched the market</td></tr><tr><td><a href="IlliquidRocket_Degen.html">@IlliquidRocket_Degen</a></td><td>liquidity-constrained aggression</td><td><span class="pos">+15.80%</span></td><td><span class="neg">-45.05%</span></td><td>0.59</td><td>13</td><td>roughly matched the market</td></tr><tr><td><a href="OvernightCarry_NO.html">@OvernightCarry_NO</a></td><td>overnight premium</td><td><span class="pos">+14.11%</span></td><td><span class="neg">-10.25%</span></td><td>0.74</td><td>244</td><td>roughly matched the market</td></tr><tr><td><a href="KitchenSink_AllIn.html">@KitchenSink_AllIn</a></td><td>signal stacking</td><td><span class="pos">+5.19%</span></td><td><span class="neg">-30.49%</span></td><td>0.31</td><td>354</td><td>made money but lagged the index</td></tr><tr><td><a href="PairsArb_ZScore2.html">@PairsArb_ZScore2</a></td><td>statistical arbitrage</td><td><span class="pos">+1.01%</span></td><td><span class="neg">-0.37%</span></td><td>1.01</td><td>3</td><td>made money but lagged the index</td></tr><tr><td><a href="SqueezeHunter_TF.html">@SqueezeHunter_TF</a></td><td>liquidity squeeze</td><td><span class="neg">-1.85%</span></td><td><span class="neg">-10.76%</span></td><td>-0.09</td><td>30</td><td>lost money</td></tr><tr><td><a href="VolCarry_LowHigh.html">@VolCarry_LowHigh</a></td><td>volatility risk premium</td><td><span class="neg">-29.99%</span></td><td><span class="neg">-48.17%</span></td><td>-0.50</td><td>36</td><td>lost money</td></tr><tr><td><a href="SpreadHarvester_MM.html">@SpreadHarvester_MM</a></td><td>market making</td><td><span class="neg">-39.07%</span></td><td><span class="neg">-57.39%</span></td><td>-0.50</td><td>528</td><td>lost money</td></tr><tr><td><a href="GapAndGo_YOLO.html">@GapAndGo_YOLO</a></td><td>intraday momentum</td><td><span class="neg">-86.57%</span></td><td><span class="neg">-86.62%</span></td><td>-6.75</td><td>180</td><td>lost money</td></tr></tbody></table>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="../limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

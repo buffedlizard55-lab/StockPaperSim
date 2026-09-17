@@ -1,0 +1,408 @@
+{
+ "username": "@IlliquidRocket_Degen",
+ "strategy_id": "IlliquidRocket",
+ "archetype": "liquidity-constrained aggression",
+ "starting_cash": 100000.0,
+ "final_equity": 49777.1,
+ "net_pnl_usd": -50222.9,
+ "total_return_pct": -50.2229,
+ "cagr_pct": -50.3611,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -76.997,
+  "max_drawdown_usd": -72113.29,
+  "peak_date": "2025-10-28",
+  "peak_equity": 93657.32,
+  "trough_date": "2026-06-09",
+  "trough_equity": 21544.03,
+  "recovery_date": null,
+  "sessions_underwater": 68,
+  "never_recovered": true,
+  "sharpe": 0.1831,
+  "sortino": 0.2615,
+  "calmar": 0.6541,
+  "daily_vol_pct": 7.7113,
+  "annualised_vol_pct": 122.414,
+  "skew": 0.489,
+  "excess_kurtosis": 3.2452,
+  "best_session_pct": 38.4974,
+  "worst_session_pct": -24.435,
+  "var_95_pct": -13.4954,
+  "cvar_95_pct": -16.6689,
+  "var_99_pct": -18.6277,
+  "cvar_99_pct": -21.903
+ },
+ "market_relation": {
+  "beta": 3.1545,
+  "alpha_annual_pct": -23.0306,
+  "r_squared": 0.1105,
+  "tracking_error_annual_pct": 115.451,
+  "information_ratio": -0.199,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 45.473,
+  "residual_return_pct": -95.696
+ },
+ "trades": {
+  "closed_trades": 29,
+  "open_trades": 0,
+  "wins": 11,
+  "losses": 18,
+  "win_rate_pct": 37.931,
+  "gross_win_usd": 62310.32,
+  "gross_loss_usd": 113808.96,
+  "profit_factor": 0.5475,
+  "avg_win_usd": 5664.57,
+  "avg_loss_usd": -6322.72,
+  "expectancy_usd_per_trade": -1775.82,
+  "best_trade": {
+   "symbol": "RIVN",
+   "net_pnl": 25646.29,
+   "entry_date": "2026-08-19",
+   "exit_date": "2026-09-09",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "RIVN",
+   "net_pnl": -37924.9,
+   "entry_date": "2025-09-17",
+   "exit_date": "2025-09-24",
+   "direction": "long"
+  },
+  "longest_win_streak": 3,
+  "longest_loss_streak": 7,
+  "avg_sessions_held": 10.76,
+  "median_sessions_held": 9.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "RIVN": 146,
+   "CAT": 95,
+   "CVNA": 10
+  },
+  "sum_of_tranche_sessions": 312,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 64,
+  "shares_traded": 163868,
+  "traded_notional_usd": 4604601.86,
+  "spread_cost_usd": 825.04,
+  "depth_cost_usd": 782.85,
+  "impact_cost_usd": 898.18,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 491.6,
+  "regulatory_fee_usd": 30.69,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 3028.36,
+  "total_cost_bps_of_traded": 6.577,
+  "total_cost_pct_of_starting_cash": 3.0284,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 17.25,
+   "spread_and_impact_pct": 82.75
+  },
+  "avg_execution_cost_bps_per_fill": 4.974,
+  "median_execution_cost_bps_per_fill": 3.924,
+  "worst_execution_cost_bps": 21.43,
+  "intraday_drift_usd": 2.08,
+  "avg_price_difference_bps_per_fill": 3.817,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 64,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 4603741.65,
+  "spread_cost_usd": 825.04,
+  "depth_cost_usd": 782.85,
+  "impact_cost_usd": 898.18,
+  "intraday_drift_usd": 2.08,
+  "fees_usd": 522.29,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 3030.44,
+  "shortfall_bps_of_paper": 6.583,
+  "friction_only_bps_of_paper": 6.578,
+  "worst_single_order_drift_usd": 90.41,
+  "best_single_order_drift_usd": -42.76,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 1275.75,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 1275.75,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 1
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 82.07,
+  "max_gross_pct_of_starting_cash": 183.27,
+  "avg_net_pct_of_starting_cash": 82.07,
+  "max_net_pct_of_starting_cash": 183.27,
+  "avg_leverage": 1.624,
+  "max_leverage": 2.623,
+  "sessions_flat": 34,
+  "avg_open_positions": 0.92
+ },
+ "turnover": {
+  "traded_notional_usd": 4604601.86,
+  "annualised_turnover_x": 94.85
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "CAT",
+   "realized_pnl": 2768.89,
+   "open_pnl": 0.0,
+   "total_pnl": 2768.89,
+   "closed_trades": 13,
+   "fees": 25.21,
+   "all_in_cost_usd": 145.83
+  },
+  {
+   "symbol": "CVNA",
+   "realized_pnl": 2263.71,
+   "open_pnl": 0.0,
+   "total_pnl": 2263.71,
+   "closed_trades": 1,
+   "fees": 2.55,
+   "all_in_cost_usd": 73.8
+  },
+  {
+   "symbol": "RIVN",
+   "realized_pnl": -56531.24,
+   "open_pnl": 0.0,
+   "total_pnl": -56531.24,
+   "closed_trades": 15,
+   "fees": 494.52,
+   "all_in_cost_usd": 2808.72
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 82971.7,
+   "end_equity": 70369.43,
+   "return_pct": -15.1886
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 70369.43,
+   "end_equity": 65141.37,
+   "return_pct": -7.4294
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 65141.37,
+   "end_equity": 73804.52,
+   "return_pct": 13.299
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 73804.52,
+   "end_equity": 78140.19,
+   "return_pct": 5.8745
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 78140.19,
+   "end_equity": 63956.22,
+   "return_pct": -18.152
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 63956.22,
+   "end_equity": 35447.27,
+   "return_pct": -44.5757
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 35447.27,
+   "end_equity": 32438.36,
+   "return_pct": -8.4884
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 32438.36,
+   "end_equity": 24661.46,
+   "return_pct": -23.9744
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 24661.46,
+   "end_equity": 28688.49,
+   "return_pct": 16.3292
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 28688.49,
+   "end_equity": 28168.56,
+   "return_pct": -1.8123
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 28168.56,
+   "end_equity": 29539.29,
+   "return_pct": 4.8662
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 29539.29,
+   "end_equity": 52193.22,
+   "return_pct": 76.6908
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 52193.22,
+   "end_equity": 49777.1,
+   "return_pct": -4.6292
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -51498.64,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 1275.75,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -3028.36,
+  "total_net_pnl_usd": -50222.9,
+  "unexplained_residual_usd": -0.01,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -50.22% total return vs +14.41% for the index, -95.70pp residual after beta, -77.0% max drawdown, 3.03% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -50.22% - a 50,223 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The liquidity premium it is built to harvest was live (-18.22%) and the account STILL lost 50.22% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 50.22% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -50.22% total, about +45.47pp is explained by carrying beta 3.15 against a +14.41% market (R^2 0.11); the residual -95.70pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "CAT contributed +2,769 USD across 13 closed trades; RIVN was the biggest drag at -56,531 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 3,028 USD (3.03% of starting capital, 5.0 bp per fill, 6.6 bp of the 4,604,602 USD traded). 83% of that was spread/depth/impact and 17% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "29 closed round trips, 37.9% winners, profit factor 0.55, average winner +5,665 vs average loser -6,323 USD, median holding 9 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 312 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: RIVN long 2025-09-17 to 2025-09-24, -37,925 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -77.00% (-9.10% for the index), trough on 2026-06-09, never recovered. Average gross exposure 82% of starting capital, peak leverage 2.62x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.49 skewed with excess kurtosis +3.25; historical 95% VaR -13.50%/day with CVaR -16.67%/day. Worst single session -24.43%, best +38.50%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Pays the widest spread and the largest square-root impact of any participant; Hits the session participation cap and leaves orders unfilled."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 127.0pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@IlliquidRocket_Degen (Illiquid Rocket) ran the \"liquidity-constrained aggression\" archetype. Declared thesis: The highest theoretical returns live in the least liquid names. This participant deliberately trades the two smallest dollar-volume names in the universe at maximum leverage, chasing 5-session momentum. It exists to measure exactly how much return the microstructure model takes away. Entry: Rank the universe by dollar volume, take the two smallest; Go 2x gross into whichever of the two has the better 5-session momentum; Rebalance every 5 sessions. Exit: Weekly rotation only. Sizing: 200% of equity in a single name. Leverage: 2.0x gross, single name. Cadence: weekly, horizon 5 sessions. Aggression 5/5. This participant was built to maximise return, not to manage risk: Concentrates everything into the highest-volatility names the competition allows."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -50.22% over 251 sessions - -50,223 USD on 100,000 of paper capital, ending at 49,777. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The liquidity premium it is built to harvest was live (-18.22%) and the account STILL lost 50.22% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 50.22% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -50.22% total, about +45.47pp is explained by carrying beta 3.15 against a +14.41% market (R^2 0.11); the residual -95.70pp is everything else - selection, timing, leverage and cost. CAT contributed +2,769 USD across 13 closed trades; RIVN was the biggest drag at -56,531 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 3,028 USD (3.03% of starting capital, 5.0 bp per fill, 6.6 bp of the 4,604,602 USD traded). 83% of that was spread/depth/impact and 17% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "29 closed round trips, 37.9% winners, profit factor 0.55, average winner +5,665 vs average loser -6,323 USD, median holding 9 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 312 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: RIVN long 2025-09-17 to 2025-09-24, -37,925 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -77.00% (-9.10% for the index), trough on 2026-06-09, never recovered. Average gross exposure 82% of starting capital, peak leverage 2.62x. Daily returns were +0.49 skewed with excess kurtosis +3.25; historical 95% VaR -13.50%/day with CVaR -16.67%/day. Worst single session -24.43%, best +38.50%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 127.0pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -50.22% in a market that returned +14.41%, and a residual of -95.70pp after beta - the trading itself destroyed value, not just the market direction. Finished at -50.22% - a 50,223 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Pays the widest spread and the largest square-root impact of any participant",
+   "Hits the session participation cap and leaves orders unfilled"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "liquidity",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 63
+}

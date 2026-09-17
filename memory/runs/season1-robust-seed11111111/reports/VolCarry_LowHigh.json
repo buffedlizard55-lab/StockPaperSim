@@ -1,0 +1,451 @@
+{
+ "username": "@VolCarry_LowHigh",
+ "strategy_id": "VolCarryLowVol",
+ "archetype": "volatility risk premium",
+ "starting_cash": 100000.0,
+ "final_equity": 18325.56,
+ "net_pnl_usd": -81674.44,
+ "total_return_pct": -81.6744,
+ "cagr_pct": -81.7979,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -82.9603,
+  "max_drawdown_usd": -88230.18,
+  "peak_date": "2025-10-07",
+  "peak_equity": 106352.25,
+  "trough_date": "2026-09-15",
+  "trough_equity": 18122.07,
+  "recovery_date": null,
+  "sessions_underwater": 1,
+  "never_recovered": true,
+  "sharpe": -2.8839,
+  "sortino": -4.1124,
+  "calmar": 0.986,
+  "daily_vol_pct": 3.4126,
+  "annualised_vol_pct": 54.174,
+  "skew": -0.1449,
+  "excess_kurtosis": 2.2974,
+  "best_session_pct": 10.7859,
+  "worst_session_pct": -16.6497,
+  "var_95_pct": -5.9482,
+  "cvar_95_pct": -8.1377,
+  "var_99_pct": -8.6226,
+  "cvar_99_pct": -11.9961
+ },
+ "market_relation": {
+  "beta": -1.4098,
+  "alpha_annual_pct": -135.9213,
+  "r_squared": 0.1127,
+  "tracking_error_annual_pct": 51.029,
+  "information_ratio": -2.664,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": -20.323,
+  "residual_return_pct": -61.352
+ },
+ "trades": {
+  "closed_trades": 48,
+  "open_trades": 0,
+  "wins": 23,
+  "losses": 25,
+  "win_rate_pct": 47.917,
+  "gross_win_usd": 11355.41,
+  "gross_loss_usd": 91422.6,
+  "profit_factor": 0.1242,
+  "avg_win_usd": 493.71,
+  "avg_loss_usd": -3656.9,
+  "expectancy_usd_per_trade": -1668.07,
+  "best_trade": {
+   "symbol": "QQQ",
+   "net_pnl": 1776.73,
+   "entry_date": "2026-04-01",
+   "exit_date": "2026-08-24",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "CVNA",
+   "net_pnl": -20274.99,
+   "entry_date": "2025-09-17",
+   "exit_date": "2025-12-01",
+   "direction": "short"
+  },
+  "longest_win_streak": 4,
+  "longest_loss_streak": 6,
+  "avg_sessions_held": 61.92,
+  "median_sessions_held": 62.0,
+  "sessions_in_market": 243,
+  "per_symbol_sessions_in_market": {
+   "CVNA": 243,
+   "SPY": 243,
+   "IWM": 243,
+   "QQQ": 243,
+   "RIVN": 243,
+   "NVDA": 132,
+   "TSLA": 111
+  },
+  "sum_of_tranche_sessions": 2972,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 67,
+  "shares_traded": 7138,
+  "traded_notional_usd": 740468.59,
+  "spread_cost_usd": 39.83,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 28.53,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 21.41,
+  "regulatory_fee_usd": 2.38,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 92.15,
+  "total_cost_bps_of_traded": 1.245,
+  "total_cost_pct_of_starting_cash": 0.0922,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 25.82,
+   "spread_and_impact_pct": 74.18
+  },
+  "avg_execution_cost_bps_per_fill": 1.086,
+  "median_execution_cost_bps_per_fill": 0.401,
+  "worst_execution_cost_bps": 6.375,
+  "intraday_drift_usd": -18.79,
+  "avg_price_difference_bps_per_fill": 0.542,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 67,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 740476.54,
+  "spread_cost_usd": 39.83,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 28.53,
+  "intraday_drift_usd": -18.79,
+  "fees_usd": 23.79,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 73.36,
+  "shortfall_bps_of_paper": 0.991,
+  "friction_only_bps_of_paper": 1.244,
+  "worst_single_order_drift_usd": 0.09,
+  "best_single_order_drift_usd": -9.31,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 643.47,
+  "borrow_fees_paid_usd": 2250.71,
+  "net_carry_usd": -1607.24,
+  "margin_calls": [
+   "2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10",
+   "2026-08-21: equity 18,937.21 < maintenance requirement 19,705.37"
+  ],
+  "margin_call_count": 2,
+  "day_trades": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 121.84,
+  "max_gross_pct_of_starting_cash": 228.36,
+  "avg_net_pct_of_starting_cash": -3.91,
+  "max_net_pct_of_starting_cash": 14.59,
+  "avg_leverage": 2.155,
+  "max_leverage": 3.662,
+  "sessions_flat": 11,
+  "avg_open_positions": 5.74
+ },
+ "turnover": {
+  "traded_notional_usd": 740468.59,
+  "annualised_turnover_x": 13.264
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "QQQ",
+   "realized_pnl": 3679.64,
+   "open_pnl": 0.0,
+   "total_pnl": 3679.64,
+   "closed_trades": 8,
+   "fees": 1.0,
+   "all_in_cost_usd": 2.39
+  },
+  {
+   "symbol": "SPY",
+   "realized_pnl": 2893.72,
+   "open_pnl": 0.0,
+   "total_pnl": 2893.72,
+   "closed_trades": 8,
+   "fees": 0.95,
+   "all_in_cost_usd": 1.96
+  },
+  {
+   "symbol": "IWM",
+   "realized_pnl": 2186.89,
+   "open_pnl": 0.0,
+   "total_pnl": 2186.89,
+   "closed_trades": 7,
+   "fees": 1.84,
+   "all_in_cost_usd": 4.7
+  },
+  {
+   "symbol": "RIVN",
+   "realized_pnl": -11824.45,
+   "open_pnl": 0.0,
+   "total_pnl": -11824.45,
+   "closed_trades": 8,
+   "fees": 17.5,
+   "all_in_cost_usd": 61.01
+  },
+  {
+   "symbol": "TSLA",
+   "realized_pnl": -13444.21,
+   "open_pnl": 0.0,
+   "total_pnl": -13444.21,
+   "closed_trades": 6,
+   "fees": 0.35,
+   "all_in_cost_usd": 1.72
+  },
+  {
+   "symbol": "NVDA",
+   "realized_pnl": -17596.38,
+   "open_pnl": 0.0,
+   "total_pnl": -17596.38,
+   "closed_trades": 2,
+   "fees": 1.16,
+   "all_in_cost_usd": 5.0
+  },
+  {
+   "symbol": "CVNA",
+   "realized_pnl": -45962.4,
+   "open_pnl": 0.0,
+   "total_pnl": -45962.4,
+   "closed_trades": 9,
+   "fees": 0.98,
+   "all_in_cost_usd": 15.39
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100566.39,
+   "end_equity": 102836.01,
+   "return_pct": 2.2568
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 102836.01,
+   "end_equity": 101200.61,
+   "return_pct": -1.5903
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 101200.61,
+   "end_equity": 71141.09,
+   "return_pct": -29.7029
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 71141.09,
+   "end_equity": 68516.7,
+   "return_pct": -3.689
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 68516.7,
+   "end_equity": 68050.04,
+   "return_pct": -0.6811
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 68050.04,
+   "end_equity": 70554.38,
+   "return_pct": 3.6802
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 70554.38,
+   "end_equity": 43000.47,
+   "return_pct": -39.0534
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 43000.47,
+   "end_equity": 41775.35,
+   "return_pct": -2.8491
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 41775.35,
+   "end_equity": 40649.53,
+   "return_pct": -2.6949
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 40649.53,
+   "end_equity": 29664.63,
+   "return_pct": -27.0234
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 29664.63,
+   "end_equity": 26000.91,
+   "return_pct": -12.3505
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 26000.91,
+   "end_equity": 18801.82,
+   "return_pct": -27.6878
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 18801.82,
+   "end_equity": 18325.56,
+   "return_pct": -2.533
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -80067.19,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 643.47,
+  "borrow_fees_usd": -2250.71,
+  "execution_costs_already_netted_usd": -92.15,
+  "total_net_pnl_usd": -81674.44,
+  "unexplained_residual_usd": -0.01,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -81.67% total return vs +14.41% for the index, -61.35pp residual after beta, -83.0% max drawdown, 0.09% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -81.67% - a 81,674 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.67%."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.67% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -81.67% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "QQQ contributed +3,680 USD across 8 closed trades; CVNA was the biggest drag at -45,962 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 92 USD (0.09% of starting capital, 1.1 bp per fill, 1.2 bp of the 740,469 USD traded). 74% of that was spread/depth/impact and 26% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "48 closed round trips, 47.9% winners, profit factor 0.12, average winner +494 vs average loser -3,657 USD, median holding 62 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 243 sessions held at least one position (the per-tranche holding periods above sum to 2972 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: CVNA short 2025-09-17 to 2025-12-01, -20,275 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -82.96% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 122% of starting capital, peak leverage 3.66x."
+   },
+   {
+    "kind": "drawdown",
+    "text": "2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10"
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were -0.14 skewed with excess kurtosis +2.30; historical 95% VaR -5.95%/day with CVaR -8.14%/day. Worst single session -16.65%, best +10.79%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: In a melt-up the high-volatility short leg explodes upward; Borrow fees on the short leg accrue daily and are highest exactly on the high-vol names."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 127.0pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@VolCarry_LowHigh (Vol Carry) ran the \"volatility risk premium\" archetype. Declared thesis: Low-volatility stocks have historically out-returned high-volatility stocks because investors overpay for lottery characteristics. Go long the three lowest-volatility names and short the three highest, dollar-neutral, at 2x gross. Entry: Rank the universe by 63-session realised volatility; Long the bottom 3, short the top 3, equal dollar weights; Rebalance monthly. Exit: Monthly rebalance only. Sizing: 33% of equity per leg = 100% long + 100% short = 200% gross. Leverage: 2.0x gross, ~0 net. Cadence: monthly, horizon 1 month. Aggression 3/5. This participant was built to maximise return, not to manage risk: Uses leverage on a market-neutral spread to convert a small annual edge into a large one."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -81.67% over 251 sessions - -81,674 USD on 100,000 of paper capital, ending at 18,326. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.67%. The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.67% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -81.67% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost. QQQ contributed +3,680 USD across 8 closed trades; CVNA was the biggest drag at -45,962 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 92 USD (0.09% of starting capital, 1.1 bp per fill, 1.2 bp of the 740,469 USD traded). 74% of that was spread/depth/impact and 26% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "48 closed round trips, 47.9% winners, profit factor 0.12, average winner +494 vs average loser -3,657 USD, median holding 62 sessions. Time in market, measured without double counting: 243 sessions held at least one position (the per-tranche holding periods above sum to 2972 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: CVNA short 2025-09-17 to 2025-12-01, -20,275 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -82.96% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 122% of starting capital, peak leverage 3.66x. 2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10 Daily returns were -0.14 skewed with excess kurtosis +2.30; historical 95% VaR -5.95%/day with CVaR -8.14%/day. Worst single session -16.65%, best +10.79%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 127.0pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: In a melt-up the high-volatility short leg explodes upward; Borrow fees on the short leg accrue daily and are highest exactly on the high-vol names."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -81.67% in a market that returned +14.41%, and a residual of -61.35pp after beta - the trading itself destroyed value, not just the market direction. Finished at -81.67% - a 81,674 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [
+   "In a melt-up the high-volatility short leg explodes upward",
+   "Borrow fees on the short leg accrue daily and are highest exactly on the high-vol names"
+  ],
+  "failure_modes_untested": [],
+  "structural_caveats": [],
+  "factors_considered": [
+   "low_vol",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 12
+}

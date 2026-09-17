@@ -1,0 +1,155 @@
+{
+ "window": {
+  "start": "2025-09-17",
+  "end": "2026-09-16",
+  "sessions": 251
+ },
+ "spx_return_pct": 14.415,
+ "spx_annualised_vol_pct": 12.901,
+ "spy_price_return_pct": 14.789,
+ "vix": {
+  "mean": 18.16,
+  "max": 31.05,
+  "min": 13.47,
+  "max_date": "2026-03-27",
+  "sessions_above_25": 16,
+  "sessions_above_30": 2
+ },
+ "max_drawdown": {
+  "max_drawdown_pct": -9.0975,
+  "max_drawdown_usd": -634.88,
+  "peak_date": "2026-01-27",
+  "peak_equity": 6978.6,
+  "trough_date": "2026-03-30",
+  "trough_equity": 6343.72,
+  "recovery_date": "2026-04-15",
+  "sessions_underwater": 11,
+  "never_recovered": false
+ },
+ "drawdown_episodes": [
+  {
+   "peak_date": "2026-01-27",
+   "trough_date": "2026-03-30",
+   "recovery_date": "2026-04-15",
+   "depth_pct": -9.098,
+   "sessions_peak_to_trough": 43,
+   "sessions_trough_to_recovery": 11,
+   "rebound_pct": 10.707
+  },
+  {
+   "peak_date": "2025-10-28",
+   "trough_date": "2025-11-20",
+   "recovery_date": "2025-12-11",
+   "depth_pct": -5.11,
+   "sessions_peak_to_trough": 17,
+   "sessions_trough_to_recovery": 14,
+   "rebound_pct": 5.54
+  },
+  {
+   "peak_date": "2026-06-02",
+   "trough_date": "2026-06-10",
+   "recovery_date": "2026-08-04",
+   "depth_pct": -4.505,
+   "sessions_peak_to_trough": 6,
+   "sessions_trough_to_recovery": 37,
+   "rebound_pct": 6.461
+  }
+ ],
+ "worst_sessions": [
+  {
+   "date": "2025-10-09",
+   "spx_return_pct": -2.711
+  },
+  {
+   "date": "2026-06-04",
+   "spx_return_pct": -2.645
+  },
+  {
+   "date": "2026-01-16",
+   "spx_return_pct": -2.063
+  },
+  {
+   "date": "2026-03-25",
+   "spx_return_pct": -1.741
+  },
+  {
+   "date": "2026-03-26",
+   "spx_return_pct": -1.672
+  }
+ ],
+ "best_sessions": [
+  {
+   "date": "2026-03-30",
+   "spx_return_pct": 2.913
+  },
+  {
+   "date": "2026-04-07",
+   "spx_return_pct": 2.508
+  },
+  {
+   "date": "2026-02-05",
+   "spx_return_pct": 1.97
+  },
+  {
+   "date": "2026-08-03",
+   "spx_return_pct": 1.79
+  },
+  {
+   "date": "2026-06-10",
+   "spx_return_pct": 1.752
+  }
+ ],
+ "up_sessions": 136,
+ "down_sessions": 114,
+ "cross_section": {
+  "best": [
+   {
+    "symbol": "CVNA",
+    "return_pct": 231.199
+   },
+   {
+    "symbol": "RIVN",
+    "return_pct": 120.982
+   },
+   {
+    "symbol": "AAPL",
+    "return_pct": 40.435
+   }
+  ],
+  "worst": [
+   {
+    "symbol": "GOOGL",
+    "return_pct": -12.213
+   },
+   {
+    "symbol": "JPM",
+    "return_pct": -14.669
+   },
+   {
+    "symbol": "NVDA",
+    "return_pct": -16.157
+   }
+  ],
+  "per_symbol_pct": {
+   "SPY": 14.789,
+   "AAPL": 40.435,
+   "QQQ": 19.053,
+   "IWM": 10.011,
+   "MSFT": 29.171,
+   "NVDA": -16.157,
+   "GOOGL": -12.213,
+   "AMZN": 27.252,
+   "META": -7.443,
+   "TSLA": -6.816,
+   "JPM": -14.669,
+   "XOM": 9.591,
+   "UNH": 11.185,
+   "CAT": -7.733,
+   "WMT": 19.166,
+   "RIVN": 120.982,
+   "CVNA": 231.199
+  },
+  "dispersion_stdev_pp": 61.49,
+  "spread_best_minus_worst_pp": 247.36
+ }
+}

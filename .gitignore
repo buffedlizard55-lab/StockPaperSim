@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Editors / OS
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Scratch output.  memory/ and docs/ ARE committed on purpose: memory/ is the
+# audit trail the brief asks to keep, and docs/ is what GitHub Pages serves.
+/tmp/
+scratch/
+*.local.json

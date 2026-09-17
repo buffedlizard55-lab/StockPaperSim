@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="market.html">Market &amp; factors</a><a class="active" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a></nav>
+</header>
+<main class="wrap">
+
+
+<h1>Methodology</h1>
+<p class="lede">How a session is simulated, what is real, what is modelled, and
+which choices were judgement calls. Every SIM CHOICE below is also written into
+the source with the reason and, where one exists, the citation.</p>
+
+
+
+<h2>1 · Competition design, reverse-engineered from three real contests</h2>
+<table class="data"><thead><tr><th>Rule</th><th>This competition</th><th>Where it comes from</th></tr></thead><tbody><tr><td>Starting capital</td><td>$100,000 paper</td><td>TradingView <a href="https://www.tradingview.com/the-leap/december-2025/rules/" rel="noopener" target="_blank">The Leap</a> presets accounts to $100,000 virtual</td></tr><tr><td>Duration</td><td>1 year (251 sessions)</td><td>Project requirement; The Leap runs are calendar-bounded contests</td></tr><tr><td>Ranking metric</td><td>Total return % (fully realised)</td><td>The Leap ranks on realised P&amp;L; <a href="https://www.trade-ideas.com/stock-trading-competition/" rel="noopener" target="_blank">Trade Ideas PM Challenge</a> ranks on Total Profit</td></tr><tr><td>End-of-period positions</td><td>Force-liquidated on the final session, costed through the venue</td><td>The Leap: all open positions are closed at the end of the competition</td></tr><tr><td>Leaderboard columns</td><td>Rank, user, total profit, closed trades, account value, average profit/trade</td><td>Trade Ideas PM Challenge schema</td></tr><tr><td>Order-rate limits</td><td>Not applicable (one decision point per session)</td><td>The Leap bans &gt;60 orders/minute; a daily-bar engine cannot generate that</td></tr><tr><td>Data delay</td><td>None in the simulation; the real contests quote delayed data</td><td>Trade Ideas states "Data delayed by 15 minutes"; CandleCharts hosts through TradingView</td></tr><tr><td>Instrument whitelist</td><td>17 instruments (3 index ETFs, 14 single names)</td><td>The Leap fixes an instrument whitelist with a maximum number of positions</td></tr><tr><td>Leverage</td><td>2.0x gross cap, 50% initial, 30% maintenance</td><td>The Leap allows 1:1 on stocks; this project widens it to 2x gross as a SIM CHOICE so return-seeking strategies can express leverage</td></tr></tbody></table>
+
+
+
+<h2>2 · The market each participant trades</h2>
+<ul>
+<li><strong>Real factors.</strong> The market return series is FRED
+<code>SP500</code>; the volatility regime is FRED <code>VIXCLS</code>. Both are
+stored verbatim under <code>data/real/fred/</code>.</li>
+<li><strong>Real anchors.</strong> SPY is derived from the real index level
+through a ratio fitted on 13 real Yahoo monthly bars (max absolute error
+0.145%);
+AAPL starts and ends on real observed closes and pays four real dividends.</li>
+<li><strong>Simulated single-name paths.</strong> Each name's daily log return is
+<code>beta × market log return + idiosyncratic shock</code>, where the shock
+scales with the real VIX relative to its window mean and is drawn from a
+fat-tail mixture (4% of draws scaled ×2.6, renormalised to unit variance) after
+<a href="https://doi.org/10.1080/713665679" rel="noopener" target="_blank">Cont
+(2001)</a>.</li>
+<li><strong>Intraday shape.</strong> Each daily bar is expanded into
+13 intervals that visit the open, high, low and close,
+with a U-shaped volume profile after
+<a href="https://doi.org/10.1093/rfs/1.1.3" rel="noopener" target="_blank">Admati
+&amp; Pfleiderer (1988)</a>. Overnight gap share
+15% of daily variance; wick size
+0.20 × daily sigma.</li>
+<li><strong>Calendar.</strong> Sessions and closures come from the real FRED
+series' own gaps, cross-checked against the Nasdaq holiday schedule; early
+closes (13:00 ET) are modelled as shorter sessions with proportionally lower
+volume.</li>
+</ul>
+
+
+
+<h2>3 · Liquidity, quoting and market making</h2>
+<ul>
+<li><strong>Quoted spread.</strong> A whole number of Rule 612 minimum
+increments, because that is what actually binds for liquid US equities:
+<code>ticks = clamp(round(0.05 × sqrt(sigma_daily × sqrt(vix_factor) /
+(tick / price))), min, max)</code> with per-liquidity-tier bounds
+{"mega": 1, "large": 1, "mid": 1, "small": 1, "micro": 2} … {"mega": 3, "large": 4, "mid": 6, "small": 12, "micro": 30} and an
+absolute cap in basis points. Result at the season open: 1 tick on SPY, NVDA,
+AAPL, JPM, RIVN; 2 ticks on TSLA and CVNA.</li>
+<li><strong>Depth.</strong> A 6-level ladder, displayed size
+20 round lots at the touch growing
+×1.60 per level, with round lots taken from the tiered Rule
+600(b)(93) definition.</li>
+<li><strong>Market makers.</strong> 4 competing dealers per
+instrument per session quote around an Avellaneda-Stoikov reservation price, so
+inventory skews the ladder away from flow
+(<a href="https://doi.org/10.1080/14697680701381228" rel="noopener" target="_blank">Avellaneda
+&amp; Stoikov 2008</a>). Passive orders earn a
+$0.0020/share rebate; aggressive orders pay
+$0.0030/share, at the Rule 610 access-fee cap.</li>
+<li><strong>Non-displayed liquidity.</strong> Quantity beyond the displayed
+ladder fills at the touch and is priced by the impact model rather than by
+walking an artificially deep book, because roughly 45% of consolidated US equity
+volume trades off-exchange
+(<a href="https://otctransparency.finra.org/" rel="noopener" target="_blank">FINRA
+OTC Transparency</a>, cited but not fetched here).</li>
+<li><strong>Book integrity.</strong> The displayed book may never cross; a
+defensive uncross step enforces it, as Rule 611 trade-through protection
+implies.</li>
+</ul>
+
+
+
+<h2>4 · Execution</h2>
+<ul>
+<li><strong>Order types.</strong> Market, limit (marketable or resting, with a
+queue-position fill model) and stop (triggered off the intraday path, then
+executed as a market order from the trigger interval).</li>
+<li><strong>Slicing.</strong> Capacity-driven, not time-driven: an order trades
+at the touch and only spans further intervals when its size exceeds what one
+interval can absorb inside the
+10% participation limit. An earlier version spread every
+market order across the whole session (a VWAP algorithm), which handed every
+participant a free intraday average price; measured on one participant it was
+worth −$1,857 of phantom &ldquo;drift benefit&rdquo; on $614k of paper
+notional, and it was removed.</li>
+<li><strong>Impact.</strong> Square-root law,
+<code>0.55 × sigma_daily × sqrt(shares / ADV)</code>, split
+35% permanent / 65% temporary, with
+50% of the permanent component decaying by the next session
+(<a href="https://doi.org/10.21314/JOR.2001.041" rel="noopener" target="_blank">Almgren
+&amp; Chriss 2001</a>; empirical calibration from Almgren, Thum, Hauptmann &amp;
+Li 2005, <em>Risk</em> 18(7):58-62 - see IR-26).</li>
+<li><strong>Fees are dated schedules, not constants.</strong> SEC §31 on sells:
+$0.00 per $1,000,000 of sell notional from 2025-09-01 · $20.60 per $1,000,000 of sell notional from 2026-04-04, per the
+<a href="https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates" rel="noopener" target="_blank">FY2026
+annual adjustment order</a>. FINRA Trade Activity Fee on sells: $0.000166 per share from 2025-01-01 · $0.000195 per share from 2026-01-01, capped at
+$8.30 per trade from 2025-01-01 · $9.79 per trade from 2026-01-01 - rate and cap from a
+<span class="tag tag-secondary">secondary source</span>, see IR-05. The earliest
+date any of these schedules is documented for is <code>2025-09-01</code>;
+<code>config.validate_fee_coverage()</code> refuses to run a season that opens
+before it, so no trade is ever costed at a rate this project could not cite. Commission
+$0.00 per order and
+$0.0000 per share by default. Exchange access fees
+are capped at $0.0030 per share under Rule 610.</li>
+<li><strong>Short selling.</strong> Requires a locate: names flagged unborrowable
+are rejected outright, and borrowable names accrue a daily fee at their declared
+annual rate (Regulation SHO Rule 203(b)).</li>
+<li><strong>Pre-trade risk.</strong> Every order - including ones a strategy
+built by hand - is screened by the broker before it reaches the venue. Orders
+that would breach the 2.0x gross cap are resized down to
+the largest permissible quantity, or rejected if not even one share fits. Orders
+that strictly reduce a position are never blocked, so a book that drifts above
+the cap through price movement can still be trimmed.</li>
+</ul>
+
+
+
+<h2>5 · Accounting</h2>
+<ul>
+<li>Average-cost basis per instrument; realised P&amp;L on reduction, unrealised
+on the mark; cash dividends on ex-dates; borrow fees daily on shorts.</li>
+<li>Maintenance margin tested at every close. A breach is liquidated at the
+<em>next</em> open (a daily-bar engine cannot liquidate intraday), and the event
+is written to memory.</li>
+<li>Day trades counted for pattern-day-trader visibility
+($25,000 threshold), reported but not enforced: these
+are paper accounts.</li>
+</ul>
+
+
+
+<h2>6 · Analysis</h2>
+<ul>
+<li>Returns, CAGR, max drawdown (with peak/trough/recovery dates and sessions
+underwater), Sharpe and Sortino
+(<a href="https://doi.org/10.1086/260062" rel="noopener" target="_blank">Sharpe
+1966</a>,
+<a href="https://doi.org/10.2469/faj.v50.6.48" rel="noopener" target="_blank">Sortino
+&amp; Price 1994</a>), Calmar, historical VaR/CVaR at 95% and 99%
+(<a href="https://doi.org/10.1111/1467-9965.00068" rel="noopener" target="_blank">Artzner
+et al. 1999</a>), skew and excess kurtosis.</li>
+<li>Beta, alpha, R² and information ratio from a daily-return OLS on the real
+index return, aligned session-for-session.</li>
+<li>Trade reconstruction by average-cost round trip, including positions that
+flip through zero (an earlier version dropped the flipped leg entirely and lost
+$20,169 of one participant's P&amp;L from the attribution).</li>
+<li>Implementation shortfall decomposed into spread, depth, impact, fees,
+intraday drift and missed trades
+(<a href="https://doi.org/10.2469/faj.v44.5.28" rel="noopener" target="_blank">Perold
+1988</a>). The components are mutually exclusive by construction: for every
+fill, spread + depth + impact + drift equals the signed price difference against
+the decision mid, so the total cannot double count.</li>
+<li>Rule-based post-mortems. Each sentence in a narrative fires only on a
+measured quantity; the strategy's declared priors are used afterwards to
+<em>label</em> the causes the numbers already identified, never to produce
+them.</li>
+</ul>
+
+
+
+<h2>7 · Determinism and memory</h2>
+<ul>
+<li>Every random draw is keyed by an explicit string (seed, participant, symbol,
+date, order attributes) - never by wall-clock time or hash ordering. Two runs
+with the same seed produce byte-identical memory.</li>
+<li>Each participant trades against an <strong>independent replica</strong> of
+the venue, so one participant's impact and dealer inventory cannot change
+another's fills and the leaderboard does not depend on processing order. The
+trade-off - participants' combined flow never clears one shared book - is
+<a href="limitations.html">limitation L-04</a>.</li>
+<li>Every order, fill, rejection, quote snapshot, daily mark, position snapshot,
+carry payment and margin event is written to
+<code>memory/runs/&lt;run_id&gt;/</code> as gzip-compressed JSON Lines, with a
+SHA-256 checksum per file and the git commit plus per-module source hashes in the
+run manifest. <code>python3 -m sim.cli verify</code> re-hashes the lot.</li>
+</ul>
+
+
+
+<h2>8 · Reproducing everything on this site</h2>
+<pre><code>python3 -m sim.cli run                 # 6 scenarios, writes memory/ (~11s)
+python3 -m sim.cli leaderboard         # ranked table
+python3 -m sim.cli report @BetaChaser_3xProxy --full
+python3 -m sim.cli compare             # robustness panel across scenarios
+python3 -m sim.cli query fills --symbol NVDA --limit 20
+python3 -m sim.cli verify              # checksums + data audits
+python3 -m sim.cli sources             # the verified-source register
+python3 scripts/build_site.py          # regenerate this site into docs/
+python3 -m unittest discover -s tests -v</code></pre>
+
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 [
   {
-    "priority": "P1",
-    "title": "Automate the Pages deployment instead of committing docs/",
-    "detail": "docs/ is committed and served from main, and CI now fails if it drifts from a fresh build, so the site cannot go stale silently. The remaining step is a workflow that runs the season, rebuilds docs/ and deploys with actions/deploy-pages, so the published site is an artefact of the code rather than a checked-in directory. Keep the byte-diff gate either way: it is the check that caught the stale-number problem this item exists to prevent.",
-    "where": ".github/workflows/pages.yml (new) - ci.yml already runs build-site and diffs it against docs/",
-    "effort": "an hour; the builder is deterministic and dependency-free"
+    "priority": "P2",
+    "title": "Point GitHub Pages at /docs and drop the root redirect",
+    "detail": "Pages is live and serving main, but its source path is the repository root, and changing it needs repository admin rights that this branch's automation does not have. The workaround in place is a root index.html that redirects to docs/index.html plus a root .nojekyll, so the canonical URL works today and nothing is duplicated - the redirect cannot go stale because every page, stylesheet and JSON file is served from under docs/. The remaining step for an admin is Settings -> Pages -> source: main, /docs, after which the root index.html and root .nojekyll can be deleted. Publishing the whole root also means memory/, data/ and the sources are downloadable from the Pages URL; that is no new exposure for a public repository, but /docs would serve only the site.",
+    "where": "repository Settings -> Pages (admin only) - index.html and .nojekyll at the repo root are the current workaround",
+    "effort": "two clicks for an admin, then delete two files"
   },
   {
     "priority": "P0",

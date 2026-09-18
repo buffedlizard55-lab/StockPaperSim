@@ -1,0 +1,25 @@
+{
+ "generated_at": "2026-09-18T02:30:43Z",
+ "pairs": [
+  {
+   "kind": "yahoo-vs-yahoo",
+   "a": "SPY",
+   "b": "^GSPC",
+   "n": 501,
+   "return_correlation": 0.9965133458692754,
+   "note": "same provider, different instruments: a sanity check, not independence"
+  },
+  {
+   "kind": "fred-vs-yahoo",
+   "a": "FRED SP500",
+   "b": "Yahoo ^GSPC",
+   "n": 502,
+   "max_abs_level_diff": 4.425314312512818e-08,
+   "median_abs_level_diff": 1.958856012889914e-08,
+   "return_correlation": 0.9999999999945958,
+   "max_abs_daily_return_diff": 8.411807539410177e-08,
+   "note": "two independent publishers of the same index; level differences come from the fact that FRED's SP500 is a daily close index series"
+  }
+ ],
+ "notes": []
+}

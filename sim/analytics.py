@@ -898,12 +898,15 @@ def performance_report(participant: dict, md, t0: int, t1: int,
             participant["closes_by_date"]),
         "carry": {
             "dividends_received_usd": acct.get("dividends_received", 0.0),
+            "dividends_in_lieu_paid_usd": acct.get("dividends_in_lieu_paid", 0.0),
             "borrow_fees_paid_usd": acct.get("borrow_fees_paid", 0.0),
             "net_carry_usd": round(acct.get("dividends_received", 0.0)
+                                   - acct.get("dividends_in_lieu_paid", 0.0)
                                    - acct.get("borrow_fees_paid", 0.0), 2),
             "margin_calls": acct.get("margin_calls", []),
             "margin_call_count": len(acct.get("margin_calls", [])),
             "day_trades": acct.get("day_trades", 0),
+            "day_trade_count": acct.get("day_trade_count", 0),
         },
         "exposure": {
             "avg_gross_pct_of_starting_cash": round(100.0 * _mean(gross), 2) if gross else 0.0,
@@ -933,21 +936,36 @@ def performance_report(participant: dict, md, t0: int, t1: int,
     return report
 
 
+# Buckets that must sum (with the residual) to the total net P&L.  Declared
+# here, next to the code that builds them, and imported by the ledger-closure
+# test, so a bucket added later cannot quietly escape the identity.
+DECOMPOSITION_REALIZED = "realized_trading_pnl_usd"
+DECOMPOSITION_OPEN = "open_position_pnl_usd"
+DECOMPOSITION_DIVIDENDS = "dividends_usd"
+DECOMPOSITION_IN_LIEU = "dividends_in_lieu_usd"
+DECOMPOSITION_BORROW = "borrow_fees_usd"
+DECOMPOSITION_BUCKETS = (DECOMPOSITION_REALIZED, DECOMPOSITION_OPEN,
+                         DECOMPOSITION_DIVIDENDS, DECOMPOSITION_IN_LIEU,
+                         DECOMPOSITION_BORROW)
+
+
 def _decompose(acct: dict, eq_final: float, starting_cash: float,
                costs: dict, contrib: List[dict]) -> dict:
     """Additive decomposition of the final P&L into named buckets."""
     realized = sum(c["realized_pnl"] for c in contrib)
     open_pnl = sum(c["open_pnl"] for c in contrib)
     divs = acct.get("dividends_received", 0.0)
+    in_lieu = acct.get("dividends_in_lieu_paid", 0.0)
     borrow = acct.get("borrow_fees_paid", 0.0)
     fee_total = costs["total_cost_usd"]
     total = eq_final - starting_cash
-    explained = realized + open_pnl + divs - borrow
+    explained = realized + open_pnl + divs - in_lieu - borrow
     return {
-        "realized_trading_pnl_usd": round(realized, 2),
-        "open_position_pnl_usd": round(open_pnl, 2),
-        "dividends_usd": round(divs, 2),
-        "borrow_fees_usd": round(-borrow, 2),
+        DECOMPOSITION_REALIZED: round(realized, 2),
+        DECOMPOSITION_OPEN: round(open_pnl, 2),
+        DECOMPOSITION_DIVIDENDS: round(divs, 2),
+        DECOMPOSITION_IN_LIEU: round(-in_lieu, 2),
+        DECOMPOSITION_BORROW: round(-borrow, 2),
         "execution_costs_already_netted_usd": round(-fee_total, 2),
         "total_net_pnl_usd": round(total, 2),
         "unexplained_residual_usd": round(total - explained, 2),

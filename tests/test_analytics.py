@@ -16,6 +16,7 @@ from fixtures import (PUBLISHED_TOP_RETURN_PCT, PUBLISHED_TOP_USERNAME,
                        REPO_ROOT, cfg, replay)
 
 from sim import analytics, config, memory, strategies
+from sim.analytics import DECOMPOSITION_BUCKETS
 
 TRADING_DAYS = config.TRADING_DAYS_PER_YEAR
 
@@ -433,12 +434,19 @@ class TestRealRunReports(unittest.TestCase):
             tol = max(1.0, 0.0001 * abs(r["net_pnl_usd"]))
             self.assertLessEqual(abs(residual), tol,
                                  f"{r['username']}: residual {residual:,.2f}")
-            # borrow_fees_usd is stored as a negative number, and the residual
-            # is defined as whatever is left after the named buckets.
-            self.assertAlmostEqual(
-                r["starting_cash"] + dec["realized_trading_pnl_usd"] +
-                dec["open_position_pnl_usd"] + dec["dividends_usd"] +
-                dec["borrow_fees_usd"] + residual, r["final_equity"], places=2)
+            # The named buckets have to add up to the equity change, residual
+            # included.  This iterates analytics.DECOMPOSITION_BUCKETS rather
+            # than listing the keys, because a hardcoded list is how this test
+            # managed to keep passing while silently ignoring the
+            # dividends_in_lieu_usd bucket that the short-side manufactured
+            # dividend added - it was summing four of five buckets and calling
+            # the missing one "the residual" (see IR-31).  borrow_fees_usd and
+            # the in-lieu bucket are stored as negative numbers.
+            explained = sum(dec[b] for b in DECOMPOSITION_BUCKETS)
+            self.assertAlmostEqual(r["starting_cash"] + explained + residual,
+                                   r["final_equity"], places=2)
+            self.assertIn("dividends_in_lieu_usd", DECOMPOSITION_BUCKETS,
+                          "a published bucket must be inside the identity")
             # Reported as the negative of the all-in execution cost, so it is
             # positive for a participant that earned net rebates.
             self.assertAlmostEqual(dec["execution_costs_already_netted_usd"],

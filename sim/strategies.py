@@ -217,8 +217,16 @@ class Context:
     # -- order construction -------------------------------------------------
     def orders_to_targets(self, targets: Dict[str, float], reason: str,
                           order_type: str = MARKET, limit_offset_ticks: int = 0,
-                          min_trade_notional: float = 1_000.0) -> List[Order]:
-        """Convert target weights into tradable orders, respecting margin."""
+                          min_trade_notional: float = 1_000.0,
+                          at_close: bool = False) -> List[Order]:
+        """Convert target weights into tradable orders, respecting margin.
+
+        `at_close` routes the order to the session's final interval instead of
+        its first, which is what makes a documented "market on close" exit mean
+        what it says.  Sizing and the margin check then use the closing mark, not
+        the open, because sizing an order against a price it will never see is
+        how a target weight silently becomes a different position.
+        """
         eq = self.equity
         if eq <= 0:
             return []
@@ -227,7 +235,8 @@ class Context:
         for symbol, target in targets.items():
             if symbol not in self.md.instruments:
                 continue
-            price = self.open_price(symbol)
+            price = (self._marks.get(symbol) or 0.0) if at_close \
+                else self.open_price(symbol)
             if price <= 0:
                 continue
             delta_notional = (target - current.get(symbol, 0.0)) * eq
@@ -249,18 +258,22 @@ class Context:
                 lp = max(tick, round(round(lp / tick) * tick, 6))
                 orders.append(Order(symbol=symbol, side=side, quantity=qty,
                                     order_type=LIMIT, limit_price=lp,
-                                    participant=self.account.participant, reason=reason))
+                                    participant=self.account.participant,
+                                    reason=reason, at_close=at_close))
             else:
                 orders.append(Order(symbol=symbol, side=side, quantity=qty,
                                     order_type=MARKET,
-                                    participant=self.account.participant, reason=reason))
+                                    participant=self.account.participant,
+                                    reason=reason, at_close=at_close))
         # Sell first so proceeds free up buying power for the buys.
         orders.sort(key=lambda o: 0 if o.side == SELL else 1)
         return orders
 
-    def flatten(self, reason: str, symbols: Optional[Sequence[str]] = None) -> List[Order]:
+    def flatten(self, reason: str, symbols: Optional[Sequence[str]] = None,
+                at_close: bool = False) -> List[Order]:
         return self.orders_to_targets({s: 0.0 for s in (symbols or self.md.symbols)
-                                       if self.position(s)}, reason)
+                                       if self.position(s)}, reason,
+                                      at_close=at_close)
 
 
 # --------------------------------------------------------------------------
@@ -396,8 +409,9 @@ class GapAndGo(Strategy):
         entry_rules=["At the open, compute gap = open / prior close - 1",
                      "Buy any name gapping up more than +1.5%",
                      "Skip names whose quoted spread is wider than 30 bp (costs eat the edge)"],
-        exit_rules=["Exit every position at the same session's close (market-on-close order)",
-                     "No stop loss intraday"],
+        exit_rules=["Exit every position at the same session's close, as a market-on-close order routed to the venue's final interval",
+                     "No stop loss intraday",
+                     "Any exit that fails to fill at the close is flattened at the next open"],
         sizing="equal 40% of equity across qualifying names, capped at 4 names = up to 160% gross",
         leverage="up to 1.6x gross", cadence="daily", horizon="intraday",
         academic_basis=[
@@ -415,7 +429,13 @@ class GapAndGo(Strategy):
                             "per-trade edge compounds ~250 times a year."))
 
     def on_day(self, ctx: Context) -> List[Order]:
-        orders = ctx.flatten("gap: close out yesterday's position at the open")
+        # Yesterday's leftovers, if any close failed, go out at the open; today's
+        # entries go out at today's CLOSE, which is what this strategy has always
+        # claimed to do and, until the at_close ticket existed, could not
+        # (IR-34).  Sizing the exit against the entry quantity rather than the
+        # current position is the point: the position to be closed does not exist
+        # yet at decision time.
+        orders = ctx.flatten("gap: close out yesterday's unfilled exit at the open")
         picks = []
         for s in ctx.symbols:
             pc = ctx.prior_close(s)
@@ -427,8 +447,14 @@ class GapAndGo(Strategy):
         picks.sort(reverse=True)
         picks = [s for _, s in picks[:4]]
         if picks:
-            orders += ctx.orders_to_targets({s: 0.40 for s in picks},
+            entries = ctx.orders_to_targets({s: 0.40 for s in picks},
                                             "gap: overnight gap-up continuation")
+            orders += entries
+            orders += [Order(symbol=o.symbol, side=SELL, quantity=o.quantity,
+                             order_type=MARKET, participant=ctx.account.participant,
+                             reason="gap: market-on-close exit, flat by the bell",
+                             at_close=True)
+                       for o in entries if o.side == BUY]
         return orders
 
 
@@ -1321,7 +1347,7 @@ class OvernightCarry(Strategy):
                 "overnight rather than during the session. This participant "
                 "buys the index ETF at the close of every session and sells it "
                 "at the open of the next, collecting the overnight leg only."),
-        entry_rules=["Buy SPY at the close of every session (simulated as a market order at the next open with the overnight gap already realised)",
+        entry_rules=["Buy SPY at the close of every session, worked on the venue's final interval (at_close), so the fill is the closing print and the overnight gap is captured rather than paid away",
                      "Hold only the index ETF; no single-name risk"],
         exit_rules=["Sell at the next session's open"],
         sizing="2.0x gross overnight, flat during the session",
@@ -1330,7 +1356,7 @@ class OvernightCarry(Strategy):
             {"claim": "Overnight and intraday returns have different distributions and premia",
              "url": "https://doi.org/10.1016/j.jfineco.2019.03.011",
              "ref": "Lou, Polk & Skouras (2019), Journal of Financial Economics", "status": "KNOWN-NOT-FETCHED"}],
-        known_failure_modes=["TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08).",
+        known_failure_modes=["TIMING / INTERVAL GRANULARITY: the entry is worked on the session's final interval, so it captures the overnight leg rather than the intraday one, but the venue's closing print is the last of K synthetic intervals rather than a real 16:00 tape print, and the exit pays the spread again at the next open. Both are cost drags a live implementation of this trade would also carry; neither is a reason to read the season's number as an estimate of the real premium.",
                              "Pays the spread twice per session, ~500 times per year",
                              "No intraday exposure means it forfeits the whole trend"],
         aggression=3,
@@ -1339,10 +1365,17 @@ class OvernightCarry(Strategy):
                             "paid one."))
 
     def on_day(self, ctx: Context) -> List[Order]:
+        # Sell at the opening bell, buy back at the closing bell: the position is
+        # held overnight and flat through the session, which is the trade the
+        # literature describes. Before the at_close ticket existed the entry had
+        # to be worked at the open, so the strategy paid the intraday leg it was
+        # trying to avoid and was structurally short-changed (IR-08); that is
+        # now fixed rather than merely documented.
         orders = []
         if ctx.position("SPY"):
-            orders += ctx.orders_to_targets({"SPY": 0.0}, "overnight: sell the open")
-        orders += ctx.orders_to_targets({"SPY": 2.0}, "overnight: buy at the open for the next gap")
+            orders += ctx.orders_to_targets({"SPY": 0.0}, "overnight: sell at the open")
+        orders += ctx.orders_to_targets({"SPY": 2.0}, "overnight: buy at the close",
+                                        at_close=True)
         return orders
 
 

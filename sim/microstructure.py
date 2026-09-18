@@ -73,6 +73,14 @@ class Order:
     tif: str = "DAY"
     participant: str = ""
     reason: str = ""          # free-text strategy rationale, stored in memory
+    # Execute against the closing interval instead of the opening one.  A
+    # strategy decides once per session, so without this flag every order it
+    # can write is an at-the-open order, and a rule like "exit at the close"
+    # (which two Season 1 strategies document) is not expressible at all.  The
+    # venue already matched orders at the final interval for the end-of-season
+    # forced liquidation, so this reuses that mechanism rather than adding one;
+    # see sim/engine.py::Competition._submit and IR-34.
+    at_close: bool = False
 
     def __post_init__(self) -> None:
         if self.side not in (BUY, SELL):
@@ -186,6 +194,7 @@ class Fill:
             "reason": self.order.reason,
             "limit_price": self.order.limit_price,
             "stop_price": self.order.stop_price,
+            "at_close": bool(getattr(self.order, "at_close", False)),
             "bid": self.quote_at_fill.get("bid"),
             "ask": self.quote_at_fill.get("ask"),
             "mid": self.quote_at_fill.get("mid"),

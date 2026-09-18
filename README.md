@@ -149,7 +149,7 @@ Yahoo Finance daily files marked `SECONDARY`; therefore it does **not** satisfy 
 official-price competition requirement, even where a Nasdaq cross-check agrees.
 Window **2025-09-17 → 2026-09-16**
 (251 sessions), $100,000 each, ranked on total return. Benchmark: the real S&P 500 returned **+14.41%** over the same window
-(FRED `SP500`); **5 of 14 participants beat it** and **5 never traded at all**,
+(FRED `SP500`); **5 of 14 participants beat it** and **4 never traded at all**,
 which the site reports as *no trades placed* rather than as a 0.00% performance.
 These table values must not be presented as an official-source backtest until the
 Nasdaq adapter's full raw-response and redistribution gate passes.
@@ -165,8 +165,8 @@ Nasdaq adapter's full raw-response and redistribution gate passes.
 | 7 | `@InsiderCopycat_Max` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
 | 8 | `@InsiderCluster_Alpha` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
 | 9 | `@CEO_CFO_Conviction` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
-| 10 | `@Kalshi_Attention_Timer` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (venue volume empty) |
-| 11 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (forward-only probe) |
+| 10 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (forward-only probe) |
+| 11 | `@Kalshi_Attention_Timer` | −2.0% | −6.2% | −0.16 | −0.06 | 14 | 0.37% | lost money |
 | 12 | `@MLB_Upset_Short` | −9.6% | −11.3% | −0.78 | −0.02 | 22 | 0.59% | lost money |
 | 13 | `@YieldCurve_Rotator` | −10.1% | −12.9% | −0.64 | 0.26 | 4 | 0.04% | lost money |
 | 14 | `@Weather_ColdSnap_Max` | −11.2% | −40.4% | −0.07 | −0.19 | 49 | 1.36% | lost money |
@@ -175,30 +175,28 @@ Nasdaq adapter's full raw-response and redistribution gate passes.
 loser is *the same signal traded the other way*
 (`@FDA_ClusterFade`, which fights the approval-count trend) - one real signal, two
 opposite implementations, and the difference between first and last. Nothing here
-is a claim that FDA approvals predict XBI. The idle five are the other half of the
+is a claim that FDA approvals predict XBI. The idle four are the other half of the
 result: `@InsiderCopycat_Max`, `@InsiderCluster_Alpha` and `@CEO_CFO_Conviction`
 need the SEC Form 4 collection (HTTP 403 on the anonymous User-Agent, since fixed
-in the collector but not yet re-collected); `@Kalshi_Attention_Timer` reads a
-venue payload whose volume fields came back empty; `@InjuryFeed_Forward` is a
-declared forward-only probe with no retrievable archive. The site labels each one
+in the collector but not yet re-collected); `@InjuryFeed_Forward` is a declared
+forward-only probe with no retrievable archive. The site labels each one
 *DATA-MISSING* with the URL and the reason, which is the difference between "we
 tested it and it did not work" and "we could not test it".
 
-**Verification.** 771 fills and 355 round trips, net round-trip P&L
-**$149,756.96** on $20.9m of traded notional, ledger digest `2adbced6…`. The
+**Verification.** 797 fills and 369 round trips, net round-trip P&L
+**$147,774.32** on $21.2m of traded notional, ledger digest `ef029973…`. The
 account is re-derived from the raw fill tape by code that never imports the
 engine: max |equity residual| **$0.0072** against a per-account rounding bound of
 $2.925 (the tape stores six-decimal prices). Median participation is 0.00013% of a
 session's volume and the largest single fill is 0.23% of it. The independent audit
-re-reads every published number: **2,591 checks, 0 failures**, plus 1,108 more in
+re-reads every published number: **2,682 checks, 0 failures**, plus 1,146 more in
 the Season 1 audit. Cost sensitivity is published as a panel, not a footnote:
 doubling spreads, impact and fees costs the leader 1.2pp and halving the venue's
 depth costs 0.1pp, while `@Weather_ColdSnap_Max` loses 0.8pp to the fee-doubling
 alone.
 
 **Data custody.** 26 instruments, 502 sessions (251 warm-up + 251 competition),
-58 collected files under `data/real/`, every request logged with status, bytes and
-SHA-256 in `data/real/collection_manifest.json`. Season 2's own registers live at
+64 inventoried files under `data/real/` (about 9.2 MB), every request logged with status, bytes and SHA-256 in `data/real/collection_manifest.json`. Season 2's own registers live at
 `docs/season2/masterfeed.html` (the 14 MasterSite projects the brief named, each
 with source class, mapping strength and whether history was retrievable),
 `docs/season2/ledger.html` (every fill with the reference bar, the file and the
@@ -210,7 +208,7 @@ participation) and `docs/season2/data.html` (the full custody chain).
 python3 scripts/collect_real_data.py --out data/real   # on a runner with network
 python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity
 python3 -m sim.cli ledger --run season2-primary-seed20260918 --participant @FDACatalyst_Rider
-python3 scripts/independent_audit_season2.py           # 2,591 checks, no project imports
+python3 scripts/independent_audit_season2.py           # 2,682 checks, no project imports
 python3 -m sim.cli build-site                          # Season 1 + Season 2 into docs/
 ```
 
@@ -245,7 +243,7 @@ from the venue assumptions rather than from a fabricated seed panel.
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    57-row verified-source register
+                    60-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -259,8 +257,8 @@ sim/            the engine - pure standard library, no third-party imports
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          398 tests - engine, venue, memory, site, registers, docs, README,
-                official-price eligibility
+tests/          426 tests - engine, venue, memory, site, registers, docs, README,
+                official-price eligibility and sensitivity
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
 memory/         the audit trail: one directory per run, gzipped event streams,
@@ -285,7 +283,7 @@ python3 -m sim.cli season2 --price-source yahoo --allow-secondary-research
                                         # explicit non-eligible research replay only
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 398 tests
+python3 -m unittest discover -s tests   # 426 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -319,7 +317,7 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 63-row register (57 source rows plus 6 provider rows), every URL
+  — the 66-row register (60 source rows plus 6 provider rows), every URL
   clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not

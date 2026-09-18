@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T21:51:25Z",
+ "generated_at": "2026-09-18T21:53:46Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -27,7 +27,8 @@
     "DGS30",
     "DTB4WK",
     "DTB3",
-    "DTB6"
+    "DTB6",
+    "CPIAUCSL"
    ],
    "failed": [
     "GOLDAMGBD228NLBM",
@@ -53,7 +54,8 @@
     "DGS30": 501,
     "DTB4WK": 501,
     "DTB3": 501,
-    "DTB6": 501
+    "DTB6": 501,
+    "CPIAUCSL": 23
    }
   },
   "treasury": {
@@ -122,7 +124,7 @@
     }
    },
    "crosscheck": {
-    "generated_at": "2026-09-18T21:51:19Z",
+    "generated_at": "2026-09-18T21:53:40Z",
     "treasurydirect_auctions": 471,
     "fiscaldata_auctions": 2000,
     "shared_auctions": 471,
@@ -261,8 +263,8 @@
    "label": "FRED (Federal Reserve Bank of St. Louis)",
    "source_class": "OFFICIAL",
    "path": "real/fred",
-   "files": 23,
-   "bytes": 190464
+   "files": 24,
+   "bytes": 190939
   },
   {
    "label": "SEC EDGAR (Form 4 + ticker map)",

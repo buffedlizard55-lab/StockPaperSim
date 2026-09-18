@@ -181,9 +181,39 @@ def narrative(strategy: ob.OfficialStrategy, row: dict,
     worst = min(trades, key=lambda t: t.pnl) if trades else None
     drivers: List[str] = []
     if not trades:
-        drivers.append(
-            "No trade closed inside the window. The cash return is the official "
-            "SOFR credited on the balance, not a strategy result.")
+        # No *closed* trade does not mean no position.  A participant that bought
+        # a thirty-year bond two sessions into the season and never sold it has
+        # zero round trips and a large marked-down position, and telling a reader
+        # that its return is the cash credit would be exactly the kind of
+        # plausible-looking wrong sentence this project exists to avoid.  So the
+        # open position is marked here, from the same official marks the engine
+        # used, and the mark is what the narrative reports.
+        if account.lots:
+            marks = book.mark_prices(book.last_session)
+            unrealised = 0.0
+            lines: List[str] = []
+            for lot in account.lots:
+                mark = float(marks.get(lot.cusip, lot.price_per100))
+                pnl = ((mark - lot.price_per100) / 100.0 * lot.face
+                       * (1.0 if lot.opened_face > 0 else -1.0))
+                unrealised += pnl
+                lines.append(
+                    f"Open position: {lot.cusip} {abs(lot.face):,.0f} face opened "
+                    f"{lot.opened_on} at {lot.price_per100:.6f}, marked {mark:.6f} "
+                    f"at {book.last_session} ({pnl:+,.2f}).")
+            drivers.append(
+                f"No trade closed inside the window, but the account is not flat: "
+                f"it holds {len(account.lots)} open position(s) whose "
+                f"mark-to-market at the final session's official mark is "
+                f"${unrealised:+,.2f}. The return is that mark plus the SOFR "
+                f"credit minus the financing charge - a real position, not a "
+                f"participant that sat still.")
+            drivers.extend(lines)
+        else:
+            drivers.append(
+                "No trade closed inside the window and the account never held a "
+                "position. The cash return is the official SOFR credited on the "
+                "balance, not a strategy result.")
     else:
         if best is not None and best.pnl > 0:
             drivers.append(

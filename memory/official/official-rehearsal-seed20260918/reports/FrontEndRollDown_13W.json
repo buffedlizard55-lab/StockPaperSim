@@ -5,7 +5,9 @@
  "data_status": "READY",
  "data_note": "",
  "drivers": [
-  "No trade closed inside the window. The cash return is the official SOFR credited on the balance, not a strategy result.",
+  "No trade closed inside the window, but the account is not flat: it holds 2 open position(s) whose mark-to-market at the final session's official mark is $+1,348.24. The return is that mark plus the SOFR credit minus the financing charge - a real position, not a participant that sat still.",
+  "Open position: 912797UY1 381,400 face opened 2026-08-10 at 99.055875, marked 99.382776 at 2026-09-16 (+1,246.80).",
+  "Open position: 912797UZ8 41,800 face opened 2026-08-17 at 99.060931, marked 99.303619 at 2026-09-16 (+101.44).",
   "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
  ],
  "verdict": "made money",
@@ -33,7 +35,7 @@
   "official_price_coverage": 1.0,
   "ruined_on": null,
   "status": "ACTIVE",
-  "rank": 2
+  "rank": 1
  },
  "intents": [
   {

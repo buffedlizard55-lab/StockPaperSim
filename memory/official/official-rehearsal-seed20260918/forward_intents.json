@@ -301,5 +301,32 @@
   "issue_date": null,
   "maturity_date": null,
   "offering_amount": null
+ },
+ {
+  "intent_id": "TIPSBreakeven_Rider-00236",
+  "participant": "@TIPSBreakeven_Rider",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "912810US5",
+  "face": 167500.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "buy TIPS while the breakeven at the security's own tenor is below realised inflation",
+  "rationale": "29.44-year breakeven 2.38% (5.35% nominal at that tenor - 2.97% TIPS) against realised CPI 109.22% over 29.44 years",
+  "evidence": {
+   "mark": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity"
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
  }
 ]

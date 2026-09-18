@@ -209,6 +209,7 @@ class OfficialSite:
         self.trips = _jsonl(os.path.join(self.run_dir, "trips.jsonl.gz"))
         self.fills = _jsonl(os.path.join(self.run_dir, "fills.jsonl.gz"))
         self.intents = _jsonl(os.path.join(self.run_dir, "intents.jsonl.gz"))
+        self.marks = _jsonl(os.path.join(self.run_dir, "marks.jsonl.gz"))
         #: What the rules said when they decided not to trade.  The stream is
         #: optional because runs written before it existed have no file, and a
         #: missing stream must degrade to "nothing recorded", not to an error.
@@ -247,6 +248,18 @@ class OfficialSite:
 
     def intents_for(self, username: str) -> List[dict]:
         return self._named(self.intents, username)
+
+    def last_mark(self, username: str) -> dict:
+        """The participant's last recorded mark, or an empty dict.
+
+        The marks stream is the venue's own end-of-session accounting: cash,
+        market value, gross exposure, leverage and equity per participant. A page
+        that explains a return with no closed trades needs it, because "no round
+        trips" and "no position" are different states and only this stream can
+        tell them apart.
+        """
+        rows = self._named(self.marks, username)
+        return rows[-1] if rows else {}
 
     def notes_for(self, username: str, limit: int = 6) -> List[dict]:
         """The reasons one rule gave for standing aside, most frequent first.
@@ -713,10 +726,25 @@ filled.</p>
              "Exit kind", "Price P&amp;L", "Total P&amp;L", "Return on cost"],
             trade_rows)))
     else:
-        body.append(card("Settled trades", f"""
-<p>No trade closed inside the window under this rule. The ending equity is the official
-SOFR credit on idle cash, not a result produced by the strategy, and the page says so
-rather than printing a number that could be mistaken for one.</p>
+        mark = d.last_mark(username)
+        if mark.get("positions"):
+            body.append(card("Settled trades", f"""
+<p>No trade closed inside the window under this rule, and the account is <strong>not
+flat</strong>: at the final session ({ESC(mark['session'])}) it held
+<strong>{mark['positions']}</strong> position(s) worth {_money(mark['market_value'])} against
+gross exposure of {_money(mark['gross_exposure'])} at {_num(mark['leverage'])}x, with cash of
+{_money(mark['cash'])} and equity of {_money(mark['equity'])}.</p>
+<p>The return on this page is therefore a <em>mark-to-market</em> on an open position, plus the
+official SOFR credit and the financing charge - not a realised result, and not a participant
+that sat still. The orders it filled are on the next card; the venue's end-of-session
+accounting is in <code>marks.jsonl.gz</code> beside the other streams.</p>
+"""))
+        else:
+            body.append(card("Settled trades", f"""
+<p>No trade closed inside the window under this rule, and the account never held a position.
+The ending equity is the official SOFR credit on idle cash, not a result produced by the
+strategy, and the page says so rather than printing a number that could be mistaken for
+one.</p>
 """))
     body.append(card("Every order this rule wrote", f"""
 <p>{metrics['intents']:,} orders, by their final state:</p>

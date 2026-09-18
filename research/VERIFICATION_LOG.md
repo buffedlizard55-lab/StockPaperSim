@@ -732,11 +732,18 @@ tapes), and the book was re-run and re-audited afterwards.
 | | |
 |---|---|
 | Run | `memory/official/official-rehearsal-seed20260918` — 250 official sessions, 2025-09-17 → 2026-09-16, 14 participants, $100,000 each |
-| Verification | **PASS** — 7,573 checks, 0 failures, largest equity residual $0.035155 |
+| Verification | **PASS** — 8,045 checks, 0 failures, largest equity residual $0.035155 |
 | Independent audit | **PASS** — 1,864 checks, 0 failures, report at `memory/official/ledger/independent_audit.json` |
-| Activity | 2,662 intents, 300 fills, 189 settled round trips; 1,182 refused, 1,170 superseded |
-| Winner | `@TIPSBreakeven_Rider` **+5.58%** — with **zero orders**: the return is the official SOFR credit on idle cash |
-| Median | **−24.20%**; best participant that actually traded: `@AuctionStrength_Follow` **+4.40%** (4 trips) |
+| Activity | 2,898 intents, 302 fills, 189 settled round trips |
+| Winner | `@FrontEndRollDown_13W` **+4.42%**, carrying two short bills; the inflation rule is last but one at **−59.77%** |
+| Median | **−39.07%** |
+
+The numbers in that table are the state **after** the collection run described
+below landed, which is the state this branch publishes. Mid-pass, before that run,
+the same table read: 2,662 intents, 300 fills, 189 round trips, winner
+`@TIPSBreakeven_Rider` **+5.58%** with zero orders, median **−24.20%**, 7,573
+verification checks. Both states are recorded because the difference between them
+is the point of the pass.
 
 ### The defect this pass found (IR-61)
 
@@ -771,3 +778,30 @@ nothing failed, because no test read that section. `tests/test_readme_claims.py`
 now re-derives the paragraph from `memory/official/…/leaderboard.json`, the
 manifest and the committed audit report, including the requirement that a winner
 with zero trades is described as cash interest rather than as a strategy result.
+
+### What changed when the wider CPI file landed (same pass, later)
+
+The push that carried the collector change fired the temporary collection
+workflow, and the runner returned `CPIAUCSL_1990-01-01_2026-09-17.csv` — 440
+monthly observations, 1990-01-01 to 2026-08-01. The book was re-run on that file:
+
+* the inflation rule stopped standing aside and **bought** — a 30-year TIPS,
+  360,400 face at 98.655276 on 2025-09-18 and a further 28,700 face at 101.054399
+  on 2025-11-28, both at the venue's official real-yield mark (OFFICIAL-DERIVED),
+  on the way to a **−59.77%** return;
+* the winner changed a second time, to `@FrontEndRollDown_13W` at **+4.42%**, which
+  holds two short bills — its return is bill carry, not a duration call;
+* the median fell from −24.20% to **−39.07%**, and the verification count rose from
+  7,573 to **8,045** because there are now open positions to re-price every
+  session.
+
+**A second instance of the same defect class, on the same page.** With the rule
+holding a marked-down position and no closed trips, the post-mortem still said
+*"No trade closed inside the window. The cash return is the official SOFR credited
+on the balance, not a strategy result."* — the generator equated "no round trips"
+with "no position". The narrative and the participant page now mark the open
+positions from the venue's own marks stream and report the number: two positions,
+**−$43,801.28** unrealised at the final session's official mark, plus $16,528.92 of
+financing. This is the same shape of error as IR-61 — a sentence that is true of a
+different account — and it is why the README's official paragraph is now checked
+by a test that re-derives it from the run.

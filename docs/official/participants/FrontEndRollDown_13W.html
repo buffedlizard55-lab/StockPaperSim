@@ -24,7 +24,7 @@ offering amount and bid-to-cover recorded on every trade.">
 <p class="lede"><strong>@FrontEndRollDown_13W</strong> - Buy the 13-week bill at auction and sell it in the secondary market five sessions before maturity, when the bill has aged into a lower point on the curve. The gain is roll-down, and it only exists while the front end is upward-sloping; the rule reads the official H.15 secondary-market bill rates to check that it is.</p>
 
 <div class="kpis"><div class="kpi"><span class="kpi-label">Return</span><span class="kpi-value ">+4.42%</span><span class="kpi-sub">$104,417.72 ending equity</span></div><div class="kpi"><span class="kpi-label">Status</span><span class="kpi-value ">ACTIVE</span><span class="kpi-sub">0 settled trades</span></div><div class="kpi"><span class="kpi-label">Max drawdown</span><span class="kpi-value ">-0.53%</span><span class="kpi-sub">Sharpe 13.02</span></div><div class="kpi"><span class="kpi-label">Coupons</span><span class="kpi-value ">$0.00</span><span class="kpi-sub">financing $-1,902.13</span></div><div class="kpi"><span class="kpi-label">Orders</span><span class="kpi-value ">12</span><span class="kpi-sub">2 filled · 0 waited · 0 refused</span></div><div class="kpi"><span class="kpi-label">Official price coverage</span><span class="kpi-value ">100.00%</span><span class="kpi-sub">primary at the published price, secondary derived</span></div></div>
-<section class="card "><h2>Why it worked, or why it did not</h2><ul><li>No trade closed inside the window. The cash return is the official SOFR credited on the balance, not a strategy result.</li><li>Official par curve over the window: 3-month 4.02% -&gt; 4.14% (+12 bp), 2-year 3.52% -&gt; 4.74% (+122 bp), 10-year 4.06% -&gt; 5.01% (+95 bp), 30-year 4.66% -&gt; 5.35% (+69 bp). Duration exposures are paid off against this path.</li></ul></section>
+<section class="card "><h2>Why it worked, or why it did not</h2><ul><li>No trade closed inside the window, but the account is not flat: it holds 2 open position(s) whose mark-to-market at the final session&#x27;s official mark is $+1,348.24. The return is that mark plus the SOFR credit minus the financing charge - a real position, not a participant that sat still.</li><li>Open position: 912797UY1 381,400 face opened 2026-08-10 at 99.055875, marked 99.382776 at 2026-09-16 (+1,246.80).</li><li>Open position: 912797UZ8 41,800 face opened 2026-08-17 at 99.060931, marked 99.303619 at 2026-09-16 (+101.44).</li><li>Official par curve over the window: 3-month 4.02% -&gt; 4.14% (+12 bp), 2-year 3.52% -&gt; 4.74% (+122 bp), 10-year 4.06% -&gt; 5.01% (+95 bp), 30-year 4.66% -&gt; 5.35% (+69 bp). Duration exposures are paid off against this path.</li></ul></section>
 <section class="card "><h2>Why it stood aside</h2>
 <p>These are the reasons the rule itself gave, at the session it decided, for not
 sending an order. They are the rule's own words, stored when the decision was
@@ -32,9 +32,15 @@ made and grouped here - not written afterwards.</p>
 <table class="data"><thead><tr><th>Sessions</th><th>First</th><th>Last</th><th>Reason</th></tr></thead><tbody><tr><td>107</td><td>2026-03-18</td><td>2026-09-16</td><td>no announced 13-week bill to bid</td></tr><tr><td>13</td><td>2025-12-04</td><td>2026-02-27</td><td>front end not upward-sloping (-14.000000000000012 bp 1M-6M): no roll-down to harvest</td></tr><tr><td>8</td><td>2025-12-24</td><td>2026-02-26</td><td>front end not upward-sloping (-13.000000000000034 bp 1M-6M): no roll-down to harvest</td></tr><tr><td>7</td><td>2025-12-29</td><td>2026-02-24</td><td>front end not upward-sloping (-10.000000000000009 bp 1M-6M): no roll-down to harvest</td></tr><tr><td>6</td><td>2025-12-08</td><td>2026-01-28</td><td>front end not upward-sloping (-12.99999999999999 bp 1M-6M): no roll-down to harvest</td></tr><tr><td>6</td><td>2026-03-03</td><td>2026-03-11</td><td>front end not upward-sloping (-6.999999999999984 bp 1M-6M): no roll-down to harvest</td></tr></tbody></table>
 </section>
 <section class="card "><h2>Settled trades</h2>
-<p>No trade closed inside the window under this rule. The ending equity is the official
-SOFR credit on idle cash, not a result produced by the strategy, and the page says so
-rather than printing a number that could be mistaken for one.</p>
+<p>No trade closed inside the window under this rule, and the account is <strong>not
+flat</strong>: at the final session (2026-09-16) it held
+<strong>2</strong> position(s) worth $420,554.82 against
+gross exposure of $420,554.82 at 4.03x, with cash of
+$-316,137.10 and equity of $104,417.72.</p>
+<p>The return on this page is therefore a <em>mark-to-market</em> on an open position, plus the
+official SOFR credit and the financing charge - not a realised result, and not a participant
+that sat still. The orders it filled are on the next card; the venue's end-of-session
+accounting is in <code>marks.jsonl.gz</code> beside the other streams.</p>
 </section>
 <section class="card "><h2>Every order this rule wrote</h2>
 <p>12 orders, by their final state:</p>

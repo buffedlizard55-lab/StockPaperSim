@@ -7,32 +7,6 @@
  "sessions": 250,
  "participants": [
   {
-   "participant": "@TIPSBreakeven_Rider",
-   "family": "inflation",
-   "final_equity": 105580.12,
-   "return_pct": 5.5801,
-   "return_at_ruin_pct": null,
-   "max_drawdown_pct": 0.0,
-   "sharpe": 26.0525,
-   "trades": 0,
-   "open_positions": 0,
-   "coupon_income": 0,
-   "financing": 0,
-   "debit_interest": 0,
-   "cash_credit": 5580.12,
-   "realised_pnl": 0,
-   "margin_events": 0,
-   "intents": 0,
-   "filled_intents": 0,
-   "waiting_intents": 0,
-   "rejected_intents": 0,
-   "data_status": "READY",
-   "official_price_coverage": 1.0,
-   "ruined_on": null,
-   "status": "ACTIVE",
-   "rank": 1
-  },
-  {
    "participant": "@FrontEndRollDown_13W",
    "family": "roll-down",
    "final_equity": 104417.72,
@@ -56,7 +30,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 2
+   "rank": 1
   },
   {
    "participant": "@AuctionStrength_Follow",
@@ -82,7 +56,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 3
+   "rank": 2
   },
   {
    "participant": "@TBillLadder_MaxRoll",
@@ -108,7 +82,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 4
+   "rank": 3
   },
   {
    "participant": "@LiquidityWeighted_Participant",
@@ -134,7 +108,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 5
+   "rank": 4
   },
   {
    "participant": "@BillCarry_TenX",
@@ -160,7 +134,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 6
+   "rank": 5
   },
   {
    "participant": "@CurveFlattener_2s10s",
@@ -186,7 +160,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 7
+   "rank": 6
   },
   {
    "participant": "@CurveSteepener_2s10s",
@@ -212,7 +186,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 8
+   "rank": 7
   },
   {
    "participant": "@ConcessionFade_Notes",
@@ -238,7 +212,7 @@
    "official_price_coverage": 1.0,
    "ruined_on": null,
    "status": "ACTIVE",
-   "rank": 9
+   "rank": 8
   },
   {
    "participant": "@BellyMeanReversion_FiveY",
@@ -260,6 +234,32 @@
    "filled_intents": 14,
    "waiting_intents": 0,
    "rejected_intents": 0,
+   "data_status": "READY",
+   "official_price_coverage": 1.0,
+   "ruined_on": null,
+   "status": "ACTIVE",
+   "rank": 9
+  },
+  {
+   "participant": "@TIPSBreakeven_Rider",
+   "family": "inflation",
+   "final_equity": 40225.31,
+   "return_pct": -59.7747,
+   "return_at_ruin_pct": null,
+   "max_drawdown_pct": -62.7844,
+   "sharpe": -1.7042,
+   "trades": 0,
+   "open_positions": 2,
+   "coupon_income": 0,
+   "financing": 0,
+   "debit_interest": -16528.92,
+   "cash_credit": 17.38,
+   "realised_pnl": 0,
+   "margin_events": 0,
+   "intents": 236,
+   "filled_intents": 2,
+   "waiting_intents": 0,
+   "rejected_intents": 174,
    "data_status": "READY",
    "official_price_coverage": 1.0,
    "ruined_on": null,
@@ -372,12 +372,12 @@
   }
  ],
  "verification": {
-  "checks": 7573,
+  "checks": 8045,
   "failures": [],
   "failure_count": 0,
   "verdict": "PASS",
   "max_equity_residual_usd": 0.035155,
-  "generated_utc": "2026-09-18T22:29:56Z"
+  "generated_utc": "2026-09-18T22:39:45Z"
  },
  "venue": {
   "primary_execution": "non-competitive award at the Treasury's published price per $100 (single-price auction)",

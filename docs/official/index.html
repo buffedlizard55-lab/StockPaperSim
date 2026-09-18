@@ -30,7 +30,7 @@ official yield curve by a formula printed on the <a href="method.html">venue pag
 No equity price, no broker quote, no modelled bar can reach this book: the code path
 does not exist, and the verification block asserts it.</p>
 
-<div class="kpis"><div class="kpi"><span class="kpi-label">Starting cash</span><span class="kpi-value ">$100,000</span><span class="kpi-sub">per participant</span></div><div class="kpi"><span class="kpi-label">Top return</span><span class="kpi-value pos">+5.58%</span><span class="kpi-sub">@TIPSBreakeven_Rider</span></div><div class="kpi"><span class="kpi-label">Participants ahead</span><span class="kpi-value ">4 of 14</span><span class="kpi-sub">return better than zero</span></div><div class="kpi"><span class="kpi-label">Prices that can reach the book</span><span class="kpi-value ">100% official</span><span class="kpi-sub">primary = the published price; secondary = derived from an official observation and labelled as such</span></div><div class="kpi"><span class="kpi-label">Round trips with both legs official</span><span class="kpi-value ">31.75%</span><span class="kpi-sub">the rest is primary in, derived out (see the trade store)</span></div><div class="kpi"><span class="kpi-label">Settled trades</span><span class="kpi-value ">189</span><span class="kpi-sub">300 fills</span></div><div class="kpi"><span class="kpi-label">Verification</span><span class="kpi-value ">PASS</span><span class="kpi-sub">7573 checks · 0 failures</span></div></div>
+<div class="kpis"><div class="kpi"><span class="kpi-label">Starting cash</span><span class="kpi-value ">$100,000</span><span class="kpi-sub">per participant</span></div><div class="kpi"><span class="kpi-label">Top return</span><span class="kpi-value pos">+4.42%</span><span class="kpi-sub">@FrontEndRollDown_13W</span></div><div class="kpi"><span class="kpi-label">Participants ahead</span><span class="kpi-value ">3 of 14</span><span class="kpi-sub">return better than zero</span></div><div class="kpi"><span class="kpi-label">Prices that can reach the book</span><span class="kpi-value ">100% official</span><span class="kpi-sub">primary = the published price; secondary = derived from an official observation and labelled as such</span></div><div class="kpi"><span class="kpi-label">Round trips with both legs official</span><span class="kpi-value ">31.75%</span><span class="kpi-sub">the rest is primary in, derived out (see the trade store)</span></div><div class="kpi"><span class="kpi-label">Settled trades</span><span class="kpi-value ">189</span><span class="kpi-sub">302 fills</span></div><div class="kpi"><span class="kpi-label">Verification</span><span class="kpi-value ">PASS</span><span class="kpi-sub">8045 checks · 0 failures</span></div></div>
 <section class="card "><h2>What makes a trade on this tape verifiable</h2>
 <p>Three things have to be true at once, and each one is checkable from the committed
 files rather than from this page:</p>
@@ -106,7 +106,7 @@ compared against the session that cited it, every target session is compared aga
 the session that wrote it, and a ruined account has to show exactly −100%.</p>
 </section>
 <section class="card "><h2>The tape in nine numbers</h2>
-<p>2,662 intents were written and 300 of them
+<p>2,898 intents were written and 302 of them
 filled, closing into <strong>189</strong> settled round trips with
 5 margin events. Official-price coverage of executed notional is
 <strong>100.00%</strong>: primary

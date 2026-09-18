@@ -252,32 +252,35 @@ may run at its own declared leverage cap and may be wiped out — the venue clos
 positions at the official mark when equity falls below 5% of gross exposure, and
 an account that reaches zero is wound up at exactly −100% and stops trading.
 
-**Result.** 189 settled round trips from 300 fills and 2,662 intents; the best
-return is `@TIPSBreakeven_Rider` at **+5.58%**, and that participant placed no
-order at all - its return is the official SOFR credit on idle cash. The median
-return is **-24.20%**, and every rule that took duration risk lost money: the best
-rule that actually traded is `@AuctionStrength_Follow` at **+4.40%** over four
-round trips, while `@LongBond_MaxDur` ends at **-90.10%**. Financing is SOFR +
-25 bp on debits and shorts and idle cash earns SOFR, which is why a participant
-that never traded can still show a small positive return. Every trade row carries
-its entry and exit price, both dates, the auction's own offering amount and
+**Result.** 189 settled round trips from 302 fills and 2,898 intents; the best
+return is `@FrontEndRollDown_13W` at **+4.42%**, and it is not a duration call: the
+account holds two short bills and its gain is their carry. The median return is
+**-39.07%**, and every participant that took duration risk lost money: the
+inflation rule's 30-year TIPS is marked $43,801.28 below what it paid and ends at
+**-59.77%**, and `@LongBond_MaxDur` ends at **-90.10%**. Financing is SOFR + 25 bp
+on debits and shorts and idle cash earns SOFR, which is why a participant that
+never traded can still show a small positive return. Every trade row carries its
+entry and exit price, both dates, the auction's own offering amount and
 bid-to-cover, the field name the price came from and that file's SHA-256.
 
-**Why the winner is a rule that never traded.** The venue records the reason a
-rule gave for standing aside, at the session it decided, and the participant
-pages publish those reasons ranked by how often they recurred. The inflation rule
-gave the same one on all 250 sessions: *"the collected CPI series reaches back
-0.999 years, short of the 29.43-year horizon this TIPS pays over; the rule does
-not quietly compare a shorter window"*. Both legs of that comparison are now read
-at the security's own remaining maturity (IR-61), and the collector asks for the
-index from 1990, so the next collection run lets the rule compare like with like
-instead of standing aside (L-36).
+**What the inflation rule did when it could finally see its own horizon.** The
+rule compares the breakeven at a security's remaining maturity with realised
+inflation over the same number of years, and it spent the whole window holding a
+29-year TIPS bought at 98.66 in September 2025 and marked 87.07 a year later, for
+a mark-to-market of **-$43,801.28** and a financing charge of $16,528.92 - which
+is where its -59.77% comes from. Two things had to be fixed before it could even
+be judged: the rule used to read its nominal leg at a fixed ten years and its
+inflation leg over a fixed five while holding a thirty-year security (IR-61), and
+the CPI file held one year of observations, so the honest answer to "what has
+inflation actually been over this horizon" was *nothing* (L-36). The collector
+now asks for the index from 1990, and the page records, session by session, the
+reason the rule gave whenever it stood aside.
 
 **Verification, twice.** `sim/official_season.py` re-reads the tape and checks
 eight families of property (published price on every primary fill, bill price
 formula on every published bill price, two-publisher agreement, no look-ahead, no
 equity residual, maturity dates, price classes, and no reachable secondary path):
-**7,573 checks, 0 failures**. Then `scripts/independent_audit_official.py` - which
+**8,045 checks, 0 failures**. Then `scripts/independent_audit_official.py` - which
 imports **nothing** from `sim/` and re-derives everything from the raw Treasury
 tapes and the run's own streams - adds **1,864 checks**, including the
 two-publisher comparison on every primary price the book actually executed. CI

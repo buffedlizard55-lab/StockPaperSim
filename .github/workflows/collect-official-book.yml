@@ -12,17 +12,20 @@ name: Collect official auction and insider data
 #
 # TRIGGERS
 # --------
-# * ``workflow_dispatch`` is the permanent way to run it, matching the policy
-#   the collector workflow states: collection can rewrite the committed data
-#   directory, so a human chooses when it happens.
-# * The ``push`` trigger below is TEMPORARY scaffolding for the branch that
-#   introduced this workflow.  GitHub's API refused a dispatch for this
-#   repository's automation ("Resource not accessible by integration"), and
-#   without the trigger there is no way to obtain the official responses from
-#   an environment that has a network.  It is removed before the branch is
-#   merged, so ``main`` keeps the manual-only policy; the run that produced the
-#   committed files is linked in research/VERIFICATION_LOG.md.
+# ``workflow_dispatch`` only, matching the policy the collector workflow states:
+# collection can rewrite the committed data directory, so a human chooses when it
+# happens.
 #
+# The branch that introduced this workflow also carried a temporary ``push``
+# trigger, because GitHub's API refused a dispatch for this repository's
+# automation ("Resource not accessible by integration") and without a trigger
+# there was no way to obtain the official responses from an environment that has
+# a network. It did its job - it collected the Treasury tapes, the FRED series
+# (including the 1990-window CPI file that let the inflation rule trade) and it
+# proved out the SEC 403s - and it is removed here, before this branch is merged,
+# so ``main`` keeps the manual-only policy. The runs it produced are linked in
+# research/VERIFICATION_LOG.md.
+
 # The self-reference guard is not cosmetic: the workflow commits and pushes,
 # and its own push would start it again forever without it.
 
@@ -33,14 +36,6 @@ on:
         description: "Comma-separated sections"
         required: false
         default: "treasury,fred,insider_bulk"
-  push:
-    branches: [arena/01a0b674-stockpapersim]
-    paths:
-      - ".github/workflows/collect-official-book.yml"
-      - "scripts/collect_real_data.py"
-      - "sim/treasury.py"
-      - "sim/officialbook.py"
-      - "sim/strategies_official.py"
 
 permissions:
   contents: write

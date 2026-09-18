@@ -3,7 +3,7 @@
  "book": "StockPaperSim Official Auction Book",
  "season": "Official Season (opened 2026-09-18) - every execution price is the U.S. Treasury's own published number",
  "seed": 20260918,
- "created_utc": "2026-09-18T22:29:57Z",
+ "created_utc": "2026-09-18T22:39:46Z",
  "window": {
   "start": "2025-09-17",
   "end": "2026-09-16",
@@ -27,33 +27,33 @@
   "@CalendarBarbell_Max"
  ],
  "counts": {
-  "intents": 2662,
-  "fills": 300,
+  "intents": 2898,
+  "fills": 302,
   "trips": 189,
   "marks": 3500,
-  "carry_rows": 4531,
+  "carry_rows": 4533,
   "margin_events": 5
  },
  "storage": {
   "streams": {
    "intents": {
     "file": "memory/official/official-rehearsal-seed20260918/intents.jsonl.gz",
-    "rows": 2662,
-    "bytes_on_disk": 117264,
-    "bytes_uncompressed": 2992910,
-    "bytes_per_row_on_disk": 44.05,
-    "compression_ratio": 25.523,
-    "sha256": "4105714bc6ce912cb1ad1c1187a9262ca5d488293c4d2d6439b7ad5abc9e49df",
+    "rows": 2898,
+    "bytes_on_disk": 125866,
+    "bytes_uncompressed": 3258438,
+    "bytes_per_row_on_disk": 43.43,
+    "compression_ratio": 25.888,
+    "sha256": "3e50ab37e834ccdc32b2de57a63b19b1af12aac95e340f9024fa53c9eeae069e",
     "compressed": true
    },
    "fills": {
     "file": "memory/official/official-rehearsal-seed20260918/fills.jsonl.gz",
-    "rows": 300,
-    "bytes_on_disk": 16491,
-    "bytes_uncompressed": 202521,
-    "bytes_per_row_on_disk": 54.97,
-    "compression_ratio": 12.281,
-    "sha256": "54405bda2f81deb7ac1754e841daff4a8a43178d224daca0df9745a49a2a8df3",
+    "rows": 302,
+    "bytes_on_disk": 16669,
+    "bytes_uncompressed": 203706,
+    "bytes_per_row_on_disk": 55.2,
+    "compression_ratio": 12.221,
+    "sha256": "e29261d6de3e446881d4eb7b58d7e4e0ad46a3d71b215e245c07a0c085dff267",
     "compressed": true
    },
    "trips": {
@@ -63,27 +63,27 @@
     "bytes_uncompressed": 308690,
     "bytes_per_row_on_disk": 96.94,
     "compression_ratio": 16.848,
-    "sha256": "4347eef37a390811ace4530ec6dc2aae5410d60643d1234e67fd2ec99fc236df",
+    "sha256": "ffa1a3b49cdb0d9110f968da6149748bd60c6c8460a575b152cc7f15e6687b2f",
     "compressed": true
    },
    "marks": {
     "file": "memory/official/official-rehearsal-seed20260918/marks.jsonl.gz",
     "rows": 3500,
-    "bytes_on_disk": 98084,
-    "bytes_uncompressed": 690243,
-    "bytes_per_row_on_disk": 28.02,
-    "compression_ratio": 7.037,
-    "sha256": "a7abbbedd09bf6f6ddd58f99e1765c240e22e2a3569040cb393433d7cde63314",
+    "bytes_on_disk": 104935,
+    "bytes_uncompressed": 696385,
+    "bytes_per_row_on_disk": 29.98,
+    "compression_ratio": 6.636,
+    "sha256": "4df7b5e09d4bdac4ff54bff0e10a3d3301df457140fccbf05b31a0cf5e4b566b",
     "compressed": true
    },
    "carry": {
     "file": "memory/official/official-rehearsal-seed20260918/carry.jsonl.gz",
-    "rows": 4531,
-    "bytes_on_disk": 69993,
-    "bytes_uncompressed": 753095,
-    "bytes_per_row_on_disk": 15.45,
-    "compression_ratio": 10.76,
-    "sha256": "3a39155d7fe1544906a741604d31d05dc45c6a3f8d3610f323d43f28df91ba8e",
+    "rows": 4533,
+    "bytes_on_disk": 70000,
+    "bytes_uncompressed": 758384,
+    "bytes_per_row_on_disk": 15.44,
+    "compression_ratio": 10.834,
+    "sha256": "8db7cd7ffa9bc610e6da8ca17d5536123a7783a9344d377f139d235f3b451660",
     "compressed": true
    },
    "margin": {
@@ -93,23 +93,23 @@
     "bytes_uncompressed": 1053,
     "bytes_per_row_on_disk": 75.0,
     "compression_ratio": 2.808,
-    "sha256": "3d917ddabd74a6a717f464e78c99e528011464cfaacd3c6e60e8e375ebfaa938",
+    "sha256": "86a8553cea997adbdae7c776d19cffc83ede8a917f453645ccc8491333697586",
     "compressed": true
    },
    "notes": {
     "file": "memory/official/official-rehearsal-seed20260918/notes.jsonl.gz",
-    "rows": 723,
-    "bytes_on_disk": 4320,
-    "bytes_uncompressed": 117029,
-    "bytes_per_row_on_disk": 5.98,
-    "compression_ratio": 27.09,
-    "sha256": "ba93203df27c20899c2b6ae7ac11859fc8f01b645df9e2845b2aa5b78588efb2",
+    "rows": 487,
+    "bytes_on_disk": 2901,
+    "bytes_uncompressed": 62119,
+    "bytes_per_row_on_disk": 5.96,
+    "compression_ratio": 21.413,
+    "sha256": "03238b7d668396758d9f16d1fb37c34e164c8d3e776cd8b468e5caa784af66df",
     "compressed": true
    }
   },
-  "total_bytes_on_disk": 324849,
-  "total_rows": 11910,
-  "bytes_per_row_average": 27.28,
+  "total_bytes_on_disk": 339068,
+  "total_rows": 11914,
+  "bytes_per_row_average": 28.46,
   "format": "gzip JSON Lines, keys sorted, separators ',' and ':' - byte-identical for two runs of the same inputs",
   "csv_export": "blotter.csv"
  },
@@ -148,7 +148,7 @@
   "note": "the price check is exact - 100 (1 - d t/360) reproduces the published price per $100 for every bill whose discount rate and issue/maturity dates are both published, to 1e-4 of a cent. The investment-rate check is partial and the implied day-count factor of every mismatch is reported rather than explained away."
  },
  "crosscheck": {
-  "generated_at": "2026-09-18T22:09:06Z",
+  "generated_at": "2026-09-18T22:37:14Z",
   "treasurydirect_auctions": 471,
   "fiscaldata_auctions": 2000,
   "shared_auctions": 471,
@@ -223,12 +223,12 @@
    {
     "file": "data/real/treasury/fiscaldata_auctions_p1.json.gz",
     "bytes": 221903,
-    "sha256": "dbdaebac45a1eed377dd2757a6508a2a35b1244f6799e1f9d64841d2bc9b83d9"
+    "sha256": "5e89033a3eac9e3f950ca82944886bbe2ad5b758af72ec394ca95c2a46321567"
    },
    {
     "file": "data/real/treasury/fiscaldata_auctions_p2.json.gz",
     "bytes": 218940,
-    "sha256": "438d014897eef2c9affb197275fe048a8f5e352e5b5c8867706c9338a1a80a1c"
+    "sha256": "216e37d279a34183e5f2a7220718a99f59af6bf8d11839156b1b6721019a2272"
    },
    {
     "file": "data/real/treasury/treasury_direct_announced.json",
@@ -243,27 +243,27 @@
    {
     "file": "data/real/treasury/treasury_direct_search_bill_p1.json.gz",
     "bytes": 50401,
-    "sha256": "a49e482fcf67bdbf26828984e1762da8c3f2bd4397c1d9511b83c2de74e8ea20"
+    "sha256": "a9339421398092484f5bf89dd22a77f6e7275071cbb2a6536fc806517b0a70cb"
    },
    {
     "file": "data/real/treasury/treasury_direct_search_bill_p2.json.gz",
     "bytes": 33835,
-    "sha256": "01f1fdf9196fdd32cc9d5a839514fee99cb891a9ae465522c73feee343a34195"
+    "sha256": "f970e36c0be64d3538bfbd21dece1de77ea86a23c2edc1994aee936f4dcba1ef"
    },
    {
     "file": "data/real/treasury/treasury_direct_search_bond_p1.json.gz",
     "bytes": 22,
-    "sha256": "5bffc71bfbf7ccd061dea9020dd0a80099492383bbce23efba7f8e086dd7d03d"
+    "sha256": "75334c1446d569877ee61f0de5ce52060663c7fa94267aa1eae58b1a8bf5b146"
    },
    {
     "file": "data/real/treasury/treasury_direct_search_note_p1.json.gz",
     "bytes": 22,
-    "sha256": "5bffc71bfbf7ccd061dea9020dd0a80099492383bbce23efba7f8e086dd7d03d"
+    "sha256": "75334c1446d569877ee61f0de5ce52060663c7fa94267aa1eae58b1a8bf5b146"
    },
    {
     "file": "data/real/treasury/treasury_direct_search_tips_p1.json.gz",
     "bytes": 22,
-    "sha256": "ee759937f90b6e69faf9bb2385a72f7e2ed4bf670300442f851529c2e01e8ce5"
+    "sha256": "75334c1446d569877ee61f0de5ce52060663c7fa94267aa1eae58b1a8bf5b146"
    }
   ],
   "price_validation": {
@@ -285,7 +285,7 @@
    "note": "the price check is exact - 100 (1 - d t/360) reproduces the published price per $100 for every bill whose discount rate and issue/maturity dates are both published, to 1e-4 of a cent. The investment-rate check is partial and the implied day-count factor of every mismatch is reported rather than explained away."
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T22:09:06Z",
+   "generated_at": "2026-09-18T22:37:14Z",
    "treasurydirect_auctions": 471,
    "fiscaldata_auctions": 2000,
    "shared_auctions": 471,
@@ -332,11 +332,11 @@
  "rates_provenance": [
   {
    "sid": "CPIAUCSL",
-   "file": "data/real/fred/CPIAUCSL_2024-09-16_2026-09-17.csv",
-   "sha256": "1a3fd904da7de3b8817859dce87494714ffc39dd5943d17e290f3de071141cb3",
+   "file": "data/real/fred/CPIAUCSL_1990-01-01_2026-09-17.csv",
+   "sha256": "df3bef229a1a0ea57db9d4ee2dd1c47d9344a1b259e8053cbb8c901afce6da9b",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL",
-   "observations": 23,
-   "first": "2024-09-01",
+   "observations": 439,
+   "first": "1990-01-01",
    "last": "2026-08-01",
    "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
    "publisher": "U.S. Treasury H.15, republished by FRED"
@@ -422,16 +422,16 @@
  "rates_missing": [],
  "irregularities": [],
  "verification": {
-  "checks": 7573,
+  "checks": 8045,
   "failures": [],
   "failure_count": 0,
   "verdict": "PASS",
   "max_equity_residual_usd": 0.035155,
-  "generated_utc": "2026-09-18T22:29:56Z"
+  "generated_utc": "2026-09-18T22:39:45Z"
  },
  "forward_book": {
   "as_of": "2026-09-16",
-  "pending_intents": 10
+  "pending_intents": 11
  },
  "roster": [
   {

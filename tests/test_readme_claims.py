@@ -386,9 +386,12 @@ class TestOfficialBookClaims(unittest.TestCase):
         (claimed,) = self._claim(r"median return is \*\*([+-][\d.]+)%\*\*")
         self.assertAlmostEqual(float(claimed), median, delta=0.005,
                                msg="the README's median is not this run's median")
-        # A winner that made no trade is the interesting case and has to be said
-        # out loud: its return is the venue's cash credit, not a strategy result.
-        if best["trades"] == 0:
+        # A winner that never filled an order is the interesting case and has to be
+        # said out loud: its return is the venue's cash credit, not a strategy
+        # result.  (Zero *closed trips* is a different state - a participant
+        # holding one long bond has no round trips and a large open position, and
+        # the page must not describe that as cash interest.)
+        if best["filled_intents"] == 0:
             self.assertIn("placed no order at all", self.flat,
                           "the best return belongs to a participant with no trades, so the "
                           "README must say that its return is cash interest")

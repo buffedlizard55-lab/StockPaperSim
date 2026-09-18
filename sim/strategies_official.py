@@ -168,9 +168,9 @@ class FrontEndRollDown_13W(OfficialStrategy):
                 ctx.sell_secondary(position.cusip, position.face,
                                    rule="exit five sessions before maturity",
                                    rationale="roll-down captured, avoid the flat spot into maturity")
-        auction = self._recent_issue(ctx, "Bill", "13-Week", within_sessions=7) or \
-            self._next_term(ctx, "13-Week")
+        auction = self._next_term(ctx, "13-Week")
         if auction is None:
+            ctx.note("no announced 13-week bill to bid")
             return
         if not any(p.cusip == auction.cusip for p in ctx.held()):
             ctx.buy_at_auction(auction, ctx.equity() * self.max_gross_leverage * 0.9,
@@ -546,21 +546,32 @@ class ConcessionFade_Notes(OfficialStrategy):
     max_gross_leverage = 8.0
 
     def plan(self, ctx) -> None:
+        # The exit rule first: five sessions after the *issue* date the auction
+        # concession is treated as given back, and the position is sold on the
+        # official curve.
         for position in ctx.held():
             if position.opened_kind == "PRIMARY-AUCTION" and \
                     (ctx.sessions_since(position.entry_date) or 0) >= 5:
                 ctx.sell_secondary(position.cusip, position.face,
                                    rule="exit five sessions after the auction",
                                    rationale="concession fade")
-        auction = self._recent_issue(ctx, "Note", "", within_sessions=2)
-        if auction is None or auction.high_yield is None:
+        # The entry rule bids the next announced note auction: a rule cannot bid
+        # an auction that has already happened, and the announced calendar is
+        # what a desk would actually see.
+        candidates = [a for a in ctx.upcoming_auctions(types=("Note",))
+                      if a.offering_amount]
+        if not candidates:
+            ctx.note("no announced note auction to bid")
             return
+        auction = candidates[0]
         if any(p.cusip == auction.cusip for p in ctx.held()):
             return
         ctx.buy_at_auction(auction, ctx.equity() * self.max_gross_leverage * 0.9,
-                           rule="buy the newest note auction and exit after five sessions",
-                           rationale=f"{auction.security_term} {auction.cusip} at "
-                                     f"{auction.high_yield:.3f}%")
+                           rule="bid the next announced note auction and exit five "
+                                "sessions after issue",
+                           rationale=f"{auction.security_term} {auction.cusip} announced "
+                                     f"{auction.announcement_date} for auction "
+                                     f"{auction.auction_date}")
 
 
 # --------------------------------------------------------------------------

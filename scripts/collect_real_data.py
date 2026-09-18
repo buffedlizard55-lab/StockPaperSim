@@ -155,6 +155,9 @@ FRED_SERIES: Dict[str, str] = {
     "DTB4WK": "4-week Treasury bill secondary market rate, discount basis (H.15)",
     "DTB3": "3-month Treasury bill secondary market rate, discount basis (H.15)",
     "DTB6": "6-month Treasury bill secondary market rate, discount basis (H.15)",
+    # The inflation leg of the TIPS breakeven rule in the Official Auction Book:
+    # the BLS all-items CPI index, republished by FRED.
+    "CPIAUCSL": "Consumer Price Index for All Urban Consumers, all items (BLS)",
 }
 
 # Issuers for the SEC Form 4 (insider) study.  CIK is re-resolved from the

@@ -162,7 +162,8 @@ class OfficialRates:
     """SOFR and the H.15 secondary-market bill rates, from FRED's copies."""
 
     WANTED = {"SOFR": "SOFR", "DTB4WK": "4-week bill", "DTB3": "3-month bill",
-              "DTB6": "6-month bill"}
+              "DTB6": "6-month bill",
+              "CPIAUCSL": "CPI-U all items, all urban consumers (BLS)"}
 
     def __init__(self, root: str = treasury.FRED_DIR) -> None:
         self.root = root
@@ -367,6 +368,7 @@ class OfficialAccount:
         self.fills: List[dict] = []
         self._lot_counter = 0
         self._trip_counter = 0
+        self.ruined_on: Optional[str] = None
 
     # -- positions ---------------------------------------------------------
     def net_face(self, cusip: str) -> float:
@@ -474,6 +476,11 @@ class OfficialBook:
         self.irregularities: List[dict] = []
         self._counters: Dict[str, int] = {}
         self._marks: Dict[str, float] = {}
+        self._by_cusip: Dict[str, List[treasury.Auction]] = {}
+        for auction in auctions.auctions.values():
+            self._by_cusip.setdefault(auction.cusip, []).append(auction)
+        for rows in self._by_cusip.values():
+            rows.sort(key=lambda a: a.auction_date)
         self.sessions_settled: List[str] = []
         self._planning_session: str = ""
         #: Per-participant gross exposure caps, declared by the rule itself.
@@ -535,10 +542,9 @@ class OfficialBook:
         official observation covers the date, in which case the caller must wait.
         """
         auction = None
-        for candidate in self.auctions.auctions.values():
-            if candidate.cusip == cusip and candidate.auction_date <= session:
-                if auction is None or candidate.auction_date > auction.auction_date:
-                    auction = candidate
+        for candidate in self._by_cusip.get(cusip, ()):
+            if candidate.auction_date <= session:
+                auction = candidate
         if auction is None:
             return None
         if auction.auction_date == session and auction.execution_price() is not None:
@@ -622,6 +628,8 @@ class OfficialBook:
         created: List[Intent] = []
         for strategy in self.roster:
             account = self.accounts[strategy.username]
+            if getattr(account, "ruined_on", None):
+                continue
             ctx = OfficialContext(self, strategy, session)
             before = len(account.intents)
             try:
@@ -668,6 +676,10 @@ class OfficialBook:
         account = self.accounts[strategy.username]
         if face is None or abs(face) < 1.0:
             return None
+        if not session:
+            # The curve has no session after this one (the end of the collected
+            # window): there is no forward target, so nothing is written.
+            return None
         if session <= self._planning_session:
             self.flag("TARGET-NOT-FORWARD", "critical",
                       f"{strategy.username} tried to trade {session} from "
@@ -686,7 +698,8 @@ class OfficialBook:
     # -- settlement --------------------------------------------------------
     def settle(self, session: str) -> dict:
         summary = {"session": session, "filled": 0, "partial": 0, "rejected": 0,
-                   "expired": 0, "waiting": 0, "maturities": 0, "notional": 0.0}
+                   "expired": 0, "waiting": 0, "cancelled": 0, "ruined": 0,
+                   "maturities": 0, "notional": 0.0}
         self._marks = self.mark_prices(session)
         for account in self.accounts.values():
             for intent in account.intents:
@@ -741,10 +754,10 @@ class OfficialBook:
                                 / max(1.0, award.auction.multiples_to_issue or 100.0)
                                 ) * max(1.0, award.auction.multiples_to_issue or 100.0)
             if scaled <= 0:
-                intent.status = INTENT_REJECTED
-                intent.settle_note = (f"refused: the award would take gross exposure "
-                                      f"past the declared {cap:.1f}x leverage cap")
-                summary["rejected"] += 1
+                intent.status = INTENT_CANCELLED
+                intent.settle_note = (f"no trade: gross exposure is already at the "
+                                      f"declared {cap:.1f}x leverage cap")
+                summary["cancelled"] = summary.get("cancelled", 0) + 1
                 return
             award = treasury.noncompetitive_award(result, scaled)
             cost, face = award.cost, award.awarded_face
@@ -810,11 +823,14 @@ class OfficialBook:
             if equity > 0 and face * price / 100.0 > headroom:
                 scaled = math.floor(headroom / price * 100.0 / 100.0) * 100.0
                 if scaled <= 0:
-                    intent.status = INTENT_REJECTED
-                    intent.settle_note = (f"refused: the order would take gross "
-                                          f"exposure past the declared {cap:.1f}x "
-                                          f"leverage cap")
-                    summary["rejected"] += 1
+                    # Not a rule breach: the account is already at the limit its
+                    # own rule declares, so there is nothing to trade.  Recorded
+                    # as a cancellation with the reason rather than as a rejected
+                    # order, because no rule of the venue was broken.
+                    intent.status = INTENT_CANCELLED
+                    intent.settle_note = (f"no trade: gross exposure is already at "
+                                          f"the declared {cap:.1f}x leverage cap")
+                    summary["cancelled"] = summary.get("cancelled", 0) + 1
                     return
                 face = scaled
         cash_delta = -direction * face * price / 100.0
@@ -878,21 +894,24 @@ class OfficialBook:
         summary["notional"] += face
 
     def _facts(self, cusip: str) -> dict:
-        for auction in self.auctions.auctions.values():
-            if auction.cusip == cusip:
-                return {"security_type": auction.security_type,
-                        "security_term": auction.security_term}
-        return {}
+        rows = self._by_cusip.get(cusip)
+        if not rows:
+            return {}
+        auction = rows[0]
+        return {"security_type": auction.security_type,
+                "security_term": auction.security_term}
 
     def _liquidity(self, cusip: str) -> dict:
-        for auction in self.auctions.auctions.values():
-            if auction.cusip == cusip:
-                return {"offering_amount": auction.offering_amount,
-                        "total_accepted": auction.total_accepted,
-                        "bid_to_cover": auction.bid_to_cover,
-                        "security_term": auction.security_term,
-                        "auction_date": auction.auction_date}
-        return {}
+        rows = self._by_cusip.get(cusip)
+        if not rows:
+            return {}
+        auction = rows[-1]
+        return {"offering_amount": auction.offering_amount,
+                "total_accepted": auction.total_accepted,
+                "bid_to_cover": auction.bid_to_cover,
+                "competitive_tendered": auction.competitive_tendered,
+                "security_term": auction.security_term,
+                "auction_date": auction.auction_date}
 
     def mark_prices(self, session: str) -> Dict[str, float]:
         """Mark every security the book has ever held, from official data."""
@@ -964,13 +983,10 @@ class OfficialBook:
         return count
 
     def _auction_for(self, cusip: str) -> Optional[treasury.Auction]:
-        best = None
-        for auction in self.auctions.auctions.values():
-            if auction.cusip != cusip:
-                continue
-            if best is None or auction.issue_date > best.issue_date:
-                best = auction
-        return best
+        rows = self._by_cusip.get(cusip)
+        if not rows:
+            return None
+        return max(rows, key=lambda a: (a.issue_date, a.auction_date))
 
     def charge_financing(self, session: str) -> None:
         """Charge repo financing on debits and shorts; credit idle cash at SOFR."""
@@ -1022,6 +1038,54 @@ class OfficialBook:
         for account in self.accounts.values():
             equity = account.equity(self._marks)
             gross = account.gross_exposure(self._marks)
+            if equity <= 0 and account.lots:
+                # RUIN.  A levered account that gaps through zero cannot lose more
+                # than it has, and no paper competition should let it: the venue
+                # closes every position at the official mark, the account is
+                # wound up at zero equity, and the participant is marked ruined
+                # and stops trading.  Without this rule the compounding of a
+                # negative balance produces returns like -100,000%, which is an
+                # artefact of the model rather than a possible outcome.
+                for lot in list(account.lots):
+                    price_row = self.price_for(lot.cusip, session)
+                    price = (float(price_row["price_per100"]) if price_row
+                             else self._marks.get(lot.cusip, lot.price_per100))
+                    account.cash += lot.face * price / 100.0
+                    pnl = ((price - lot.price_per100) / 100.0 * abs(lot.face)
+                           * (1.0 if lot.face > 0 else -1.0))
+                    account.close_trip(
+                        account.participant, lot.cusip, self._facts(lot.cusip),
+                        abs(lot.face),
+                        entry={"date": lot.opened_on, "price": lot.price_per100,
+                               "kind": lot.kind, "evidence": lot.evidence,
+                               "direction": "long" if lot.face > 0 else "short"},
+                        exit_={"date": session, "price": price, "kind": EXIT_LIQUIDATION,
+                               "evidence": price_row or {"derivation": "last mark"}},
+                        pnl=pnl, coupons=lot.coupons_received,
+                        financing=lot.financing_paid, fees=0.0,
+                        liquidity=self._liquidity(lot.cusip))
+                    account.lots.remove(lot)
+                write_off = -account.cash
+                account.cash = 0.0
+                account.ruined_on = session
+                event = {"session": session, "participant": account.participant,
+                         "equity_before": round(equity, 2), "gross_exposure": 0.0,
+                         "required": 0.0, "action": "ruin: every position closed at the "
+                                                     "official mark and the account "
+                                                     "wound up at zero equity",
+                         "negative_balance_written_off": round(write_off, 2),
+                         "liquidated": True}
+                account.margin_events.append(event)
+                self.margin_events.append(event)
+                summary_ruined = True
+                self.irregularities.append({
+                    "code": "RUIN", "severity": "high",
+                    "participant": account.participant, "session": session,
+                    "detail": (f"equity reached ${equity:,.2f} on {session}; the "
+                               f"position was closed and the account written off "
+                               f"(negative balance "
+                               f"${abs(write_off):,.2f} not carried)")})
+                continue
             if gross <= 0 or equity >= MAINTENANCE_FRACTION * gross:
                 continue
             event = {"session": session, "participant": account.participant,
@@ -1109,6 +1173,7 @@ class OfficialBook:
                 "participant": strategy.username, "family": strategy.family,
                 "final_equity": round(final, 2),
                 "return_pct": round(100.0 * (final / account.starting_cash - 1.0), 4),
+                "return_at_ruin_pct": (-100.0 if account.ruined_on else None),
                 "max_drawdown_pct": round(100.0 * worst, 4),
                 "sharpe": round(sharpe, 4),
                 "trades": len(closed),
@@ -1130,6 +1195,8 @@ class OfficialBook:
                                         if i.status == INTENT_REJECTED),
                 "data_status": strategy.data_status,
                 "official_price_coverage": 1.0,
+                "ruined_on": account.ruined_on,
+                "status": ("RUINED" if account.ruined_on else "ACTIVE"),
             })
         rows.sort(key=lambda r: -r["return_pct"])
         for rank, row in enumerate(rows, 1):
@@ -1167,12 +1234,47 @@ class HoldingRef:
                 self.entry_date = lot.opened_on
                 break
 
+    #: The reference behaves like the auction it points at for every published
+    #: field a rule might read, so a rule written against an auction works
+    #: unchanged when it is handed a position instead.
+    @property
+    def security_type(self) -> str:
+        return self.auction.security_type
+
+    @property
+    def security_term(self) -> str:
+        return self.auction.security_term
+
+    @property
+    def term(self) -> str:
+        return self.auction.term
+
+    @property
+    def auction_date(self) -> str:
+        return self.auction.auction_date
+
+    @property
+    def issue_date(self) -> str:
+        return self.auction.issue_date
+
+    @property
+    def maturity_date(self) -> str:
+        return self.auction.maturity_date
+
+    @property
+    def interest_rate(self):
+        return self.auction.interest_rate
+
     def days_to_maturity(self, session: str) -> int:
         try:
             return (dt.date.fromisoformat(self.auction.maturity_date)
                     - dt.date.fromisoformat(session)).days
         except (TypeError, ValueError):
             return 10 ** 6
+
+    def __repr__(self) -> str:                       # pragma: no cover - debug aid
+        return (f"<HoldingRef {self.cusip} face={self.face:,.0f} "
+                f"price={self.price_per100}>")
 
 
 class OfficialContext:
@@ -1219,15 +1321,21 @@ class OfficialContext:
         return view.change_bp(self.session, n) if view else None
 
     def realised_inflation_5y(self) -> Optional[float]:
-        """Realised CPI inflation, from the official index the Fed publishes.
+        """Realised CPI inflation over five years, from the official index.
 
-        The CPI level is not in this book's collected set, so the rule returns
-        ``None`` and the TIPS participant states that it could not be evaluated.
-        That is the honest outcome: a breakeven trade needs an inflation
-        observation, and inventing one would be exactly the failure this project
-        is built to avoid.
+        ``CPIAUCSL`` is the Bureau of Labor Statistics' own all-items index as
+        republished by FRED, and the change over 60 monthly observations is
+        arithmetic on it.  A rule that cannot find the series gets ``None`` and
+        says so, rather than substituting a guess.
         """
-        return None
+        view = self.rates.get("CPIAUCSL")
+        if view is None:
+            return None
+        levels = [v for d, v in zip(view.dates, view.values)
+                  if d <= self.session]
+        if len(levels) < 61 or levels[-61] <= 0:
+            return None
+        return (levels[-1] / levels[-61] - 1.0) * 100.0
 
     def sessions_since(self, date: str) -> Optional[int]:
         dates = [d for d in self.curve.dates() if d <= self.session]
@@ -1273,8 +1381,14 @@ class OfficialContext:
                 return auction
         return None
 
-    def hold_term(self, term: str) -> Optional[treasury.Auction]:
-        """The newest security whose term label matches, as the position to hold."""
+    def hold_term(self, term: str) -> Optional[HoldingRef]:
+        """The newest security whose term label matches, ready to be sized.
+
+        Returned as a :class:`HoldingRef` rather than a bare auction so a
+        weight-based rule can move it with :meth:`set_weight`; the reference
+        resolves the current face, the mark and which lot opened it, and it works
+        for a security the account does not hold yet (face 0).
+        """
         candidates = [a for a in self.auctions.auctions.values()
                       if a.auction_date <= self.session and
                       (term.lower() in (a.term or "").lower() or
@@ -1282,7 +1396,7 @@ class OfficialContext:
         if not candidates:
             return None
         candidates.sort(key=lambda a: (a.issue_date, a.auction_date))
-        return candidates[-1]
+        return HoldingRef(self._book, self.account, candidates[-1], self)
 
     def liquidity_score(self, auction: treasury.Auction) -> Optional[float]:
         """A score from official auction statistics only (0 to 1)."""
@@ -1331,6 +1445,8 @@ class OfficialContext:
 
     def buy_secondary(self, cusip: str, market_value: float, rule: str,
                       rationale: str) -> None:
+        if not self._next_session():
+            return
         row = self._book.price_for(cusip, self.session)
         if row is None:
             self.note(f"no official observation for {cusip} at {self.session}")
@@ -1346,7 +1462,7 @@ class OfficialContext:
                                              "derivation": row["derivation"]}})
 
     def sell_secondary(self, cusip: str, face: float, rule: str, rationale: str) -> None:
-        if face <= 0:
+        if face <= 0 or not self._next_session():
             return
         row = self._book.price_for(cusip, self.session)
         target = self._next_session()

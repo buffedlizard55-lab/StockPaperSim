@@ -16,6 +16,7 @@ import re
 import shutil
 import tempfile
 import unittest
+from html import escape as html_escape
 from html.parser import HTMLParser
 
 from fixtures import REPO_ROOT
@@ -392,7 +393,14 @@ class TestFullBuild(unittest.TestCase):
                             f"source URL missing: {row['url']}")
             self.assertIn(row["status"], html)
             probe = row["claim"][:40]
-            for esc in (probe, probe.replace("&", "&amp;").replace("<", "&lt;")
+            # ``html.escape`` is what the page is rendered with, and it escapes
+            # quotes as well as the three markup characters - so a claim whose
+            # first 40 characters contain an apostrophe ("FINRA's Trading
+            # Activity Fee guidance page: ...") is published as &#x27; and a
+            # comparison that only handles &, < and > reports it missing. The
+            # probe set below is generated the same way the page renders.
+            for esc in (probe, html_escape(probe),
+                        probe.replace("&", "&amp;").replace("<", "&lt;")
                         .replace(">", "&gt;")):
                 if esc in html:
                     break

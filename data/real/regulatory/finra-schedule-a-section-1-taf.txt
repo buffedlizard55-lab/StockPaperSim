@@ -1,0 +1,66 @@
+SOURCE: https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees
+        "Section 1 - Member Regulatory Fees" (Schedule A to the FINRA By-Laws)
+        Reached by following the link FINRA's own TAF page publishes, which
+        points at http://www.finra.org/finramanual/org/bylaws_A_1/ and
+        redirects to the canonical URL above.
+Publisher: FINRA
+Retrieved: 2026-09-18 (fetched; the page renders the full rule text)
+
+WHY THIS FILE EXISTS
+  config.FINRA_TAF_PER_SHARE and config.FINRA_TAF_MAX_PER_TRADE put a dated
+  fee schedule on every sell a participant makes. Until 2026-09-18 those
+  numbers were SECONDARY - corroborated by two broker fee schedules because
+  FINRA's own rate table was believed to live in a PDF this environment could
+  not read. It does not: the ruleboard renders the rate paragraph as HTML, and
+  this excerpt pins the schedule to it. Closes IR-05.
+
+VERSION STATEMENT ON THE PAGE
+  "This version is valid from Jan 01, 2026 through Dec 31, 2026."
+  "Amendments have been announced but are not yet effective."
+  (The page also carries the amendment history as a footnote table; the entry
+  that governs this project's 2026 sessions is:)
+  "Amended by SR-FINRA-2024-019 eff. Jan. 1, 2026."
+
+QUOTED (paragraph (b)(3), "Fee Rates", footnote *)
+  "Trading Activity Fee rates are as follows: Each member shall pay to FINRA:
+  (1) $0.000195 per share for each sale of a covered equity security, with a
+  maximum charge of $9.79 per trade; (2) $0.00329 per contract for each sale
+  of an option; (3) $0.000135 per contract for each round turn transaction of
+  a security future, provided there is a minimum charge of $0.016 per round
+  turn transaction; (4) $0.00124 per bond for each sale of a covered
+  TRACE-Eligible Security (other than an Asset-Backed Security) and/or
+  municipal security, with a maximum charge of $1.24 per trade; and
+  (5) $0.00000124 times the value, as reported to TRACE, of a sale of an
+  Asset-Backed Security, with a maximum charge of $1.24 per trade. In
+  addition, if the execution price for a covered security is less than the
+  Trading Activity Fee rate ($0.000195 for covered equity securities, $0.00329
+  for covered option contracts, or $0.016 for a security future) on a per
+  share, per contract, or round turn transaction basis then no fee will be
+  assessed."
+
+  Paragraph (b)(1) defines the covered securities and (b)(2) lists thirteen
+  exemptions (registration-statement securities other than OCC options,
+  tender/exchange offers, warrant exercises, transactions executed outside the
+  United States, exchange market-maker proprietary transactions and so on).
+  Equity share volume is subparagraph (b)(3)(A).
+
+WHAT THIS DOES AND DOES NOT ESTABLISH
+  Establishes, for the version in force for every 2026 session of Seasons 1
+  and 2: the equity rate is $0.000195 per share, the per-trade maximum is
+  $9.79, and the charge is levied on each SALE of a covered equity security.
+  Two details that were previously guessed:
+
+  * There is NO minimum charge on equity sales. The $0.01 floor quoted by
+    several brokers is their own pass-through convention; Schedule A sets a
+    maximum only for equities. sim/microstructure.py charges
+    min(qty * rate, cap), which is what the rule says.
+  * A sale whose execution price is below the per-share rate is not assessed
+    at all. At this universe's prices ($9 to $670) the condition cannot bind,
+    and it is not implemented; it is recorded here so that a future season
+    trading sub-penny names does not inherit the gap silently.
+
+  Does NOT establish the 2025 rate: this page is the 2026 version and the
+  versions tab is not reachable as a stable URL. The 2025 numbers
+  ($0.000166/share, $8.30 cap) are pinned by the SEC's publication of
+  SR-FINRA-2024-019, excerpted in sec-release-34-101696-taf-rate-schedule.txt
+  alongside this file, whose rate table carries a "2025 (no change)" column.

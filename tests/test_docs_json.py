@@ -241,7 +241,12 @@ class TestPublishedSite(unittest.TestCase):
         self.assertIn("$8.30 per trade from 2025-01-01", text)
         self.assertIn("$9.79 per trade from 2026-01-01", text)
         self.assertIn(config.fee_coverage_start(), text)
-        self.assertRegex(text, r"(?i)secondary source")   # the TAF caveat
+        # The TAF caveat used to read "rate and cap from a secondary source,
+        # see IR-05". Since 2026-09-18 both schedules are primary-sourced, so
+        # the guard is the source being named - not the caveat being present.
+        self.assertIn("section-1-member-regulatory-fees", text)
+        self.assertIn("2024-27764", text)
+        self.assertRegex(text, r"IR-05 is closed")
 
     def test_the_tick_size_exemption_is_explained_on_the_site(self):
         text = _read("methodology.html") + _read("irregularities.html")

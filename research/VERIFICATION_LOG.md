@@ -24,6 +24,13 @@ reached through the page-fetch tool or through search-result text. Several hosts
 refused the connection outright; those refusals are recorded rather than worked
 around, and each one is reflected in `research/IRREGULARITIES.json`.
 
+The pass recorded as **§4i** was made on **2026-09-18** from the same kind of
+sandbox. It reached `finra.org` and `federalregister.gov` through the page-fetch
+tool (the shell in that environment still could not open them), which is the same
+route every other non-allowlisted page in this log was read through. The document
+that had been assumed unreadable - the Schedule A rate text - turned out to be
+served as HTML to exactly that tool.
+
 ---
 
 ## 1. Real market data (stored, checksummed, used as the market factor)
@@ -105,7 +112,7 @@ re-derived. Recorded as **IR-25**.
 | Fee | Value used | Source | Status |
 |---|---|---|---|
 | SEC Section 31 (sells) | **$0.00 per $1,000,000** from 2025-09-01; **$20.60 per $1,000,000** from 2026-04-04 | FY2026 annual adjustment order, `https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates`; corroborated by Nasdaq `https://www.nasdaqtrader.com/MicroNews.aspx?id=OTA2026-14` | `FETCHED` |
-| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | Broker fee schedules only (`https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/`). FINRA's own Schedule A to the By-Laws was **not retrievable** from this environment | `SECONDARY` - flagged as **IR-05** |
+| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | **Primary, 2026-09-18**: Section 1 of Schedule A to the FINRA By-Laws, 2026 version (`https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees`), and SEC Release 34-101696 / 89 FR 93709 for the 2025 column (`https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and`). Until this pass: broker fee schedules only, because Schedule A was believed to be an unreadable PDF | `FETCHED-VERIFIED` - **IR-05 closed** (§4i) |
 
 Both are **dated schedules**, not constants (`config.SEC31_PER_MILLION`,
 `config.FINRA_TAF_PER_SHARE`, `config.FINRA_TAF_MAX_PER_TRADE`), because a
@@ -370,8 +377,11 @@ These are not omissions to paper over; each is flagged in
 `research/IRREGULARITIES.json` and `research/LIMITATIONS.json` and shown on the
 site.
 
-1. **FINRA Schedule A** (the primary source for the TAF rate and cap) - not
-   retrievable; the rate is `SECONDARY` (**IR-05**).
+1. ~~**FINRA Schedule A** (the primary source for the TAF rate and cap) - not
+   retrievable; the rate is `SECONDARY` (**IR-05**).~~ **Closed 2026-09-18**: the
+   rate paragraph is served as HTML and both the 2025 and 2026 rates are now
+   cited to primary documents (§4i). The list below is the state as of the
+   2026-09-17 pass, kept so the record shows what was open and when it shut.
 2. **Real intraday quotes, trades and depth** for the 17-name universe - no
    consolidated tape access; the venue is a calibrated simulation (**IR-03**,
    **L-01**).
@@ -467,6 +477,65 @@ pre-fix figures quoted in IR-31 are now recoverable only through git
 (`git show 71b3d90:memory/runs/season1-primary-seed20260917/events/carry.jsonl.gz`),
 which is written into the entry so a reviewer is not left trying to re-run a
 season from a commit whose memory no longer exists.
+
+## 4i. IR-05 closed: the fee schedule was pinned to a *belief* about the publisher, not to the publisher
+
+§4d recorded two register URLs that returned 404 while the substance behind them
+was right. One of them was cited for a rate: `rulebooks/finra-rules/7541`, which
+does not exist, because the Trading Activity Fee has no rule number and lives in
+Section 1 of Schedule A to the FINRA By-Laws. The fix at the time was to cite
+FINRA's TAF guidance page, which confirms the fee's *structure* and defers the
+numbers to Schedule A - and there the trail stopped, because Schedule A was
+described in `data/real/regulatory/finra-trading-activity-fee.txt` as "a PDF this
+environment could not read". **That description was never tested against the
+page.** It was wrong: the rulebook renders the rate paragraph as HTML, and the
+site's own banner dates it.
+
+What the 2026-09-18 pass retrieved:
+
+| Document | URL | What it establishes |
+|---|---|---|
+| Section 1 of Schedule A to the FINRA By-Laws, version banner "valid from Jan 01, 2026 through Dec 31, 2026" | `finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees` (reached by following the `bylaws_A_1` link on FINRA's TAF page, which redirects there) | "Each member shall pay to FINRA: (1) **$0.000195 per share** for each sale of a covered equity security, with a **maximum charge of $9.79 per trade**"; the 2026 option ($0.00329/contract), security-future ($0.000135, $0.016 minimum), TRACE bond ($0.00124, $1.24 max) and ABS ($0.00000124 × value, $1.24 max) rates; subparagraph (b)(1)'s covered securities and (b)(2)'s thirteen exemptions; "Amended by **SR-FINRA-2024-019** eff. Jan. 1, 2026" |
+| SEC notice of filing and immediate effectiveness, Release No. 34-101696, File No. SR-FINRA-2024-019, 89 FR 93709, published 2024-11-27 | `federalregister.gov/documents/2024/11/27/2024-27764/...` | "The current TAF rates ... are: (1) **$0.000166 per share** ... with a **maximum charge of $8.30 per trade**"; the 2024-2029 table, whose covered-equity row reads 2024 $0.000166 (up to $8.30) / **2025 (no change)** $0.000166 (up to $8.30) / **2026** $0.000195 (up to $9.79) / 2027 $0.000232 (up to $11.61) / 2028 $0.000240 (up to $12.05) / 2029 $0.000249 (up to $12.50); footnote 39, the no-fee-below-the-rate condition |
+
+Why two documents and not one: FINRA serves **only the current version** of
+Schedule A, and the current version is the 2026 one. Season 1 opens 2025-09-17,
+so its September-December sessions are costed at the 2025 rate, which the
+Schedule A page no longer states. The Commission's publication of the filing
+that set it carries a "2025 (no change)" column, so both halves of the schedule
+now stand on a primary document rather than on a broker's help page.
+
+**Result of the verification: no number moved.** Both primary documents agree
+with the two broker schedules that had been used since 2026-09-17, to the digit.
+The seasons were not re-run, because a re-run would have reproduced the same
+fills and the same costs - and saying so is the point of checking. What changed
+is the evidence label: the two register rows carry `FETCHED-VERIFIED` instead of
+`SECONDARY`, the excerpts are stored verbatim under `data/real/regulatory/` so
+the citations survive the publisher moving the page (the failure mode §4d was
+about), and IR-05 is closed and downgraded to low.
+
+Two details came out of the primary text that the secondary sources could not
+have provided, and they are recorded rather than absorbed:
+
+* **Schedule A sets a maximum but no minimum on equity sales.** The "$0.01
+  minimum" that several brokers publish is their own pass-through convention -
+  and it had been written into IR-05's own text as if it were the rule. The
+  model charges `min(qty * rate, cap)` in `sim/microstructure.py`, which is what
+  the rule actually says, so the implementation was right and the *description*
+  was wrong.
+* **A sale whose execution price is below the per-share rate is not assessed at
+  all.** At this universe's prices ($9 to $670) that condition cannot bind, so
+  it is not implemented; it is now written into the config comment and the
+  stored excerpt, so a future season trading sub-penny names does not inherit
+  the gap silently.
+
+One thing the same class of check cannot catch is stated in `LIMITATIONS.json`
+(L-12, rewritten by this pass): `validate_fee_coverage()` refuses a window that
+opens *before* the earliest documented date, but nothing refuses a window that
+opens *after* the last one, so a rate change the project has not seen would be
+charged at the previous rate. The stored 2027-2029 columns are what a future
+season would need, and the networked cite-hygiene job in `REMAINING_WORK.json`
+is the mechanism that would notice the change.
 
 ## 6. Audits run on the simulation itself
 

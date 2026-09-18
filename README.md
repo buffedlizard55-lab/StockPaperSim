@@ -235,7 +235,7 @@ from the venue assumptions rather than from a fabricated seed panel.
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    55-row verified-source register
+                    56-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -256,7 +256,7 @@ memory/         the audit trail: one directory per run, gzipped event streams,
 docs/           the published site (GitHub Pages serves this directory)
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
                 IRREGULARITIES.json (47), LIMITATIONS.json (22),
-                REMAINING_WORK.json (26), MASTER_SITE_SIGNALS.md,
+                REMAINING_WORK.json (25), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -303,7 +303,7 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 61-row register (55 source rows plus 6 provider rows), every URL
+  — the 62-row register (56 source rows plus 6 provider rows), every URL
   clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not
@@ -318,7 +318,7 @@ manual review, and flag irregularities rather than paper over them.
   — all 47 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 22 limitations, 26 items of remaining work in priority order, and what
+  — 22 limitations, 25 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

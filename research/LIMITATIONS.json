@@ -79,9 +79,9 @@
   {
     "id": "L-12",
     "severity": "low",
-    "title": "Two fee inputs rest on secondary sources or uncertain effective dates",
-    "detail": "The FINRA Trade Activity Fee rate is corroborated only from broker documentation (IR-05), and whether the SEC's 2024 half-penny tick tier and $0.001 access-fee cap are operative during the window could not be settled from primary sources (IR-04). Both are small in dollar terms but both are regulatory facts that should be cited to the regulator, not to a broker.",
-    "fix": "Retrieve FINRA Schedule A and the current compliance-date order for the 2024 Reg NMS amendments, then pin both constants to the primary text."
+    "title": "Fee schedules are pinned to documents read on a date, and no code re-reads them",
+    "detail": "This limitation was written as 'two fee inputs rest on secondary sources or uncertain effective dates' and both halves are now closed: the 2024 Reg NMS tick tier and access-fee cap were settled from the Commission's relief orders (IR-04, closed 2026-09-17) and the FINRA Trade Activity Fee rate is pinned to Section 1 of Schedule A to the By-Laws plus SEC Release 34-101696 (IR-05, closed 2026-09-18). What remains is a different and narrower limit. config's SCHEDULES are literal constants with a retrieval date attached, and validate_fee_coverage() only refuses a window that opens BEFORE the earliest documented date; nothing refuses a window that opens AFTER the last one, so a rate change the project has not seen would be silently charged at the previous rate. The same class of risk is what IR-33 found in the register's dead links - a citation is a claim about a page at a moment, and the page moves on its own.",
+    "fix": "A scheduled job that re-opens every fee source in the register and reports what moved (the networked cite-hygiene item in REMAINING_WORK.json), plus - when a future season is planned beyond 2026-12-31 - extending the schedules from the then-current Schedule A version and the phase-in table already stored in data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt, which carries the 2027-2029 rates."
   },
   {
     "id": "L-13",

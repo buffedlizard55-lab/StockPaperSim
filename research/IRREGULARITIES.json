@@ -49,12 +49,13 @@
   },
   {
     "id": "IR-05",
-    "severity": "medium",
-    "topic": "The FINRA Trade Activity Fee rate rests on secondary sources only",
-    "detail": "The TAF applied to equity sells ($0.000195 per share, minimum $0.01, maximum $9.79 per trade, effective 2026-01-01, replacing $0.000166 with an $8.30 maximum) was corroborated from a broker help page and a broker pricing page. FINRA's own Rule 7541 / Schedule A text was not retrievable from this environment, so the rate is SECONDARY-sourced.",
-    "resolution": "The rate is implemented because it is small and directionally certain, and it is labelled SECONDARY everywhere it appears - in config.py, in the source register and here. Verify against FINRA Schedule A before using these numbers for anything that matters.",
+    "severity": "low",
+    "topic": "The FINRA Trade Activity Fee rate rested on secondary sources - now pinned to the regulator's own text",
+    "detail": "The TAF applied to equity sells ($0.000195 per share, maximum $9.79 per trade, effective 2026-01-01, replacing $0.000166 with an $8.30 maximum) was originally corroborated only from a broker help page and a broker pricing page, because FINRA's Rule 7541 / Schedule A text was believed to be unreachable from this environment. It was not: the path rulebooks/finra-rules/7541 does not exist at all (there is no rule number for the TAF; it lives in Section 1 of Schedule A to the By-Laws), and the real rate paragraph is served as HTML, not only as a PDF. Two primary documents were read on 2026-09-18: the Schedule A Section 1 page, whose own banner reads 'This version is valid from Jan 01, 2026 through Dec 31, 2026' and which states $0.000195 per share with a $9.79 maximum, amended by SR-FINRA-2024-019 eff. Jan. 1, 2026; and SEC Release 34-101696 (89 FR 93709), the Commission's publication of that filing, whose rate table carries a '2025 (no change)' column at $0.000166 with an $8.30 maximum. The two agree with each other and with both broker schedules to the digit. Two details came out of the primary text that the secondary sources did not provide: Schedule A sets a maximum but no minimum charge on equity sales (the $0.01 floor brokers publish is their own convention, and the model's min(qty*rate, cap) is what the rule says), and no fee is assessed where the execution price is below the per-share rate - a condition that cannot bind at this universe's prices and is therefore recorded rather than implemented.",
+    "resolution": "config.FINRA_TAF_PER_SHARE and config.FINRA_TAF_MAX_PER_TRADE now carry status FETCHED-VERIFIED in the source register, with verbatim excerpts stored as data/real/regulatory/finra-schedule-a-section-1-taf.txt and data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt, so the citation survives the publisher moving the page. No number changed: the season's fills are costed at exactly the rates the regulator publishes, and neither season was re-run because neither needed to be. Severity dropped from medium to low.",
     "links": [
-      "https://www.finra.org/rules-guidance/rulebooks/finra-rules/7541"
+      "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees",
+      "https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and"
     ]
   },
   {

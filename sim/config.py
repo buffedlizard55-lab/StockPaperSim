@@ -135,28 +135,45 @@ SEC31_PER_MILLION: Tuple[Tuple[str, float], ...] = (
 )
 
 # FINRA Trading Activity Fee (TAF), levied on *sales*, per share, with a
-# per-trade cap.  UNVERIFIED against a FINRA primary document from this
-# sandbox (finra.org was unreachable); the figures below are the rates
-# reported by two independent broker fee schedules for 2026 and are marked
-# UNVERIFIED so a maintainer can confirm them.
-#   SOURCE (secondary): https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/
-#   PRIMARY TO CHECK:  https://www.finra.org/rules-guidance/guidance/trading-activity-fee
-#                      (FINRA's own TAF page; it defers the rates themselves to
-#                      Section 1 of Schedule A to the By-Laws).  Fetched live
-#                      2026-09-17.  The URL previously cited here,
-#                      rulebooks/finra-rules/7541 cited here before, returns 404:
-#                      FINRA has no rule number for the TAF, it lives in the
-#                      By-Laws schedule.  See IR-33.
-#   FLAGGED IN: research/IRREGULARITIES.json (IR-05)
+# per-trade cap.  VERIFIED against the regulator's own text on 2026-09-18,
+# which closed IR-05; the rate and the cap are unchanged by that verification.
+#   SOURCE (2026, primary): https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees
+#                      Section 1 of Schedule A to the By-Laws, version "valid
+#                      from Jan 01, 2026 through Dec 31, 2026": "$0.000195 per
+#                      share for each sale of a covered equity security, with a
+#                      maximum charge of $9.79 per trade", amended by
+#                      SR-FINRA-2024-019 eff. Jan. 1, 2026.  Verbatim excerpt:
+#                      data/real/regulatory/finra-schedule-a-section-1-taf.txt
+#   SOURCE (2025, primary): https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and
+#                      SEC Release 34-101696 (89 FR 93709), the Commission's
+#                      publication of SR-FINRA-2024-019: the rate current
+#                      through 2025 is "$0.000166 per share ... with a maximum
+#                      charge of $8.30 per trade", and the 2026 column reads
+#                      "$0.000195 ... (up to $9.79 max per trade)".  FINRA
+#                      serves only the current version of the schedule, so the
+#                      2025 number needs this document to stand on.  Verbatim
+#                      excerpt: data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt
+#   Two details read off that text and worth keeping:
+#     * There is no MINIMUM charge on equity sales - Schedule A sets a maximum
+#       only (the $0.01 floors brokers publish are pass-through conventions),
+#       so min(qty * rate, cap) in sim/microstructure.py is the rule.
+#     * No fee is assessed where the execution price is below the per-share
+#       rate.  At this universe's prices ($9-$670) the condition cannot bind,
+#       so it is not implemented - recorded here rather than absorbed silently.
+#   HISTORY: the URL cited before 2026-09-17, rulebooks/finra-rules/7541,
+#   returns 404 - FINRA has no rule number for the TAF, it lives in the
+#   By-Laws schedule (IR-33).  Until 2026-09-18 the numbers below were
+#   corroborated only by two broker schedules and carried status SECONDARY
+#   (IR-05); those schedules agreed with the regulator to the digit.
 FINRA_TAF_PER_SHARE: Tuple[Tuple[str, float], ...] = (
-    ("2025-01-01", 0.000166),   # UNVERIFIED (secondary sources)
-    ("2026-01-01", 0.000195),   # UNVERIFIED (secondary sources)
+    ("2025-01-01", 0.000166),   # SR-FINRA-2024-019 (89 FR 93709), 2025 column
+    ("2026-01-01", 0.000195),   # Schedule A Sec. 1, 2026 version
 )
 # The per-trade cap changed with the rate, so it is a schedule too.  Applying
 # the 2026 cap to a 2025 sale would overstate the fee on very large orders.
 FINRA_TAF_MAX_PER_TRADE: Tuple[Tuple[str, float], ...] = (
-    ("2025-01-01", 8.30),       # UNVERIFIED (secondary sources)
-    ("2026-01-01", 9.79),       # UNVERIFIED (secondary sources)
+    ("2025-01-01", 8.30),       # SR-FINRA-2024-019 (89 FR 93709), 2025 column
+    ("2026-01-01", 9.79),       # Schedule A Sec. 1, 2026 version
 )
 
 # Exchange access-fee cap under Reg NMS Rule 610 is $0.003 per share for NMS
@@ -539,18 +556,24 @@ def all_verified_sources() -> List[dict]:
          "url": "https://otctransparency.finra.org/",
          "publisher": "FINRA OTC Transparency",
          "status": "KNOWN-NOT-FETCHED"},
-        {"claim": "FINRA Trade Activity Fee of $0.000195 per share on equity sells (minimum $0.01, maximum $9.79) from 2026-01-01",
-         "url": "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
-         "publisher": "FINRA; rates are in Section 1 of Schedule A to the By-Laws",
-         "status": "SECONDARY",
-         "note": "the page was fetched and excerpted on 2026-09-17, and it "
-                 "confirms the fee is levied on sales and that the rate "
-                 "table lives in Schedule A; the RATE NUMBERS in the claim "
-                 "are still corroborated only by two broker fee schedules, "
-                 "because Schedule A is a PDF this environment cannot read, "
-                 "so the row is NOT promoted to FETCHED-VERIFIED (IR-05 "
-                 "stays open). The rulebooks/finra-rules/7541 path cited "
-                 "here before 2026-09-17 returns 404 (IR-33)."},
+        {"claim": "Section 1 of Schedule A to the FINRA By-Laws, version valid 2026-01-01 through 2026-12-31: the Trading Activity Fee is $0.000195 per share for each sale of a covered equity security with a maximum charge of $9.79 per trade, no minimum applies to equity sales, and no fee is assessed where the execution price is below the per-share rate; the same paragraph states the 2026 option, security-future, bond and asset-backed rates, and the amendment history reads 'Amended by SR-FINRA-2024-019 eff. Jan. 1, 2026'",
+         "url": "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees",
+         "publisher": "FINRA (Schedule A to the By-Laws, Section 1)",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched 2026-09-18 by following the link FINRA's TAF guidance "
+                 "page publishes; the page renders the rate paragraph as HTML "
+                 "rather than only as a PDF, and the verbatim excerpt is "
+                 "data/real/regulatory/finra-schedule-a-section-1-taf.txt. This "
+                 "row was SECONDARY until 2026-09-18 (IR-05, now closed)."},
+        {"claim": "SEC Release 34-101696 (89 FR 93709, File No. SR-FINRA-2024-019): the TAF rate for a covered equity security is $0.000166 per share with a maximum of $8.30 per trade for 2024 and again for 2025 ('no change'), rising to $0.000195 with a $9.79 maximum in 2026 and $0.000232/$11.61 in 2027; and no fee is assessed where the execution price is below the per-share rate",
+         "url": "https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and",
+         "publisher": "U.S. Securities and Exchange Commission (Federal Register)",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched 2026-09-18; the current-rate list and the 2024-2029 "
+                 "table are on printed page 93714. This is the document the "
+                 "2025 sessions are costed against, because FINRA serves only "
+                 "the current version of Schedule A. Excerpt: "
+                 "data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt"},
         {"claim": "Tiered round-lot definition: 100 shares up to $250, 40 to $1,000, 10 to $10,000, 1 share above",
          "url": "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.600",
          "publisher": "eCFR / SEC Rule 600(b)(93)",
@@ -688,8 +711,13 @@ def all_verified_sources() -> List[dict]:
          "publisher": "Internal Revenue Service",
          "status": FETCHED_VERIFIED,
          "note": "fetched live 2026-09-17 (Publication 550 (2025))"},
-        {"claim": "FINRA rulebooks index, where Schedule A to the By-Laws (the PRIMARY source for the Trade Activity Fee rate) is published; not retrievable from this environment, hence IR-05",
-         "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules",
+        {"claim": "FINRA's Trading Activity Fee guidance page: the TAF is one of the member regulatory fees FINRA assesses to recover the cost of supervising and regulating firms, and 'Details of the Trading Activity Fee - including the securities it applies to, transactions that are exempt from the fee and the fee rates - are in Section 1 of Schedule A to FINRA's By-Laws'; it also announces the TAF system's migration to the E-Bill platform effective 2026-07-01",
+         "url": "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
          "publisher": "FINRA",
-         "status": "KNOWN-NOT-FETCHED"},
+         "status": FETCHED_VERIFIED,
+         "note": "fetched 2026-09-17 and again 2026-09-18; the page is the "
+                 "navigation path that reaches the rate text - it links "
+                 "bylaws_A_1, which redirects to the Schedule A section "
+                 "registered above. Excerpt: "
+                 "data/real/regulatory/finra-trading-activity-fee.txt"},
     ]

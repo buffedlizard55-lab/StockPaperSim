@@ -14,13 +14,6 @@
     "effort": "a day, mostly waiting on credentials"
   },
   {
-    "priority": "P0",
-    "title": "Verify the two regulatory inputs that are still secondary or uncertain",
-    "detail": "Fetch FINRA Schedule A for the Trade Activity Fee (IR-05) and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04), then pin both constants to the primary text and re-run.",
-    "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
-    "effort": "an hour of reading"
-  },
-  {
     "priority": "P1",
     "title": "Minute-bar intraday engine",
     "detail": "Expose multiple decision points per session on top of the existing intraday path, keep the order book alive across them, and add a closing-auction order type. This is what makes @GapAndGo_YOLO, @OvernightCarry_NO and @SpreadHarvester_MM measurable instead of caveated (L-03, IR-08).",

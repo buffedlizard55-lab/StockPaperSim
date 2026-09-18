@@ -1399,8 +1399,13 @@ Li 2005, <em>Risk</em> 18(7):58-62 - see IR-26).</li>
 {sec31}, per the
 <a href="https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates" rel="noopener" target="_blank">FY2026
 annual adjustment order</a>. FINRA Trade Activity Fee on sells: {taf}, capped at
-{taf_cap} - rate and cap from a
-<span class="tag tag-secondary">secondary source</span>, see IR-05. The earliest
+{taf_cap} - rate and cap from
+<a href="https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees" rel="noopener" target="_blank">Section 1
+of Schedule A to the FINRA By-Laws</a> (2026 version) and, for the 2025 rate,
+from the Commission's publication of
+<a href="https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and" rel="noopener" target="_blank">SR-FINRA-2024-019</a>.
+Both schedules were SECONDARY-sourced until 2026-09-18; IR-05 is closed and the
+numbers did not move. The earliest
 date any of these schedules is documented for is <code>{coverage}</code>;
 <code>config.validate_fee_coverage()</code> refuses to run a season that opens
 before it, so no trade is ever costed at a rate this project could not cite. Commission
@@ -1712,7 +1717,7 @@ retrieved.</p>
     [status_badge("FETCHED-VERIFIED"), "Retrieved in this environment <em>and</em> saved verbatim under <code>data/real/</code>. Strongest category."],
     [status_badge("FETCHED"), "Retrieved in this environment; the content was used but not saved as a data file."],
     [status_badge("FETCHED-VIA-SEARCH"), "Reached only as text inside search results, because the page itself would not load here. Weaker: treat as corroborating, not primary."],
-    [status_badge("SECONDARY"), "Only a secondary source could be reached. The primary document is cited but was <strong>not</strong> fetched - flagged as an irregularity where it matters (IR-05)."],
+    [status_badge("SECONDARY"), "Only a secondary source could be reached; the primary document is cited as the thing to check. <strong>No row carries this status as of 2026-09-18</strong> - the last one was the Trade Activity Fee rate, which is now pinned to FINRA's own Schedule A (IR-05, closed). The badge stays in the vocabulary because a reviewer needs to see it when a future claim is only reachable second-hand."],
     [status_badge("KNOWN-NOT-FETCHED"), "Cited from the literature or from the regulation's canonical URL. <strong>Not retrieved in this environment.</strong> Verify manually before relying on it."],
     [status_badge("ADAPTER-DOCS"), "Vendor API documentation for a shipped live-data adapter that could not be exercised here."],
 ])}

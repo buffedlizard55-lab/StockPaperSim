@@ -3,10 +3,10 @@
  "strategy_id": "SqueezeHunter",
  "archetype": "liquidity squeeze",
  "starting_cash": 100000.0,
- "final_equity": 93956.58,
- "net_pnl_usd": -6043.42,
- "total_return_pct": -6.0434,
- "cagr_pct": -6.0668,
+ "final_equity": 93957.68,
+ "net_pnl_usd": -6042.32,
+ "total_return_pct": -6.0423,
+ "cagr_pct": -6.0656,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -13.9421,
@@ -18,29 +18,29 @@
   "recovery_date": null,
   "sessions_underwater": 188,
   "never_recovered": true,
-  "sharpe": -0.3952,
+  "sharpe": -0.3951,
   "sortino": -0.3714,
   "calmar": 0.4351,
   "daily_vol_pct": 0.8543,
   "annualised_vol_pct": 13.561,
   "skew": -1.3919,
-  "excess_kurtosis": 13.3828,
+  "excess_kurtosis": 13.3833,
   "best_session_pct": 3.7222,
   "worst_session_pct": -4.7041,
   "var_95_pct": -0.9028,
-  "cvar_95_pct": -2.5264,
+  "cvar_95_pct": -2.5263,
   "var_99_pct": -3.8272,
   "cvar_99_pct": -4.3838
  },
  "market_relation": {
   "beta": 0.1332,
-  "alpha_annual_pct": -7.2781,
+  "alpha_annual_pct": -7.2769,
   "r_squared": 0.0161,
   "tracking_error_annual_pct": 13.452,
   "information_ratio": -0.541,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 1.92,
-  "residual_return_pct": -7.963
+  "residual_return_pct": -7.962
  },
  "trades": {
   "closed_trades": 35,
@@ -136,12 +136,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 4.7,
+  "dividends_received_usd": 5.81,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 4.7,
+  "net_carry_usd": 5.81,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 1
+  "day_trades": 1,
+  "day_trade_count": 1
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 9.2,
@@ -356,18 +358,19 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 94111.11,
-   "end_equity": 93956.58,
-   "return_pct": -0.1642
+   "end_equity": 93957.68,
+   "return_pct": -0.163
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": -6048.14,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 4.7,
+  "dividends_usd": 5.81,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -601.29,
-  "total_net_pnl_usd": -6043.42,
-  "unexplained_residual_usd": 0.02,
+  "total_net_pnl_usd": -6042.32,
+  "unexplained_residual_usd": 0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
@@ -376,7 +379,7 @@
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -6.04% - a 6,043 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -6.04% - a 6,042 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
@@ -442,7 +445,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -6.04% over 251 sessions - -6,043 USD on 100,000 of paper capital, ending at 93,957. Verdict: lost money."
+    "text": "Outcome: -6.04% over 251 sessions - -6,042 USD on 100,000 of paper capital, ending at 93,958. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -478,7 +481,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: -6.04% in a market that returned +14.41%, and a residual of -7.96pp after beta - the trading itself destroyed value, not just the market direction. Finished at -6.04% - a 6,043 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -6.04% in a market that returned +14.41%, and a residual of -7.96pp after beta - the trading itself destroyed value, not just the market direction. Finished at -6.04% - a 6,042 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],

@@ -140,7 +140,13 @@ SEC31_PER_MILLION: Tuple[Tuple[str, float], ...] = (
 # reported by two independent broker fee schedules for 2026 and are marked
 # UNVERIFIED so a maintainer can confirm them.
 #   SOURCE (secondary): https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/
-#   PRIMARY TO CHECK:  https://www.finra.org/rules-guidance/rulebooks/finra-rules  (Schedule A to the By-Laws)
+#   PRIMARY TO CHECK:  https://www.finra.org/rules-guidance/guidance/trading-activity-fee
+#                      (FINRA's own TAF page; it defers the rates themselves to
+#                      Section 1 of Schedule A to the By-Laws).  Fetched live
+#                      2026-09-17.  The URL previously cited here,
+#                      rulebooks/finra-rules/7541 cited here before, returns 404:
+#                      FINRA has no rule number for the TAF, it lives in the
+#                      By-Laws schedule.  See IR-33.
 #   FLAGGED IN: research/IRREGULARITIES.json (IR-05)
 FINRA_TAF_PER_SHARE: Tuple[Tuple[str, float], ...] = (
     ("2025-01-01", 0.000166),   # UNVERIFIED (secondary sources)
@@ -383,7 +389,11 @@ class MarginConfig:
     shorting_allowed: bool = True
     # Pattern Day Trader rule: accounts under $25,000 are limited to 3 day
     # trades per rolling 5 business days.  Not binding at $100k but modelled.
-    #   SOURCE: https://www.finra.org/investors/learn-to-invest/types-investments/margin-investing/pattern-day-trader
+    # The counting rule, including the six worked examples the venue's
+    # Account._count_day_trade reproduces, is FINRA Regulatory Notice 21-13.
+    #   SOURCE: https://www.finra.org/rules-guidance/notices/21-13
+    # (The investor-education page previously cited here,
+    #  /investors/learn-to-invest/.../pattern-day-trader, now 404s: IR-33.)
     pdt_equity_threshold: float = 25_000.0
 
 
@@ -530,9 +540,17 @@ def all_verified_sources() -> List[dict]:
          "publisher": "FINRA OTC Transparency",
          "status": "KNOWN-NOT-FETCHED"},
         {"claim": "FINRA Trade Activity Fee of $0.000195 per share on equity sells (minimum $0.01, maximum $9.79) from 2026-01-01",
-         "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/7541",
-         "publisher": "FINRA Rule 7541 and Schedule A to the By-Laws",
-         "status": "SECONDARY"},
+         "url": "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
+         "publisher": "FINRA; rates are in Section 1 of Schedule A to the By-Laws",
+         "status": "SECONDARY",
+         "note": "the page was fetched and excerpted on 2026-09-17, and it "
+                 "confirms the fee is levied on sales and that the rate "
+                 "table lives in Schedule A; the RATE NUMBERS in the claim "
+                 "are still corroborated only by two broker fee schedules, "
+                 "because Schedule A is a PDF this environment cannot read, "
+                 "so the row is NOT promoted to FETCHED-VERIFIED (IR-05 "
+                 "stays open). The rulebooks/finra-rules/7541 path cited "
+                 "here before 2026-09-17 returns 404 (IR-33)."},
         {"claim": "Tiered round-lot definition: 100 shares up to $250, 40 to $1,000, 10 to $10,000, 1 share above",
          "url": "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.600",
          "publisher": "eCFR / SEC Rule 600(b)(93)",
@@ -647,10 +665,29 @@ def all_verified_sources() -> List[dict]:
          "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Pages/dataarchived.html",
          "publisher": "NYU Stern (Aswath Damodaran)",
          "status": "KNOWN-NOT-FETCHED"},
-        {"claim": "FINRA pattern day trader rule page: a margin account must hold $25,000 in equity to day trade, the threshold the simulated margin model reports against",
-         "url": "https://www.finra.org/investors/learn-to-invest/types-investments/margin-investing/pattern-day-trader",
+        {"claim": "FINRA Regulatory Notice 21-13: the day-trade counting rule (Rule 4210(f)(8)(B)) with six worked examples, which Account._count_day_trade reproduces test-for-test; also the source of the overnight-position carve-out",
+         "url": "https://www.finra.org/rules-guidance/notices/21-13",
          "publisher": "FINRA",
-         "status": "KNOWN-NOT-FETCHED"},
+         "status": FETCHED_VERIFIED,
+         "note": "fetched live 2026-09-17; the six examples are pinned in tests/test_portfolio.py::TestFinraDayTradeExamples"},
+        {"claim": "FINRA Rule 4210 (Margin Requirements), the rule body the Notice interprets, including the $25,000 pattern-day-trader equity minimum the venue reports against",
+         "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210",
+         "publisher": "FINRA",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched 2026-09-17 and excerpted under data/real/regulatory/, "
+                 "because paragraph (f)(8)(B) is the rule body the day-trade "
+                 "counter in sim/portfolio.py implements and the $25,000 "
+                 "minimum is the figure MarginConfig reports against"},
+        {"claim": "FINRA Rule 4330: a member borrowing a customer's securities must disclose 'payments deemed cash-in-lieu of dividend paid on securities while on loan' - the manufactured-dividend obligation the venue charges short positions with (IR-31)",
+         "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330",
+         "publisher": "FINRA",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched live 2026-09-17; the disclosure list is in 4330(b)(2)(B)(ii)(g)"},
+        {"claim": "IRS Publication 550: a borrower who must remit payments in lieu of dividends to the lender, and the 45-day holding rule that decides whether that payment is deductible - the tax-side confirmation that a short position OWES the dividend rather than missing it",
+         "url": "https://www.irs.gov/publications/p550",
+         "publisher": "Internal Revenue Service",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched live 2026-09-17 (Publication 550 (2025))"},
         {"claim": "FINRA rulebooks index, where Schedule A to the By-Laws (the PRIMARY source for the Trade Activity Fee rate) is published; not retrievable from this environment, hence IR-05",
          "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules",
          "publisher": "FINRA",

@@ -277,21 +277,62 @@ class TestMaintenanceAndCarry(unittest.TestCase):
         f_dear = dear.accrue_carry("2026-01-05", {"CVNA": 185.0})["borrow_fee"]
         self.assertGreater(f_dear, f_cheap)
 
-    def test_dividends_are_paid_only_on_longs(self):
+    def test_dividends_are_paid_on_longs_and_owed_by_shorts(self):
         a = acct()
         marks = {"SPY": 700.0}
         a.apply_fill(mk_fill("SPY", BUY, 100, 700.0), marks)
-        paid = a.pay_dividend("SPY", 1.90)
-        self.assertAlmostEqual(paid, 190.0, places=6)
+        out = a.settle_dividend("SPY", 1.90)
+        self.assertAlmostEqual(out["received"], 190.0, places=6)
+        self.assertEqual(out["in_lieu"], 0.0)
         self.assertAlmostEqual(a.dividends_received, 190.0, places=6)
         self.assertAlmostEqual(a.cash, 100_000.0 - 70_000.0 + 190.0, places=6)
-        self.assertEqual(a.pay_dividend("NVDA", 1.00), 0.0)
-        self.assertEqual(a.pay_dividend("SPY", 0.0), 0.0)
+        self.assertEqual(a.settle_dividend("NVDA", 1.00)["received"], 0.0)
+        self.assertEqual(a.settle_dividend("SPY", 0.0)["received"], 0.0)
 
+    def test_short_position_owes_a_manufactured_dividend(self):
+        """A borrower must pay the lender the dividend that goes ex."""
         b = acct()
         b.apply_fill(mk_fill("RIVN", SELL, 100, 12.0), {"RIVN": 12.0})
-        self.assertEqual(b.pay_dividend("RIVN", 1.00), 0.0,
+        out = b.settle_dividend("RIVN", 1.00)
+        self.assertEqual(out["received"], 0.0,
                          "a short position does not receive the dividend")
+        self.assertAlmostEqual(out["in_lieu"], 100.0, places=6)
+        self.assertAlmostEqual(b.dividends_in_lieu_paid, 100.0, places=6)
+        self.assertAlmostEqual(b.cash, 100_000.0 + 1_200.0 - 100.0, places=6,
+                               msg="short proceeds credited, manufactured "
+                                   "dividend debited")
+        # The per-symbol row shows the net carry on the position.
+        self.assertAlmostEqual(b.position("RIVN").dividends, -100.0, places=6)
+
+    def test_dividend_entitlement_is_the_position_carried_into_the_ex_date(self):
+        """Buying ON the ex-date earns nothing; selling ON it is still paid."""
+        buyer = acct()
+        buyer.apply_fill(mk_fill("SPY", BUY, 100, 700.0), {"SPY": 700.0})
+        # They held nothing before today, so entitled_qty=0 decides it.
+        self.assertEqual(buyer.settle_dividend("SPY", 1.90, entitled_qty=0)["received"],
+                         0.0, "a position opened on the ex-date is not entitled")
+
+        seller = acct()
+        seller.apply_fill(mk_fill("SPY", BUY, 100, 700.0), {"SPY": 700.0})
+        seller.start_day("2026-01-06")
+        seller.apply_fill(mk_fill("SPY", SELL, 100, 700.0, date="2026-01-06"),
+                          {"SPY": 700.0})
+        out = seller.settle_dividend("SPY", 1.90, entitled_qty=100)
+        self.assertAlmostEqual(out["received"], 190.0, places=6,
+                               msg="the holder of record before the ex-date is "
+                                   "paid even if they sold during the day")
+        self.assertEqual(seller.quantity("SPY"), 0)
+
+    def test_quantities_at_open_snapshots_before_trading(self):
+        a = acct()
+        a.apply_fill(mk_fill("SPY", BUY, 100, 700.0), {"SPY": 700.0})
+        a.start_day("2026-01-06")
+        self.assertEqual(a.quantities_at_open(), {"SPY": 100},
+                         "the snapshot must be taken before today's fills")
+        a.apply_fill(mk_fill("SPY", SELL, 100, 701.0, date="2026-01-06"),
+                     {"SPY": 701.0})
+        self.assertEqual(a.quantities_at_open(), {},
+                         "flat book snapshots to nothing, not to yesterday")
 
     def test_day_trades_are_counted_once_per_session(self):
         a = acct()
@@ -300,13 +341,16 @@ class TestMaintenanceAndCarry(unittest.TestCase):
         a.apply_fill(mk_fill("SPY", BUY, 100, 100.0, date="2026-01-05"), marks)
         a.apply_fill(mk_fill("SPY", SELL, 100, 101.0, date="2026-01-05"), marks)
         self.assertEqual(a.day_trades, ["2026-01-05"])
+        self.assertEqual(a.day_trade_count, 1)
         a.apply_fill(mk_fill("SPY", BUY, 100, 101.0, date="2026-01-05"), marks)
         a.apply_fill(mk_fill("SPY", SELL, 100, 102.0, date="2026-01-05"), marks)
         self.assertEqual(a.day_trades, ["2026-01-05"], "one entry per session")
+        self.assertEqual(a.day_trade_count, 2, "but each round trip is counted")
         a.start_day("2026-01-06")
         a.apply_fill(mk_fill("SPY", BUY, 100, 102.0, date="2026-01-06"), marks)
         a.apply_fill(mk_fill("SPY", SELL, 100, 103.0, date="2026-01-06"), marks)
         self.assertEqual(a.day_trades, ["2026-01-05", "2026-01-06"])
+        self.assertEqual(a.day_trade_count, 3)
 
     def test_overnight_round_trip_is_not_a_day_trade(self):
         a = acct()
@@ -316,7 +360,137 @@ class TestMaintenanceAndCarry(unittest.TestCase):
         a.start_day("2026-01-06")
         a.apply_fill(mk_fill("SPY", SELL, 100, 101.0, date="2026-01-06"), marks)
         self.assertEqual(a.day_trades, [])
+        self.assertEqual(a.day_trade_count, 0,
+                         "the intraday counter must reset with the session")
 
+    def test_adding_to_a_position_intraday_is_not_a_day_trade(self):
+        """FINRA counts a day trade as opening AND closing, not two buys.
+
+        The pre-fix detector returned True for any second fill of a session,
+        which turned scaling into day trading and, at season scale, flagged
+        235 of 251 sessions for an overnight strategy that never round trips
+        intraday at all.
+        """
+        a = acct()
+        marks = {"SPY": 100.0}
+        a.start_day("2026-01-05")
+        a.apply_fill(mk_fill("SPY", BUY, 100, 100.0, date="2026-01-05"), marks)
+        a.apply_fill(mk_fill("SPY", BUY, 100, 100.0, date="2026-01-05"), marks)
+        a.apply_fill(mk_fill("SPY", BUY, 50, 100.0, date="2026-01-05"), marks)
+        self.assertEqual(a.day_trades, [], "three buys are not a round trip")
+        self.assertEqual(a.day_trade_count, 0)
+        # A partial close of the intraday opening IS one day trade.
+        a.apply_fill(mk_fill("SPY", SELL, 50, 101.0, date="2026-01-05"), marks)
+        self.assertEqual(a.day_trades, ["2026-01-05"])
+        self.assertEqual(a.day_trade_count, 1)
+        # Short-side mirror: selling short then covering is a day trade too.
+        b = acct()
+        b.start_day("2026-01-05")
+        b.apply_fill(mk_fill("AAPL", SELL, 100, 200.0, date="2026-01-05"),
+                     {"AAPL": 200.0})
+        b.apply_fill(mk_fill("AAPL", SELL, 100, 200.0, date="2026-01-05"),
+                     {"AAPL": 200.0})
+        self.assertEqual(b.day_trades, [])
+        b.apply_fill(mk_fill("AAPL", BUY, 150, 199.0, date="2026-01-05"),
+                     {"AAPL": 199.0})
+        self.assertEqual(b.day_trades, ["2026-01-05"])
+        self.assertEqual(b.day_trade_count, 1)
+
+
+class TestFinraDayTradeExamples(unittest.TestCase):
+    """The six worked examples in FINRA Regulatory Notice 21-13, verbatim.
+
+    https://www.finra.org/rules-guidance/notices/21-13 is the only place the
+    arithmetic behind "four or more day trades in five business days" is
+    written out, and it is unusually explicit: Interpretation /02 lets a firm
+    count "the number of times during the day that the day trading customer
+    changes its trading direction", and then works six sequences out by hand.
+
+    Those six answers are the specification for Account._count_day_trade.  They
+    rule out the two implementations a reasonable person writes first: counting
+    closing transactions (which would call example C three day trades, not one)
+    and counting any fill that reduces today's quantity (example D would be
+    two).  Only a count of direction CHANGES, with consecutive same-direction
+    fills merged, reproduces all six.  A test that merely asserted "a round trip
+    counts once" would have passed against all three implementations and told us
+    nothing; these examples are why the rule here is the rule FINRA publishes.
+    """
+
+    def run_sequence(self, *legs):
+        """Apply (side, symbol, qty) legs in one session and return the count."""
+        a = acct()
+        a.start_day("2026-01-05")
+        marks = {sym: 100.0 for _, sym, _ in legs}
+        for side, sym, qty in legs:
+            a.apply_fill(mk_fill(sym, side, qty, 100.0, date="2026-01-05"), marks)
+        return a, a.day_trade_count
+
+    def test_example_a_one_round_trip_is_one_trade(self):
+        # 09:30 Buy 250 ABC; 09:31 Buy 250 ABC; 13:00 Sell 500 ABC.
+        # Notice: "The customer has executed one day trade."
+        _, n = self.run_sequence((BUY, "SPY", 250), (BUY, "SPY", 250),
+                                 (SELL, "SPY", 500))
+        self.assertEqual(n, 1)
+
+    def test_example_b_two_round_trips_are_two(self):
+        # 09:30 Buy 100; 09:31 Sell 100; 09:32 Buy 100; 13:00 Sell 100.
+        _, n = self.run_sequence((BUY, "SPY", 100), (SELL, "SPY", 100),
+                                 (BUY, "SPY", 100), (SELL, "SPY", 100))
+        self.assertEqual(n, 2)
+
+    def test_example_c_three_exits_of_one_entry_are_one_trade(self):
+        # 09:30 Buy 500; 13:00 Sell 100; 13:01 Sell 100; 13:03 Sell 300.
+        # Scaling OUT is not three day trades.  This is the case a naive
+        # per-fill detector gets wrong.
+        _, n = self.run_sequence((BUY, "SPY", 500), (SELL, "SPY", 100),
+                                 (SELL, "SPY", 100), (SELL, "SPY", 300))
+        self.assertEqual(n, 1)
+
+    def test_example_d_partial_exit_of_a_scaled_position_is_one_trade(self):
+        # 09:30 Buy 250; 09:31 Buy 300; 13:01 Buy 100; 13:02 Sell 150;
+        # 13:03 Sell 175.  The position is still 325 shares long at the close
+        # and the Notice still counts one trade.
+        _, n = self.run_sequence((BUY, "SPY", 250), (BUY, "SPY", 300),
+                                 (BUY, "SPY", 100), (SELL, "SPY", 150),
+                                 (SELL, "SPY", 175))
+        self.assertEqual(n, 1)
+
+    def test_example_e_reversal_then_exit_is_two(self):
+        # 09:30 Buy 199; 09:31 Buy 142; 13:00 Sell 1; 13:01 Buy 45;
+        # 13:02 Sell 100; 13:03 Sell 200.  The one-share sale is a real
+        # direction change, so it counts even though it barely touches the
+        # position.
+        _, n = self.run_sequence((BUY, "SPY", 199), (BUY, "SPY", 142),
+                                 (SELL, "SPY", 1), (BUY, "SPY", 45),
+                                 (SELL, "SPY", 100), (SELL, "SPY", 200))
+        self.assertEqual(n, 2)
+
+    def test_example_f_is_counted_per_security(self):
+        # 09:30 Buy 200 ABC; 09:30 Buy 100 XYZ; 13:00 Sell 100 ABC;
+        # 13:00 Sell 100 XYZ -> "two day trades", i.e. the rule is applied to
+        # each security separately and never to the account's net flow.
+        _, n = self.run_sequence((BUY, "SPY", 200), (BUY, "AAPL", 100),
+                                 (SELL, "SPY", 100), (SELL, "AAPL", 100))
+        self.assertEqual(n, 2)
+
+    def test_one_laying_out_a_position_and_another_opening_it_is_not_a_trade(self):
+        # Not from the Notice: this is the @OvernightCarry_NO shape.  Closing
+        # yesterday's long and opening today's, in the same session, contains no
+        # same-day round trip of the SAME shares, so the "except for positions
+        # held overnight" carve-out applies.  The pre-fix stub called this 235
+        # day trades in 251 sessions and made an overnight strategy look like a
+        # pattern day trader.
+        a = acct()
+        marks = {"SPY": 100.0}
+        a.start_day("2026-01-05")
+        a.apply_fill(mk_fill("SPY", BUY, 1114, 100.0, date="2026-01-05"), marks)
+        a.start_day("2026-01-06")
+        a.apply_fill(mk_fill("SPY", SELL, 1114, 101.0, date="2026-01-06"), marks)
+        a.apply_fill(mk_fill("SPY", BUY, 1108, 101.0, date="2026-01-06"), marks)
+        a.start_day("2026-01-07")
+        a.apply_fill(mk_fill("SPY", SELL, 1108, 102.0, date="2026-01-07"), marks)
+        self.assertEqual(a.day_trade_count, 0)
+        self.assertEqual(a.day_trades, [])
 
 class TestMarksAndSummary(unittest.TestCase):
     def test_mark_appends_to_the_equity_curve_and_reports_consistent_fields(self):
@@ -349,10 +523,11 @@ class TestMarksAndSummary(unittest.TestCase):
         self.assertAlmostEqual(
             s["net_pnl"],
             s["realized_gross_pnl"] + s["unrealized_pnl"] + s["dividends_received"]
+            - s["dividends_in_lieu_paid"]
             - s["borrow_fees_paid"] - s["incremental_cash_costs"],
             places=2,
             msg="P&L decomposition must close: realized + unrealized + dividends "
-                "- carry - cash costs = net P&L")
+                "- manufactured dividends - borrow - cash costs = net P&L")
         self.assertAlmostEqual(s["total_return_pct"],
                                100.0 * s["net_pnl"] / s["starting_cash"], places=3)
 

@@ -129,13 +129,15 @@
  },
  "carry": {
   "dividends_received_usd": 136.89,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.08,
   "net_carry_usd": 136.81,
   "margin_calls": [
    "2025-11-17: equity 38,295.00 < maintenance requirement 39,874.40"
   ],
   "margin_call_count": 1,
-  "day_trades": 1
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 40.29,
@@ -286,6 +288,7 @@
   "realized_trading_pnl_usd": -54319.04,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 136.89,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.08,
   "execution_costs_already_netted_usd": -215.55,
   "total_net_pnl_usd": -54182.25,

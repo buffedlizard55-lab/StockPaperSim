@@ -21,7 +21,7 @@
   "id": "IR-14",
   "severity": "low",
   "symbol": null,
-  "message": "@KitchenSink_AllIn: 41 order(s) REJECTED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.03x)"
+  "message": "@KitchenSink_AllIn: 34 order(s) REJECTED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.01x)"
  },
  {
   "id": "IR-14",
@@ -51,7 +51,7 @@
   "id": "IR-15",
   "severity": "medium",
   "symbol": null,
-  "message": "@SpreadHarvester_MM: 585 order(s) SIZE-CLIPPED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.49x)"
+  "message": "@SpreadHarvester_MM: 585 order(s) SIZE-CLIPPED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.48x)"
  },
  {
   "id": "IR-15",
@@ -64,6 +64,12 @@
   "severity": "low",
   "symbol": null,
   "message": "@BetaChaser_3xProxy: 7 order(s) SIZE-CLIPPED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.00x)"
+ },
+ {
+  "id": "IR-15",
+  "severity": "low",
+  "symbol": null,
+  "message": "@OvernightCarry_NO: 5 order(s) SIZE-CLIPPED by the broker-side pre-trade check [gross leverage cap #x would be breached (#x)] - e.g. gross leverage cap 2.00x would be breached (2.01x)"
  },
  {
   "id": "IR-15",

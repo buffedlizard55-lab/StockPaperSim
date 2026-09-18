@@ -55,8 +55,9 @@
    "Skip names whose quoted spread is wider than 30 bp (costs eat the edge)"
   ],
   "exit_rules": [
-   "Exit every position at the same session's close (market-on-close order)",
-   "No stop loss intraday"
+   "Exit every position at the same session's close, as a market-on-close order routed to the venue's final interval",
+   "No stop loss intraday",
+   "Any exit that fails to fill at the close is flattened at the next open"
   ],
   "sizing": "equal 40% of equity across qualifying names, capped at 4 names = up to 160% gross",
   "leverage": "up to 1.6x gross",
@@ -698,7 +699,7 @@
   "archetype": "overnight premium",
   "thesis": "A large share of the market's long-run return arrives overnight rather than during the session. This participant buys the index ETF at the close of every session and sells it at the open of the next, collecting the overnight leg only.",
   "entry_rules": [
-   "Buy SPY at the close of every session (simulated as a market order at the next open with the overnight gap already realised)",
+   "Buy SPY at the close of every session, worked on the venue's final interval (at_close), so the fill is the closing print and the overnight gap is captured rather than paid away",
    "Hold only the index ETF; no single-name risk"
   ],
   "exit_rules": [
@@ -717,7 +718,7 @@
    }
   ],
   "known_failure_modes": [
-   "TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08).",
+   "TIMING / INTERVAL GRANULARITY: the entry is worked on the session's final interval, so it captures the overnight leg rather than the intraday one, but the venue's closing print is the last of K synthetic intervals rather than a real 16:00 tape print, and the exit pays the spread again at the next open. Both are cost drags a live implementation of this trade would also carry; neither is a reason to read the season's number as an estimate of the real premium.",
    "Pays the spread twice per session, ~500 times per year",
    "No intraday exposure means it forfeits the whole trend"
   ],

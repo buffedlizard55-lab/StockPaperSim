@@ -98,7 +98,20 @@ class Account:
         self.rejected: List[Fill] = []
         self.equity_curve: List[Tuple[str, float]] = []
         self.margin_calls: List[str] = []
-        self.day_trades: List[str] = []  # dates with a round-trip (PDT tracking)
+        self.day_trades: List[str] = []  # dates with a same-day round trip (PDT)
+        self.day_trade_count = 0        # round trips closed intraday, all sessions
+        # Dividends the account OWES because it was short across an ex-date.  A
+        # stock loan requires the borrower to pay the lender a "manufactured"
+        # dividend; the position does not receive the dividend, it pays one.
+        self.dividends_in_lieu_paid = 0.0
+        # Signed quantity built up per symbol during the current session, and
+        # whether the current clip is accumulating or reducing it.  Used only
+        # to detect genuine intraday round trips; see _count_day_trade.
+        self._intraday_net: Dict[str, int] = {}
+        self._intraday_clip: Dict[str, str] = {}
+        # Quantity this account OPENED during the current session, per symbol:
+        # the pool a closing clip has to draw on before it is a day trade.
+        self._intraday_open: Dict[str, int] = {}
         # Session index at which each symbol's current position was opened.
         # Used by holding-period exit rules; part of participant state, so it
         # is persisted with the run and never shared between participants.
@@ -110,7 +123,66 @@ class Account:
     def start_day(self, date: str) -> None:
         if date != self._current_date:
             self._opened_today = {}
+            self._intraday_net = {}
+            self._intraday_clip = {}
+            self._intraday_open = {}
         self._current_date = date
+
+    def _count_day_trade(self, symbol: str, before_qty: int,
+                         signed_qty: int) -> None:
+        """Count intraday round trips the way the rule actually defines them.
+
+        FINRA Rule 4210(f)(8)(B)(i) defines day trading as "the purchasing and
+        selling or the selling and purchasing of the same security on the same
+        day in a margin account except for positions held overnight", and
+        Regulatory Notice 21-13 Interpretation /02 counts "the number of times
+        during the day that the day trading customer changes its trading
+        direction" (https://www.finra.org/rules-guidance/notices/21-13).  Both
+        halves matter, and the Notice works six sequences out by hand.  Those
+        six answers rule out the two implementations a reasonable person writes
+        first: counting closing transactions calls buy 500 / sell 100 / sell 100
+        / sell 300 three day trades instead of one, and counting any fill that
+        reduces the day's quantity calls buy 250 / buy 300 / buy 100 / sell 150
+        / sell 175 two instead of one.  A naive version also turns
+        @OvernightCarry_NO's nightly lay-off-then-re-entry into a day trade on
+        every single session, which is exactly what the "except for positions
+        held overnight" carve-out forbids.
+
+        So: consecutive same-direction fills are one clip, a clip is "opening"
+        when it grows the ABSOLUTE position (not when it flips the day's net,
+        which is what let the overnight case through), and one day trade is
+        recorded for each switch from an opening clip to a closing clip that
+        gives back shares this account opened today - `self._intraday_open`
+        tracks that pool, so a lay-off of yesterday's position can never draw on
+        it.  tests/test_portfolio.py::TestFinraDayTradeExamples pins all six
+        examples plus the overnight case down; that test is the specification.
+        """
+        if not signed_qty:
+            return
+        growing = (before_qty == 0) or (before_qty > 0) == (signed_qty > 0)
+        opened_today = self._intraday_open.get(symbol, 0)
+        if growing:
+            self._intraday_open[symbol] = opened_today + abs(signed_qty)
+            self._intraday_clip[symbol] = "open"
+            return
+        # A closing clip.  It only makes a day trade if it hands back shares
+        # opened in this session, and only the FIRST one of the clip counts:
+        # scaling out of a position is one round trip, not one per tranche.
+        self._intraday_open[symbol] = max(0, opened_today - abs(signed_qty))
+        if self._intraday_clip.get(symbol) == "open" and opened_today > 0:
+            self.day_trade_count += 1
+            if self._current_date not in self.day_trades:
+                self.day_trades.append(self._current_date)
+        self._intraday_clip[symbol] = "close"
+
+    def quantities_at_open(self) -> Dict[str, int]:
+        """Positions as of the start of the current session.
+
+        Dividend entitlement is decided by ownership at the close BEFORE the
+        ex-date, not by what the participant happens to hold after today's
+        trades, so the engine snapshots the book here and pays on that.
+        """
+        return {s: p.quantity for s, p in self.positions.items() if p.quantity}
 
     def position(self, symbol: str) -> Position:
         if symbol not in self.positions:
@@ -216,6 +288,7 @@ class Account:
         price = fill.avg_price
         side = fill.order.side
         signed = qty if side == BUY else -qty
+        before_qty = pos.quantity
 
         # Realised P&L on the reducing leg (average-cost basis).
         if pos.quantity != 0 and (pos.quantity > 0) != (signed > 0):
@@ -259,16 +332,13 @@ class Account:
         self.costs.depth_cost += fill.depth_cost
         self.costs.impact_cost += fill.impact_cost
 
-        # Pattern-day-trader style bookkeeping (informational).
-        if self._opened_today.get(fill.order.symbol, 0) and \
-                self._day_trade_closes(pos, side):
-            if self._current_date not in self.day_trades:
-                self.day_trades.append(self._current_date)
+        # Pattern-day-trader bookkeeping; see _count_day_trade for the rule.
+        # `before` is the position as it stood at the START of this fill, which
+        # is what separates "unwinding yesterday" from "giving back today".
+        self._count_day_trade(fill.order.symbol, before_qty, signed)
+        self._intraday_net[fill.order.symbol] = \
+            self._intraday_net.get(fill.order.symbol, 0) + signed
         self._opened_today[fill.order.symbol] = self._opened_today.get(fill.order.symbol, 0) + qty
-
-    @staticmethod
-    def _day_trade_closes(pos: Position, side: str) -> bool:
-        return True
 
     # ------------------------------------------------------------------
     def accrue_carry(self, date: str, marks: Dict[str, float],
@@ -289,15 +359,38 @@ class Account:
                 out["borrow_fee"] += fee
         return out
 
-    def pay_dividend(self, symbol: str, per_share: float) -> float:
+    def settle_dividend(self, symbol: str, per_share: float,
+                        entitled_qty: Optional[int] = None) -> dict:
+        """Settle one ex-date for one symbol.
+
+        ``entitled_qty`` is the quantity held on the close BEFORE the ex-date
+        (the record-date position).  A long is paid the dividend; a short owes
+        the lender a manufactured "payment in lieu", because the lender is
+        entitled to the distribution even though the borrower holds the shares.
+        Defaulting ``entitled_qty`` to None means "use the position as it stands
+        after today's trades", which is what a naive simulator does and is wrong
+        on both counts: a position opened on the ex-date itself is not entitled
+        to anything, and a position closed on the ex-date is still owed (or
+        still owes) it.
+        """
         pos = self.position(symbol)
-        if pos.quantity <= 0 or per_share <= 0:
-            return 0.0
-        amount = pos.quantity * per_share
-        self.cash += amount
-        pos.dividends += amount
-        self.dividends_received += amount
-        return amount
+        qty = pos.quantity if entitled_qty is None else int(entitled_qty)
+        per_share = float(per_share)
+        received = max(0.0, qty) * per_share if per_share > 0 else 0.0
+        in_lieu = max(0.0, -qty) * per_share if per_share > 0 else 0.0
+        if received:
+            self.cash += received
+            pos.dividends += received
+            self.dividends_received += received
+        if in_lieu:
+            self.cash -= in_lieu
+            pos.dividends -= in_lieu
+            self.dividends_in_lieu_paid += in_lieu
+        return {"received": received, "in_lieu": in_lieu}
+
+    def pay_dividend(self, symbol: str, per_share: float) -> float:
+        """Back-compatible wrapper: dividends on the current long position."""
+        return self.settle_dividend(symbol, per_share)["received"]
 
     # ------------------------------------------------------------------
     def mark(self, date: str, marks: Dict[str, float]) -> dict:
@@ -353,6 +446,7 @@ class Account:
             "unrealized_pnl": round(sum(p.unrealized(marks.get(s, p.avg_cost))
                                         for s, p in self.positions.items()), 2),
             "dividends_received": round(self.dividends_received, 2),
+            "dividends_in_lieu_paid": round(self.dividends_in_lieu_paid, 2),
             "borrow_fees_paid": round(self.borrow_paid, 2),
             "costs": self.costs.as_dict(),
             "incremental_cash_costs": round(self.costs.incremental_cash, 2),
@@ -364,6 +458,7 @@ class Account:
             "shares_sold": sum(p.shares_sold for p in self.positions.values()),
             "margin_calls": self.margin_calls,
             "day_trades": len(self.day_trades),
+            "day_trade_count": self.day_trade_count,
             "open_positions": {s: p.to_row(marks.get(s, p.avg_cost))
                                for s, p in self.positions.items() if p.quantity},
         }

@@ -3,10 +3,10 @@
  "strategy_id": "MeanRevZ",
  "archetype": "short-term reversal",
  "starting_cash": 100000.0,
- "final_equity": 110313.37,
- "net_pnl_usd": 10313.37,
- "total_return_pct": 10.3134,
- "cagr_pct": 10.3565,
+ "final_equity": 110314.47,
+ "net_pnl_usd": 10314.47,
+ "total_return_pct": 10.3145,
+ "cagr_pct": 10.3576,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -17.9591,
@@ -18,13 +18,13 @@
   "recovery_date": null,
   "sessions_underwater": 123,
   "never_recovered": true,
-  "sharpe": 0.6753,
-  "sortino": 0.8775,
+  "sharpe": 0.6754,
+  "sortino": 0.8776,
   "calmar": 0.5767,
   "daily_vol_pct": 1.0517,
   "annualised_vol_pct": 16.695,
   "skew": 1.0418,
-  "excess_kurtosis": 9.7996,
+  "excess_kurtosis": 9.7995,
   "best_session_pct": 6.0003,
   "worst_session_pct": -4.208,
   "var_95_pct": -1.5078,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 0.5786,
-  "alpha_annual_pct": 2.9381,
+  "alpha_annual_pct": 2.9392,
   "r_squared": 0.1999,
   "tracking_error_annual_pct": 14.934,
   "information_ratio": 0.197,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 8.341,
-  "residual_return_pct": 1.973
+  "residual_return_pct": 1.974
  },
  "trades": {
   "closed_trades": 53,
@@ -141,12 +141,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 192.6,
+  "dividends_received_usd": 193.7,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 192.6,
+  "net_carry_usd": 193.7,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 38.19,
@@ -406,17 +408,18 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 113216.79,
-   "end_equity": 110313.37,
-   "return_pct": -2.5645
+   "end_equity": 110314.47,
+   "return_pct": -2.5635
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 10120.76,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 192.6,
+  "dividends_usd": 193.7,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -284.81,
-  "total_net_pnl_usd": 10313.37,
+  "total_net_pnl_usd": 10314.47,
   "unexplained_residual_usd": 0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
@@ -492,7 +495,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +10.31% over 251 sessions - +10,313 USD on 100,000 of paper capital, ending at 110,313. Verdict: roughly matched the market."
+    "text": "Outcome: +10.31% over 251 sessions - +10,314 USD on 100,000 of paper capital, ending at 110,314. Verdict: roughly matched the market."
    },
    {
     "title": "Why: the style premia that were actually live",

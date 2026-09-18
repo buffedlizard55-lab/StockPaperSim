@@ -3,44 +3,44 @@
  "strategy_id": "TrendSurfer",
  "archetype": "time-series trend",
  "starting_cash": 100000.0,
- "final_equity": 130114.76,
- "net_pnl_usd": 30114.76,
- "total_return_pct": 30.1148,
- "cagr_pct": 30.2513,
+ "final_equity": 130109.06,
+ "net_pnl_usd": 30109.06,
+ "total_return_pct": 30.1091,
+ "cagr_pct": 30.2456,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -26.8628,
+  "max_drawdown_pct": -26.864,
   "max_drawdown_usd": -33656.33,
   "peak_date": "2026-02-09",
-  "peak_equity": 125289.92,
+  "peak_equity": 125284.22,
   "trough_date": "2026-03-27",
-  "trough_equity": 91633.59,
+  "trough_equity": 91627.89,
   "recovery_date": "2026-05-06",
   "sessions_underwater": 27,
   "never_recovered": false,
-  "sharpe": 0.9663,
-  "sortino": 1.4434,
-  "calmar": 1.1261,
-  "daily_vol_pct": 2.0775,
-  "annualised_vol_pct": 32.98,
-  "skew": -0.2314,
-  "excess_kurtosis": 0.716,
-  "best_session_pct": 6.4831,
-  "worst_session_pct": -7.1216,
-  "var_95_pct": -3.1731,
-  "cvar_95_pct": -4.6066,
-  "var_99_pct": -5.1289,
-  "cvar_99_pct": -6.3122
+  "sharpe": 0.9661,
+  "sortino": 1.4431,
+  "calmar": 1.1259,
+  "daily_vol_pct": 2.0776,
+  "annualised_vol_pct": 32.982,
+  "skew": -0.2313,
+  "excess_kurtosis": 0.7159,
+  "best_session_pct": 6.4835,
+  "worst_session_pct": -7.1219,
+  "var_95_pct": -3.1732,
+  "cvar_95_pct": -4.6068,
+  "var_99_pct": -5.1291,
+  "cvar_99_pct": -6.3124
  },
  "market_relation": {
   "beta": 2.2259,
-  "alpha_annual_pct": -0.2011,
-  "r_squared": 0.7582,
-  "tracking_error_annual_pct": 16.218,
-  "information_ratio": -0.012,
+  "alpha_annual_pct": -0.206,
+  "r_squared": 0.7581,
+  "tracking_error_annual_pct": 16.22,
+  "information_ratio": -0.013,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 32.086,
-  "residual_return_pct": -1.971
+  "beta_contribution_pct": 32.087,
+  "residual_return_pct": -1.978
  },
  "trades": {
   "closed_trades": 55,
@@ -132,12 +132,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 1576.15,
+  "dividends_received_usd": 1570.45,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 1576.15,
+  "net_carry_usd": 1570.45,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 1
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 226.74,
@@ -260,83 +262,84 @@
    "month": "2026-01",
    "sessions": 20,
    "start_equity": 114250.45,
-   "end_equity": 121048.47,
-   "return_pct": 5.9501
+   "end_equity": 121042.77,
+   "return_pct": 5.9451
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 121048.47,
-   "end_equity": 115829.78,
-   "return_pct": -4.3112
+   "start_equity": 121042.77,
+   "end_equity": 115824.08,
+   "return_pct": -4.3114
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 115829.78,
-   "end_equity": 98767.24,
-   "return_pct": -14.7307
+   "start_equity": 115824.08,
+   "end_equity": 98761.54,
+   "return_pct": -14.7314
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 98767.24,
-   "end_equity": 122533.41,
-   "return_pct": 24.0628
+   "start_equity": 98761.54,
+   "end_equity": 122527.71,
+   "return_pct": 24.0642
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 122533.41,
-   "end_equity": 140900.66,
-   "return_pct": 14.9896
+   "start_equity": 122527.71,
+   "end_equity": 140894.96,
+   "return_pct": 14.9903
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 140900.66,
-   "end_equity": 130449.9,
-   "return_pct": -7.4171
+   "start_equity": 140894.96,
+   "end_equity": 130444.2,
+   "return_pct": -7.4174
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 130449.9,
-   "end_equity": 130941.89,
-   "return_pct": 0.3771
+   "start_equity": 130444.2,
+   "end_equity": 130936.19,
+   "return_pct": 0.3772
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 130941.89,
-   "end_equity": 140109.62,
-   "return_pct": 7.0014
+   "start_equity": 130936.19,
+   "end_equity": 140103.92,
+   "return_pct": 7.0017
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 140109.62,
-   "end_equity": 130114.76,
-   "return_pct": -7.1336
+   "start_equity": 140103.92,
+   "end_equity": 130109.06,
+   "return_pct": -7.1339
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 28538.57,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 1576.15,
+  "dividends_usd": 1570.45,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -40.75,
-  "total_net_pnl_usd": 30114.76,
+  "total_net_pnl_usd": 30109.06,
   "unexplained_residual_usd": 0.04,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +30.11% total return vs +14.41% for the index, -1.97pp residual after beta, -26.9% max drawdown, 0.04% of capital lost to execution costs.",
+  "headline": "Beat the market: +30.11% total return vs +14.41% for the index, -1.98pp residual after beta, -26.9% max drawdown, 0.04% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +30.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +15.70pp."
+    "text": "Finished at +30.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +15.69pp."
    },
    {
     "kind": "factor",
@@ -348,7 +351,7 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +30.11% total, about +32.09pp is explained by carrying beta 2.23 against a +14.41% market (R^2 0.76); the residual -1.97pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +30.11% total, about +32.09pp is explained by carrying beta 2.23 against a +14.41% market (R^2 0.76); the residual -1.98pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -402,7 +405,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +30.11% over 251 sessions - +30,115 USD on 100,000 of paper capital, ending at 130,115. Verdict: beat the market."
+    "text": "Outcome: +30.11% over 251 sessions - +30,109 USD on 100,000 of paper capital, ending at 130,109. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -410,7 +413,7 @@
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +30.11% total, about +32.09pp is explained by carrying beta 2.23 against a +14.41% market (R^2 0.76); the residual -1.97pp is everything else - selection, timing, leverage and cost. NVDA contributed +10,476 USD (35% of net P&L) across 10 closed trades; JPM was the biggest drag at -524 USD."
+    "text": "Of the +30.11% total, about +32.09pp is explained by carrying beta 2.23 against a +14.41% market (R^2 0.76); the residual -1.98pp is everything else - selection, timing, leverage and cost. NVDA contributed +10,476 USD (35% of net P&L) across 10 closed trades; JPM was the biggest drag at -524 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -438,7 +441,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It beat the index by 15.70pp, but after beta the residual is -1.97pp: the win came from carrying more market risk (beta 2.23) in an up market, not from the signal itself. Finished at +30.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +15.70pp."
+    "text": "It beat the index by 15.69pp, but after beta the residual is -1.98pp: the win came from carrying more market risk (beta 2.23) in an up market, not from the signal itself. Finished at +30.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +15.69pp."
    }
   ],
   "failure_modes_fired": [],

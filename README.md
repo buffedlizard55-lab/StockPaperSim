@@ -25,7 +25,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 30 flags this project raised against itself.
+> carries the 34 flags this project raised against itself.
 
 ---
 
@@ -39,47 +39,74 @@ over the same window (FRED `SP500`); **13 of 20 participants beat it**.
 |---|---|---|---|---|---|---|---|---|
 | 1 | `@BetaChaser_3xProxy` | **+108.4%** | −43.5% | 1.40 | 3.92 | 66 | 0.24% | beat the market |
 | 2 | `@SectorRotator_AlphaX` | +100.9% | −32.2% | 1.91 | 2.44 | 25 | 0.05% | beat the market |
-| 3 | `@MeanRev_Z2Sigma` | +74.8% | −7.0% | 3.50 | 0.51 | 53 | 0.24% | beat the market |
-| 4 | `@OverreactionFade_LT` | +73.5% | −12.5% | 2.53 | 0.49 | 70 | 1.24% | beat the market |
-| 5 | `@MomentumMax_12x1` | +51.2% | −45.0% | 1.07 | 3.25 | 9 | 0.03% | beat the market |
-| 6 | `@OneBigBet_Concentra` | +48.9% | −22.1% | 1.22 | 0.55 | 55 | 1.14% | beat the market |
-| 7 | `@BuyHold_MaxBeta` | +45.3% | −32.0% | 0.89 | 3.17 | 3 | 0.11% | beat the market |
+| 3 | `@MeanRev_Z2Sigma` | +74.3% | −7.0% | 3.36 | 0.54 | 53 | 0.26% | beat the market |
+| 4 | `@MomentumMax_12x1` | +51.2% | −45.0% | 1.07 | 3.25 | 9 | 0.03% | beat the market |
+| 5 | `@BuyHold_MaxBeta` | +45.3% | −32.0% | 0.89 | 3.17 | 3 | 0.11% | beat the market |
+| 6 | `@OverreactionFade_LT` | +42.1% | −12.6% | 1.65 | 0.47 | 71 | 1.19% | beat the market |
+| 7 | `@OneBigBet_Concentra` | +40.6% | −22.1% | 1.37 | 0.41 | 50 | 0.62% | beat the market |
 | 8 | `@TrendSurfer_GoldenX` | +30.1% | −26.9% | 0.97 | 2.23 | 55 | 0.04% | beat the market |
-| 9 | `@VIXRegime_Timer` | +28.0% | −14.7% | 1.44 | 1.34 | 35 | 0.06% | beat the market |
-| 10 | `@DriftRider_PEAD` | +21.0% | −14.8% | 0.92 | 0.23 | 40 | 0.35% | beat the market |
-| 11 | `@DonchianBreakout_20` | +19.0% | −19.3% | 0.69 | 1.57 | 8 | 0.05% | roughly matched the market |
-| 12 | `@Contrarian_DeepValue` | +18.9% | −51.2% | 0.62 | 2.78 | 3 | 0.02% | roughly matched the market |
+| 9 | `@VIXRegime_Timer` | +28.4% | −14.7% | 1.46 | 1.34 | 35 | 0.06% | beat the market |
+| 10 | `@DriftRider_PEAD` | +20.7% | −14.8% | 0.91 | 0.23 | 40 | 0.35% | beat the market |
+| 11 | `@Contrarian_DeepValue` | +18.9% | −51.2% | 0.62 | 2.78 | 3 | 0.02% | roughly matched the market |
+| 12 | `@DonchianBreakout_20` | +18.2% | −19.4% | 0.67 | 1.57 | 8 | 0.05% | roughly matched the market |
 | 13 | `@IlliquidRocket_Degen` | +15.8% | −45.0% | 0.59 | 1.02 | 13 | 1.87% | roughly matched the market |
-| 14 | `@OvernightCarry_NO` | +14.1% | −10.3% | 0.74 | 1.05 | 244 | 1.29% | roughly matched the market |
-| 15 | `@KitchenSink_AllIn` | +5.2% | −30.5% | 0.31 | 1.56 | 354 | 0.39% | made money but lagged the index |
+| 14 | `@OvernightCarry_NO` | +9.0% | −4.9% | 1.25 | 0.04 | 247 | 1.16% | made money but lagged the index |
+| 15 | `@KitchenSink_AllIn` | +9.0% | −31.1% | 0.41 | 1.55 | 367 | 0.38% | made money but lagged the index |
 | 16 | `@PairsArb_ZScore2` | +1.0% | −0.4% | 1.01 | −0.01 | 3 | 0.01% | made money but lagged the index |
 | 17 | `@SqueezeHunter_TF` | −1.8% | −10.8% | −0.09 | 0.13 | 30 | 0.48% | lost money |
 | 18 | `@VolCarry_LowHigh` | −30.0% | −48.2% | −0.50 | −1.31 | 36 | 0.06% | lost money |
-| 19 | `@SpreadHarvester_MM` | −39.1% | −57.4% | −0.50 | −3.07 | 528 | −0.08% | lost money |
-| 20 | `@GapAndGo_YOLO` | **−86.6%** | −86.6% | −6.75 | 0.65 | 180 | 1.15% | lost money |
+| 19 | `@SpreadHarvester_MM` | −34.4% | −53.6% | −0.52 | −1.93 | 537 | −0.07% | lost money |
+| 20 | `@GapAndGo_YOLO` | **−91.8%** | −91.9% | −8.09 | 0.82 | 203 | 1.23% | lost money |
+
+> **These numbers were re-derived, not patched.** Season 1 has been republished
+> once, after two accounting errors were found in a line-by-line reading of the
+> engine rather than by a failing test: dividend entitlement was settled on the
+> position left *after* the ex-date's trades, and short positions were never
+> charged the manufactured dividend a stock loan requires (IR-31). Two
+> strategies also turned out to be unable to write the exit rule they documented,
+> because the venue could only execute at the opening bell (IR-34), and the
+> pattern-day-trader counter was a stub that returned `True` for any second fill
+> (IR-32). Fixing the accounting changed P&L, so the honest response was to
+> re-run the season and republish, not to edit the table in prose. The direct
+> cash correction was small - dividends received went from $11,299.61 to
+> $11,600.83 while $1,852.31 of manufactured dividends began to be charged, a net
+> $1,551.09 across 20 accounts, about $78 each - and the individual effects were
+> not: `@OverreactionFade_LT` moved 31.3pp because a $2.12 difference on one
+> ex-date changed the size of an order a month later and every later trade
+> compounded from it. Six of twenty ranks moved. Ranks 1 to 3 held, but the
+> middle of the table did not, and three participants changed rank without any
+> change in their own return at all, displaced by someone else's correction. That is the same knife-edge IR-29
+> measures from the other side, and it is why this README ranks nothing by skill
+> and why `scripts/independent_audit.py` exists: 763 checks re-derive every
+> published number from the raw event trail using code that never imports the
+> engine, and CI runs it on every push.
 
 **What actually caused these returns** (each participant page carries the full
 post-mortem, generated from that participant's own numbers):
 
-* The winner did not pick stocks well. `@BetaChaser_3xProxy` ran **beta 3.92**
-  into a market that rose 14.4%, and the report splits it: **+56.5pp from beta**
-  and **+51.9pp residual** (annualised alpha +44.1%, R² 0.50). It also took a
+* The winner did not pick stocks well. `@BetaChaser_3xProxy` ran **beta 3.92** into a market
+  that rose 14.4%, and the report splits it: **+56.5pp from beta** and
+  **+51.9pp residual** (annualised alpha +44.1%, R² 0.50). It took a
   **−43.5% drawdown** to get there. `@BuyHold_MaxBeta` is the control
   experiment: same idea, three trades, +45.3%.
-* `@GapAndGo_YOLO` lost 86.6% not because the gap signal was wrong but because
-  it chased gaps with full size into a **1.15%-of-capital execution cost** and
-  180 round trips; the venue model charges spread, impact and fees, and that is
-  where the account went.
+* `@GapAndGo_YOLO` lost 91.8% not because the gap signal was
+  wrong but because it chased gaps with full size into a **1.23%
+  of capital in execution cost** over 203 round trips, every one of them opened
+  and closed inside a single session (FINRA's counting rule, Notice 21-13). The
+  venue charges spread, impact and fees twice a day to a strategy that holds for
+  hours, and that is where the account went. It also now receives **$0.00** of
+  dividends, against $80.46 before IR-34, which is what a book that is genuinely
+  flat by the close must receive.
 * `@SpreadHarvester_MM` is the market maker. It **earned the rebate** (negative
-  cost, −0.08%) and still lost 39.1%, because quoting both sides of a trending,
-  fat-tailed tape accumulates inventory it cannot unwind at the mid - adverse
-  selection, modelled after Glosten-Milgrom. It is the most instructive failure
-  in the season.
+  cost, −0.07%) and still lost 34.4%, because quoting both
+  sides of a trending, fat-tailed tape accumulates inventory it cannot unwind
+  at the mid - adverse selection, modelled after Glosten-Milgrom. It is the most
+  instructive failure in the season.
+
 * `@MeanRev_Z2Sigma` is the best risk-adjusted result in the season (**Sharpe
-  3.50, max DD −7.0%**) and third on return: mean reversion in a range-bound
-  year with a cheap venue (0.24% of capital).
-* `@PairsArb_ZScore2` is nearly market-neutral (beta −0.01) and made +1.0%: the
-  spread legs offset, and the season had no dislocation big enough to pay.
+  3.36, max DD −7.0%**) and third on return: mean reversion in
+  a range-bound year with a cheap venue (0.26% of capital).
+
 
 Because one calendar path cannot separate skill from luck, every participant is
 replayed across **six scenarios** (the real calendar path plus five synthetic
@@ -117,7 +144,7 @@ gets.
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    52-row verified-source register
+                    55-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -128,15 +155,17 @@ sim/            the engine - pure standard library, no third-party imports
   memory.py         append-only checksummed event store
   cli.py            run / leaderboard / report / verify / query / export /
                     irregularities / sources / build-site
-scripts/        build_site.py (the GitHub Pages generator), check_purity.py
-tests/          327 tests - engine, venue, memory, site, registers, published docs
+scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
+                independent_audit.py (re-derives every published number from
+                the raw event streams; imports no project code)
+tests/          360 tests - engine, venue, memory, site, registers, docs, README
 data/real/      verbatim FRED and Yahoo downloads, with checksums
 memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports
 docs/           the published site (GitHub Pages serves this directory)
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (27), LIMITATIONS.json (16),
-                REMAINING_WORK.json (15)
+                IRREGULARITIES.json (34), LIMITATIONS.json (16),
+                REMAINING_WORK.json (17)
 ```
 
 ## Run it
@@ -147,7 +176,8 @@ python3 -m sim.cli leaderboard          # ranked table with the benchmark
 python3 -m sim.cli report --user @GapAndGo_YOLO     # full post-mortem
 python3 -m sim.cli verify               # checksum every run + data audits
 python3 -m sim.cli build-site           # regenerate docs/
-python3 -m unittest discover -s tests   # 327 tests
+python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
+python3 -m unittest discover -s tests   # 360 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -181,7 +211,8 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 58-row register, every URL clickable, every row carrying an honesty
+  — the 61-row register (55 source rows plus 6 provider rows), every URL
+  clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not
   actually retrieved here.
@@ -192,10 +223,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 30 flags, including the ones raised against this project's own modelling
+  — all 34 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 16 limitations, 16 items of remaining work in priority order, and what
+  — 16 limitations, 17 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

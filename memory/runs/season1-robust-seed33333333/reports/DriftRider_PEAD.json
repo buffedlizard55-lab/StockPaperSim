@@ -3,214 +3,207 @@
  "strategy_id": "EventDriftRider",
  "archetype": "post-event drift",
  "starting_cash": 100000.0,
- "final_equity": 124695.84,
- "net_pnl_usd": 24695.84,
- "total_return_pct": 24.6958,
- "cagr_pct": 24.8055,
+ "final_equity": 132698.04,
+ "net_pnl_usd": 32698.04,
+ "total_return_pct": 32.698,
+ "cagr_pct": 32.8477,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -13.578,
-  "max_drawdown_usd": -18782.99,
+  "max_drawdown_pct": -18.8698,
+  "max_drawdown_usd": -29603.29,
   "peak_date": "2026-07-16",
-  "peak_equity": 138333.59,
+  "peak_equity": 156881.89,
   "trough_date": "2026-08-13",
-  "trough_equity": 119550.6,
+  "trough_equity": 127278.6,
   "recovery_date": null,
   "sessions_underwater": 23,
   "never_recovered": true,
-  "sharpe": 0.8844,
-  "sortino": 1.3382,
-  "calmar": 1.8269,
-  "daily_vol_pct": 1.9009,
-  "annualised_vol_pct": 30.176,
-  "skew": 1.9628,
-  "excess_kurtosis": 13.3299,
-  "best_session_pct": 12.7203,
+  "sharpe": 1.1052,
+  "sortino": 1.5322,
+  "calmar": 1.7408,
+  "daily_vol_pct": 1.8747,
+  "annualised_vol_pct": 29.76,
+  "skew": 1.003,
+  "excess_kurtosis": 8.847,
+  "best_session_pct": 12.4032,
   "worst_session_pct": -7.3473,
-  "var_95_pct": -2.4473,
-  "cvar_95_pct": -3.7988,
-  "var_99_pct": -4.4204,
-  "cvar_99_pct": -5.7888
+  "var_95_pct": -2.681,
+  "cvar_95_pct": -4.2155,
+  "var_99_pct": -5.0135,
+  "cvar_99_pct": -6.0001
  },
  "market_relation": {
-  "beta": -0.1943,
-  "alpha_annual_pct": 29.4878,
-  "r_squared": 0.0069,
-  "tracking_error_annual_pct": 30.071,
-  "information_ratio": 0.981,
+  "beta": -0.1434,
+  "alpha_annual_pct": 34.9574,
+  "r_squared": 0.0039,
+  "tracking_error_annual_pct": 29.702,
+  "information_ratio": 1.177,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -2.801,
-  "residual_return_pct": 27.497
+  "beta_contribution_pct": -2.067,
+  "residual_return_pct": 34.765
  },
  "trades": {
-  "closed_trades": 51,
+  "closed_trades": 53,
   "open_trades": 0,
-  "wins": 26,
-  "losses": 25,
-  "win_rate_pct": 50.98,
-  "gross_win_usd": 77505.24,
-  "gross_loss_usd": 52986.04,
-  "profit_factor": 1.4627,
-  "avg_win_usd": 2980.97,
-  "avg_loss_usd": -2119.44,
-  "expectancy_usd_per_trade": 480.77,
+  "wins": 22,
+  "losses": 31,
+  "win_rate_pct": 41.509,
+  "gross_win_usd": 84279.91,
+  "gross_loss_usd": 51673.94,
+  "profit_factor": 1.631,
+  "avg_win_usd": 3830.91,
+  "avg_loss_usd": -1666.9,
+  "expectancy_usd_per_trade": 615.21,
   "best_trade": {
    "symbol": "RIVN",
-   "net_pnl": 19474.15,
+   "net_pnl": 15303.23,
    "entry_date": "2026-04-06",
-   "exit_date": "2026-04-10",
+   "exit_date": "2026-04-21",
    "direction": "long"
   },
   "worst_trade": {
    "symbol": "RIVN",
-   "net_pnl": -7694.34,
-   "entry_date": "2026-06-08",
-   "exit_date": "2026-06-10",
+   "net_pnl": -9069.41,
+   "entry_date": "2026-03-30",
+   "exit_date": "2026-04-02",
    "direction": "short"
   },
-  "longest_win_streak": 5,
-  "longest_loss_streak": 3,
-  "avg_sessions_held": 22.51,
+  "longest_win_streak": 4,
+  "longest_loss_streak": 8,
+  "avg_sessions_held": 23.3,
   "median_sessions_held": 15.0,
   "sessions_in_market": 239,
   "per_symbol_sessions_in_market": {
-   "CVNA": 171,
-   "NVDA": 158,
-   "GOOGL": 112,
-   "RIVN": 96,
-   "TSLA": 94,
-   "XOM": 92,
-   "UNH": 84,
+   "GOOGL": 213,
+   "CVNA": 174,
+   "RIVN": 136,
+   "CAT": 104,
+   "TSLA": 71,
    "AMZN": 67,
    "META": 56,
-   "CAT": 16,
-   "AAPL": 16,
+   "NVDA": 49,
+   "AAPL": 34,
+   "XOM": 16,
+   "UNH": 16,
    "JPM": 16
   },
-  "sum_of_tranche_sessions": 1148,
+  "sum_of_tranche_sessions": 1235,
   "tranche_intervals_overlap": true,
   "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 83,
-  "shares_traded": 37618,
-  "traded_notional_usd": 3211573.51,
-  "spread_cost_usd": 210.98,
-  "depth_cost_usd": 13.52,
-  "impact_cost_usd": 233.4,
+  "fills": 85,
+  "shares_traded": 37792,
+  "traded_notional_usd": 3103416.82,
+  "spread_cost_usd": 210.06,
+  "depth_cost_usd": 1.5,
+  "impact_cost_usd": 205.21,
   "commission_usd": 0.0,
-  "exchange_fee_usd": 112.85,
-  "regulatory_fee_usd": 21.31,
+  "exchange_fee_usd": 113.38,
+  "regulatory_fee_usd": 19.79,
   "rebate_usd": 0.0,
-  "total_cost_usd": 592.07,
-  "total_cost_bps_of_traded": 1.844,
-  "total_cost_pct_of_starting_cash": 0.5921,
+  "total_cost_usd": 549.94,
+  "total_cost_bps_of_traded": 1.772,
+  "total_cost_pct_of_starting_cash": 0.5499,
   "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": 22.66,
-   "spread_and_impact_pct": 77.34
+   "explicit_fees_pct": 24.22,
+   "spread_and_impact_pct": 75.78
   },
-  "avg_execution_cost_bps_per_fill": 1.589,
-  "median_execution_cost_bps_per_fill": 0.856,
-  "worst_execution_cost_bps": 7.56,
-  "intraday_drift_usd": -80.42,
-  "avg_price_difference_bps_per_fill": 0.953,
+  "avg_execution_cost_bps_per_fill": 1.647,
+  "median_execution_cost_bps_per_fill": 0.969,
+  "worst_execution_cost_bps": 6.647,
+  "intraday_drift_usd": -121.32,
+  "avg_price_difference_bps_per_fill": 0.895,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 83,
+  "orders": 85,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 3211587.07,
-  "spread_cost_usd": 210.98,
-  "depth_cost_usd": 13.52,
-  "impact_cost_usd": 233.4,
-  "intraday_drift_usd": -80.42,
-  "fees_usd": 134.17,
+  "paper_notional_usd": 3103410.36,
+  "spread_cost_usd": 210.06,
+  "depth_cost_usd": 1.5,
+  "impact_cost_usd": 205.21,
+  "intraday_drift_usd": -121.32,
+  "fees_usd": 133.17,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 511.65,
-  "shortfall_bps_of_paper": 1.593,
-  "friction_only_bps_of_paper": 1.844,
-  "worst_single_order_drift_usd": 16.31,
-  "best_single_order_drift_usd": -14.79,
+  "total_shortfall_usd": 428.62,
+  "shortfall_bps_of_paper": 1.381,
+  "friction_only_bps_of_paper": 1.772,
+  "worst_single_order_drift_usd": 9.65,
+  "best_single_order_drift_usd": -17.14,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 620.93,
-  "borrow_fees_paid_usd": 444.31,
-  "net_carry_usd": 176.62,
+  "dividends_received_usd": 593.35,
+  "dividends_in_lieu_paid_usd": 76.34,
+  "borrow_fees_paid_usd": 424.97,
+  "net_carry_usd": 92.04,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 3
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 50.79,
-  "max_gross_pct_of_starting_cash": 174.6,
-  "avg_net_pct_of_starting_cash": -10.77,
-  "max_net_pct_of_starting_cash": 104.85,
-  "avg_leverage": 0.444,
-  "max_leverage": 1.423,
+  "avg_gross_pct_of_starting_cash": 57.63,
+  "max_gross_pct_of_starting_cash": 178.57,
+  "avg_net_pct_of_starting_cash": -3.15,
+  "max_net_pct_of_starting_cash": 168.42,
+  "avg_leverage": 0.499,
+  "max_leverage": 1.403,
   "sessions_flat": 13,
-  "avg_open_positions": 3.8
+  "avg_open_positions": 3.69
  },
  "turnover": {
-  "traded_notional_usd": 3211573.51,
-  "annualised_turnover_x": 28.425
+  "traded_notional_usd": 3103416.82,
+  "annualised_turnover_x": 27.239
  },
  "contribution_by_symbol": [
   {
    "symbol": "NVDA",
-   "realized_pnl": 11745.39,
+   "realized_pnl": 20602.54,
    "open_pnl": 0.0,
-   "total_pnl": 11745.39,
-   "closed_trades": 6,
-   "fees": 8.15,
-   "all_in_cost_usd": 24.73
-  },
-  {
-   "symbol": "CVNA",
-   "realized_pnl": 7442.71,
-   "open_pnl": 0.0,
-   "total_pnl": 7442.71,
-   "closed_trades": 10,
-   "fees": 6.61,
-   "all_in_cost_usd": 86.76
+   "total_pnl": 20602.54,
+   "closed_trades": 4,
+   "fees": 7.8,
+   "all_in_cost_usd": 22.91
   },
   {
    "symbol": "TSLA",
-   "realized_pnl": 6285.5,
+   "realized_pnl": 11245.23,
    "open_pnl": 0.0,
-   "total_pnl": 6285.5,
-   "closed_trades": 9,
-   "fees": 8.21,
-   "all_in_cost_usd": 38.46
+   "total_pnl": 11245.23,
+   "closed_trades": 7,
+   "fees": 6.31,
+   "all_in_cost_usd": 31.46
   },
   {
-   "symbol": "RIVN",
-   "realized_pnl": 3818.67,
+   "symbol": "CVNA",
+   "realized_pnl": 10926.85,
    "open_pnl": 0.0,
-   "total_pnl": 3818.67,
-   "closed_trades": 10,
-   "fees": 93.32,
-   "all_in_cost_usd": 377.44
+   "total_pnl": 10926.85,
+   "closed_trades": 11,
+   "fees": 6.77,
+   "all_in_cost_usd": 86.68
   },
   {
    "symbol": "UNH",
-   "realized_pnl": 2485.91,
+   "realized_pnl": 2321.16,
    "open_pnl": 0.0,
-   "total_pnl": 2485.91,
-   "closed_trades": 2,
-   "fees": 1.57,
-   "all_in_cost_usd": 6.54
+   "total_pnl": 2321.16,
+   "closed_trades": 1,
+   "fees": 1.49,
+   "all_in_cost_usd": 6.13
   },
   {
    "symbol": "XOM",
-   "realized_pnl": 2261.62,
+   "realized_pnl": 2177.01,
    "open_pnl": 0.0,
-   "total_pnl": 2261.62,
-   "closed_trades": 2,
-   "fees": 3.51,
-   "all_in_cost_usd": 10.37
+   "total_pnl": 2177.01,
+   "closed_trades": 1,
+   "fees": 3.39,
+   "all_in_cost_usd": 10.0
   },
   {
    "symbol": "AMZN",
@@ -223,12 +216,12 @@
   },
   {
    "symbol": "CAT",
-   "realized_pnl": 1449.27,
+   "realized_pnl": 1299.34,
    "open_pnl": 0.0,
-   "total_pnl": 1449.27,
-   "closed_trades": 1,
-   "fees": 1.63,
-   "all_in_cost_usd": 8.26
+   "total_pnl": 1299.34,
+   "closed_trades": 2,
+   "fees": 1.51,
+   "all_in_cost_usd": 7.47
   },
   {
    "symbol": "META",
@@ -241,30 +234,39 @@
   },
   {
    "symbol": "AAPL",
-   "realized_pnl": -2168.79,
+   "realized_pnl": -2305.91,
    "open_pnl": 0.0,
-   "total_pnl": -2168.79,
-   "closed_trades": 1,
-   "fees": 1.78,
-   "all_in_cost_usd": 4.02
-  },
-  {
-   "symbol": "JPM",
-   "realized_pnl": -3399.99,
-   "open_pnl": 0.0,
-   "total_pnl": -3399.99,
-   "closed_trades": 1,
-   "fees": 2.1,
-   "all_in_cost_usd": 6.82
+   "total_pnl": -2305.91,
+   "closed_trades": 2,
+   "fees": 1.89,
+   "all_in_cost_usd": 4.31
   },
   {
    "symbol": "GOOGL",
-   "realized_pnl": -7888.68,
+   "realized_pnl": -2309.7,
    "open_pnl": 0.0,
-   "total_pnl": -7888.68,
-   "closed_trades": 3,
-   "fees": 4.17,
-   "all_in_cost_usd": 14.2
+   "total_pnl": -2309.7,
+   "closed_trades": 5,
+   "fees": 4.31,
+   "all_in_cost_usd": 14.26
+  },
+  {
+   "symbol": "JPM",
+   "realized_pnl": -3631.4,
+   "open_pnl": 0.0,
+   "total_pnl": -3631.4,
+   "closed_trades": 1,
+   "fees": 2.24,
+   "all_in_cost_usd": 7.39
+  },
+  {
+   "symbol": "RIVN",
+   "realized_pnl": -10206.74,
+   "open_pnl": 0.0,
+   "total_pnl": -10206.74,
+   "closed_trades": 13,
+   "fees": 94.34,
+   "all_in_cost_usd": 344.87
   }
  ],
  "monthly_returns": [
@@ -293,126 +295,127 @@
    "month": "2025-12",
    "sessions": 22,
    "start_equity": 99387.07,
-   "end_equity": 105239.63,
-   "return_pct": 5.8886
+   "end_equity": 105206.73,
+   "return_pct": 5.8555
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 105239.63,
-   "end_equity": 108417.22,
-   "return_pct": 3.0194
+   "start_equity": 105206.73,
+   "end_equity": 108384.77,
+   "return_pct": 3.0208
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 108417.22,
-   "end_equity": 103306.42,
-   "return_pct": -4.714
+   "start_equity": 108384.77,
+   "end_equity": 103564.05,
+   "return_pct": -4.4478
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 103306.42,
-   "end_equity": 115418.46,
-   "return_pct": 11.7244
+   "start_equity": 103564.05,
+   "end_equity": 102505.0,
+   "return_pct": -1.0226
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 115418.46,
-   "end_equity": 129779.69,
-   "return_pct": 12.4427
+   "start_equity": 102505.0,
+   "end_equity": 125143.34,
+   "return_pct": 22.0851
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 129779.69,
-   "end_equity": 130160.9,
-   "return_pct": 0.2937
+   "start_equity": 125143.34,
+   "end_equity": 134323.68,
+   "return_pct": 7.3359
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 130160.9,
-   "end_equity": 116360.2,
-   "return_pct": -10.6028
+   "start_equity": 134323.68,
+   "end_equity": 128452.75,
+   "return_pct": -4.3707
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 116360.2,
-   "end_equity": 125715.41,
-   "return_pct": 8.0399
+   "start_equity": 128452.75,
+   "end_equity": 133902.91,
+   "return_pct": 4.2429
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 125715.41,
-   "end_equity": 122194.43,
-   "return_pct": -2.8008
+   "start_equity": 133902.91,
+   "end_equity": 130054.93,
+   "return_pct": -2.8737
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 122194.43,
-   "end_equity": 124695.84,
-   "return_pct": 2.0471
+   "start_equity": 130054.93,
+   "end_equity": 132698.04,
+   "return_pct": 2.0323
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": 24519.2,
+  "realized_trading_pnl_usd": 32605.97,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 620.93,
-  "borrow_fees_usd": -444.31,
-  "execution_costs_already_netted_usd": -592.07,
-  "total_net_pnl_usd": 24695.84,
-  "unexplained_residual_usd": 0.02,
+  "dividends_usd": 593.35,
+  "dividends_in_lieu_usd": -76.34,
+  "borrow_fees_usd": -424.97,
+  "execution_costs_already_netted_usd": -549.94,
+  "total_net_pnl_usd": 32698.04,
+  "unexplained_residual_usd": 0.03,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +24.70% total return vs +14.41% for the index, +27.50pp residual after beta, -13.6% max drawdown, 0.59% of capital lost to execution costs.",
+  "headline": "Beat the market: +32.70% total return vs +14.41% for the index, +34.77pp residual after beta, -18.9% max drawdown, 0.55% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +24.70% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.28pp."
+    "text": "Finished at +32.70% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +18.28pp."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +24.70% - the result was driven by something other than this factor."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +32.70% - the result was driven by something other than this factor."
    },
    {
     "kind": "attribution",
-    "text": "Of the +24.70% total, about -2.80pp is explained by carrying beta -0.19 against a +14.41% market (R^2 0.01); the residual +27.50pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +32.70% total, about -2.07pp is explained by carrying beta -0.14 against a +14.41% market (R^2 0.00); the residual +34.77pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "NVDA contributed +11,745 USD (48% of net P&L) across 6 closed trades; GOOGL was the biggest drag at -7,889 USD."
+    "text": "NVDA contributed +20,603 USD (63% of net P&L) across 4 closed trades; RIVN was the biggest drag at -10,207 USD."
    },
    {
     "kind": "costs",
-    "text": "Execution cost 592 USD (0.59% of starting capital, 1.6 bp per fill, 1.8 bp of the 3,211,574 USD traded). 77% of that was spread/depth/impact and 23% was explicit fees and rebates."
+    "text": "Execution cost 550 USD (0.55% of starting capital, 1.6 bp per fill, 1.8 bp of the 3,103,417 USD traded). 76% of that was spread/depth/impact and 24% was explicit fees and rebates."
    },
    {
     "kind": "trades",
-    "text": "51 closed round trips, 51.0% winners, profit factor 1.46, average winner +2,981 vs average loser -2,119 USD, median holding 15 sessions."
+    "text": "53 closed round trips, 41.5% winners, profit factor 1.63, average winner +3,831 vs average loser -1,667 USD, median holding 15 sessions."
    },
    {
     "kind": "trades",
-    "text": "Time in market, measured without double counting: 239 sessions held at least one position (the per-tranche holding periods above sum to 1148 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+    "text": "Time in market, measured without double counting: 239 sessions held at least one position (the per-tranche holding periods above sum to 1235 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
    },
    {
     "kind": "trades",
-    "text": "Single worst trade: RIVN short 2026-06-08 to 2026-06-10, -7,694 USD."
+    "text": "Single worst trade: RIVN short 2026-03-30 to 2026-04-02, -9,069 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown -13.58% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 51% of starting capital, peak leverage 1.42x."
+    "text": "Worst peak-to-trough drawdown -18.87% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 58% of starting capital, peak leverage 1.40x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +1.96 skewed with excess kurtosis +13.33; historical 95% VaR -2.45%/day with CVaR -3.80%/day. Worst single session -7.35%, best +12.72%."
+    "text": "Daily returns were +1.00 skewed with excess kurtosis +8.85; historical 95% VaR -2.68%/day with CVaR -4.22%/day. Worst single session -7.35%, best +12.40%."
    },
    {
     "kind": "caveat",
@@ -438,27 +441,27 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +24.70% over 251 sessions - +24,696 USD on 100,000 of paper capital, ending at 124,696. Verdict: beat the market."
+    "text": "Outcome: +32.70% over 251 sessions - +32,698 USD on 100,000 of paper capital, ending at 132,698. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +24.70% - the result was driven by something other than this factor."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +32.70% - the result was driven by something other than this factor."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +24.70% total, about -2.80pp is explained by carrying beta -0.19 against a +14.41% market (R^2 0.01); the residual +27.50pp is everything else - selection, timing, leverage and cost. NVDA contributed +11,745 USD (48% of net P&L) across 6 closed trades; GOOGL was the biggest drag at -7,889 USD."
+    "text": "Of the +32.70% total, about -2.07pp is explained by carrying beta -0.14 against a +14.41% market (R^2 0.00); the residual +34.77pp is everything else - selection, timing, leverage and cost. NVDA contributed +20,603 USD (63% of net P&L) across 4 closed trades; RIVN was the biggest drag at -10,207 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "Execution cost 592 USD (0.59% of starting capital, 1.6 bp per fill, 1.8 bp of the 3,211,574 USD traded). 77% of that was spread/depth/impact and 23% was explicit fees and rebates."
+    "text": "Execution cost 550 USD (0.55% of starting capital, 1.6 bp per fill, 1.8 bp of the 3,103,417 USD traded). 76% of that was spread/depth/impact and 24% was explicit fees and rebates."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": "51 closed round trips, 51.0% winners, profit factor 1.46, average winner +2,981 vs average loser -2,119 USD, median holding 15 sessions. Time in market, measured without double counting: 239 sessions held at least one position (the per-tranche holding periods above sum to 1148 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: RIVN short 2026-06-08 to 2026-06-10, -7,694 USD."
+    "text": "53 closed round trips, 41.5% winners, profit factor 1.63, average winner +3,831 vs average loser -1,667 USD, median holding 15 sessions. Time in market, measured without double counting: 239 sessions held at least one position (the per-tranche holding periods above sum to 1235 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: RIVN short 2026-03-30 to 2026-04-02, -9,069 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -13.58% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 51% of starting capital, peak leverage 1.42x. Daily returns were +1.96 skewed with excess kurtosis +13.33; historical 95% VaR -2.45%/day with CVaR -3.80%/day. Worst single session -7.35%, best +12.72%."
+    "text": "Worst peak-to-trough drawdown -18.87% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 58% of starting capital, peak leverage 1.40x. Daily returns were +1.00 skewed with excess kurtosis +8.85; historical 95% VaR -2.68%/day with CVaR -4.22%/day. Worst single session -7.35%, best +12.40%."
    },
    {
     "title": "Regime context (real market data)",
@@ -474,7 +477,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 10.28pp and the excess survives a beta adjustment (+27.50pp residual), so the outperformance is not simply leverage on a rising market. Finished at +24.70% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.28pp."
+    "text": "It worked: it beat the index by 18.28pp and the excess survives a beta adjustment (+34.77pp residual), so the outperformance is not simply leverage on a rising market. Finished at +32.70% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +18.28pp."
    }
   ],
   "failure_modes_fired": [],
@@ -488,5 +491,5 @@
  },
  "errors": [],
  "account_closed_early": false,
- "sessions_with_orders": 69
+ "sessions_with_orders": 67
 }

@@ -41,6 +41,12 @@ ALLOWED_HOSTS = {
     "polygon.io", "finnhub.io", "www.tiingo.com", "www.cboe.com",
     "www.cftc.gov", "ir.thecorporatesecretary.com", "pages.stern.nyu.edu",
     "www.spglobal.com", "help.revolut.com", "www.cis.upenn.edu",
+    # Added 2026-09-17 while fixing IR-31/IR-32: the IRS publication is the
+    # primary source for payments in lieu of dividends on borrowed stock, and
+    # investor.gov is the SEC's own education portal. Both were reached live;
+    # investor.gov is here so a future citation is not silently rejected, and
+    # it is NOT currently used by any register row.
+    "www.irs.gov", "www.investor.gov",
     # Official CPython documentation - the primary source for the hash
     # randomisation behaviour that IR-30 turns on.
     "docs.python.org",
@@ -62,7 +68,12 @@ class TestVerifiedSourceRegister(unittest.TestCase):
 
     def test_every_row_has_the_four_required_fields(self):
         for i, row in enumerate(self.rows):
-            self.assertEqual(set(row), {"claim", "url", "publisher", "status"},
+            # "note" is optional and, when present, must say something: it is
+            # where the caveat that does not fit the one-line claim goes (e.g.
+            # "the rate itself is corroborated only by broker schedules"), so
+            # the site can render it next to the link for a reviewer.
+            self.assertLessEqual(set(row),
+                                 {"claim", "url", "publisher", "status", "note"},
                              f"row {i} has the wrong shape: {sorted(row)}")
             for field in ("claim", "url", "publisher", "status"):
                 self.assertTrue(str(row[field]).strip(),
@@ -86,6 +97,19 @@ class TestVerifiedSourceRegister(unittest.TestCase):
                 self.assertGreater(len(parsed.path), 1,
                                    f"bare domain, not a checkable page: {row['url']}")
 
+    def test_notes_when_present_are_specific(self):
+        for row in self.rows:
+            note = row.get("note")
+            if note is None:
+                continue
+            self.assertIsInstance(note, str)
+            self.assertGreater(len(note), 40,
+                               f"note on {row['url']} is too short to help a reviewer")
+            # A note that does not mention a date is making a claim about the
+            # state of the world that will silently go stale (IR-33).
+            self.assertTrue(any(ch.isdigit() for ch in note),
+                            f"note on {row['url']} cites no date or number")
+
     def test_statuses_are_honest_and_from_the_vocabulary(self):
         seen = set()
         for row in self.rows:
@@ -97,12 +121,53 @@ class TestVerifiedSourceRegister(unittest.TestCase):
         # FETCHED-VERIFIED means "retrieved here AND saved under data/real/".
         verified = [r for r in self.rows if r["status"] == config.FETCHED_VERIFIED]
         self.assertGreater(len(verified), 0)
+        # Two kinds of evidence count as "stored", because the two kinds of
+        # source are different: a market-data claim is backed by the CSV or JSON
+        # that came out of the API (data/real/fred, data/real/yahoo), while a
+        # legal or tax claim is backed by an excerpt of the page kept in
+        # data/real/regulatory with the SOURCE url in it. A FETCHED-VERIFIED row
+        # with neither is a claim that cannot be re-checked once the site moves.
+        regulatory = os.path.join(REAL, "regulatory")
+        snapshots = {}
+        if os.path.isdir(regulatory):
+            for name in sorted(os.listdir(regulatory)):
+                with open(os.path.join(regulatory, name), encoding="utf-8") as fh:
+                    snapshots[name] = fh.read()
         for row in verified:
             host = urlparse(row["url"]).netloc
-            self.assertTrue(host.endswith("fred.stlouisfed.org")
-                            or host.endswith("finance.yahoo.com"),
-                            f"{row['url']} claims VERIFIED but nothing from that "
-                            f"host is stored under data/real/")
+            if host.endswith("fred.stlouisfed.org") or host.endswith("finance.yahoo.com"):
+                continue
+            hits = [n for n, text in snapshots.items() if row["url"] in text]
+            self.assertTrue(hits,
+                            f"{row['url']} claims VERIFIED but no stored evidence "
+                            f"exists for it: neither a data/real download from "
+                            f"that host nor a data/real/regulatory excerpt citing "
+                            f"the URL")
+
+    def test_regulatory_snapshots_are_traceable_and_dated(self):
+        """Every excerpt under data/real/regulatory names its URL and its date.
+
+        These files are what makes a legal citation checkable after the publisher
+        moves the page (IR-33 is two such moves in one pass). Without a retrieval
+        date they assert something about "now" forever, which is how the register
+        accumulated a dead link in the first place.
+        """
+        regulatory = os.path.join(REAL, "regulatory")
+        names = sorted(os.listdir(regulatory)) if os.path.isdir(regulatory) else []
+        self.assertGreaterEqual(len(names), 5,
+                                "the regulatory excerpts are the evidence trail "
+                                "for the fee, margin and securities-lending "
+                                "figures; there should be at least one per "
+                                "non-data FETCHED-VERIFIED row")
+        for name in names:
+            with open(os.path.join(regulatory, name), encoding="utf-8") as fh:
+                text = fh.read()
+            self.assertIn("SOURCE: http", text,
+                          f"{name} does not record the URL it came from")
+            self.assertRegex(text, r"[Rr]etrieved: 20\d\d-\d\d-\d\d",
+                             f"{name} records no retrieval date")
+            self.assertRegex(text, r"[Ww][Hh][YwWY] THIS FILE EXISTS",
+                             f"{name} does not say which decision it supports")
 
     def test_nothing_in_the_register_is_a_duplicate(self):
         urls = [r["url"] for r in self.rows]

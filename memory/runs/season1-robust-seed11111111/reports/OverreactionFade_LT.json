@@ -3,10 +3,10 @@
  "strategy_id": "OverreactionFade",
  "archetype": "contrarian reversal",
  "starting_cash": 100000.0,
- "final_equity": 179018.08,
- "net_pnl_usd": 79018.08,
- "total_return_pct": 79.0181,
- "cagr_pct": 79.4339,
+ "final_equity": 179019.18,
+ "net_pnl_usd": 79019.18,
+ "total_return_pct": 79.0192,
+ "cagr_pct": 79.435,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -18.507,
@@ -19,8 +19,8 @@
   "sessions_underwater": 55,
   "never_recovered": false,
   "sharpe": 2.4135,
-  "sortino": 3.6406,
-  "calmar": 4.2921,
+  "sortino": 3.6407,
+  "calmar": 4.2922,
   "daily_vol_pct": 1.6184,
   "annualised_vol_pct": 25.691,
   "skew": 1.2353,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 0.6135,
-  "alpha_annual_pct": 53.1662,
+  "alpha_annual_pct": 53.1669,
   "r_squared": 0.0949,
   "tracking_error_annual_pct": 24.441,
   "information_ratio": 2.175,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 8.844,
-  "residual_return_pct": 70.174
+  "residual_return_pct": 70.176
  },
  "trades": {
   "closed_trades": 75,
@@ -131,12 +131,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 2.37,
+  "dividends_received_usd": 3.47,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 2.37,
+  "net_carry_usd": 3.47,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 2
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 28.91,
@@ -306,23 +308,24 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 179256.35,
-   "end_equity": 179018.08,
-   "return_pct": -0.1329
+   "end_equity": 179019.18,
+   "return_pct": -0.1323
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 79015.73,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 2.37,
+  "dividends_usd": 3.47,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -1956.8,
-  "total_net_pnl_usd": 79018.08,
+  "total_net_pnl_usd": 79019.18,
   "unexplained_residual_usd": -0.02,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +79.02% total return vs +14.41% for the index, +70.17pp residual after beta, -18.5% max drawdown, 1.96% of capital lost to execution costs.",
+  "headline": "Beat the market: +79.02% total return vs +14.41% for the index, +70.18pp residual after beta, -18.5% max drawdown, 1.96% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
@@ -338,7 +341,7 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +79.02% total, about +8.84pp is explained by carrying beta 0.61 against a +14.41% market (R^2 0.09); the residual +70.17pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +79.02% total, about +8.84pp is explained by carrying beta 0.61 against a +14.41% market (R^2 0.09); the residual +70.18pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -392,7 +395,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +79.02% over 251 sessions - +79,018 USD on 100,000 of paper capital, ending at 179,018. Verdict: beat the market."
+    "text": "Outcome: +79.02% over 251 sessions - +79,019 USD on 100,000 of paper capital, ending at 179,019. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -400,7 +403,7 @@
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +79.02% total, about +8.84pp is explained by carrying beta 0.61 against a +14.41% market (R^2 0.09); the residual +70.17pp is everything else - selection, timing, leverage and cost. CVNA contributed +46,919 USD (59% of net P&L) across 27 closed trades; GOOGL was the biggest drag at -1,645 USD."
+    "text": "Of the +79.02% total, about +8.84pp is explained by carrying beta 0.61 against a +14.41% market (R^2 0.09); the residual +70.18pp is everything else - selection, timing, leverage and cost. CVNA contributed +46,919 USD (59% of net P&L) across 27 closed trades; GOOGL was the biggest drag at -1,645 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -428,7 +431,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 64.60pp and the excess survives a beta adjustment (+70.17pp residual), so the outperformance is not simply leverage on a rising market. Finished at +79.02% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +64.60pp."
+    "text": "It worked: it beat the index by 64.60pp and the excess survives a beta adjustment (+70.18pp residual), so the outperformance is not simply leverage on a rising market. Finished at +79.02% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +64.60pp."
    }
   ],
   "failure_modes_fired": [],

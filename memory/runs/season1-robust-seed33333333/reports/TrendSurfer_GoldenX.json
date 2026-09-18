@@ -3,10 +3,10 @@
  "strategy_id": "TrendSurfer",
  "archetype": "time-series trend",
  "starting_cash": 100000.0,
- "final_equity": 166225.73,
- "net_pnl_usd": 66225.73,
- "total_return_pct": 66.2257,
- "cagr_pct": 66.5626,
+ "final_equity": 166239.26,
+ "net_pnl_usd": 66239.26,
+ "total_return_pct": 66.2393,
+ "cagr_pct": 66.5762,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -28.5578,
@@ -18,13 +18,13 @@
   "recovery_date": "2026-04-14",
   "sessions_underwater": 97,
   "never_recovered": false,
-  "sharpe": 1.3203,
-  "sortino": 2.3691,
-  "calmar": 2.3308,
+  "sharpe": 1.3205,
+  "sortino": 2.3695,
+  "calmar": 2.3313,
   "daily_vol_pct": 2.9527,
   "annualised_vol_pct": 46.873,
   "skew": 0.3797,
-  "excess_kurtosis": 1.1499,
+  "excess_kurtosis": 1.1498,
   "best_session_pct": 12.5347,
   "worst_session_pct": -7.823,
   "var_95_pct": -4.6505,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 2.7651,
-  "alpha_annual_pct": 22.0506,
+  "alpha_annual_pct": 22.0588,
   "r_squared": 0.5792,
   "tracking_error_annual_pct": 30.406,
   "information_ratio": 0.725,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 39.859,
-  "residual_return_pct": 26.367
+  "residual_return_pct": 26.381
  },
  "trades": {
   "closed_trades": 100,
@@ -48,12 +48,12 @@
   "wins": 84,
   "losses": 16,
   "win_rate_pct": 84.0,
-  "gross_win_usd": 69813.44,
+  "gross_win_usd": 69817.24,
   "gross_loss_usd": 5256.0,
-  "profit_factor": 13.2826,
-  "avg_win_usd": 831.11,
+  "profit_factor": 13.2833,
+  "avg_win_usd": 831.16,
   "avg_loss_usd": -328.5,
-  "expectancy_usd_per_trade": 645.57,
+  "expectancy_usd_per_trade": 645.61,
   "best_trade": {
    "symbol": "CVNA",
    "net_pnl": 15771.69,
@@ -90,27 +90,27 @@
  },
  "costs": {
   "fills": 208,
-  "shares_traded": 5282,
-  "traded_notional_usd": 1184642.94,
-  "spread_cost_usd": 34.28,
+  "shares_traded": 5284,
+  "traded_notional_usd": 1184927.34,
+  "spread_cost_usd": 34.29,
   "depth_cost_usd": 0.0,
   "impact_cost_usd": 29.9,
   "commission_usd": 0.0,
   "exchange_fee_usd": 15.85,
-  "regulatory_fee_usd": 9.31,
+  "regulatory_fee_usd": 9.32,
   "rebate_usd": 0.0,
-  "total_cost_usd": 89.34,
+  "total_cost_usd": 89.36,
   "total_cost_bps_of_traded": 0.754,
-  "total_cost_pct_of_starting_cash": 0.0893,
+  "total_cost_pct_of_starting_cash": 0.0894,
   "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": 28.16,
-   "spread_and_impact_pct": 71.84
+   "explicit_fees_pct": 28.17,
+   "spread_and_impact_pct": 71.83
   },
   "avg_execution_cost_bps_per_fill": 0.57,
   "median_execution_cost_bps_per_fill": 0.457,
   "worst_execution_cost_bps": 3.146,
-  "intraday_drift_usd": -10.97,
+  "intraday_drift_usd": -10.98,
   "avg_price_difference_bps_per_fill": 0.354,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
@@ -118,14 +118,14 @@
   "orders": 208,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 1184639.27,
-  "spread_cost_usd": 34.28,
+  "paper_notional_usd": 1184923.67,
+  "spread_cost_usd": 34.29,
   "depth_cost_usd": 0.0,
   "impact_cost_usd": 29.9,
-  "intraday_drift_usd": -10.97,
-  "fees_usd": 25.16,
+  "intraday_drift_usd": -10.98,
+  "fees_usd": 25.17,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 78.37,
+  "total_shortfall_usd": 78.38,
   "shortfall_bps_of_paper": 0.662,
   "friction_only_bps_of_paper": 0.754,
   "worst_single_order_drift_usd": 0.6,
@@ -133,26 +133,28 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 1668.27,
+  "dividends_received_usd": 1678.01,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 1668.27,
+  "net_carry_usd": 1678.01,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 232.56,
-  "max_gross_pct_of_starting_cash": 369.59,
+  "max_gross_pct_of_starting_cash": 369.73,
   "avg_net_pct_of_starting_cash": 232.56,
-  "max_net_pct_of_starting_cash": 369.59,
+  "max_net_pct_of_starting_cash": 369.73,
   "avg_leverage": 1.894,
   "max_leverage": 2.183,
   "sessions_flat": 1,
   "avg_open_positions": 8.13
  },
  "turnover": {
-  "traded_notional_usd": 1184642.94,
-  "annualised_turnover_x": 9.728
+  "traded_notional_usd": 1184927.34,
+  "annualised_turnover_x": 9.73
  },
  "contribution_by_symbol": [
   {
@@ -184,12 +186,12 @@
   },
   {
    "symbol": "XOM",
-   "realized_pnl": 4347.9,
+   "realized_pnl": 4351.7,
    "open_pnl": 0.0,
-   "total_pnl": 4347.9,
+   "total_pnl": 4351.7,
    "closed_trades": 15,
-   "fees": 4.58,
-   "all_in_cost_usd": 11.72
+   "fees": 4.59,
+   "all_in_cost_usd": 11.74
   },
   {
    "symbol": "QQQ",
@@ -319,38 +321,39 @@
    "month": "2026-08",
    "sessions": 21,
    "start_equity": 177899.95,
-   "end_equity": 180130.6,
-   "return_pct": 1.2539
+   "end_equity": 180144.12,
+   "return_pct": 1.2615
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 180130.6,
-   "end_equity": 166225.73,
-   "return_pct": -7.7193
+   "start_equity": 180144.12,
+   "end_equity": 166239.26,
+   "return_pct": -7.7187
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": 64557.44,
+  "realized_trading_pnl_usd": 64561.24,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 1668.27,
+  "dividends_usd": 1678.01,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
-  "execution_costs_already_netted_usd": -89.34,
-  "total_net_pnl_usd": 66225.73,
-  "unexplained_residual_usd": 0.02,
+  "execution_costs_already_netted_usd": -89.36,
+  "total_net_pnl_usd": 66239.26,
+  "unexplained_residual_usd": 0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +66.23% total return vs +14.41% for the index, +26.37pp residual after beta, -28.6% max drawdown, 0.09% of capital lost to execution costs.",
+  "headline": "Beat the market: +66.24% total return vs +14.41% for the index, +26.38pp residual after beta, -28.6% max drawdown, 0.09% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +66.23% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +51.81pp."
+    "text": "Finished at +66.24% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +51.82pp."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +66.23% - the result was driven by something other than this factor."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +66.24% - the result was driven by something other than this factor."
    },
    {
     "kind": "factor",
@@ -358,7 +361,7 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +66.23% total, about +39.86pp is explained by carrying beta 2.77 against a +14.41% market (R^2 0.58); the residual +26.37pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +66.24% total, about +39.86pp is explained by carrying beta 2.77 against a +14.41% market (R^2 0.58); the residual +26.38pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -366,7 +369,7 @@
    },
    {
     "kind": "costs",
-    "text": "Execution cost 89 USD (0.09% of starting capital, 0.6 bp per fill, 0.8 bp of the 1,184,643 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
+    "text": "Execution cost 89 USD (0.09% of starting capital, 0.6 bp per fill, 0.8 bp of the 1,184,927 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
    },
    {
     "kind": "trades",
@@ -412,19 +415,19 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +66.23% over 251 sessions - +66,226 USD on 100,000 of paper capital, ending at 166,226. Verdict: beat the market."
+    "text": "Outcome: +66.24% over 251 sessions - +66,239 USD on 100,000 of paper capital, ending at 166,239. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +66.23% - the result was driven by something other than this factor. The beta premium this participant is built to harvest was live (+24.72% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +1.0 loading) yet the account still returned +66.24% - the result was driven by something other than this factor. The beta premium this participant is built to harvest was live (+24.72% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +66.23% total, about +39.86pp is explained by carrying beta 2.77 against a +14.41% market (R^2 0.58); the residual +26.37pp is everything else - selection, timing, leverage and cost. CVNA contributed +41,367 USD (62% of net P&L) across 32 closed trades; RIVN was the biggest drag at -1,950 USD."
+    "text": "Of the +66.24% total, about +39.86pp is explained by carrying beta 2.77 against a +14.41% market (R^2 0.58); the residual +26.38pp is everything else - selection, timing, leverage and cost. CVNA contributed +41,367 USD (62% of net P&L) across 32 closed trades; RIVN was the biggest drag at -1,950 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "Execution cost 89 USD (0.09% of starting capital, 0.6 bp per fill, 0.8 bp of the 1,184,643 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
+    "text": "Execution cost 89 USD (0.09% of starting capital, 0.6 bp per fill, 0.8 bp of the 1,184,927 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
    },
    {
     "title": "Why: trade-level behaviour",
@@ -448,7 +451,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 51.81pp and the excess survives a beta adjustment (+26.37pp residual), so the outperformance is not simply leverage on a rising market. Finished at +66.23% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +51.81pp."
+    "text": "It worked: it beat the index by 51.82pp and the excess survives a beta adjustment (+26.38pp residual), so the outperformance is not simply leverage on a rising market. Finished at +66.24% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +51.82pp."
    }
   ],
   "failure_modes_fired": [

@@ -3,10 +3,10 @@
  "strategy_id": "PairsStatArb",
  "archetype": "statistical arbitrage",
  "starting_cash": 100000.0,
- "final_equity": 100728.94,
- "net_pnl_usd": 728.94,
- "total_return_pct": 0.7289,
- "cagr_pct": 0.7319,
+ "final_equity": 100609.0,
+ "net_pnl_usd": 609.0,
+ "total_return_pct": 0.609,
+ "cagr_pct": 0.6114,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -1.3687,
@@ -18,29 +18,29 @@
   "recovery_date": "2026-03-12",
   "sessions_underwater": 91,
   "never_recovered": false,
-  "sharpe": 0.447,
-  "sortino": 0.4817,
-  "calmar": 0.5347,
-  "daily_vol_pct": 0.1051,
-  "annualised_vol_pct": 1.669,
-  "skew": 2.3467,
-  "excess_kurtosis": 28.9531,
+  "sharpe": 0.3812,
+  "sortino": 0.4038,
+  "calmar": 0.4467,
+  "daily_vol_pct": 0.1033,
+  "annualised_vol_pct": 1.641,
+  "skew": 2.2809,
+  "excess_kurtosis": 30.2207,
   "best_session_pct": 0.9171,
   "worst_session_pct": -0.5756,
-  "var_95_pct": -0.1003,
+  "var_95_pct": -0.1004,
   "cvar_95_pct": -0.2409,
   "var_99_pct": -0.3059,
-  "cvar_99_pct": -0.4293
+  "cvar_99_pct": -0.4294
  },
  "market_relation": {
-  "beta": -0.0504,
-  "alpha_annual_pct": 1.4716,
-  "r_squared": 0.1517,
-  "tracking_error_annual_pct": 1.537,
-  "information_ratio": 0.958,
+  "beta": -0.0492,
+  "alpha_annual_pct": 1.3349,
+  "r_squared": 0.15,
+  "tracking_error_annual_pct": 1.513,
+  "information_ratio": 0.883,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -0.726,
-  "residual_return_pct": 1.455
+  "beta_contribution_pct": -0.71,
+  "residual_return_pct": 1.319
  },
  "trades": {
   "closed_trades": 7,
@@ -127,25 +127,27 @@
  },
  "carry": {
   "dividends_received_usd": 278.58,
+  "dividends_in_lieu_paid_usd": 119.93,
   "borrow_fees_paid_usd": 107.87,
-  "net_carry_usd": 170.71,
+  "net_carry_usd": 50.78,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 43.01,
   "max_gross_pct_of_starting_cash": 210.68,
   "avg_net_pct_of_starting_cash": -0.31,
   "max_net_pct_of_starting_cash": 1.16,
-  "avg_leverage": 0.431,
+  "avg_leverage": 0.432,
   "max_leverage": 2.136,
   "sessions_flat": 86,
   "avg_open_positions": 0.87
  },
  "turnover": {
   "traded_notional_usd": 1187496.48,
-  "annualised_turnover_x": 11.927
+  "annualised_turnover_x": 11.934
  },
  "contribution_by_symbol": [
   {
@@ -214,49 +216,49 @@
    "month": "2026-03",
    "sessions": 22,
    "start_equity": 99698.9,
-   "end_equity": 100595.88,
-   "return_pct": 0.8997
+   "end_equity": 100476.68,
+   "return_pct": 0.7801
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 100595.88,
-   "end_equity": 100770.56,
-   "return_pct": 0.1736
+   "start_equity": 100476.68,
+   "end_equity": 100651.36,
+   "return_pct": 0.1738
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 100770.56,
-   "end_equity": 100732.24,
-   "return_pct": -0.038
+   "start_equity": 100651.36,
+   "end_equity": 100613.03,
+   "return_pct": -0.0381
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 100732.24,
-   "end_equity": 100737.11,
-   "return_pct": 0.0048
+   "start_equity": 100613.03,
+   "end_equity": 100617.18,
+   "return_pct": 0.0041
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 100737.11,
-   "end_equity": 100737.38,
+   "start_equity": 100617.18,
+   "end_equity": 100617.44,
    "return_pct": 0.0003
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 100737.38,
-   "end_equity": 100715.21,
+   "start_equity": 100617.44,
+   "end_equity": 100595.28,
    "return_pct": -0.022
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 100715.21,
-   "end_equity": 100728.94,
+   "start_equity": 100595.28,
+   "end_equity": 100609.0,
    "return_pct": 0.0136
   }
  ],
@@ -264,19 +266,20 @@
   "realized_trading_pnl_usd": 558.22,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 278.58,
+  "dividends_in_lieu_usd": -119.93,
   "borrow_fees_usd": -107.87,
   "execution_costs_already_netted_usd": -25.08,
-  "total_net_pnl_usd": 728.94,
-  "unexplained_residual_usd": 0.01,
+  "total_net_pnl_usd": 609.0,
+  "unexplained_residual_usd": 0.0,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "made money but lagged the index",
-  "headline": "Made money but lagged the index: +0.73% total return vs +14.41% for the index, +1.46pp residual after beta, -1.4% max drawdown, 0.03% of capital lost to execution costs.",
+  "headline": "Made money but lagged the index: +0.61% total return vs +14.41% for the index, +1.32pp residual after beta, -1.4% max drawdown, 0.03% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +0.73%, profitable but 13.69pp behind the S&P 500's +14.41%."
+    "text": "Finished at +0.61%, profitable but 13.81pp behind the S&P 500's +14.41%."
    },
    {
     "kind": "factor",
@@ -284,15 +287,15 @@
    },
    {
     "kind": "factor",
-    "text": "The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.73% - the result was driven by something other than this factor."
+    "text": "The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.61% - the result was driven by something other than this factor."
    },
    {
     "kind": "attribution",
-    "text": "Of the +0.73% total, about -0.73pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.46pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +0.61% total, about -0.71pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.32pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "QQQ contributed +1,296 USD (178% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
+    "text": "QQQ contributed +1,296 USD (213% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
    },
    {
     "kind": "costs",
@@ -316,7 +319,7 @@
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +2.35 skewed with excess kurtosis +28.95; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
+    "text": "Daily returns were +2.28 skewed with excess kurtosis +30.22; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
    },
    {
     "kind": "caveat",
@@ -342,15 +345,15 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +0.73% over 251 sessions - +729 USD on 100,000 of paper capital, ending at 100,729. Verdict: made money but lagged the index."
+    "text": "Outcome: +0.61% over 251 sessions - +609 USD on 100,000 of paper capital, ending at 100,609. Verdict: made money but lagged the index."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The reversal premium this participant is built to harvest was live (+19.00% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.73% - the result was driven by something other than this factor."
+    "text": "The reversal premium this participant is built to harvest was live (+19.00% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The low_vol premium went against the declared exposure (-25.90% for a +0.5 loading) yet the account still returned +0.61% - the result was driven by something other than this factor."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +0.73% total, about -0.73pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.46pp is everything else - selection, timing, leverage and cost. QQQ contributed +1,296 USD (178% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
+    "text": "Of the +0.61% total, about -0.71pp is explained by carrying beta -0.05 against a +14.41% market (R^2 0.15); the residual +1.32pp is everything else - selection, timing, leverage and cost. QQQ contributed +1,296 USD (213% of net P&L) across 4 closed trades; SPY was the biggest drag at -738 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -362,7 +365,7 @@
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -1.37% (-9.10% for the index), trough on 2025-10-29, recovered 2026-03-12. Average gross exposure 43% of starting capital, peak leverage 2.14x. Daily returns were +2.35 skewed with excess kurtosis +28.95; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
+    "text": "Worst peak-to-trough drawdown -1.37% (-9.10% for the index), trough on 2025-10-29, recovered 2026-03-12. Average gross exposure 43% of starting capital, peak leverage 2.14x. Daily returns were +2.28 skewed with excess kurtosis +30.22; historical 95% VaR -0.10%/day with CVaR -0.24%/day. Worst single session -0.58%, best +0.92%."
    },
    {
     "title": "Regime context (real market data)",
@@ -378,7 +381,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It made money (+0.73%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +0.73%, profitable but 13.69pp behind the S&P 500's +14.41%."
+    "text": "It made money (+0.61%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +0.61%, profitable but 13.81pp behind the S&P 500's +14.41%."
    }
   ],
   "failure_modes_fired": [],

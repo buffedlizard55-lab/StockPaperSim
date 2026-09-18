@@ -180,7 +180,21 @@ class CompetitionEngine:
     # ------------------------------------------------------------------
     def _submit(self, p: ParticipantRuntime, orders: Sequence[Order], t: int,
                 marks: Dict[str, float], start_interval: int = 0) -> List[Fill]:
-        """Pre-trade risk check, then execution against the venue replica."""
+        """Pre-trade risk check, then execution against the venue replica.
+
+        Orders flagged at_close are held back and worked from the session's
+        final interval, so an opening-bell order and a market-on-close order can
+        coexist in one decision.  The split happens here rather than inside the
+        execution engine because the venue decides *when* an order meets the
+        book, and that is a property of the session, not of the order ticket.
+        """
+        if not start_interval:
+            late = [o for o in orders if getattr(o, "at_close", False)]
+            early = [o for o in orders if not getattr(o, "at_close", False)]
+            if late:
+                fills = self._submit(p, early, t, marks, start_interval)
+                K = self._venue(late[0].symbol, t).path.K
+                return fills + self._submit(p, late, t, marks, start_interval=K)
         fills: List[Fill] = []
         for order in orders:
             order = self._risk_check(p, order, marks)
@@ -311,6 +325,9 @@ class CompetitionEngine:
         if p.closed:
             return
         acct.start_day(date)
+        # Snapshot BEFORE any of today's fills: this is the book that carries
+        # the record-date entitlement for a dividend going ex today.
+        entitled = acct.quantities_at_open()
         marks = {s: quotes[s]["mid"] for s in quotes if s in closes}
         marks.update({s: closes[s] for s in closes if s not in marks})
 
@@ -369,14 +386,27 @@ class CompetitionEngine:
                         "equity_after": round(acct.equity(marks), 2)})
 
         # Carry: borrow fees on shorts, cash dividends on ex-dates.
+        # Dividend entitlement is the position carried INTO the ex-date (the
+        # record-date holding), not the position left after today's trades, so
+        # the quantities snapshotted at the open decide who is paid.  A short
+        # across the ex-date owes the lender a manufactured dividend.
         carry = acct.accrue_carry(date, closes)
         for symbol, amount in self._dividend_map.get(date, []):
-            paid = acct.pay_dividend(symbol, amount)
+            settle = acct.settle_dividend(symbol, amount,
+                                          entitled_qty=entitled.get(symbol, 0))
+            paid, in_lieu = settle["received"], settle["in_lieu"]
             if paid and self.writer and self.full_memory:
                 self.writer.append("carry", {
                     "date": date, "participant": p.spec.username, "symbol": symbol,
                     "kind": "dividend", "amount": round(paid, 2),
-                    "per_share": amount})
+                    "per_share": amount,
+                    "entitled_qty": max(0, entitled.get(symbol, 0))})
+            if in_lieu and self.writer and self.full_memory:
+                self.writer.append("carry", {
+                    "date": date, "participant": p.spec.username, "symbol": symbol,
+                    "kind": "dividend_in_lieu", "amount": round(-in_lieu, 2),
+                    "per_share": amount,
+                    "entitled_qty": min(0, entitled.get(symbol, 0))})
         if carry["borrow_fee"] and self.writer and self.full_memory:
             self.writer.append("carry", {
                 "date": date, "participant": p.spec.username, "symbol": None,

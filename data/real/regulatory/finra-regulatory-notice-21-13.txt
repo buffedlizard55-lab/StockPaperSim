@@ -1,0 +1,66 @@
+SOURCE: https://www.finra.org/rules-guidance/notices/21-13
+        "FINRA Announces Updates to the Interpretations of FINRA's Margin Rule
+         for Day Trading"
+Publisher: FINRA (Financial Industry Regulatory Authority)
+Published: March 24, 2021
+Retrieved: 2026-09-17 (fetched and read in full; this file is the excerpt the
+           project relies on, kept so the claim is checkable offline)
+
+WHY THIS FILE EXISTS
+  sim/portfolio.py::Account._count_day_trade counts intraday round trips. The
+  rule text alone ("the purchasing and selling ... of the same security on the
+  same day ... except for positions held overnight") does not determine the
+  arithmetic when a participant trades the same symbol five times in a session.
+  This Notice is the only place FINRA works example sequences out by hand, so it
+  is the specification the venue reproduces. The six answers below are quoted
+  verbatim and are asserted one-by-one in
+  tests/test_portfolio.py::TestFinraDayTradeExamples.
+
+RULE TEXT, quoted
+  "FINRA Rule 4210(f)(8)(B)(i) defines 'day trading' to mean the purchasing and
+  selling or the selling and purchasing of the same security on the same day in
+  a margin account except for positions held overnight FINRA Rule
+  4210(f)(8)(B)(ii) defines a 'pattern day trader' as a customer who executes
+  four or more day trades within five business days."
+
+  Interpretation /02, quoted:
+  "Rather than counting day trades based on the number of transactions a
+  customer executes to establish or increase a position that is liquidated on
+  the same day (as set out in Interpretation /01 above) a firm may instead count
+  day trades based on the number of times during the day that the day trading
+  customer changes its trading direction (i.e., changes from buying a particular
+  security to selling it, or changes from selling a particular security to
+  buying it)."
+
+THE SIX WORKED EXAMPLES, quoted verbatim with the Notice's own answers
+  Example A:  09:30 Buy 250 ABC / 09:31 Buy 250 ABC / 13:00 Sell 500 ABC
+              "The customer has executed one day trade."
+  Example B:  09:30 Buy 100 ABC / 09:31 Sell 100 ABC / 09:32 Buy 100 ABC /
+              13:00 Sell 100 ABC
+              "The customer has executed two day trades."
+  Example C:  09:30 Buy 500 ABC / 13:00 Sell 100 ABC / 13:01 Sell 100 ABC /
+              13:03 Sell 300 ABC
+              "The customer has executed one day trade."
+  Example D:  09:30 Buy 250 ABC / 09:31 Buy 300 ABC / 13:01 Buy 100 ABC /
+              13:02 Sell 150 ABC / 13:03 Sell 175 ABC
+              "The customer has executed one day trade."
+  Example E:  09:30 Buy 199 ABC / 09:31 Buy 142 ABC / 13:00 Sell 1 ABC /
+              13:01 Buy 45 ABC / 13:02 Sell 100 ABC / 13:03 Sell 200 ABC
+              "The customer has executed two day trades."
+  Example F:  09:30 Buy 200 ABC / 09:30 Buy 100 XYZ / 13:00 Sell 100 ABC /
+              13:00 Sell 100 XYZ
+              "The customer has executed two day trades"
+
+WHAT THAT RULES OUT
+  Examples C, D and E rule out the two implementations that a reader of the
+  rule text alone would write: counting closing fills (C would be three) and
+  counting every fill that reduces the day's quantity (D would be two).
+  Consecutive same-direction fills must be merged into one clip and the count
+  taken over clip transitions. The venue therefore counts a day trade when an
+  accumulating clip is followed by a reducing clip that gives back shares the
+  account opened in that session.
+
+ENDNOTE, quoted
+  "A customer is not considered a 'pattern day trader' if the number of day
+  trades is 6 percent or less of the total trades for a five business day
+  period."

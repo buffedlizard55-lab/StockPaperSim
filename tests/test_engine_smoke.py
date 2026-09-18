@@ -18,6 +18,7 @@ import time
 import unittest
 
 from fixtures import REPO_ROOT, cfg, short_replay
+from sim.analytics import DECOMPOSITION_BUCKETS
 
 from sim import config, engine, memory, microstructure, strategies
 
@@ -153,11 +154,24 @@ class TestEngineSmoke(unittest.TestCase):
             residual = d["unexplained_residual_usd"]
             if abs(residual) > abs(worst):
                 worst_user, worst = user, residual
+            # Every money bucket the decomposition publishes must be summed, so
+            # a newly added bucket cannot silently escape the identity.
+            buckets = [k for k in d if k in DECOMPOSITION_BUCKETS]
+            self.assertTrue(buckets)
+            self.assertEqual(set(DECOMPOSITION_BUCKETS), set(buckets),
+                             f"{user} publishes an unbucketed P&L term")
             self.assertAlmostEqual(
                 d["total_net_pnl_usd"],
-                d["realized_trading_pnl_usd"] + d["open_position_pnl_usd"]
-                + d["dividends_usd"] + d["borrow_fees_usd"] + residual,
+                sum(d[k] for k in buckets) + residual,
                 delta=0.02, msg=f"{user} decomposition does not add up")
+            # Nothing else in the block may be a money bucket that the sum
+            # above forgot: every *_usd key must be listed or explicitly meta.
+            orphans = [k for k in d if k.endswith("_usd")
+                       and k not in DECOMPOSITION_BUCKETS
+                       and k not in ("total_net_pnl_usd",
+                                     "execution_costs_already_netted_usd",
+                                     "unexplained_residual_usd")]
+            self.assertEqual([], orphans, f"{user} has an unbuilt bucket")
             self.assertAlmostEqual(d["total_net_pnl_usd"], rep["net_pnl_usd"],
                                    delta=0.02, msg=user)
             # Execution costs are already inside the fill prices.
@@ -385,6 +399,139 @@ class TestEngineSmoke(unittest.TestCase):
         self.assertTrue(os.path.isabs(memory.DEFAULT_ROOT))
 
 
+    # ------------------------------------------------------------- dividends
+
+    def test_dividend_events_match_the_entitlement_recorded_at_the_open(self):
+        """Every cash dividend the season paid must be justified by the book.
+
+        A dividend belongs to whoever held the shares going into the ex-date.
+        The engine writes the entitled quantity into the event so the claim can
+        be checked without re-deriving it, and an event that pays anyone whose
+        entitled quantity was not strictly positive is an accounting error.
+        """
+        seen = 0
+        for rec in self.records:
+            if not rec.get("full_memory"):
+                continue
+            for ev in self.store.stream(rec["run_id"], "carry").list():
+                if ev.get("kind") not in ("dividend", "dividend_in_lieu"):
+                    continue
+                seen += 1
+                per_share, entitled = ev["per_share"], ev["entitled_qty"]
+                self.assertGreater(per_share, 0.0, ev)
+                if ev["kind"] == "dividend":
+                    self.assertGreater(entitled, 0,
+                                       f"paid a dividend to {ev['participant']} "
+                                       f"on {ev['date']} with entitled_qty "
+                                       f"{entitled}")
+                    self.assertAlmostEqual(ev["amount"],
+                                           round(entitled * per_share, 2),
+                                           delta=0.011, msg=ev)
+                else:
+                    self.assertLess(entitled, 0,
+                                    f"charged a manufactured dividend to a "
+                                    f"non-short: {ev}")
+                    self.assertAlmostEqual(ev["amount"],
+                                           round(-(-entitled) * per_share, 2),
+                                           delta=0.011, msg=ev)
+        self.assertGreater(seen, 0, "the short season must include dividends, "
+                                    "otherwise this test proves nothing")
+
+    def test_manufactured_dividends_are_reported_in_carry(self):
+        for rep in self.rec["reports"]:
+            carry = rep["carry"]
+            for key in ("dividends_received_usd", "dividends_in_lieu_paid_usd",
+                        "borrow_fees_paid_usd", "day_trade_count"):
+                self.assertIn(key, carry, rep["username"])
+            self.assertGreaterEqual(carry["dividends_in_lieu_paid_usd"], 0.0)
+            self.assertAlmostEqual(
+                carry["net_carry_usd"],
+                round(carry["dividends_received_usd"]
+                      - carry["dividends_in_lieu_paid_usd"]
+                      - carry["borrow_fees_paid_usd"], 2),
+                delta=0.011, msg=rep["username"])
+
+
+    # ------------------------------------------------------ at-close tickets
+    # IR-34: a strategy that documents a market-on-close exit has to be able to
+    # write one.  These three tests are what makes that claim checkable rather
+    # than aspirational: the first says the ticket is honoured by the venue, the
+    # second says it is only used by the two strategies that documented such a
+    # rule, and the third says the strategy is actually flat by the close, which
+    # is the whole point of the rule and was false before the fix.
+
+    def test_at_close_orders_are_worked_at_the_final_interval(self):
+        rows = list(self.store.stream(self.rec["run_id"], "fills")
+                    .select("interval", "at_close"))
+        late = [r for r in rows if r.get("at_close")]
+        early = [r for r in rows if not r.get("at_close")]
+        self.assertGreater(len(late), 0, "no at-close fill was ever recorded")
+        K = max(r["interval"] for r in rows)
+        self.assertEqual({r["interval"] for r in late}, {K},
+                         "an at_close order must only ever meet the closing "
+                         "interval, whatever else it does")
+        self.assertEqual(min(r["interval"] for r in early), 0,
+                         "an ordinary order must be worked from the opening "
+                         "interval; only the at_close ticket may wait")
+        # Note what is NOT asserted: an ordinary order can still be FILLED at
+        # the last interval, because a thin book works it across the ladder.  The
+        # guarantee is about when a ticket STARTS, not where it ends, and a test
+        # that claimed early orders never reach interval K would be wrong about
+        # the venue rather than about this feature.
+        self.assertFalse([r for r in late if r["interval"] == 0],
+                         "an at_close order was worked at the opening bell")
+
+    def test_only_the_close_of_session_strategies_use_the_ticket(self):
+        rows = list(self.store.stream(self.rec["run_id"], "fills")
+                    .select("participant", "at_close"))
+        users = {r["participant"] for r in rows if r.get("at_close")}
+        self.assertEqual(users, {"@GapAndGo_YOLO", "@OvernightCarry_NO"},
+                         "at_close changes what a strategy can claim about its "
+                         "holding period, so a new user of it must be a decision")
+
+    def test_gap_and_go_exits_later_in_the_same_session_it_entered(self):
+        """"Flat by the close" has to mean the exit is worked AFTER the entry.
+
+        Asserting on a positions stream would not do it: positions.jsonl.gz
+        holds the END OF SEASON book, not a snapshot per session, so a test
+        written against it passes for the wrong reason (the first draft of this
+        test did exactly that).  The fills stream does carry the evidence, one
+        row per execution with the interval it was worked on, so the real claim
+        is checkable per symbol: every entry GapAndGo makes is matched by a
+        closing fill at a LATER interval of the same session.  If at_close ever
+        stops being honoured the closing fill falls back to interval 0, the two
+        legs share an interval, and this fails - which is precisely the defect
+        IR-34 was, for three seasons' worth of sessions.
+        """
+        rows = list(self.store.stream(self.rec["run_id"], "fills")
+                    .select("date", "symbol", "participant", "side", "interval",
+                            "at_close", "filled_qty"))
+        checked = 0
+        for day in sorted({r["date"] for r in rows}):
+            bysym = {}
+            for r in rows:
+                if r["participant"] != "@GapAndGo_YOLO" or r["date"] != day:
+                    continue
+                e = bysym.setdefault(r["symbol"], {"buy": [], "sell": []})
+                e["buy" if r["side"] == "buy" else "sell"].append(r)
+            for sym, legs in bysym.items():
+                if not legs["buy"]:
+                    continue
+                exits = [r for r in legs["sell"] if r.get("at_close")]
+                self.assertTrue(exits,
+                                f"{sym} on {day}: entered and never exited at the "
+                                f"close, so the book was held overnight")
+                latest_entry = max(r["interval"] for r in legs["buy"])
+                earliest_exit = min(r["interval"] for r in exits)
+                self.assertGreater(earliest_exit, latest_entry,
+                                   f"{sym} on {day}: exit worked at interval "
+                                   f"{earliest_exit}, not after the entry at "
+                                   f"{latest_entry}")
+                checked += 1
+        self.assertGreater(checked, 10,
+                           f"only {checked} entries to check; the short season is "
+                           f"not exercising this rule, so the test proves nothing")
+
 class TestEngineControls(unittest.TestCase):
     """Pre-trade controls, quoting, and roster restriction."""
 
@@ -537,7 +684,6 @@ def _fill(participant, symbol, side, qty, price):
         avg_price=price, decision_price=price, spread_cost=0.0, depth_cost=0.0,
         impact_cost=0.0, commission=0.0, exchange_fee=0.0, regulatory_fee=0.0,
         rebate=0.0, interval=0, status="filled")
-
 
 if __name__ == "__main__":
     unittest.main()

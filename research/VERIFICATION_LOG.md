@@ -10,7 +10,7 @@ Statuses use the vocabulary defined in `sim/config.py`:
 
 | Status | Meaning |
 |---|---|
-| `FETCHED-VERIFIED` | retrieved in this environment **and** stored verbatim under `data/real/` |
+| `FETCHED-VERIFIED` | retrieved in this environment **and** stored under `data/real/` - the download itself for market data, a dated verbatim excerpt for a page (since 2026-09-17, IR-33: a citation with no stored artefact goes stale in silence) |
 | `FETCHED` | retrieved in this environment; content used, not stored |
 | `FETCHED-VIA-SEARCH` | reached only as text inside search results (weaker - the page itself was not fetched) |
 | `SECONDARY` | only a secondary source was reached; the primary was not retrievable |
@@ -303,7 +303,68 @@ IR-29 is preserved in the register text rather than quietly replaced, because
 "we published a plausible number that turned out to be an artefact" is exactly
 the failure mode this log exists to record.
 
+## 4d. Link health of the register itself (**IR-33**, found 2026-09-17)
+
+The register is the deliverable a reviewer actually clicks, so every URL in
+`sim/config.py`'s verified-source register and every `links[]` entry in
+`research/IRREGULARITIES.json` was re-opened in this pass. Two official URLs
+returned 404 while the substance of the claims they carried was correct:
+
+| Cited | Status today | Replacement, fetched and read |
+|---|---|---|
+| `finra.org/rules-guidance/rulebooks/finra-rules/7541` (Trade Activity Fee rate) | **404** - there is no Rule 7541 | [`finra.org/rules-guidance/guidance/trading-activity-fee`](https://www.finra.org/rules-guidance/guidance/trading-activity-fee), which defers rates to Section 1 of Schedule A |
+| `finra.org/investors/learn-to-invest/types-investments/margin-investing/pattern-day-trader` | **404** - the investor-education section was restructured | [`finra.org/rules-guidance/notices/21-13`](https://www.finra.org/rules-guidance/notices/21-13) for the counting rule and [`/investors/insights/frequent-intraday-trading`](https://www.finra.org/investors/insights/frequent-intraday-trading) for the plain-language version |
+| `finra.org/rules-guidance/rulebooks/finra-rules/4337` (used in a first draft of IR-31) | **404** - the securities-lending rule is 4330 | [`finra.org/rules-guidance/rulebooks/finra-rules/4330`](https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330), paragraph (b)(2)(B)(ii)(g) |
+
+Fetched live in this pass and excerpted to `data/real/regulatory/`, with the
+quotation that carries the weight recorded in the file:
+
+| Source | What it settles |
+|---|---|
+| [FINRA Rule 4330](https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330) | a borrower of customer securities must disclose "payments deemed cash-in-lieu of dividend paid on securities while on loan" - the obligation IR-31 implements |
+| [FINRA Rule 4210](https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210) | the margin rule body; (f)(8)(B) is the day-trading section the venue's counter implements |
+| [FINRA Regulatory Notice 21-13](https://www.finra.org/rules-guidance/notices/21-13) | the day-trade count, with six worked examples, quoted verbatim in `data/real/regulatory/finra-regulatory-notice-21-13.txt` and asserted one by one in `tests/test_portfolio.py::TestFinraDayTradeExamples` |
+| [IRS Publication 550](https://www.irs.gov/publications/p550) | a short seller "may have to remit to the lender payments in lieu of the dividends distributed while you maintain your short position" - corroboration from the tax side that the short **pays** |
+| [Federal Register API, document 2026-04233](https://www.federalregister.gov/api/v1/documents/2026-04233.json) | FY2026 Section 31 order: citation `91 FR 10643`, published `2026-03-04`, and **`effective_on` empty** - the date is in the prose, not the structured fields |
+
+The Section 31 effective date was re-checked because a broker fee page disagrees
+with it: the FY2025 advisory states the old rate runs "until 60 calendar days
+after legislation is enacted that sets the amount of the Commission's fiscal
+year 2026 appropriation", the FY2026 appropriation was signed 2026-02-03, and
+2026-02-03 + 60 calendar days = **2026-04-04**, which is the date
+`config.SEC31_PER_MILLION` uses. One vendor page says 04/02/2026; the order and
+the arithmetic agree with each other, so the repo is right and the vendor is
+approximating. `docs/sources.html` now renders 61 rows (55 source, 6 provider).
+
+## 4e. Two accounting errors and one fidelity error, found by reading, not by testing (**IR-31**, **IR-32**, **IR-34**)
+
+All three were found in a pass that read `sim/portfolio.py`, `sim/engine.py` and
+`sim/strategies.py` line by line against the rules they claim to implement. None
+of them made a test red - which is the point worth recording, because it means
+this project's test suite, as strong as it is on identities, does not detect
+semantic errors that leave the arithmetic self-consistent.
+
+| Defect | What was wrong | Effect on the published season | Guard added |
+|---|---|---|---|
+| **IR-31** dividend entitlement | ex-date dividends were paid on the position left *after* the day's trades | 4 payments totalling $635.91 went to positions opened on the ex-date itself; 18 of 202 payment events fell on a day the symbol was also traded | `test_dividend_entitlement_is_the_position_carried_into_the_ex_date`, `test_dividend_events_match_the_entitlement_recorded_at_the_open` |
+| **IR-31** payment in lieu | `pay_dividend()` returned `0.0` for any non-positive quantity, so shorts never paid the dividend they owe | $1,852.31 of manufactured dividends now charged; shorts had been collecting a free tailwind equal to roughly the yield, because `div_drag` removes that yield from the drift | `test_short_position_owes_a_manufactured_dividend`, plus the ledger-closure test now sums every bucket in `analytics.DECOMPOSITION_BUCKETS` |
+| **IR-32** day-trade counter | `_day_trade_closes()` was a stub returning `True`, so *any* second fill of a session counted | zero P&L effect (proved: with the dividend fix reverted and this fix kept, the leaderboard reproduced the pre-fix committed bytes exactly), but `@OvernightCarry_NO` - a strategy that never round-trips intraday - was published with 235 "day trades" in 251 sessions | the six Notice 21-13 examples, asserted verbatim |
+| **IR-34** fidelity | the venue could only execute at the opening bell, so a documented "market-on-close" exit was unexpressible and silently became a next-open exit | `@OvernightCarry_NO` +14.11% → **+8.97%**, `@GapAndGo_YOLO` −86.62% → **−91.75%**; GapAndGo's dividends received went from $6.95 to exactly **$0.00**, which is what a book that is genuinely flat by the close must earn | `test_at_close_orders_are_worked_at_the_final_interval`, `test_gap_and_go_exits_later_in_the_same_session_it_entered`, `test_only_the_close_of_session_strategies_use_the_ticket` |
+
+The corrections were **not** applied by editing the published table. Each fix was
+followed by a full re-run of all six scenarios, a rebuild of `docs/`, and a
+re-derivation of the README table from `memory/runs/.../leaderboard.json` by
+script - `tests/test_readme_claims.py` now compares that table cell by cell
+against the memory it came from, and checks the README's own counts (test total,
+register size, three research file sizes) against the files, because three
+earlier passes had each left a hand-typed number stale.
+
+Every one of these fixes was verified to be a real guard by reverting it in place
+and watching the corresponding tests fail, then restoring from a backup copy.
+That is the only way to know a new test tests something.
+
 ## 5. What could **not** be verified here
+
 
 These are not omissions to paper over; each is flagged in
 `research/IRREGULARITIES.json` and `research/LIMITATIONS.json` and shown on the
@@ -329,7 +390,28 @@ site.
 
 ---
 
+## 4f. The register's own measured figures were re-derived, and two were wrong
+
+This pass did not only audit the code and the citations: every dollar and
+percentage point quoted in `research/IRREGULARITIES.json` was recomputed from the
+event streams of the season it describes, which is the only way a measured claim
+stays checkable. Three did not survive.
+
+| Claim as written | What the data says | Disposition |
+|---|---|---|
+| IR-31: "4 dividend payments totalling **$635.91** went to positions opened on the ex-date" | **not reproducible** under any definition tried (first trade of the day: 1 event, $14.46; flat at the prior close: 3 events, $92.02). The number apparently came from an intermediate diagnostic whose filter was never recorded | Replaced by the derivation now in the entry - 18 of 202 events mispriced against the entitlement carried into the ex-date, 11 overpayments $1,198.01, 7 underpayments $962.48, $2,160.49 gross, **-$235.53 net**, 7 of 20 accounts - stated with its method so a reviewer can re-run it |
+| IR-31: dividends moved "$11,299.61 → **$11,662.74**", net **$1,489.18** | those are the figures for the run **before** IR-34 re-timed two books. The published season is $11,299.61 → **$11,600.83** received, **$1,852.31** charged in lieu, net **$1,551.09** | Both kept, with the attribution spelled out ($1,489.18 of it is this fix alone), because silently re-labelling a stale number as current is how a register becomes fiction |
+| IR-34: "no rank changed", and GapAndGo's dividends "$**6.95** → $0.00" | 6 of 20 ranks moved (4-7 and 11-12; three of them purely because *other* accounts changed), and GapAndGo's pre-fix figure on the originally released season is **$80.46**, not $6.95, which was the intermediate run | Corrected in place |
+
+The pattern is worth naming, because it is not a code problem. Every one of these
+was true of a run that existed at the moment it was written and stopped being true
+when a later fix re-ran the season. A measured claim in a register is a claim
+about a specific artefact, so the register entries now name the season they were
+measured on, and `tests/test_readme_claims.py` exists so that the human-readable
+restatement of those numbers in `README.md` cannot drift from the memory again.
+
 ## 6. Audits run on the simulation itself
+
 
 These are internal consistency checks, all reproduced by the test suite
 (`python3 -m unittest discover -s tests`) and by `python3 -m sim.cli verify`.
@@ -338,9 +420,9 @@ These are internal consistency checks, all reproduced by the test suite
 |---|---|
 | Fitted SPY/index ratio vs real SPY monthly closes | ratio **10.02785**, max absolute error **0.1451%** |
 | Simulated vs real SPY monthly high-low range | mean absolute difference **0.503 pp**, worst **0.993 pp**, over 11 months |
-| P&L ledger closure per participant | residual **≤ $0.10**, total **$0.42** across 20 participants |
+| P&L ledger closure per participant | `final_equity - starting_cash - net_pnl_usd` is **exactly $0.00** for all 20 published reports (`scripts/independent_audit.py`); the `tests/test_memory.py` fixture season closes to **$0.42** over 20 participants, worst **$0.10** |
 | Final positions | every account **flat** at the season end (forced liquidation costed through the venue) |
-| Executed prices vs the Rule 612 tick grid | **2,985 / 2,985** fills exactly on-grid, and **all 8,534 displayed bid/ask levels** in the quote stream on-grid (`tests/test_memory.py`) |
+| Executed prices vs the Rule 612 tick grid | on the **published season**: **3,078 / 3,078** fills and **8,534 / 8,534** displayed bid/ask levels are exactly on-grid. The smaller fixture season in `tests/test_memory.py` (2,985 fills) checks the same property on a run whose bytes the test regenerates, so both are quoted to avoid a reader mistaking one for the other |
 | Decision prices vs executed prices | the decision mark stays unrounded, so the tick cost is charged rather than handed back (`test_the_decision_price_is_deliberately_off_grid`) |
 | Memory checksums | every file in every run manifest verified; a deliberately corrupted stream is detected |
 | Determinism, in-process | the same seed reproduces the same leaderboard bit for bit; a different seed changes ranks |
@@ -348,3 +430,5 @@ These are internal consistency checks, all reproduced by the test suite
 | Order-of-iteration audit | AST sweep: no `for` loop in `sim/strategies.py` iterates a set |
 | Site freshness | `docs/` is byte-identical to a fresh `build-site` from the committed memory (CI fails if it drifts), and the published config fingerprint equals `CompetitionConfig.fingerprint()` |
 | Look-ahead | strategies see only `t-1` and earlier data when deciding (`tests/test_strategies.py`) |
+| **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the primary season (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). **763 / 763 pass.** Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
+| README self-description | `tests/test_readme_claims.py` recomputes the suite's test count, the register size and the three research-file counts, and re-reads all 20 leaderboard rows against `memory/runs/season1-primary-seed20260917/leaderboard.json` |

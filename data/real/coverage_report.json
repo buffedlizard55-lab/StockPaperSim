@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T07:13:23Z",
+ "generated_at": "2026-09-18T07:22:50Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -164,7 +164,7 @@
    },
    "nfl_injuries": {
     "ok": true,
-    "bytes": 380783
+    "bytes": 381285
    },
    "ncaa_scoreboard_fbs_2025_week10": {
     "ok": true,
@@ -189,27 +189,32 @@
   "kalshi": {
    "KXNFLGAME": {
     "ok": true,
-    "rows": 132
+    "rows": 132,
+    "rows_with_volume": 132
    },
    "KXNBA": {
     "ok": true,
-    "rows": 0
+    "rows": 0,
+    "rows_with_volume": 0
    },
    "KXMLBGAME": {
     "ok": true,
-    "rows": 200
+    "rows": 200,
+    "rows_with_volume": 200
    },
    "KXHIGHNY": {
     "ok": true,
-    "rows": 200
+    "rows": 200,
+    "rows_with_volume": 200
    },
    "KXAAAGASM": {
     "ok": true,
-    "rows": 80
+    "rows": 80,
+    "rows_with_volume": 80
    }
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T07:13:23Z",
+   "generated_at": "2026-09-18T07:22:50Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -282,7 +287,7 @@
    "source_class": "MIXED",
    "path": "real/sports",
    "files": 8,
-   "bytes": 2301456
+   "bytes": 2301958
   },
   {
    "label": "NOAA/NCEI daily summaries",
@@ -296,7 +301,7 @@
    "source_class": "OFFICIAL-VENDOR",
    "path": "real/kalshi",
    "files": 5,
-   "bytes": 242150
+   "bytes": 520529
   }
  ]
 }

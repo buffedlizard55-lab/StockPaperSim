@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T04:32:25Z",
+ "generated_at": "2026-09-18T12:53:55Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -106,14 +106,32 @@
    "failed": [
     "SPY",
     "QQQ",
+    "IWM",
     "GLD",
+    "UNG",
+    "XLU",
     "XBI",
+    "IBB",
+    "TLT",
     "DKNG",
+    "FLUT",
+    "PENN",
+    "SRAD",
+    "GENI",
     "AAPL",
     "MSFT",
-    "NVDA"
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T"
    ],
-   "rows": {}
+   "rows": {},
+   "dividends_failed": [],
+   "dividends": {}
   },
   "sec": {
    "tickers_ok": [],
@@ -126,30 +144,32 @@
    ]
   },
   "fda": {
-   "rows": 10760,
-   "failed": [],
-   "pages": 7
+   "rows": 0,
+   "failed": [
+    "skip=0"
+   ],
+   "pages": 0
   },
   "mlb": {
-   "rows": 2322,
-   "ok": true
+   "rows": 0,
+   "ok": false
   },
   "espn": {
    "nfl": {
-    "rows": 285,
-    "chunks_failed": 0
+    "rows": 0,
+    "chunks_failed": 22
    },
    "ncaaf": {
-    "rows": 282,
-    "chunks_failed": 0
+    "rows": 0,
+    "chunks_failed": 16
    },
    "nba": {
     "rows": 0,
-    "chunks_failed": 0
+    "chunks_failed": 29
    },
    "mlb": {
     "rows": 0,
-    "chunks_failed": 0
+    "chunks_failed": 27
    }
   },
   "nba": {
@@ -161,12 +181,10 @@
     "ok": false
    },
    "nfl_injuries": {
-    "ok": true,
-    "bytes": 381285
+    "ok": false
    },
    "ncaa_scoreboard_fbs_2025_week10": {
-    "ok": true,
-    "bytes": 72675
+    "ok": false
    },
    "nba_stats_scoreboard_probe": {
     "ok": false
@@ -174,40 +192,31 @@
   },
   "weather": {
    "USW00023272": {
-    "ok": true,
-    "rows": 721,
-    "label": "San Francisco (downtown / SFO-area co-op station)"
+    "ok": false
    },
    "USW00023234": {
-    "ok": true,
-    "rows": 728,
-    "label": "San Francisco International Airport"
+    "ok": false
    }
   },
   "kalshi": {
    "KXNFLGAME": {
-    "ok": true,
-    "rows": 132
+    "ok": false
    },
    "KXNBA": {
-    "ok": true,
-    "rows": 0
+    "ok": false
    },
    "KXMLBGAME": {
-    "ok": true,
-    "rows": 200
+    "ok": false
    },
    "KXHIGHNY": {
-    "ok": true,
-    "rows": 200
+    "ok": false
    },
    "KXAAAGASM": {
-    "ok": true,
-    "rows": 80
+    "ok": false
    }
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T04:32:25Z",
+   "generated_at": "2026-09-18T12:53:55Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -238,7 +247,7 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201264
+   "bytes": 2201239
   },
   {
    "label": "Stooq daily CSV (blocked)",
@@ -248,9 +257,16 @@
    "bytes": 0
   },
   {
-   "label": "Nasdaq quote API",
-   "source_class": "SECONDARY",
+   "label": "Nasdaq historical quote API (official-source candidate)",
+   "source_class": "OFFICIAL",
    "path": "real/prices/nasdaq",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "Nasdaq raw JSON responses",
+   "source_class": "OFFICIAL",
+   "path": "real/raw/nasdaq",
    "files": 0,
    "bytes": 0
   },
@@ -273,14 +289,14 @@
    "source_class": "OFFICIAL",
    "path": "real/fda",
    "files": 1,
-   "bytes": 3854213
+   "bytes": 0
   },
   {
    "label": "League scoreboards",
    "source_class": "MIXED",
    "path": "real/sports",
    "files": 8,
-   "bytes": 2301947
+   "bytes": 2097520
   },
   {
    "label": "NOAA/NCEI daily summaries",

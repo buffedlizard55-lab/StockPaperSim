@@ -387,7 +387,10 @@
    {
     "signal": "nfl_injury_report",
     "state": "MISSING",
-    "files": [],
+    "files": [
+     "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+     "data/real/sports/official/nfl_injuries.raw"
+    ],
     "url": "https://www.nfl.com/injuries/",
     "sessions_actionable": null,
     "price_derived": false
@@ -395,7 +398,10 @@
    {
     "signal": "nba_injury_report",
     "state": "MISSING",
-    "files": [],
+    "files": [
+     "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+     "data/real/sports/official/nfl_injuries.raw"
+    ],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
     "sessions_actionable": null,
     "price_derived": false
@@ -411,6 +417,6 @@
    "nfl_injury_report",
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
  }
 ]

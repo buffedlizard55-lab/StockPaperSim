@@ -578,7 +578,7 @@
   },
   "mlb_games_7d": {
    "state": "AVAILABLE",
-   "rows": 2291,
+   "rows": 2292,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -591,7 +591,7 @@
   },
   "mlb_home_win_rate_30d": {
    "state": "AVAILABLE",
-   "rows": 2291,
+   "rows": 2292,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -604,7 +604,7 @@
   },
   "mlb_upsets_7d": {
    "state": "AVAILABLE",
-   "rows": 2291,
+   "rows": 2292,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -643,7 +643,7 @@
   },
   "kalshi_settled_30d": {
    "state": "AVAILABLE",
-   "rows": 610,
+   "rows": 612,
    "window": [
     "2026-07-31",
     "2026-09-18"
@@ -656,7 +656,7 @@
   },
   "kalshi_volume_30d": {
    "state": "MISSING",
-   "rows": 610,
+   "rows": 612,
    "window": [
     "2026-07-31",
     "2026-09-18"
@@ -726,8 +726,11 @@
     null,
     null
    ],
-   "files": [],
-   "note": "official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "files": [
+    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+    "data/real/sports/official/nfl_injuries.raw"
+   ],
+   "note": "official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://www.nfl.com/injuries/"
   },
   "nba_injury_report": {
@@ -737,8 +740,11 @@
     null,
     null
    ],
-   "files": [],
-   "note": "official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "files": [
+    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+    "data/real/sports/official/nfl_injuries.raw"
+   ],
+   "note": "official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
   },
   "insider_buys_30d::AAPL": {
@@ -30520,10 +30526,10 @@
    280.0,
    286.0,
    292.0,
-   312.0,
-   436.0,
-   428.0,
-   446.0
+   310.0,
+   434.0,
+   426.0,
+   444.0
   ],
   "kalshi_volume_30d": [
    0.0,

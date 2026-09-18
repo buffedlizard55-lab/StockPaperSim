@@ -135,6 +135,20 @@ FRED_SERIES: Dict[str, str] = {
     "DJIA": "Dow Jones Industrial Average (daily close), source S&P Dow Jones Indices",
     "SOFR": "Secured Overnight Financing Rate, source Federal Reserve Bank of New York",
     "GOLDPMGBD228NLBM": "LBMA gold price, PM fix (USD/troy oz)",
+    # Added 2026-09-18 for the Official Auction Book (sim/treasury.py): the
+    # constant-maturity points of the Treasury par curve.  FRED republishes the
+    # Treasury's own H.15 numbers and names the Treasury as the source, so these
+    # are the same observations the Treasury publishes, available over the whole
+    # window in one file each.  The Treasury's own daily CSV is requested too
+    # (collect_treasury) so every point has two official channels.
+    "DGS1MO": "1-month Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS6MO": "6-month Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS1": "1-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS2": "2-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS5": "5-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS7": "7-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS20": "20-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    "DGS30": "30-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
 }
 
 # Issuers for the SEC Form 4 (insider) study.  CIK is re-resolved from the
@@ -154,6 +168,7 @@ SOURCE_CLASS = {
     "sec": "OFFICIAL", "fda": "OFFICIAL", "mlb": "OFFICIAL",
     "nocode": "OFFICIAL", "espn": "SECONDARY", "nba": "OFFICIAL",
     "finra": "OFFICIAL", "nyfed": "OFFICIAL",
+    "treasury": "OFFICIAL", "fiscaldata": "OFFICIAL", "sec_bulk": "OFFICIAL",
      "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
 }
 
@@ -268,6 +283,21 @@ def write_bytes(path: str, body: bytes) -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "wb") as handle:
         handle.write(body)
+
+
+def write_gzip_bytes(path: str, body: bytes) -> None:
+    """Store a raw response compressed, when the verbatim text is large.
+
+    The bytes on disk are a gzip container of exactly the bytes the fetcher
+    received, so ``gzip -dc`` recovers the file whose SHA-256 the manifest
+    records.  This exists because the Treasury auction *search* endpoint returns
+    roughly 4 KB of JSON per auction and the season window holds about 1,500
+    auctions: keeping them uncompressed would add ~6 MB to the repository for
+    rows that the derived tape already carries in full.
+    """
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "wb") as handle:
+        handle.write(gzip.compress(body, 9))
 
 
 def write_json(path: str, payload) -> None:
@@ -724,6 +754,637 @@ def collect_nyfed(fetcher: Fetcher, out: str) -> dict:
     except ValueError:
         summary["error"] = "response was not JSON"
     summary["ok"] = True
+    return summary
+
+
+# --------------------------------------------------------------------------
+# 1c. U.S. Treasury - the Official Auction Book's price source (2026-09-18)
+# --------------------------------------------------------------------------
+#
+# WHY THIS SECTION EXISTS
+# -----------------------
+# Every other price file this project holds is either an aggregator's copy
+# (Yahoo, SECONDARY) or an exchange response that may not be redistributed
+# (Nasdaq, OFFICIAL but NOT_AUTHORIZED_BY_TERMS).  Neither can produce a trade
+# whose *executed* price is an official publisher's own number.
+#
+# The U.S. Treasury publishes, free and without a key, the complete result of
+# every auction it runs: the auction date, the issue date, the maturity date,
+# the price per $100 awarded to every accepted bidder (single-price auction
+# since 1998), the interest rate on the security, the sizes tendered and
+# accepted by bidder class, the minimum and multiple to issue, and the maximum
+# non-competitive award.  A non-competitive bid for a Treasury bill therefore
+# has an *exactly known* execution price - the official high price - before a
+# single modelled number is introduced, and redeeming that bill at par on the
+# official maturity date has an exactly known payoff.  That is the strongest
+# price provenance this project can construct from free public sources, and it
+# is what makes an official-price settled trade possible at all.
+#
+# TWO PUBLISHERS, ONE NUMBER
+# --------------------------
+# TreasuryDirect's own auction web service (Bureau of the Fiscal Service) and
+# Treasury's Fiscal Data API are separate endpoints with separate schemas, and
+# both are fetched.  Every CUSIP that appears in both is compared field by
+# field, so "official" is checked against a second official response rather
+# than asserted once (see ``treasury_crosscheck``).
+#
+# These URLs were verified reachable and correct in shape on 2026-09-18 by
+# fetching them (the responses are what is committed here); the development
+# sandbox blocks outbound HTTPS, which is why the fetch happens on the runner.
+TREASURY_AUCTIONED = ("https://www.treasurydirect.gov/TA_WS/securities/"
+                      "auctioned?format=json&days={days}")
+TREASURY_ANNOUNCED = ("https://www.treasurydirect.gov/TA_WS/securities/"
+                      "announced?format=json")
+TREASURY_SEARCH = ("https://www.treasurydirect.gov/TA_WS/securities/search"
+                   "?startDate={start}&endDate={end}&dateFieldName=auctionDate"
+                   "&type={type}&format=json&pagesize={pagesize}"
+                   "&pagenum={pagenum}")
+FISCALDATA_AUCTIONS = ("https://api.fiscaldata.treasury.gov/services/api/"
+                       "fiscal_service/v1/accounting/od/auctions_query"
+                       "?sort=-auction_date&page[size]={pagesize}"
+                       "&page[number]={page}")
+TREASURY_YIELD_CSV = ("https://home.treasury.gov/resource-center/data-chart-"
+                      "center/interest-rates/daily-treasury-rates.csv/all/"
+                      "{year}?type=daily_treasury_yield_curve"
+                      "&field_tdr_date_value={year}&page&_format=csv")
+#: Auction types swept across the whole season window.  "Bill" includes the
+#: cash-management bills (the ``cashManagementBillCMB`` flag distinguishes
+#: them), so CMB is not requested separately.
+TREASURY_SEARCH_TYPES: Tuple[str, ...] = ("Bill", "Note", "Bond", "TIPS")
+TREASURY_SEARCH_PAGESIZE = 250
+TREASURY_SEARCH_MAX_PAGES = 8
+#: How many days back the "auctioned" endpoint is asked for.  This is the
+#: endpoint that carries a completed result for auctions held in the last few
+#: weeks, including anything the season window does not cover.
+TREASURY_AUCTIONED_DAYS = 45
+FISCALDATA_PAGES = 2
+FISCALDATA_PAGESIZE = 1000
+TREASURY_YIELD_YEARS: Tuple[str, ...] = ("2024", "2025", "2026")
+
+#: The auction fields carried into the derived tape.  Keys are the names the
+#: engine uses; values are the TreasuryDirect response field names.  Nothing is
+#: renamed silently: a field that is absent from a response is written as null.
+TREASURY_FIELDS: Tuple[Tuple[str, str], ...] = (
+    ("cusip", "cusip"),
+    ("security_type", "securityType"),
+    ("type", "type"),
+    ("security_term", "securityTerm"),
+    ("term", "term"),
+    ("auction_date", "auctionDate"),
+    ("issue_date", "issueDate"),
+    ("maturity_date", "maturityDate"),
+    ("announcement_date", "announcementDate"),
+    ("dated_date", "datedDate"),
+    ("price_per100", "pricePer100"),
+    ("high_price", "highPrice"),
+    ("adjusted_price", "adjustedPrice"),
+    ("unadjusted_price", "unadjustedPrice"),
+    ("high_discount_rate", "highDiscountRate"),
+    ("high_investment_rate", "highInvestmentRate"),
+    ("high_yield", "highYield"),
+    ("avg_median_yield", "averageMedianYield"),
+    ("avg_median_discount_rate", "averageMedianDiscountRate"),
+    ("avg_median_investment_rate", "averageMedianInvestmentRate"),
+    ("interest_rate", "interestRate"),
+    ("offering_amount", "offeringAmount"),
+    ("competitive_accepted", "competitiveAccepted"),
+    ("competitive_tendered", "competitiveTendered"),
+    ("noncompetitive_accepted", "noncompetitiveAccepted"),
+    ("total_accepted", "totalAccepted"),
+    ("total_tendered", "totalTendered"),
+    ("bid_to_cover", "bidToCoverRatio"),
+    ("soma_accepted", "somaAccepted"),
+    ("soma_tendered", "somaTendered"),
+    ("treasury_retail_accepted", "treasuryRetailAccepted"),
+    ("primary_dealer_accepted", "primaryDealerAccepted"),
+    ("primary_dealer_tendered", "primaryDealerTendered"),
+    ("indirect_bidder_accepted", "indirectBidderAccepted"),
+    ("direct_bidder_accepted", "directBidderAccepted"),
+    ("fima_noncompetitive_accepted", "fimaNoncompetitiveAccepted"),
+    ("maximum_noncompetitive_award", "maximumNoncompetitiveAward"),
+    ("maximum_competitive_award", "maximumCompetitiveAward"),
+    ("minimum_to_issue", "minimumToIssue"),
+    ("multiples_to_issue", "multiplesToIssue"),
+    ("minimum_bid_amount", "minimumBidAmount"),
+    ("currently_outstanding", "currentlyOutstanding"),
+    ("auction_format", "auctionFormat"),
+    ("interest_payment_frequency", "interestPaymentFrequency"),
+    ("first_interest_payment_date", "firstInterestPaymentDate"),
+    ("tips", "tips"),
+    ("floating_rate", "floatingRate"),
+    ("cash_management_bill", "cashManagementBillCMB"),
+    ("reopening", "reopening"),
+    ("back_dated", "backDated"),
+    ("accrued_interest_per100", "accruedInterestPer100"),
+    ("adjusted_accrued_interest_per1000", "adjustedAccruedInterestPer1000"),
+    ("competitive_results_pdf", "pdfFilenameCompetitiveResults"),
+    ("announcement_pdf", "pdfFilenameAnnouncement"),
+    ("updated_timestamp", "updatedTimestamp"),
+)
+
+#: The Fiscal Data API's column names for the same facts.  The two schemas are
+#: deliberately kept separate rather than coerced into one: a cross-check is
+#: only worth something if the second publisher's own field names are visible.
+FISCALDATA_FIELDS: Tuple[Tuple[str, str], ...] = (
+    ("cusip", "cusip"),
+    ("security_type", "security_type"),
+    ("security_term", "security_term"),
+    ("auction_date", "auction_date"),
+    ("issue_date", "issue_date"),
+    ("maturity_date", "maturity_date"),
+    ("announcement_date", "announcemt_date"),
+    ("price_per100", "price_per100"),
+    ("high_price", "high_price"),
+    ("high_discount_rate", "high_discnt_rate"),
+    ("high_investment_rate", "high_investment_rate"),
+    ("high_yield", "high_yield"),
+    ("avg_median_yield", "avg_med_yield"),
+    ("interest_rate", "int_rate"),
+    ("offering_amount", "offering_amt"),
+    ("competitive_accepted", "comp_accepted"),
+    ("noncompetitive_accepted", "noncomp_accepted"),
+    ("total_accepted", "total_accepted"),
+    ("total_tendered", "total_tendered"),
+    ("bid_to_cover", "bid_to_cover_ratio"),
+    ("soma_accepted", "soma_accepted"),
+    ("maximum_noncompetitive_award", "max_noncomp_award"),
+    ("maximum_competitive_award", "max_comp_award"),
+    ("minimum_to_issue", "min_to_issue"),
+    ("multiples_to_issue", "multiples_to_issue"),
+    ("auction_format", "auction_format"),
+    ("interest_payment_frequency", "int_payment_frequency"),
+    ("tips", "inflation_index_security"),
+    ("floating_rate", "floating_rate"),
+    ("cash_management_bill", "cash_management_bill_cmb"),
+    ("reopening", "reopening"),
+)
+
+
+def _treasury_number(value) -> Optional[float]:
+    """Parse one Treasury numeric field.  Blank and 'null' mean absent."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text or text.lower() in ("null", "n/a", "none"):
+        return None
+    try:
+        return float(text)
+    except ValueError:
+        return None
+
+
+def _treasury_date(value) -> Optional[str]:
+    """Treasury dates arrive as ``2026-09-17T00:00:00`` or ``DD-MON-YYYY``."""
+    if value is None:
+        return None
+    text = str(value).strip()
+    if not text or text.lower() == "null":
+        return None
+    if "T" in text:
+        text = text.split("T", 1)[0]
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", text):
+        return text
+    months = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
+              "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
+    m = re.match(r"^(\d{1,2})-([A-Za-z]{3})-(\d{4})$", text)
+    if m and m.group(2).upper() in months:
+        return f"{m.group(3)}-{months[m.group(2).upper()]:02d}-{int(m.group(1)):02d}"
+    return None
+
+
+def _treasury_row(raw: dict, fields, url: str, digest: str, publisher: str) -> dict:
+    row: dict = {}
+    for name, key in fields:
+        value = raw.get(key)
+        if name.endswith("_date"):
+            row[name] = _treasury_date(value)
+        elif name in ("cusip", "security_type", "type", "security_term", "term",
+                      "auction_format", "interest_payment_frequency", "tips",
+                      "floating_rate", "cash_management_bill", "reopening",
+                      "back_dated", "competitive_results_pdf", "announcement_pdf",
+                      "updated_timestamp", "first_interest_payment_date"):
+            text = None if value is None else str(value).strip()
+            row[name] = None if text in ("", "null") else text
+        else:
+            row[name] = _treasury_number(value)
+    # The auction's own id: a CUSIP can be auctioned twice (an original issue and
+    # a reopening), so the key has to carry the auction date as well.
+    row["auction_key"] = f"{row.get('cusip')}|{row.get('auction_date')}"
+    row["source"] = url
+    row["raw_sha256"] = digest
+    row["publisher"] = publisher
+    row["source_class"] = "OFFICIAL"
+    return row
+
+
+def collect_treasury(fetcher: Fetcher, out: str) -> dict:
+    """Treasury auction results, the announced calendar and the par curve."""
+    summary: dict = {"auctioned": {}, "search": {}, "announced": {},
+                     "fiscaldata": {}, "yield_curve": {}, "crosscheck": {},
+                     "failed": []}
+    base = os.path.join(out, "treasury")
+
+    # -- 1. TreasuryDirect: auctions completed in the last N days -----------
+    url = TREASURY_AUCTIONED.format(days=TREASURY_AUCTIONED_DAYS)
+    body = fetcher.get(url, "treasury",
+                       note="TreasuryDirect: auctions with a completed result")
+    tape: List[dict] = []
+    if body is None:
+        summary["failed"].append("auctioned")
+    else:
+        digest = hashlib.sha256(body).hexdigest()
+        write_bytes(os.path.join(base, "treasury_direct_auctioned.json"), body)
+        try:
+            rows = json.loads(body.decode("utf-8"))
+        except ValueError:
+            rows = []
+            summary["failed"].append("auctioned:not-json")
+        tape = [_treasury_row(r, TREASURY_FIELDS, url, digest,
+                              "U.S. Department of the Treasury (TreasuryDirect)")
+                for r in rows if isinstance(r, dict)]
+        summary["auctioned"] = {"rows": len(tape), "bytes": len(body),
+                                "sha256": digest, "url": url}
+
+    # -- 2. TreasuryDirect: the whole season window, by type ---------------
+    for security_type in TREASURY_SEARCH_TYPES:
+        rows_all: List[dict] = []
+        pages = 0
+        for page in range(1, TREASURY_SEARCH_MAX_PAGES + 1):
+            url = TREASURY_SEARCH.format(start=WARMUP_START, end=COLLECT_END,
+                                         type=security_type,
+                                         pagesize=TREASURY_SEARCH_PAGESIZE,
+                                         pagenum=page)
+            body = fetcher.get(url, "treasury",
+                               note=f"TreasuryDirect search: {security_type} "
+                                    f"page {page}")
+            if body is None:
+                summary["failed"].append(f"search:{security_type}:{page}")
+                break
+            digest = hashlib.sha256(body).hexdigest()
+            write_gzip_bytes(os.path.join(
+                base, f"treasury_direct_search_{security_type.lower()}_p{page}.json.gz"),
+                body)
+            try:
+                rows = json.loads(body.decode("utf-8"))
+            except ValueError:
+                summary["failed"].append(f"search:{security_type}:{page}:not-json")
+                break
+            if not isinstance(rows, list) or not rows:
+                summary.setdefault("search", {}).setdefault(security_type, {})[
+                    "last_page"] = page
+                break
+            rows_all.extend(_treasury_row(r, TREASURY_FIELDS, url, digest,
+                                          "U.S. Department of the Treasury "
+                                          "(TreasuryDirect)")
+                            for r in rows if isinstance(r, dict))
+            pages = page
+            if len(rows) < TREASURY_SEARCH_PAGESIZE:
+                break
+        summary["search"][security_type] = {"rows": len(rows_all), "pages": pages}
+        tape.extend(rows_all)
+
+    # -- 3. TreasuryDirect: what is announced but not yet auctioned --------
+    body = fetcher.get(TREASURY_ANNOUNCED, "treasury",
+                       note="TreasuryDirect: announced, not-yet-auctioned securities")
+    if body is None:
+        summary["failed"].append("announced")
+    else:
+        digest = hashlib.sha256(body).hexdigest()
+        write_bytes(os.path.join(base, "treasury_direct_announced.json"), body)
+        try:
+            rows = json.loads(body.decode("utf-8"))
+        except ValueError:
+            rows = []
+            summary["failed"].append("announced:not-json")
+        announced = [_treasury_row(r, TREASURY_FIELDS, TREASURY_ANNOUNCED, digest,
+                                   "U.S. Department of the Treasury (TreasuryDirect)")
+                     for r in rows if isinstance(r, dict)]
+        summary["announced"] = {"rows": len(announced), "bytes": len(body),
+                                "sha256": digest, "url": TREASURY_ANNOUNCED}
+        write_jsonl(os.path.join(base, "announced_tape.jsonl"), announced)
+
+    # -- 4. Fiscal Data API: the same auctions from a second publisher -----
+    fiscal_rows: List[dict] = []
+    for page in range(1, FISCALDATA_PAGES + 1):
+        url = FISCALDATA_AUCTIONS.format(pagesize=FISCALDATA_PAGESIZE, page=page)
+        body = fetcher.get(url, "fiscaldata",
+                           note=f"Fiscal Data: auctions, page {page}")
+        if body is None:
+            summary["failed"].append(f"fiscaldata:{page}")
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        write_gzip_bytes(os.path.join(base, f"fiscaldata_auctions_p{page}.json.gz"),
+                         body)
+        try:
+            payload = json.loads(body.decode("utf-8"))
+        except ValueError:
+            summary["failed"].append(f"fiscaldata:{page}:not-json")
+            continue
+        rows = payload.get("data") if isinstance(payload, dict) else None
+        if not isinstance(rows, list):
+            summary["failed"].append(f"fiscaldata:{page}:no-data")
+            continue
+        fiscal_rows.extend(_treasury_row(r, FISCALDATA_FIELDS, url, digest,
+                                         "U.S. Department of the Treasury "
+                                         "(Fiscal Data API)")
+                           for r in rows if isinstance(r, dict))
+        summary["fiscaldata"][f"page{page}"] = {"rows": len(rows), "bytes": len(body),
+                                                "sha256": digest, "url": url}
+
+    # -- 5. The official par yield curve, straight from the Treasury --------
+    for year in TREASURY_YIELD_YEARS:
+        url = TREASURY_YIELD_CSV.format(year=year)
+        body = fetcher.get(url, "treasury",
+                           note=f"Treasury: daily par yield curve {year}")
+        if body is None:
+            summary["failed"].append(f"yield_curve:{year}")
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        path = os.path.join(base, f"daily_treasury_yield_curve_{year}.csv")
+        write_bytes(path, body)
+        rows = [r for r in body.decode("utf-8", "replace").splitlines()[1:]
+                if r.strip()]
+        summary["yield_curve"][year] = {"rows": len(rows), "bytes": len(body),
+                                        "sha256": digest, "url": url}
+
+    # -- 6. One tape, one row per auction, deduplicated ---------------------
+    merged: Dict[str, dict] = {}
+    for row in tape:
+        if not row.get("cusip") or not row.get("auction_date"):
+            continue
+        merged[row["auction_key"]] = row
+    tape_path = os.path.join(base, "auction_tape.jsonl")
+    write_jsonl(tape_path, [merged[k] for k in sorted(merged)])
+    if fiscal_rows:
+        write_jsonl(os.path.join(base, "fiscaldata_auction_tape.jsonl"),
+                    [r for r in fiscal_rows if r.get("cusip")])
+    summary["tape"] = {"rows": len(merged), "file": os.path.relpath(tape_path, REPO_ROOT)}
+    summary["crosscheck"] = treasury_crosscheck(out)
+    return summary
+
+
+def treasury_crosscheck(out: str) -> dict:
+    """Compare the two official publishers on every CUSIP they share.
+
+    A single publisher can be wrong in a way no amount of reading finds.  The
+    Treasury publishes the same auction through TreasuryDirect and through the
+    Fiscal Data API with different field names and different extraction code, so
+    comparing them is a real check - and where they disagree the disagreement is
+    published rather than smoothed over.
+    """
+    base = os.path.join(out, "treasury")
+
+    def load(name: str) -> Dict[str, dict]:
+        path = os.path.join(base, name)
+        rows: Dict[str, dict] = {}
+        if not os.path.exists(path):
+            return rows
+        with open(path, "r", encoding="utf-8") as handle:
+            for line in handle:
+                line = line.strip()
+                if not line:
+                    continue
+                row = json.loads(line)
+                key = row.get("auction_key") or f"{row.get('cusip')}|{row.get('auction_date')}"
+                rows[key] = row
+        return rows
+
+    a = load("auction_tape.jsonl")
+    b = load("fiscaldata_auction_tape.jsonl")
+    compare = ("price_per100", "high_discount_rate", "high_yield", "interest_rate",
+               "offering_amount", "competitive_accepted", "total_accepted",
+               "bid_to_cover", "maturity_date", "issue_date", "security_term")
+    pairs: List[dict] = []
+    checked = 0
+    for key in sorted(set(a) & set(b)):
+        left, right = a[key], b[key]
+        row = {"auction_key": key, "cusip": left.get("cusip"),
+               "auction_date": left.get("auction_date"), "fields": {}, "matches": 0,
+               "diffs": 0}
+        for field in compare:
+            x, y = left.get(field), right.get(field)
+            if x is None or y is None:
+                continue
+            checked += 1
+            same = (abs(float(x) - float(y)) <= max(1e-9, abs(float(x)) * 1e-9)
+                    if isinstance(x, (int, float)) and isinstance(y, (int, float))
+                    else str(x) == str(y))
+            row["fields"][field] = {"treasurydirect": x, "fiscaldata": y,
+                                    "match": bool(same)}
+            row["matches" if same else "diffs"] += 1
+        pairs.append(row)
+    result = {"generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+              "treasurydirect_auctions": len(a), "fiscaldata_auctions": len(b),
+              "shared_auctions": len(pairs), "field_comparisons": checked,
+              "fields_compared": list(compare),
+              "shared_auctions_with_a_difference": sum(1 for p in pairs if p["diffs"]),
+              "pairs": pairs}
+    write_json(os.path.join(out, "crosschecks", "treasury_crosscheck.json"), result)
+    return {k: v for k, v in result.items() if k != "pairs"}
+
+
+# --------------------------------------------------------------------------
+# 1d. SEC bulk insider data sets (OFFICIAL, primary, complete quarters)
+# --------------------------------------------------------------------------
+#
+# The per-filing Form 4 walk in ``collect_sec`` depends on EDGAR's browse
+# endpoint answering an anonymous client; when it does not, three participants
+# in the published Season 2 roster had no signal at all and reported
+# DATA-MISSING rather than a number.  The Commission also publishes the same
+# filings as a quarterly *structured* extract - every Form 3, 4 and 5 for the
+# quarter, tab delimited, with the transaction table carrying the transaction
+# date, the transaction code and **the price per share the insider actually
+# transacted at**.  That is a filing-grade price for a real security on a real
+# date from the primary source, and it is retrieved as one ZIP per quarter
+# instead of one HTTP request per filing.
+#
+#   SOURCE: https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets
+#   README: https://www.sec.gov/files/insider_transactions_readme.pdf
+#     - eight tab-delimited UTF-8 files per quarter; this collector reads three
+#       of them (SUBMISSION, REPORTINGOWNER, NONDERIV_TRANS) and keeps the rows
+#       whose issuer symbol is in the traded universe
+#     - fields kept from NONDERIV_TRANS: TRANS_DATE (DD-MON-YYYY), TRANS_CODE,
+#       TRANS_SHARES, TRANS_PRICEPERSHARE, TRANS_ACQUIRED_DISP_CD
+#     - fields kept from REPORTINGOWNER: RPTOWNERNAME, RPTOWNER_RELATIONSHIP,
+#       RPTOWNER_TITLE (the officer title is what makes the CEO/CFO rule
+#       checkable rather than assumed)
+SEC_INSIDER_SETS_PAGE = ("https://www.sec.gov/data-research/sec-markets-data/"
+                         "insider-transactions-data-sets")
+#: Two directory layouts have been used for the same quarterly files, so both
+#: are tried in order and whichever answers is recorded with its own URL.
+SEC_INSIDER_ZIP_PATTERNS: Tuple[str, ...] = (
+    "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/{q}_form345.zip",
+    "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/{q}_form345.zip",
+)
+INSIDER_MAX_QUARTERS = 8
+#: 2026 Q2 is the newest published quarter as of 2026-09-18 (the page says the
+#: data sets run "January 2006 - June 2026").
+INSIDER_LATEST_QUARTER = "2026q2"
+
+
+def _quarter_walk(latest: str, count: int) -> List[str]:
+    m = re.match(r"^(\d{4})q([1-4])$", latest)
+    if not m:
+        return []
+    year, quarter = int(m.group(1)), int(m.group(2))
+    out: List[str] = []
+    while len(out) < count:
+        out.append(f"{year}q{quarter}")
+        quarter -= 1
+        if quarter == 0:
+            year, quarter = year - 1, 4
+        if year < 2006:
+            break
+    return out
+
+
+def _insider_rows_from_zip(body: bytes, quarter: str, url: str,
+                           digest: str) -> Tuple[List[dict], dict]:
+    """Extract the universe's insider transactions from one quarterly ZIP."""
+    import io
+    import zipfile
+
+    wanted = set(EQUITY_UNIVERSE) | set(INSIDER_TICKERS)
+    stats = {"quarter": quarter, "url": url, "bytes": len(body), "sha256": digest,
+             "files": [], "submissions": 0, "reporting_owners": 0,
+             "transactions": 0, "kept": 0, "issuers": 0}
+    try:
+        with zipfile.ZipFile(io.BytesIO(body)) as archive:
+            names = {os.path.basename(n).upper(): n for n in archive.namelist()}
+            stats["files"] = sorted(os.path.basename(n) for n in archive.namelist())
+
+            def table(key: str) -> List[dict]:
+                name = names.get(key)
+                if not name:
+                    return []
+                text = archive.read(name).decode("utf-8", "replace")
+                lines = text.splitlines()
+                if not lines:
+                    return []
+                header = [h.strip().upper() for h in lines[0].split("\t")]
+                rows = []
+                for line in lines[1:]:
+                    if not line.strip():
+                        continue
+                    parts = line.split("\t")
+                    rows.append({header[i]: (parts[i] if i < len(parts) else "")
+                                 for i in range(len(header))})
+                return rows
+
+            submissions = {}
+            for row in table("SUBMISSION.TXT"):
+                symbol = (row.get("ISSUERTRADINGSYMBOL") or "").strip().upper()
+                if symbol not in wanted:
+                    continue
+                submissions[row.get("ACCESSION_NUMBER", "")] = {
+                    "symbol": symbol, "issuer_cik": row.get("ISSUERCIK"),
+                    "issuer_name": row.get("ISSUERNAME"),
+                    "filing_date": _treasury_date(row.get("FILING_DATE")),
+                    "period_of_report": _treasury_date(row.get("PERIOD_OF_REPORT")),
+                    "document_type": (row.get("DOCUMENT_TYPE") or "").strip()}
+            stats["submissions"] = len(submissions)
+            stats["issuers"] = len({s["symbol"] for s in submissions.values()})
+
+            owners: Dict[str, List[dict]] = {}
+            for row in table("REPORTINGOWNER.TXT"):
+                accession = row.get("ACCESSION_NUMBER", "")
+                if accession not in submissions:
+                    continue
+                owners.setdefault(accession, []).append({
+                    "owner_cik": row.get("RPTOWNERCIK"),
+                    "owner_name": (row.get("RPTOWNERNAME") or "").strip(),
+                    "relationship": (row.get("RPTOWNER_RELATIONSHIP") or "").strip(),
+                    "title": (row.get("RPTOWNER_TITLE") or "").strip()})
+            stats["reporting_owners"] = sum(len(v) for v in owners.values())
+
+            transactions: List[dict] = []
+            for row in table("NONDERIV_TRANS.TXT"):
+                accession = row.get("ACCESSION_NUMBER", "")
+                submission = submissions.get(accession)
+                if submission is None:
+                    continue
+                stats["transactions"] += 1
+                price = _treasury_number(row.get("TRANS_PRICEPERSHARE"))
+                shares = _treasury_number(row.get("TRANS_SHARES"))
+                trans_date = _treasury_date(row.get("TRANS_DATE"))
+                if trans_date is None or price is None or shares is None:
+                    # A row without a date, a price or a share count cannot be
+                    # turned into a dated price observation, so it is counted
+                    # and dropped rather than guessed at.
+                    continue
+                transaction = {
+                    "symbol": submission["symbol"],
+                    "issuer_name": submission["issuer_name"],
+                    "issuer_cik": submission["issuer_cik"],
+                    "accession_number": accession,
+                    "document_type": submission["document_type"],
+                    "filing_date": submission["filing_date"],
+                    "period_of_report": submission["period_of_report"],
+                    "transaction_date": trans_date,
+                    "transaction_code": (row.get("TRANS_CODE") or "").strip(),
+                    "acquired_disposed": (row.get("TRANS_ACQUIRED_DISP_CD") or "").strip(),
+                    "shares": shares,
+                    "price_per_share": price,
+                    "notional": round(shares * price, 2),
+                    "direct_indirect": (row.get("DIRECT_INDIRECT_OWNERSHIP") or "").strip(),
+                    "security_title": (row.get("SECURITY_TITLE") or "").strip(),
+                    "owners": owners.get(accession, []),
+                    "source": url,
+                    "raw_sha256": digest,
+                    "source_class": "OFFICIAL",
+                    "publisher": "U.S. Securities and Exchange Commission (EDGAR "
+                                 "structured data set)",
+                }
+                transactions.append(transaction)
+                stats["kept"] += 1
+    except Exception as exc:                      # a corrupt ZIP is a finding
+        stats["error"] = f"{type(exc).__name__}: {exc}"
+        return [], stats
+    return transactions, stats
+
+
+def collect_insider_bulk(fetcher: Fetcher, out: str) -> dict:
+    """The SEC's quarterly Form 3/4/5 structured extracts, universe-filtered."""
+    base = os.path.join(out, "insider_bulk")
+    quarters = _quarter_walk(INSIDER_LATEST_QUARTER, INSIDER_MAX_QUARTERS)
+    summary: dict = {"quarters": quarters, "ok": [], "failed": [], "rows": 0,
+                     "detail": [], "source": SEC_INSIDER_SETS_PAGE,
+                     "documentation": "https://www.sec.gov/files/insider_transactions_readme.pdf"}
+    rows: List[dict] = []
+    for quarter in quarters:
+        body, used, attempts = None, "", []
+        for pattern in SEC_INSIDER_ZIP_PATTERNS:
+            url = pattern.format(q=quarter)
+            attempts.append(url)
+            body = fetcher.get(url, "sec", note=f"SEC insider data set {quarter}")
+            if body is not None:
+                used = url
+                break
+        if body is None:
+            summary["failed"].append({"quarter": quarter, "attempts": attempts})
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        extracted, stats = _insider_rows_from_zip(body, quarter, used, digest)
+        stats["attempts"] = attempts
+        summary["detail"].append(stats)
+        summary["ok"].append(quarter)
+        rows.extend(extracted)
+    if rows:
+        rows.sort(key=lambda r: (r["transaction_date"], r["symbol"],
+                                 r["accession_number"]))
+        path = os.path.join(base, "insider_transactions.jsonl")
+        write_jsonl(path, rows)
+        summary["rows"] = len(rows)
+        summary["file"] = os.path.relpath(path, REPO_ROOT)
+        summary["symbols"] = sorted({r["symbol"] for r in rows})
+        # A compact per-quarter index keeps the site's custody table cheap: the
+        # row count, the issuer breadth and the exact ZIP bytes are what a
+        # reader checks, not 40,000 transaction rows.
+        write_json(os.path.join(base, "index.json"), {
+            "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "source": SEC_INSIDER_SETS_PAGE,
+            "documentation": summary["documentation"],
+            "quarters": summary["detail"]})
     return summary
 
 
@@ -1457,6 +2118,8 @@ def coverage_report(out: str, results: dict) -> dict:
         (os.path.join(out, "sec"), "SEC EDGAR (Form 4 + ticker map)", "OFFICIAL"),
         (os.path.join(out, "finra"), "FINRA REG SHO daily short-sale volume", "OFFICIAL"),
         (os.path.join(out, "nyfed"), "NY Fed reference rates (SOFR)", "OFFICIAL"),
+        (os.path.join(out, "treasury"), "U.S. Treasury auctions and par yield curve", "OFFICIAL"),
+        (os.path.join(out, "insider_bulk"), "SEC quarterly insider transaction data sets", "OFFICIAL"),
         (os.path.join(out, "fda"), "FDA openFDA /drug/drugsfda", "OFFICIAL"),
         (os.path.join(out, "sports"), "League scoreboards", "MIXED"),
         (os.path.join(out, "weather"), "NOAA/NCEI daily summaries", "OFFICIAL"),
@@ -1480,7 +2143,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--out", default=os.path.join(REPO_ROOT, "data", "real"))
     parser.add_argument("--max-seconds", type=float, default=1500.0)
     parser.add_argument("--only",
-                        default="prices,sec,fda,sports,weather,kalshi,official_rates")
+                        default=("prices,sec,fda,sports,weather,kalshi,"
+                                 "official_rates,treasury,insider_bulk"))
     args = parser.parse_args(argv)
 
     out = os.path.abspath(args.out)
@@ -1507,6 +2171,23 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         results["finra"] = collect_finra(fetcher, out)
         print(f"finra: {results['finra']['files']} files, "
               f"{results['finra']['rows_kept']} universe rows kept")
+    if "treasury" in only:
+        # The U.S. Treasury's own auction results and par yield curve: the only
+        # free, public source in this collector whose *executed* price is an
+        # official publisher's number, which is what the Official Auction Book
+        # trades on (sim/treasury.py).
+        results["treasury"] = collect_treasury(fetcher, out)
+        print(f"treasury: {results['treasury']['tape']} "
+              f"crosscheck={results['treasury']['crosscheck']}")
+    if "insider_bulk" in only or "sec" in only:
+        # The quarterly structured extracts are requested with the per-filing
+        # walk because they answer the same question (what did insiders trade,
+        # at what price, on what date) from the primary source, without
+        # depending on the browse endpoint that returned HTTP 403 on
+        # 2026-09-18.
+        results["insider_bulk"] = collect_insider_bulk(fetcher, out)
+        print(f"insider_bulk: {results['insider_bulk']['rows']} rows from "
+              f"{results['insider_bulk']['ok']}")
     if "sec" in only:
         results["sec"] = collect_sec(fetcher, out)
         print(f"sec: {results['sec']['transactions']} transactions from "

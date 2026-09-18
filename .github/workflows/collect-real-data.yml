@@ -19,9 +19,9 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Comma-separated sections (prices,sec,fda,sports,weather,kalshi)"
+        description: "Comma-separated sections (prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk)"
         required: false
-        default: "prices,sec,fda,sports,weather,kalshi"
+        default: "prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk"
       max_seconds:
         description: "Soft budget for the whole collection run"
         required: false
@@ -62,7 +62,7 @@ jobs:
           # On a push event there are no inputs, so every one of them needs a
           # fallback; an empty --max-seconds is an argparse error (exit 2), which
           # is exactly how the first run of this workflow failed.
-          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi' }}
+          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk' }}
           MAX_SECONDS: ${{ github.event.inputs.max_seconds || '1500' }}
         run: |
           python scripts/collect_real_data.py --out data/real \

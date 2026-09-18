@@ -163,7 +163,14 @@ class OfficialRates:
 
     WANTED = {"SOFR": "SOFR", "DTB4WK": "4-week bill", "DTB3": "3-month bill",
               "DTB6": "6-month bill",
-              "CPIAUCSL": "CPI-U all items, all urban consumers (BLS)"}
+              "CPIAUCSL": "CPI-U all items, all urban consumers (BLS)",
+              # Real yields for inflation-protected securities.  Marking a TIPS
+              # off the nominal par curve would be a modelling error with a
+              # large, silent effect on P&L; the H.15 real-yield curve is the
+              # official observation of the same securities' yield.
+              "DFII5": "5-year TIPS real yield (H.15)",
+              "DFII10": "10-year TIPS real yield (H.15)",
+              "DFII30": "30-year TIPS real yield (H.15)"}
 
     def __init__(self, root: str = treasury.FRED_DIR) -> None:
         self.root = root
@@ -214,6 +221,34 @@ class OfficialRates:
     def sofr(self, session: str) -> Optional[float]:
         view = self.series.get("SOFR")
         return view.value(session) if view else None
+
+    def real_yield(self, session: str, years: float) -> Optional[Tuple[float, str]]:
+        """Interpolated official real yield for a TIPS of ``years`` remaining.
+
+        Returns ``(yield_pct, which_series)`` or ``None`` when the real-yield
+        series are not collected - in which case the caller must not price the
+        security at all rather than price it off the nominal curve.
+        """
+        points: List[Tuple[float, float, str]] = []
+        for sid, tenor in (("DFII5", 5.0), ("DFII10", 10.0), ("DFII30", 30.0)):
+            view = self.series.get(sid)
+            if view is None:
+                continue
+            value = view.value(session)
+            if value is not None:
+                points.append((tenor, value, sid))
+        if not points:
+            return None
+        points.sort()
+        if years <= points[0][0]:
+            return points[0][1], points[0][2]
+        if years >= points[-1][0]:
+            return points[-1][1], points[-1][2]
+        for (t0, r0, s0), (t1, r1, s1) in zip(points, points[1:]):
+            if t0 <= years <= t1:
+                weight = (years - t0) / (t1 - t0)
+                return r0 + weight * (r1 - r0), f"{s0}/{s1}"
+        return points[-1][1], points[-1][2]
 
     def bill_discount_rate(self, session: str, days: int) -> Optional[float]:
         """The official H.15 secondary-market discount rate for ``days`` to run.
@@ -302,6 +337,7 @@ class Lot:
     accrued_paid: float = 0.0
     coupons_received: float = 0.0
     financing_paid: float = 0.0
+    opened_face: float = 0.0
 
     def market_value(self, price_per100: float) -> float:
         return self.face * price_per100 / 100.0
@@ -387,13 +423,32 @@ class OfficialAccount:
                                            if row["face"] else None)
         return out
 
+    def net_face_by_cusip(self) -> Dict[str, float]:
+        """Net face value per security.
+
+        Lots are kept as they were opened (so every trade has its own entry date
+        and evidence), but exposure is measured on the *net* position: a long lot
+        and a short lot in the same CUSIP are one position to a risk system, and
+        measuring them gross would overstate both the leverage and the financing
+        charge.  This distinction was found by reading a run's tape, where both
+        sides of the same CUSIP appeared side by side.
+        """
+        out: Dict[str, float] = {}
+        for lot in self.lots:
+            out[lot.cusip] = out.get(lot.cusip, 0.0) + lot.face
+        return out
+
     def gross_exposure(self, marks: Dict[str, float]) -> float:
-        return sum(abs(lot.market_value(marks.get(lot.cusip, lot.price_per100)))
-                   for lot in self.lots)
+        return sum(abs(face * marks.get(cusip, 100.0) / 100.0)
+                   for cusip, face in self.net_face_by_cusip().items())
 
     def market_value(self, marks: Dict[str, float]) -> float:
-        return sum(lot.market_value(marks.get(lot.cusip, lot.price_per100))
-                   for lot in self.lots)
+        return sum(face * marks.get(cusip, 100.0) / 100.0
+                   for cusip, face in self.net_face_by_cusip().items())
+
+    def short_face_by_cusip(self) -> Dict[str, float]:
+        return {cusip: -face for cusip, face in self.net_face_by_cusip().items()
+                if face < 0}
 
     def equity(self, marks: Dict[str, float]) -> float:
         return self.cash + self.market_value(marks)
@@ -403,30 +458,85 @@ class OfficialAccount:
         self._lot_counter += 1
         lot = Lot(lot_id=f"L{self._lot_counter:05d}", cusip=cusip, face=face,
                   price_per100=price, opened_on=session, kind=kind,
-                  evidence=evidence, accrued_paid=accrued)
+                  evidence=evidence, accrued_paid=accrued, opened_face=face)
         self.lots.append(lot)
         return lot
 
-    # -- FIFO consumption --------------------------------------------------
-    def consume(self, cusip: str, face: float) -> List[Tuple[Lot, float]]:
-        """Remove ``face`` from the position, oldest lot first, signed."""
-        remaining = abs(face)
-        sign = 1.0 if face >= 0 else -1.0
-        taken: List[Tuple[Lot, float]] = []
+    # -- fills -------------------------------------------------------------
+    def apply_fill(self, cusip: str, signed_face: float, price: float, session: str,
+                   kind: str, evidence: dict, facts: dict, liquidity: dict,
+                   accrued: float = 0.0) -> dict:
+        """Book a fill against the position: net it first, then open the residual.
+
+        A fill that opposes an existing position closes that position, lot by
+        lot, oldest first; only the part of the fill that no opposing position
+        absorbs opens a new lot.  Risk at this venue is carried on the *net*
+        position, so the tape has to be net too - otherwise the leverage cap,
+        the repo charge and the coupon payments are all measured against a
+        position the account does not actually have.  (The first version of this
+        engine let offsetting lots pile up side by side, and a rule that traded
+        both directions in one CUSIP booked a 3,000% return on a position that
+        was almost flat.)
+
+        Every closed part becomes a Trip: its entry price and evidence come from
+        the lot being closed, its exit price and evidence from this fill.
+        """
+        out = {"closed_face": 0.0, "opened_face": 0.0, "price_pnl": 0.0,
+               "coupons": 0.0, "financing": 0.0, "trips": [],
+               "direction": "long", "lot_id": None}
+        if abs(signed_face) < 1e-9:
+            return out
+        want = 1.0 if signed_face > 0 else -1.0
+        out["direction"] = "long" if want > 0 else "short"
+        remaining = abs(signed_face)
         keep: List[Lot] = []
         for lot in self.lots:
+            # Lots of the SAME sign as the fill are left alone: buying more of
+            # a long does not close the long.  Only opposing lots are netted.
+            # (The first version of this loop had the test inverted, which made
+            # every fill behave as a close of its own direction - the account
+            # bought, its net long fell, and equity fell twice over.  Found by
+            # re-running the 2s10s flattener and reading one session line by
+            # line.)
             if remaining <= 1e-9 or lot.cusip != cusip or \
-                    (lot.face > 0) != (sign > 0):
+                    (lot.opened_face > 0) == (want > 0):
                 keep.append(lot)
                 continue
-            take = min(abs(lot.face), remaining)
-            taken.append((lot, take))
+            before = abs(lot.face)
+            take = min(before, remaining)
+            share = take / before if before else 0.0
             remaining -= take
-            if abs(lot.face) - take > 1e-9:
-                lot.face -= take * (1.0 if lot.face > 0 else -1.0)
+            price_pnl = ((price - lot.price_per100) / 100.0 * take
+                         * (1.0 if lot.opened_face > 0 else -1.0))
+            coupons = lot.coupons_received * share
+            financing = lot.financing_paid * share
+            lot.coupons_received -= coupons
+            lot.financing_paid -= financing
+            lot.face -= take * (1.0 if lot.opened_face > 0 else -1.0)
+            if abs(lot.face) > 1e-9:
                 keep.append(lot)
+            trip = self.close_trip(
+                self.participant, cusip, facts, take,
+                entry={"date": lot.opened_on, "price": lot.price_per100,
+                       "kind": lot.kind, "evidence": lot.evidence,
+                       "direction": "long" if lot.opened_face > 0 else "short"},
+                exit_={"date": session, "price": price, "kind": kind,
+                       "evidence": evidence},
+                pnl=price_pnl, coupons=coupons, financing=financing, fees=0.0,
+                liquidity=liquidity)
+            out["closed_face"] += take
+            out["price_pnl"] += price_pnl
+            out["coupons"] += coupons
+            out["financing"] += financing
+            out["trips"].append(trip.trip_id)
         self.lots = keep
-        return taken
+        if remaining > 1e-9:
+            lot = self.add_lot(cusip, remaining * want, price, session, kind,
+                               evidence,
+                               accrued=accrued * (remaining / abs(signed_face)))
+            out["opened_face"] = remaining
+            out["lot_id"] = lot.lot_id
+        return out
 
     def close_trip(self, participant: str, cusip: str, facts: dict, face: float,
                    entry: dict, exit_: dict, pnl: float, coupons: float,
@@ -606,6 +716,27 @@ class OfficialBook:
                                  "source": auction.source,
                                  "sha256": auction.raw_sha256}}
         years = days / 365.0
+        if auction.is_tips:
+            # An inflation-protected security is discounted at the official REAL
+            # yield of its own tenor, not at the nominal par yield: the two are
+            # different securities in the same currency.  When the real-yield
+            # series are missing this returns None and the order waits.
+            real = self.rates.real_yield(session, years)
+            if real is None:
+                return None
+            yield_pct, which = real
+            price = treasury.price_from_yield(yield_pct, auction.interest_rate or 0.0,
+                                              years)
+            return {"price_per100": round(price, 6), "kind": ENTRY_SECONDARY,
+                    "derivation": ("present value of the security's own real coupon "
+                                   "and par at the official H.15 real yield for its "
+                                   "remaining maturity"),
+                    "session": session,
+                    "evidence": {"field": which, "real_yield_pct": round(yield_pct, 6),
+                                 "remaining_years": round(years, 4),
+                                 "indexation": ("the mark is a clean real price: "
+                                                "inflation indexation of principal "
+                                                "and coupon is NOT modelled")}}
         par = self.curve.yield_at(session, years)
         if par is None:
             return None
@@ -722,6 +853,43 @@ class OfficialBook:
                 "face": round(face, 2), "price_per100": price, "kind": kind,
                 "cash_delta": round(cash_delta, 2), "note": note}
 
+    def _projected(self, account: OfficialAccount, cusip: str, direction: float,
+                   face: float, marks: Dict[str, float], cash_delta: float) -> dict:
+        """The position, equity and gross a fill would leave behind.
+
+        The venue checks the maintenance rule on what the account would look
+        like *after* the fill rather than booking it and unwinding it again on
+        the same session - the same order of operations a margin system uses.
+        """
+        net = dict(account.net_face_by_cusip())
+        net[cusip] = net.get(cusip, 0.0) + direction * face
+        value = sum(n * marks.get(c, 100.0) / 100.0 for c, n in net.items())
+        gross = sum(abs(n * marks.get(c, 100.0) / 100.0) for c, n in net.items())
+        return {"net": net, "market_value": value, "gross": gross,
+                "equity": account.cash + cash_delta + value}
+
+    def _maintenance_refusal(self, account: OfficialAccount, intent: Intent,
+                             summary: dict, projected: dict, what: str) -> bool:
+        gross = projected["gross"]
+        if gross <= 0 or projected["equity"] >= MAINTENANCE_FRACTION * gross:
+            return False
+        intent.status = INTENT_REJECTED
+        intent.settle_note = (
+            f"refused: {what} would leave equity ${projected['equity']:,.2f} "
+            f"against a maintenance requirement of "
+            f"${MAINTENANCE_FRACTION * gross:,.2f} on gross exposure "
+            f"${gross:,.2f}")
+        summary["rejected"] += 1
+        return True
+
+    def _closable(self, account: OfficialAccount, cusip: str,
+                  direction: float, face: float) -> float:
+        """How much of a fill opposes an existing position (and so adds nothing)."""
+        existing = account.net_face(cusip)
+        if existing * direction >= 0:
+            return 0.0
+        return min(face, abs(existing))
+
     def _settle_bid(self, account: OfficialAccount, intent: Intent,
                     session: str, summary: dict) -> None:
         result = self.result_for(intent.cusip, session)
@@ -738,31 +906,38 @@ class OfficialBook:
             intent.settle_note = award.reason
             summary["rejected"] += 1
             return
-        price = award.price_per100
-        cost = award.cost
-        face = award.awarded_face
+        price, cost, face = award.price_per100, award.cost, award.awarded_face
         cap = self.leverage_caps.get(intent.participant, 1.0)
         marks = self.mark_prices(session)
-        projected_gross = account.gross_exposure(marks) + face * price / 100.0
         equity = account.equity(marks)
-        if equity > 0 and projected_gross > cap * equity:
+        gross = account.gross_exposure(marks)
+        closing_face = self._closable(account, intent.cusip, 1.0, face)
+        adding = max(0.0, face - closing_face)
+        if equity > 0 and adding * price / 100.0 > max(0.0, cap * equity - gross):
             # The venue's leverage policy, applied by scaling the award down to
             # the cap rather than by inventing a rejection reason: a real desk
             # would size the bid to the limit it is allowed to run.
-            allowed_value = max(0.0, cap * equity - account.gross_exposure(marks))
-            scaled = math.floor((allowed_value / price * 100.0)
-                                / max(1.0, award.auction.multiples_to_issue or 100.0)
-                                ) * max(1.0, award.auction.multiples_to_issue or 100.0)
-            if scaled <= 0:
+            allowed = max(0.0, cap * equity - gross)
+            step = max(1.0, award.auction.multiples_to_issue or 100.0)
+            scaled_add = math.floor((allowed / price * 100.0) / step) * step
+            if scaled_add <= 0 and closing_face <= 0:
                 intent.status = INTENT_CANCELLED
                 intent.settle_note = (f"no trade: gross exposure is already at the "
                                       f"declared {cap:.1f}x leverage cap")
                 summary["cancelled"] = summary.get("cancelled", 0) + 1
                 return
-            award = treasury.noncompetitive_award(result, scaled)
-            cost, face = award.cost, award.awarded_face
-            price = award.price_per100
-        account.cash -= cost
+            award = treasury.noncompetitive_award(result, closing_face + scaled_add)
+            if not award.ok:
+                intent.status = INTENT_REJECTED
+                intent.settle_note = award.reason
+                summary["rejected"] += 1
+                return
+            price, cost, face = award.price_per100, award.cost, award.awarded_face
+        cash_delta = -cost
+        projected = self._projected(account, intent.cusip, 1.0, face, marks, cash_delta)
+        if self._maintenance_refusal(account, intent, summary, projected,
+                                     "settling the award"):
+            return
         evidence = {"source": result.source, "sha256": result.raw_sha256,
                     "publisher": result.publisher,
                     "auction_date": result.auction_date,
@@ -772,27 +947,19 @@ class OfficialBook:
                     "cross_checked_by": ("Fiscal Data API"
                                          if self.auctions.fiscal_data.get(
                                              result.auction_key) else None)}
-        lot = account.add_lot(result.cusip, face, price, session,
-                              ENTRY_PRIMARY, evidence,
-                              accrued=award.accrued_interest)
-        marks = self.mark_prices(session)
-        equity = account.equity(marks)
-        gross = account.gross_exposure(marks)
-        if gross > 0 and equity < MAINTENANCE_FRACTION * gross:
-            account.lots.remove(lot)
-            account.cash += cost
-            intent.status = INTENT_REJECTED
-            intent.settle_note = (
-                f"refused: settling the award would leave equity "
-                f"${equity:,.2f} against a maintenance requirement of "
-                f"${MAINTENANCE_FRACTION * gross:,.2f} on gross exposure "
-                f"${gross:,.2f}")
-            summary["rejected"] += 1
-            return
-        fill = self._fill_row(intent, session, price, ENTRY_PRIMARY,
-                              face, -cost,
+        account.cash += cash_delta
+        outcome = account.apply_fill(intent.cusip, face, price, session,
+                                     ENTRY_PRIMARY, evidence,
+                                     self._facts(intent.cusip),
+                                     self._liquidity(intent.cusip),
+                                     accrued=award.accrued_interest)
+        fill = self._fill_row(intent, session, price, ENTRY_PRIMARY, face,
+                              cash_delta,
                               award.reason or "non-competitive award at the official price")
         fill["liquidity"] = award.liquidity
+        fill["closed_face"] = outcome["closed_face"]
+        fill["opened_face"] = outcome["opened_face"]
+        fill["trips_closed"] = outcome["trips"]
         account.fills.append(fill)
         intent.status = INTENT_FILLED if face >= intent.face - 1e-6 \
             else INTENT_PARTIAL
@@ -804,6 +971,22 @@ class OfficialBook:
 
     def _settle_secondary(self, account: OfficialAccount, intent: Intent,
                           session: str, summary: dict) -> None:
+        auction = self._auction_for(intent.cusip)
+        if auction is not None and auction.issue_date and \
+                session < auction.issue_date:
+            # A secondary trade in a security that has not been issued yet is a
+            # when-issued trade.  This venue does not book them: it has no
+            # official observation of a when-issued price, and inventing one
+            # from the par curve would put a number on the tape that no
+            # publisher printed.  The order is refused with the date that would
+            # make it tradable.
+            intent.status = INTENT_REJECTED
+            intent.settle_note = (
+                f"refused: {intent.cusip} is issued on {auction.issue_date}, "
+                f"after this session; the venue books no when-issued trades "
+                f"because it holds no official when-issued observation")
+            summary["rejected"] += 1
+            return
         price_row = self.price_for(intent.cusip, session)
         if price_row is None:
             intent.status = INTENT_WAITING
@@ -813,78 +996,57 @@ class OfficialBook:
             summary["waiting"] += 1
             return
         price = float(price_row["price_per100"])
-        face = intent.face
         direction = 1.0 if intent.side == "buy" else -1.0
+        face = intent.face
         cap = self.leverage_caps.get(intent.participant, 1.0)
-        if direction > 0:
-            marks = self.mark_prices(session)
-            equity = account.equity(marks)
-            headroom = max(0.0, cap * equity - account.gross_exposure(marks))
-            if equity > 0 and face * price / 100.0 > headroom:
-                scaled = math.floor(headroom / price * 100.0 / 100.0) * 100.0
-                if scaled <= 0:
-                    # Not a rule breach: the account is already at the limit its
-                    # own rule declares, so there is nothing to trade.  Recorded
-                    # as a cancellation with the reason rather than as a rejected
-                    # order, because no rule of the venue was broken.
-                    intent.status = INTENT_CANCELLED
-                    intent.settle_note = (f"no trade: gross exposure is already at "
-                                          f"the declared {cap:.1f}x leverage cap")
-                    summary["cancelled"] = summary.get("cancelled", 0) + 1
-                    return
-                face = scaled
-        cash_delta = -direction * face * price / 100.0
-        existing = account.net_face(intent.cusip)
-        if direction < 0 and existing <= 1e-9:
-            # An outright short: the venue's policy is stated in the docstring.
-            pass
-        account.cash += cash_delta
-        if direction > 0:
-            lot = account.add_lot(intent.cusip, face, price, session,
-                                  ENTRY_SECONDARY, price_row)
-            closing = None
-            marks = self.mark_prices(session)
-            equity = account.equity(marks)
-            gross = account.gross_exposure(marks)
-            if gross > 0 and equity < MAINTENANCE_FRACTION * gross:
-                account.lots.remove(lot)
-                account.cash -= cash_delta
-                intent.status = INTENT_REJECTED
-                intent.settle_note = (
-                    f"refused: the purchase would leave equity ${equity:,.2f} "
-                    f"against a maintenance requirement of "
-                    f"${MAINTENANCE_FRACTION * gross:,.2f}")
-                summary["rejected"] += 1
+        marks = self.mark_prices(session)
+        equity = account.equity(marks)
+        gross = account.gross_exposure(marks)
+        # The leverage cap binds on every order that ADDS exposure, in either
+        # direction: a short adds gross exactly as a long does.  The first
+        # version of this method sized only buys, and a rule that shorted the
+        # long end grew an unbounded short - the kind of defect that only shows
+        # up in the tape, which is where it was found.
+        closing_face = self._closable(account, intent.cusip, direction, face)
+        adding = max(0.0, face - closing_face)
+        if equity > 0 and adding * price / 100.0 > max(0.0, cap * equity - gross):
+            allowed = max(0.0, cap * equity - gross)
+            scaled_add = math.floor((allowed / price * 100.0) / 100.0) * 100.0
+            if scaled_add <= 0 and closing_face <= 0:
+                # Not a rule breach: the account is already at the limit its own
+                # rule declares, so there is nothing to trade.  Recorded as a
+                # cancellation with the reason rather than as a rejected order.
+                intent.status = INTENT_CANCELLED
+                intent.settle_note = (f"no trade: gross exposure is already at the "
+                                      f"declared {cap:.1f}x leverage cap")
+                summary["cancelled"] = summary.get("cancelled", 0) + 1
                 return
-        elif existing > 1e-9:
-            closing = account.consume(intent.cusip, min(face, existing))
-        else:
-            account.add_lot(intent.cusip, -face, price, session, ENTRY_SECONDARY,
-                            price_row)
-            closing = None
+            face = closing_face + scaled_add
+        if face <= 1e-9:
+            intent.status = INTENT_CANCELLED
+            intent.settle_note = "no trade: nothing left to size after the leverage cap"
+            summary["cancelled"] = summary.get("cancelled", 0) + 1
+            return
+        if direction < 0 and account.net_face(intent.cusip) <= 1e-9:
+            # An outright short: the venue's policy is stated in the docstring.
             intent.side = "short"
-        if closing:
-            consumed_face = sum(take for _, take in closing)
-            pnl = sum((price - lot.price_per100) / 100.0 * take
-                      for lot, take in closing)
-            coupons = sum(lot.coupons_received * (take / abs(lot.face or take))
-                          for lot, take in closing if lot.face)
-            financing = sum(lot.financing_paid * (take / abs(lot.face or take))
-                            for lot, take in closing if lot.face)
-            facts = self._facts(intent.cusip)
-            trip = account.close_trip(
-                intent.participant, intent.cusip, facts, consumed_face,
-                entry={"date": closing[0][0].opened_on,
-                       "price": closing[0][0].price_per100,
-                       "kind": closing[0][0].kind, "evidence": closing[0][0].evidence,
-                       "direction": "long"},
-                exit_={"date": session, "price": price,
-                       "kind": EXIT_SECONDARY, "evidence": price_row},
-                pnl=pnl, coupons=coupons, financing=financing, fees=0.0,
-                liquidity=self._liquidity(intent.cusip))
+        cash_delta = -direction * face * price / 100.0
+        projected = self._projected(account, intent.cusip, direction, face, marks,
+                                    cash_delta)
+        if self._maintenance_refusal(account, intent, summary, projected,
+                                     "the purchase" if direction > 0 else "the sale"):
+            return
+        account.cash += cash_delta
+        outcome = account.apply_fill(intent.cusip, direction * face, price, session,
+                                     ENTRY_SECONDARY, price_row,
+                                     self._facts(intent.cusip),
+                                     self._liquidity(intent.cusip))
         fill = self._fill_row(intent, session, price, ENTRY_SECONDARY, face,
                               cash_delta, f"{price_row['derivation']}")
         fill["liquidity"] = self._liquidity(intent.cusip)
+        fill["closed_face"] = outcome["closed_face"]
+        fill["opened_face"] = outcome["opened_face"]
+        fill["trips_closed"] = outcome["trips"]
         account.fills.append(fill)
         intent.status = INTENT_FILLED
         intent.settled_on = session
@@ -1020,18 +1182,23 @@ class OfficialBook:
                                       "basis": (f"SOFR {sofr:.4f}% + "
                                                 f"{REPO_SPREAD_BP:.0f} bp on the debit "
                                                 f"balance")})
-            for lot in account.lots:
-                if lot.face < 0:
-                    notional = abs(lot.market_value(self._marks.get(
-                        lot.cusip, lot.price_per100)))
-                    charge = notional * daily_debit * days
-                    account.cash -= charge
-                    lot.financing_paid += charge
-                    account.carry.append({"session": session,
-                                          "participant": account.participant,
-                                          "kind": "short_financing", "amount": -charge,
-                                          "basis": ("repo financing on a short "
-                                                    "Treasury position")})
+            for cusip, short_face in account.short_face_by_cusip().items():
+                notional = short_face * self._marks.get(cusip, 100.0) / 100.0
+                charge = notional * daily_debit * days
+                if charge <= 0:
+                    continue
+                account.cash -= charge
+                account.carry.append({"session": session,
+                                      "participant": account.participant,
+                                      "kind": "short_financing", "amount": -charge,
+                                      "basis": (f"repo financing at SOFR + "
+                                                f"{REPO_SPREAD_BP:.0f} bp on the net "
+                                                f"short of {abs(short_face):,.0f} "
+                                                f"{cusip}")})
+                for lot in account.lots:
+                    if lot.cusip == cusip and lot.face < 0:
+                        share = abs(lot.face) / short_face if short_face else 0.0
+                        lot.financing_paid += charge * share
 
     def check_margin(self, session: str) -> None:
         """Liquidate what has to be liquidated, and record that it happened."""
@@ -1050,7 +1217,13 @@ class OfficialBook:
                     price_row = self.price_for(lot.cusip, session)
                     price = (float(price_row["price_per100"]) if price_row
                              else self._marks.get(lot.cusip, lot.price_per100))
-                    account.cash += lot.face * price / 100.0
+                    proceeds = lot.face * price / 100.0
+                    account.cash += proceeds
+                    account.carry.append({
+                        "session": session, "participant": account.participant,
+                        "kind": "liquidation_proceeds", "amount": proceeds,
+                        "basis": (f"ruin: the venue closed {abs(lot.face):,.0f} of "
+                                  f"{lot.cusip} at the official mark {price}")})
                     pnl = ((price - lot.price_per100) / 100.0 * abs(lot.face)
                            * (1.0 if lot.face > 0 else -1.0))
                     account.close_trip(
@@ -1066,6 +1239,12 @@ class OfficialBook:
                         liquidity=self._liquidity(lot.cusip))
                     account.lots.remove(lot)
                 write_off = -account.cash
+                account.carry.append({
+                    "session": session, "participant": account.participant,
+                    "kind": "ruin_write_off", "amount": write_off,
+                    "basis": ("the account reached zero equity and the venue did not "
+                              "carry the negative balance; recorded here so every "
+                              "cash movement is explained by a row in the tape")})
                 account.cash = 0.0
                 account.ruined_on = session
                 event = {"session": session, "participant": account.participant,
@@ -1099,6 +1278,12 @@ class OfficialBook:
                          else self._marks.get(lot.cusip, lot.price_per100))
                 proceeds = lot.face * price / 100.0
                 account.cash += proceeds
+                account.carry.append({
+                    "session": session, "participant": account.participant,
+                    "kind": "liquidation_proceeds", "amount": proceeds,
+                    "basis": (f"venue liquidation of {abs(lot.face):,.0f} of "
+                              f"{lot.cusip} at the official mark {price} under the "
+                              f"declared maintenance rule")})
                 pnl = ((price - lot.price_per100) / 100.0 * abs(lot.face)
                        * (1.0 if lot.face > 0 else -1.0))
                 account.close_trip(
@@ -1391,8 +1576,10 @@ class OfficialContext:
         """
         candidates = [a for a in self.auctions.auctions.values()
                       if a.auction_date <= self.session and
+                      (not a.issue_date or a.issue_date <= self.session) and
                       (term.lower() in (a.term or "").lower() or
-                       term.lower() in (a.security_term or "").lower())]
+                       term.lower() in (a.security_term or "").lower())
+                      and (a.is_tips == ("tips" in term.lower()))]
         if not candidates:
             return None
         candidates.sort(key=lambda a: (a.issue_date, a.auction_date))

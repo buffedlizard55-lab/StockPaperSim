@@ -158,6 +158,12 @@ FRED_SERIES: Dict[str, str] = {
     # The inflation leg of the TIPS breakeven rule in the Official Auction Book:
     # the BLS all-items CPI index, republished by FRED.
     "CPIAUCSL": "Consumer Price Index for All Urban Consumers, all items (BLS)",
+    # Real yields for the inflation-protected leg: marking a TIPS off the
+    # nominal curve is a modelling error, so the official real-yield series are
+    # collected and the book refuses to price TIPS without them.
+    "DFII5": "5-year TIPS real yield, source U.S. Treasury (H.15)",
+    "DFII10": "10-year TIPS real yield, source U.S. Treasury (H.15)",
+    "DFII30": "30-year TIPS real yield, source U.S. Treasury (H.15)",
 }
 
 # Issuers for the SEC Form 4 (insider) study.  CIK is re-resolved from the

@@ -149,6 +149,12 @@ FRED_SERIES: Dict[str, str] = {
     "DGS7": "7-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
     "DGS20": "20-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
     "DGS30": "30-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
+    # Secondary-market bill rates on a discount basis, also from H.15: these are
+    # the Treasury's own quotes for bills trading in the secondary market, which
+    # is what an execution cost has to be measured against rather than assumed.
+    "DTB4WK": "4-week Treasury bill secondary market rate, discount basis (H.15)",
+    "DTB3": "3-month Treasury bill secondary market rate, discount basis (H.15)",
+    "DTB6": "6-month Treasury bill secondary market rate, discount basis (H.15)",
 }
 
 # Issuers for the SEC Form 4 (insider) study.  CIK is re-resolved from the
@@ -803,10 +809,18 @@ FISCALDATA_AUCTIONS = ("https://api.fiscaldata.treasury.gov/services/api/"
                        "fiscal_service/v1/accounting/od/auctions_query"
                        "?sort=-auction_date&page[size]={pagesize}"
                        "&page[number]={page}")
-TREASURY_YIELD_CSV = ("https://home.treasury.gov/resource-center/data-chart-"
-                      "center/interest-rates/daily-treasury-rates.csv/all/"
-                      "{year}?type=daily_treasury_yield_curve"
-                      "&field_tdr_date_value={year}&page&_format=csv")
+#: Two paths are tried because the first returned HTTP 200 with a zero-length
+#: body on the 2026-09-18 collection run.  A zero-length response is written to
+#: the manifest as a failure and never as a file: an empty CSV in the data
+#: directory would look like a publisher saying "no observations".
+TREASURY_YIELD_CSV_PATTERNS: Tuple[str, ...] = (
+    "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
+    "daily-treasury-rates.csv/all/{year}?type=daily_treasury_yield_curve"
+    "&field_tdr_date_value={year}&page&_format=csv",
+    "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
+    "daily-treasury-rates.csv/{year}/all?type=daily_treasury_yield_curve"
+    "&field_tdr_date_value={year}&page&_format=csv",
+)
 #: Auction types swept across the whole season window.  "Bill" includes the
 #: cash-management bills (the ``cashManagementBillCMB`` flag distinguishes
 #: them), so CMB is not requested separately.
@@ -1093,11 +1107,17 @@ def collect_treasury(fetcher: Fetcher, out: str) -> dict:
 
     # -- 5. The official par yield curve, straight from the Treasury --------
     for year in TREASURY_YIELD_YEARS:
-        url = TREASURY_YIELD_CSV.format(year=year)
-        body = fetcher.get(url, "treasury",
-                           note=f"Treasury: daily par yield curve {year}")
+        body, used = None, ""
+        for pattern in TREASURY_YIELD_CSV_PATTERNS:
+            url = pattern.format(year=year)
+            body = fetcher.get(url, "treasury",
+                               note=f"Treasury: daily par yield curve {year}")
+            if body:
+                used = url
+                break
+            summary["failed"].append(f"yield_curve:{year}:empty-or-blocked:{url}")
+            body = None
         if body is None:
-            summary["failed"].append(f"yield_curve:{year}")
             continue
         digest = hashlib.sha256(body).hexdigest()
         path = os.path.join(base, f"daily_treasury_yield_curve_{year}.csv")
@@ -1105,7 +1125,7 @@ def collect_treasury(fetcher: Fetcher, out: str) -> dict:
         rows = [r for r in body.decode("utf-8", "replace").splitlines()[1:]
                 if r.strip()]
         summary["yield_curve"][year] = {"rows": len(rows), "bytes": len(body),
-                                        "sha256": digest, "url": url}
+                                        "sha256": digest, "url": used}
 
     # -- 6. One tape, one row per auction, deduplicated ---------------------
     merged: Dict[str, dict] = {}
@@ -2171,6 +2191,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         results["finra"] = collect_finra(fetcher, out)
         print(f"finra: {results['finra']['files']} files, "
               f"{results['finra']['rows_kept']} universe rows kept")
+    if "fred" in only:
+        # The H.15 series on their own, without re-fetching the equity price
+        # files: the official auction book needs the par curve and the
+        # secondary-market bill rates, and asking for "prices" would rewrite
+        # every committed Yahoo file as a side effect.
+        results["fred"] = collect_fred(fetcher, out)
+        print(f"fred: {results['fred']['ok']}")
     if "treasury" in only:
         # The U.S. Treasury's own auction results and par yield curve: the only
         # free, public source in this collector whose *executed* price is an

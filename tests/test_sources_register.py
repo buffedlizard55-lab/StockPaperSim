@@ -19,7 +19,7 @@ from urllib.parse import urlparse
 from fixtures import REPO_ROOT
 
 from sim import config, marketdata, masterfeed, realdata, strategies, strategies_mf
-from sim import live, strategies_live
+from sim import live, strategies_live, strategies_official, treasury
 
 RESEARCH = os.path.join(REPO_ROOT, "research")
 REAL = os.path.join(REPO_ROOT, "data", "real")
@@ -71,6 +71,15 @@ ALLOWED_HOSTS = {
     # for the access policy it follows.
     "data.sec.gov", "cdn.nba.com", "stats.nba.com", "www.nba.com",
     "github.com",
+    # Added 2026-09-18 with IR-59's correction: the St. Louis Fed's own
+    # announcement that it removed the ICE/LBMA benchmark series from FRED on
+    # 2022-01-31 is the primary source for why the gold URLs 404.
+    "news.research.stlouisfed.org",
+    # Added 2026-09-18 with the Official Auction Book: the Treasury endpoints and
+    # portals the official lane reads or cites, and the parts of the SEC's own
+    # site that publish the insider extracts it is still waiting on.
+    "www.treasurydirect.gov", "api.fiscaldata.treasury.gov", "fiscaldata.treasury.gov",
+    "home.treasury.gov",
     # Added 2026-09-18 with IR-41's correction: the venue's own migration note,
     # which is the primary source for the *_fp / *_dollars field names the
     # collector now reads. Unknown-host rejection is the point of this set, so a
@@ -464,6 +473,15 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         urls |= {e["url"] for s in strategies_live.build_live_roster()
                  for e in s.spec.academic_basis if isinstance(e, dict) and e.get("url")}
         urls.add(live.PROJECTION_SOURCE)
+        # The official auction lane keeps its register in sim/treasury.py, which
+        # the site renders row by row on docs/official/sources.html, and each of
+        # its participants declares its own research basis (eCFR, the H.15
+        # release, the Treasury portal pages).  Both are registers a reader can
+        # follow from the site, which is the property this test protects.
+        urls |= {row["url"] for row in treasury.SOURCES}
+        urls |= {row["docs"] for row in treasury.SOURCES if row.get("docs")}
+        urls |= {e["url"] for s in strategies_official.ROSTER
+                 for e in s.research_basis if isinstance(e, dict) and e.get("url")}
         # ...and the MasterSite project page it links to for the project itself.
         urls |= {row["site_url"] for row in masterfeed.signal_register()}
         urls.add(masterfeed.MASTER_SITE_URL)

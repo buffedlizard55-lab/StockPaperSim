@@ -558,5 +558,78 @@
   "links": [
    "https://github.com/buffedlizard55-lab/StockPaperSim/actions/workflows/collect-real-data.yml"
   ]
+ },
+ {
+  "id": "IR-55",
+  "topic": "The netting test in the venue's fill booking was inverted",
+  "severity": "high",
+  "detail": "sim/officialbook.py books a fill by netting it against the position. The first version tested the sign of each lot with != instead of ==, so every fill closed lots of its OWN direction: a buy made the net long fall and the cash fall at the same time, and the account lost the same money twice. It showed up as a 2s10s flattener going from +$134,817 of equity to -$103,429 in one session and being wound up at zero, and it was found by re-reading one session of that account's tape line by line rather than by any aggregate check - the run's own verification passed while the engine was wrong.",
+  "resolution": "The test is inverted back, the behaviour is asserted in tests/test_official_book.py (a fill nets against the position, exposure is the net position), and the equity residual check now has a companion that re-derives each account's equity from its fills and carry rows. After the fix no account reaches ruin on the published run and the largest equity residual is under one cent.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/officialbook.py"
+  ]
+ },
+ {
+  "id": "IR-56",
+  "topic": "An account could be marked as holding opposing lots in one CUSIP",
+  "severity": "high",
+  "detail": "Exposure, financing and the leverage cap were computed by summing the absolute value of every lot, so a long lot and a short lot in the same security were charged as two positions. A curve rule that bought and sold the same CUSIP ended up carrying both sides, which inflated gross exposure (and the repo charge) while leaving the real position nearly flat, and let the rule keep adding size it would not have been allowed to add.",
+  "resolution": "Exposure, market value and financing are computed from the net position per CUSIP, and a fill that opposes a position closes it FIFO before any residual opens a new lot. The site's participant pages print the net positions the rule actually carried.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/officialbook.py"
+  ]
+ },
+ {
+  "id": "IR-57",
+  "topic": "A secondary trade was booked in a security that had not been issued",
+  "severity": "medium",
+  "detail": "A rule that read the newest 2-year auction could buy or sell it on the session after the auction, days before the issue date, priced off the par curve as though the security were already trading. The real market for such a security is the when-issued market, and the book holds no official when-issued observation: the price was plausible and entirely invented, which is the failure mode this project exists to avoid.",
+  "resolution": "The venue refuses a secondary order in an unissued security and writes the issue date into the settlement note; hold_term() only offers issued securities. Refusals are counted per participant and shown on the participant pages.",
+  "links": [
+   "https://www.treasurydirect.gov/auctions/announcements-data-results/"
+  ]
+ },
+ {
+  "id": "IR-58",
+  "topic": "The equity lane still cannot trade on official prices, and the gate says so",
+  "severity": "medium",
+  "detail": "The brief asks for simulated real trades on Nasdaq/NYSE/S&P 500 instruments with verified pricing. Nasdaq's normalised price archive requires an entitlement, and the free publisher pages forbid redistribution of their data, so no price file in this repository for an equity or ETF is official. The live book therefore executes against SECONDARY bars and prints the coverage number (0.00% of filled notional at an official executable price) rather than relabelling aggregator data.",
+  "resolution": "The new Official Auction Book is the answer that does not need a licence: US Treasury auctions are executed at the price the Treasury publishes, so settled trades with 100% official executed prices are now published, and the equity side keeps its fail-closed label until the entitlement exists.",
+  "links": [
+   "https://www.nasdaqtrader.com/Trader.aspx?id=HistoricalData",
+   "https://www.treasurydirect.gov/auctions/announcements-data-results/"
+  ]
+ },
+ {
+  "id": "IR-59",
+  "topic": "The FRED gold series were withdrawn in 2022 and every request for them is a 404",
+  "severity": "low",
+  "detail": "The collection run of 2026-09-18 requested GOLDAMGBD228NLBM and GOLDPMGBD228NLBM and both were answered HTTP 404, while twenty-one other FRED series on the same host returned data. The cause is permanent rather than transient: the St. Louis Fed announced that from 2022-01-31 FRED would no longer carry ICE Benchmark Administration data, naming the LBMA gold and silver daily prices among the series to be deleted. The repository already knew this for the PM fix; the AM fix id is still cited as an official URL by the MasterSite signal register (sim/masterfeed.py), so a reader following that row reaches a dead page.",
+  "resolution": "The gold participants are marked as waiting on a source rather than being pointed at a substitute; the register row and the manifest carry the status and the URL, and the fix is listed in REMAINING_WORK.",
+  "links": [
+   "https://news.research.stlouisfed.org/2022/01/ice-benchmark-administration-ltd-iba-data-to-be-removed-from-fred/",
+   "https://fred.stlouisfed.org/series/GOLDAMGBD228NLBM"
+  ]
+ },
+ {
+  "id": "IR-60",
+  "topic": "The Fiscal Data API's v2 auctions path answers 404 while v1 works",
+  "severity": "low",
+  "detail": "Both the collected data path and the project's earlier probes used /services/api/fiscal_service/v1/accounting/od/auctions_query. The v2 form of the same path returns HTTP 404 with a service error body, which is a live endpoint change rather than a mistake in the request, and a reader following a v2 link would find nothing.",
+  "resolution": "The collector and the register name v1, the discrepancy is recorded here with the failing path, and a re-probe is listed in REMAINING_WORK so the lane moves to v2 when it is published.",
+  "links": [
+   "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
+  ]
+ },
+ {
+  "id": "IR-61",
+  "topic": "The TIPS breakeven rule compared a ten-year breakeven with a five-year realised inflation rate",
+  "severity": "medium",
+  "detail": "The inflation participant's declared rule read its nominal leg at a fixed ten years (the 10-year point of the official par curve) and its inflation leg over a fixed sixty months (five years of the CPI index), then compared the two as though they were one breakeven. The security it bought was whatever TIPS auctioned most recently, whose remaining maturity can be twenty-nine years, so the comparison mixed three horizons. Found while wiring the standing-aside record into the site: renaming the helper made the planning call raise AttributeError, the venue's per-rule exception guard turned that into a PLAN-ERROR flag and carried on, and the rule kept producing no orders - which is the same symptom the mixed comparison had, and is why nothing in the standings looked wrong. No published run depended on it: the participant held no security and closed no trade under either version.",
+  "resolution": "Fixed before this branch was merged. Both legs are now read at the security's own remaining maturity - the nominal yield from the par curve at that tenor, realised inflation from the CPI index over the same number of years - and when the collected history is too short the rule records that reason and stands aside instead of substituting a shorter window. The venue stores those reasons (notes.jsonl.gz) and the participant page publishes them, so a rule that does nothing can no longer look like a rule that is merely patient.",
+  "links": [
+   "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+   "https://fred.stlouisfed.org/series/CPIAUCSL"
+  ]
  }
 ]

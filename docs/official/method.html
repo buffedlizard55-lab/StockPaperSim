@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venue &amp;amp; formulas · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../official/index.html">Overview</a><a class="" href="../official/leaderboard.html">Leaderboard</a><a class="" href="../official/blotter.html">Trade tape</a><a class="" href="../official/forward.html">Forward book</a><a class="" href="../official/participants/index.html">Participants</a><a class="" href="../official/ledger.html">Trade store</a><a class="active" href="../official/method.html">Venue &amp; formulas</a><a class="" href="../official/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../live/index.html">Live Book</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede">This page is the contract: the rules the book is settled under, the
+formulas that turn an official observation into a price, and the checks that run
+against the tape afterwards. If a number on this site cannot be reproduced from a
+committed file by a formula on this page, it does not belong on the site.</p>
+
+<section class="card "><h2>Venue rules</h2><table class="data"><thead><tr><th>Rule</th><th>Statement</th></tr></thead><tbody><tr><td>Primary execution</td><td>non-competitive award at the Treasury&#x27;s published price per $100 (single-price auction)</td></tr><tr><td>Secondary execution</td><td>price derived from the Treasury&#x27;s official par yield curve, or from the H.15 secondary-market bill discount rates for bills</td></tr><tr><td>Fees</td><td>none on the primary leg; the secondary leg is a derived price</td></tr><tr><td>Financing</td><td>SOFR + 25 bp on debits and shorts</td></tr><tr><td>Cash credit</td><td>SOFR on idle cash The official SOFR series has no fix on a business day the reference-rate calendar closes (Good Friday 2026-04-03 in this window), and the venue then applies the last published observation; it never uses a later one, and the independent audit checks that direction.</td></tr><tr><td>Maintenance</td><td>5% of gross exposure</td></tr><tr><td>Maximum gross leverage</td><td>10.0×</td></tr><tr><td>Settlement</td><td>primary leg on the official issue date; secondary leg on the session it trades (the real convention is next-business-day and this is a declared simplification)</td></tr><tr><td>When-issued trading</td><td>refused: the venue holds no official when-issued observation, so a secondary order in a security that has not been issued is rejected with the issue date written on it</td></tr><tr><td>Position accounting</td><td>fills are netted against the position FIFO; risk, financing and coupons are measured on the net position, and every close is a settled round trip with its own entry and exit evidence</td></tr><tr><td>Ruin</td><td>if equity reaches zero the venue closes every position at the official mark, writes the negative balance off at zero and stops the account - which is why a ruined participant shows exactly −100%</td></tr></tbody></table></section>
+<section class="card "><h2>The formulas</h2>
+<h3>Bill price from a discount rate</h3>
+<p>Treasury bills are quoted on a discount basis. The price per $100 of face is</p>
+<p><code>P = 100 × (1 − d × t / 360)</code>, with <code>d</code> the published
+discount rate and <code>t</code> the days from settlement to maturity. The check above
+reproduces every published bill price from its own published rate, so the committed
+tape and the formula agree.</p>
+<h3>Coupon security price from a yield</h3>
+<p>Notes, bonds and TIPS are priced from the official yield for their remaining
+maturity by the standard present-value relation used for Treasury securities
+(semi-annual coupon, actual/actual accrual, par at maturity). TIPS are discounted at
+the official H.15 <em>real</em> yield of their tenor, never at the nominal par yield:
+marking an inflation-protected security off a nominal curve is a modelling error with a
+large silent effect on P&amp;L. When the real-yield series are not collected, the venue
+prices nothing and the order waits.</p>
+<h3>Non-competitive award</h3>
+<p>A non-competitive bid is awarded the full amount requested at the published price,
+up to the official maximum per auction, and the award is scaled down to the venue's
+leverage cap with the reason recorded. Because the auction is single-price, the
+published price is the price every accepted bidder paid - the book does not assume a
+fill inside a range.</p>
+<hr>
+
+<h3>The two publishers, compared field by field</h3>
+<p>TreasuryDirect's auction results and the Fiscal Data API's auctions table are
+separate publications of the same events. The collector compares every shared auction
+on eleven fields and records the result:
+<strong>471</strong> shared
+auctions, <strong>4,251</strong>
+field comparisons, <strong>0</strong>
+differences. The price formula is checked separately against every published bill
+price: <strong>1,485</strong> prices checked,
+<strong>0</strong> mismatches, and the
+highest investment-rate agreement this convention can reach is
+<strong>78.16%</strong> - the code prints
+that number rather than claiming the formula explains every published rate, because it
+does not.</p>
+
+</section>
+<section class="card "><h2>Verification of the published run</h2>
+<p>After the season settles, <code>sim/official_season.py</code> re-reads the tape and
+re-derives it. It does not import the settlement path: it reads the intents, fills and
+trades the book wrote and asks whether they agree with the official files.
+<strong>8,045 checks</strong>,
+<strong>0 failures</strong>, verdict
+<strong>PASS</strong>; the largest disagreement
+between the recorded equity of an account and the equity re-derived from its own fills
+and carry rows is <strong>$0.035155</strong>.</p>
+</section>
+<table class="data"><thead><tr><th>Check code</th><th>Detail</th></tr></thead><tbody><tr><td>—</td><td>no failures</td></tr></tbody></table>
+<section class="card "><h2>The eight families of check</h2>
+<ol>
+<li><strong>PRIMARY-PRICE-NOT-OFFICIAL</strong> - every primary fill price must equal
+the published price for that CUSIP and auction date.</li>
+<li><strong>BILL-PRICE-FORMULA-MISMATCH</strong> - every published bill price must
+reproduce from its own discount rate.</li>
+<li><strong>TWO-PUBLISHER-DISAGREEMENT</strong> - the two official publishers must
+agree on every shared auction.</li>
+<li><strong>LOOK-AHEAD</strong> - no intent may cite an observation dated after the
+session that wrote it.</li>
+<li><strong>EQUITY-RESIDUAL</strong> - each account's recorded equity must equal the
+equity re-derived from its fills and carry rows.</li>
+<li><strong>MATURITY-DATE-MISMATCH</strong> - a redemption at par may only happen on
+the published maturity date.</li>
+<li><strong>TRIP-NOT-OFFICIAL</strong> - every closed trade must carry its price class.</li>
+<li><strong>SECONDARY-PATH-REACHABLE</strong> - the official book's module must not be
+able to reach a secondary price file at all.</li>
+</ol>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,679 @@
+{
+ "participant": "@AuctionStrength_Follow",
+ "family": "auction microstructure",
+ "thesis": "Follow the demand print: when an auction stops through and the bid-to-cover is at the high end of its recent range, buy that CUSIP in the secondary market the next session and hold until the next auction of the same term. Bid-to-cover and the high rate are the Treasury's own published numbers, so the signal is not an estimate.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 17-Week 912797RN9 (long, secondary-curve to secondary-curve) 2025-10-14 to 2025-10-16 for $116.25.",
+  "4 of 4 closed trades made money; coupons paid $0.00 and financing cost $-1,172.84.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "made money",
+ "metrics": {
+  "participant": "@AuctionStrength_Follow",
+  "family": "auction microstructure",
+  "final_equity": 104400.11,
+  "return_pct": 4.4001,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -0.3345,
+  "sharpe": 6.9351,
+  "trades": 4,
+  "open_positions": 0,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -1172.84,
+  "cash_credit": 5292.44,
+  "realised_pnl": 280.5,
+  "margin_events": 0,
+  "intents": 122,
+  "filled_intents": 8,
+  "waiting_intents": 0,
+  "rejected_intents": 114,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 2
+ },
+ "intents": [
+  {
+   "intent_id": "AuctionStrength_Follow-00008",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-10",
+   "target_session": "2025-10-14",
+   "cusip": "912797RN9",
+   "side": "buy",
+   "face": 544100.0,
+   "rule": "buy the CUSIP whose auction printed bid-to-cover above its running mean",
+   "rationale": "4-Week 912797RN9: bid-to-cover 2.920 vs mean 2.808",
+   "status": "FILLED",
+   "settled_on": "2025-10-14",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "mark": {
+     "observation_date": "2025-10-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00008",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2025-10-14",
+    "cusip": "912797RN9",
+    "side": "buy",
+    "face": 544100.0,
+    "price_per100": 99.676384,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -542339.21,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 110000000000.0,
+     "total_accepted": 110299178800.0,
+     "bid_to_cover": 2.92,
+     "competitive_tendered": 312989828000.0,
+     "security_term": "4-Week",
+     "auction_date": "2025-10-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 544100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00009",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-15",
+   "target_session": "2025-10-16",
+   "cusip": "912797RN9",
+   "side": "sell",
+   "face": 544100.0,
+   "rule": "rotate to the strongest auction print",
+   "rationale": "new auction had stronger demand",
+   "status": "FILLED",
+   "settled_on": "2025-10-16",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2025-10-15"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00009",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2025-10-16",
+    "cusip": "912797RN9",
+    "side": "sell",
+    "face": 544100.0,
+    "price_per100": 99.69775,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 542455.46,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 110000000000.0,
+     "total_accepted": 110299178800.0,
+     "bid_to_cover": 2.92,
+     "competitive_tendered": 312989828000.0,
+     "security_term": "4-Week",
+     "auction_date": "2025-10-09"
+    },
+    "closed_face": 544100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00025",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-05",
+   "target_session": "2025-12-08",
+   "cusip": "912797A72",
+   "side": "buy",
+   "face": 545400.0,
+   "rule": "buy the CUSIP whose auction printed bid-to-cover above its running mean",
+   "rationale": "2-Day 912797A72: bid-to-cover 4.320 vs mean 2.841",
+   "status": "FILLED",
+   "settled_on": "2025-12-08",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "mark": {
+     "observation_date": "2025-12-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00025",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2025-12-08",
+    "cusip": "912797A72",
+    "side": "buy",
+    "face": 545400.0,
+    "price_per100": 99.979611,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -545288.8,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 25000000.0,
+     "total_accepted": 25000500.0,
+     "bid_to_cover": 4.32,
+     "competitive_tendered": 108000000.0,
+     "security_term": "2-Day",
+     "auction_date": "2025-12-04"
+    },
+    "closed_face": 0.0,
+    "opened_face": 545400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00026",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-08",
+   "target_session": "2025-12-09",
+   "cusip": "912797A72",
+   "side": "sell",
+   "face": 545400.0,
+   "rule": "rotate to the strongest auction print",
+   "rationale": "new auction had stronger demand",
+   "status": "FILLED",
+   "settled_on": "2025-12-09",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-08",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2025-12-08"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00026",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2025-12-09",
+    "cusip": "912797A72",
+    "side": "sell",
+    "face": 545400.0,
+    "price_per100": 99.989833,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 545344.55,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 25000000.0,
+     "total_accepted": 25000500.0,
+     "bid_to_cover": 4.32,
+     "competitive_tendered": 108000000.0,
+     "security_term": "2-Day",
+     "auction_date": "2025-12-04"
+    },
+    "closed_face": 545400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00042",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-16",
+   "target_session": "2026-01-20",
+   "cusip": "912797SR9",
+   "side": "buy",
+   "face": 549100.0,
+   "rule": "buy the CUSIP whose auction printed bid-to-cover above its running mean",
+   "rationale": "4-Week 912797SR9: bid-to-cover 2.920 vs mean 2.908",
+   "status": "FILLED",
+   "settled_on": "2026-01-20",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "mark": {
+     "observation_date": "2026-01-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00042",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2026-01-20",
+    "cusip": "912797SR9",
+    "side": "buy",
+    "face": 549100.0,
+    "price_per100": 99.719222,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -547558.25,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 95266128300.0,
+     "bid_to_cover": 2.92,
+     "competitive_tendered": null,
+     "security_term": "4-Week",
+     "auction_date": "2026-01-15"
+    },
+    "closed_face": 0.0,
+    "opened_face": 549100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00043",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-20",
+   "target_session": "2026-01-21",
+   "cusip": "912797SR9",
+   "side": "sell",
+   "face": 549100.0,
+   "rule": "rotate to the strongest auction print",
+   "rationale": "new auction had stronger demand",
+   "status": "FILLED",
+   "settled_on": "2026-01-21",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-01-20"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00043",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2026-01-21",
+    "cusip": "912797SR9",
+    "side": "sell",
+    "face": 549100.0,
+    "price_per100": 99.7285,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 547609.19,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 95266128300.0,
+     "bid_to_cover": 2.92,
+     "competitive_tendered": null,
+     "security_term": "4-Week",
+     "auction_date": "2026-01-15"
+    },
+    "closed_face": 549100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00119",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-04",
+   "target_session": "2026-09-08",
+   "cusip": "912797VK0",
+   "side": "buy",
+   "face": 566100.0,
+   "rule": "buy the CUSIP whose auction printed bid-to-cover above its running mean",
+   "rationale": "4-Week 912797VK0: bid-to-cover 2.970 vs mean 2.869",
+   "status": "FILLED",
+   "settled_on": "2026-09-08",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "mark": {
+     "observation_date": "2026-09-04",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00119",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2026-09-08",
+    "cusip": "912797VK0",
+    "side": "buy",
+    "face": 566100.0,
+    "price_per100": 99.715333,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -564488.5,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 95385335100.0,
+     "bid_to_cover": 2.97,
+     "competitive_tendered": 259672244700.0,
+     "security_term": "4-Week",
+     "auction_date": "2026-09-03"
+    },
+    "closed_face": 0.0,
+    "opened_face": 566100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "AuctionStrength_Follow-00120",
+   "participant": "@AuctionStrength_Follow",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-08",
+   "target_session": "2026-09-09",
+   "cusip": "912797VK0",
+   "side": "sell",
+   "face": 566100.0,
+   "rule": "rotate to the strongest auction print",
+   "rationale": "new auction had stronger demand",
+   "status": "FILLED",
+   "settled_on": "2026-09-09",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-08",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-09-08"
+    }
+   },
+   "fill": {
+    "intent_id": "AuctionStrength_Follow-00120",
+    "participant": "@AuctionStrength_Follow",
+    "session": "2026-09-09",
+    "cusip": "912797VK0",
+    "side": "sell",
+    "face": 566100.0,
+    "price_per100": 99.7255,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 564546.06,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 95385335100.0,
+     "bid_to_cover": 2.97,
+     "competitive_tendered": 259672244700.0,
+     "security_term": "4-Week",
+     "auction_date": "2026-09-03"
+    },
+    "closed_face": 566100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@AuctionStrength_Follow",
+   "cusip": "912797RN9",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 544100.0,
+   "entry_date": "2025-10-14",
+   "entry_price_per100": 99.676384,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.676384,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-10-14",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 4.017302,
+     "days": 29,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "exit_date": "2025-10-16",
+   "exit_price_per100": 99.69775,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.69775,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-10-16",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 4.03,
+     "days": 27,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 116.25,
+   "total_pnl": 116.25,
+   "return_on_cost_pct": 0.021435,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 110000000000.0,
+    "total_accepted": 110299178800.0,
+    "bid_to_cover": 2.92,
+    "competitive_tendered": 312989828000.0,
+    "security_term": "4-Week",
+    "auction_date": "2025-10-09"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@AuctionStrength_Follow",
+   "cusip": "912797A72",
+   "security_type": "Bill",
+   "security_term": "2-Day",
+   "direction": "long",
+   "face": 545400.0,
+   "entry_date": "2025-12-08",
+   "entry_price_per100": 99.979611,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.979611,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-12-08",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.67,
+     "days": 2,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "exit_date": "2025-12-09",
+   "exit_price_per100": 99.989833,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.989833,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-12-09",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.66,
+     "days": 1,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 55.75,
+   "total_pnl": 55.75,
+   "return_on_cost_pct": 0.010224,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 25000000.0,
+    "total_accepted": 25000500.0,
+    "bid_to_cover": 4.32,
+    "competitive_tendered": 108000000.0,
+    "security_term": "2-Day",
+    "auction_date": "2025-12-04"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@AuctionStrength_Follow",
+   "cusip": "912797SR9",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 549100.0,
+   "entry_date": "2026-01-20",
+   "entry_price_per100": 99.719222,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.719222,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-01-20",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.61,
+     "days": 28,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "exit_date": "2026-01-21",
+   "exit_price_per100": 99.7285,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.7285,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-01-21",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.62,
+     "days": 27,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 50.95,
+   "total_pnl": 50.95,
+   "return_on_cost_pct": 0.009304,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 95266128300.0,
+    "bid_to_cover": 2.92,
+    "competitive_tendered": null,
+    "security_term": "4-Week",
+    "auction_date": "2026-01-15"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@AuctionStrength_Follow",
+   "cusip": "912797VK0",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 566100.0,
+   "entry_date": "2026-09-08",
+   "entry_price_per100": 99.715333,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.715333,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-09-08",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.66,
+     "days": 28,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732"
+    }
+   },
+   "exit_date": "2026-09-09",
+   "exit_price_per100": 99.7255,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.7255,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-09-09",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.66,
+     "days": 27,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 57.56,
+   "total_pnl": 57.56,
+   "return_on_cost_pct": 0.010196,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 90000000000.0,
+    "total_accepted": 95385335100.0,
+    "bid_to_cover": 2.97,
+    "competitive_tendered": 259672244700.0,
+    "security_term": "4-Week",
+    "auction_date": "2026-09-03"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

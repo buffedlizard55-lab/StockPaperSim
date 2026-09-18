@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@CurveFlattener_2s10s · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../official/index.html">Overview</a><a class="" href="../../official/leaderboard.html">Leaderboard</a><a class="" href="../../official/blotter.html">Trade tape</a><a class="" href="../../official/forward.html">Forward book</a><a class="active" href="../../official/participants/index.html">Participants</a><a class="" href="../../official/ledger.html">Trade store</a><a class="" href="../../official/method.html">Venue &amp; formulas</a><a class="" href="../../official/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../live/index.html">Live Book</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede"><strong>@CurveFlattener_2s10s</strong> - The same pair, the other way: short the 2-year and long the 10-year. It exists in this book because publishing only the winner of a pair of opposite rules is how a competition hides luck.</p>
+
+<div class="kpis"><div class="kpi"><span class="kpi-label">Return</span><span class="kpi-value ">-18.98%</span><span class="kpi-sub">$81,024.72 ending equity</span></div><div class="kpi"><span class="kpi-label">Status</span><span class="kpi-value ">ACTIVE</span><span class="kpi-sub">6 settled trades</span></div><div class="kpi"><span class="kpi-label">Max drawdown</span><span class="kpi-value ">-20.57%</span><span class="kpi-sub">Sharpe -1.51</span></div><div class="kpi"><span class="kpi-label">Coupons</span><span class="kpi-value ">$0.00</span><span class="kpi-sub">financing $36.59</span></div><div class="kpi"><span class="kpi-label">Orders</span><span class="kpi-value ">496</span><span class="kpi-sub">22 filled · 0 waited · 235 refused</span></div><div class="kpi"><span class="kpi-label">Official price coverage</span><span class="kpi-value ">100.00%</span><span class="kpi-sub">primary at the published price, secondary derived</span></div></div>
+<section class="card "><h2>Why it worked, or why it did not</h2><ul><li>Best trade: 2-Year 91282CPB1 (short, secondary-curve to secondary-curve) 2025-10-01 to 2025-10-08 for $1.45.</li><li>Worst trade: 2-Year 91282CPB1 (secondary-curve to secondary-curve) 2025-10-01 to 2025-10-14 for $-8.51.</li><li>3 of 6 closed trades made money; coupons paid $0.00 and financing cost $36.59.</li><li>Official par curve over the window: 3-month 4.02% -&gt; 4.14% (+12 bp), 2-year 3.52% -&gt; 4.74% (+122 bp), 10-year 4.06% -&gt; 5.01% (+95 bp), 30-year 4.66% -&gt; 5.35% (+69 bp). Duration exposures are paid off against this path.</li></ul></section>
+<section class="card "><h2>Settled trades</h2><table class="data"><thead><tr><th>Entry</th><th>Exit</th><th>Security</th><th>Side</th><th>Face</th><th>Entry price</th><th>Exit price</th><th>Exit kind</th><th>Price P&amp;L</th><th>Total P&amp;L</th><th>Return on cost</th></tr></thead><tbody><tr><td>2025-09-18</td><td>2025-09-24</td><td>2-Year <span class="muted small">91282CNV9</span></td><td>short</td><td>$3,400</td><td>100.101483</td><td>100.097706</td><td>SECONDARY-CURVE</td><td><span class="pos">$0.13</span></td><td><span class="neg">$-3.43</span></td><td>-0.10%</td></tr><tr><td>2025-10-01</td><td>2025-10-02</td><td>2-Year <span class="muted small">91282CPB1</span></td><td>short</td><td>$2,200</td><td>99.903918</td><td>99.903551</td><td>SECONDARY-CURVE</td><td><span class="pos">$0.01</span></td><td><span class="neg">$-0.38</span></td><td>-0.02%</td></tr><tr><td>2025-10-01</td><td>2025-10-08</td><td>2-Year <span class="muted small">91282CPB1</span></td><td>short</td><td>$2,400</td><td>99.903918</td><td>99.843559</td><td>SECONDARY-CURVE</td><td><span class="pos">$1.45</span></td><td><span class="neg">$-1.49</span></td><td>-0.06%</td></tr><tr><td>2025-10-01</td><td>2025-10-14</td><td>2-Year <span class="muted small">91282CPB1</span></td><td>short</td><td>$6,700</td><td>99.903918</td><td>100.030969</td><td>SECONDARY-CURVE</td><td><span class="neg">$-8.51</span></td><td><span class="neg">$-20.21</span></td><td>-0.30%</td></tr><tr><td>2025-10-01</td><td>2025-10-15</td><td>2-Year <span class="muted small">91282CPB1</span></td><td>short</td><td>$3,100</td><td>99.903918</td><td>99.991341</td><td>SECONDARY-CURVE</td><td><span class="neg">$-2.71</span></td><td><span class="neg">$-10.31</span></td><td>-0.33%</td></tr><tr><td>2025-10-01</td><td>2025-10-17</td><td>2-Year <span class="muted small">91282CPB1</span></td><td>short</td><td>$3,700</td><td>99.903918</td><td>100.067727</td><td>SECONDARY-CURVE</td><td><span class="neg">$-6.06</span></td><td><span class="neg">$-16.47</span></td><td>-0.45%</td></tr></tbody></table></section>
+<section class="card "><h2>Every order this rule wrote</h2>
+<p>496 orders, by their final state:</p>
+<ul><li>CANCELLED: <strong>237</strong></li><li>REJECTED: <strong>235</strong></li><li>FILLED: <strong>22</strong></li><li>PENDING: <strong>2</strong></li></ul>
+<p><strong>WAITING-DATA</strong> means the venue found no official observation for the
+target session and left the order open rather than filling it at a modelled price;
+<strong>REJECTED</strong> means a declared rule refused it (a when-issued trade, a
+non-competitive award beyond the maximum, a maintenance breach);
+<strong>CANCELLED</strong> means the order was superseded or the leverage cap left
+nothing to size.</p>
+</section>
+<section class="card "><h2>The orders that filled</h2><table class="data"><thead><tr><th>Written</th><th>Target</th><th>Order</th><th>Side</th><th>CUSIP</th><th>Face</th><th>Rule</th><th>Settlement note</th></tr></thead><tbody><tr><td>2025-10-29</td><td>2025-10-30</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$7,100</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-28</td><td>2025-10-29</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CNT4</td><td>$344,700</td><td>long leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-28</td><td>2025-10-29</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$2,300</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-24</td><td>2025-10-27</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$2,100</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-22</td><td>2025-10-23</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$3,700</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-16</td><td>2025-10-17</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CPB1</td><td>$3,700</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-14</td><td>2025-10-15</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CNT4</td><td>$437,100</td><td>long leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-14</td><td>2025-10-15</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CPB1</td><td>$3,100</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-10</td><td>2025-10-14</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CPB1</td><td>$6,700</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-09</td><td>2025-10-10</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$1,600</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-08</td><td>2025-10-09</td><td>SECONDARY-ORDER</td><td>short</td><td>91282CPB1</td><td>$900</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2025-10-07</td><td>2025-10-08</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CPB1</td><td>$2,400</td><td>short leg of the 2s10s flattener</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr></tbody></table></section>
+<section class="card "><h2>Rule and data status</h2>
+<p><strong>Rule:</strong> The same pair, the other way: short the 2-year and long the 10-year. It exists in this book because publishing only the winner of a pair of opposite rules is how a competition hides luck.</p>
+<p><strong>Where the rule's premises come from:</strong></p>
+<ul><li>none declared</li></ul>
+<p><strong>Data status:</strong> <span class="badge badge-ok">READY</span>
+</p>
+<p><a href="index.html">All participants</a> ·
+<a href="../blotter.html">Trade tape</a> ·
+<a href="../method.html">Venue rules</a></p>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="../method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

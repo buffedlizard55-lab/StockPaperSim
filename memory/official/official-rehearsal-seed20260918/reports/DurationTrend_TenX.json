@@ -1,0 +1,4655 @@
+{
+ "participant": "@DurationTrend_TenX",
+ "family": "trend / duration",
+ "thesis": "Hold the 10-year long at the 10x gross cap while the official 10-year par yield is below its own 60-session mean, and short it when above. A trend rule on a single official series, with the position taken in the cash market and financed at SOFR plus a spread.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 10-Year 91282CNT4 (long, secondary-curve to secondary-curve) 2025-11-07 to 2025-11-12 for $2,007.32.",
+  "Worst trade: 10-Year 91282CPJ4 (secondary-curve to margin-liquidation) 2026-02-17 to 2026-09-10 for $-51,595.54.",
+  "14 of 39 closed trades made money; coupons paid $16,158.00 and financing cost $-20,514.65.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path.",
+  "The venue liquidated the account 1 time(s) under its declared maintenance rule; those fills are in the tape with the reason recorded on each one."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@DurationTrend_TenX",
+  "family": "trend / duration",
+  "final_equity": 37014.48,
+  "return_pct": -62.9855,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -65.5088,
+  "sharpe": -1.6288,
+  "trades": 39,
+  "open_positions": 3,
+  "coupon_income": 16158.0,
+  "financing": 3911.22,
+  "debit_interest": -24425.87,
+  "cash_credit": 6719.22,
+  "realised_pnl": -58948.96,
+  "margin_events": 1,
+  "intents": 248,
+  "filled_intents": 44,
+  "waiting_intents": 0,
+  "rejected_intents": 155,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 11
+ },
+ "intents": [
+  {
+   "intent_id": "DurationTrend_TenX-00019",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-14",
+   "target_session": "2025-10-15",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 887300.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.030% vs 60-session mean 4.210%; moving 91282CNT4 to $904,174 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-14",
+     "price_per100": 101.901004
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00019",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-15",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 887300.0,
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -902679.71,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 887300.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00020",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-16",
+   "target_session": "2025-10-17",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 34100.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 3.990% vs 60-session mean 4.198%; moving 91282CNT4 to $942,051 of market value from $907,178",
+   "status": "FILLED",
+   "settled_on": "2025-10-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-16",
+     "price_per100": 102.240243
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00020",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-17",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 34100.0,
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -34778.28,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 34100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00021",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-17",
+   "target_session": "2025-10-20",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 18600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.020% vs 60-session mean 4.192%; moving 91282CNT4 to $920,670 of market value from $939,727",
+   "status": "FILLED",
+   "settled_on": "2025-10-20",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-17",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-17",
+     "price_per100": 101.989087
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00021",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-20",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 18600.0,
+    "price_per100": 102.155232,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 19000.87,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 18600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00022",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-20",
+   "target_session": "2025-10-21",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 8100.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.000% vs 60-session mean 4.185%; moving 91282CNT4 to $930,581 of market value from $922,257",
+   "status": "FILLED",
+   "settled_on": "2025-10-21",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-20",
+     "price_per100": 102.155232
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00022",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-21",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 8100.0,
+    "price_per100": 102.327764,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -8288.55,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 8100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00023",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-21",
+   "target_session": "2025-10-22",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 10900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 3.980% vs 60-session mean 4.178%; moving 91282CNT4 to $943,276 of market value from $932,104",
+   "status": "FILLED",
+   "settled_on": "2025-10-22",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-21",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-21",
+     "price_per100": 102.327764
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00023",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-22",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 10900.0,
+    "price_per100": 102.407633,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -11162.43,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 10900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00024",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-22",
+   "target_session": "2025-10-23",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 4300.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 3.970% vs 60-session mean 4.170%; moving 91282CNT4 to $948,488 of market value from $943,994",
+   "status": "FILLED",
+   "settled_on": "2025-10-23",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-22",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-22",
+     "price_per100": 102.407633
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00024",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-23",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 4300.0,
+    "price_per100": 102.072573,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -4389.12,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 4300.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00025",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-23",
+   "target_session": "2025-10-24",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 25400.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.010% vs 60-session mean 4.165%; moving 91282CNT4 to $919,339 of market value from $945,294",
+   "status": "FILLED",
+   "settled_on": "2025-10-24",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-23",
+     "price_per100": 102.072573
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00025",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-24",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 25400.0,
+    "price_per100": 101.996639,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 25907.15,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 25400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00026",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-24",
+   "target_session": "2025-10-27",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 6800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.020% vs 60-session mean 4.159%; moving 91282CNT4 to $911,700 of market value from $918,684",
+   "status": "FILLED",
+   "settled_on": "2025-10-27",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-24",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-24",
+     "price_per100": 101.996639
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00026",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-27",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 6800.0,
+    "price_per100": 102.079225,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 6941.39,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 6800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00027",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-27",
+   "target_session": "2025-10-28",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 1900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.010% vs 60-session mean 4.153%; moving 91282CNT4 to $914,469 of market value from $912,486",
+   "status": "FILLED",
+   "settled_on": "2025-10-28",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-27",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-27",
+     "price_per100": 102.079225
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00027",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-28",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 1900.0,
+    "price_per100": 102.246605,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -1942.69,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 1900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00028",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-28",
+   "target_session": "2025-10-29",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 10400.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 3.990% vs 60-session mean 4.149%; moving 91282CNT4 to $926,612 of market value from $915,925",
+   "status": "FILLED",
+   "settled_on": "2025-10-29",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-28",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-28",
+     "price_per100": 102.246605
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00028",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-29",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 10400.0,
+    "price_per100": 101.499552,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -10555.95,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 10400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00029",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-29",
+   "target_session": "2025-10-30",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 53900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.080% vs 60-session mean 4.146%; moving 91282CNT4 to $865,053 of market value from $919,789",
+   "status": "FILLED",
+   "settled_on": "2025-10-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-29",
+     "price_per100": 101.499552
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00029",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-30",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 53900.0,
+    "price_per100": 101.25482,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 54576.35,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 53900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00030",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-30",
+   "target_session": "2025-10-31",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 18800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.110% vs 60-session mean 4.144%; moving 91282CNT4 to $843,915 of market value from $862,995",
+   "status": "FILLED",
+   "settled_on": "2025-10-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-30",
+     "price_per100": 101.25482
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00030",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-10-31",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 18800.0,
+    "price_per100": 101.262008,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 19037.26,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 18800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00031",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-31",
+   "target_session": "2025-11-03",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 700.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.110% vs 60-session mean 4.143%; moving 91282CNT4 to $843,269 of market value from $844,019",
+   "status": "FILLED",
+   "settled_on": "2025-11-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-31",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-31",
+     "price_per100": 101.262008
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00031",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-03",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 700.0,
+    "price_per100": 101.108945,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 707.76,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00032",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-03",
+   "target_session": "2025-11-04",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 13600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.130% vs 60-session mean 4.141%; moving 91282CNT4 to $828,269 of market value from $842,035",
+   "status": "FILLED",
+   "settled_on": "2025-11-04",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-03",
+     "price_per100": 101.108945
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00032",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-04",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 13600.0,
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 13783.69,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 13600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00033",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-04",
+   "target_session": "2025-11-05",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 14800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.100% vs 60-session mean 4.138%; moving 91282CNT4 to $845,267 of market value from $830,264",
+   "status": "FILLED",
+   "settled_on": "2025-11-05",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-04",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-04",
+     "price_per100": 101.350635
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00033",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-05",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 14800.0,
+    "price_per100": 100.779663,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -14915.39,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 14800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00034",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-05",
+   "target_session": "2025-11-06",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 1629800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.170% vs 60-session mean 4.137%; moving 91282CNT4 to $-802,054 of market value from $840,502",
+   "status": "FILLED",
+   "settled_on": "2025-11-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-05",
+     "price_per100": 100.779663
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00034",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-06",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 921400.0,
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 933231.01,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 834000.0,
+    "opened_face": 87400.0,
+    "trips_closed": [
+     "T00008",
+     "T00009",
+     "T00010",
+     "T00011",
+     "T00012",
+     "T00013",
+     "T00014",
+     "T00015"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00035",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-06",
+   "target_session": "2025-11-07",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 916700.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.110% vs 60-session mean 4.134%; moving 91282CNT4 to $840,034 of market value from $-88,522",
+   "status": "FILLED",
+   "settled_on": "2025-11-07",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-06",
+     "price_per100": 101.284025
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00035",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-07",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 916700.0,
+    "price_per100": 101.285823,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -928487.14,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 87400.0,
+    "opened_face": 829300.0,
+    "trips_closed": [
+     "T00016"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00036",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-07",
+   "target_session": "2025-11-10",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 1000.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.110% vs 60-session mean 4.131%; moving 91282CNT4 to $838,905 of market value from $839,963",
+   "status": "FILLED",
+   "settled_on": "2025-11-10",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-07",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-07",
+     "price_per100": 101.285823
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00036",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-10",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 1000.0,
+    "price_per100": 101.120979,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1011.21,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 1000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00017"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00037",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-10",
+   "target_session": "2025-11-12",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 1642400.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.130% vs 60-session mean 4.129%; moving 91282CNT4 to $-823,246 of market value from $837,585",
+   "status": "FILLED",
+   "settled_on": "2025-11-12",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-10",
+     "price_per100": 101.120979
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00037",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-12",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 934100.0,
+    "price_per100": 101.528165,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 948374.59,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 828300.0,
+    "opened_face": 105800.0,
+    "trips_closed": [
+     "T00018"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00038",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-12",
+   "target_session": "2025-11-13",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 946700.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.080% vs 60-session mean 4.125%; moving 91282CNT4 to $853,851 of market value from $-107,417",
+   "status": "FILLED",
+   "settled_on": "2025-11-13",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-12",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-12",
+     "price_per100": 101.528165
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00038",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-13",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 939200.0,
+    "price_per100": 101.283426,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -951253.94,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 105800.0,
+    "opened_face": 833400.0,
+    "trips_closed": [
+     "T00019"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00039",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-13",
+   "target_session": "2025-11-14",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 10800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.110% vs 60-session mean 4.121%; moving 91282CNT4 to $855,044 of market value from $844,096",
+   "status": "FILLED",
+   "settled_on": "2025-11-14",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-13",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-13",
+     "price_per100": 101.283426
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00039",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-14",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 10800.0,
+    "price_per100": 101.039387,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -10912.25,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 10800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00040",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-14",
+   "target_session": "2025-11-17",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 1671200.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.140% vs 60-session mean 4.118%; moving 91282CNT4 to $-835,600 of market value from $852,975",
+   "status": "FILLED",
+   "settled_on": "2025-11-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-14",
+     "price_per100": 101.039387
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00040",
+    "participant": "@DurationTrend_TenX",
+    "session": "2025-11-17",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 922400.0,
+    "price_per100": 101.086641,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 932423.18,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 844200.0,
+    "opened_face": 78200.0,
+    "trips_closed": [
+     "T00020",
+     "T00021"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00080",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-14",
+   "target_session": "2026-01-15",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 856500.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.150% vs 60-session mean 4.112%; moving 91282CPJ4 to $-846,987 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-01-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-14",
+     "price_per100": 98.880701
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00080",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-15",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 856500.0,
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 845472.7,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 856500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00081",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-15",
+   "target_session": "2026-01-16",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 2800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.170% vs 60-session mean 4.114%; moving 91282CPJ4 to $-848,271 of market value from $-845,473",
+   "status": "FILLED",
+   "settled_on": "2026-01-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-15",
+     "price_per100": 98.712516
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00081",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-16",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 2800.0,
+    "price_per100": 98.15672,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2748.39,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 2800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00082",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-16",
+   "target_session": "2026-01-20",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 52400.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.240% vs 60-session mean 4.119%; moving 91282CPJ4 to $-894,920 of market value from $-843,461",
+   "status": "FILLED",
+   "settled_on": "2026-01-20",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-16",
+     "price_per100": 98.15672
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00082",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-20",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 52400.0,
+    "price_per100": 97.684615,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 51186.74,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 52400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00083",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-20",
+   "target_session": "2026-01-21",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 45300.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.300% vs 60-session mean 4.124%; moving 91282CPJ4 to $-934,857 of market value from $-890,591",
+   "status": "FILLED",
+   "settled_on": "2026-01-21",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-20",
+     "price_per100": 97.684615
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00083",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-21",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 35900.0,
+    "price_per100": 98.004934,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 35183.77,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 35900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00084",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-21",
+   "target_session": "2026-01-22",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 22700.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.260% vs 60-session mean 4.129%; moving 91282CPJ4 to $-906,421 of market value from $-928,695",
+   "status": "FILLED",
+   "settled_on": "2026-01-22",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-21",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-21",
+     "price_per100": 98.004934
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00084",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-22",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 22700.0,
+    "price_per100": 98.001726,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -22246.39,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 22700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00022"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00085",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-23",
+   "target_session": "2026-01-26",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 15800.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.240% vs 60-session mean 4.136%; moving 91282CPJ4 to $-892,312 of market value from $-907,910",
+   "status": "FILLED",
+   "settled_on": "2026-01-26",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-23",
+     "price_per100": 98.163075
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00085",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-26",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 15800.0,
+    "price_per100": 98.322689,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -15534.98,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 15800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00023"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00086",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-26",
+   "target_session": "2026-01-27",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 16000.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.220% vs 60-session mean 4.140%; moving 91282CPJ4 to $-878,101 of market value from $-893,852",
+   "status": "FILLED",
+   "settled_on": "2026-01-27",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-26",
+     "price_per100": 98.322689
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00086",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-27",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 16000.0,
+    "price_per100": 98.169211,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -15707.07,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 16000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00024"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00087",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-27",
+   "target_session": "2026-01-28",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 15200.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.240% vs 60-session mean 4.144%; moving 91282CPJ4 to $-891,707 of market value from $-876,749",
+   "status": "FILLED",
+   "settled_on": "2026-01-28",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-27",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-27",
+     "price_per100": 98.169211
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00087",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-28",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 15200.0,
+    "price_per100": 98.010913,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 14897.66,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 15200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00088",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-28",
+   "target_session": "2026-01-29",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 15600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.260% vs 60-session mean 4.147%; moving 91282CPJ4 to $-905,559 of market value from $-890,233",
+   "status": "FILLED",
+   "settled_on": "2026-01-29",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-28",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-28",
+     "price_per100": 98.010913
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00088",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-29",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 15600.0,
+    "price_per100": 98.182946,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 15316.54,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 15600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00089",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-29",
+   "target_session": "2026-01-30",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 17100.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.240% vs 60-session mean 4.149%; moving 91282CPJ4 to $-890,267 of market value from $-907,112",
+   "status": "FILLED",
+   "settled_on": "2026-01-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-29",
+     "price_per100": 98.182946
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00089",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-01-30",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 17100.0,
+    "price_per100": 98.035561,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -16764.08,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 17100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00025"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00090",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-30",
+   "target_session": "2026-02-02",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 14700.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.260% vs 60-session mean 4.152%; moving 91282CPJ4 to $-903,485 of market value from $-888,986",
+   "status": "FILLED",
+   "settled_on": "2026-02-02",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-30",
+     "price_per100": 98.035561
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00090",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-02",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 14700.0,
+    "price_per100": 97.796171,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 14376.04,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 14700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00091",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-02",
+   "target_session": "2026-02-03",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 24100.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.290% vs 60-session mean 4.154%; moving 91282CPJ4 to $-924,851 of market value from $-901,192",
+   "status": "FILLED",
+   "settled_on": "2026-02-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-02",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-02",
+     "price_per100": 97.796171
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00091",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-03",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 24100.0,
+    "price_per100": 97.877589,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 23588.5,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 24100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00092",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-03",
+   "target_session": "2026-02-04",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 8100.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.280% vs 60-session mean 4.157%; moving 91282CPJ4 to $-917,586 of market value from $-925,530",
+   "status": "FILLED",
+   "settled_on": "2026-02-04",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-03",
+     "price_per100": 97.877589
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00092",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-04",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 8100.0,
+    "price_per100": 97.799662,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -7921.77,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 8100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00026"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00094",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-05",
+   "target_session": "2026-02-06",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 57400.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.210% vs 60-session mean 4.161%; moving 91282CPJ4 to $-866,331 of market value from $-922,884",
+   "status": "FILLED",
+   "settled_on": "2026-02-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-05",
+     "price_per100": 98.44097
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00094",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-06",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 57400.0,
+    "price_per100": 98.362512,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -56460.08,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 57400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00027"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00095",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-06",
+   "target_session": "2026-02-09",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 7900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.220% vs 60-session mean 4.163%; moving 91282CPJ4 to $-873,530 of market value from $-865,688",
+   "status": "FILLED",
+   "settled_on": "2026-02-09",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-06",
+     "price_per100": 98.362512
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00095",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-09",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 7900.0,
+    "price_per100": 98.373936,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 7771.54,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 7900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00096",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-09",
+   "target_session": "2026-02-10",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.220% vs 60-session mean 4.164%; moving 91282CPJ4 to $-872,623 of market value from $-873,561",
+   "status": "FILLED",
+   "settled_on": "2026-02-10",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-09",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-09",
+     "price_per100": 98.373936
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00096",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-10",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 900.0,
+    "price_per100": 98.852045,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -889.67,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00028"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00097",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-10",
+   "target_session": "2026-02-11",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 1727900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.160% vs 60-session mean 4.166%; moving 91282CPJ4 to $831,222 of market value from $-876,916",
+   "status": "FILLED",
+   "settled_on": "2026-02-11",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-10",
+     "price_per100": 98.852045
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00097",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-11",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 887100.0,
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -875390.48,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 887100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00029",
+     "T00030",
+     "T00031",
+     "T00032",
+     "T00033",
+     "T00034",
+     "T00035",
+     "T00036",
+     "T00037"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00098",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-11",
+   "target_session": "2026-02-12",
+   "cusip": "91282CPJ4",
+   "side": "short",
+   "face": 857600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.180% vs 60-session mean 4.167%; moving 91282CPJ4 to $-846,341 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-02-12",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-11",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-11",
+     "price_per100": 98.680022
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00098",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-12",
+    "cusip": "91282CPJ4",
+    "side": "short",
+    "face": 857600.0,
+    "price_per100": 99.409162,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 852532.97,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 857600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00099",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-12",
+   "target_session": "2026-02-13",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 1703900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.090% vs 60-session mean 4.166%; moving 91282CPJ4 to $841,391 of market value from $-852,533",
+   "status": "FILLED",
+   "settled_on": "2026-02-13",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-12",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-12",
+     "price_per100": 99.409162
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00099",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-13",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 857600.0,
+    "price_per100": 99.824274,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -856092.97,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 857600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00038"
+    ]
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00100",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-13",
+   "target_session": "2026-02-17",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 807900.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.040% vs 60-session mean 4.165%; moving 91282CPJ4 to $806,575 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-02-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-13",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-13",
+     "price_per100": 99.824274
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00100",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-02-17",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 807900.0,
+    "price_per100": 99.759865,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -805959.95,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 807900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00246",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-14",
+   "target_session": "2026-09-15",
+   "cusip": "91282CRF0",
+   "side": "short",
+   "face": 337600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 4.970% vs 60-session mean 4.645%; moving 91282CRF0 to $-328,625 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-09-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-14",
+     "price_per100": 97.324097
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00246",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-09-15",
+    "cusip": "91282CRF0",
+    "side": "short",
+    "face": 301300.0,
+    "price_per100": 97.094654,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 292546.19,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000040000.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 105714440000.0,
+     "security_term": "9-Year 11-Month",
+     "auction_date": "2026-09-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 301300.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "DurationTrend_TenX-00247",
+   "participant": "@DurationTrend_TenX",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-15",
+   "target_session": "2026-09-16",
+   "cusip": "91282CRF0",
+   "side": "short",
+   "face": 38600.0,
+   "rule": "long the 10-year below its 60-session mean yield, short above",
+   "rationale": "10-year 5.000% vs 60-session mean 4.654%; moving 91282CRF0 to $-330,108 of market value from $-292,546",
+   "status": "FILLED",
+   "settled_on": "2026-09-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-15",
+     "price_per100": 97.094654
+    }
+   },
+   "fill": {
+    "intent_id": "DurationTrend_TenX-00247",
+    "participant": "@DurationTrend_TenX",
+    "session": "2026-09-16",
+    "cusip": "91282CRF0",
+    "side": "short",
+    "face": 3800.0,
+    "price_per100": 97.014685,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 3686.56,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000040000.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 105714440000.0,
+     "security_term": "9-Year 11-Month",
+     "auction_date": "2026-09-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 3800.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 18600.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-20",
+   "exit_price_per100": 102.155232,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 102.155232,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-20",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.986557,
+     "remaining_years": 9.8247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 78.48,
+   "total_pnl": 78.48,
+   "return_on_cost_pct": 0.414727,
+   "holding_days": 5,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 25400.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-24",
+   "exit_price_per100": 101.996639,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.996639,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-24",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.005717,
+     "remaining_years": 9.8137,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 66.88,
+   "total_pnl": 66.88,
+   "return_on_cost_pct": 0.258837,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 6800.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-27",
+   "exit_price_per100": 102.079225,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 102.079225,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.995735,
+     "remaining_years": 9.8055,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 23.52,
+   "total_pnl": 23.52,
+   "return_on_cost_pct": 0.340015,
+   "holding_days": 12,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 53900.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-30",
+   "exit_price_per100": 101.25482,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.25482,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.095808,
+     "remaining_years": 9.7973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -257.91,
+   "total_pnl": -257.91,
+   "return_on_cost_pct": -0.470343,
+   "holding_days": 15,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 18800.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-31",
+   "exit_price_per100": 101.262008,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.262008,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.094932,
+     "remaining_years": 9.7945,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -88.61,
+   "total_pnl": -88.61,
+   "return_on_cost_pct": -0.463278,
+   "holding_days": 16,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 700.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-03",
+   "exit_price_per100": 101.108945,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.108945,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.113616,
+     "remaining_years": 9.7863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -4.37,
+   "total_pnl": -4.37,
+   "return_on_cost_pct": -0.613733,
+   "holding_days": 19,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 13600.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-04",
+   "exit_price_per100": 101.350635,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.084128,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -52.04,
+   "total_pnl": -52.04,
+   "return_on_cost_pct": -0.376161,
+   "holding_days": 20,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00008",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 749500.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -3367.44,
+   "total_pnl": -3367.44,
+   "return_on_cost_pct": -0.441636,
+   "holding_days": 22,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00009",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 34100.0,
+   "entry_date": "2025-10-17",
+   "entry_price_per100": 101.989087,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.00663,
+     "remaining_years": 9.8329,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -240.43,
+   "total_pnl": -240.43,
+   "return_on_cost_pct": -0.691311,
+   "holding_days": 20,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00010",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 8100.0,
+   "entry_date": "2025-10-21",
+   "entry_price_per100": 102.327764,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 102.327764,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-21",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.965753,
+     "remaining_years": 9.8219,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -84.54,
+   "total_pnl": -84.54,
+   "return_on_cost_pct": -1.019996,
+   "holding_days": 16,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00011",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 10900.0,
+   "entry_date": "2025-10-22",
+   "entry_price_per100": 102.407633,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 102.407633,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-22",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.956137,
+     "remaining_years": 9.8192,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -122.47,
+   "total_pnl": -122.47,
+   "return_on_cost_pct": -1.097192,
+   "holding_days": 15,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00012",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 4300.0,
+   "entry_date": "2025-10-23",
+   "entry_price_per100": 102.072573,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 102.072573,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-23",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.996539,
+     "remaining_years": 9.8164,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -33.91,
+   "total_pnl": -33.91,
+   "return_on_cost_pct": -0.772537,
+   "holding_days": 14,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00013",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 1900.0,
+   "entry_date": "2025-10-28",
+   "entry_price_per100": 102.246605,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 102.246605,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-28",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.975534,
+     "remaining_years": 9.8027,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -18.29,
+   "total_pnl": -18.29,
+   "return_on_cost_pct": -0.94143,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00014",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 10400.0,
+   "entry_date": "2025-10-29",
+   "entry_price_per100": 101.499552,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.499552,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-29",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.066,
+     "remaining_years": 9.8,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -22.41,
+   "total_pnl": -22.41,
+   "return_on_cost_pct": -0.212343,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00015",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 14800.0,
+   "entry_date": "2025-11-05",
+   "entry_price_per100": 100.779663,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 100.779663,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-05",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.153927,
+     "remaining_years": 9.7808,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 74.65,
+   "total_pnl": 74.65,
+   "return_on_cost_pct": 0.50046,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00016",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 87400.0,
+   "entry_date": "2025-11-06",
+   "entry_price_per100": 101.284025,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-07",
+   "exit_price_per100": 101.285823,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.285823,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092027,
+     "remaining_years": 9.7753,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 14.65,
+   "fees": 0.0,
+   "pnl": -1.57,
+   "total_pnl": -16.22,
+   "return_on_cost_pct": -0.018323,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00017",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 1000.0,
+   "entry_date": "2025-11-07",
+   "entry_price_per100": 101.285823,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.285823,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092027,
+     "remaining_years": 9.7753,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-10",
+   "exit_price_per100": 101.120979,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.120979,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-10",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.112146,
+     "remaining_years": 9.7671,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1.65,
+   "total_pnl": -1.65,
+   "return_on_cost_pct": -0.162751,
+   "holding_days": 3,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00018",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 828300.0,
+   "entry_date": "2025-11-07",
+   "entry_price_per100": 101.285823,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.285823,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092027,
+     "remaining_years": 9.7753,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-12",
+   "exit_price_per100": 101.528165,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.528165,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-12",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.062521,
+     "remaining_years": 9.7616,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 2007.32,
+   "total_pnl": 2007.32,
+   "return_on_cost_pct": 0.239265,
+   "holding_days": 5,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00019",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 105800.0,
+   "entry_date": "2025-11-12",
+   "entry_price_per100": 101.528165,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.528165,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-12",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.062521,
+     "remaining_years": 9.7616,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-13",
+   "exit_price_per100": 101.283426,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.283426,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-13",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.09232,
+     "remaining_years": 9.7589,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 36.06,
+   "fees": 0.0,
+   "pnl": 258.93,
+   "total_pnl": 222.87,
+   "return_on_cost_pct": 0.207484,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00020",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 833400.0,
+   "entry_date": "2025-11-13",
+   "entry_price_per100": 101.283426,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.283426,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-13",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.09232,
+     "remaining_years": 9.7589,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-17",
+   "exit_price_per100": 101.086641,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.086641,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.110676,
+     "remaining_years": 9.7479,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1640.01,
+   "total_pnl": -1640.01,
+   "return_on_cost_pct": -0.194291,
+   "holding_days": 4,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00021",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 10800.0,
+   "entry_date": "2025-11-14",
+   "entry_price_per100": 101.039387,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.039387,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-14",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.122119,
+     "remaining_years": 9.7562,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-17",
+   "exit_price_per100": 101.086641,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.086641,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.110676,
+     "remaining_years": 9.7479,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 5.1,
+   "total_pnl": 5.1,
+   "return_on_cost_pct": 0.046768,
+   "holding_days": 3,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00022",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 22700.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-01-22",
+   "exit_price_per100": 98.001726,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.001726,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-22",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.247342,
+     "remaining_years": 9.8192,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 24.04,
+   "fees": 0.0,
+   "pnl": 161.35,
+   "total_pnl": 137.31,
+   "return_on_cost_pct": 0.612766,
+   "holding_days": 7,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00023",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 15800.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-01-26",
+   "exit_price_per100": 98.322689,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.322689,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-26",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.207215,
+     "remaining_years": 9.8082,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 21.52,
+   "fees": 0.0,
+   "pnl": 61.59,
+   "total_pnl": 40.07,
+   "return_on_cost_pct": 0.256902,
+   "holding_days": 11,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00024",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 16000.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-01-27",
+   "exit_price_per100": 98.169211,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.169211,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.226384,
+     "remaining_years": 9.8055,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 29.12,
+   "fees": 0.0,
+   "pnl": 86.93,
+   "total_pnl": 57.81,
+   "return_on_cost_pct": 0.366018,
+   "holding_days": 12,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00025",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 17100.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-01-30",
+   "exit_price_per100": 98.035561,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.035561,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.243105,
+     "remaining_years": 9.7973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 38.91,
+   "fees": 0.0,
+   "pnl": 115.76,
+   "total_pnl": 76.85,
+   "return_on_cost_pct": 0.45526,
+   "holding_days": 15,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00026",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 8100.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-04",
+   "exit_price_per100": 97.799662,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.799662,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.272685,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 24.63,
+   "fees": 0.0,
+   "pnl": 73.94,
+   "total_pnl": 49.32,
+   "return_on_cost_pct": 0.616776,
+   "holding_days": 20,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00027",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 57400.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-06",
+   "exit_price_per100": 98.362512,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.362512,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.202247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 191.94,
+   "fees": 0.0,
+   "pnl": 200.9,
+   "total_pnl": 8.96,
+   "return_on_cost_pct": 0.015818,
+   "holding_days": 22,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00028",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 900.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-10",
+   "exit_price_per100": 98.852045,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.852045,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-10",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.14137,
+     "remaining_years": 9.7671,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 3.56,
+   "fees": 0.0,
+   "pnl": -1.26,
+   "total_pnl": -4.81,
+   "return_on_cost_pct": -0.541514,
+   "holding_days": 26,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00029",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 718500.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 2948.09,
+   "fees": 0.0,
+   "pnl": 233.47,
+   "total_pnl": -2714.62,
+   "return_on_cost_pct": -0.382745,
+   "holding_days": 27,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00030",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 2800.0,
+   "entry_date": "2026-01-16",
+   "entry_price_per100": 98.15672,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.15672,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.227945,
+     "remaining_years": 9.8356,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 11.06,
+   "fees": 0.0,
+   "pnl": -14.65,
+   "total_pnl": -25.71,
+   "return_on_cost_pct": -0.935542,
+   "holding_days": 26,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00031",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 52400.0,
+   "entry_date": "2026-01-20",
+   "entry_price_per100": 97.684615,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.684615,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-20",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.287142,
+     "remaining_years": 9.8247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 199.02,
+   "fees": 0.0,
+   "pnl": -521.59,
+   "total_pnl": -720.61,
+   "return_on_cost_pct": -1.407808,
+   "holding_days": 22,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00032",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 35900.0,
+   "entry_date": "2026-01-21",
+   "entry_price_per100": 98.004934,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.004934,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-21",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.246941,
+     "remaining_years": 9.8219,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 114.7,
+   "fees": 0.0,
+   "pnl": -242.36,
+   "total_pnl": -357.05,
+   "return_on_cost_pct": -1.014822,
+   "holding_days": 21,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00033",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 15200.0,
+   "entry_date": "2026-01-28",
+   "entry_price_per100": 98.010913,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.010913,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-28",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.246192,
+     "remaining_years": 9.8027,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 32.39,
+   "fees": 0.0,
+   "pnl": -101.7,
+   "total_pnl": -134.09,
+   "return_on_cost_pct": -0.900092,
+   "holding_days": 14,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00034",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 15600.0,
+   "entry_date": "2026-01-29",
+   "entry_price_per100": 98.182946,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.182946,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-29",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.224667,
+     "remaining_years": 9.8,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 30.88,
+   "fees": 0.0,
+   "pnl": -77.54,
+   "total_pnl": -108.42,
+   "return_on_cost_pct": -0.707889,
+   "holding_days": 13,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00035",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 14700.0,
+   "entry_date": "2026-02-02",
+   "entry_price_per100": 97.796171,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.796171,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-02",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.273123,
+     "remaining_years": 9.789,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 24.62,
+   "fees": 0.0,
+   "pnl": -129.93,
+   "total_pnl": -154.54,
+   "return_on_cost_pct": -1.075009,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00036",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 24100.0,
+   "entry_date": "2026-02-03",
+   "entry_price_per100": 97.877589,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.877589,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.262904,
+     "remaining_years": 9.7863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 29.3,
+   "fees": 0.0,
+   "pnl": -193.39,
+   "total_pnl": -222.69,
+   "return_on_cost_pct": -0.944065,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00037",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 7900.0,
+   "entry_date": "2026-02-09",
+   "entry_price_per100": 98.373936,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.373936,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-09",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.200822,
+     "remaining_years": 9.7699,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-11",
+   "exit_price_per100": 98.680022,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.680022,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-11",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.162721,
+     "remaining_years": 9.7644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 4.8,
+   "fees": 0.0,
+   "pnl": -24.18,
+   "total_pnl": -28.98,
+   "return_on_cost_pct": -0.372887,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00038",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "short",
+   "face": 857600.0,
+   "entry_date": "2026-02-12",
+   "entry_price_per100": 99.409162,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.409162,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-12",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.072521,
+     "remaining_years": 9.7616,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-02-13",
+   "exit_price_per100": 99.824274,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.824274,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-13",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.021516,
+     "remaining_years": 9.7589,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 131.94,
+   "fees": 0.0,
+   "pnl": -3560.0,
+   "total_pnl": -3691.94,
+   "return_on_cost_pct": -0.433055,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00039",
+   "participant": "@DurationTrend_TenX",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 807900.0,
+   "entry_date": "2026-02-17",
+   "entry_price_per100": 99.759865,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.759865,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.030676,
+     "remaining_years": 9.7479,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-09-10",
+   "exit_price_per100": 93.373488,
+   "exit_kind": "MARGIN-LIQUIDATION",
+   "exit_evidence": {
+    "price_per100": 93.373488,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-09-10",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.920164,
+     "remaining_years": 9.1863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 16158.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -51595.54,
+   "total_pnl": -35437.54,
+   "return_on_cost_pct": -4.396936,
+   "holding_days": 205,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

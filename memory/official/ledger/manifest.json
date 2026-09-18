@@ -1,0 +1,86 @@
+{
+ "generated_utc": "2026-09-18T22:39:46Z",
+ "books": [
+  "Live Book (rehearsal)",
+  "Official Auction Book",
+  "Season 1",
+  "Season 2"
+ ],
+ "trades": 2999,
+ "participants": 58,
+ "coverage": {
+  "trades": 2999,
+  "notional_usd": 3673453300.54,
+  "pnl_usd": 485700.92,
+  "by_price_class": {
+   "MODELLED": {
+    "trades": 2224,
+    "notional_usd": 74537438.9,
+    "pnl_usd": 598465.72,
+    "notional_share_pct": 2.0291
+   },
+   "SECONDARY": {
+    "trades": 586,
+    "notional_usd": 35161083.56,
+    "pnl_usd": 48251.51,
+    "notional_share_pct": 0.9572
+   },
+   "OFFICIAL-DERIVED": {
+    "trades": 138,
+    "notional_usd": 2432417730.75,
+    "pnl_usd": -195245.82,
+    "notional_share_pct": 66.2161
+   },
+   "OFFICIAL": {
+    "trades": 51,
+    "notional_usd": 1131337047.33,
+    "pnl_usd": 34229.51,
+    "notional_share_pct": 30.7976
+   }
+  },
+  "by_book": {
+   "Season 1": {
+    "trades": 1854,
+    "notional_usd": 64031845.77,
+    "pnl_usd": 450691.44,
+    "notional_share_pct": 1.7431
+   },
+   "Season 2": {
+    "trades": 370,
+    "notional_usd": 10505593.13,
+    "pnl_usd": 147774.28,
+    "notional_share_pct": 0.286
+   },
+   "Live Book (rehearsal)": {
+    "trades": 586,
+    "notional_usd": 35161083.56,
+    "pnl_usd": 48251.51,
+    "notional_share_pct": 0.9572
+   },
+   "Official Auction Book": {
+    "trades": 189,
+    "notional_usd": 3563754778.08,
+    "pnl_usd": -161016.31,
+    "notional_share_pct": 97.0137
+   }
+  },
+  "official_executed_notional_pct": 30.7976,
+  "official_trades": 51,
+  "official_entry_notional_pct": 50.4109,
+  "official_entry_trades": 97
+ },
+ "storage": {
+  "trades": {
+   "file": "memory/official/ledger/trades.jsonl.gz",
+   "rows": 2999,
+   "bytes_on_disk": 426210,
+   "bytes_uncompressed": 5127659,
+   "bytes_per_row_on_disk": 142.12,
+   "sha256": "07eb6fe784f47f239d50026fd81b410f3d3f7940641aed0be1e067d89e09993d"
+  },
+  "csv": {
+   "file": "memory/official/ledger/trades.csv",
+   "rows": 2999
+  }
+ }
+}

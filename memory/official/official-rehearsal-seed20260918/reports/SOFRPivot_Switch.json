@@ -1,0 +1,2720 @@
+{
+ "participant": "@SOFRPivot_Switch",
+ "family": "regime",
+ "thesis": "Read the Federal Reserve Bank of New York's own SOFR series: while its 20-session change is negative, own duration at the 10x gross cap; while it is positive, sit in the shortest bill available. The switch is one official observation, so a reader can reproduce every decision.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 10-Year 91282CNT4 (long, secondary-curve to secondary-curve) 2025-10-15 to 2025-10-20 for $3,735.64.",
+  "Worst trade: 10-Year 91282CNT4 (secondary-curve to margin-liquidation) 2025-11-04 to 2026-05-19 for $-34,181.69.",
+  "8 of 20 closed trades made money; coupons paid $0.00 and financing cost $-26,293.12.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path.",
+  "The venue liquidated the account 1 time(s) under its declared maintenance rule; those fills are in the tape with the reason recorded on each one."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@SOFRPivot_Switch",
+  "family": "regime",
+  "final_equity": 34638.68,
+  "return_pct": -65.3613,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -67.2817,
+  "sharpe": -2.1423,
+  "trades": 20,
+  "open_positions": 4,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -26293.12,
+  "cash_credit": 63.22,
+  "realised_pnl": -36594.67,
+  "margin_events": 1,
+  "intents": 152,
+  "filled_intents": 29,
+  "waiting_intents": 0,
+  "rejected_intents": 93,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 12
+ },
+ "intents": [
+  {
+   "intent_id": "SOFRPivot_Switch-00001",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-09-17",
+   "target_session": "2025-09-18",
+   "cusip": "912797RD1",
+   "side": "buy",
+   "face": 99800.0,
+   "rule": "park in the shortest bill when the regime flips",
+   "rationale": "SOFR 20-session change +5.0 bp",
+   "status": "FILLED",
+   "settled_on": "2025-09-18",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-09-16",
+     "auction_date": "2025-09-18",
+     "security_term": "4-Week",
+     "offering_amount": 100000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00001",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-09-18",
+    "cusip": "912797RD1",
+    "side": "buy",
+    "face": 99800.0,
+    "price_per100": 99.685778,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -99486.41,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 100000000000.0,
+     "total_accepted": 100283646300.0,
+     "noncompetitive_accepted": 6277751700.0,
+     "competitive_accepted": 93723015300.0,
+     "competitive_tendered": 264394455500.0,
+     "bid_to_cover": 2.71,
+     "soma_accepted": 282879300.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00158974,
+     "request_as_pct_of_total_accepted": 9.952e-05,
+     "request_as_pct_of_offering": 9.98e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 99800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00019",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-14",
+   "target_session": "2025-10-15",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 885400.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -32.0 bp; moving 91282CNT4 to $902,298 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-14",
+     "price_per100": 101.901004
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00019",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-15",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 885400.0,
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -900746.78,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 885400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00020",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-16",
+   "target_session": "2025-10-17",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 33900.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -8.0 bp; moving 91282CNT4 to $939,970 of market value from $905,235",
+   "status": "FILLED",
+   "settled_on": "2025-10-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-16",
+     "price_per100": 102.240243
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00020",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-17",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 19100.0,
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -19479.92,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 19100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00021",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-17",
+   "target_session": "2025-10-20",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 904500.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +4.0 bp; moving 91282CNT4 to $0 of market value from $922,491",
+   "status": "FILLED",
+   "settled_on": "2025-10-20",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-17",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-17",
+     "price_per100": 101.989087
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00021",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-20",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 904500.0,
+    "price_per100": 102.155232,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 923994.07,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 904500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001",
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00022",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-20",
+   "target_session": "2025-10-21",
+   "cusip": "912797QS9",
+   "side": "buy",
+   "face": 3800.0,
+   "rule": "park in the shortest bill when the regime flips",
+   "rationale": "SOFR 20-session change +2.0 bp",
+   "status": "FILLED",
+   "settled_on": "2025-10-21",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-16",
+     "auction_date": "2025-10-21",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00022",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-21",
+    "cusip": "912797QS9",
+    "side": "buy",
+    "face": 3800.0,
+    "price_per100": 99.540333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3782.53,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 98292517600.0,
+     "noncompetitive_accepted": 1465369000.0,
+     "competitive_accepted": 93335040500.0,
+     "competitive_tendered": 276711445000.0,
+     "bid_to_cover": 2.93,
+     "soma_accepted": 3292108100.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00025932,
+     "request_as_pct_of_total_accepted": 3.87e-06,
+     "request_as_pct_of_offering": 4e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 3800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00024",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-22",
+   "target_session": "2025-10-23",
+   "cusip": "912797RQ2",
+   "side": "buy",
+   "face": 99600.0,
+   "rule": "park in the shortest bill when the regime flips",
+   "rationale": "SOFR 20-session change +9.0 bp",
+   "status": "FILLED",
+   "settled_on": "2025-10-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-21",
+     "auction_date": "2025-10-23",
+     "security_term": "4-Week",
+     "offering_amount": 110000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00024",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-23",
+    "cusip": "912797RQ2",
+    "side": "buy",
+    "face": 99600.0,
+    "price_per100": 99.693167,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -99294.39,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 110000000000.0,
+     "total_accepted": 110309903100.0,
+     "noncompetitive_accepted": 6525367100.0,
+     "competitive_accepted": 101475252000.0,
+     "competitive_tendered": 292141454500.0,
+     "bid_to_cover": 2.73,
+     "soma_accepted": 309284000.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00152635,
+     "request_as_pct_of_total_accepted": 9.029e-05,
+     "request_as_pct_of_offering": 9.055e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 99600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00027",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-27",
+   "target_session": "2025-10-28",
+   "cusip": "912797QY6",
+   "side": "buy",
+   "face": 500.0,
+   "rule": "park in the shortest bill when the regime flips",
+   "rationale": "SOFR 20-session change +11.0 bp",
+   "status": "FILLED",
+   "settled_on": "2025-10-28",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-23",
+     "auction_date": "2025-10-28",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00027",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-28",
+    "cusip": "912797QY6",
+    "side": "buy",
+    "face": 500.0,
+    "price_per100": 99.547333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -497.74,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 100322897800.0,
+     "noncompetitive_accepted": 1459728000.0,
+     "competitive_accepted": 93440364700.0,
+     "competitive_tendered": 271166955000.0,
+     "bid_to_cover": 2.87,
+     "soma_accepted": 5322805100.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 3.425e-05,
+     "request_as_pct_of_total_accepted": 5e-07,
+     "request_as_pct_of_offering": 5.3e-07
+    },
+    "closed_face": 0.0,
+    "opened_face": 500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00028",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-30",
+   "target_session": "2025-10-31",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 921500.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -16.0 bp; moving 91282CNT4 to $933,098 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-30",
+     "price_per100": 101.25482
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00028",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-10-31",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 921500.0,
+    "price_per100": 101.262008,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -933129.4,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 921500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00029",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-31",
+   "target_session": "2025-11-03",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 921500.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +2.0 bp; moving 91282CNT4 to $0 of market value from $933,129",
+   "status": "FILLED",
+   "settled_on": "2025-11-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-31",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-31",
+     "price_per100": 101.262008
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00029",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-03",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 921500.0,
+    "price_per100": 101.108945,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 931718.93,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 921500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00030",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-03",
+   "target_session": "2025-11-04",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 909200.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -5.0 bp; moving 91282CNT4 to $919,307 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-11-04",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-03",
+     "price_per100": 101.108945
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00030",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-04",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 905600.0,
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -917831.35,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 905600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00031",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-05",
+   "target_session": "2025-11-06",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 42000.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -23.0 bp; moving 91282CNT4 to $870,249 of market value from $912,661",
+   "status": "FILLED",
+   "settled_on": "2025-11-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-05",
+     "price_per100": 100.779663
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00031",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-06",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 42000.0,
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 42539.29,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 42000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00032",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-06",
+   "target_session": "2025-11-07",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 35000.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -20.0 bp; moving 91282CNT4 to $910,140 of market value from $874,689",
+   "status": "FILLED",
+   "settled_on": "2025-11-07",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-06",
+     "price_per100": 101.284025
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00032",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-07",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 32700.0,
+    "price_per100": 101.285823,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -33120.46,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 32700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00034",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-10",
+   "target_session": "2025-11-12",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 14200.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -20.0 bp; moving 91282CNT4 to $891,916 of market value from $906,347",
+   "status": "FILLED",
+   "settled_on": "2025-11-12",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-10",
+     "price_per100": 101.120979
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00034",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-12",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 14200.0,
+    "price_per100": 101.528165,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 14417.0,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 14200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00035",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-12",
+   "target_session": "2025-11-13",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 26200.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -21.0 bp; moving 91282CNT4 to $922,264 of market value from $895,580",
+   "status": "FILLED",
+   "settled_on": "2025-11-13",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-12",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-12",
+     "price_per100": 101.528165
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00035",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-13",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 5900.0,
+    "price_per100": 101.283426,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -5975.72,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 5900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00037",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-14",
+   "target_session": "2025-11-17",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 16200.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -35.0 bp; moving 91282CNT4 to $880,804 of market value from $897,230",
+   "status": "FILLED",
+   "settled_on": "2025-11-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-11-14",
+     "price_per100": 101.039387
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00037",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2025-11-17",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 16200.0,
+    "price_per100": 101.086641,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 16376.04,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 16200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00073",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-14",
+   "target_session": "2026-01-15",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 818600.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -11.0 bp; moving 91282CPJ4 to $809,492 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-01-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-14",
+     "price_per100": 98.880701
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00073",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-01-15",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 4800.0,
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -4738.2,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 0.0,
+    "opened_face": 4800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00080",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-26",
+   "target_session": "2026-01-27",
+   "cusip": "91282CPJ4",
+   "side": "sell",
+   "face": 4700.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +0.0 bp; moving 91282CPJ4 to $0 of market value from $4,719",
+   "status": "FILLED",
+   "settled_on": "2026-01-27",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-26",
+     "price_per100": 98.322689
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00080",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-01-27",
+    "cusip": "91282CPJ4",
+    "side": "sell",
+    "face": 4700.0,
+    "price_per100": 98.169211,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 4613.95,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 4700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00011"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00127",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-01",
+   "target_session": "2026-06-02",
+   "cusip": "912797TN7",
+   "side": "buy",
+   "face": 3900.0,
+   "rule": "park in the shortest bill when the regime flips",
+   "rationale": "SOFR 20-session change +1.0 bp",
+   "status": "FILLED",
+   "settled_on": "2026-06-02",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-05-28",
+     "auction_date": "2026-06-02",
+     "security_term": "6-Week",
+     "offering_amount": 75000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00127",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-06-02",
+    "cusip": "912797TN7",
+    "side": "buy",
+    "face": 3900.0,
+    "price_per100": 99.577083,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3883.51,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 79749787200.0,
+     "noncompetitive_accepted": 1649746100.0,
+     "competitive_accepted": 71652020500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.28,
+     "soma_accepted": 4748020600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.0002364,
+     "request_as_pct_of_total_accepted": 4.89e-06,
+     "request_as_pct_of_offering": 5.2e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 3900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00136",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-14",
+   "target_session": "2026-07-15",
+   "cusip": "91282CQQ7",
+   "side": "buy",
+   "face": 382400.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -2.0 bp; moving 91282CQQ7 to $376,447 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-07-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-14",
+     "price_per100": 98.427353
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00136",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-15",
+    "cusip": "91282CQQ7",
+    "side": "buy",
+    "face": 382400.0,
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -377327.28,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 382400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00137",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-15",
+   "target_session": "2026-07-16",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 400.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -5.0 bp; moving 91282CQQ7 to $376,839 of market value from $377,327",
+   "status": "FILLED",
+   "settled_on": "2026-07-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-15",
+     "price_per100": 98.673452
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00137",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-16",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 400.0,
+    "price_per100": 98.516699,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 394.07,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00013"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00138",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-16",
+   "target_session": "2026-07-17",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 5900.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -1.0 bp; moving 91282CQQ7 to $370,431 of market value from $376,334",
+   "status": "FILLED",
+   "settled_on": "2026-07-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-16",
+     "price_per100": 98.516699
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00138",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-17",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 5900.0,
+    "price_per100": 98.671431,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 5821.61,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 5900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00015"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00140",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-20",
+   "target_session": "2026-07-21",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 10100.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -5.0 bp; moving 91282CQQ7 to $359,692 of market value from $369,633",
+   "status": "FILLED",
+   "settled_on": "2026-07-21",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-20",
+     "price_per100": 98.280476
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00140",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-21",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 10100.0,
+    "price_per100": 98.036765,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 9901.71,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 10100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00016"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00141",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-21",
+   "target_session": "2026-07-22",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 366000.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +0.0 bp; moving 91282CQQ7 to $0 of market value from $358,815",
+   "status": "FILLED",
+   "settled_on": "2026-07-22",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-21",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-21",
+     "price_per100": 98.036765
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00141",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-22",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 366000.0,
+    "price_per100": 97.729251,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 357689.06,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 366000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00017"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00142",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-29",
+   "target_session": "2026-07-30",
+   "cusip": "91282CQQ7",
+   "side": "buy",
+   "face": 346900.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -3.0 bp; moving 91282CQQ7 to $339,175 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-07-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-29",
+     "price_per100": 97.746519
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00142",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-30",
+    "cusip": "91282CQQ7",
+    "side": "buy",
+    "face": 346900.0,
+    "price_per100": 97.669554,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -338815.68,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 346900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00143",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-30",
+   "target_session": "2026-07-31",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 300.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -1.0 bp; moving 91282CQQ7 to $338,457 of market value from $338,816",
+   "status": "FILLED",
+   "settled_on": "2026-07-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-30",
+     "price_per100": 97.669554
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00143",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-07-31",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 300.0,
+    "price_per100": 97.12603,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 291.38,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00018"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00144",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-31",
+   "target_session": "2026-08-03",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 346600.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +2.0 bp; moving 91282CQQ7 to $0 of market value from $336,639",
+   "status": "FILLED",
+   "settled_on": "2026-08-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-31",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-31",
+     "price_per100": 97.12603
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00144",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-08-03",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 346600.0,
+    "price_per100": 97.518121,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 337997.81,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 346600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00019"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00145",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-12",
+   "target_session": "2026-08-13",
+   "cusip": "91282CQQ7",
+   "side": "buy",
+   "face": 341100.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -2.0 bp; moving 91282CQQ7 to $333,283 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-08-13",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-12",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-08-12",
+     "price_per100": 97.684385
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00145",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-08-13",
+    "cusip": "91282CQQ7",
+    "side": "buy",
+    "face": 340400.0,
+    "price_per100": 98.076879,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -333853.7,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 340400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00146",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-13",
+   "target_session": "2026-08-14",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 340400.0,
+   "rule": "stand aside while SOFR's 20-session change is positive",
+   "rationale": "SOFR 20-session change +0.0 bp; moving 91282CQQ7 to $0 of market value from $333,854",
+   "status": "FILLED",
+   "settled_on": "2026-08-14",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-13",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-08-13",
+     "price_per100": 98.076879
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00146",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-08-14",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 340400.0,
+    "price_per100": 97.692943,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 332546.78,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 340400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00020"
+    ]
+   }
+  },
+  {
+   "intent_id": "SOFRPivot_Switch-00151",
+   "participant": "@SOFRPivot_Switch",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-15",
+   "target_session": "2026-09-16",
+   "cusip": "91282CRF0",
+   "side": "buy",
+   "face": 321900.0,
+   "rule": "own duration while SOFR's 20-session change is negative",
+   "rationale": "SOFR 20-session change -2.0 bp; moving 91282CRF0 to $312,595 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-09-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-15",
+     "price_per100": 97.094654
+    }
+   },
+   "fill": {
+    "intent_id": "SOFRPivot_Switch-00151",
+    "participant": "@SOFRPivot_Switch",
+    "session": "2026-09-16",
+    "cusip": "91282CRF0",
+    "side": "buy",
+    "face": 319700.0,
+    "price_per100": 97.014685,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -310155.95,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000040000.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 105714440000.0,
+     "security_term": "9-Year 11-Month",
+     "auction_date": "2026-09-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 319700.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 885400.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.733316,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.037607,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-20",
+   "exit_price_per100": 102.155232,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 102.155232,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-20",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.986557,
+     "remaining_years": 9.8247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 3735.64,
+   "total_pnl": 3735.64,
+   "return_on_cost_pct": 0.414727,
+   "holding_days": 5,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 19100.0,
+   "entry_date": "2025-10-17",
+   "entry_price_per100": 101.989087,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.00663,
+     "remaining_years": 9.8329,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-20",
+   "exit_price_per100": 102.155232,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 102.155232,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-20",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.986557,
+     "remaining_years": 9.8247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 31.73,
+   "total_pnl": 31.73,
+   "return_on_cost_pct": 0.162905,
+   "holding_days": 3,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "912797RD1",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 99800.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 99.685778,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-09-18",
+    "issue_date": "2025-09-23",
+    "maturity_date": "2025-10-21",
+    "field": "pricePer100",
+    "value": 99.685778,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-10-21",
+   "exit_price_per100": 100.0,
+   "exit_kind": "MATURITY-REDEMPTION",
+   "exit_evidence": {
+    "field": "maturityDate",
+    "value": "2025-10-21",
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "derivation": "redemption at par on the official maturity date"
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 313.59,
+   "total_pnl": 313.59,
+   "return_on_cost_pct": 0.315212,
+   "holding_days": 33,
+   "liquidity": {
+    "offering_amount": 100000000000.0,
+    "total_accepted": 100283646300.0,
+    "bid_to_cover": 2.71,
+    "competitive_tendered": 264394455500.0,
+    "security_term": "4-Week",
+    "auction_date": "2025-09-18"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 921500.0,
+   "entry_date": "2025-10-31",
+   "entry_price_per100": 101.262008,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.262008,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.094932,
+     "remaining_years": 9.7945,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-03",
+   "exit_price_per100": 101.108945,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.108945,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.113616,
+     "remaining_years": 9.7863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1410.48,
+   "total_pnl": -1410.48,
+   "return_on_cost_pct": -0.151155,
+   "holding_days": 3,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 42000.0,
+   "entry_date": "2025-11-04",
+   "entry_price_per100": 101.350635,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.084128,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-06",
+   "exit_price_per100": 101.284025,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.284025,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.092247,
+     "remaining_years": 9.7781,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -27.98,
+   "total_pnl": -27.98,
+   "return_on_cost_pct": -0.065722,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 14200.0,
+   "entry_date": "2025-11-04",
+   "entry_price_per100": 101.350635,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.084128,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-12",
+   "exit_price_per100": 101.528165,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.528165,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-12",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.062521,
+     "remaining_years": 9.7616,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 25.21,
+   "total_pnl": 25.21,
+   "return_on_cost_pct": 0.175164,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 16200.0,
+   "entry_date": "2025-11-04",
+   "entry_price_per100": 101.350635,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.084128,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-11-17",
+   "exit_price_per100": 101.086641,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.086641,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.110676,
+     "remaining_years": 9.7479,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -42.77,
+   "total_pnl": -42.77,
+   "return_on_cost_pct": -0.260476,
+   "holding_days": 13,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00008",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "912797RQ2",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 99600.0,
+   "entry_date": "2025-10-23",
+   "entry_price_per100": 99.693167,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-10-23",
+    "issue_date": "2025-10-28",
+    "maturity_date": "2025-11-25",
+    "field": "pricePer100",
+    "value": 99.693167,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-11-25",
+   "exit_price_per100": 100.0,
+   "exit_kind": "MATURITY-REDEMPTION",
+   "exit_evidence": {
+    "field": "maturityDate",
+    "value": "2025-11-25",
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "derivation": "redemption at par on the official maturity date"
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 305.61,
+   "total_pnl": 305.61,
+   "return_on_cost_pct": 0.307777,
+   "holding_days": 33,
+   "liquidity": {
+    "offering_amount": 110000000000.0,
+    "total_accepted": 110309903100.0,
+    "bid_to_cover": 2.73,
+    "competitive_tendered": 292141454500.0,
+    "security_term": "4-Week",
+    "auction_date": "2025-10-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00009",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "912797QS9",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 3800.0,
+   "entry_date": "2025-10-21",
+   "entry_price_per100": 99.540333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-10-21",
+    "issue_date": "2025-10-23",
+    "maturity_date": "2025-12-04",
+    "field": "pricePer100",
+    "value": 99.540333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-04",
+   "exit_price_per100": 100.0,
+   "exit_kind": "MATURITY-REDEMPTION",
+   "exit_evidence": {
+    "field": "maturityDate",
+    "value": "2025-12-04",
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "derivation": "redemption at par on the official maturity date"
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 17.47,
+   "total_pnl": 17.47,
+   "return_on_cost_pct": 0.46179,
+   "holding_days": 44,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 98292517600.0,
+    "bid_to_cover": 2.93,
+    "competitive_tendered": 276711445000.0,
+    "security_term": "6-Week",
+    "auction_date": "2025-10-21"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00010",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "912797QY6",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 500.0,
+   "entry_date": "2025-10-28",
+   "entry_price_per100": 99.547333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-10-28",
+    "issue_date": "2025-10-30",
+    "maturity_date": "2025-12-11",
+    "field": "pricePer100",
+    "value": 99.547333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-11",
+   "exit_price_per100": 100.0,
+   "exit_kind": "MATURITY-REDEMPTION",
+   "exit_evidence": {
+    "field": "maturityDate",
+    "value": "2025-12-11",
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "derivation": "redemption at par on the official maturity date"
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 2.26,
+   "total_pnl": 2.26,
+   "return_on_cost_pct": 0.454725,
+   "holding_days": 44,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 100322897800.0,
+    "bid_to_cover": 2.87,
+    "competitive_tendered": 271166955000.0,
+    "security_term": "6-Week",
+    "auction_date": "2025-10-28"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00011",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 4700.0,
+   "entry_date": "2026-01-15",
+   "entry_price_per100": 98.712516,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-01-27",
+   "exit_price_per100": 98.169211,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.169211,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.226384,
+     "remaining_years": 9.8055,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -25.54,
+   "total_pnl": -25.54,
+   "return_on_cost_pct": -0.550391,
+   "holding_days": 12,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00012",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 833200.0,
+   "entry_date": "2025-11-04",
+   "entry_price_per100": 101.350635,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.350635,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-11-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.084128,
+     "remaining_years": 9.7836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-05-19",
+   "exit_price_per100": 97.248176,
+   "exit_kind": "MARGIN-LIQUIDATION",
+   "exit_evidence": {
+    "price_per100": 97.248176,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-19",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.627306,
+     "remaining_years": 9.2466,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -34181.69,
+   "total_pnl": -34181.69,
+   "return_on_cost_pct": -4.047788,
+   "holding_days": 196,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00013",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 400.0,
+   "entry_date": "2026-07-15",
+   "entry_price_per100": 98.673452,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541525,
+     "remaining_years": 9.8411,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-16",
+   "exit_price_per100": 98.516699,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.516699,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.561379,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.63,
+   "total_pnl": -0.63,
+   "return_on_cost_pct": -0.15886,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00014",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "912797TN7",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 3900.0,
+   "entry_date": "2026-06-02",
+   "entry_price_per100": 99.577083,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-02",
+    "issue_date": "2026-06-04",
+    "maturity_date": "2026-07-16",
+    "field": "pricePer100",
+    "value": 99.577083,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-16",
+   "exit_price_per100": 100.0,
+   "exit_kind": "MATURITY-REDEMPTION",
+   "exit_evidence": {
+    "field": "maturityDate",
+    "value": "2026-07-16",
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "derivation": "redemption at par on the official maturity date"
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 16.49,
+   "total_pnl": 16.49,
+   "return_on_cost_pct": 0.424713,
+   "holding_days": 44,
+   "liquidity": {
+    "offering_amount": 75000000000.0,
+    "total_accepted": 79749787200.0,
+    "bid_to_cover": 3.28,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-06-02"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00015",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 5900.0,
+   "entry_date": "2026-07-15",
+   "entry_price_per100": 98.673452,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541525,
+     "remaining_years": 9.8411,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-17",
+   "exit_price_per100": 98.671431,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.671431,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541781,
+     "remaining_years": 9.8356,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.12,
+   "total_pnl": -0.12,
+   "return_on_cost_pct": -0.002048,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00016",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 10100.0,
+   "entry_date": "2026-07-15",
+   "entry_price_per100": 98.673452,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541525,
+     "remaining_years": 9.8411,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-21",
+   "exit_price_per100": 98.036765,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.036765,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-21",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.622402,
+     "remaining_years": 9.8247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -64.31,
+   "total_pnl": -64.31,
+   "return_on_cost_pct": -0.645247,
+   "holding_days": 6,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00017",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 366000.0,
+   "entry_date": "2026-07-15",
+   "entry_price_per100": 98.673452,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541525,
+     "remaining_years": 9.8411,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-22",
+   "exit_price_per100": 97.729251,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.729251,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-22",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.661689,
+     "remaining_years": 9.8219,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -3455.78,
+   "total_pnl": -3455.78,
+   "return_on_cost_pct": -0.956895,
+   "holding_days": 7,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00018",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 300.0,
+   "entry_date": "2026-07-30",
+   "entry_price_per100": 97.669554,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.669554,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.669333,
+     "remaining_years": 9.8,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-31",
+   "exit_price_per100": 97.12603,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.12603,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.739187,
+     "remaining_years": 9.7973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1.63,
+   "total_pnl": -1.63,
+   "return_on_cost_pct": -0.556493,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00019",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 346600.0,
+   "entry_date": "2026-07-30",
+   "entry_price_per100": 97.669554,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.669554,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.669333,
+     "remaining_years": 9.8,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-08-03",
+   "exit_price_per100": 97.518121,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.518121,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.688749,
+     "remaining_years": 9.789,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -524.87,
+   "total_pnl": -524.87,
+   "return_on_cost_pct": -0.155046,
+   "holding_days": 4,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00020",
+   "participant": "@SOFRPivot_Switch",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 340400.0,
+   "entry_date": "2026-08-13",
+   "entry_price_per100": 98.076879,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 98.076879,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-13",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.617288,
+     "remaining_years": 9.7616,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-08-14",
+   "exit_price_per100": 97.692943,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.692943,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-14",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.666338,
+     "remaining_years": 9.7589,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1306.92,
+   "total_pnl": -1306.92,
+   "return_on_cost_pct": -0.391464,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

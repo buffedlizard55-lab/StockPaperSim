@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@BellyMeanReversion_FiveY · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../official/index.html">Overview</a><a class="" href="../../official/leaderboard.html">Leaderboard</a><a class="" href="../../official/blotter.html">Trade tape</a><a class="" href="../../official/forward.html">Forward book</a><a class="active" href="../../official/participants/index.html">Participants</a><a class="" href="../../official/ledger.html">Trade store</a><a class="" href="../../official/method.html">Venue &amp; formulas</a><a class="" href="../../official/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../live/index.html">Live Book</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede"><strong>@BellyMeanReversion_FiveY</strong> - Buy the 5-year when its official par yield is more than 25 bp above its own 120-session mean and stand aside otherwise, at the 10x gross cap while the position is on. The mirror of the trend rule: one of the two has to be wrong about this window, and the book says which.</p>
+
+<div class="kpis"><div class="kpi"><span class="kpi-label">Return</span><span class="kpi-value ">-49.22%</span><span class="kpi-sub">$50,783.05 ending equity</span></div><div class="kpi"><span class="kpi-label">Status</span><span class="kpi-value ">ACTIVE</span><span class="kpi-sub">7 settled trades</span></div><div class="kpi"><span class="kpi-label">Max drawdown</span><span class="kpi-value ">-50.64%</span><span class="kpi-sub">Sharpe -2.51</span></div><div class="kpi"><span class="kpi-label">Coupons</span><span class="kpi-value ">$0.00</span><span class="kpi-sub">financing $-19,822.02</span></div><div class="kpi"><span class="kpi-label">Orders</span><span class="kpi-value ">92</span><span class="kpi-sub">14 filled · 0 waited · 0 refused</span></div><div class="kpi"><span class="kpi-label">Official price coverage</span><span class="kpi-value ">100.00%</span><span class="kpi-sub">primary at the published price, secondary derived</span></div></div>
+<section class="card "><h2>Why it worked, or why it did not</h2><ul><li>Best trade: 5-Year 91282CQD6 (long, secondary-curve to secondary-curve) 2026-03-27 to 2026-03-31 for $5,402.50.</li><li>Worst trade: 5-Year 91282CQD6 (secondary-curve to secondary-curve) 2026-03-25 to 2026-03-26 for $-4,852.76.</li><li>4 of 7 closed trades made money; coupons paid $0.00 and financing cost $-19,822.02.</li><li>Official par curve over the window: 3-month 4.02% -&gt; 4.14% (+12 bp), 2-year 3.52% -&gt; 4.74% (+122 bp), 10-year 4.06% -&gt; 5.01% (+95 bp), 30-year 4.66% -&gt; 5.35% (+69 bp). Duration exposures are paid off against this path.</li></ul></section>
+<section class="card "><h2>Settled trades</h2><table class="data"><thead><tr><th>Entry</th><th>Exit</th><th>Security</th><th>Side</th><th>Face</th><th>Entry price</th><th>Exit price</th><th>Exit kind</th><th>Price P&amp;L</th><th>Total P&amp;L</th><th>Return on cost</th></tr></thead><tbody><tr><td>2026-03-23</td><td>2026-03-24</td><td>5-Year <span class="muted small">91282CQD6</span></td><td>long</td><td>$947,400</td><td>97.989667</td><td>97.635427</td><td>SECONDARY-CURVE</td><td><span class="neg">$-3,356.07</span></td><td><span class="neg">$-3,356.07</span></td><td>-0.36%</td></tr><tr><td>2026-03-25</td><td>2026-03-26</td><td>5-Year <span class="muted small">91282CQD6</span></td><td>long</td><td>$914,000</td><td>97.943525</td><td>97.412588</td><td>SECONDARY-CURVE</td><td><span class="neg">$-4,852.76</span></td><td><span class="neg">$-4,852.76</span></td><td>-0.54%</td></tr><tr><td>2026-03-27</td><td>2026-03-30</td><td>5-Year <span class="muted small">91282CQD6</span></td><td>long</td><td>$1,800</td><td>97.507707</td><td>97.908601</td><td>SECONDARY-CURVE</td><td><span class="pos">$7.22</span></td><td><span class="pos">$7.22</span></td><td>0.41%</td></tr><tr><td>2026-03-27</td><td>2026-03-31</td><td>5-Year <span class="muted small">91282CQD6</span></td><td>long</td><td>$868,400</td><td>97.507707</td><td>98.129828</td><td>SECONDARY-CURVE</td><td><span class="pos">$5,402.50</span></td><td><span class="pos">$5,402.50</span></td><td>0.64%</td></tr><tr><td>2026-04-06</td><td>2026-04-07</td><td>5-Year <span class="muted small">91282CQG9</span></td><td>long</td><td>$897,400</td><td>99.531237</td><td>99.667508</td><td>SECONDARY-CURVE</td><td><span class="pos">$1,222.90</span></td><td><span class="pos">$1,222.90</span></td><td>0.14%</td></tr><tr><td>2026-05-05</td><td>2026-05-07</td><td>5-Year <span class="muted small">91282CQK0</span></td><td>long</td><td>$71,900</td><td>99.083896</td><td>99.263383</td><td>SECONDARY-CURVE</td><td><span class="pos">$129.05</span></td><td><span class="pos">$129.05</span></td><td>0.18%</td></tr><tr><td>2026-05-06</td><td>2026-05-07</td><td>5-Year <span class="muted small">91282CQK0</span></td><td>long</td><td>$34,200</td><td>99.486434</td><td>99.263383</td><td>SECONDARY-CURVE</td><td><span class="neg">$-76.28</span></td><td><span class="neg">$-76.28</span></td><td>-0.22%</td></tr></tbody></table></section>
+<section class="card "><h2>Every order this rule wrote</h2>
+<p>92 orders, by their final state:</p>
+<ul><li>CANCELLED: <strong>77</strong></li><li>FILLED: <strong>14</strong></li><li>PENDING: <strong>1</strong></li></ul>
+<p><strong>WAITING-DATA</strong> means the venue found no official observation for the
+target session and left the order open rather than filling it at a modelled price;
+<strong>REJECTED</strong> means a declared rule refused it (a when-issued trade, a
+non-competitive award beyond the maximum, a maintenance breach);
+<strong>CANCELLED</strong> means the order was superseded or the leverage cap left
+nothing to size.</p>
+</section>
+<section class="card "><h2>The orders that filled</h2><table class="data"><thead><tr><th>Written</th><th>Target</th><th>Order</th><th>Side</th><th>CUSIP</th><th>Face</th><th>Rule</th><th>Settlement note</th></tr></thead><tbody><tr><td>2026-05-11</td><td>2026-05-12</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQK0</td><td>$880,200</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-05-06</td><td>2026-05-07</td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CQK0</td><td>$106,100</td><td>stand aside unless the 5-year is 25 bp cheap to its mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-05-05</td><td>2026-05-06</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQK0</td><td>$811,100</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-05-04</td><td>2026-05-05</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQK0</td><td>$884,100</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-04-29</td><td>2026-04-30</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQG9</td><td>$910,400</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-04-06</td><td>2026-04-07</td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CQG9</td><td>$897,400</td><td>stand aside unless the 5-year is 25 bp cheap to its mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-04-03</td><td>2026-04-06</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQG9</td><td>$897,400</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-03-30</td><td>2026-03-31</td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CQD6</td><td>$868,400</td><td>stand aside unless the 5-year is 25 bp cheap to its mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-03-27</td><td>2026-03-30</td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CQD6</td><td>$1,800</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-03-26</td><td>2026-03-27</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQD6</td><td>$870,200</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-03-25</td><td>2026-03-26</td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CQD6</td><td>$914,000</td><td>stand aside unless the 5-year is 25 bp cheap to its mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr><tr><td>2026-03-24</td><td>2026-03-25</td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CQD6</td><td>$914,000</td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td>filled on the official curve: present value of the security&#x27;s own coupon and par at the official par yield for its remaining maturity, interpolated in tenor</td></tr></tbody></table></section>
+<section class="card "><h2>Rule and data status</h2>
+<p><strong>Rule:</strong> Buy the 5-year when its official par yield is more than 25 bp above its own 120-session mean and stand aside otherwise, at the 10x gross cap while the position is on. The mirror of the trend rule: one of the two has to be wrong about this window, and the book says which.</p>
+<p><strong>Where the rule's premises come from:</strong></p>
+<ul><li>none declared</li></ul>
+<p><strong>Data status:</strong> <span class="badge badge-ok">READY</span>
+</p>
+<p><a href="index.html">All participants</a> ·
+<a href="../blotter.html">Trade tape</a> ·
+<a href="../method.html">Venue rules</a></p>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="../method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -648,3 +648,160 @@ liquidity model instead of a secondary file's volume column. The whole file cove
 roughly 13,000 symbols in about 69 page-sized chunks, so it is a job for the
 runner's collector, filtered to the traded universe before storage — recorded as a
 P1 item rather than half-collected here.
+
+## Official Auction Book session (2026-09-18 → 2026-09-19)
+
+This session added the lane the brief's first requirement names: **simulated settled
+trades built from real verified official pricing, dates and liquidity**. It is the
+first book on this site that may only execute on a number a publisher printed, so
+the log records the sources one by one and then the defects that reading its tape
+found.
+
+### The two official publishers, and what each one gave
+
+| Source | URL | What was verified |
+| --- | --- | --- |
+| TreasuryDirect auction results | <https://www.treasurydirect.gov/TA_WS/securities/auctioned> | Returned JSON rows for completed auctions with `pricePer100`, `highDiscountRate`, `highYield`, `highInvestmentRate`, `offeringAmount`, `totalAccepted`, `totalTendered`, `competitiveAccepted`, `nonCompetitiveAccepted`, `primaryDealerAccepted`, `indirectBidderAccepted`, `directBidderAccepted`, `somaAccepted`, `bidToCoverRatio`, `allocationPercentage`, `minimumToIssue`, `multiplesToIssue`, `maximumNonCompetitiveAward`, `reopening`, `tips`, `auctionDate`, `issueDate`, `maturityDate` |
+| TreasuryDirect results by date range | <https://www.treasurydirect.gov/TA_WS/securities/search> | The same fields for every auction in a window; this is what backs the season (471 auctions in the last-45-day window, 2,000 in the Fiscal Data table) |
+| Fiscal Data API | <https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query> | A second official publication of the same events with its own schema and field names. The collector compares **471 shared auctions on 11 fields — 4,251 comparisons, 0 differences**, written to `data/real/crosschecks/treasury_crosscheck.json` |
+| Treasury par yield curve | <https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/> | Official constant-maturity par yields, fetched per year (2024, 2025, 2026) and used to price the secondary leg by the formula printed on `docs/official/method.html` |
+| Federal Reserve H.15 | <https://www.federalreserve.gov/releases/h15/> | The release the bill secondary-market rates (`DTB4WK`, `DTB3`, `DTB6`) and the TIPS real yields (`DFII5`, `DFII10`, `DFII30`) come from; the FRED copies are the collected form, and `DTB*` was added in this session so a bill's secondary mark has an official quote instead of a curve-derived one |
+| 31 CFR Part 356 | <https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-356> | The auction rules the primary leg follows: non-competitive bidding, the maximum award, award at the single published price, and the price/yield formulas |
+| SEC insider data sets | <https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets> | **Attempted and refused**: HTTP 403 at both documented path layouts for all eight quarters requested. Recorded in `data/real/collection_manifest.json` and registered as L-27 |
+
+### Arithmetic checked against the published numbers
+
+* **1,485 published bill prices** reproduce from their own published discount rate
+  by `100 (1 − d t/360)` with **0 mismatches**, to 1e-4 of a cent.
+* The **investment-rate** check is partial and stays partial: 1,106 of 1,415
+  published rates match the 365-day convention (78.163%) and the mismatches imply a
+  1.0026–1.0028 day-count factor. The code reports the agreement rate and the
+  implied factors rather than switching conventions to force a match.
+* A 4-week bill auctioned 2026-09-17 (`912797VM6`) was re-priced by hand from its
+  published 3.820% discount rate and 28 days: formula price 99.702889, published
+  price 99.702889.
+
+### The publication the verification produced
+
+| Item | Value |
+| --- | --- |
+| Window | 2025-09-17 → 2026-09-16, 250 official sessions |
+| Participants | 14 strategies, one username each, $100,000 each |
+| Settled round trips | 160 from 243 fills and 2,814 intents |
+| Verification | **PASS** — 7,947 checks, 0 failures, largest equity residual $0.036 |
+| Official executed notional | 100% of this book's closed-trade notional (primary = published price; the secondary leg is labelled OFFICIAL-DERIVED) |
+| Irregularities in the run | **none** (look-ahead, target-not-forward, plan errors and ruin events all empty) |
+
+### Defects this session found, and how
+
+All three were found by re-reading one account's tape line by line, not by a
+failing test, and all three are registered:
+
+1. **IR-55 — the netting test was inverted.** `apply_fill()` closed lots of its own
+   direction, so a buy made the net long fall *and* the cash fall. A 2s10s
+   flattener went from +$134,817 to −$103,429 in one session and was wound up at
+   zero. The run's own verification passed while the engine was wrong, which is why
+   the fix added an account-level assertion (equity re-derived from fills and carry
+   rows) rather than only a regression test.
+2. **IR-56 — opposing lots accumulated in one CUSIP.** Exposure, financing and the
+   leverage cap were summed over lots rather than over the net position, so a rule
+   that traded both directions in one security was charged twice and allowed to add
+   size its real position did not justify.
+3. **IR-57 — a secondary trade was booked in a security that had not been issued.**
+   The price came from the par curve and the security was days from issuance, so the
+   tape carried a plausible, entirely invented number. The venue now refuses
+   when-issued trades with the issue date in the settlement note.
+
+### What the lane cannot do yet, stated on the site rather than in a footnote
+
+US equities and ETFs have no official, redistributable price in this repository
+(IR-58), so the equity books keep their SECONDARY label and the coverage number.
+The official lane answers that part of the brief with the instrument family where a
+publisher *does* print the price of every trade: US Treasury auctions. The
+limitations that remain are registered as L-27 to L-35, and the next session's
+queue is in `REMAINING_WORK.json`, headed by the SEC 403.
+
+## Official Auction Book, second pass (2026-09-19): the reasons a rule stood aside
+
+Pass 1 built the lane and its audit; this pass went looking for the failure mode a
+green verification cannot see — a rule that does nothing and looks patient. The
+tape was read account by account, the collection run that landed during the pass
+was merged first (it brought the three DFII real-yield series and the Treasury
+tapes), and the book was re-run and re-audited afterwards.
+
+| | |
+|---|---|
+| Run | `memory/official/official-rehearsal-seed20260918` — 250 official sessions, 2025-09-17 → 2026-09-16, 14 participants, $100,000 each |
+| Verification | **PASS** — 8,045 checks, 0 failures, largest equity residual $0.035155 |
+| Independent audit | **PASS** — 1,864 checks, 0 failures, report at `memory/official/ledger/independent_audit.json` |
+| Activity | 2,898 intents, 302 fills, 189 settled round trips |
+| Winner | `@FrontEndRollDown_13W` **+4.42%**, carrying two short bills; the inflation rule is last but one at **−59.77%** |
+| Median | **−39.07%** |
+
+The numbers in that table are the state **after** the collection run described
+below landed, which is the state this branch publishes. Mid-pass, before that run,
+the same table read: 2,662 intents, 300 fills, 189 round trips, winner
+`@TIPSBreakeven_Rider` **+5.58%** with zero orders, median **−24.20%**, 7,573
+verification checks. Both states are recorded because the difference between them
+is the point of the pass.
+
+### The defect this pass found (IR-61)
+
+The inflation rule compared a **ten-year** nominal breakeven with a **five-year**
+realised inflation rate, while buying whichever TIPS had auctioned most recently —
+a security with 29 years left. Three horizons were being called one breakeven.
+Nothing failed when it was wrong, because the rule's other outcome was *also* no
+orders: renaming the realised-inflation helper made the planning call raise
+`AttributeError`, the venue's per-rule guard turned that into a private
+`PLAN-ERROR` flag, and the standings looked identical either way.
+
+Fixed by reading both legs at the security's own remaining maturity, and by making
+the venue keep what the rule says when it decides not to trade.
+
+### What the fix changed about the published record
+
+| | |
+|---|---|
+| `notes.jsonl.gz` | new stream beside the other six: `{session, participant, note}`, 723 rows this run |
+| Participant pages | a **Why it stood aside** card, reasons ranked by how often they recurred |
+| `buy_at_auction` | a bid for an auction that has not priced yet is sized at the newest published price of the same type and term, and the rationale records that this was a sizing input (L-37) — the executed price is unchanged: the auction's own published number |
+| `OfficialRates._find` | picks the **longest** collected window of a series instead of the first name that sorts (the CPI index now has more than one file requested) |
+| Collector | `FRED_SERIES_WINDOWS["CPIAUCSL"] = "1990-01-01"` — a five-year realised rate cannot come from one year of observations, and narrowing the rule's window to fit the file would have been the wrong repair |
+| CI | the independent audit now writes its report into the committed memory and fails if the committed copy changes, so the check count the README quotes is re-derived, not typed |
+
+### The same class of defect, one layer up: the README's own paragraph
+
+The official section of `README.md` was written at the end of pass 1 quoting that
+run's numbers. Merging the collection run and fixing IR-61 replaced every one of
+them — winner, return, trip count and the verification count all moved — and
+nothing failed, because no test read that section. `tests/test_readme_claims.py`
+now re-derives the paragraph from `memory/official/…/leaderboard.json`, the
+manifest and the committed audit report, including the requirement that a winner
+with zero trades is described as cash interest rather than as a strategy result.
+
+### What changed when the wider CPI file landed (same pass, later)
+
+The push that carried the collector change fired the temporary collection
+workflow, and the runner returned `CPIAUCSL_1990-01-01_2026-09-17.csv` — 440
+monthly observations, 1990-01-01 to 2026-08-01. The book was re-run on that file:
+
+* the inflation rule stopped standing aside and **bought** — a 30-year TIPS,
+  360,400 face at 98.655276 on 2025-09-18 and a further 28,700 face at 101.054399
+  on 2025-11-28, both at the venue's official real-yield mark (OFFICIAL-DERIVED),
+  on the way to a **−59.77%** return;
+* the winner changed a second time, to `@FrontEndRollDown_13W` at **+4.42%**, which
+  holds two short bills — its return is bill carry, not a duration call;
+* the median fell from −24.20% to **−39.07%**, and the verification count rose from
+  7,573 to **8,045** because there are now open positions to re-price every
+  session.
+
+**A second instance of the same defect class, on the same page.** With the rule
+holding a marked-down position and no closed trips, the post-mortem still said
+*"No trade closed inside the window. The cash return is the official SOFR credited
+on the balance, not a strategy result."* — the generator equated "no round trips"
+with "no position". The narrative and the participant page now mark the open
+positions from the venue's own marks stream and report the number: two positions,
+**−$43,801.28** unrealised at the final session's official mark, plus $16,528.92 of
+financing. This is the same shape of error as IR-61 — a sentence that is true of a
+different account — and it is why the README's official paragraph is now checked
+by a test that re-derives it from the run.

@@ -1,0 +1,2628 @@
+{
+ "participant": "@LiquidityWeighted_Participant",
+ "family": "liquidity",
+ "thesis": "Size every auction bid by the official liquidity of the issue it is buying - bidding less into auctions whose acceptance was thin or whose bid-to-cover was low - and hold the highest-scoring bill each week. The brief asked for bid sizing and liquidity to be part of the record; this participant makes it part of the rule, and the book prints the participation percentage of every award.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 26-Week 912797QS9 (long, primary-auction to secondary-curve) 2025-10-21 to 2025-12-02 for $1,031.74.",
+  "15 of 15 closed trades made money; coupons paid $0.00 and financing cost $-11,484.76.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@LiquidityWeighted_Participant",
+  "family": "liquidity",
+  "final_equity": 99021.22,
+  "return_pct": -0.9788,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -0.9975,
+  "sharpe": -5.3554,
+  "trades": 15,
+  "open_positions": 2,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -11484.76,
+  "cash_credit": 17.38,
+  "realised_pnl": 9560.46,
+  "margin_events": 0,
+  "intents": 263,
+  "filled_intents": 32,
+  "waiting_intents": 0,
+  "rejected_intents": 0,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 4
+ },
+ "intents": [
+  {
+   "intent_id": "LiquidityWeighted_Participant-00001",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-09-17",
+   "target_session": "2025-09-18",
+   "cusip": "912797RD1",
+   "side": "buy",
+   "face": 235500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.87 on 4-Week 912797RD1",
+   "status": "FILLED",
+   "settled_on": "2025-09-18",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-09-16",
+     "auction_date": "2025-09-18",
+     "security_term": "4-Week",
+     "offering_amount": 100000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00001",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-09-18",
+    "cusip": "912797RD1",
+    "side": "buy",
+    "face": 235500.0,
+    "price_per100": 99.685778,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -234760.01,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 100000000000.0,
+     "total_accepted": 100283646300.0,
+     "noncompetitive_accepted": 6277751700.0,
+     "competitive_accepted": 93723015300.0,
+     "competitive_tendered": 264394455500.0,
+     "bid_to_cover": 2.71,
+     "soma_accepted": 282879300.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00375134,
+     "request_as_pct_of_total_accepted": 0.00023483,
+     "request_as_pct_of_offering": 0.0002355
+    },
+    "closed_face": 0.0,
+    "opened_face": 235500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00003",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-09-19",
+   "target_session": "2025-09-22",
+   "cusip": "912797NU7",
+   "side": "buy",
+   "face": 258400.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.95 on 13-Week 912797NU7",
+   "status": "PARTIAL",
+   "settled_on": "2025-09-22",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-09-18",
+     "auction_date": "2025-09-22",
+     "security_term": "13-Week",
+     "offering_amount": 82000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00003",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-09-22",
+    "cusip": "912797NU7",
+    "side": "buy",
+    "face": 65700.0,
+    "price_per100": 99.013556,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -65051.91,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 82000000000.0,
+     "total_accepted": 85357331000.0,
+     "noncompetitive_accepted": 1905090100.0,
+     "competitive_accepted": 80020703900.0,
+     "competitive_tendered": 271133748600.0,
+     "bid_to_cover": 3.33,
+     "soma_accepted": 3356537000.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00344866,
+     "request_as_pct_of_total_accepted": 7.697e-05,
+     "request_as_pct_of_offering": 8.012e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 65700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00023",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-20",
+   "target_session": "2025-10-21",
+   "cusip": "912797RD1",
+   "side": "sell",
+   "face": 235500.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2025-10-21",
+   "settle_note": "filled on the official curve: at or past the official maturity date: par",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2025-10-20"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00023",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-10-21",
+    "cusip": "912797RD1",
+    "side": "sell",
+    "face": 235500.0,
+    "price_per100": 100.0,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 235500.0,
+    "note": "at or past the official maturity date: par",
+    "liquidity": {
+     "offering_amount": 100000000000.0,
+     "total_accepted": 100283646300.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 264394455500.0,
+     "security_term": "4-Week",
+     "auction_date": "2025-09-18"
+    },
+    "closed_face": 235500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00024",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-20",
+   "target_session": "2025-10-21",
+   "cusip": "912797QS9",
+   "side": "buy",
+   "face": 245100.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.91 on 6-Week 912797QS9",
+   "status": "PARTIAL",
+   "settled_on": "2025-10-21",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-16",
+     "auction_date": "2025-10-21",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00024",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-10-21",
+    "cusip": "912797QS9",
+    "side": "buy",
+    "face": 235200.0,
+    "price_per100": 99.540333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -234118.86,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 98292517600.0,
+     "noncompetitive_accepted": 1465369000.0,
+     "competitive_accepted": 93335040500.0,
+     "competitive_tendered": 276711445000.0,
+     "bid_to_cover": 2.93,
+     "soma_accepted": 3292108100.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01605056,
+     "request_as_pct_of_total_accepted": 0.00023929,
+     "request_as_pct_of_offering": 0.00024758
+    },
+    "closed_face": 0.0,
+    "opened_face": 235200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00050",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-01",
+   "target_session": "2025-12-02",
+   "cusip": "912797QS9",
+   "side": "sell",
+   "face": 235200.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2025-12-02",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-01",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2025-12-01"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00050",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-12-02",
+    "cusip": "912797QS9",
+    "side": "sell",
+    "face": 235200.0,
+    "price_per100": 99.979,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 235150.61,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 98292517600.0,
+     "bid_to_cover": 2.93,
+     "competitive_tendered": 276711445000.0,
+     "security_term": "6-Week",
+     "auction_date": "2025-10-21"
+    },
+    "closed_face": 235200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00051",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-01",
+   "target_session": "2025-12-02",
+   "cusip": "912797RJ8",
+   "side": "buy",
+   "face": 246600.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.91 on 6-Week 912797RJ8",
+   "status": "PARTIAL",
+   "settled_on": "2025-12-02",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-11-26",
+     "auction_date": "2025-12-02",
+     "security_term": "6-Week",
+     "offering_amount": 75000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00051",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-12-02",
+    "cusip": "912797RJ8",
+    "side": "buy",
+    "face": 234500.0,
+    "price_per100": 99.568333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233487.74,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 77023349800.0,
+     "noncompetitive_accepted": 1544809600.0,
+     "competitive_accepted": 73356202300.0,
+     "competitive_tendered": 234779910000.0,
+     "bid_to_cover": 3.15,
+     "soma_accepted": 2022337900.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01517986,
+     "request_as_pct_of_total_accepted": 0.00030445,
+     "request_as_pct_of_offering": 0.00031267
+    },
+    "closed_face": 0.0,
+    "opened_face": 234500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00067",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-23",
+   "target_session": "2025-12-24",
+   "cusip": "912797NU7",
+   "side": "sell",
+   "face": 65700.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2025-12-24",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2025-12-23"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00067",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-12-24",
+    "cusip": "912797NU7",
+    "side": "sell",
+    "face": 65700.0,
+    "price_per100": 99.980111,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 65686.93,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 101059283600.0,
+     "bid_to_cover": 2.7,
+     "competitive_tendered": 255396460000.0,
+     "security_term": "6-Week",
+     "auction_date": "2025-11-10"
+    },
+    "closed_face": 65700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00068",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-23",
+   "target_session": "2025-12-24",
+   "cusip": "912797SH1",
+   "side": "buy",
+   "face": 269700.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 1.00 on 4-Week 912797SH1",
+   "status": "PARTIAL",
+   "settled_on": "2025-12-24",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-12-23",
+     "auction_date": "2025-12-24",
+     "security_term": "4-Week",
+     "offering_amount": 80000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00068",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2025-12-24",
+    "cusip": "912797SH1",
+    "side": "buy",
+    "face": 65100.0,
+    "price_per100": 99.722333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -64919.24,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 80000000000.0,
+     "total_accepted": 80276252900.0,
+     "noncompetitive_accepted": 5564185300.0,
+     "competitive_accepted": 72436210400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.14,
+     "soma_accepted": 275857200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00116998,
+     "request_as_pct_of_total_accepted": 8.109e-05,
+     "request_as_pct_of_offering": 8.137e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 65100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00080",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-12",
+   "target_session": "2026-01-13",
+   "cusip": "912797RJ8",
+   "side": "sell",
+   "face": 234500.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-01-13",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-12",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-01-12"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00080",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-01-13",
+    "cusip": "912797RJ8",
+    "side": "sell",
+    "face": 234500.0,
+    "price_per100": 99.980167,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234453.49,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 77023349800.0,
+     "bid_to_cover": 3.15,
+     "competitive_tendered": 234779910000.0,
+     "security_term": "6-Week",
+     "auction_date": "2025-12-02"
+    },
+    "closed_face": 234500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00081",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-01-12",
+   "target_session": "2026-01-13",
+   "cusip": "912797RU3",
+   "side": "buy",
+   "face": 260100.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.96 on 6-Week 912797RU3",
+   "status": "PARTIAL",
+   "settled_on": "2026-01-13",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-01-08",
+     "auction_date": "2026-01-13",
+     "security_term": "6-Week",
+     "offering_amount": 75000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00081",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-01-13",
+    "cusip": "912797RU3",
+    "side": "buy",
+    "face": 234600.0,
+    "price_per100": 99.58175,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233618.79,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 77456674200.0,
+     "noncompetitive_accepted": 1482596000.0,
+     "competitive_accepted": 73517615000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.97,
+     "soma_accepted": 2456463200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.0158236,
+     "request_as_pct_of_total_accepted": 0.00030288,
+     "request_as_pct_of_offering": 0.0003128
+    },
+    "closed_face": 0.0,
+    "opened_face": 234600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00090",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-26",
+   "target_session": "2026-01-27",
+   "cusip": "912797SH1",
+   "side": "sell",
+   "face": 65100.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-01-27",
+   "settle_note": "filled on the official curve: at or past the official maturity date: par",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-01-26"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00090",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-01-27",
+    "cusip": "912797SH1",
+    "side": "sell",
+    "face": 65100.0,
+    "price_per100": 100.0,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 65100.0,
+    "note": "at or past the official maturity date: par",
+    "liquidity": {
+     "offering_amount": 80000000000.0,
+     "total_accepted": 80276252900.0,
+     "bid_to_cover": 3.14,
+     "competitive_tendered": null,
+     "security_term": "4-Week",
+     "auction_date": "2025-12-24"
+    },
+    "closed_face": 65100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00091",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-01-26",
+   "target_session": "2026-01-27",
+   "cusip": "912797SB4",
+   "side": "buy",
+   "face": 253500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.94 on 6-Week 912797SB4",
+   "status": "PARTIAL",
+   "settled_on": "2026-01-27",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-01-22",
+     "auction_date": "2026-01-27",
+     "security_term": "6-Week",
+     "offering_amount": 90000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00091",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-01-27",
+    "cusip": "912797SB4",
+    "side": "buy",
+    "face": 64800.0,
+    "price_per100": 99.575917,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -64525.19,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 94159179900.0,
+     "noncompetitive_accepted": 1529620100.0,
+     "competitive_accepted": 88371136500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.64,
+     "soma_accepted": 4158423300.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00423635,
+     "request_as_pct_of_total_accepted": 6.882e-05,
+     "request_as_pct_of_offering": 7.2e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 64800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00110",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-23",
+   "target_session": "2026-02-24",
+   "cusip": "912797RU3",
+   "side": "sell",
+   "face": 234600.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-02-24",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-02-23"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00110",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-02-24",
+    "cusip": "912797RU3",
+    "side": "sell",
+    "face": 234600.0,
+    "price_per100": 99.979833,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234552.69,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 77456674200.0,
+     "bid_to_cover": 2.97,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-01-13"
+    },
+    "closed_face": 234600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00111",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-02-23",
+   "target_session": "2026-02-24",
+   "cusip": "912797SL2",
+   "side": "buy",
+   "face": 261500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.97 on 6-Week 912797SL2",
+   "status": "PARTIAL",
+   "settled_on": "2026-02-24",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-02-19",
+     "auction_date": "2026-02-24",
+     "security_term": "6-Week",
+     "offering_amount": 90000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00111",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-02-24",
+    "cusip": "912797SL2",
+    "side": "buy",
+    "face": 234700.0,
+    "price_per100": 99.575917,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233704.68,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 93375125300.0,
+     "noncompetitive_accepted": 1526231600.0,
+     "competitive_accepted": 88275139500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.82,
+     "soma_accepted": 3373754200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01537774,
+     "request_as_pct_of_total_accepted": 0.00025135,
+     "request_as_pct_of_offering": 0.00026078
+    },
+    "closed_face": 0.0,
+    "opened_face": 234700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00121",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-09",
+   "target_session": "2026-03-10",
+   "cusip": "912797SB4",
+   "side": "sell",
+   "face": 64800.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-03-10",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-09",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-03-09"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00121",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-03-10",
+    "cusip": "912797SB4",
+    "side": "sell",
+    "face": 64800.0,
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 64786.9,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 94159179900.0,
+     "bid_to_cover": 2.64,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-01-27"
+    },
+    "closed_face": 64800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00122",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-03-09",
+   "target_session": "2026-03-10",
+   "cusip": "912797SM0",
+   "side": "buy",
+   "face": 268500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 1.00 on 6-Week 912797SM0",
+   "status": "PARTIAL",
+   "settled_on": "2026-03-10",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-03-05",
+     "auction_date": "2026-03-10",
+     "security_term": "6-Week",
+     "offering_amount": 90000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00122",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-03-10",
+    "cusip": "912797SM0",
+    "side": "buy",
+    "face": 64500.0,
+    "price_per100": 99.575917,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -64226.47,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 95126426600.0,
+     "noncompetitive_accepted": 1541589200.0,
+     "competitive_accepted": 88359202500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.98,
+     "soma_accepted": 5125634900.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00418399,
+     "request_as_pct_of_total_accepted": 6.78e-05,
+     "request_as_pct_of_offering": 7.167e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 64500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00142",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-06",
+   "target_session": "2026-04-07",
+   "cusip": "912797SL2",
+   "side": "sell",
+   "face": 234700.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-04-07",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-04-06"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00142",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-04-07",
+    "cusip": "912797SL2",
+    "side": "sell",
+    "face": 234700.0,
+    "price_per100": 99.980056,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234653.19,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 93375125300.0,
+     "bid_to_cover": 2.82,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-02-24"
+    },
+    "closed_face": 234700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00008"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00143",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-04-06",
+   "target_session": "2026-04-07",
+   "cusip": "912797SV0",
+   "side": "buy",
+   "face": 252500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.94 on 6-Week 912797SV0",
+   "status": "PARTIAL",
+   "settled_on": "2026-04-07",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-04-02",
+     "auction_date": "2026-04-07",
+     "security_term": "6-Week",
+     "offering_amount": 70000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00143",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-04-07",
+    "cusip": "912797SV0",
+    "side": "buy",
+    "face": 234700.0,
+    "price_per100": 99.57825,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233710.15,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 75108783800.0,
+     "noncompetitive_accepted": 1527982800.0,
+     "competitive_accepted": 66472210400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.57,
+     "soma_accepted": 5108590600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01536012,
+     "request_as_pct_of_total_accepted": 0.00031248,
+     "request_as_pct_of_offering": 0.00033529
+    },
+    "closed_face": 0.0,
+    "opened_face": 234700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00153",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-20",
+   "target_session": "2026-04-21",
+   "cusip": "912797SM0",
+   "side": "sell",
+   "face": 64500.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-04-21",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-04-20"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00153",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-04-21",
+    "cusip": "912797SM0",
+    "side": "sell",
+    "face": 64500.0,
+    "price_per100": 99.980111,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 64487.17,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 90000000000.0,
+     "total_accepted": 95126426600.0,
+     "bid_to_cover": 2.98,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-03-10"
+    },
+    "closed_face": 64500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00009"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00154",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-04-20",
+   "target_session": "2026-04-21",
+   "cusip": "912797SX6",
+   "side": "buy",
+   "face": 247000.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.92 on 6-Week 912797SX6",
+   "status": "PARTIAL",
+   "settled_on": "2026-04-21",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-04-16",
+     "auction_date": "2026-04-21",
+     "security_term": "6-Week",
+     "offering_amount": 70000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00154",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-04-21",
+    "cusip": "912797SX6",
+    "side": "buy",
+    "face": 64200.0,
+    "price_per100": 99.578833,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -63929.61,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 75034203600.0,
+     "noncompetitive_accepted": 1629136000.0,
+     "competitive_accepted": 66422060000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.88,
+     "soma_accepted": 5033007600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00394074,
+     "request_as_pct_of_total_accepted": 8.556e-05,
+     "request_as_pct_of_offering": 9.171e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 64200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00174",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-18",
+   "target_session": "2026-05-19",
+   "cusip": "912797SV0",
+   "side": "sell",
+   "face": 234700.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-05-19",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-18",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-05-18"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00174",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-05-19",
+    "cusip": "912797SV0",
+    "side": "sell",
+    "face": 234700.0,
+    "price_per100": 99.980222,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234653.58,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 75108783800.0,
+     "bid_to_cover": 3.57,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-04-07"
+    },
+    "closed_face": 234700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00010"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00175",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-05-18",
+   "target_session": "2026-05-19",
+   "cusip": "912797TF4",
+   "side": "buy",
+   "face": 269100.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 1.00 on 6-Week 912797TF4",
+   "status": "PARTIAL",
+   "settled_on": "2026-05-19",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-05-14",
+     "auction_date": "2026-05-19",
+     "security_term": "6-Week",
+     "offering_amount": 85000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00175",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-05-19",
+    "cusip": "912797TF4",
+    "side": "buy",
+    "face": 234700.0,
+    "price_per100": 99.582333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233719.74,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 85000000000.0,
+     "total_accepted": 90129693000.0,
+     "noncompetitive_accepted": 1388876600.0,
+     "competitive_accepted": 82411604200.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.01,
+     "soma_accepted": 5129212200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01689855,
+     "request_as_pct_of_total_accepted": 0.0002604,
+     "request_as_pct_of_offering": 0.00027612
+    },
+    "closed_face": 0.0,
+    "opened_face": 234700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00184",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-06-01",
+   "target_session": "2026-06-02",
+   "cusip": "912797SX6",
+   "side": "sell",
+   "face": 64200.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-06-02",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-06-01",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-06-01"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00184",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-06-02",
+    "cusip": "912797SX6",
+    "side": "sell",
+    "face": 64200.0,
+    "price_per100": 99.979833,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 64187.05,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 75034203600.0,
+     "bid_to_cover": 2.88,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-04-21"
+    },
+    "closed_face": 64200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00011"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00185",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-01",
+   "target_session": "2026-06-02",
+   "cusip": "912797TN7",
+   "side": "buy",
+   "face": 260500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.97 on 6-Week 912797TN7",
+   "status": "PARTIAL",
+   "settled_on": "2026-06-02",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-05-28",
+     "auction_date": "2026-06-02",
+     "security_term": "6-Week",
+     "offering_amount": 75000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00185",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-06-02",
+    "cusip": "912797TN7",
+    "side": "buy",
+    "face": 63900.0,
+    "price_per100": 99.577083,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -63629.76,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 79749787200.0,
+     "noncompetitive_accepted": 1649746100.0,
+     "competitive_accepted": 71652020500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.28,
+     "soma_accepted": 4748020600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00387332,
+     "request_as_pct_of_total_accepted": 8.013e-05,
+     "request_as_pct_of_offering": 8.52e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 63900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00204",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-06-29",
+   "target_session": "2026-06-30",
+   "cusip": "912797TF4",
+   "side": "sell",
+   "face": 234700.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-06-30",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-06-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-06-29"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00204",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-06-30",
+    "cusip": "912797TF4",
+    "side": "sell",
+    "face": 234700.0,
+    "price_per100": 99.979944,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234652.93,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 85000000000.0,
+     "total_accepted": 90129693000.0,
+     "bid_to_cover": 3.01,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-05-19"
+    },
+    "closed_face": 234700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00012"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00205",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-29",
+   "target_session": "2026-06-30",
+   "cusip": "912797TW7",
+   "side": "buy",
+   "face": 255900.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.95 on 6-Week 912797TW7",
+   "status": "PARTIAL",
+   "settled_on": "2026-06-30",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-06-25",
+     "auction_date": "2026-06-30",
+     "security_term": "6-Week",
+     "offering_amount": 80000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00205",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-06-30",
+    "cusip": "912797TW7",
+    "side": "buy",
+    "face": 234800.0,
+    "price_per100": 99.573583,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233798.77,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 80000000000.0,
+     "total_accepted": 85183779500.0,
+     "noncompetitive_accepted": 1288501000.0,
+     "competitive_accepted": 76711570000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.71,
+     "soma_accepted": 5183708500.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01822273,
+     "request_as_pct_of_total_accepted": 0.00027564,
+     "request_as_pct_of_offering": 0.0002935
+    },
+    "closed_face": 0.0,
+    "opened_face": 234800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00214",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-13",
+   "target_session": "2026-07-14",
+   "cusip": "912797TN7",
+   "side": "sell",
+   "face": 63900.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-07-14",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-13",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-07-13"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00214",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-07-14",
+    "cusip": "912797TN7",
+    "side": "sell",
+    "face": 63900.0,
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 63887.08,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 75000000000.0,
+     "total_accepted": 79749787200.0,
+     "bid_to_cover": 3.28,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-06-02"
+    },
+    "closed_face": 63900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00013"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00215",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-07-13",
+   "target_session": "2026-07-14",
+   "cusip": "912797TY3",
+   "side": "buy",
+   "face": 261600.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.97 on 6-Week 912797TY3",
+   "status": "PARTIAL",
+   "settled_on": "2026-07-14",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-07-09",
+     "auction_date": "2026-07-14",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00215",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-07-14",
+    "cusip": "912797TY3",
+    "side": "buy",
+    "face": 63600.0,
+    "price_per100": 99.575333,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -63329.91,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 98851921500.0,
+     "noncompetitive_accepted": 1439921800.0,
+     "competitive_accepted": 91560383000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.84,
+     "soma_accepted": 3851616700.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00441691,
+     "request_as_pct_of_total_accepted": 6.434e-05,
+     "request_as_pct_of_offering": 6.695e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 63600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00235",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-10",
+   "target_session": "2026-08-11",
+   "cusip": "912797TW7",
+   "side": "sell",
+   "face": 234800.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-08-11",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-08-10"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00235",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-08-11",
+    "cusip": "912797TW7",
+    "side": "sell",
+    "face": 234800.0,
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 234752.52,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 80000000000.0,
+     "total_accepted": 85183779500.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-06-30"
+    },
+    "closed_face": 234800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00014"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00236",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-08-10",
+   "target_session": "2026-08-11",
+   "cusip": "912797UH8",
+   "side": "buy",
+   "face": 244100.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.91 on 6-Week 912797UH8",
+   "status": "PARTIAL",
+   "settled_on": "2026-08-11",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-08-06",
+     "auction_date": "2026-08-11",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00236",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-08-11",
+    "cusip": "912797UH8",
+    "side": "buy",
+    "face": 234900.0,
+    "price_per100": 99.571833,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -233894.24,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 100756083800.0,
+     "noncompetitive_accepted": 1351534300.0,
+     "competitive_accepted": 91649510200.0,
+     "competitive_tendered": 274703118000.0,
+     "bid_to_cover": 2.93,
+     "soma_accepted": 5755039300.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01738025,
+     "request_as_pct_of_total_accepted": 0.00023314,
+     "request_as_pct_of_offering": 0.00024726
+    },
+    "closed_face": 0.0,
+    "opened_face": 234900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00246",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-24",
+   "target_session": "2026-08-25",
+   "cusip": "912797TY3",
+   "side": "sell",
+   "face": 63600.0,
+   "rule": "exit just before maturity to redeploy",
+   "rationale": "liquidity-weighted rotation",
+   "status": "FILLED",
+   "settled_on": "2026-08-25",
+   "settle_note": "filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-24",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+     "observation_date": "2026-08-24"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00246",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-08-25",
+    "cusip": "912797TY3",
+    "side": "sell",
+    "face": 63600.0,
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 63587.14,
+    "note": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 98851921500.0,
+     "bid_to_cover": 2.84,
+     "competitive_tendered": null,
+     "security_term": "6-Week",
+     "auction_date": "2026-07-14"
+    },
+    "closed_face": 63600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00015"
+    ]
+   }
+  },
+  {
+   "intent_id": "LiquidityWeighted_Participant-00247",
+   "participant": "@LiquidityWeighted_Participant",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-08-24",
+   "target_session": "2026-08-25",
+   "cusip": "912797UJ4",
+   "side": "buy",
+   "face": 232500.0,
+   "rule": "size the bill bid by official issue liquidity",
+   "rationale": "liquidity score 0.87 on 6-Week 912797UJ4",
+   "status": "PARTIAL",
+   "settled_on": "2026-08-25",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-08-20",
+     "auction_date": "2026-08-25",
+     "security_term": "6-Week",
+     "offering_amount": 95000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "LiquidityWeighted_Participant-00247",
+    "participant": "@LiquidityWeighted_Participant",
+    "session": "2026-08-25",
+    "cusip": "912797UJ4",
+    "side": "buy",
+    "face": 63300.0,
+    "price_per100": 99.574167,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -63030.45,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 95000000000.0,
+     "total_accepted": 99279272200.0,
+     "noncompetitive_accepted": 1371814800.0,
+     "competitive_accepted": 91628591600.0,
+     "competitive_tendered": 254508932000.0,
+     "bid_to_cover": 2.71,
+     "soma_accepted": 4278865800.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00461433,
+     "request_as_pct_of_total_accepted": 6.376e-05,
+     "request_as_pct_of_offering": 6.663e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 63300.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797RD1",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 235500.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 99.685778,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-09-18",
+    "issue_date": "2025-09-23",
+    "maturity_date": "2025-10-21",
+    "field": "pricePer100",
+    "value": 99.685778,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-10-21",
+   "exit_price_per100": 100.0,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.0,
+    "kind": "MATURITY-REDEMPTION",
+    "derivation": "at or past the official maturity date: par",
+    "session": "2025-10-21",
+    "evidence": {
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+     "field": "maturityDate",
+     "maturity_date": "2025-10-21"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 739.99,
+   "total_pnl": 739.99,
+   "return_on_cost_pct": 0.315212,
+   "holding_days": 33,
+   "liquidity": {
+    "offering_amount": 100000000000.0,
+    "total_accepted": 100283646300.0,
+    "bid_to_cover": 2.71,
+    "competitive_tendered": 264394455500.0,
+    "security_term": "4-Week",
+    "auction_date": "2025-09-18"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797QS9",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 235200.0,
+   "entry_date": "2025-10-21",
+   "entry_price_per100": 99.540333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-10-21",
+    "issue_date": "2025-10-23",
+    "maturity_date": "2025-12-04",
+    "field": "pricePer100",
+    "value": 99.540333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-02",
+   "exit_price_per100": 99.979,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-12-02",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.78,
+     "days": 2,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1031.74,
+   "total_pnl": 1031.74,
+   "return_on_cost_pct": 0.440693,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 98292517600.0,
+    "bid_to_cover": 2.93,
+    "competitive_tendered": 276711445000.0,
+    "security_term": "6-Week",
+    "auction_date": "2025-10-21"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797NU7",
+   "security_type": "Bill",
+   "security_term": "52-Week",
+   "direction": "long",
+   "face": 65700.0,
+   "entry_date": "2025-09-22",
+   "entry_price_per100": 99.013556,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-09-22",
+    "issue_date": "2025-09-25",
+    "maturity_date": "2025-12-26",
+    "field": "pricePer100",
+    "value": 99.013556,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-24",
+   "exit_price_per100": 99.980111,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.980111,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2025-12-24",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.58,
+     "days": 2,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 635.03,
+   "total_pnl": 635.03,
+   "return_on_cost_pct": 0.976185,
+   "holding_days": 93,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 101059283600.0,
+    "bid_to_cover": 2.7,
+    "competitive_tendered": 255396460000.0,
+    "security_term": "6-Week",
+    "auction_date": "2025-11-10"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797RJ8",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234500.0,
+   "entry_date": "2025-12-02",
+   "entry_price_per100": 99.568333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+    "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2025-12-02",
+    "issue_date": "2025-12-04",
+    "maturity_date": "2026-01-15",
+    "field": "pricePer100",
+    "value": 99.568333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-01-13",
+   "exit_price_per100": 99.980167,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.980167,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-01-13",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.57,
+     "days": 2,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
+     "sha256": "13c91c5b1444f3ba02a4204295e5352efeea369d5cf20265a19b7bd19145e071"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 965.75,
+   "total_pnl": 965.75,
+   "return_on_cost_pct": 0.413619,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 75000000000.0,
+    "total_accepted": 77023349800.0,
+    "bid_to_cover": 3.15,
+    "competitive_tendered": 234779910000.0,
+    "security_term": "6-Week",
+    "auction_date": "2025-12-02"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SH1",
+   "security_type": "Bill",
+   "security_term": "17-Week",
+   "direction": "long",
+   "face": 65100.0,
+   "entry_date": "2025-12-24",
+   "entry_price_per100": 99.722333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-12-24",
+    "issue_date": "2025-12-30",
+    "maturity_date": "2026-01-27",
+    "field": "pricePer100",
+    "value": 99.722333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-01-27",
+   "exit_price_per100": 100.0,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.0,
+    "kind": "MATURITY-REDEMPTION",
+    "derivation": "at or past the official maturity date: par",
+    "session": "2026-01-27",
+    "evidence": {
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "field": "maturityDate",
+     "maturity_date": "2026-01-27"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 180.76,
+   "total_pnl": 180.76,
+   "return_on_cost_pct": 0.27844,
+   "holding_days": 34,
+   "liquidity": {
+    "offering_amount": 80000000000.0,
+    "total_accepted": 80276252900.0,
+    "bid_to_cover": 3.14,
+    "competitive_tendered": null,
+    "security_term": "4-Week",
+    "auction_date": "2025-12-24"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797RU3",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234600.0,
+   "entry_date": "2026-01-13",
+   "entry_price_per100": 99.58175,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-01-13",
+    "issue_date": "2026-01-15",
+    "maturity_date": "2026-02-26",
+    "field": "pricePer100",
+    "value": 99.58175,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-02-24",
+   "exit_price_per100": 99.979833,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979833,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-02-24",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.63,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 933.9,
+   "total_pnl": 933.9,
+   "return_on_cost_pct": 0.399755,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 75000000000.0,
+    "total_accepted": 77456674200.0,
+    "bid_to_cover": 2.97,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-01-13"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SB4",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 64800.0,
+   "entry_date": "2026-01-27",
+   "entry_price_per100": 99.575917,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-01-27",
+    "issue_date": "2026-01-29",
+    "maturity_date": "2026-03-12",
+    "field": "pricePer100",
+    "value": 99.575917,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-03-10",
+   "exit_price_per100": 99.979778,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-03-10",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.64,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 261.7,
+   "total_pnl": 261.7,
+   "return_on_cost_pct": 0.405581,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 90000000000.0,
+    "total_accepted": 94159179900.0,
+    "bid_to_cover": 2.64,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-01-27"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00008",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SL2",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234700.0,
+   "entry_date": "2026-02-24",
+   "entry_price_per100": 99.575917,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-02-24",
+    "issue_date": "2026-02-26",
+    "maturity_date": "2026-04-09",
+    "field": "pricePer100",
+    "value": 99.575917,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-04-07",
+   "exit_price_per100": 99.980056,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.980056,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-04-07",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.59,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 948.51,
+   "total_pnl": 948.51,
+   "return_on_cost_pct": 0.40586,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 90000000000.0,
+    "total_accepted": 93375125300.0,
+    "bid_to_cover": 2.82,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-02-24"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00009",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SM0",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 64500.0,
+   "entry_date": "2026-03-10",
+   "entry_price_per100": 99.575917,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-03-10",
+    "issue_date": "2026-03-12",
+    "maturity_date": "2026-04-23",
+    "field": "pricePer100",
+    "value": 99.575917,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-04-21",
+   "exit_price_per100": 99.980111,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.980111,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-04-21",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.58,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 260.71,
+   "total_pnl": 260.71,
+   "return_on_cost_pct": 0.405915,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 90000000000.0,
+    "total_accepted": 95126426600.0,
+    "bid_to_cover": 2.98,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-03-10"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00010",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SV0",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234700.0,
+   "entry_date": "2026-04-07",
+   "entry_price_per100": 99.57825,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-04-07",
+    "issue_date": "2026-04-09",
+    "maturity_date": "2026-05-21",
+    "field": "pricePer100",
+    "value": 99.57825,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-05-19",
+   "exit_price_per100": 99.980222,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.980222,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-05-19",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.56,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 943.43,
+   "total_pnl": 943.43,
+   "return_on_cost_pct": 0.403674,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 75108783800.0,
+    "bid_to_cover": 3.57,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-04-07"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00011",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797SX6",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 64200.0,
+   "entry_date": "2026-04-21",
+   "entry_price_per100": 99.578833,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-04-21",
+    "issue_date": "2026-04-23",
+    "maturity_date": "2026-06-04",
+    "field": "pricePer100",
+    "value": 99.578833,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-06-02",
+   "exit_price_per100": 99.979833,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979833,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-06-02",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.63,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 257.44,
+   "total_pnl": 257.44,
+   "return_on_cost_pct": 0.402696,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 75034203600.0,
+    "bid_to_cover": 2.88,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-04-21"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00012",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797TF4",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234700.0,
+   "entry_date": "2026-05-19",
+   "entry_price_per100": 99.582333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-05-19",
+    "issue_date": "2026-05-21",
+    "maturity_date": "2026-07-02",
+    "field": "pricePer100",
+    "value": 99.582333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-06-30",
+   "exit_price_per100": 99.979944,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979944,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-06-30",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.61,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 933.19,
+   "total_pnl": 933.19,
+   "return_on_cost_pct": 0.399279,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 85000000000.0,
+    "total_accepted": 90129693000.0,
+    "bid_to_cover": 3.01,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-05-19"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00013",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797TN7",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 63900.0,
+   "entry_date": "2026-06-02",
+   "entry_price_per100": 99.577083,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-02",
+    "issue_date": "2026-06-04",
+    "maturity_date": "2026-07-16",
+    "field": "pricePer100",
+    "value": 99.577083,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-14",
+   "exit_price_per100": 99.979778,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-07-14",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.64,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 257.32,
+   "total_pnl": 257.32,
+   "return_on_cost_pct": 0.404405,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 75000000000.0,
+    "total_accepted": 79749787200.0,
+    "bid_to_cover": 3.28,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-06-02"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00014",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797TW7",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 234800.0,
+   "entry_date": "2026-06-30",
+   "entry_price_per100": 99.573583,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-30",
+    "issue_date": "2026-07-02",
+    "maturity_date": "2026-08-13",
+    "field": "pricePer100",
+    "value": 99.573583,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-08-11",
+   "exit_price_per100": 99.979778,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-08-11",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.64,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 953.75,
+   "total_pnl": 953.75,
+   "return_on_cost_pct": 0.407935,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 80000000000.0,
+    "total_accepted": 85183779500.0,
+    "bid_to_cover": 2.71,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-06-30"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00015",
+   "participant": "@LiquidityWeighted_Participant",
+   "cusip": "912797TY3",
+   "security_type": "Bill",
+   "security_term": "26-Week",
+   "direction": "long",
+   "face": 63600.0,
+   "entry_date": "2026-07-14",
+   "entry_price_per100": 99.575333,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-07-14",
+    "issue_date": "2026-07-16",
+    "maturity_date": "2026-08-27",
+    "field": "pricePer100",
+    "value": 99.575333,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-08-25",
+   "exit_price_per100": 99.979778,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.979778,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days",
+    "session": "2026-08-25",
+    "evidence": {
+     "field": "DTB4WK/DTB3/DTB6 (FRED copy of H.15)",
+     "rate_pct": 3.64,
+     "days": 2,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 257.23,
+   "total_pnl": 257.23,
+   "return_on_cost_pct": 0.40617,
+   "holding_days": 42,
+   "liquidity": {
+    "offering_amount": 95000000000.0,
+    "total_accepted": 98851921500.0,
+    "bid_to_cover": 2.84,
+    "competitive_tendered": null,
+    "security_term": "6-Week",
+    "auction_date": "2026-07-14"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

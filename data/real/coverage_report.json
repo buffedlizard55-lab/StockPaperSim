@@ -1,84 +1,11 @@
 {
- "generated_at": "2026-09-18T12:46:04Z",
+ "generated_at": "2026-09-18T22:37:19Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
   "season_end": "2026-09-16"
  },
  "collected": {
-  "yahoo": {
-   "ok": [
-    "SPY",
-    "QQQ",
-    "IWM",
-    "GLD",
-    "UNG",
-    "XLU",
-    "XBI",
-    "IBB",
-    "TLT",
-    "DKNG",
-    "FLUT",
-    "PENN",
-    "SRAD",
-    "GENI",
-    "AAPL",
-    "MSFT",
-    "NVDA",
-    "JPM",
-    "XOM",
-    "JNJ",
-    "PG",
-    "TSLA",
-    "MU",
-    "T",
-    "^GSPC",
-    "^VIX"
-   ],
-   "failed": [],
-   "rows": {
-    "SPY": 502,
-    "QQQ": 502,
-    "IWM": 502,
-    "GLD": 502,
-    "UNG": 502,
-    "XLU": 502,
-    "XBI": 502,
-    "IBB": 502,
-    "TLT": 502,
-    "DKNG": 502,
-    "FLUT": 502,
-    "PENN": 502,
-    "SRAD": 502,
-    "GENI": 502,
-    "AAPL": 502,
-    "MSFT": 502,
-    "NVDA": 502,
-    "JPM": 502,
-    "XOM": 502,
-    "JNJ": 502,
-    "PG": 502,
-    "TSLA": 502,
-    "MU": 502,
-    "T": 502,
-    "^GSPC": 502,
-    "^VIX": 504
-   }
-  },
-  "stooq": {
-   "ok": [],
-   "failed": [
-    "SPY: host refused (Access denied)",
-    "QQQ: host refused (Access denied)",
-    "GLD: host refused (Access denied)",
-    "XBI: host refused (Access denied)",
-    "DKNG: host refused (Access denied)",
-    "AAPL: host refused (Access denied)",
-    "MSFT: host refused (Access denied)",
-    "NVDA: host refused (Access denied)"
-   ],
-   "rows": {}
-  },
   "fred": {
    "ok": [
     "SP500",
@@ -86,7 +13,25 @@
     "DGS10",
     "DGS3MO",
     "DCOILWTICO",
-    "DTWEXBGS"
+    "DTWEXBGS",
+    "NASDAQCOM",
+    "DJIA",
+    "SOFR",
+    "DGS1MO",
+    "DGS6MO",
+    "DGS1",
+    "DGS2",
+    "DGS5",
+    "DGS7",
+    "DGS20",
+    "DGS30",
+    "DTB4WK",
+    "DTB3",
+    "DTB6",
+    "CPIAUCSL",
+    "DFII5",
+    "DFII10",
+    "DFII30"
    ],
    "failed": [
     "GOLDAMGBD228NLBM",
@@ -94,149 +39,201 @@
    ],
    "rows": {
     "SP500": 503,
-    "VIXCLS": 517,
-    "DGS10": 500,
-    "DGS3MO": 500,
+    "VIXCLS": 518,
+    "DGS10": 501,
+    "DGS3MO": 501,
     "DCOILWTICO": 497,
-    "DTWEXBGS": 498
+    "DTWEXBGS": 498,
+    "NASDAQCOM": 503,
+    "DJIA": 503,
+    "SOFR": 500,
+    "DGS1MO": 501,
+    "DGS6MO": 501,
+    "DGS1": 501,
+    "DGS2": 501,
+    "DGS5": 501,
+    "DGS7": 501,
+    "DGS20": 501,
+    "DGS30": 501,
+    "DTB4WK": 501,
+    "DTB3": 501,
+    "DTB6": 501,
+    "CPIAUCSL": 439,
+    "DFII5": 501,
+    "DFII10": 501,
+    "DFII30": 501
    }
   },
-  "nasdaq": {
+  "treasury": {
+   "auctioned": {
+    "rows": 53,
+    "bytes": 187897,
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+   },
+   "search": {
+    "Bill": {
+     "rows": 418,
+     "pages": 2
+    },
+    "Note": {
+     "rows": 0,
+     "pages": 0
+    },
+    "Bond": {
+     "rows": 0,
+     "pages": 0
+    },
+    "TIPS": {
+     "rows": 0,
+     "pages": 0
+    }
+   },
+   "announced": {
+    "rows": 250,
+    "bytes": 883752,
+    "sha256": "e9ec93354e29be97673ab40648772e50330464acabe6d66992cf94e57688c8e7",
+    "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json"
+   },
+   "fiscaldata": {
+    "page1": {
+     "rows": 1000,
+     "bytes": 3400898,
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1"
+    },
+    "page2": {
+     "rows": 1000,
+     "bytes": 3395538,
+     "sha256": "4effdbc635e3e72cc1f2e05e983aef634738ffef34f926b62c3feb23bad93660",
+     "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=2"
+    }
+   },
+   "yield_curve": {
+    "2024": {
+     "rows": 250,
+     "bytes": 19098,
+     "sha256": "6775840b76cd7fd41121f61d6f6c60184eca6b2ba49954ec7372c463cbeef34d",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2024/all?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv"
+    },
+    "2025": {
+     "rows": 249,
+     "bytes": 20155,
+     "sha256": "cf2fa3da7f160384b63d2ead698532b1d76cd9f789ce4911e2304db85b14e6d5",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2025/all?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv"
+    },
+    "2026": {
+     "rows": 180,
+     "bytes": 14690,
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
+    }
+   },
+   "crosscheck": {
+    "generated_at": "2026-09-18T22:37:14Z",
+    "treasurydirect_auctions": 471,
+    "fiscaldata_auctions": 2000,
+    "shared_auctions": 471,
+    "field_comparisons": 4251,
+    "fields_compared": [
+     "price_per100",
+     "high_discount_rate",
+     "high_yield",
+     "interest_rate",
+     "offering_amount",
+     "competitive_accepted",
+     "total_accepted",
+     "bid_to_cover",
+     "maturity_date",
+     "issue_date",
+     "security_term"
+    ],
+    "shared_auctions_with_a_difference": 0
+   },
+   "failed": [
+    "yield_curve:2024:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2024?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv",
+    "yield_curve:2025:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2025?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv",
+    "yield_curve:2026:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2026?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
+   ],
+   "tape": {
+    "rows": 471,
+    "file": "data/real/treasury/auction_tape.jsonl"
+   }
+  },
+  "insider_bulk": {
+   "quarters": [
+    "2026q2",
+    "2026q1",
+    "2025q4",
+    "2025q3",
+    "2025q2",
+    "2025q1",
+    "2024q4",
+    "2024q3"
+   ],
    "ok": [],
    "failed": [
-    "SPY",
-    "QQQ",
-    "GLD",
-    "XBI",
-    "DKNG",
-    "AAPL",
-    "MSFT",
-    "NVDA"
-   ],
-   "rows": {}
-  },
-  "sec": {
-   "tickers_ok": [],
-   "tickers_failed": [],
-   "filings": 0,
-   "transactions": 0,
-   "skipped_tickers": [],
-   "errors": [
-    "company_tickers.json refused; falling back to the per-company feed",
-    "no ticker->CIK mapping could be retrieved"
-   ],
-   "cik_map_source": ""
-  },
-  "fda": {
-   "rows": 10760,
-   "failed": [],
-   "pages": 7
-  },
-  "mlb": {
-   "rows": 2322,
-   "ok": true
-  },
-  "espn": {
-   "nfl": {
-    "rows": 285,
-    "chunks_failed": 0
-   },
-   "ncaaf": {
-    "rows": 282,
-    "chunks_failed": 0
-   },
-   "nba": {
-    "rows": 0,
-    "chunks_failed": 0
-   },
-   "mlb": {
-    "rows": 0,
-    "chunks_failed": 0
-   }
-  },
-  "nba": {
-   "ok": false,
-   "rows": 0
-  },
-  "official_docs": {
-   "nba_injury_report_index": {
-    "ok": false
-   },
-   "nfl_injuries": {
-    "ok": true,
-    "bytes": 381335
-   },
-   "ncaa_scoreboard_fbs_2025_week10": {
-    "ok": true,
-    "bytes": 72675
-   },
-   "nba_stats_scoreboard_probe": {
-    "ok": false
-   }
-  },
-  "weather": {
-   "USW00023272": {
-    "ok": true,
-    "rows": 723,
-    "label": "San Francisco (downtown / SFO-area co-op station)"
-   },
-   "USW00023234": {
-    "ok": true,
-    "rows": 730,
-    "label": "San Francisco International Airport"
-   }
-  },
-  "kalshi": {
-   "KXNFLGAME": {
-    "ok": true,
-    "rows": 132,
-    "rows_with_volume": 132
-   },
-   "KXNBA": {
-    "ok": true,
-    "rows": 0,
-    "rows_with_volume": 0
-   },
-   "KXMLBGAME": {
-    "ok": true,
-    "rows": 200,
-    "rows_with_volume": 200
-   },
-   "KXHIGHNY": {
-    "ok": true,
-    "rows": 200,
-    "rows_with_volume": 200
-   },
-   "KXAAAGASM": {
-    "ok": true,
-    "rows": 80,
-    "rows_with_volume": 80
-   }
-  },
-  "crosscheck": {
-   "generated_at": "2026-09-18T12:46:04Z",
-   "pairs": [
     {
-     "kind": "yahoo-vs-yahoo",
-     "a": "SPY",
-     "b": "^GSPC",
-     "n": 501,
-     "return_correlation": 0.9965133458692754,
-     "note": "same provider, different instruments: a sanity check, not independence"
+     "quarter": "2026q2",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q2_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q2_form345.zip"
+     ]
     },
     {
-     "kind": "fred-vs-yahoo",
-     "a": "FRED SP500",
-     "b": "Yahoo ^GSPC",
-     "n": 502,
-     "max_abs_level_diff": 4.425314312512818e-08,
-     "median_abs_level_diff": 1.958856012889914e-08,
-     "return_correlation": 0.9999999999945958,
-     "max_abs_daily_return_diff": 8.411807539410177e-08,
-     "note": "two independent publishers of the same index; level differences come from the fact that FRED's SP500 is a daily close index series"
+     "quarter": "2026q1",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q1_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q1_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2025q4",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q4_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q4_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2025q3",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q3_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q3_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2025q2",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q2_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q2_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2025q1",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q1_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q1_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2024q4",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q4_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q4_form345.zip"
+     ]
+    },
+    {
+     "quarter": "2024q3",
+     "attempts": [
+      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q3_form345.zip",
+      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q3_form345.zip"
+     ]
     }
    ],
-   "notes": []
+   "rows": 0,
+   "detail": [],
+   "source": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
+   "documentation": "https://www.sec.gov/files/insider_transactions_readme.pdf"
   }
  },
  "sources": [
@@ -255,9 +252,16 @@
    "bytes": 0
   },
   {
-   "label": "Nasdaq quote API",
-   "source_class": "SECONDARY",
+   "label": "Nasdaq historical quote API (official-source candidate)",
+   "source_class": "OFFICIAL",
    "path": "real/prices/nasdaq",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "Nasdaq raw JSON responses",
+   "source_class": "OFFICIAL",
+   "path": "real/raw/nasdaq",
    "files": 0,
    "bytes": 0
   },
@@ -265,13 +269,41 @@
    "label": "FRED (Federal Reserve Bank of St. Louis)",
    "source_class": "OFFICIAL",
    "path": "real/fred",
-   "files": 8,
-   "bytes": 63729
+   "files": 28,
+   "bytes": 224265
   },
   {
    "label": "SEC EDGAR (Form 4 + ticker map)",
    "source_class": "OFFICIAL",
    "path": "real/sec",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "FINRA REG SHO daily short-sale volume",
+   "source_class": "OFFICIAL",
+   "path": "real/finra",
+   "files": 1,
+   "bytes": 236645
+  },
+  {
+   "label": "NY Fed reference rates (SOFR)",
+   "source_class": "OFFICIAL",
+   "path": "real/nyfed",
+   "files": 1,
+   "bytes": 119018
+  },
+  {
+   "label": "U.S. Treasury auctions and par yield curve",
+   "source_class": "OFFICIAL",
+   "path": "real/treasury",
+   "files": 15,
+   "bytes": 5738952
+  },
+  {
+   "label": "SEC quarterly insider transaction data sets",
+   "source_class": "OFFICIAL",
+   "path": "real/insider_bulk",
    "files": 0,
    "bytes": 0
   },

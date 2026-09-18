@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade store · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../official/index.html">Overview</a><a class="" href="../official/leaderboard.html">Leaderboard</a><a class="" href="../official/blotter.html">Trade tape</a><a class="" href="../official/forward.html">Forward book</a><a class="" href="../official/participants/index.html">Participants</a><a class="active" href="../official/ledger.html">Trade store</a><a class="" href="../official/method.html">Venue &amp; formulas</a><a class="" href="../official/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../live/index.html">Live Book</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede">Every closed trade in every book on this site - the official auction
+book, the two backtest seasons and the live rehearsal - is normalised into one ledger
+so the same record can be re-used for testing, analysis and evaluation without
+re-deriving it from four different memory formats. Each row keeps its participant,
+instrument, side, quantity, entry and exit date, entry and exit price, costs, P&amp;L
+and - the part that matters for honesty - its <strong>price class</strong>.</p>
+
+<div class="kpis"><div class="kpi"><span class="kpi-label">Closed trades</span><span class="kpi-value ">2,999</span><span class="kpi-sub">across every book</span></div><div class="kpi"><span class="kpi-label">Notional</span><span class="kpi-value ">$3,673,453,301</span><span class="kpi-sub">entry cost</span></div><div class="kpi"><span class="kpi-label">Net P&amp;L</span><span class="kpi-value ">$485,700.92</span><span class="kpi-sub">4 books</span></div><div class="kpi"><span class="kpi-label">Notional with both legs official</span><span class="kpi-value ">30.80%</span><span class="kpi-sub">share whose entry AND exit were a publisher's own number</span></div><div class="kpi"><span class="kpi-label">Notional with an official entry</span><span class="kpi-value ">50.41%</span><span class="kpi-sub">share bought or sold at a price a publisher printed, whatever the exit</span></div></div>
+<section class="card "><h2>By book</h2><table class="data"><thead><tr><th>Book</th><th>Trades</th><th>Notional</th><th>Share of notional</th><th>P&amp;L</th></tr></thead><tbody><tr><td>Official Auction Book</td><td>189</td><td>$3,563,754,778</td><td>97.01%</td><td>$-161,016.31</td></tr><tr><td>Season 1</td><td>1,854</td><td>$64,031,846</td><td>1.74%</td><td>$450,691.44</td></tr><tr><td>Live Book (rehearsal)</td><td>586</td><td>$35,161,084</td><td>0.96%</td><td>$48,251.51</td></tr><tr><td>Season 2</td><td>370</td><td>$10,505,593</td><td>0.29%</td><td>$147,774.28</td></tr></tbody></table></section>
+<section class="card "><h2>By price class</h2><table class="data"><thead><tr><th>Price class</th><th>Trades</th><th>Notional</th><th>Share of notional</th><th>P&amp;L</th></tr></thead><tbody><tr><td><span class="badge badge-warn">OFFICIAL-DERIVED</span></td><td>138</td><td>$2,432,417,731</td><td>66.22%</td><td>$-195,245.82</td></tr><tr><td><span class="badge badge-ok">OFFICIAL</span></td><td>51</td><td>$1,131,337,047</td><td>30.80%</td><td>$34,229.51</td></tr><tr><td>MODELLED</td><td>2,224</td><td>$74,537,439</td><td>2.03%</td><td>$598,465.72</td></tr><tr><td>SECONDARY</td><td>586</td><td>$35,161,084</td><td>0.96%</td><td>$48,251.51</td></tr></tbody></table>
+<p>The classes are the point of the whole exercise. <strong>OFFICIAL</strong> and
+<strong>OFFICIAL-DERIVED</strong> rows rest on a government publisher's own number.
+<strong>MODELLED</strong> rows are the backtest seasons, whose prices are explicit
+simulations of a real path. <strong>SECONDARY</strong> rows are the live rehearsal,
+executed against an aggregator's bars with the gate failing closed. Mixing those up
+would make the site's headline numbers mean nothing, so the ledger counts them
+separately and the site prints the split.</p>
+</section>
+<section class="card "><h2>By participant (first 40 by trade count)</h2><table class="data"><thead><tr><th>Username</th><th>Trades</th><th>Notional</th><th>P&amp;L</th><th>Price classes</th></tr></thead><tbody><tr><td>@SpreadHarvester_MM</td><td>537</td><td>$12,506,560</td><td>$-32,737.91</td><td>MODELLED</td></tr><tr><td>@KitchenSink_AllIn</td><td>367</td><td>$3,809,253</td><td>$7,674.26</td><td>MODELLED</td></tr><tr><td>@OvernightCarry_NO</td><td>247</td><td>$26,031,268</td><td>$7,767.12</td><td>MODELLED</td></tr><tr><td>@GapAndGo_YOLO</td><td>203</td><td>$3,053,010</td><td>$-91,753.90</td><td>MODELLED</td></tr><tr><td>@MLB_Attention_Momo</td><td>105</td><td>$2,202,164</td><td>$23,849.27</td><td>MODELLED</td></tr><tr><td>@CurveSteepener_MaxBeta</td><td>85</td><td>$5,302,545</td><td>$8,247.21</td><td>SECONDARY</td></tr><tr><td>@KitchenSink_Official</td><td>81</td><td>$5,702,044</td><td>$4,594.98</td><td>SECONDARY</td></tr><tr><td>@SOFRPivot_Rider</td><td>79</td><td>$4,190,045</td><td>$11,015.15</td><td>SECONDARY</td></tr><tr><td>@OverreactionFade_LT</td><td>71</td><td>$2,874,345</td><td>$42,142.92</td><td>MODELLED</td></tr><tr><td>@OilDollar_FadeUNG</td><td>69</td><td>$2,296,633</td><td>$-20,667.89</td><td>SECONDARY</td></tr><tr><td>@BetaChaser_3xProxy</td><td>66</td><td>$621,753</td><td>$108,262.68</td><td>MODELLED</td></tr><tr><td>@TrendSurfer_GoldenX</td><td>55</td><td>$490,086</td><td>$28,538.57</td><td>MODELLED</td></tr><tr><td>@MeanRev_Z2Sigma</td><td>53</td><td>$1,355,297</td><td>$74,235.94</td><td>MODELLED</td></tr><tr><td>@GoldVsRealRate_Live</td><td>51</td><td>$3,341,283</td><td>$-4,395.17</td><td>SECONDARY</td></tr><tr><td>@OneBigBet_Concentra</td><td>50</td><td>$5,961,963</td><td>$40,625.49</td><td>MODELLED</td></tr><tr><td>@MLB_Attention_Live</td><td>49</td><td>$2,055,997</td><td>$18,177.97</td><td>SECONDARY</td></tr><tr><td>@PinePilot_EMA_Cross</td><td>49</td><td>$435,929</td><td>$17,406.24</td><td>MODELLED</td></tr><tr><td>@Weather_ColdSnap_Max</td><td>49</td><td>$702,349</td><td>$-11,595.66</td><td>MODELLED</td></tr><tr><td>@FDACatalyst_Rider</td><td>46</td><td>$2,865,908</td><td>$74,063.06</td><td>MODELLED</td></tr><tr><td>@GOLD_Trend_GLD</td><td>43</td><td>$1,492,635</td><td>$32,828.75</td><td>MODELLED</td></tr><tr><td>@DriftRider_PEAD</td><td>40</td><td>$1,033,420</td><td>$21,184.47</td><td>MODELLED</td></tr><tr><td>@VolControl_MaxLev</td><td>39</td><td>$2,151,257</td><td>$-10,805.74</td><td>SECONDARY</td></tr><tr><td>@DurationTrend_TenX</td><td>39</td><td>$554,865,761</td><td>$-46,702.16</td><td>OFFICIAL-DERIVED</td></tr><tr><td>@VolCarry_LowHigh</td><td>36</td><td>$198,705</td><td>$-27,775.36</td><td>MODELLED</td></tr><tr><td>@FDA_PDUFA_Drifter</td><td>35</td><td>$2,813,802</td><td>$66,782.07</td><td>SECONDARY</td></tr><tr><td>@VIXRegime_Timer</td><td>35</td><td>$1,505,351</td><td>$26,555.80</td><td>MODELLED</td></tr><tr><td>@FDA_ClusterFade</td><td>34</td><td>$1,649,455</td><td>$2,249.43</td><td>MODELLED</td></tr><tr><td>@ConcessionFade_Notes</td><td>31</td><td>$488,432,167</td><td>$-10,905.75</td><td>OFFICIAL-DERIVED</td></tr><tr><td>@SqueezeHunter_TF</td><td>30</td><td>$1,318,040</td><td>$-1,846.16</td><td>MODELLED</td></tr><tr><td>@BillCarry_TenX</td><td>28</td><td>$899,559,847</td><td>$26,501.53</td><td>OFFICIAL</td></tr><tr><td>@SectorRotator_AlphaX</td><td>25</td><td>$494,673</td><td>$99,905.08</td><td>MODELLED</td></tr><tr><td>@MLB_Upset_Short</td><td>22</td><td>$582,242</td><td>$-9,541.77</td><td>MODELLED</td></tr><tr><td>@DowNasdaq_SpreadMax</td><td>21</td><td>$1,294,549</td><td>$26,438.16</td><td>SECONDARY</td></tr><tr><td>@VIXRegime_LiveMax</td><td>21</td><td>$1,799,067</td><td>$9,694.38</td><td>SECONDARY</td></tr><tr><td>@SOFRPivot_Switch</td><td>20</td><td>$403,276,817</td><td>$-36,594.72</td><td>OFFICIAL, OFFICIAL-DERIVED</td></tr><tr><td>@CurveSteepener_2s10s</td><td>18</td><td>$3,248,142</td><td>$0.25</td><td>OFFICIAL-DERIVED</td></tr><tr><td>@PinePilot_EMA_Live</td><td>17</td><td>$1,779,737</td><td>$-9,187.77</td><td>SECONDARY</td></tr><tr><td>@LiquidityWeighted_Participant</td><td>15</td><td>$232,053,082</td><td>$9,560.45</td><td>OFFICIAL-DERIVED</td></tr><tr><td>@Kalshi_Attention_Timer</td><td>14</td><td>$179,458</td><td>$-1,982.63</td><td>MODELLED</td></tr><tr><td>@IlliquidRocket_Degen</td><td>13</td><td>$1,749,177</td><td>$15,800.95</td><td>MODELLED</td></tr></tbody></table></section>
+<section class="card "><h2>Where the store lives</h2>
+<p>Two coverage numbers are printed rather than one, because they answer different
+questions: <strong>both legs official</strong> counts trades whose entry and exit were
+each a published print, and <strong>official entry</strong> counts trades that were
+bought or sold at a published price whatever happened on the way out. Quoting the
+larger one as if it were the smaller would be the easiest lie on this site to tell,
+so both are on the page.</p>
+<p>Written by <code>sim/tradelog.py</code> as
+<code>memory/official/ledger/trades.jsonl.gz</code> (one JSON object per trade),
+<code>trades.csv</code> for a spreadsheet, <code>coverage.json</code> for the counts on
+this page and <code>manifest.json</code> for the SHA-256 of each file and a per-file
+byte budget. The store is append-only by construction: a rebuild regenerates it from
+the memory directories, so a reader can always check the site against the tape.</p>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

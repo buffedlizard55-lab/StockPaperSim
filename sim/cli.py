@@ -18,6 +18,9 @@ from here, and no command requires interactive input:
     python3 -m sim.cli live --mode all      # plan the live forward book + rehearsal
     python3 -m sim.cli live --mode forward  # upcoming intents only, nothing settles
     python3 -m sim.cli live-blotter         # every filled forward trade, verified
+    python3 -m sim.cli official            # the official-price auction book
+    python3 -m sim.cli official-blotter    # every settled official trade + evidence
+    python3 -m sim.cli trades              # the unified ledger across every book
     python3 -m sim.cli build-site          # regenerate the GitHub Pages site
     python3 -m sim.cli export fills out.csv
 """
@@ -33,7 +36,7 @@ import textwrap
 from typing import Dict, List, Optional, Sequence
 
 from . import analytics, config, engine, eligibility, ledger as ledger_mod, marketdata, memory
-from . import live, live_season, realdata, season2, universe
+from . import live, live_season, official_season, realdata, season2, tradelog, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -438,6 +441,17 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         return rc
 
     try:
+        # The official auction book is written before the live book so the
+        # published-site tests see its pages when they walk docs/; like every
+        # other builder it owns its own directory.
+        import build_site_official  # type: ignore
+        official_written = build_site_official.build(args.memory_root, args.out)
+        print(f"  official auction book: {len(official_written)} pages under "
+              f"docs/official/")
+    except SystemExit as exc:
+        print(f"  official auction book: SKIPPED - {exc}")
+
+    try:
         # The live book is a third section and its own builder, called between
         # the two for the same reason Season 2 is called after Season 1: each
         # builder owns its directory and CI diffs the whole tree afterwards.
@@ -480,6 +494,16 @@ def cmd_build_site(args: argparse.Namespace) -> int:
                     "</nav>",
                     f'<a href="{"../" * depth}live/index.html">Live Book</a></nav>', 1) \
                     if "live/index.html" not in injected else injected
+                # The Official Auction Book is the fourth section, and this is
+                # the section the brief's first requirement is answered by: it
+                # is the only book on the site that may execute on a price a
+                # publisher printed.  Its nav entry is injected here with the
+                # others so a Season-1-only build stays link-clean.
+                injected = injected.replace(
+                    "</nav>",
+                    f'<a href="{"../" * depth}official/index.html">Official Book'
+                    f'</a></nav>', 1) \
+                    if "official/index.html" not in injected else injected
                 if injected != html:
                     with open(page_path, "w", encoding="utf-8") as handle:
                         handle.write(injected)
@@ -897,6 +921,161 @@ def cmd_trade_sim(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_official(args: argparse.Namespace) -> int:
+    """Run the Official Auction Book and print what it settled."""
+    import sim.official_season as _os  # noqa: F401  (kept explicit for readers)
+    start = args.start or official_season.treasury.SEASON_START
+    end = args.end or official_season.treasury.SEASON_END
+    result = official_season.run_official(
+        starting_cash=args.starting_cash or official_season.ob.STARTING_CASH,
+        start=start, end=end, verbose=args.verbose)
+    summary = result["summary"]
+    forward = result["forward"]
+    print("=" * 122)
+    print("OFFICIAL AUCTION BOOK  -  every execution price is the U.S. Treasury's "
+          "own published number")
+    print("=" * 122)
+    print(f"window {summary['first_session']} -> {summary['last_session']} "
+          f"({summary['sessions']} official sessions) · "
+          f"{len(summary['participants'])} participants · "
+          f"${official_season.ob.STARTING_CASH:,.0f} each")
+    header = (f"{'#':>2} {'username':30s} {'return%':>10} {'maxDD%':>9} "
+              f"{'trades':>7} {'coupons $':>11} {'fin $':>10} {'status':>7}")
+    print(header)
+    print("-" * len(header))
+    for row in summary["participants"]:
+        print(f"{row['rank']:2d} {row['participant']:30s} {row['return_pct']:+10.2f} "
+              f"{row['max_drawdown_pct']:9.2f} {row['trades']:7d} "
+              f"{row['coupon_income']:11,.2f} "
+              f"{row['financing'] + row['debit_interest']:10,.2f} {row['status']:>7}")
+    verification = result["verification"]
+    print(f"\n  verification: {verification['verdict']} "
+          f"({verification['checks']} checks, {verification['failure_count']} failures, "
+          f"max equity residual ${verification['max_equity_residual_usd']})")
+    coverage = result["coverage"]
+    print(f"  unified ledger: {coverage['trades']} closed trades across "
+          f"{len(coverage['by_book'])} books · official-price notional share "
+          f"{coverage['official_executed_notional_pct']}%")
+    print(f"  forward book: {forward['pending_intents']} pending intents as of "
+          f"{forward['as_of']} - settled only against the official record")
+    print(f"  memory: {result['run_dir']}")
+    return 0
+
+
+def cmd_official_blotter(args: argparse.Namespace) -> int:
+    """Print settled official trades: entry, exit, dates, prices, evidence."""
+    base = official_season.OFFICIAL_MEMORY
+    run_id = args.run or official_season.REHEARSAL_RUN_ID
+    run_dir = os.path.join(base, run_id)
+    if not os.path.isdir(run_dir):
+        print(f"no official run at {run_dir}; run 'python3 -m sim.cli official' first")
+        return 1
+    trips = official_season.tradelog.from_official_run(run_dir)
+    rows = [t for t in trips
+            if not args.participant or t["participant"] == args.participant]
+    if args.export:
+        fieldnames = ["trade_id", "participant", "instrument", "instrument_name",
+                      "side", "quantity", "entry_date", "entry_price", "entry_kind",
+                      "exit_date", "exit_price", "exit_kind", "holding_days",
+                      "pnl_usd", "coupon_usd", "financing_usd", "price_class"]
+        os.makedirs(os.path.dirname(os.path.abspath(args.export)), exist_ok=True)
+        with open(args.export, "w", encoding="utf-8", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fieldnames,
+                                    extrasaction="ignore", lineterminator="\n")
+            writer.writeheader()
+            for row in rows:
+                writer.writerow(row)
+        print(f"wrote {len(rows)} trades to {args.export}")
+    print(f"run {run_id} · {len(rows)} closed official trades"
+          + (f" · participant {args.participant}" if args.participant else ""))
+    print(f"{'participant':24s}{'security':18s}{'cusip':11s}{'entry':11s}"
+          f"{'px':>11s}{'exit':11s}{'px':>11s}{'pnl $':>12s}{'class':>18s}")
+    for row in sorted(rows, key=lambda r: (r["exit_date"] or "", r["participant"]))[:args.limit]:
+        print(f"{(row['participant'] or '')[:23]:24s}"
+              f"{(row.get('instrument_name') or '')[:17]:18s}"
+              f"{row['instrument']:11s}{row['entry_date']:11s}"
+              f"{row['entry_price']:11.6f}{row['exit_date']:11s}"
+              f"{row['exit_price']:11.6f}{row['pnl_usd']:12,.2f}"
+              f"{row['price_class']:>18s}")
+    return 0
+
+
+def cmd_official_report(args: argparse.Namespace) -> int:
+    base = official_season.OFFICIAL_MEMORY
+    run_id = args.run or official_season.REHEARSAL_RUN_ID
+    path = os.path.join(base, run_id, "reports",
+                        f"{args.username.lstrip('@')}.json")
+    if not os.path.exists(path):
+        print(f"no report at {path}")
+        return 1
+    with open(path, "r", encoding="utf-8") as handle:
+        report = json.load(handle)
+    metrics = report["metrics"]
+    print(f"{report['participant']}  ({report['family']})")
+    print("=" * 96)
+    print(textwrap.fill(report["thesis"], 96))
+    print()
+    print(f"  return {metrics['return_pct']:+.2f}%   max drawdown "
+          f"{metrics['max_drawdown_pct']:.2f}%   sharpe {metrics['sharpe']:.2f}   "
+          f"status {metrics['status']}")
+    print(f"  trades {metrics['trades']}   intents {metrics['intents']}   filled "
+          f"{metrics['filled_intents']}   waiting {metrics['waiting_intents']}   "
+          f"rejected {metrics['rejected_intents']}")
+    print(f"  coupons ${metrics['coupon_income']:,.2f}   financing "
+          f"${metrics['financing'] + metrics['debit_interest']:,.2f}   "
+          f"cash credit ${metrics['cash_credit']:,.2f}")
+    print("\n  what produced this result:")
+    for line in report["drivers"]:
+        print(textwrap.fill(line, 94, initial_indent="   - ", subsequent_indent="     "))
+    if report["closed_trades"]:
+        print("\n  trades:")
+        for trade in report["closed_trades"][:20]:
+            print(f"   {trade['entry_date']} -> {trade['exit_date']}  "
+                  f"{trade['security_term']:16s} {trade['cusip']}  "
+                  f"{trade['entry_kind']:17s} -> {trade['exit_kind']:20s} "
+                  f"pnl ${trade['pnl']:>11,.2f}")
+    return 0
+
+
+def cmd_trades(args: argparse.Namespace) -> int:
+    """The unified ledger: every closed trade in every book, with its provenance."""
+    trades = tradelog.collect_trades(include_seasons=True)
+    if args.participant:
+        trades = [t for t in trades if t["participant"] == args.participant]
+    if args.official_only:
+        trades = [t for t in trades if t.get("official_execution_price")]
+    coverage = tradelog.coverage(trades)
+    print(f"{len(trades)} closed trades · ${coverage['notional_usd']:,.2f} notional · "
+          f"${coverage['pnl_usd']:,.2f} net P&L")
+    print(f"{'price class':40s}{'trades':>8s}{'notional $':>16s}{'share %':>10s}"
+          f"{'pnl $':>14s}")
+    for klass, row in sorted(coverage["by_price_class"].items(),
+                             key=lambda kv: -kv[1]["notional_usd"]):
+        print(f"{klass:40s}{row['trades']:8d}{row['notional_usd']:16,.2f}"
+              f"{row['notional_share_pct']:10.4f}{row['pnl_usd']:14,.2f}")
+    print(f"  both legs official: {coverage['official_executed_notional_pct']}% of "
+          f"notional · official entry: {coverage['official_entry_notional_pct']}%")
+    print("\nby book:")
+    for book, row in sorted(coverage["by_book"].items(),
+                            key=lambda kv: -kv[1]["notional_usd"]):
+        print(f"  {book:34s}{row['trades']:6d} trades  {row['notional_share_pct']:8.3f}%"
+              f" of notional  ${row['pnl_usd']:,.2f} P&L")
+    if args.out:
+        manifest = tradelog.write_ledger(trades, args.out)
+        print(f"\nwrote the ledger to {args.out} "
+              f"({manifest['storage']['trades']['rows']} rows, "
+              f"{manifest['storage']['trades']['bytes_on_disk'] / 1024:.1f} KiB on disk)")
+    print(f"\n{'exit':11s}{'participant':26s}{'instrument':10s}{'entry':12s}"
+          f"{'exit':12s}{'pnl $':>12s}  {'class':18s}")
+    for trade in sorted(trades, key=lambda t: (t.get("exit_date") or "",
+                                               t["participant"]))[:args.limit]:
+        print(f"{str(trade['exit_date']):11s}{trade['participant'][:25]:26s}"
+              f"{trade['instrument'][:9]:10s}{str(trade['entry_date']):12s}"
+              f"{str(trade['exit_date']):12s}{trade['pnl_usd'] or 0:12,.2f}  "
+              f"{trade['price_class']:18s}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="sim.cli", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -999,6 +1178,33 @@ def build_parser() -> argparse.ArgumentParser:
     lr.add_argument("username")
     lr.add_argument("--run", default=f"live-rehearsal-seed{live.LIVE_SEED}")
     lr.set_defaults(func=cmd_live_report)
+
+    off = sub.add_parser("official", help="run the Official Auction Book (official prices only)")
+    off.add_argument("--start", default="", help="first session (default: the season start)")
+    off.add_argument("--end", default="", help="last session (default: the season end)")
+    off.add_argument("--starting-cash", type=float, default=0.0)
+    off.add_argument("--verbose", action="store_true")
+    off.set_defaults(func=cmd_official)
+
+    ob_ = sub.add_parser("official-blotter", help="every settled official trade with its evidence")
+    ob_.add_argument("--run", default="")
+    ob_.add_argument("--participant", default="")
+    ob_.add_argument("--limit", type=int, default=30)
+    ob_.add_argument("--export", default="", help="write every closed trade to this CSV")
+    ob_.set_defaults(func=cmd_official_blotter)
+
+    orp = sub.add_parser("official-report", help="post-mortem for one official participant")
+    orp.add_argument("username")
+    orp.add_argument("--run", default="")
+    orp.set_defaults(func=cmd_official_report)
+
+    tr = sub.add_parser("trades", help="the unified trade ledger across every book")
+    tr.add_argument("--out", default="", help="directory to write the ledger into")
+    tr.add_argument("--limit", type=int, default=25)
+    tr.add_argument("--participant", default="")
+    tr.add_argument("--official-only", action="store_true",
+                    help="only trades whose executed price is an official number")
+    tr.set_defaults(func=cmd_trades)
 
     ts = sub.add_parser("trade-sim", help="simulate placing a real trade with full microstructure & cost model")
     ts.add_argument("--symbol", default="SPY", help="ticker symbol (e.g. SPY, QQQ, AAPL, NVDA)")

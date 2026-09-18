@@ -1,0 +1,139 @@
+{
+ "participant": "@TIPSBreakeven_Rider",
+ "family": "inflation",
+ "thesis": "Buy inflation-protected paper at auction when the breakeven implied by the official observations sits below the inflation the official CPI index has actually delivered. The two sides of that comparison are read at the same horizon: the nominal yield comes from the Treasury's par curve at the TIPS security's own remaining maturity, and realised inflation comes from the BLS index over the same number of years. The rule bids at the next announced TIPS auction, so the entry price is a published one.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "No trade closed inside the window, but the account is not flat: it holds 2 open position(s) whose mark-to-market at the final session's official mark is $-43,801.28. The return is that mark plus the SOFR credit minus the financing charge - a real position, not a participant that sat still.",
+  "Open position: 912810UH9 360,400 face opened 2025-09-18 at 98.655276, marked 87.071097 at 2026-09-16 (-41,749.38).",
+  "Open position: 91282CNS6 28,700 face opened 2025-11-28 at 101.054399, marked 93.904932 at 2026-09-16 (-2,051.90).",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@TIPSBreakeven_Rider",
+  "family": "inflation",
+  "final_equity": 40225.31,
+  "return_pct": -59.7747,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -62.7844,
+  "sharpe": -1.7042,
+  "trades": 0,
+  "open_positions": 2,
+  "coupon_income": 0,
+  "financing": 0,
+  "debit_interest": -16528.92,
+  "cash_credit": 17.38,
+  "realised_pnl": 0,
+  "margin_events": 0,
+  "intents": 236,
+  "filled_intents": 2,
+  "waiting_intents": 0,
+  "rejected_intents": 174,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 10
+ },
+ "intents": [
+  {
+   "intent_id": "TIPSBreakeven_Rider-00001",
+   "participant": "@TIPSBreakeven_Rider",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-17",
+   "target_session": "2025-09-18",
+   "cusip": "912810UH9",
+   "side": "buy",
+   "face": 360400.0,
+   "rule": "buy TIPS while the breakeven at the security's own tenor is below realised inflation",
+   "rationale": "29.43-year breakeven 2.01% (4.66% nominal at that tenor - 2.65% TIPS) against realised CPI 108.52% over 29.43 years",
+   "status": "FILLED",
+   "settled_on": "2025-09-18",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "mark": {
+     "observation_date": "2025-09-17",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity"
+    }
+   },
+   "fill": {
+    "intent_id": "TIPSBreakeven_Rider-00001",
+    "participant": "@TIPSBreakeven_Rider",
+    "session": "2025-09-18",
+    "cusip": "912810UH9",
+    "side": "buy",
+    "face": 360400.0,
+    "price_per100": 98.655276,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -355553.61,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 8000000000.0,
+     "total_accepted": 8000011500.0,
+     "bid_to_cover": 2.78,
+     "competitive_tendered": null,
+     "security_term": "29-Year 6-Month",
+     "auction_date": "2025-08-21"
+    },
+    "closed_face": 0.0,
+    "opened_face": 360400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "TIPSBreakeven_Rider-00049",
+   "participant": "@TIPSBreakeven_Rider",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-26",
+   "target_session": "2025-11-28",
+   "cusip": "91282CNS6",
+   "side": "buy",
+   "face": 348700.0,
+   "rule": "buy TIPS while the breakeven at the security's own tenor is below realised inflation",
+   "rationale": "9.64-year breakeven 2.13% (3.97% nominal at that tenor - 1.84% TIPS) against realised CPI 36.54% over 9.64 years",
+   "status": "FILLED",
+   "settled_on": "2025-11-28",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "mark": {
+     "observation_date": "2025-11-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity"
+    }
+   },
+   "fill": {
+    "intent_id": "TIPSBreakeven_Rider-00049",
+    "participant": "@TIPSBreakeven_Rider",
+    "session": "2025-11-28",
+    "cusip": "91282CNS6",
+    "side": "buy",
+    "face": 28700.0,
+    "price_per100": 101.054399,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -29002.61,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 19000000000.0,
+     "total_accepted": 19000003700.0,
+     "bid_to_cover": 2.41,
+     "competitive_tendered": null,
+     "security_term": "9-Year 8-Month",
+     "auction_date": "2025-11-20"
+    },
+    "closed_face": 0.0,
+    "opened_face": 28700.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": []
+}

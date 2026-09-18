@@ -1,0 +1,316 @@
+{
+ "participant": "@LongBond_MaxDur",
+ "family": "control / duration",
+ "thesis": "Own the longest-dated coupon security the official auction calendar offers, at the 10x gross cap, and roll it only when it matures. This is the control the brief needs: maximum duration, minimum thinking. In a window where the Treasury's own 30-year yield rose, it should lose - and the book reports what it did rather than what it should have done.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Worst trade: 30-Year 912810UM8 (secondary-curve to margin-liquidation) 2025-10-15 to 2026-03-20 for $-44,487.02.",
+  "0 of 2 closed trades made money; coupons paid $0.00 and financing cost $-26,022.27.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path.",
+  "The venue liquidated the account 2 time(s) under its declared maintenance rule; those fills are in the tape with the reason recorded on each one."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@LongBond_MaxDur",
+  "family": "control / duration",
+  "final_equity": 9901.36,
+  "return_pct": -90.0986,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -91.5117,
+  "sharpe": -1.7109,
+  "trades": 2,
+  "open_positions": 1,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -26022.27,
+  "cash_credit": 591.77,
+  "realised_pnl": -62622.86,
+  "margin_events": 2,
+  "intents": 38,
+  "filled_intents": 3,
+  "waiting_intents": 0,
+  "rejected_intents": 35,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 14
+ },
+ "intents": [
+  {
+   "intent_id": "LongBond_MaxDur-00019",
+   "participant": "@LongBond_MaxDur",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-14",
+   "target_session": "2025-10-15",
+   "cusip": "912810UM8",
+   "side": "buy",
+   "face": 885500.0,
+   "rule": "maximum duration at the 10x gross cap",
+   "rationale": "30-Year 912810UM8; moving 912810UM8 to $904,174 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-14",
+     "price_per100": 102.106141
+    }
+   },
+   "fill": {
+    "intent_id": "LongBond_MaxDur-00019",
+    "participant": "@LongBond_MaxDur",
+    "session": "2025-10-15",
+    "cusip": "912810UM8",
+    "side": "buy",
+    "face": 885500.0,
+    "price_per100": 101.779185,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -901254.68,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 22000000000.0,
+     "total_accepted": 22408408700.0,
+     "bid_to_cover": 2.38,
+     "competitive_tendered": null,
+     "security_term": "29-Year 10-Month",
+     "auction_date": "2025-10-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 885500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LongBond_MaxDur-00037",
+   "participant": "@LongBond_MaxDur",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-14",
+   "target_session": "2026-04-15",
+   "cusip": "912810UR7",
+   "side": "buy",
+   "face": 326200.0,
+   "rule": "maximum duration at the 10x gross cap",
+   "rationale": "30-Year 912810UR7; moving 912810UR7 to $320,098 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-04-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-04-14",
+     "price_per100": 98.124187
+    }
+   },
+   "fill": {
+    "intent_id": "LongBond_MaxDur-00037",
+    "participant": "@LongBond_MaxDur",
+    "session": "2026-04-15",
+    "cusip": "912810UR7",
+    "side": "buy",
+    "face": 326200.0,
+    "price_per100": 97.813408,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -319067.34,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 22000000000.0,
+     "total_accepted": 25901386200.0,
+     "bid_to_cover": 2.39,
+     "competitive_tendered": null,
+     "security_term": "29-Year 10-Month",
+     "auction_date": "2026-04-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 326200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "LongBond_MaxDur-00038",
+   "participant": "@LongBond_MaxDur",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-31",
+   "target_session": "2026-08-03",
+   "cusip": "912810UU0",
+   "side": "buy",
+   "face": 119000.0,
+   "rule": "maximum duration at the 10x gross cap",
+   "rationale": "30-Year 912810UU0; moving 912810UU0 to $114,220 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-08-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-31",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-31",
+     "price_per100": 95.949941
+    }
+   },
+   "fill": {
+    "intent_id": "LongBond_MaxDur-00038",
+    "participant": "@LongBond_MaxDur",
+    "session": "2026-08-03",
+    "cusip": "912810UU0",
+    "side": "buy",
+    "face": 119000.0,
+    "price_per100": 96.536786,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -114878.78,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 22000000000.0,
+     "total_accepted": 24287893700.0,
+     "bid_to_cover": 2.44,
+     "competitive_tendered": null,
+     "security_term": "29-Year 10-Month",
+     "auction_date": "2026-07-09"
+    },
+    "closed_face": 0.0,
+    "opened_face": 119000.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@LongBond_MaxDur",
+   "cusip": "912810UM8",
+   "security_type": "Bond",
+   "security_term": "30-Year",
+   "direction": "long",
+   "face": 885500.0,
+   "entry_date": "2025-10-15",
+   "entry_price_per100": 101.779185,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 101.779185,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.639556,
+     "remaining_years": 29.8521,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-03-20",
+   "exit_price_per100": 96.755242,
+   "exit_kind": "MARGIN-LIQUIDATION",
+   "exit_evidence": {
+    "price_per100": 96.755242,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-20",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.960575,
+     "remaining_years": 29.4247,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -44487.02,
+   "total_pnl": -44487.02,
+   "return_on_cost_pct": -4.93612,
+   "holding_days": 156,
+   "liquidity": {
+    "offering_amount": 22000000000.0,
+    "total_accepted": 22408408700.0,
+    "bid_to_cover": 2.38,
+    "competitive_tendered": null,
+    "security_term": "29-Year 10-Month",
+    "auction_date": "2025-10-09"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@LongBond_MaxDur",
+   "cusip": "912810UR7",
+   "security_type": "Bond",
+   "security_term": "30-Year",
+   "direction": "long",
+   "face": 326200.0,
+   "entry_date": "2026-04-15",
+   "entry_price_per100": 97.813408,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.813408,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-04-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.889715,
+     "remaining_years": 29.8575,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-07-31",
+   "exit_price_per100": 92.253675,
+   "exit_kind": "MARGIN-LIQUIDATION",
+   "exit_evidence": {
+    "price_per100": 92.253675,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 5.270436,
+     "remaining_years": 29.5644,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -18135.85,
+   "total_pnl": -18135.85,
+   "return_on_cost_pct": -5.684019,
+   "holding_days": 107,
+   "liquidity": {
+    "offering_amount": 22000000000.0,
+    "total_accepted": 25901386200.0,
+    "bid_to_cover": 2.39,
+    "competitive_tendered": null,
+    "security_term": "29-Year 10-Month",
+    "auction_date": "2026-04-09"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

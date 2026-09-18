@@ -1,0 +1,332 @@
+[
+ {
+  "intent_id": "BellyMeanReversion_FiveY-00092",
+  "participant": "@BellyMeanReversion_FiveY",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "91282CRK9",
+  "face": 466900.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+  "rationale": "5-year 4.860% vs mean 4.238% (+62.2 bp); moving 91282CRK9 to $457,047 of market value from $0",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 97.873492
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "BillCarry_TenX-00250",
+  "participant": "@BillCarry_TenX",
+  "kind": "AUCTION-BID",
+  "side": "buy",
+  "cusip": "912797VM6",
+  "face": 786100.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "highest available bill yield at the 10x gross cap",
+  "rationale": "levered bill carry, financed at SOFR + 25 bp",
+  "evidence": {
+   "auction_notice": {
+    "observation_date": "2026-09-15",
+    "auction_date": "2026-09-17",
+    "security_term": "4-Week",
+    "offering_amount": 90000000000.0,
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+   }
+  },
+  "security_term": "4-Week",
+  "issue_date": "2026-09-22",
+  "maturity_date": "2026-10-20",
+  "offering_amount": 90000000000.0
+ },
+ {
+  "intent_id": "ConcessionFade_Notes-00451",
+  "participant": "@ConcessionFade_Notes",
+  "kind": "SECONDARY-ORDER",
+  "side": "sell",
+  "cusip": "91282CRE3",
+  "face": 482800.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "exit five sessions after the auction",
+  "rationale": "concession fade",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "observation_date": "2026-09-16"
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "CurveFlattener_2s10s-00495",
+  "participant": "@CurveFlattener_2s10s",
+  "kind": "SECONDARY-ORDER",
+  "side": "sell",
+  "cusip": "91282CRH6",
+  "face": 368800.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "short leg of the 2s10s flattener",
+  "rationale": "2s10s slope +27.0 bp; moving 91282CRH6 to $-364,611 of market value from $0",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 98.861885
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "CurveFlattener_2s10s-00496",
+  "participant": "@CurveFlattener_2s10s",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "91282CRF0",
+  "face": 375800.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "long leg of the 2s10s flattener",
+  "rationale": "2s10s slope +27.0 bp; moving 91282CRF0 to $364,611 of market value from $0",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 97.014685
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "CurveSteepener_2s10s-00493",
+  "participant": "@CurveSteepener_2s10s",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "91282CRH6",
+  "face": 321200.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "long leg of the 2s10s steepener",
+  "rationale": "2s10s slope +27.0 bp; moving 91282CRH6 to $317,567 of market value from $0",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 98.861885
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "CurveSteepener_2s10s-00494",
+  "participant": "@CurveSteepener_2s10s",
+  "kind": "SECONDARY-ORDER",
+  "side": "sell",
+  "cusip": "91282CRF0",
+  "face": 327300.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "short leg of the 2s10s steepener",
+  "rationale": "2s10s slope +27.0 bp; moving 91282CRF0 to $-317,567 of market value from $0",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 97.014685
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "DurationTrend_TenX-00248",
+  "participant": "@DurationTrend_TenX",
+  "kind": "SECONDARY-ORDER",
+  "side": "sell",
+  "cusip": "91282CRF0",
+  "face": 38200.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "long the 10-year below its 60-session mean yield, short above",
+  "rationale": "10-year 5.010% vs 60-session mean 4.662%; moving 91282CRF0 to $-333,130 of market value from $-295,992",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 97.014685
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "LiquidityWeighted_Participant-00263",
+  "participant": "@LiquidityWeighted_Participant",
+  "kind": "AUCTION-BID",
+  "side": "buy",
+  "cusip": "912797VM6",
+  "face": 250400.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "size the bill bid by official issue liquidity",
+  "rationale": "liquidity score 0.93 on 4-Week 912797VM6",
+  "evidence": {
+   "auction_notice": {
+    "observation_date": "2026-09-15",
+    "auction_date": "2026-09-17",
+    "security_term": "4-Week",
+    "offering_amount": 90000000000.0,
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+   }
+  },
+  "security_term": "4-Week",
+  "issue_date": "2026-09-22",
+  "maturity_date": "2026-10-20",
+  "offering_amount": 90000000000.0
+ },
+ {
+  "intent_id": "SOFRPivot_Switch-00152",
+  "participant": "@SOFRPivot_Switch",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "91282CRF0",
+  "face": 1600.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "own duration while SOFR's 20-session change is negative",
+  "rationale": "SOFR 20-session change -3.0 bp; moving 91282CRF0 to $311,748 of market value from $310,156",
+  "evidence": {
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "observation_date": "2026-09-16",
+    "price_per100": 97.014685
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ },
+ {
+  "intent_id": "TIPSBreakeven_Rider-00236",
+  "participant": "@TIPSBreakeven_Rider",
+  "kind": "SECONDARY-ORDER",
+  "side": "buy",
+  "cusip": "912810US5",
+  "face": 167500.0,
+  "created_on": "2026-09-16",
+  "target_session": "2026-09-17",
+  "status": "PENDING",
+  "rule": "buy TIPS while the breakeven at the security's own tenor is below realised inflation",
+  "rationale": "29.44-year breakeven 2.38% (5.35% nominal at that tenor - 2.97% TIPS) against realised CPI 109.22% over 29.44 years",
+  "evidence": {
+   "mark": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity"
+   }
+  },
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
+ }
+]

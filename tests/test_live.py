@@ -474,10 +474,23 @@ class TestOfficialExtractVerification(unittest.TestCase):
         self.assertIn("bond_market_open_equity_closed", explained)
         self.assertTrue(explained["bond_market_open_equity_closed"][0]["why"])
 
+    def test_the_reports_bytes_do_not_churn(self):
+        """A committed artefact must not change bytes on every run."""
+        script = os.path.join(REPO_ROOT, "scripts", "verify_official_extracts.py")
+        path = os.path.join(REPO_ROOT, "data", "real", "fred",
+                            "AGENT_FETCH_VERIFICATION.json")
+        with open(path, "rb") as handle:
+            before = handle.read()
+        subprocess.run([sys.executable, script, "--quiet"],
+                       capture_output=True, text=True, cwd=REPO_ROOT, check=True)
+        with open(path, "rb") as handle:
+            after = handle.read()
+        self.assertEqual(before, after,
+                         "the verification report was rewritten even though no "
+                         "check changed")
+
     def test_the_verifier_can_fail(self):
         """A verifier that cannot fail is not a verifier."""
-        import tempfile
-        import shutil
         with tempfile.TemporaryDirectory() as tmp:
             fred = os.path.join(tmp, "fred")
             os.makedirs(fred)
@@ -489,9 +502,11 @@ class TestOfficialExtractVerification(unittest.TestCase):
             # only thing standing between a transcription and the repo is this
             # check plus its digest.
             path = os.path.join(fred, "DJIA_2024-09-16_2026-09-17.csv")
-            rows = open(path, encoding="utf-8").read().splitlines()
+            with open(path, encoding="utf-8") as handle:
+                rows = handle.read().splitlines()
             rows[1] = rows[1].split(",")[0] + ",0.00"
-            open(path, "w", encoding="utf-8").write("\n".join(rows) + "\n")
+            with open(path, "w", encoding="utf-8") as handle:
+                handle.write("\n".join(rows) + "\n")
             proc = subprocess.run(
                 [sys.executable,
                  os.path.join(REPO_ROOT, "scripts", "verify_official_extracts.py"),

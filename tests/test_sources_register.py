@@ -558,5 +558,73 @@ class TestRealDataFiles(unittest.TestCase):
         self.assertIn("332.4", blob)      # AAPL end anchor
 
 
+
+class TestRuntimeRegisterClaims(unittest.TestCase):
+    """Counts the register quotes from a run must be that run's counts.
+
+    IR-13, IR-14 and IR-15 each state how many events the published season
+    produced. All three were quietly wrong for two full re-runs: every number
+    described whichever memory happened to exist when the sentence was written, and
+    each later fix moved the season underneath the prose without a single test
+    noticing. The run's own irregularities file is the authority for those counts,
+    so it is compared against the prose here - a register may quote a peak, but it
+    may not quote a stale one.
+    """
+
+    RUN = "season1-primary-seed20260917"
+
+    def _runtime_rows(self):
+        path = os.path.join(REPO_ROOT, "memory", "runs", self.RUN, "irregularities.json")
+        with open(path, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        return payload["irregularities"] if isinstance(payload, dict) else payload
+
+    def _peak(self, code):
+        """(largest per-participant count, total) for one runtime IR code.
+
+        The run's rows are already aggregated per participant by the engine, and
+        the participant is part of the message rather than a field of its own, so
+        "@Name: 67 order(s) REJECTED..." is the unit being read here.
+        """
+        counts: dict = {}
+        for r in self._runtime_rows():
+            if r.get("id") != code:
+                continue
+            msg = r.get("message", "")
+            m = re.match(r"(@[\w.\-]+): (\d+) order\(s\)", msg)
+            if m:
+                counts[m.group(1)] = counts.get(m.group(1), 0) + int(m.group(2))
+            else:
+                counts["unaggregated"] = counts.get("unaggregated", 0) + 1
+        return (max(counts.values()) if counts else 0,
+                sum(counts.values()) if counts else 0)
+
+    def _entry_text(self, ident):
+        row = {r["id"]: r for r in load_json("IRREGULARITIES.json")}[ident]
+        return row["detail"] + " " + row["resolution"]
+
+    def test_the_rejection_and_clip_counts_are_the_published_ones(self):
+        peak, total = self._peak("IR-14")
+        text = self._entry_text("IR-14")
+        self.assertIn(f"{peak} such rejections", text,
+                      f"IR-14 does not state the published peak of {peak} rejected orders")
+        self.assertIn(f"{total} across all participants", text,
+                      f"IR-14 quotes a peak but not the {total} events it sits inside")
+        clip, clip_total = self._peak("IR-15")
+        text = self._entry_text("IR-15")
+        self.assertIn(f"{clip} clips", text,
+                      f"IR-15 does not state the published peak of {clip} clips")
+        self.assertIn(f"{clip_total} clips in total", text,
+                      f"IR-15 does not state the published total of {clip_total} clips")
+
+    def test_the_blowup_entry_quotes_the_published_worst_return(self):
+        with open(os.path.join(REPO_ROOT, "memory", "runs", self.RUN,
+                               "leaderboard.json"), encoding="utf-8") as fh:
+            board = json.load(fh)["leaderboard"]
+        worst = min(r["total_return_pct"] for r in board)
+        self.assertLess(worst, 0.0, "the worst participant is not meant to be profitable")
+        self.assertIn(f"{worst:.2f}%", self._entry_text("IR-13"),
+                      f"IR-13 does not quote the published worst return {worst:.2f}%")
+
 if __name__ == "__main__":
     unittest.main()

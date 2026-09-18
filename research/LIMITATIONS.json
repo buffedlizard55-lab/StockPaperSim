@@ -94,7 +94,7 @@
     "id": "L-14",
     "severity": "low",
     "title": "Memory is compressed JSON Lines, not a database",
-    "detail": "Queries are streaming scans over gzip files. At the current scale (about 38,000 event rows and 4.3 MB for six scenarios) that is instant and has the advantage of being human-readable, dependency-free and trivially checksummable. It would not survive 10 million rows or concurrent writers.",
+    "detail": "Queries are streaming scans over gzip files. At the published scale (36,597 event rows across 8 streams, 4.08 MB for the six scenarios) that is instant and has the advantage of being human-readable, dependency-free and trivially checksummable. It would not survive 10 million rows or concurrent writers.",
     "fix": "A SQLite or DuckDB backend behind the same MemoryStore interface; the JSONL files stay as the export format. The query API is already written against an iterator abstraction, so the swap is local."
   },
   {

@@ -438,7 +438,38 @@ artefact rather than on a copy. One residual limit is stated instead of fixed: a
 squash merge means `main` never contains the PR-head commit a manifest names, so
 the durable provenance of a run is its per-module hashes, not the commit string.
 
+## 4h. A second sweep: the register's runtime counts were stale too (**IR-13**, **IR-14**, **IR-15**)
+
+§4f re-derived the dollar figures in the register. Reading the deployed
+`docs/irregularities.html` afterwards exposed the same failure in the entries that
+quantify *runtime* events, which nobody had recomputed because those numbers are
+not in the leaderboard and no test compared them with the run:
+
+| Entry | Register said | The published run says | Corrected |
+|---|---|---|---|
+| IR-13 (a participant blowing up) | `@GapAndGo_YOLO finished at -86.67%` | **−91.75%** | the number had been overtaken by two re-runs |
+| IR-14 (pre-trade rejects) | `@SpreadHarvester_MM had 131 such rejections` | **67**, and **115** across the three participants that hit the cap | the season total is now quoted beside the peak |
+| IR-15 (size clips) | `195 clips for @SpreadHarvester_MM and 44 for @KitchenSink_AllIn` | **193** and **44**, **259** in total | ditto |
+| L-14 (memory scale) | `about 38,000 event rows and 4.3 MB` | **36,597** rows across 8 streams, **4.08 MB** | exact, since it is cheap to be |
+| IR-23 (beta/alpha) | `alpha +44.9%/yr` | **+44.08%/yr** | corrected |
+| IR-21, IR-22, IR-29 | measured deltas quoted as if current | those were measured on the memory at commit 71b3d90 | each now **names the artefact it was measured on**, because a measured claim about a regenerable run is only meaningful with its run attached |
+
+`tests/test_sources_register.py::TestRuntimeRegisterClaims` closes this class: it
+re-aggregates the published run's own `irregularities.json` (the engine stores one
+aggregated row per participant and per normalised reason, with the participant
+embedded in the message) and requires IR-14 and IR-15 to state that peak and that
+total, and requires IR-13 to quote the leaderboard's actual worst return. It is
+the guard that would have caught all five stale numbers on the day they went
+stale.
+
+What this pass could *not* verify was also recorded rather than dropped: the
+pre-fix figures quoted in IR-31 are now recoverable only through git
+(`git show 71b3d90:memory/runs/season1-primary-seed20260917/events/carry.jsonl.gz`),
+which is written into the entry so a reviewer is not left trying to re-run a
+season from a commit whose memory no longer exists.
+
 ## 6. Audits run on the simulation itself
+
 
 
 

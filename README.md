@@ -158,7 +158,7 @@ sim/            the engine - pure standard library, no third-party imports
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          367 tests - engine, venue, memory, site, registers, docs, README
+tests/          369 tests - engine, venue, memory, site, registers, docs, README
 data/real/      verbatim FRED and Yahoo downloads, with checksums
 memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports
@@ -177,7 +177,7 @@ python3 -m sim.cli report --user @GapAndGo_YOLO     # full post-mortem
 python3 -m sim.cli verify               # checksum every run + data audits
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 367 tests
+python3 -m unittest discover -s tests   # 369 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the

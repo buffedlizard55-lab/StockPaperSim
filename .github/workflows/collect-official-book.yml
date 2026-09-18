@@ -32,7 +32,7 @@ on:
       only:
         description: "Comma-separated sections"
         required: false
-        default: "treasury,insider_bulk,official_rates"
+        default: "treasury,fred,insider_bulk"
   push:
     branches: [arena/01a0b674-stockpapersim]
     paths:
@@ -71,7 +71,7 @@ jobs:
 
       - name: Collect
         env:
-          ONLY: ${{ github.event.inputs.only || 'treasury,insider_bulk,official_rates' }}
+          ONLY: ${{ github.event.inputs.only || 'treasury,fred,insider_bulk' }}
         run: |
           python3 scripts/collect_real_data.py --out data/real \
             --only "$ONLY" --max-seconds 1800

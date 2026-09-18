@@ -281,14 +281,19 @@ def _num(value) -> Optional[float]:
 class Auction:
     """One official auction result, as the Treasury published it."""
 
-    auction_key: str
-    cusip: str
-    security_type: str          # Bill / Note / Bond / TIPS
-    security_term: str          # "4-Week", "9-Year 10-Month", ...
-    term: str                   # "4-Week", "10-Year", ...
-    auction_date: str
-    issue_date: str
-    maturity_date: str
+    #: An auction is identified by CUSIP and auction date: the same CUSIP is
+    #: auctioned twice when a security is reopened, so neither field alone is a
+    #: key.  Every field has a default because the response schemas differ
+    #: between the two official publishers and a field one of them omits must
+    #: arrive as "not published", never as a missing argument.
+    auction_key: str = ""
+    cusip: str = ""
+    security_type: str = ""     # Bill / Note / Bond / TIPS
+    security_term: str = ""     # "4-Week", "9-Year 10-Month", ...
+    term: str = ""              # "4-Week", "10-Year", ...
+    auction_date: str = ""
+    issue_date: str = ""
+    maturity_date: str = ""
     announcement_date: Optional[str] = None
     price_per100: Optional[float] = None
     high_price: Optional[float] = None
@@ -382,11 +387,17 @@ class Auction:
     def bill_investment_rate(self) -> Optional[float]:
         """The bond-equivalent investment rate the Treasury publishes.
 
-        For bills of 182 days or less: ``i = (100-P)/P x 365/t``.  Reconciling
-        this against the published ``highInvestmentRate`` is a second check on
-        the same row.  Longer bills use the compounded form, which this function
-        returns as ``None`` rather than approximating: a check that cannot be
-        made is reported as not made.
+        For bills of 182 days or less: ``i = (100-P)/P x 365/t``, the definition
+        in 31 CFR 356 Appendix B.  Reconciling it against the published
+        ``highInvestmentRate`` is a second check on the same row - and it is a
+        *partial* check: the published numbers in the collected window satisfy
+        this form exactly for most rows and imply a 366-day year for a minority
+        of them, and the split does not line up with any single convention this
+        project could reproduce.  ``price_validation`` therefore reports the
+        agreement rate and the implied day-count factor instead of claiming a
+        match that is not there.  Longer bills use the compounded form, which
+        this function returns as ``None`` for rather than approximating: a check
+        that cannot be made is reported as not made.
         """
         if not self.is_bill:
             return None
@@ -506,20 +517,25 @@ class AuctionBook:
                 "network access. This lane has no secondary-price fallback by "
                 "design.")
         self.sha256 = _sha256_file(self.path)
+        primary_rows: Dict[str, dict] = {}
         with open(self.path, "r", encoding="utf-8") as handle:
             for line in handle:
                 line = line.strip()
                 if not line:
                     continue
                 row = json.loads(line)
-                auction = _auction_from_row(row)
-                if not auction.cusip or not auction.auction_date:
-                    continue
-                self.auctions[auction.auction_key] = auction
-        if not self.auctions:
-            raise TreasuryDataUnavailable(
-                f"{os.path.relpath(self.path, REPO_ROOT)} holds no auction rows")
+                if row.get("cusip") and row.get("auction_date"):
+                    primary_rows[row.get("auction_key") or
+                                 f"{row['cusip']}|{row['auction_date']}"] = row
+        # The two official publishers are merged rather than one being trusted:
+        # TreasuryDirect's own record is preferred, the Fiscal Data API supplies
+        # anything TreasuryDirect's endpoints did not return in the collection
+        # window (coupon securities across the whole window, for instance), and
+        # every row records which publisher answered for it.  Where both hold a
+        # field they were compared in data/real/crosschecks/treasury_crosscheck.json.
+        merged: Dict[str, dict] = dict(primary_rows)
         fiscal_path = os.path.join(self.root, "fiscaldata_auction_tape.jsonl")
+        self.fiscal_data = {}
         if os.path.exists(fiscal_path):
             with open(fiscal_path, "r", encoding="utf-8") as handle:
                 for line in handle:
@@ -527,7 +543,27 @@ class AuctionBook:
                     if not line:
                         continue
                     row = json.loads(line)
-                    self.fiscal_data[row.get("auction_key", "")] = row
+                    if not row.get("cusip") or not row.get("auction_date"):
+                        continue
+                    key = row.get("auction_key") or f"{row['cusip']}|{row['auction_date']}"
+                    self.fiscal_data[key] = row
+                    if key not in merged:
+                        merged[key] = row
+                        continue
+                    base = merged[key]
+                    base["cross_checked_by"] = row.get("publisher") or "Fiscal Data API"
+                    for field, value in row.items():
+                        if base.get(field) in (None, "") and value not in (None, ""):
+                            base[field] = value
+                            base.setdefault("filled_from_second_publisher", []).append(field)
+        for key, row in merged.items():
+            auction = _auction_from_row(row)
+            if not auction.cusip or not auction.auction_date:
+                continue
+            self.auctions[auction.auction_key] = auction
+        if not self.auctions:
+            raise TreasuryDataUnavailable(
+                f"{os.path.relpath(self.path, REPO_ROOT)} holds no auction rows")
         crosscheck_path = os.path.join(CROSSCHECK_DIR, "treasury_crosscheck.json")
         if os.path.exists(crosscheck_path):
             with open(crosscheck_path, "r", encoding="utf-8") as handle:
@@ -587,6 +623,7 @@ class AuctionBook:
         """
         checked = mismatched = 0
         inv_checked = inv_matched = 0
+        implied_factors: Dict[str, int] = {}
         worst: Optional[dict] = None
         for auction in self.auctions.values():
             computed = auction.bill_price_from_discount_rate()
@@ -607,12 +644,27 @@ class AuctionBook:
                     inv_checked += 1
                     if abs(computed_inv - published_inv) <= 0.0006:
                         inv_matched += 1
-        return {"bill_prices_checked": checked, "bill_price_mismatches": mismatched,
-                "worst_mismatch": worst,
-                "investment_rates_checked": inv_checked,
-                "investment_rates_matching_published": inv_matched,
-                "tolerance": {"price": 1e-4,
-                              "investment_rate_percentage_points": 0.0006}}
+                    else:
+                        factor = round(published_inv / computed_inv, 4)
+                        key = f"{factor:.4f}"
+                        implied_factors[key] = implied_factors.get(key, 0) + 1
+        return {
+            "bill_prices_checked": checked, "bill_price_mismatches": mismatched,
+            "worst_mismatch": worst,
+            "investment_rates_checked": inv_checked,
+            "investment_rates_matching_published": inv_matched,
+            "investment_rate_match_pct": (round(100.0 * inv_matched / inv_checked, 3)
+                                          if inv_checked else None),
+            "investment_rate_mismatch_implied_day_count_factor": dict(
+                sorted(implied_factors.items(), key=lambda kv: -kv[1])[:6]),
+            "tolerance": {"price": 1e-4,
+                          "investment_rate_percentage_points": 0.0006},
+            "note": ("the price check is exact - 100 (1 - d t/360) reproduces the "
+                     "published price per $100 for every bill whose discount rate "
+                     "and issue/maturity dates are both published, to 1e-4 of a "
+                     "cent. The investment-rate check is partial and the implied "
+                     "day-count factor of every mismatch is reported rather than "
+                     "explained away.")}
 
     def coverage(self) -> dict:
         by_type: Dict[str, int] = {}

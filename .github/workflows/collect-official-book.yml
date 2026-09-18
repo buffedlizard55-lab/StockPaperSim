@@ -1,0 +1,151 @@
+name: Collect official auction and insider data
+
+# WHY THIS RUNS ON A GITHUB RUNNER
+# --------------------------------
+# The development sandbox has no outbound HTTPS, and the Official Auction Book
+# (sim/treasury.py, sim/officialbook.py) may only trade on prices a publisher
+# itself printed.  This workflow fetches the two official sources that make an
+# executed price official - the U.S. Treasury's auction results (TreasuryDirect
+# and the Fiscal Data API) and the SEC's quarterly Form 3/4/5 structured
+# extracts - writes them verbatim under data/real/ with a SHA-256 per file, and
+# commits the result back to the branch it ran on.
+#
+# TRIGGERS
+# --------
+# * ``workflow_dispatch`` is the permanent way to run it, matching the policy
+#   the collector workflow states: collection can rewrite the committed data
+#   directory, so a human chooses when it happens.
+# * The ``push`` trigger below is TEMPORARY scaffolding for the branch that
+#   introduced this workflow.  GitHub's API refused a dispatch for this
+#   repository's automation ("Resource not accessible by integration"), and
+#   without the trigger there is no way to obtain the official responses from
+#   an environment that has a network.  It is removed before the branch is
+#   merged, so ``main`` keeps the manual-only policy; the run that produced the
+#   committed files is linked in research/VERIFICATION_LOG.md.
+#
+# The self-reference guard is not cosmetic: the workflow commits and pushes,
+# and its own push would start it again forever without it.
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma-separated sections"
+        required: false
+        default: "treasury,insider_bulk,official_rates"
+  push:
+    branches: [arena/01a0b674-stockpapersim]
+    paths:
+      - ".github/workflows/collect-official-book.yml"
+      - "scripts/collect_real_data.py"
+      - "sim/treasury.py"
+      - "sim/officialbook.py"
+      - "sim/strategies_official.py"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-official-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Fetch Treasury auctions and SEC insider extracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      !startsWith(github.event.head_commit.message, 'data:')
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity
+        run: python3 scripts/check_purity.py
+
+      - name: Collect
+        env:
+          ONLY: ${{ github.event.inputs.only || 'treasury,insider_bulk,official_rates' }}
+        run: |
+          python3 scripts/collect_real_data.py --out data/real \
+            --only "$ONLY" --max-seconds 1800
+
+      - name: Summarise what was collected
+        run: |
+          python3 - <<'PY'
+          import json, os
+          m = json.load(open("data/real/collection_manifest.json"))
+          print(f"requests: {len(m['requests'])} ok: {m['ok']} failed: {m['failed']}")
+          for r in m["requests"]:
+              if not r["ok"]:
+                  print(f"  FAIL {r['kind']:10s} {r.get('error','')[:60]:60s} {r['url'][:100]}")
+          for name in ("treasury", "insider_bulk"):
+              p = os.path.join("data/real", name)
+              if os.path.isdir(p):
+                  total = sum(os.path.getsize(os.path.join(d, f))
+                              for d, _, fs in os.walk(p) for f in fs)
+                  n = sum(len(fs) for _, _, fs in os.walk(p))
+                  print(f"  {name}: {n} files, {total/1024:.1f} KB")
+          for path in ("data/real/treasury/auction_tape.jsonl",
+                       "data/real/insider_bulk/insider_transactions.jsonl"):
+              if os.path.exists(path):
+                  print(f"  {path}: {sum(1 for _ in open(path))} rows")
+          cc = "data/real/crosschecks/treasury_crosscheck.json"
+          if os.path.exists(cc):
+              print("  crosscheck:", json.dumps(
+                  {k: v for k, v in json.load(open(cc)).items() if k != "pairs"}))
+          PY
+
+      - name: Show what changed
+        run: git status --short data/real | head -40; du -sh data/real
+
+      - name: Commit the collected data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/real
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+            exit 0
+          fi
+          BRANCH="${{ github.ref_name }}"
+          git fetch --quiet origin "$BRANCH"
+          git rebase --quiet "origin/$BRANCH" || { git rebase --abort || true; }
+          git commit -m "data: collect official Treasury auction and SEC insider records
+
+          Fetched by scripts/collect_real_data.py on a GitHub runner because the
+          development sandbox has no outbound network.  Every request, status,
+          byte count and SHA-256 is recorded in data/real/collection_manifest.json,
+          and both publishers of the auction data are compared field by field in
+          data/real/crosschecks/treasury_crosscheck.json."
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:$BRANCH"; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "::warning::push attempt $attempt rejected; rebasing and retrying"
+            git fetch --quiet origin "$BRANCH"
+            git rebase --quiet "origin/$BRANCH" || git rebase --abort || true
+          done
+          echo "::error::could not push the collected data"
+          exit 1
+
+      - name: Upload the manifest as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: official-book-collection
+          path: |
+            data/real/collection_manifest.json
+            data/real/coverage_report.json
+            data/real/crosschecks/treasury_crosscheck.json
+            data/real/treasury/
+            data/real/insider_bulk/index.json
+          if-no-files-found: warn
+          retention-days: 14

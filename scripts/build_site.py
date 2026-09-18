@@ -680,13 +680,42 @@ What the simulation cannot do at all is in
 <a href="limitations.html">Limitations</a>.</p>
 <p class="muted">Run <code>{ESC(str(d.run_id))}</code> · generated
 {ESC(str(man.get("finalised_utc", "")))} · {ESC(str(timing.get("elapsed_seconds", "")))}s
-of compute for the primary scenario · git commit
-<code>{ESC(str((man.get("code", {}).get("git", {}) or {}).get("commit", "unknown"))[:12])}</code></p>
+of compute for the primary scenario · {provenance_sentence(man)}</p>
 ''')}
 """
     return page("Overview", body, "index.html")
 
 
+
+def provenance_sentence(manifest: dict) -> str:
+    """Say honestly which code produced the published run.
+
+    A commit id on its own is not provenance. A season can be - and in this
+    repository's history was - generated from a working tree carrying uncommitted
+    changes, in which case the recorded commit is the one the run was *based on*
+    and not the code that actually ran. The run manifest already distinguishes the
+    two (`code.git.dirty`), and the durable fingerprint is the per-module SHA-256
+    list in the same manifest, so the footer states which of them a reader is
+    looking at instead of implying a reproducibility guarantee the commit string
+    cannot give after a squash merge.
+    """
+    code = manifest.get("code") or {}
+    git = code.get("git") or {}
+    commit = str(git.get("commit") or "unknown")[:12]
+    n_hashes = len(code.get("python_module_hashes") or {})
+    parts = [f"git commit <code>{ESC(commit)}</code>"]
+    if git.get("dirty"):
+        branch = ESC(str(git.get("branch") or "an unnamed branch"))
+        parts.append(
+            f"<strong>generated from a modified working tree</strong> on "
+            f"{branch}: that commit is what the run was based on, not the whole of "
+            f"the code that ran, so reproduce from the {n_hashes} per-module "
+            f"SHA-256 hashes in the manifest, or re-run it")
+    elif n_hashes:
+        parts.append(f"with {n_hashes} per-module source hashes in the manifest")
+    else:
+        parts.append("with no per-module source hashes recorded in the manifest")
+    return " &middot; ".join(parts)
 def _market_summary_html(d: SiteData) -> str:
     m = d.market
     if not m:

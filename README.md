@@ -164,7 +164,7 @@ memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports
 docs/           the published site (GitHub Pages serves this directory)
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (34), LIMITATIONS.json (16),
+                IRREGULARITIES.json (35), LIMITATIONS.json (16),
                 REMAINING_WORK.json (17)
 ```
 
@@ -223,7 +223,7 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 34 flags, including the ones raised against this project's own modelling
+  — all 35 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
   — 16 limitations, 17 items of remaining work in priority order, and what

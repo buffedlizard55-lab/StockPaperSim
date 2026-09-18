@@ -270,9 +270,14 @@ class TestPublishedSite(unittest.TestCase):
         with open(os.path.join(REPO_ROOT, "research", "REMAINING_WORK.json"),
                   encoding="utf-8") as fh:
             rows = json.load(fh)
-        html = _read("limitations.html")
+        # Compare the rendered *text*: the page escapes apostrophes and
+        # ampersands, and a title that says "collector's" must not fail this
+        # check because the markup says &#x27;. Unescaping the page is the
+        # honest comparison; escaping the expected string was the previous
+        # approach and it only worked while no title contained an apostrophe.
+        page = html.unescape(_read("limitations.html"))
         for row in rows:
-            self.assertIn(row["title"][:30].replace("&", "&amp;"), html,
+            self.assertIn(row["title"][:30], page,
                           f"remaining work not published: {row['title'][:40]}")
 
     def test_every_participant_page_has_the_why_it_worked_section(self):

@@ -470,5 +470,16 @@
     "links": [
       "https://buffedlizard55-lab.github.io/MasterSite/"
     ]
+  },
+  {
+    "id": "IR-47",
+    "severity": "medium",
+    "topic": "A collection run left main publishing file hashes that no longer existed",
+    "detail": "The season's provenance records a SHA-256 for every price file it traded, and the custody page prints them. The collector commits its data directly to the branch, and a push made with the workflow's own GITHUB_TOKEN does not trigger CI - so the run that refreshed 22 price files after the merge changed the bytes under a published season with nothing to catch it. Only adjusted closes and two single-line documents moved, so no traded price changed, but the audit would have failed on the custody check had it been run on that commit.",
+    "resolution": "The collector workflow now re-derives the season, runs both independent audits as a gate, rebuilds the site and commits memory and docs alongside the data, in a step separate from the data commit so a failure there cannot lose the collection. The drift itself was corrected by re-running the season against the refreshed files (e3c1ed4).",
+    "links": [
+      "https://github.com/buffedlizard55-lab/StockPaperSim/actions/runs/35305919022",
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
+    ]
   }
 ]

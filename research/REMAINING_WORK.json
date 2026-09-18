@@ -173,5 +173,12 @@
     "priority": "P2",
     "effort": "a scheduled workflow plus a season of patience",
     "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
+  },
+  {
+    "title": "Make CI see the collector's own commits",
+    "detail": "A push performed with the workflow's GITHUB_TOKEN does not trigger other workflows, so the collection job can change data under a published season without CI noticing (IR-47). The re-derive step added in this pass keeps the two in step, but a failure inside that step still commits the data first. A small dispatcher - the collector finishing by firing a repository_dispatch that runs the test suite and the audits - would close the gap.",
+    "priority": "P1",
+    "effort": "half a day",
+    "where": ".github/workflows/collect-real-data.yml, .github/workflows/ci.yml"
   }
 ]

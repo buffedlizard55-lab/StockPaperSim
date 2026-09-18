@@ -436,5 +436,62 @@ class TestFullBuild(unittest.TestCase):
             shutil.rmtree(out2, ignore_errors=True)
 
 
+
+class TestRunProvenanceFooter(unittest.TestCase):
+    """A commit id in the footer must not promise more than it can deliver.
+
+    The season published on GitHub Pages was generated from a dirty working tree,
+    which made the footer's "git commit <sha>" a statement about a commit that did
+    not contain the code which ran (IR-35). These tests pin the three footer
+    states and - the one that actually caught the bug - compare the committed
+    site's footer against the committed manifest it was generated from.
+    """
+
+    def _foot(self, manifest):
+        return site.provenance_sentence(manifest)
+
+    def test_a_dirty_run_says_so_instead_of_leaning_on_the_commit(self):
+        html = self._foot({"code": {"git": {"commit": "a" * 40, "branch": "arena/x",
+                                            "dirty": True},
+                                    "python_module_hashes": {"sim/engine.py": "h"}}})
+        self.assertIn("modified working tree", html)
+        self.assertIn("1 per-module SHA-256 source hashes", html)
+        self.assertIn("arena/x", html)
+
+    def test_a_clean_run_points_at_the_module_hashes(self):
+        html = self._foot({"code": {"git": {"commit": "b" * 40, "branch": "main",
+                                            "dirty": False},
+                                    "python_module_hashes": {"sim/engine.py": "h",
+                                                              "sim/cli.py": "h2"}}})
+        self.assertNotIn("modified working tree", html)
+        self.assertIn("2 per-module SHA-256 source hashes", html)
+
+    def test_a_manifest_without_git_metadata_degrades_explicitly(self):
+        # A run whose memory root sat outside the repository used to record
+        # commit=None *and* dirty=False, i.e. it reported "clean" for a tree it
+        # had never looked at. Unknown must never render as clean.
+        html = self._foot({})
+        self.assertIn("no git provenance recorded", html)
+        self.assertIn("no per-module source hashes", html)
+        for banned in ("None", "{", "}"):
+            self.assertNotIn(banned, html, f"raw python value leaked into the footer: {banned}")
+
+    def test_the_published_footer_matches_the_published_manifest(self):
+        index = os.path.join(REPO_ROOT, "docs", "index.html")
+        if not os.path.exists(index):
+            self.skipTest("docs/ not built yet")
+        run = "season1-primary-seed20260917"
+        with open(os.path.join(MEMORY_ROOT, "runs", run, "manifest.json"),
+                  encoding="utf-8") as fh:
+            man = json.load(fh)
+        with open(index, encoding="utf-8") as fh:
+            html = fh.read()
+        commit = str((man.get("code") or {}).get("git", {}).get("commit") or "unknown")[:12]
+        self.assertIn(commit, html, "the footer does not name the manifest's commit")
+        dirty = bool((man.get("code") or {}).get("git", {}).get("dirty"))
+        self.assertEqual("modified working tree" in html, dirty,
+                         f"footer says dirty={not dirty} but the manifest says dirty={dirty}")
+
+
 if __name__ == "__main__":
     unittest.main()

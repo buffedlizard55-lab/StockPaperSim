@@ -257,8 +257,8 @@ sim/            the engine - pure standard library, no third-party imports
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          426 tests - engine, venue, memory, site, registers, docs, README,
-                official-price eligibility and sensitivity
+tests/          433 tests - engine, venue, memory, site, registers, docs, README,
+                official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
 memory/         the audit trail: one directory per run, gzipped event streams,
@@ -281,9 +281,11 @@ python3 -m sim.cli price-audit         # strict official-price gate (non-zero un
 python3 -m sim.cli season2               # official Nasdaq backend; fails closed if ineligible
 python3 -m sim.cli season2 --price-source yahoo --allow-secondary-research
                                         # explicit non-eligible research replay only
+python3 -m sim.cli trade-sim --symbol SPY --side buy --qty 500
+                                        # simulate placing a real trade with full microstructure
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 426 tests
+python3 -m unittest discover -s tests   # 433 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the

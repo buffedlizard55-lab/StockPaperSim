@@ -591,6 +591,130 @@ def _read_json(path: str) -> dict:
         return json.load(handle)
 
 
+def cmd_trade_sim(args: argparse.Namespace) -> int:
+    import math
+    from . import microstructure
+
+    symbol = args.symbol.upper()
+    side = args.side.lower()
+    qty = int(args.qty)
+    order_type = args.type.lower()
+    custom_price = float(args.price) if args.price is not None else None
+    participant = args.participant or "@InteractiveTrader"
+    cash = float(args.cash)
+    date = args.date or "2026-09-16"
+
+    ref_file = ""
+    ref_sha256 = ""
+    price = custom_price
+    adv = 5_000_000.0
+    sigma_annual = 0.25
+
+    # Check real data collection if available
+    try:
+        if os.path.isdir(os.path.join(realdata.REAL_ROOT, "prices", "yahoo")):
+            series = realdata.load_series(symbol)
+            by_date = series.by_date()
+            if date in by_date:
+                bar = by_date[date]
+                if price is None:
+                    price = bar.close if args.at_close else bar.open
+                adv = float(max(100_000, bar.volume))
+            meta = realdata.file_digest(realdata.symbol_path(symbol, realdata.REAL_ROOT, "yahoo"))
+            ref_file = meta.get("path", "")
+            ref_sha256 = meta.get("sha256", "")
+    except Exception:
+        pass
+
+    uni = universe.universe_by_symbol()
+    inst = uni.get(symbol)
+    if inst:
+        if price is None:
+            price = inst.price_start
+        adv = float(inst.adv_shares)
+        sigma_annual = float(max(0.01, inst.beta * 0.15 + inst.sigma_idio_annual))
+    elif price is None:
+        price = 100.0
+
+    min_tick = config.minimum_tick(price)
+    round_lot_size = config.round_lot(price)
+
+    cost_cfg = config.CostConfig()
+    liq_cfg = config.LiquidityConfig()
+    imp_cfg = config.ImpactConfig()
+
+    cm = microstructure.CostModel(cost_cfg)
+    lm = microstructure.LiquidityModel(liq_cfg)
+    im = microstructure.ImpactModel(imp_cfg)
+
+    sigma_daily = sigma_annual / math.sqrt(252)
+    if inst:
+        quoted_spread = lm.quoted_spread(inst, price, sigma_daily)
+    else:
+        quoted_spread = min_tick if price > 1.0 else 0.0001
+    half_spread = quoted_spread / 2.0
+
+    part_rate = qty / max(1.0, adv)
+    impact_ret = im.impact_return(qty, adv, sigma_daily)
+    perm_ret, temp_ret = im.split(impact_ret)
+    perm_usd = price * perm_ret
+    temp_usd = price * temp_ret
+
+    direction = 1.0 if side == "buy" else -1.0
+    effective_slippage_usd = half_spread + temp_usd + perm_usd
+    effective_price = round(price + direction * effective_slippage_usd, 4)
+    if min_tick > 0.0001:
+        effective_price = round(round(effective_price / min_tick) * min_tick, 4)
+
+    slippage_bps = round(abs(effective_price - price) / price * 10000.0, 2)
+    notional = round(qty * effective_price, 2)
+
+    taker_fee = round(cm.taker_fee(qty), 4)
+    reg_fee = round(cm.regulatory(side, qty, effective_price, date), 4)
+    total_cost = round(taker_fee + reg_fee + (qty * effective_slippage_usd), 2)
+
+    initial_margin_req = round(notional * 0.50, 2)
+    maint_margin_req = round(notional * 0.25, 2)
+    margin_ok = cash >= (notional if side == "buy" else initial_margin_req)
+    adv_pct = part_rate * 100.0
+    adv_status = "PASS (<1% ADV)" if adv_pct < 1.0 else ("WARN (1-5% ADV)" if adv_pct <= 5.0 else "EXCEEDS CAP (>5% ADV)")
+
+    print("================================================================================")
+    print(" STOCKPAPERSIM :: US EQUITIES REAL-TRADE SIMULATOR & ORDER AUDIT")
+    print("================================================================================")
+    print(f" Participant:         {participant}")
+    print(f" Date / Session:      {date} ({'At Close 16:00 ET' if args.at_close else 'At Open 09:30 ET'})")
+    print(f" Order Specification: {side.upper()} {qty:,} {symbol} ({order_type.upper()})")
+    print(f" Decision Mid Price:  ${price:,.4f}")
+    print("--------------------------------------------------------------------------------")
+    print(" 1. REGULATORY & VENUE CONSTRAINTS (17 CFR Part 242)")
+    print(f"    Minimum Tick:      ${min_tick:.4f} (Rule 612 grid)")
+    print(f"    Round Lot Size:    {round_lot_size} shares (Rule 600(b)(93))")
+    print(f"    ADV Participation: {adv_pct:.4f}% of {adv:,.0f} daily volume [{adv_status}]")
+    print(f"    Reg T Initial 50%: ${initial_margin_req:,.2f} (Available cash: ${cash:,.2f}) [{'OK' if margin_ok else 'MARGIN VIOLATION'}]")
+    print(f"    Maintenance 25%:   ${maint_margin_req:,.2f}")
+    print("--------------------------------------------------------------------------------")
+    print(" 2. MICROSTRUCTURE & SLIPPAGE BREAKDOWN (Almgren-Chriss / Perold IS)")
+    print(f"    Quoted Spread:     ${quoted_spread:.4f} (Half-Spread: +${half_spread:.4f})")
+    print(f"    Temporary Impact:  +${temp_usd:.4f}/sh")
+    print(f"    Permanent Impact:  +${perm_usd:.4f}/sh")
+    print(f"    Total Slippage:    {slippage_bps:.2f} bps (${effective_slippage_usd * qty:,.2f} total drag)")
+    print(f"    Effective Price:   ${effective_price:,.4f}")
+    print("--------------------------------------------------------------------------------")
+    print(" 3. STATUTORY & EXCHANGE COST STACK")
+    print(f"    Exchange Taker:    ${taker_fee:,.4f} (Rule 610(c) $0.003/sh cap)")
+    print(f"    Regulatory Fee:    ${reg_fee:,.4f} (SEC §31 $20.60/M + FINRA TAF $0.000195/sh)")
+    print(f"    Total Trade Cost:  ${total_cost:,.2f}")
+    print(f"    Net Cash Impact:   ${(notional + taker_fee + reg_fee) * direction:,.2f}")
+    if ref_file:
+        print("--------------------------------------------------------------------------------")
+        print(" 4. DATA CUSTODY & AUDIT HASH")
+        print(f"    Reference File:    {ref_file}")
+        print(f"    SHA-256 Digest:    {ref_sha256[:16]}...{ref_sha256[-8:]}")
+    print("================================================================================")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="sim.cli", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -671,6 +795,18 @@ def build_parser() -> argparse.ArgumentParser:
     bs.add_argument("--run", default="")
     bs.add_argument("--out", default=os.path.join(REPO_ROOT, "docs"))
     bs.set_defaults(func=cmd_build_site)
+
+    ts = sub.add_parser("trade-sim", help="simulate placing a real trade with full microstructure & cost model")
+    ts.add_argument("--symbol", default="SPY", help="ticker symbol (e.g. SPY, QQQ, AAPL, NVDA)")
+    ts.add_argument("--side", choices=("buy", "sell"), default="buy", help="order side")
+    ts.add_argument("--qty", type=int, default=100, help="order share quantity")
+    ts.add_argument("--type", choices=("market", "limit", "stop"), default="market", help="order type")
+    ts.add_argument("--price", type=float, default=None, help="custom limit or decision price")
+    ts.add_argument("--date", default="2026-09-16", help="trading date (YYYY-MM-DD)")
+    ts.add_argument("--participant", default="@InteractiveTrader", help="strategy username")
+    ts.add_argument("--cash", type=float, default=100000.0, help="available paper cash")
+    ts.add_argument("--at-close", action="store_true", help="execute at closing bell instead of open")
+    ts.set_defaults(func=cmd_trade_sim)
     return p
 
 

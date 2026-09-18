@@ -373,7 +373,8 @@ class TestEngineSmoke(unittest.TestCase):
         """
         import ast
         path = os.path.join(REPO_ROOT, "sim", "strategies.py")
-        tree = ast.parse(open(path, encoding="utf-8").read(), filename=path)
+        with open(path, "r", encoding="utf-8") as fh:
+            tree = ast.parse(fh.read(), filename=path)
         offenders = []
         for scope in ast.walk(tree):
             if not isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef)):

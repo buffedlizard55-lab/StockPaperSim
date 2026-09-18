@@ -364,7 +364,8 @@ class TestAcademicBasis(unittest.TestCase):
         for fn in sorted(os.listdir(sim_dir)):
             if not fn.endswith(".py"):
                 continue
-            text = open(os.path.join(sim_dir, fn), encoding="utf-8").read()
+            with open(os.path.join(sim_dir, fn), "r", encoding="utf-8") as fh:
+                text = fh.read()
             for m in re.finditer(r"10\.\d{4,5}/[^\s\)\"'`,;>]+", text):
                 doi = m.group(0).rstrip(".,;")
                 found.add(doi)
@@ -384,8 +385,8 @@ class TestAcademicBasis(unittest.TestCase):
         self.assertIn("10.2469/faj.v44.5.28", found,
                       "Perold's implementation-shortfall DOI vanished from sim/")
         # The corrected attribution must be documented where the error was.
-        micro = open(os.path.join(sim_dir, "microstructure.py"),
-                     encoding="utf-8").read()
+        with open(os.path.join(sim_dir, "microstructure.py"), "r", encoding="utf-8") as fh:
+            micro = fh.read()
         self.assertIn("Roll (1984)", micro)
         self.assertRegex(micro,
                          r"Perold 1988[\s\S]{0,200}?10\.2469/faj\.v44\.5\.28")
@@ -477,7 +478,8 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
             for fn in sorted(os.listdir(d)):
                 if not fn.endswith(".py"):
                     continue
-                text = open(os.path.join(d, fn), encoding="utf-8").read()
+                with open(os.path.join(d, fn), "r", encoding="utf-8") as fh:
+                    text = fh.read()
                 for m in re.finditer(r"https?://[^\s'\"\)\],>]+", text):
                     url = m.group(0).rstrip(".,;")
                     if url in allowed:

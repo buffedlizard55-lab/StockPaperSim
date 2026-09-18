@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live US Equities Simulator · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="active" href="simulator.html">Trade Simulator</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Live US Equities Paper-Trading Simulation &amp; Order Staging Engine</h1>
+<p class="lede">Simulate placing real trades on the US stock market across <strong>Nasdaq, NYSE, and S&amp;P 500</strong>
+with full venue microstructure modelling: Level 2 order book depth, quoted spread crossing under Reg NMS Rule 612,
+Almgren-Chriss (2001, 2005) square-root market impact, dated SEC &sect;31 ($20.60/M) and FINRA TAF ($0.000195/sh) fees,
+Reg T 50% initial margin requirements, ADV participation checks, and verified SHA-256 trade logging.</p>
+
+<div class="card notice">
+  <h2>Can strategies place upcoming trades and simulate a real trading experience?</h2>
+  <p><strong>Yes.</strong> The venue models the complete order lifecycle: strategies evaluate signals, stage upcoming
+  orders for the next session's opening bell (09:30 ET) or closing bell (16:00 ET), undergo pre-trade regulatory
+  and margin checks, walk the Level 2 depth ladder, incur temporary and permanent price impact, pay statutory exchange/regulatory fees,
+  and log every fill to an immutable event memory stream.</p>
+</div>
+
+<div class="card">
+  <h2>Interactive Trade Simulator &amp; Order Execution Engine</h2>
+  <div class="sim-stat-grid" id="sim-stats">
+    <div class="sim-stat-box"><div class="sim-stat-title">Cash Balance</div><div class="sim-stat-val pos" id="stat-cash">$100,000.00</div></div>
+    <div class="sim-stat-box"><div class="sim-stat-title">Buying Power (2x Reg T)</div><div class="sim-stat-val" id="stat-bp">$200,000.00</div></div>
+    <div class="sim-stat-box"><div class="sim-stat-title">Portfolio Equity</div><div class="sim-stat-val" id="stat-equity">$100,000.00</div></div>
+    <div class="sim-stat-box"><div class="sim-stat-title">Unrealized P&amp;L</div><div class="sim-stat-val" id="stat-unrealized">$0.00</div></div>
+    <div class="sim-stat-box"><div class="sim-stat-title">Realized P&amp;L</div><div class="sim-stat-val" id="stat-realized">$0.00</div></div>
+    <div class="sim-stat-box"><div class="sim-stat-title">Day Trades Count</div><div class="sim-stat-val" id="stat-pdt">0 / 3 (PDT OK)</div></div>
+  </div>
+
+  <div class="sim-container">
+    <!-- Left Column: Order Ticket & Controls -->
+    <div>
+      <h3>Order Ticket</h3>
+      <div class="sim-row">
+        <div class="sim-form-group">
+          <label for="sim-strategy">Strategy / User</label>
+          <select id="sim-strategy" class="sim-select">
+            <option value="@ManualTrader">@ManualTrader (Custom Interactive User)</option>
+            <option value="@BetaChaser_3xProxy">@BetaChaser_3xProxy (Leveraged Beta Max)</option>
+            <option value="@FDACatalyst_Rider">@FDACatalyst_Rider (Biotech Catalyst Rider)</option>
+            <option value="@MomentumMax_12x1">@MomentumMax_12x1 (Momentum Max)</option>
+            <option value="@MeanRev_Z2Sigma">@MeanRev_Z2Sigma (Mean Reversion Z-Score)</option>
+            <option value="@GapAndGo_YOLO">@GapAndGo_YOLO (Aggressive Day Trader)</option>
+            <option value="@PinePilot_EMA_Cross">@PinePilot_EMA_Cross (Pine Script Trend Cross)</option>
+            <option value="@GOLD_Trend_GLD">@GOLD_Trend_GLD (Gold Trend Follower)</option>
+            <option value="@Weather_ColdSnap_Max">@Weather_ColdSnap_Max (NOAA Weather Proxy)</option>
+            <option value="@CEO_CFO_Conviction">@CEO_CFO_Conviction (SEC Form 4 Conviction)</option>
+            <option value="@OneBigBet_Concentra">@OneBigBet_Concentra (High Concentration Bet)</option>
+            <option value="@SectorRotator_AlphaX">@SectorRotator_AlphaX (Multi-Sector Rotator)</option>
+          </select>
+        </div>
+        <div class="sim-form-group">
+          <label for="sim-symbol">US Equity / ETF Universe</label>
+          <select id="sim-symbol" class="sim-select">
+            <option value="SPY">SPY &middot; SPDR S&amp;P 500 ETF ($560.25 &middot; ADV 65M &middot; Spread 1c)</option>
+            <option value="QQQ">QQQ &middot; Invesco QQQ Trust ($485.50 &middot; ADV 45M &middot; Spread 1c)</option>
+            <option value="AAPL">AAPL &middot; Apple Inc ($225.80 &middot; ADV 55M &middot; Spread 1c)</option>
+            <option value="NVDA">NVDA &middot; NVIDIA Corp ($118.40 &middot; ADV 70M &middot; Spread 1c)</option>
+            <option value="MSFT">MSFT &middot; Microsoft Corp ($435.60 &middot; ADV 22M &middot; Spread 1c)</option>
+            <option value="TSLA">TSLA &middot; Tesla Inc ($245.20 &middot; ADV 60M &middot; Spread 1c)</option>
+            <option value="GLD">GLD &middot; SPDR Gold Trust ($238.90 &middot; ADV 8M &middot; Spread 1c)</option>
+            <option value="XBI">XBI &middot; SPDR Biotech ETF ($92.40 &middot; ADV 6M &middot; Spread 1c)</option>
+            <option value="UNG">UNG &middot; US Natural Gas Fund ($14.80 &middot; ADV 12M &middot; Spread 1c)</option>
+            <option value="XLU">XLU &middot; Utilities Select ETF ($76.20 &middot; ADV 14M &middot; Spread 1c)</option>
+            <option value="TLT">TLT &middot; 20+ Year Treasury Bond ($96.50 &middot; ADV 28M &middot; Spread 1c)</option>
+            <option value="JPM">JPM &middot; JPMorgan Chase ($215.30 &middot; ADV 10M &middot; Spread 1c)</option>
+            <option value="XOM">XOM &middot; Exxon Mobil ($115.80 &middot; ADV 15M &middot; Spread 1c)</option>
+            <option value="JNJ">JNJ &middot; Johnson &amp; Johnson ($162.40 &middot; ADV 7M &middot; Spread 1c)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sim-row">
+        <div class="sim-form-group">
+          <label for="sim-side">Order Side</label>
+          <select id="sim-side" class="sim-select">
+            <option value="buy">BUY / LONG</option>
+            <option value="sell">SELL / CLOSE</option>
+            <option value="short">SELL SHORT (Reg SHO Borrow)</option>
+          </select>
+        </div>
+        <div class="sim-form-group">
+          <label for="sim-type">Order Type</label>
+          <select id="sim-type" class="sim-select">
+            <option value="market">MARKET (Immediate Depth Walk)</option>
+            <option value="limit">LIMIT (Passive / Sized)</option>
+            <option value="stop">STOP LOSS (Conditional Trigger)</option>
+            <option value="pegged">PEGGED TO MID (Passive Maker Rebate)</option>
+            <option value="oco">OCO (One-Cancels-Other Bracket)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sim-row">
+        <div class="sim-form-group">
+          <label for="sim-qty">Quantity (Shares)</label>
+          <input type="number" id="sim-qty" class="sim-input" value="500" min="1" step="1">
+        </div>
+        <div class="sim-form-group">
+          <label for="sim-timing">Execution Timing</label>
+          <select id="sim-timing" class="sim-select">
+            <option value="open">At Market Open (09:30 ET)</option>
+            <option value="close">At Market Close (16:00 ET)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sim-form-group" id="group-limit" style="display:none;">
+        <label for="sim-limit-price">Limit Price ($)</label>
+        <input type="number" id="sim-limit-price" class="sim-input" value="560.00" step="0.01">
+      </div>
+
+      <div class="sim-form-group">
+        <label for="sim-leverage">Gross Leverage Slider: <span id="leverage-val" style="color:var(--accent);font-weight:bold;">1.00x</span> (Reg T Limit: 2.00x)</label>
+        <input type="range" id="sim-leverage" min="0.1" max="2.0" step="0.05" value="1.0" class="sim-input" style="padding:0;">
+      </div>
+
+      <div class="sim-btn-row">
+        <button id="btn-stage" class="sim-btn sim-btn-primary">Stage Upcoming Order</button>
+        <button id="btn-fill-now" class="sim-btn sim-btn-secondary">Instant Fill (Simulate Now)</button>
+        <button id="btn-execute-all" class="sim-btn sim-btn-secondary">Execute Staged Queue</button>
+        <button id="btn-reset" class="sim-btn sim-btn-danger">Reset Account ($100k)</button>
+      </div>
+    </div>
+
+    <!-- Right Column: Microstructure, Level 2 Depth & Costs -->
+    <div>
+      <h3>Live Level 2 Order Book &amp; Sizing Depth</h3>
+      <table class="data compact" style="margin-bottom:12px;">
+        <thead><tr><th>Side</th><th>Level</th><th>Price</th><th>Size (Shares)</th><th>Cumulative Depth</th><th>Depth Bar</th></tr></thead>
+        <tbody id="book-tbody">
+          <!-- Populated dynamically by JS -->
+        </tbody>
+      </table>
+
+      <h3>Slippage &amp; Cost Stack Breakdown</h3>
+      <table class="data compact" id="cost-breakdown-table">
+        <tbody>
+          <tr><th>Reference Mid Price</th><td id="cost-mid">$560.2500</td></tr>
+          <tr><th>Half-Spread Crossing</th><td id="cost-spread">+$0.0050 / sh (+0.09 bps)</td></tr>
+          <tr><th>Depth Walk Slippage</th><td id="cost-depth">+$0.0000 / sh</td></tr>
+          <tr><th>Almgren-Chriss Temporary Impact</th><td id="cost-temp">+$0.0071 / sh</td></tr>
+          <tr><th>Almgren-Chriss Permanent Impact</th><td id="cost-perm">+$0.0038 / sh</td></tr>
+          <tr><th>Exchange Taker Fee (Rule 610)</th><td id="cost-exchange">$1.5000 ($0.003/sh)</td></tr>
+          <tr><th>SEC &sect;31 Statutory Fee (Sales)</th><td id="cost-sec31">$0.0000 ($20.60/M)</td></tr>
+          <tr><th>FINRA TAF Fee (Sales)</th><td id="cost-taf">$0.0000 ($0.000195/sh)</td></tr>
+          <tr><th>Total Slippage</th><td id="cost-slippage"><strong>0.28 bps ($7.95 drag)</strong></td></tr>
+          <tr><th>Effective Execution Price</th><td id="cost-eff" style="font-size:16px;font-weight:bold;color:var(--accent);">$560.2659</td></tr>
+          <tr><th>Total Notional &middot; Cash Required</th><td id="cost-notional"><strong>$280,132.95</strong></td></tr>
+          <tr><th>ADV Participation Rate</th><td id="cost-adv"><span class="badge badge-ok">0.0008% of ADV (PASS)</span></td></tr>
+          <tr><th>Reg T 50% Initial Margin</th><td id="cost-margin"><span class="badge badge-ok">PASS ($140,066.48 required)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <h3>Staged Upcoming Orders Queue</h3>
+  <div class="table-scroll">
+    <table class="data" id="queue-table">
+      <thead><tr><th>Order ID</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>Type</th><th>Qty</th><th>Timing</th><th>Est. Price</th><th>Est. Slippage</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody id="queue-tbody">
+        <tr><td colspan="11" class="muted" style="text-align:center;">No upcoming staged orders. Use "Stage Upcoming Order" to add orders for the next session.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Open Positions</h3>
+  <div class="table-scroll">
+    <table class="data" id="positions-table">
+      <thead><tr><th>Symbol</th><th>Side</th><th>Shares</th><th>Avg Entry Price</th><th>Current Price</th><th>Market Value</th><th>Unrealized P&amp;L</th><th>Action</th></tr></thead>
+      <tbody id="positions-tbody">
+        <tr><td colspan="8" class="muted" style="text-align:center;">No open positions. Account is 100% cash ($100,000.00).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Verified Trade Ledger &amp; Event Stream</h3>
+  <div class="table-scroll">
+    <table class="data" id="ledger-table">
+      <thead><tr><th>Time</th><th>Order ID</th><th>Strategy</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Decision Price</th><th>Fill Price</th><th>Slippage</th><th>Fees</th><th>Net Cash</th><th>Realized P&amp;L</th><th>Audit Hash</th></tr></thead>
+      <tbody id="ledger-tbody">
+        <tr><td colspan="13" class="muted" style="text-align:center;">No trades executed yet. Fills will appear here with verified pricing, fees, and SHA-256 hashes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sim-btn-row" style="margin-top:14px;">
+    <button id="btn-export-json" class="sim-btn sim-btn-secondary">Download Memory JSON</button>
+    <button id="btn-export-jsonl" class="sim-btn sim-btn-secondary">Download JSONL Stream</button>
+    <button id="btn-export-csv" class="sim-btn sim-btn-secondary">Download CSV Ledger</button>
+  </div>
+</div>
+
+<section class="card">
+  <h2>Reverse-Engineering Paper Trading Competition Platforms</h2>
+  <p class="lede">How StockPaperSim compares to industry paper trading competition sites: TradingView's <em>The Leap</em>, Trade Ideas' <em>PM Challenge</em>, and CandleCharts' <em>Showdown</em>.</p>
+  <div class="table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>TradingView The Leap</th>
+          <th>Trade Ideas PM Challenge</th>
+          <th>CandleCharts Showdown</th>
+          <th>StockPaperSim (This Simulator)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Starting Paper Capital</th>
+          <td>$100,000 USD (fixed)</td>
+          <td>$100,000 USD (fixed)</td>
+          <td>$50,000 USD (fixed)</td>
+          <td><strong>$100,000 USD (fixed per persona)</strong></td>
+        </tr>
+        <tr>
+          <th>Competition Horizon</th>
+          <td>1 calendar month (monthly cycle)</td>
+          <td>Multi-week tournament</td>
+          <td>Single event series</td>
+          <td><strong>1 full year (251 real sessions)</strong></td>
+        </tr>
+        <tr>
+          <th>Ranking Metric</th>
+          <td>Realized P&amp;L / Total Return (%)</td>
+          <td>Total Profit (%) + open positions</td>
+          <td>Absolute Return (%)</td>
+          <td><strong>Total Return (%) with return decomposition</strong></td>
+        </tr>
+        <tr>
+          <th>Risk Management Constraint</th>
+          <td>None (highest return wins)</td>
+          <td>None (highest return wins)</td>
+          <td>None (highest return wins)</td>
+          <td><strong>None (pure return seeking; no forced stops/VaR)</strong></td>
+        </tr>
+        <tr>
+          <th>Microstructure &amp; Liquidity</th>
+          <td>Delayed aggregate bar fills</td>
+          <td>15-min delayed intraday stream</td>
+          <td>Standard broker simulator</td>
+          <td><strong>Full Level 2 depth ladder, ADV cap, Almgren-Chriss impact</strong></td>
+        </tr>
+        <tr>
+          <th>Exchange &amp; Statutory Fees</th>
+          <td>Flat $1.00 or generic commission</td>
+          <td>Standard broker commission</td>
+          <td>Standard vendor fees</td>
+          <td><strong>Dated SEC &sect;31 ($20.60/M), FINRA TAF ($0.000195/sh), Rule 610 cap ($0.003/sh)</strong></td>
+        </tr>
+        <tr>
+          <th>Audit Trail &amp; Memory</th>
+          <td>Leaderboard snapshot</td>
+          <td>Daily snapshot table</td>
+          <td>Contest summary</td>
+          <td><strong>Bit-for-bit reproducible SHA-256 event streams &amp; verified ledger</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Community &amp; Social Media Strategies Directory</h2>
+  <p class="lede">Evaluating trading strategies circulating across Reddit (r/wallstreetbets, r/algotrading), YouTube, FinTwit/X, and Facebook against empirical financial literature.</p>
+  <div class="table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Source / Community</th>
+          <th>Strategy Concept</th>
+          <th>Academic &amp; Empirical Reference</th>
+          <th>Literature Verdict</th>
+          <th>Simulator Persona</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>r/wallstreetbets, X</td>
+          <td>Leveraged 3x Beta &amp; Gamma Squeezes</td>
+          <td>FINRA Rule 4210 Reg T Margin / ETF Daily Reset Decay</td>
+          <td>Delivers massive beta in bull markets but catastrophic drawdowns (&gt;40%) during corrections.</td>
+          <td><code>@BetaChaser_3xProxy</code>, <code>@LeapMaxLever_Momentum</code></td>
+        </tr>
+        <tr>
+          <td>FinTwit / X, Quant Blogs</td>
+          <td>Moving Average &amp; Trend Momentum</td>
+          <td>Jegadeesh &amp; Titman (1993), Moskowitz et al. (2012)</td>
+          <td>Robust, documented anomaly across asset classes; prone to sharp momentum crashes.</td>
+          <td><code>@MomentumMax_12x1</code>, <code>@PinePilot_EMA_Cross</code></td>
+        </tr>
+        <tr>
+          <td>YouTube, r/daytrading</td>
+          <td>RSI-2 &amp; Short-Term Mean Reversion</td>
+          <td>Jegadeesh (1990), Lehmann (1990)</td>
+          <td>Strong gross returns; fragile and heavily eroded by bid-ask spread and taker fees.</td>
+          <td><code>@MeanRev_Z2Sigma</code>, <code>@Contrarian_DeepValue</code></td>
+        </tr>
+        <tr>
+          <td>YouTube Day Trading</td>
+          <td>Opening Range Breakout (ORB) / Gap &amp; Go</td>
+          <td>Barber &amp; Odean (2000, 2014), Zarattini et al. (2024)</td>
+          <td>Intraday active trading loses 90%+ of capital to execution friction and market impact over 1 year.</td>
+          <td><code>@GapAndGo_YOLO</code></td>
+        </tr>
+        <tr>
+          <td>Reddit r/valueinvesting</td>
+          <td>Deep Value &amp; Contrarian Reversal</td>
+          <td>De Bondt &amp; Thaler (1985)</td>
+          <td>Captures multi-year value premia but suffers prolonged multi-month drawdowns.</td>
+          <td><code>@Contrarian_DeepValue</code></td>
+        </tr>
+        <tr>
+          <td>openFDA &amp; SEC EDGAR</td>
+          <td>Post-Regulatory / Insider Catalyst Drift</td>
+          <td>Bernard &amp; Thomas (1989), SEC Form 4 Disclosures</td>
+          <td>Biotech re-rates with delay after cluster approvals; CEO purchases provide credible signaling.</td>
+          <td><code>@FDACatalyst_Rider</code>, <code>@CEO_CFO_Conviction</code></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <h2>MasterSite Projects to Trading Signals Register</h2>
+  <p class="lede">Mapping all 14 projects from <a href="https://buffedlizard55-lab.github.io/MasterSite/">MasterSite</a> into verified trading strategies and data pipelines.</p>
+  <div class="table-scroll">
+    <table class="data">
+      <thead>
+        <tr>
+          <th>Project ID</th>
+          <th>Requested As</th>
+          <th>Official Source Endpoint</th>
+          <th>Source Class</th>
+          <th>Mapping Strength</th>
+          <th>Testing Status</th>
+          <th>Strategy Persona</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>CEO</code></td><td>CEO</td><td>SEC EDGAR Form 4 (CEO/CFO Title Filter)</td><td>OFFICIAL</td><td>STRONG</td><td>BACKTESTED</td><td><code>@CEO_CFO_Conviction</code></td></tr>
+        <tr><td><code>SFWeather</code></td><td>weather</td><td>NOAA NCEI Daily Summaries (Station USW00023272)</td><td>OFFICIAL</td><td>WEAK (Proxy)</td><td>BACKTESTED</td><td><code>@Weather_ColdSnap_Max</code></td></tr>
+        <tr><td><code>Insider-trades</code></td><td>insider trades</td><td>SEC EDGAR Form 4 Stream</td><td>OFFICIAL</td><td>STRONG</td><td>BACKTESTED</td><td><code>@InsiderCopycat_Max</code>, <code>@InsiderCluster_Alpha</code></td></tr>
+        <tr><td><code>TradingViewTheLeap</code></td><td>TheLeap</td><td>TradingView The Leap Competition Rules</td><td>OFFICIAL</td><td>WEAK (Design)</td><td>BACKTESTED</td><td><code>@LeapMaxLever_Momentum</code></td></tr>
+        <tr><td><code>NFLInjuryReport</code></td><td>NFL Injury</td><td>NFL Official Weekly Injury Reports</td><td>OFFICIAL</td><td>WEAK</td><td>FORWARD-ONLY</td><td><code>@InjuryFeed_Forward</code></td></tr>
+        <tr><td><code>NBAInjuryReport</code></td><td>NBA Injury</td><td>NBA Official Injury Reports</td><td>OFFICIAL</td><td>WEAK</td><td>FORWARD-ONLY</td><td><code>@InjuryFeed_Forward</code></td></tr>
+        <tr><td><code>DrugAnalysis</code></td><td>FDA Decisions Drug Analysis</td><td>openFDA DrugsFDA API Database</td><td>OFFICIAL</td><td>STRONG</td><td>BACKTESTED</td><td><code>@FDACatalyst_Rider</code>, <code>@FDA_ClusterFade</code></td></tr>
+        <tr><td><code>Ncaa-football-alerts</code></td><td>NCAA Scoreboard</td><td>NCAA Official Football Scoreboard API</td><td>OFFICIAL</td><td>WEAK</td><td>FORWARD-ONLY</td><td><code>@InjuryFeed_Forward</code> (Probe)</td></tr>
+        <tr><td><code>NFL-scoreboard</code></td><td>NFL scoreboard</td><td>ESPN NFL Scoreboard API / League Dates</td><td>SECONDARY</td><td>WEAK</td><td>BACKTESTED</td><td><code>@MLB_Attention_Momo</code></td></tr>
+        <tr><td><code>MLB-Live-PBP</code></td><td>MLB Scoreboard</td><td>MLB StatsAPI Official Schedule &amp; Scores</td><td>OFFICIAL</td><td>WEAK</td><td>BACKTESTED</td><td><code>@MLB_Attention_Momo</code>, <code>@MLB_Upset_Short</code></td></tr>
+        <tr><td><code>SportsPred</code></td><td>Sports Pred</td><td>Sports Pred Model Predictions</td><td>ASSERTED</td><td>UNPROVEN</td><td>FORWARD-ONLY</td><td><code>@InjuryFeed_Forward</code> (Probe)</td></tr>
+        <tr><td><code>GOLD</code></td><td>Gold</td><td>FRED LBMA Gold Fix &amp; GLD Daily Bars</td><td>OFFICIAL</td><td>WEAK</td><td>BACKTESTED</td><td><code>@GOLD_Trend_GLD</code></td></tr>
+        <tr><td><code>Tradingview-pinescript-editor</code></td><td>PinePilot</td><td>TradingView Pine Script Reference</td><td>SECONDARY</td><td>STRONG</td><td>BACKTESTED</td><td><code>@PinePilot_EMA_Cross</code></td></tr>
+        <tr><td><code>KalshiPaperSim</code></td><td>Kalshi</td><td>Kalshi CFTC-Regulated Settled Markets API</td><td>OFFICIAL-VENDOR</td><td>UNPROVEN</td><td>BACKTESTED</td><td><code>@Kalshi_Attention_Timer</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

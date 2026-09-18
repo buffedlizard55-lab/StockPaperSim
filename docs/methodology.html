@@ -17,7 +17,7 @@ audit trail.">
     <a class="brand" href="index.html">StockPaperSim</a>
     <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
   </div>
-  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="market.html">Market &amp; factors</a><a class="active" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (real prices)</a></nav>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="active" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (real prices)</a></nav>
 </header>
 <main class="wrap">
 
@@ -121,8 +121,13 @@ Li 2005, <em>Risk</em> 18(7):58-62 - see IR-26).</li>
 $0.00 per $1,000,000 of sell notional from 2025-09-01 · $20.60 per $1,000,000 of sell notional from 2026-04-04, per the
 <a href="https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates" rel="noopener" target="_blank">FY2026
 annual adjustment order</a>. FINRA Trade Activity Fee on sells: $0.000166 per share from 2025-01-01 · $0.000195 per share from 2026-01-01, capped at
-$8.30 per trade from 2025-01-01 · $9.79 per trade from 2026-01-01 - rate and cap from a
-<span class="tag tag-secondary">secondary source</span>, see IR-05. The earliest
+$8.30 per trade from 2025-01-01 · $9.79 per trade from 2026-01-01 - rate and cap from
+<a href="https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees" rel="noopener" target="_blank">Section 1
+of Schedule A to the FINRA By-Laws</a> (2026 version) and, for the 2025 rate,
+from the Commission's publication of
+<a href="https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and" rel="noopener" target="_blank">SR-FINRA-2024-019</a>.
+Both schedules were SECONDARY-sourced until 2026-09-18; IR-05 is closed and the
+numbers did not move. The earliest
 date any of these schedules is documented for is <code>2025-09-01</code>;
 <code>config.validate_fee_coverage()</code> refuses to run a season that opens
 before it, so no trade is ever costed at a rate this project could not cite. Commission

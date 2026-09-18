@@ -424,7 +424,7 @@
   },
   "mlb_games_7d": {
    "state": "AVAILABLE",
-   "rows": 2292,
+   "rows": 2293,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -437,7 +437,7 @@
   },
   "mlb_home_win_rate_30d": {
    "state": "AVAILABLE",
-   "rows": 2292,
+   "rows": 2293,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -450,7 +450,7 @@
   },
   "mlb_upsets_7d": {
    "state": "AVAILABLE",
-   "rows": 2292,
+   "rows": 2293,
    "window": [
     "2026-03-25",
     "2026-09-17"
@@ -463,10 +463,10 @@
   },
   "weather_cold_anomaly_10d": {
    "state": "AVAILABLE",
-   "rows": 721,
+   "rows": 723,
    "window": [
     "2024-09-16",
-    "2026-09-13"
+    "2026-09-15"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -476,10 +476,10 @@
   },
   "weather_precip_30d_in": {
    "state": "AVAILABLE",
-   "rows": 721,
+   "rows": 723,
    "window": [
     "2024-09-16",
-    "2026-09-13"
+    "2026-09-15"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -497,11 +497,11 @@
    "files": [
     "data/real/kalshi/"
    ],
-   "note": "settled-contract counts from the venue's own API; the price and volume fields in the same payload are null",
+   "note": "settled-contract counts and volumes from the venue's own API",
    "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
   },
   "kalshi_volume_30d": {
-   "state": "MISSING",
+   "state": "AVAILABLE",
    "rows": 612,
    "window": [
     "2026-07-31",
@@ -510,7 +510,7 @@
    "files": [
     "data/real/kalshi/"
    ],
-   "note": "every volume/open_interest/last_price field in the collected payload is null, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING",
+   "note": "settled-contract counts and volumes from the venue's own API",
    "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
   },
   "fred_slope_bps": {
@@ -1214,14 +1214,14 @@
   "kalshi_settled_30d": {
    "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 444.0,
+   "last_value": 442.0,
    "state": "AVAILABLE"
   },
   "kalshi_volume_30d": {
-   "sessions_actionable": 0,
+   "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 0.0,
-   "state": "MISSING"
+   "last_value": 790220737.08,
+   "state": "AVAILABLE"
   },
   "fred_slope_bps": {
    "sessions_actionable": 250,

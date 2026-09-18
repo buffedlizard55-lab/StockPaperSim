@@ -24,6 +24,13 @@ reached through the page-fetch tool or through search-result text. Several hosts
 refused the connection outright; those refusals are recorded rather than worked
 around, and each one is reflected in `research/IRREGULARITIES.json`.
 
+The pass recorded as **§4i** was made on **2026-09-18** from the same kind of
+sandbox. It reached `finra.org` and `federalregister.gov` through the page-fetch
+tool (the shell in that environment still could not open them), which is the same
+route every other non-allowlisted page in this log was read through. The document
+that had been assumed unreadable - the Schedule A rate text - turned out to be
+served as HTML to exactly that tool.
+
 ---
 
 ## 1. Real market data (stored, checksummed, used as the market factor)
@@ -105,7 +112,7 @@ re-derived. Recorded as **IR-25**.
 | Fee | Value used | Source | Status |
 |---|---|---|---|
 | SEC Section 31 (sells) | **$0.00 per $1,000,000** from 2025-09-01; **$20.60 per $1,000,000** from 2026-04-04 | FY2026 annual adjustment order, `https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates`; corroborated by Nasdaq `https://www.nasdaqtrader.com/MicroNews.aspx?id=OTA2026-14` | `FETCHED` |
-| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | Broker fee schedules only (`https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/`). FINRA's own Schedule A to the By-Laws was **not retrievable** from this environment | `SECONDARY` - flagged as **IR-05** |
+| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | **Primary, 2026-09-18**: Section 1 of Schedule A to the FINRA By-Laws, 2026 version (`https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees`), and SEC Release 34-101696 / 89 FR 93709 for the 2025 column (`https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and`). Until this pass: broker fee schedules only, because Schedule A was believed to be an unreadable PDF | `FETCHED-VERIFIED` - **IR-05 closed** (§4i) |
 
 Both are **dated schedules**, not constants (`config.SEC31_PER_MILLION`,
 `config.FINRA_TAF_PER_SHARE`, `config.FINRA_TAF_MAX_PER_TRADE`), because a
@@ -370,8 +377,11 @@ These are not omissions to paper over; each is flagged in
 `research/IRREGULARITIES.json` and `research/LIMITATIONS.json` and shown on the
 site.
 
-1. **FINRA Schedule A** (the primary source for the TAF rate and cap) - not
-   retrievable; the rate is `SECONDARY` (**IR-05**).
+1. ~~**FINRA Schedule A** (the primary source for the TAF rate and cap) - not
+   retrievable; the rate is `SECONDARY` (**IR-05**).~~ **Closed 2026-09-18**: the
+   rate paragraph is served as HTML and both the 2025 and 2026 rates are now
+   cited to primary documents (§4i). The list below is the state as of the
+   2026-09-17 pass, kept so the record shows what was open and when it shut.
 2. **Real intraday quotes, trades and depth** for the 17-name universe - no
    consolidated tape access; the venue is a calibrated simulation (**IR-03**,
    **L-01**).
@@ -468,6 +478,192 @@ pre-fix figures quoted in IR-31 are now recoverable only through git
 which is written into the entry so a reviewer is not left trying to re-run a
 season from a commit whose memory no longer exists.
 
+## 4i. IR-05 closed: the fee schedule was pinned to a *belief* about the publisher, not to the publisher
+
+§4d recorded two register URLs that returned 404 while the substance behind them
+was right. One of them was cited for a rate: `rulebooks/finra-rules/7541`, which
+does not exist, because the Trading Activity Fee has no rule number and lives in
+Section 1 of Schedule A to the FINRA By-Laws. The fix at the time was to cite
+FINRA's TAF guidance page, which confirms the fee's *structure* and defers the
+numbers to Schedule A - and there the trail stopped, because Schedule A was
+described in `data/real/regulatory/finra-trading-activity-fee.txt` as "a PDF this
+environment could not read". **That description was never tested against the
+page.** It was wrong: the rulebook renders the rate paragraph as HTML, and the
+site's own banner dates it.
+
+What the 2026-09-18 pass retrieved:
+
+| Document | URL | What it establishes |
+|---|---|---|
+| Section 1 of Schedule A to the FINRA By-Laws, version banner "valid from Jan 01, 2026 through Dec 31, 2026" | `finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees` (reached by following the `bylaws_A_1` link on FINRA's TAF page, which redirects there) | "Each member shall pay to FINRA: (1) **$0.000195 per share** for each sale of a covered equity security, with a **maximum charge of $9.79 per trade**"; the 2026 option ($0.00329/contract), security-future ($0.000135, $0.016 minimum), TRACE bond ($0.00124, $1.24 max) and ABS ($0.00000124 × value, $1.24 max) rates; subparagraph (b)(1)'s covered securities and (b)(2)'s thirteen exemptions; "Amended by **SR-FINRA-2024-019** eff. Jan. 1, 2026" |
+| SEC notice of filing and immediate effectiveness, Release No. 34-101696, File No. SR-FINRA-2024-019, 89 FR 93709, published 2024-11-27 | `federalregister.gov/documents/2024/11/27/2024-27764/...` | "The current TAF rates ... are: (1) **$0.000166 per share** ... with a **maximum charge of $8.30 per trade**"; the 2024-2029 table, whose covered-equity row reads 2024 $0.000166 (up to $8.30) / **2025 (no change)** $0.000166 (up to $8.30) / **2026** $0.000195 (up to $9.79) / 2027 $0.000232 (up to $11.61) / 2028 $0.000240 (up to $12.05) / 2029 $0.000249 (up to $12.50); footnote 39, the no-fee-below-the-rate condition |
+
+Why two documents and not one: FINRA serves **only the current version** of
+Schedule A, and the current version is the 2026 one. Season 1 opens 2025-09-17,
+so its September-December sessions are costed at the 2025 rate, which the
+Schedule A page no longer states. The Commission's publication of the filing
+that set it carries a "2025 (no change)" column, so both halves of the schedule
+now stand on a primary document rather than on a broker's help page.
+
+**Result of the verification: no number moved.** Both primary documents agree
+with the two broker schedules that had been used since 2026-09-17, to the digit.
+The seasons were not re-run, because a re-run would have reproduced the same
+fills and the same costs - and saying so is the point of checking. What changed
+is the evidence label: the two register rows carry `FETCHED-VERIFIED` instead of
+`SECONDARY`, the excerpts are stored verbatim under `data/real/regulatory/` so
+the citations survive the publisher moving the page (the failure mode §4d was
+about), and IR-05 is closed and downgraded to low.
+
+Two details came out of the primary text that the secondary sources could not
+have provided, and they are recorded rather than absorbed:
+
+* **Schedule A sets a maximum but no minimum on equity sales.** The "$0.01
+  minimum" that several brokers publish is their own pass-through convention -
+  and it had been written into IR-05's own text as if it were the rule. The
+  model charges `min(qty * rate, cap)` in `sim/microstructure.py`, which is what
+  the rule actually says, so the implementation was right and the *description*
+  was wrong.
+* **A sale whose execution price is below the per-share rate is not assessed at
+  all.** At this universe's prices ($9 to $670) that condition cannot bind, so
+  it is not implemented; it is now written into the config comment and the
+  stored excerpt, so a future season trading sub-penny names does not inherit
+  the gap silently.
+
+One thing the same class of check cannot catch is stated in `LIMITATIONS.json`
+(L-12, rewritten by this pass): `validate_fee_coverage()` refuses a window that
+opens *before* the earliest documented date, but nothing refuses a window that
+opens *after* the last one, so a rate change the project has not seen would be
+charged at the previous rate. The stored 2027-2029 columns are what a future
+season would need, and the networked cite-hygiene job in `REMAINING_WORK.json`
+is the mechanism that would notice the change.
+
+## 4j. The venue-parameter sensitivity harness: IR-29's knife edge, measured
+
+IR-29 recorded that snapping displayed quotes back onto the Rule 612 tick grid -
+a change of at most half a cent - moved two participants by 28.3pp and 32.9pp on
+the identical seed. That was a finding about the *model*, and it was honest but
+inert: a reader of the season still saw one path and one ordering. This pass
+turns it into an artefact.
+
+**What was built.** `sim/sensitivity.py`, driven by `python3 -m sim.cli
+sensitivity`, moves 14 declared modelling choices one at a time and re-runs the
+season after each: the quoted-spread coefficient and every per-tier spread bound
+one tick wider and one tick tighter, two depth-growth settings, non-displayed
+liquidity off, the impact coefficient 20% either way, the impact exponent at 0.6
+instead of 0.5 (IR-26), tick snapping removed (IR-29's own perturbation), one
+market maker fewer, the taker fee at 1.5x the Rule 610(c) cap, and maker rebates
+at zero. It publishes per-participant returns and ranks for every point of the
+grid to `memory/sensitivity.json`, which `scripts/build_site.py` renders as
+`docs/sensitivity.html` and `docs/assets/data/sensitivity.json`.
+
+**Two rules make the differences attributable to the parameter.** The replay is
+built once, from the shipped configuration, and every run in the grid trades
+those same bars - the panel is therefore a measurement about the published
+season, not about a nearby re-draw. And each point moves exactly one declared
+value; the two model-form switches (`snap_quotes_to_tick`, `impact_exponent`)
+are keyword arguments on the execution engine rather than `CompetitionConfig`
+fields, so the published fingerprint `e563b5e41deb6ad8` cannot move when they do
+(`tests/test_sensitivity.py` asserts they are not config attributes, alongside
+the grid's self-consistency).
+
+**The check that makes it a measurement of the published season.** The grid's
+base run - the shipped configuration, re-run inside the harness - reproduces
+`memory/runs/season1-primary-seed20260917/leaderboard.json` for all 20
+participants to every published decimal, and reports the same fingerprint. The
+deltas below are therefore deltas from the published season.
+
+**What it found.**
+
+| Statistic | Value |
+|---|---|
+| Single-parameter moves | 14 |
+| Participants whose rank moves at all | 17 of 20 |
+| Largest rank move across the grid | 6 places |
+| Largest return swing | 92.2pp |
+| Winner/loser sign flips anywhere in the grid | 12 |
+| Mean Spearman correlation with the published ordering | 0.9754 (worst 0.9444) |
+
+The largest swing is `@IlliquidRocket_Degen`: published at **+15.8%**, it returns
+**-76.4%** when every tier's quoted spread is one tick wider and **-73.8%** when
+the taker fee is 1.5x. It is also the participant that trades the names where
+those bounds actually bind. The four moves that change no ranking at all in
+Season 1 (`hidden_liquidity_off`, `maker_rebate_off`, `makers_3`,
+`depth_growth_2.0`; Spearman 1.0) are as informative as the ones that do: they
+say those choices are not what this season's ordering rests on. The move that
+reorders most is the literal one-tick-wider spread (0.9489), and the worst
+single correlation is the lower impact coefficient (0.9444).
+
+**What it does not say.** This is a sensitivity band over declared model
+choices, not a sampling confidence interval: it holds the seed fixed and says
+nothing about idiosyncratic risk (that is the six-scenario panel's job), and the
+participants' *levels* remain single-path numbers. The page states both.
+
+## 4k. The Kalshi column was readable all along, and the fix is proven by the collection
+
+IR-41 recorded that the venue's settled-markets endpoint "returns contract metadata
+for the requested window - ticker, title, close time - with every numeric field
+(volume, open interest, last price, settlement value, bid and ask) left empty by
+the venue", and Season 2 was published with `kalshi_volume_30d` MISSING and
+`@Kalshi_Attention_Timer` idle.
+
+**That diagnosis was wrong, and wrong in the direction that hides a signal.** A
+live settled-market request on 2026-09-17 returned, for
+`KXNFLGAME-26SEP17DETBUF-BUF`, `volume_fp "30421098.89"`,
+`open_interest_fp "16869704.61"`, `last_price_dollars`, `yes_bid_dollars`,
+`yes_ask_dollars` and `settlement_value_dollars` - with the pre-migration integer
+names (`volume`, `open_interest`, `last_price`, ...) absent from the payload
+entirely. The venue migrated its numeric fields to fixed-point names and says so:
+`*_fp` are contract counts and `*_dollars` are dollar values, and the migration
+note states the integer fields are legacy and will be deprecated. The fault was
+the reader, not the venue, which is why the correction is a mapping change in
+`scripts/collect_real_data.py` (commit 106725e) rather than a new source.
+
+**Proven by the collection, not by the code reading.** The next runner-side
+collection (2026-09-18) wrote `data/real/kalshi/*.jsonl`, and the committed files
+show every numeric column populated: **612 settled-market rows across the four
+non-empty series, every one with a real volume and open interest**, and every row
+carrying `source_keys` that name the exact venue field each value came from
+(`{"volume": "volume_fp", "open_interest": "open_interest_fp", ...}`).
+`data/real/coverage_report.json` records `rows_with_volume` per series (132, 200,
+200, 80). The fifth series, `KXNBA`, is empty because the venue really does
+return no settled NBA markets for the window - that one is a fact about the
+venue, and it is now distinguishable from a parsing failure, which is what
+`source_keys` and the per-series count are for.
+
+**What the corrected collection changed, and what it did not.** Season 2 was
+re-derived from the new files. Exactly one participant moved:
+
+| Participant | Was | Now | Change |
+|---|---|---|---|
+| `@Kalshi_Attention_Timer` | 0.00% (DATA-MISSING, 0 trades) | **-1.98%** (14 round trips) | the signal became testable, and lost money |
+| `@InjuryFeed_Forward` | 0.00% | 0.00% | unchanged, but rank 10-11 swaps with the above |
+
+Every other participant's return, and the leader, is unchanged to the published
+decimal. The season's aggregates moved with the new fills: **771 to 797 fills**,
+**355 to 369 round trips**, **$149,756.96 to $147,774.32** of net round-trip P&L,
+$20.86m to $21.22m of notional, win rate 56.34% to 55.28%. The verdict on the
+signal is the honest one: testable, and losing.
+
+**A second defect found in the same pass (IR-48).** The collector's re-derive step
+ran the audits *before* rebuilding the site. The Season 2 audit re-reads the
+published pages and compares every number they quote with the memory, so the
+moment a collection legitimately moved a number the gate failed on the previous
+run's pages - `Kalshi_Attention_Timer.html does not quote the published return
+-1.98%` - and, because that step runs after the data is committed, the branch was
+left holding the new collection with the season and site not re-derived: the
+stale-artefact condition IR-47 was about, reached by a different route. The
+workflow now rebuilds the site before the audits (season2, build-site, audit,
+audit). Nothing in the audits was weakened; they remain the gate. Verified by
+hand on the same sequence: 2,681 checks, 0 failures for Season 2 and 1,146, 0
+failures for the run-level audit.
+
+**What was published, and what replaced it.** The claim that the venue served
+empty numeric fields was on the site, in the README and in this register until
+2026-09-18. It is corrected in place in all three, with the artefact named
+(`data/real/kalshi/*.jsonl`, `data/real/coverage_report.json`, commit 106725e for
+the reader) and with the re-derived season published from the corrected files -
+no number was relabelled, quiet-edited or left standing in two versions.
+
 ## 6. Audits run on the simulation itself
 
 
@@ -490,5 +686,5 @@ These are internal consistency checks, all reproduced by the test suite
 | Order-of-iteration audit | AST sweep: no `for` loop in `sim/strategies.py` iterates a set |
 | Site freshness | `docs/` is byte-identical to a fresh `build-site` from the committed memory (CI fails if it drifts), and the published config fingerprint equals `CompetitionConfig.fingerprint()` |
 | Look-ahead | strategies see only `t-1` and earlier data when deciding (`tests/test_strategies.py`) |
-| **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the primary season (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). **763 / 763 pass.** Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
+| **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the Season 1 primary and 383 on the Season 2 primary - **1,146 in total, all passing** (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). The Season 2-specific audit, `scripts/independent_audit_season2.py`, adds 2,681 checks of its own. Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
 | README self-description | `tests/test_readme_claims.py` recomputes the suite's test count, the register size and the three research-file counts, and re-reads all 20 leaderboard rows against `memory/runs/season1-primary-seed20260917/leaderboard.json` |

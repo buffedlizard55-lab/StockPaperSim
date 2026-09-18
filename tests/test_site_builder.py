@@ -16,6 +16,7 @@ import re
 import shutil
 import tempfile
 import unittest
+from html import escape as html_escape
 from html.parser import HTMLParser
 
 from fixtures import REPO_ROOT
@@ -308,15 +309,16 @@ class TestFullBuild(unittest.TestCase):
         self.assertFalse(missing, f"broken links: {missing[:10]}")
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
-        self.assertEqual(len(site.NAV), 10)
+        # 11 since the venue-sensitivity page landed (IR-29).
+        self.assertEqual(len(site.NAV), 11)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
             self.assertRegex(html, r'<nav[^>]*class="[^"]*\bnav\b[^"]*"', rel)
             for _href, label in site.NAV:
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
-            for label in ("Leaderboard", "Strategies", "Market", "Methodology",
-                          "Data", "Sources", "Irregularities", "Limitations",
-                          "Participants"):
+            for label in ("Leaderboard", "Strategies", "Market", "Venue sensitivity",
+                          "Methodology", "Data", "Sources", "Irregularities",
+                          "Limitations", "Participants"):
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
             self.assertIn('class="site-footer"', html, rel)
             self.assertIn("assets/site.js" if rel.count("/") == 0
@@ -392,7 +394,14 @@ class TestFullBuild(unittest.TestCase):
                             f"source URL missing: {row['url']}")
             self.assertIn(row["status"], html)
             probe = row["claim"][:40]
-            for esc in (probe, probe.replace("&", "&amp;").replace("<", "&lt;")
+            # ``html.escape`` is what the page is rendered with, and it escapes
+            # quotes as well as the three markup characters - so a claim whose
+            # first 40 characters contain an apostrophe ("FINRA's Trading
+            # Activity Fee guidance page: ...") is published as &#x27; and a
+            # comparison that only handles &, < and > reports it missing. The
+            # probe set below is generated the same way the page renders.
+            for esc in (probe, html_escape(probe),
+                        probe.replace("&", "&amp;").replace("<", "&lt;")
                         .replace(">", "&gt;")):
                 if esc in html:
                     break

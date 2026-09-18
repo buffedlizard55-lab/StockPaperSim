@@ -63,6 +63,11 @@ ALLOWED_HOSTS = {
     # for the access policy it follows.
     "data.sec.gov", "cdn.nba.com", "stats.nba.com", "www.nba.com",
     "github.com",
+    # Added 2026-09-18 with IR-41's correction: the venue's own migration note,
+    # which is the primary source for the *_fp / *_dollars field names the
+    # collector now reads. Unknown-host rejection is the point of this set, so a
+    # citation is never allow-listed without opening the page.
+    "docs.kalshi.com",
 }
 
 
@@ -412,6 +417,12 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         "https://docs.alpaca.markets/docs/market-data",
         # HTML-escaped form of a URL that IS registered.
         "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&amp;range=1y",
+        # Kalshi's API reference and its fixed-point migration note: the schema
+        # the collector reads, not data itself. The endpoint they document is
+        # registered (sim/realdata.py, and IR-41 links it), which is the link a
+        # reviewer needs to re-fetch the payload.
+        "https://docs.kalshi.com/getting_started/fixed_point_migration",
+        "https://docs.kalshi.com/api-reference/market/get-markets",
         # The secondary source behind IR-05, registered as SECONDARY at the
         # FINRA rule page and named in the irregularity entry.
         "https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/",

@@ -14,13 +14,6 @@
     "effort": "a day, mostly waiting on credentials"
   },
   {
-    "priority": "P0",
-    "title": "Verify the two regulatory inputs that are still secondary or uncertain",
-    "detail": "Fetch FINRA Schedule A for the Trade Activity Fee (IR-05) and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04), then pin both constants to the primary text and re-run.",
-    "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
-    "effort": "an hour of reading"
-  },
-  {
     "priority": "P1",
     "title": "Minute-bar intraday engine",
     "detail": "Expose multiple decision points per session on top of the existing intraday path, keep the order book alive across them, and add a closing-auction order type. This is what makes @GapAndGo_YOLO, @OvernightCarry_NO and @SpreadHarvester_MM measurable instead of caveated (L-03, IR-08).",
@@ -105,13 +98,6 @@
     "effort": "half a day"
   },
   {
-    "priority": "P1",
-    "title": "Publish a venue-parameter sensitivity harness (the IR-29 answer)",
-    "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
-    "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
-    "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
-  },
-  {
     "title": "Cite-hygiene job for the source register (networked, not in CI by design)",
     "priority": "P2",
     "effort": "S",
@@ -161,17 +147,17 @@
     "where": "scripts/collect_real_data.py, data/real/sec/, sim/masterfeed.py"
   },
   {
-    "title": "Collect the Kalshi volume column, or retire the attention-timer participant",
-    "detail": "The venue's settled-markets payload returned contract metadata with every numeric field empty, so kalshi_volume_30d is MISSING by construction and @Kalshi_Attention_Timer reports DATA-MISSING. Either a payload with real volume/open-interest is found (the v2 markets endpoint with a status filter is the first thing to try) or the participant should be retired rather than kept as a permanent zero.",
-    "priority": "P2",
-    "effort": "half a day to probe, one line to retire",
-    "where": "sim/masterfeed.py, scripts/collect_real_data.py"
-  },
-  {
     "title": "Give the forward-only participants a live path",
     "detail": "The NFL and NBA injury probes, the NCAA scoreboard and SportsPred place no trades by design because no archive exists. A scheduled collector that captures the official documents while a season is running would turn them from placeholders into the forward test the brief asked for, and would be the first genuinely live element of this project.",
     "priority": "P2",
     "effort": "a scheduled workflow plus a season of patience",
     "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
+  },
+  {
+    "title": "Make CI see the collector's own commits",
+    "detail": "A push performed with the workflow's GITHUB_TOKEN does not trigger other workflows, so the collection job can change data under a published season without CI noticing (IR-47). The re-derive step added in this pass keeps the two in step, but a failure inside that step still commits the data first. A small dispatcher - the collector finishing by firing a repository_dispatch that runs the test suite and the audits - would close the gap.",
+    "priority": "P1",
+    "effort": "half a day",
+    "where": ".github/workflows/collect-real-data.yml, .github/workflows/ci.yml"
   }
 ]

@@ -183,9 +183,14 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "source_class": "OFFICIAL", "path": "data/real/sec/",
      "provides": "the official ticker->CIK map, per-issuer submission indexes and the "
                  "filing archive directory tree",
-     "note": "The ticker map answered HTTP 403 to an anonymous User-Agent from the "
-             "collection runner; it now sends a contact address in the UA as SEC's "
-             "own webmaster FAQ requires, and the outcome is recorded either way."},
+     "note": "The ticker map answered HTTP 403 from the collection runner. The "
+             "declared-bot header set SEC publishes is now sent for every request "
+             "(a contact address in the User-Agent, Accept-Encoding gzip, deflate; "
+             "the register cites the page these come from), the manifest records "
+             "each request's status, attempt count and the first characters of a "
+             "refusal body, and a refused map falls back to the per-company filing "
+             "feed, whose CIK lands in data/real/sec/cik_map.json with the "
+             "substitution named in the file."},
     {"id": "sec_submissions", "label": "SEC submissions API",
      "url": "https://data.sec.gov/submissions/CIK",
      "source_class": "OFFICIAL", "path": "data/real/sec/",

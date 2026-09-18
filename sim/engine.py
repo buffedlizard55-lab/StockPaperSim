@@ -69,14 +69,19 @@ class CompetitionEngine:
     def __init__(self, cfg: config.CompetitionConfig, md, seed: Optional[int] = None,
                  roster: Optional[Sequence[Strategy]] = None,
                  writer: Optional[memory.RunWriter] = None,
-                 full_memory: bool = True, verbose: bool = False) -> None:
+                 full_memory: bool = True, verbose: bool = False,
+                 venue_overrides: Optional[Dict[str, object]] = None) -> None:
         self.cfg = cfg
         self.md = md
         self.seed = cfg.seed if seed is None else seed
         self.writer = writer
         self.full_memory = full_memory
         self.verbose = verbose
-        self.exec_engine = ExecutionEngine(cfg)
+        #: Model-form switches for sim/sensitivity.py.  Deliberately not part of
+        #: the configuration: a competition run must be described by exactly the
+        #: config whose fingerprint the replay was generated from.
+        self.venue_overrides: Dict[str, object] = dict(venue_overrides or {})
+        self.exec_engine = ExecutionEngine(cfg, **self.venue_overrides)
         self.roster = list(roster) if roster is not None else build_roster()
         self.t0 = md.first_competition_index
         self.t1 = len(md.dates)

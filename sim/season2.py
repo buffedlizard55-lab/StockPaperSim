@@ -1,17 +1,20 @@
-"""Season 2: the MasterFeed Invitational, run on real collected prices.
+"""Season 2: the MasterFeed Invitational, with an eligibility-gated price path.
 
 Season 1 answered "what would twenty aggressive strategies have done on a
-calibrated replay of the real index path".  Season 2 answers a narrower and
-harder question: **what did the strategies that can be mapped to a MasterSite
-project actually do on the real prices of the instruments they traded**, with
-every price, date and event traceable to a collected file.
+calibrated replay of the real index path". Season 2 is intended to answer a
+narrower and harder question: **what did the strategies that can be mapped to a
+MasterSite project do on an eligible official price set**, with every price, date
+and event traceable to a collected file. The
+committed Yahoo-backed run is retained as **non-eligible research**; the normal
+Season 2 entry point now uses the official Nasdaq backend and stops if its
+provenance or redistribution status is not accepted.
 
 Design decisions that differ from Season 1, each deliberate:
 
 * **One real path, no seed panel.**  Real prices are a single realisation, so
   there is no "robustness across synthetic seeds" to publish.  Instead of
   pretending otherwise, Season 2 publishes **cost and liquidity stress runs**:
-  the same real prices with the execution stack doubled and with available
+  the same collected prices with the execution stack doubled and with available
   liquidity halved.  That measures sensitivity to the assumptions that really
   are still modelled (IR-40, IR-41).
 * **Real dividends.**  Ex-dates and amounts come from the vendor event feed
@@ -42,7 +45,7 @@ def _sha256_bytes(blob: bytes) -> str:
 
 SEASON2_SEED = 20260918
 SEASON2_NAME = "StockPaperSim MasterFeed Invitational"
-SEASON2_SEASON = "Season 2 (2025-2026) - real collected prices"
+SEASON2_SEASON = "Season 2 (2025-2026) - eligibility-gated collected prices"
 
 STRESS_LABELS = ("primary", "stress-costs2x", "stress-thinliquidity")
 
@@ -78,8 +81,11 @@ def season2_config(label: str = "primary") -> config.CompetitionConfig:
     return cfg
 
 
-def build_market(root: str = realdata.REAL_ROOT) -> realdata.RealMarketData:
-    md = realdata.build_real_market_data(root=root)
+def build_market(root: str = realdata.REAL_ROOT,
+                 price_source: str = "nasdaq",
+                 require_official: bool = True) -> realdata.RealMarketData:
+    md = realdata.build_real_market_data(
+        root=root, price_source=price_source, require_official=require_official)
     md.signals = masterfeed.build_signal_book(md, root=root)  # type: ignore[attr-defined]
     return md
 
@@ -110,7 +116,7 @@ def _signal_fire_counts(md, book) -> dict:
 def _signal_status(md, roster) -> List[dict]:
     """Per participant: which collected signals it reads, and whether they exist.
 
-    A participant that reads only real prices has an empty list here and is not
+    A participant that reads only collected prices has an empty list here and is not
     signal-dependent; a participant whose source could not be collected is
     flagged, so the site can say "data missing" instead of publishing a zero
     return as if it were a result.
@@ -158,9 +164,16 @@ def _signal_status(md, roster) -> List[dict]:
 
 
 def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_ROOT,
-                labels: Sequence[str] = ("primary",), verbose: bool = False) -> List[dict]:
-    """Run Season 2 for each requested assumption set and write memory + ledger."""
-    md = build_market(real_root)
+                labels: Sequence[str] = ("primary",), verbose: bool = False,
+                price_source: str = "nasdaq",
+                require_official: bool = True) -> List[dict]:
+    """Run Season 2, refusing non-eligible price data by default.
+
+    Set ``price_source='yahoo', require_official=False`` only for an explicitly
+    labelled research replay; that path is never an official competition run.
+    """
+    md = build_market(real_root, price_source=price_source,
+                      require_official=require_official)
     book = getattr(md, "signals")
     roster = build_roster_mf()
     records: List[dict] = []
@@ -195,7 +208,10 @@ def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_
         writer.write_json("data_provenance.json", {
             "diagnostics": md.diagnostics,
             "inventory": realdata.data_inventory(real_root),
-            "crosschecks": realdata.crosscheck_against_fred("SPY", real_root),
+            "crosschecks": realdata.crosscheck_against_fred(
+                "SPY", real_root, price_source=price_source),
+            "eligibility": md.diagnostics.get("official_eligibility"),
+            "price_source": price_source,
             "note": ("Every bar traded in this run is byte-identical to a bar in one of "
                      "the files inventoried here, and the independent audit re-checks "
                      "each one against the collected file rather than against this copy."),

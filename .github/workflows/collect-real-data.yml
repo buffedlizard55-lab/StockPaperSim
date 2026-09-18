@@ -13,14 +13,9 @@ name: Collect real market data
 # repository change without a human reading the diff.
 
 on:
-  # A push to either file also triggers collection. ``workflow_dispatch`` on its
-  # own is not enough while this branch is unmerged: GitHub only offers manual
-  # dispatch for workflows that exist on the default branch, and the first
-  # collection has to happen before the pull request can publish real numbers.
-  push:
-    paths:
-      - ".github/workflows/collect-real-data.yml"
-      - "scripts/collect_real_data.py"
+  # Collection is manual-only: it can rewrite the committed data directory and
+  # may require a human to review licensing, source status and the resulting
+  # diff. A code push must never silently create a data commit on a PR branch.
   workflow_dispatch:
     inputs:
       only:
@@ -72,6 +67,21 @@ jobs:
         run: |
           python scripts/collect_real_data.py --out data/real \
             --only "$ONLY" --max-seconds "$MAX_SECONDS"
+
+      - name: Audit official-price candidate (fail closed, report retained)
+        run: |
+          set +e
+          python -m sim.cli price-audit \
+            --data-root data/real \
+            --backend nasdaq \
+            > data/real/official_price_eligibility.json
+          RC=$?
+          echo "official-price eligibility exit code: $RC"
+          cat data/real/official_price_eligibility.json
+          # Collection may preserve an auditable candidate even while licensing
+          # is unresolved. The Season 2 runner itself remains a hard gate and
+          # will not trade on this report until it says eligible=true.
+          exit 0
 
       - name: Summarise the collection manifest
         run: |

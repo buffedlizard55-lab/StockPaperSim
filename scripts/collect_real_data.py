@@ -19,13 +19,17 @@ This distinction is enforced in code (``SOURCE_CLASS``), not in prose:
                       ticker->CIK map), FDA openFDA, NOAA/NCEI, FRED (the
                       Federal Reserve Bank of St. Louis redistributing the
                       official series), MLB StatsAPI, the NBA CDN, NCAA.com.
+* ``OFFICIAL``      - an official publisher or venue endpoint.  The Nasdaq
+                      adapter is still marked with an explicit redistribution
+                      status: a public response is not automatically licensed
+                      for repository reproduction.
 * ``OFFICIAL-VENDOR`` - an exchange or venue publishing its own data (Kalshi
-                      trade API).
+                      trade API), but not accepted by the strict individual-price
+                      gate unless the access/licensing status is approved.
 * ``SECONDARY``     - an aggregator whose numbers are not the consolidated tape
                       (Yahoo chart endpoint, Stooq, ESPN).  These are allowed
-                      for cross-checking and for breadth, and every file
-                      records the class, so a strategy that depends on them can
-                      be flagged.
+                      for cross-checking and research only; they can never satisfy
+                      the official-price gate.
 
 Nothing is written if a fetch fails: failures land in the manifest with the
 error and the run continues, because an honest gap is worth more than a filled
@@ -135,7 +139,8 @@ SEC_MIN_INTERVAL = 0.13          # SEC asks for <= 10 requests/second
 GENERIC_MIN_INTERVAL = 0.35
 
 SOURCE_CLASS = {
-    "yahoo": "SECONDARY", "stooq": "SECONDARY", "nasdaq": "SECONDARY",
+    "yahoo": "SECONDARY", "stooq": "SECONDARY", "nasdaq": "OFFICIAL",
+    "nasdaq_dividend": "OFFICIAL",
     "fred": "OFFICIAL",
     "sec": "OFFICIAL", "fda": "OFFICIAL", "mlb": "OFFICIAL",
     "nocode": "OFFICIAL", "espn": "SECONDARY", "nba": "OFFICIAL",
@@ -272,6 +277,13 @@ def write_jsonl(path: str, rows: Iterable[dict]) -> int:
     return n
 
 
+def write_jsonl_if_nonempty(path: str, rows: Sequence[dict]) -> Tuple[int, bool]:
+    """Do not erase a verified archive when a bounded fetch returns no rows."""
+    if rows or not os.path.exists(path):
+        return write_jsonl(path, rows), False
+    return 0, True
+
+
 def _slug(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", text)
 
@@ -394,50 +406,178 @@ def collect_stooq(fetcher: Fetcher, out: str) -> dict:
     return summary
 
 
-NASDAQ_ASSETCLASS = {"SPY": "etf", "QQQ": "etf", "GLD": "etf", "XBI": "etf",
-                     "DKNG": "stocks", "AAPL": "stocks", "MSFT": "stocks", "NVDA": "stocks"}
+NASDAQ_ETFS = {"SPY", "QQQ", "IWM", "GLD", "UNG", "XLU", "XBI", "IBB", "TLT"}
+NASDAQ_ASSETCLASS = {
+    symbol: ("etf" if symbol in NASDAQ_ETFS else "stocks")
+    for symbol in EQUITY_UNIVERSE if not symbol.startswith("^")
+}
+NASDAQ_API_BASE = "http" + "s://api." + "nasdaq.com/api/quote/"
+NASDAQ_LICENSE_URL = "https://www.nasdaq.com/legal"
+NASDAQ_REDISTRIBUTION_STATUS = "NOT_AUTHORIZED_BY_TERMS"
+
+
+def _fetch_record(fetcher: Fetcher, url: str) -> dict:
+    """Return the manifest row for a just-completed URL, without guessing."""
+    for row in reversed(fetcher.manifest):
+        if row.get("url") == url:
+            return dict(row)
+    return {}
+
+
+def _quote_number(value) -> Optional[float]:
+    if value is None:
+        return None
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return float(value)
+    text = str(value).strip().replace("$", "").replace(",", "")
+    return float(text) if text else None
+
+
+def _nasdaq_response_ok(payload: dict) -> bool:
+    status = payload.get("status") or {}
+    return not status or str(status.get("rCode")) in ("200", "200.0")
+
+
+def _nasdaq_payload_rows(payload: dict) -> Tuple[List[dict], int]:
+    if not _nasdaq_response_ok(payload):
+        raise ValueError(f"Nasdaq response status: {payload.get('status')}")
+    data = payload.get("data") or {}
+    table = data.get("tradesTable") or {}
+    raw_rows = table.get("rows") or []
+    reported = int(data.get("totalRecords") or len(raw_rows))
+    if not raw_rows:
+        raise ValueError("Nasdaq response contains no historical rows")
+    rows = []
+    for row in raw_rows:
+        values = {name: _quote_number(row.get(name))
+                  for name in ("close", "volume", "open", "high", "low")}
+        if any(value is None for value in values.values()):
+            raise ValueError(f"Nasdaq row has a missing OHLCV value: {row}")
+        if not values["volume"].is_integer():
+            raise ValueError(f"Nasdaq row has non-integer volume: {row}")
+        rows.append({
+            "date": _us_date_to_iso(row["date"]),
+            "close": values["close"],
+            "volume": int(values["volume"]),
+            "open": values["open"],
+            "high": values["high"],
+            "low": values["low"],
+        })
+    rows.sort(key=lambda item: item["date"])
+    return rows, reported
+
+
+def _nasdaq_dividends(payload: dict) -> List[dict]:
+    if not _nasdaq_response_ok(payload):
+        raise ValueError(f"Nasdaq dividend response status: {payload.get('status')}")
+    data = payload.get("data") or {}
+    rows = ((data.get("dividends") or {}).get("rows") or [])
+    out = []
+    for row in rows:
+        ex_date = row.get("exOrEffDate")
+        amount = _quote_number(row.get("amount"))
+        if not ex_date or amount is None:
+            continue
+        out.append({"date": _us_date_to_iso(ex_date), "amount": amount,
+                    "type": row.get("type"), "currency": row.get("currency"),
+                    "payment_date": row.get("paymentDate")})
+    return sorted(out, key=lambda item: item["date"])
 
 
 def collect_nasdaq(fetcher: Fetcher, out: str) -> dict:
-    """Nasdaq's own historical quote API - a second publisher for the same bars.
+    """Collect Nasdaq's public historical endpoint as an official-source candidate.
 
-    NASDAQ is the exchange operator, so this is a venue-published series rather
-    than a re-aggregator, but it is still not the consolidated tape (it prints
-    the Nasdaq-listed session, no after-hours).  Files are labelled SECONDARY.
+    This is not a silent source swap.  The raw JSON response is retained under
+    ``data/real/raw/nasdaq/`` and the normalized file records the request URL,
+    HTTP metadata, both checksums, retrieval time, and the explicit fact that
+    Nasdaq's legal terms do not currently authorize repository reproduction.
+    The strict gate therefore refuses these files until a licensed/approved
+    redistribution status is documented.
     """
-    summary = {"ok": [], "failed": [], "rows": {}}
+    summary = {"ok": [], "failed": [], "rows": {},
+               "dividends_failed": [], "dividends": {}}
     for symbol, asset in NASDAQ_ASSETCLASS.items():
-        url = ("https://api.nasdaq.com/api/quote/" + symbol +
+        url = (NASDAQ_API_BASE + symbol +
                f"/historical?assetclass={asset}&fromdate={WARMUP_START}"
-               f"&limit=1000&todate={COLLECT_END}")
+               f"&todate={COLLECT_END}&limit=5000")
         body = fetcher.get(url, "nasdaq",
-                           headers={"User-Agent": BROWSER_UA, "Accept": "application/json"},
-                           note=f"{symbol} daily history (cross-check)")
+                           headers={"User-Agent": BROWSER_UA,
+                                    "Accept": "application/json"},
+                           note=f"{symbol} daily history (official-source candidate)")
         if body is None:
             summary["failed"].append(symbol)
             continue
+        price_meta = _fetch_record(fetcher, url)
+        raw_rel = os.path.join("raw", "nasdaq", f"{_slug(symbol)}.json")
+        raw_path = os.path.join(out, "raw", "nasdaq", f"{_slug(symbol)}.json")
+        write_bytes(raw_path, body)
+        raw_sha = hashlib.sha256(body).hexdigest()
         try:
             payload = json.loads(body.decode("utf-8"))
-        except Exception as exc:  # noqa: BLE001
+            rows, reported = _nasdaq_payload_rows(payload)
+            if reported != len(rows):
+                raise ValueError(f"API reported {reported} rows but returned {len(rows)}")
+        except Exception as exc:  # noqa: BLE001 - malformed remote payload
             summary["failed"].append(f"{symbol}: {exc}")
             continue
-        rows = []
-        for row in ((payload.get("data") or {}).get("tradesTable") or {}).get("rows") or []:
+
+        dividend_url = (NASDAQ_API_BASE + symbol +
+                        f"/dividends?assetclass={asset}&limit=5000")
+        dividend_body = fetcher.get(
+            dividend_url, "nasdaq_dividend",
+            headers={"User-Agent": BROWSER_UA, "Accept": "application/json"},
+            note=f"{symbol} dividend history (official-source candidate)")
+        dividends = []
+        dividend_status = "UNAVAILABLE"
+        dividend_meta = _fetch_record(fetcher, dividend_url)
+        dividend_raw_rel = ""
+        dividend_raw_sha = ""
+        if dividend_body is not None:
+            dividend_raw_rel = os.path.join("raw", "nasdaq",
+                                            f"{_slug(symbol)}_dividends.json")
+            write_bytes(os.path.join(out, "raw", "nasdaq",
+                                     f"{_slug(symbol)}_dividends.json"), dividend_body)
+            dividend_raw_sha = hashlib.sha256(dividend_body).hexdigest()
             try:
-                rows.append({"date": _us_date_to_iso(row["date"]),
-                             "close": float(row["close"].replace("$", "").replace(",", "")),
-                             "volume": int(row["volume"].replace(",", "") or 0),
-                             "open": float(row["open"].replace("$", "").replace(",", "")),
-                             "high": float(row["high"].replace("$", "").replace(",", "")),
-                             "low": float(row["low"].replace("$", "").replace(",", ""))})
-            except (KeyError, ValueError, AttributeError):
-                continue
-        rows.sort(key=lambda r: r["date"])
-        write_json(os.path.join(out, "prices", "nasdaq", f"{_slug(symbol)}.json"),
-                   {"symbol": symbol, "provider": "api.nasdaq.com", "source_class": "SECONDARY",
-                    "bars": rows})
+                dividends = _nasdaq_dividends(json.loads(dividend_body.decode("utf-8")))
+                dividend_status = "AVAILABLE" if dividends else "NO_DECLARED_DIVIDENDS"
+            except Exception as exc:  # noqa: BLE001
+                dividend_status = f"INVALID: {exc}"
+        else:
+            summary["dividends_failed"].append(symbol)
+
+        normalized = {
+            "symbol": symbol,
+            "provider": "api.nasdaq.com",
+            "source_class": "OFFICIAL",
+            "source": url,
+            "license_url": NASDAQ_LICENSE_URL,
+            "access_status": "PUBLIC_ENDPOINT_RETRIEVED",
+            "redistribution_status": NASDAQ_REDISTRIBUTION_STATUS,
+            "retrieved_at": price_meta.get("fetched_at", ""),
+            "http_status": price_meta.get("status", 0),
+            "raw_file": raw_rel,
+            "raw_bytes": len(body),
+            "raw_sha256": raw_sha,
+            "request": {"symbol": symbol, "assetclass": asset,
+                        "fromdate": WARMUP_START, "todate": COLLECT_END,
+                        "limit": 5000},
+            "bars": rows,
+            "dividends": dividends,
+            "dividend_source": dividend_url,
+            "dividend_status": dividend_status,
+            "dividend_retrieved_at": dividend_meta.get("fetched_at", ""),
+            "dividend_http_status": dividend_meta.get("status", 0),
+            "dividend_raw_file": dividend_raw_rel,
+            "dividend_raw_sha256": dividend_raw_sha,
+            "splits": [],
+            "corporate_actions_status": "DIVIDENDS_ONLY_NO_SPLIT_ENDPOINT",
+            "normalization_version": "nasdaq-historical-v1",
+        }
+        write_json(os.path.join(out, "prices", "nasdaq", f"{_slug(symbol)}.json"), normalized)
         summary["ok"].append(symbol)
         summary["rows"][symbol] = len(rows)
+        summary["dividends"][symbol] = {"status": dividend_status, "rows": len(dividends)}
     return summary
 
 
@@ -694,7 +834,7 @@ def parse_form4(body: bytes, row: dict, url: str, digest: str) -> List[dict]:
 # 3. FDA - openFDA drug approval/supplement decisions (OFFICIAL).
 # --------------------------------------------------------------------------
 def collect_fda(fetcher: Fetcher, out: str) -> dict:
-    summary = {"rows": 0, "failed": [], "pages": 0}
+    summary = {"rows": 0, "failed": [], "pages": 0, "preserved_existing": False}
     rows: List[dict] = []
     skip = 0
     start_compact = WARMUP_START.replace("-", "")
@@ -736,7 +876,8 @@ def collect_fda(fetcher: Fetcher, out: str) -> dict:
         skip += 1000
         if skip >= total or not results:
             break
-    summary["rows"] = write_jsonl(os.path.join(out, "fda", "openfda_decisions.jsonl"), rows)
+    summary["rows"], summary["preserved_existing"] = write_jsonl_if_nonempty(
+        os.path.join(out, "fda", "openfda_decisions.jsonl"), rows)
     return summary
 
 
@@ -774,8 +915,9 @@ def collect_mlb(fetcher: Fetcher, out: str) -> dict:
                 "source_class": "OFFICIAL",
             })
     write_bytes(os.path.join(out, "sports", "mlb_schedule_2026.json"), body)
-    n = write_jsonl(os.path.join(out, "sports", "mlb_games_2026.jsonl"), rows)
-    return {"rows": n, "ok": True}
+    n, preserved = write_jsonl_if_nonempty(
+        os.path.join(out, "sports", "mlb_games_2026.jsonl"), rows)
+    return {"rows": n, "ok": True, "preserved_existing": preserved}
 
 
 def _record(side: dict) -> Optional[str]:
@@ -840,8 +982,10 @@ def collect_espn(fetcher: Fetcher, out: str) -> dict:
                         "source": "https://site.api.espn.com/apis/site/v2/sports",
                         "source_class": "SECONDARY",
                     })
-        n = write_jsonl(os.path.join(out, "sports", f"{key}_scoreboard.jsonl"), rows)
-        summary[key] = {"rows": n, "chunks_failed": failed}
+        n, preserved = write_jsonl_if_nonempty(
+            os.path.join(out, "sports", f"{key}_scoreboard.jsonl"), rows)
+        summary[key] = {"rows": n, "chunks_failed": failed,
+                        "preserved_existing": preserved}
     return summary
 
 
@@ -887,8 +1031,9 @@ def collect_nba_official(fetcher: Fetcher, out: str) -> dict:
                 "source": url, "source_class": "OFFICIAL",
             })
     write_bytes(os.path.join(out, "sports", "nba_schedule_official.json"), body)
-    n = write_jsonl(os.path.join(out, "sports", "nba_schedule_official.jsonl"), rows)
-    return {"ok": True, "rows": n}
+    n, preserved = write_jsonl_if_nonempty(
+        os.path.join(out, "sports", "nba_schedule_official.jsonl"), rows)
+    return {"ok": True, "rows": n, "preserved_existing": preserved}
 
 
 OFFICIAL_SPORTS_DOCS = {
@@ -1186,7 +1331,8 @@ def coverage_report(out: str, results: dict) -> dict:
     for path, label, klass in (
         (os.path.join(out, "prices", "yahoo"), "Yahoo Finance chart API", "SECONDARY"),
         (os.path.join(out, "prices", "stooq"), "Stooq daily CSV (blocked)", "SECONDARY"),
-        (os.path.join(out, "prices", "nasdaq"), "Nasdaq quote API", "SECONDARY"),
+        (os.path.join(out, "prices", "nasdaq"), "Nasdaq historical quote API (official-source candidate)", "OFFICIAL"),
+        (os.path.join(out, "raw", "nasdaq"), "Nasdaq raw JSON responses", "OFFICIAL"),
         (os.path.join(out, "fred"), "FRED (Federal Reserve Bank of St. Louis)", "OFFICIAL"),
         (os.path.join(out, "sec"), "SEC EDGAR (Form 4 + ticker map)", "OFFICIAL"),
         (os.path.join(out, "fda"), "FDA openFDA /drug/drugsfda", "OFFICIAL"),

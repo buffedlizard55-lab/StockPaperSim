@@ -12,9 +12,9 @@ from here, and no command requires interactive input:
     python3 -m sim.cli verify              # checksums + data audits
     python3 -m sim.cli irregularities      # every IR-xx flag raised
     python3 -m sim.cli sources             # the verified-source register
-    python3 -m sim.cli season2             # Season 2: real collected prices
+    python3 -m sim.cli price-audit         # strict official-price eligibility audit
+    python3 -m sim.cli season2             # Season 2: official prices, fail closed
     python3 -m sim.cli ledger --limit 20   # every round trip with verified prices
-    python3 -m sim.cli sensitivity         # venue-parameter sensitivity grid
     python3 -m sim.cli build-site          # regenerate the GitHub Pages site
     python3 -m sim.cli export fills out.csv
 """
@@ -29,8 +29,8 @@ import sys
 import textwrap
 from typing import Dict, List, Optional, Sequence
 
-from . import analytics, config, engine, ledger as ledger_mod, marketdata, memory
-from . import realdata, season2, sensitivity, universe
+from . import analytics, config, engine, eligibility, ledger as ledger_mod, marketdata, memory
+from . import realdata, season2, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -472,26 +472,42 @@ def cmd_build_site(args: argparse.Namespace) -> int:
 
 
 # ==========================================================================
-# Argument parsing
+# official price eligibility + season2 + ledger
 # ==========================================================================
 
-# ==========================================================================
-# season2 + ledger
-# ==========================================================================
+def cmd_price_audit(args: argparse.Namespace) -> int:
+    symbols = tuple(s.strip() for s in args.symbols.split(",") if s.strip())
+    report = eligibility.audit_official_prices(
+        root=os.path.abspath(args.data_root), symbols=symbols,
+        start=args.start, end=args.end, backend=args.backend)
+    print(json.dumps(report, indent=2, sort_keys=False))
+    return 0 if report["eligible"] else 1
+
 
 def cmd_season2(args: argparse.Namespace) -> int:
     labels = tuple(s.strip() for s in args.labels.split(",") if s.strip())
+    if args.price_source == "yahoo" and not args.allow_secondary_research:
+        print("refusing Yahoo in the official Season 2 command; use "
+              "--allow-secondary-research to run the clearly non-eligible research replay")
+        return 2
     print(f"StockPaperSim :: {season2.SEASON2_NAME} :: {season2.SEASON2_SEASON}")
     print(f"window {realdata.SEASON2_START} -> {realdata.SEASON2_END} | "
-          f"assumptions {', '.join(labels)}")
-    print("building the real market from data/real/prices + data/real/fred ...",
+          f"price source {args.price_source} | assumptions {', '.join(labels)}")
+    print("building the selected collected market from data/real/prices + data/real/fred ...",
           flush=True)
-    records = season2.run_season2(root=args.memory_root, labels=labels,
-                                  verbose=args.verbose)
+    try:
+        records = season2.run_season2(
+            root=args.memory_root, labels=labels, verbose=args.verbose,
+            price_source=args.price_source,
+            require_official=(args.price_source != "yahoo"))
+    except eligibility.OfficialPriceEligibilityError as exc:
+        print(str(exc), file=sys.stderr)
+        print(json.dumps(exc.audit, indent=2, sort_keys=False))
+        return 1
     primary = records[0]
     _print_leaderboard(primary["leaderboard"], primary["market"])
     if len(records) > 1:
-        print("\nSTRESS PANEL - every participant, same real prices, harder venue")
+        print("\nSTRESS PANEL - every participant, same prices, harder venue")
         names = [r["username"] for r in records[0]["leaderboard"]]
         head = f"{'participant':26s}" + "".join(f"{lbl:>20s}" for lbl in
                                                 [r["label"] for r in records])
@@ -514,71 +530,13 @@ def cmd_season2(args: argparse.Namespace) -> int:
         print(f"  ledger digest {v['ledger_digest_sha256'][:16]}... | max |equity "
               f"residual| ${v['max_abs_equity_residual_usd']:,.4f} "
               f"(bound ${bound:,.4f}; the tape stores six-decimal prices, so a "
-              f"residual below the bound is rounding, not a discrepancy: "
-              f"{'inside' if v['all_residuals_within_rounding_bound'] else 'OUTSIDE'})")
-        idle = [p["username"] for p in v["per_participant"]
-                if not p.get("sessions_with_orders")]
-        if idle:
-            print(f"  no trades at all: {', '.join(idle)}")
-        mf = _read_json(os.path.join(args.memory_root, "runs", rec["run_id"],
-                                     "masterfeed.json"))
-        missing = [k for k, a in mf["availability"].items() if a["state"] != "AVAILABLE"]
-        if missing:
-            # Collapse the per-symbol arrays into one line each: 26 symbols x 2
-            # insider arrays buried the two signals a reader actually needs to
-            # see (Form 4 and the Kalshi volume column).
-            by_family: Dict[str, List[str]] = {}
-            for name in sorted(missing):
-                family, _, symbol = name.partition("::")
-                by_family.setdefault(family, []).append(symbol or name)
-            parts = []
-            for family, symbols in sorted(by_family.items()):
-                if len(symbols) == 1 and symbols[0] == family:
-                    parts.append(family)
-                else:
-                    parts.append(f"{family} ({len(symbols)} series)")
-            print(f"  signals with NO collected data: {', '.join(parts)}")
-    print(f"\nledgers written under {args.memory_root}/runs/<run_id>/ledger_*.jsonl")
+              "non-zero residual inside that bound is expected)")
     return 0
 
 
-def cmd_sensitivity(args: argparse.Namespace) -> int:
-    """Re-run the season with one venue parameter moved at a time (IR-29)."""
-    cfg = config.CompetitionConfig()
-    seed = int(args.seed) if args.seed else cfg.seed
-    print(f"StockPaperSim :: venue-parameter sensitivity :: {cfg.season}")
-    print(f"window {cfg.start} -> {cfg.end} | seed {seed} | "
-          f"{len(sensitivity.PERTURBATIONS)} perturbations")
-    print("building the replay once, from the shipped configuration ...", flush=True)
-    md = marketdata.build_replay(cfg, seed=seed)
-    print(f"  {len(md.dates)} sessions; every run below trades these same bars")
-    report = sensitivity.run_grid(cfg, md, seed=seed, verbose=args.verbose)
-    out = args.out or os.path.join(memory.DEFAULT_ROOT, "sensitivity.json")
-    os.makedirs(os.path.dirname(out), exist_ok=True)
-    with open(out, "w", encoding="utf-8") as handle:
-        json.dump(report, handle, indent=1)
-        handle.write("\n")
-    summary = report["summary"]
-    print(f"\nSENSITIVITY ({summary['n_perturbations']} single-parameter moves, "
-          f"one shared market path)")
-    print(f"{'participant':24s} {'base%':>9} {'worst%':>9} {'best%':>9} "
-          f"{'range_pp':>9} {'max_rank_move':>14}")
-    for row in report["by_participant"][:12]:
-        span = row["max_return_pct"] - row["min_return_pct"]
-        print(f"{row['username']:24s} {row['base_return_pct']:+9.2f} "
-              f"{row['min_return_pct']:+9.2f} {row['max_return_pct']:+9.2f} "
-              f"{span:9.2f} {row['max_abs_rank_change']:14d}")
-    print(f"\n  participants whose rank moves at all : "
-          f"{summary['participants_with_rank_change']} of {summary['n_participants']}")
-    print(f"  largest rank move                    : {summary['max_abs_rank_change']}")
-    print(f"  largest return swing                 : "
-          f"{summary['max_abs_return_swing_pp']}pp")
-    print(f"  mean rank correlation vs the base    : {summary['mean_spearman']} "
-          f"(worst {summary['min_spearman']})")
-    print(f"  sign flips (a winner becoming a loser): {summary['sign_flips']}")
-    print(f"\nwritten to {out}")
-    return 0
-
+# ==========================================================================
+# season2 + ledger
+# ==========================================================================
 
 def cmd_ledger(args: argparse.Namespace) -> int:
     store = _store(args)
@@ -599,7 +557,8 @@ def cmd_ledger(args: argparse.Namespace) -> int:
             fields = ["symbol", "direction", "status", "entry_date", "entry_price",
                       "exit_date", "exit_price", "quantity", "gross_pnl_usd", "fees_usd",
                       "net_pnl_usd", "entry_fill_count", "exit_reason"]
-            writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+            writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore",
+                                    lineterminator="\n")
             writer.writeheader()
             for row in sorted(trips, key=lambda t: (t["symbol"], t["entry_date"])):
                 writer.writerow(row)
@@ -682,19 +641,23 @@ def build_parser() -> argparse.ArgumentParser:
     ex.add_argument("--run", default="")
     ex.set_defaults(func=cmd_export)
 
-    s2 = sub.add_parser("season2", help="run the real-price MasterFeed season")
+    pa = sub.add_parser("price-audit", help="strictly audit official price provenance and eligibility")
+    pa.add_argument("--data-root", default=os.path.join(REPO_ROOT, "data", "real"))
+    pa.add_argument("--backend", choices=tuple(realdata.PRICE_BACKENDS), default="nasdaq")
+    pa.add_argument("--start", default=realdata.SEASON2_WARMUP_START)
+    pa.add_argument("--end", default=realdata.SEASON2_END)
+    pa.add_argument("--symbols", default=",".join(realdata.UNIVERSE))
+    pa.set_defaults(func=cmd_price_audit)
+
+    s2 = sub.add_parser("season2", help="run Season 2 with the fail-closed price gate")
     s2.add_argument("--labels", default="primary,stress-costs2x,stress-thinliquidity",
                     help="comma-separated assumption sets")
+    s2.add_argument("--price-source", choices=tuple(realdata.PRICE_BACKENDS), default="nasdaq",
+                    help="official Nasdaq by default; Yahoo requires an explicit research flag")
+    s2.add_argument("--allow-secondary-research", action="store_true",
+                    help="allow the existing Yahoo-backed, non-eligible research replay")
     s2.add_argument("--verbose", action="store_true")
     s2.set_defaults(func=cmd_season2)
-
-    sn = sub.add_parser("sensitivity",
-                        help="venue-parameter sensitivity grid (the IR-29 answer)")
-    sn.add_argument("--seed", default="", help="defaults to the primary seed")
-    sn.add_argument("--out", default="",
-                    help="defaults to memory/sensitivity.json")
-    sn.add_argument("--verbose", action="store_true")
-    sn.set_defaults(func=cmd_sensitivity)
 
     lg = sub.add_parser("ledger", help="inspect the verified trade ledger")
     lg.add_argument("--run", default="")

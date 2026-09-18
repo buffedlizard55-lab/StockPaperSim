@@ -2,16 +2,16 @@
   {
     "id": "L-01",
     "severity": "high",
-    "title": "There is no live market-data feed, so Season 1 is a replay",
-    "detail": "The build environment could reach pypi.org, files.pythonhosted.org and github.com directly. Every market-data host failed at the transport layer except FRED and the Yahoo v8 chart endpoint, which were reachable only through the page-fetch tool. A competition that advertises real-time prices cannot be run honestly under those conditions, so Season 1 replays a fixed, documented market path instead. This is the single largest limitation and the reason the site says 'simulated' as often as it says 'real'.",
-    "fix": "A vendor key plus outbound network access. Six adapters are already implemented and documented (Yahoo chart, Stooq, Alpaca, Polygon, Finnhub, Tiingo) and build_from_provider() will drive a season from any of them; the three marked real-time capable can support intraday polling."
+    "title": "There is no eligible official-price set in the committed Season 2 run",
+    "detail": "The development sandbox's direct urllib request to Nasdaq ended with a TLS EOF, although the official endpoint was retrievable through the page-fetch path. A GitHub Actions adapter now supports collection and preserves raw bytes, but Nasdaq's public-site legal terms do not establish permission to redistribute the response in this repository. The existing Yahoo files remain reproducible SECONDARY research data, not eligible official prices; the strict Season 2 command refuses to trade until the audit passes.",
+    "fix": "Run the official collector on GitHub Actions, obtain a documented redistribution/licensing status for the official source, review the raw/checksum/coverage report, then rerun the official-price gate and Season 2. Never replace the Yahoo files silently."
   },
   {
     "id": "L-02",
     "severity": "high",
-    "title": "Single-name daily OHLCV is simulated, not observed",
-    "detail": "Only the S&P 500 and VIX daily series are real observations across the whole window, plus 13 real SPY monthly bars and 5 real AAPL daily bars with 4 real AAPL dividends. Every other daily bar for every other instrument is generated from those real factors plus declared beta, idiosyncratic volatility and drift. Individual results are therefore conditional on design inputs that no vendor supplied.",
-    "fix": "Fetch real daily bars per symbol through a provider adapter (L-01). The generator is written so the replay can be swapped for observed bars without touching the engine, portfolio or analytics code."
+    "title": "The committed Season 2 price files are secondary, not official",
+    "detail": "The historical Season 2 memory uses Yahoo daily OHLCV, dividends and splits. Those are real observations but Yahoo is an aggregator and every file is marked SECONDARY. The official Nasdaq adapter is separate and the eligibility gate checks all 24 tradable symbols; no current Season 2 result is promoted merely because two publishers agree.",
+    "fix": "Collect and license the official-source candidate, pass sim.eligibility, then run Season 2 against the named official backend. The engine already carries per-fill file, checksum, date, reference close, volume, participation, spread, impact and fee fields."
   },
   {
     "id": "L-03",
@@ -79,9 +79,9 @@
   {
     "id": "L-12",
     "severity": "low",
-    "title": "Fee schedules are pinned to documents read on a date, and no code re-reads them",
-    "detail": "This limitation was written as 'two fee inputs rest on secondary sources or uncertain effective dates' and both halves are now closed: the 2024 Reg NMS tick tier and access-fee cap were settled from the Commission's relief orders (IR-04, closed 2026-09-17) and the FINRA Trade Activity Fee rate is pinned to Section 1 of Schedule A to the By-Laws plus SEC Release 34-101696 (IR-05, closed 2026-09-18). What remains is a different and narrower limit. config's SCHEDULES are literal constants with a retrieval date attached, and validate_fee_coverage() only refuses a window that opens BEFORE the earliest documented date; nothing refuses a window that opens AFTER the last one, so a rate change the project has not seen would be silently charged at the previous rate. The same class of risk is what IR-33 found in the register's dead links - a citation is a claim about a page at a moment, and the page moves on its own.",
-    "fix": "A scheduled job that re-opens every fee source in the register and reports what moved (the networked cite-hygiene item in REMAINING_WORK.json), plus - when a future season is planned beyond 2026-12-31 - extending the schedules from the then-current Schedule A version and the phase-in table already stored in data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt, which carries the 2027-2029 rates."
+    "title": "Two fee inputs rest on secondary sources or uncertain effective dates",
+    "detail": "The FINRA Trade Activity Fee rate is now supported by FINRA's primary fee-adjustment schedule (IR-05). The SEC's 2024 half-penny tick tier and $0.001 access-fee cap remain subject to the documented temporary relief and future compliance dates (IR-04). Both are regulatory facts that remain pinned to primary sources, not broker summaries.",
+    "fix": "Retrieve FINRA Schedule A and the current compliance-date order for the 2024 Reg NMS amendments, then pin both constants to the primary text."
   },
   {
     "id": "L-13",

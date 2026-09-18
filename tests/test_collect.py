@@ -200,7 +200,7 @@ class FetcherBehaviour(unittest.TestCase):
         self.assertEqual(collector.FETCH_POLICY["nasdaq"]["tries"], 2)
         self.assertLess(collector.FETCH_POLICY["nasdaq"]["timeout"], 45.0)
         # The kind keeps its source class: nothing about the bound hides it.
-        self.assertEqual(collector.SOURCE_CLASS["nasdaq"], "SECONDARY")
+        self.assertEqual(collector.SOURCE_CLASS["nasdaq"], "OFFICIAL")
 
 
 #: A settled market as the venue serves it now: numbers as fixed-point strings

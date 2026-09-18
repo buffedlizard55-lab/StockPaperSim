@@ -285,7 +285,7 @@ def write_ledger(run_dir: str, ledger: dict, compress: bool = False) -> List[str
     if ledger["fills"]:
         fields = sorted({k for row in ledger["fills"] for k in row})
         with open(os.path.join(run_dir, LEDGER_CSV), "w", encoding="utf-8", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=fields)
+            writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
             writer.writeheader()
             for row in ledger["fills"]:
                 writer.writerow({k: row.get(k, "") for k in fields})

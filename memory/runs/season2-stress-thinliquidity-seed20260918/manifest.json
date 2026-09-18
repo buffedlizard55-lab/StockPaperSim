@@ -1,0 +1,991 @@
+{
+ "schema_version": "1.0.0",
+ "run_id": "season2-stress-thinliquidity-seed20260918",
+ "created_utc": "2026-09-18T03:42:06Z",
+ "finalised_utc": "2026-09-18T03:42:07Z",
+ "code": {
+  "git": {
+   "commit": "a3039f60e4942f6122ba6d344db9192e20acb30c",
+   "branch": "arena/01a0b254-stockpapersim",
+   "dirty": true,
+   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
+  },
+  "python_module_hashes": {
+   "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
+   "sim/analytics.py": "3d7a209133268656f72ebdf9c388e63703566cdc169c727cb71ea0c05183e9a4",
+   "sim/calendar.py": "250bfee6820695c3bf715a13c097356f08eea5d0bed58a9bc95af3daf9f432da",
+   "sim/cli.py": "447c743f7ec03f4ce0ea08942fa6f73224f9fb201ffbbbbdfd7cace0f0ba1bb7",
+   "sim/config.py": "e5ef91ff94e5bd24488233ebd5b43a740495f69eab9337daf06c1bdc05d87110",
+   "sim/engine.py": "e552a725f6417b8c2b6ca0dd4f5eff9e1eb7ede48205a7fb326f21c9c30860f3",
+   "sim/ledger.py": "df365e11d39aae63f98966e108d9ae32f55f9f3651c0f1743f400e91d216b903",
+   "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
+   "sim/masterfeed.py": "2a1747a9dba58eadd0d6dfe6a620331d01cef808717edf5b9dbbc149125fb3e9",
+   "sim/memory.py": "c7b2390f379b220dac8ffd4737b07edd2ed69d940f270fa43c18755988c5452e",
+   "sim/microstructure.py": "cb4d849f3d4e91172d93ed8d83fb47ce504ef51a6d81bf8d8b78fcbd49569f44",
+   "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
+   "sim/realdata.py": "e50b3e809644c1ba8985cd031f440250af9ab7d443960d8d6393fbfb085942fe",
+   "sim/season2.py": "6f0c4d6b91fefbc90dcc130777ce7123d7d519ab710ddbecdf66ff6e8288ee4e",
+   "sim/strategies.py": "c428738ac9203b5c83273499f167d62274432966fb18b8faf9531f8856cebf73",
+   "sim/strategies_mf.py": "50d227d8c1efe6d929907742b4c0386f499c067f6024e422a2f80b537578be5a",
+   "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
+  }
+ },
+ "files": {
+  "reports/FDACatalyst_Rider.json": {
+   "sha256": "f8971c9e6b222f6f9033c033c7a67a951c24a2d4d3df12b12d8b800e47ce1b3c",
+   "bytes": 15164,
+   "kind": "json"
+  },
+  "reports/FDA_ClusterFade.json": {
+   "sha256": "1cf5ac9ea873c3f3facbd0b10ed4c39a9c6b99ff7ce9efb847b7de60362aed0c",
+   "bytes": 15110,
+   "kind": "json"
+  },
+  "reports/InsiderCopycat_Max.json": {
+   "sha256": "158153f25aa96deb9f563ca87e0d363bb25918c6a0fbf3cb945d5dc9d25cdfb2",
+   "bytes": 13979,
+   "kind": "json"
+  },
+  "reports/InsiderCluster_Alpha.json": {
+   "sha256": "a823254e27a9dfd61d902aa3a3e79508a9f058870c17b8d04faef10fe340e6df",
+   "bytes": 13804,
+   "kind": "json"
+  },
+  "reports/CEO_CFO_Conviction.json": {
+   "sha256": "ad2dc18abfff60ceeb9c000c01274a6a11607e4913812abf5e5e03343a25f06b",
+   "bytes": 13926,
+   "kind": "json"
+  },
+  "reports/MLB_Attention_Momo.json": {
+   "sha256": "4a442f57fe9c93fe8951f82f9622fe7583172ca69dacfb86cccc3898531d59ad",
+   "bytes": 15700,
+   "kind": "json"
+  },
+  "reports/MLB_Upset_Short.json": {
+   "sha256": "9a691e9f9fdddf2c196cb0039c11788d0567ad6e433a95a6ab13e72d7c9366a4",
+   "bytes": 15474,
+   "kind": "json"
+  },
+  "reports/Weather_ColdSnap_Max.json": {
+   "sha256": "1fb54b1b75ebb3b233a74253f3e503b57d99e9ada3881197529e38920c4e8a43",
+   "bytes": 15296,
+   "kind": "json"
+  },
+  "reports/Kalshi_Attention_Timer.json": {
+   "sha256": "a2ce2bf1c8b52a2de374d760c858a92869ca1447cdbe21eba63d0ed3a459b111",
+   "bytes": 13718,
+   "kind": "json"
+  },
+  "reports/GOLD_Trend_GLD.json": {
+   "sha256": "7b21cc1553b779f0f1dc175ab18e343352ceb4c209510d2842eb2aff2adaa17d",
+   "bytes": 15020,
+   "kind": "json"
+  },
+  "reports/PinePilot_EMA_Cross.json": {
+   "sha256": "4c37c843aca99b834164ff4dc30b388e349c87d83146d13984e9955d92c9dc7b",
+   "bytes": 15658,
+   "kind": "json"
+  },
+  "reports/LeapMaxLever_Momentum.json": {
+   "sha256": "b2900cb3ce630d38e457e10402a5fda43a562c2cb74fa062b25b3f9771abe7c1",
+   "bytes": 15189,
+   "kind": "json"
+  },
+  "reports/YieldCurve_Rotator.json": {
+   "sha256": "fcf9157049bd80cde297fca8604ac66f9cf1cd900c10a30973650897f33860ba",
+   "bytes": 15112,
+   "kind": "json"
+  },
+  "reports/InjuryFeed_Forward.json": {
+   "sha256": "ba6112554cc490a0ec8fa876b0bc26c5b46baf55dde20b7e07534593820a98e3",
+   "bytes": 13792,
+   "kind": "json"
+  },
+  "market_report.json": {
+   "sha256": "3df0877bdfa93a338cf26b1f4ec9874334bd08f374f55dff2f5d7d5e1b4b8815",
+   "bytes": 2957,
+   "kind": "json"
+  },
+  "factor_report.json": {
+   "sha256": "75b6ffd39d8094a0f19a89f47420efeb04dfa095fd8c74e68fd74b7af1cec29f",
+   "bytes": 1394,
+   "kind": "json"
+  },
+  "leaderboard.json": {
+   "sha256": "8fd74e4fe09abdbb4faf4bc50f5425fd48579a7762d87e943e60a9cbdf7e078d",
+   "bytes": 7521,
+   "kind": "json"
+  },
+  "irregularities.json": {
+   "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+   "bytes": 3,
+   "kind": "json"
+  },
+  "participants.json": {
+   "sha256": "41b104379bd9bbd67e88fdca1ad2c50637ad4ef8bab62f0f7cf3056761158ccf",
+   "bytes": 24072,
+   "kind": "json"
+  },
+  "masterfeed.json": {
+   "sha256": "306c3a52f899aa1eb6fad8b26da5eec71c9518aa779009675913059a06f0a290",
+   "bytes": 35291,
+   "kind": "json"
+  },
+  "data_provenance.json": {
+   "sha256": "139727d0f20f0db6653896bef1ace30b799a767daef3d8f31d84549cabc67dce",
+   "bytes": 26648,
+   "kind": "json"
+  },
+  "signal_status.json": {
+   "sha256": "fcc34ff58fe9aa6baa7e93f9c2fccea7d0c6c892bd034fb60edd1f24d11a1ea1",
+   "bytes": 10327,
+   "kind": "json"
+  },
+  "ledger_manifest.json": {
+   "sha256": "a09407b73a0f824ba34e5dfdbe05bd5944b716fce24393698141c423982a5c44",
+   "bytes": 507,
+   "kind": "json"
+  },
+  "verification.json": {
+   "sha256": "ec53d6d12b0ab36e341e3c31339c8cac8ef15ae210651e28dc789e118507d840",
+   "bytes": 10186,
+   "kind": "json"
+  }
+ },
+ "season": "season2",
+ "label": "stress-thinliquidity",
+ "seed": 20260918,
+ "competition": {
+  "name": "StockPaperSim MasterFeed Invitational",
+  "season": "Season 2 (2025-2026) - real collected prices",
+  "start": "2025-09-17",
+  "end": "2026-09-16",
+  "starting_cash": 100000.0,
+  "rank_metric": "total_return_pct"
+ },
+ "config_fingerprint": "643a6b0981d789f1",
+ "winner": "@FDACatalyst_Rider",
+ "top3": [
+  {
+   "rank": 1,
+   "username": "@FDACatalyst_Rider",
+   "total_return_pct": 74.1972
+  },
+  {
+   "rank": 2,
+   "username": "@LeapMaxLever_Momentum",
+   "total_return_pct": 38.1349
+  },
+  {
+   "rank": 3,
+   "username": "@GOLD_Trend_GLD",
+   "total_return_pct": 32.8158
+  }
+ ],
+ "market": {
+  "window": {
+   "start": "2025-09-17",
+   "end": "2026-09-16",
+   "sessions": 251
+  },
+  "spx_return_pct": 14.415,
+  "spx_annualised_vol_pct": 12.901,
+  "spy_price_return_pct": 14.25,
+  "vix": {
+   "mean": 18.16,
+   "max": 31.05,
+   "min": 13.47,
+   "max_date": "2026-03-27",
+   "sessions_above_25": 16,
+   "sessions_above_30": 2
+  },
+  "max_drawdown": {
+   "max_drawdown_pct": -9.0975,
+   "max_drawdown_usd": -634.88,
+   "peak_date": "2026-01-27",
+   "peak_equity": 6978.6,
+   "trough_date": "2026-03-30",
+   "trough_equity": 6343.72,
+   "recovery_date": "2026-04-15",
+   "sessions_underwater": 11,
+   "never_recovered": false
+  },
+  "drawdown_episodes": [
+   {
+    "peak_date": "2026-01-27",
+    "trough_date": "2026-03-30",
+    "recovery_date": "2026-04-15",
+    "depth_pct": -9.098,
+    "sessions_peak_to_trough": 43,
+    "sessions_trough_to_recovery": 11,
+    "rebound_pct": 10.707
+   },
+   {
+    "peak_date": "2025-10-28",
+    "trough_date": "2025-11-20",
+    "recovery_date": "2025-12-11",
+    "depth_pct": -5.11,
+    "sessions_peak_to_trough": 17,
+    "sessions_trough_to_recovery": 14,
+    "rebound_pct": 5.54
+   },
+   {
+    "peak_date": "2026-06-02",
+    "trough_date": "2026-06-10",
+    "recovery_date": "2026-08-04",
+    "depth_pct": -4.505,
+    "sessions_peak_to_trough": 6,
+    "sessions_trough_to_recovery": 37,
+    "rebound_pct": 6.461
+   }
+  ],
+  "worst_sessions": [
+   {
+    "date": "2025-10-09",
+    "spx_return_pct": -2.711
+   },
+   {
+    "date": "2026-06-04",
+    "spx_return_pct": -2.645
+   },
+   {
+    "date": "2026-01-16",
+    "spx_return_pct": -2.063
+   },
+   {
+    "date": "2026-03-25",
+    "spx_return_pct": -1.741
+   },
+   {
+    "date": "2026-03-26",
+    "spx_return_pct": -1.672
+   }
+  ],
+  "best_sessions": [
+   {
+    "date": "2026-03-30",
+    "spx_return_pct": 2.913
+   },
+   {
+    "date": "2026-04-07",
+    "spx_return_pct": 2.508
+   },
+   {
+    "date": "2026-02-05",
+    "spx_return_pct": 1.97
+   },
+   {
+    "date": "2026-08-03",
+    "spx_return_pct": 1.79
+   },
+   {
+    "date": "2026-06-10",
+    "spx_return_pct": 1.752
+   }
+  ],
+  "up_sessions": 136,
+  "down_sessions": 114,
+  "cross_section": {
+   "best": [
+    {
+     "symbol": "MU",
+     "return_pct": 483.396
+    },
+    {
+     "symbol": "XBI",
+     "return_pct": 64.476
+    },
+    {
+     "symbol": "JNJ",
+     "return_pct": 51.468
+    }
+   ],
+   "worst": [
+    {
+     "symbol": "GENI",
+     "return_pct": -46.047
+    },
+    {
+     "symbol": "SRAD",
+     "return_pct": -56.25
+    },
+    {
+     "symbol": "FLUT",
+     "return_pct": -65.148
+    }
+   ],
+   "per_symbol_pct": {
+    "SPY": 14.25,
+    "QQQ": 19.206,
+    "IWM": 19.154,
+    "GLD": 15.357,
+    "UNG": -21.634,
+    "XLU": -1.783,
+    "XBI": 64.476,
+    "IBB": 43.607,
+    "TLT": -10.481,
+    "DKNG": -43.254,
+    "FLUT": -65.148,
+    "PENN": -6.501,
+    "SRAD": -56.25,
+    "GENI": -46.047,
+    "AAPL": 39.58,
+    "MSFT": -3.681,
+    "NVDA": 22.312,
+    "JPM": 12.85,
+    "XOM": 42.414,
+    "JNJ": 51.468,
+    "PG": -6.979,
+    "TSLA": -15.07,
+    "MU": 483.396,
+    "T": -11.831
+   },
+   "dispersion_stdev_pp": 103.82,
+   "spread_best_minus_worst_pp": 548.54
+  }
+ },
+ "factors": {
+  "market": {
+   "factor": "MKT",
+   "description": "S&P 500 index (real FRED SP500 series)",
+   "cumulative_return_pct": 14.304,
+   "mean_daily_bps": 5.66,
+   "annualised_vol_pct": 12.88,
+   "sharpe": 1.107
+  },
+  "momentum": {
+   "factor": "MOM",
+   "description": "long top tercile / short bottom tercile by 63-session return skipping the last 5, rebalanced monthly",
+   "cumulative_return_pct": 22.094,
+   "mean_daily_bps": 8.36,
+   "annualised_vol_pct": 14.25,
+   "sharpe": 1.478
+  },
+  "reversal": {
+   "factor": "REV",
+   "description": "short top tercile / long bottom tercile by 5-session return, rebalanced weekly",
+   "cumulative_return_pct": -4.851,
+   "mean_daily_bps": -1.63,
+   "annualised_vol_pct": 13.32,
+   "sharpe": -0.308
+  },
+  "beta": {
+   "factor": "BETA",
+   "description": "long high-declared-beta tercile, short low",
+   "cumulative_return_pct": 8.32,
+   "mean_daily_bps": 3.65,
+   "annualised_vol_pct": 15.38,
+   "sharpe": 0.599
+  },
+  "low_vol": {
+   "factor": "VOL",
+   "description": "long low realised-vol tercile, short high (the low-volatility anomaly)",
+   "cumulative_return_pct": 5.417,
+   "mean_daily_bps": 2.43,
+   "annualised_vol_pct": 12.93,
+   "sharpe": 0.474
+  },
+  "liquidity": {
+   "factor": "LIQ",
+   "description": "long illiquid tercile by dollar volume, short liquid",
+   "cumulative_return_pct": -28.934,
+   "mean_daily_bps": -13.1,
+   "annualised_vol_pct": 15.92,
+   "sharpe": -2.073
+  }
+ },
+ "timing": {
+  "started_utc": "2026-09-18T03:42:06Z",
+  "finished_utc": "2026-09-18T03:42:07Z",
+  "elapsed_seconds": 1.12
+ },
+ "irregularity_count": 0,
+ "data_sources": {
+  "market": {
+   "SPY": {
+    "file": "data/real/prices/yahoo/SPY.json",
+    "sha256": "7353863ce2b1a9438c1be2922e0aef571e3813bf0ff57dbbf11b33c28a864fbc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 60182500,
+    "beta_vs_fred_spx": 1.0362,
+    "sigma_idio_annual_estimated": 0.0151,
+    "first_close": 562.840027,
+    "last_close": 754.049988
+   },
+   "QQQ": {
+    "file": "data/real/prices/yahoo/QQQ.json",
+    "sha256": "e8cfe01a120c538da1320474ba43d37432e8ebb3387eb489dc22eba738ffd85a",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 39072300,
+    "beta_vs_fred_spx": 1.2177,
+    "sigma_idio_annual_estimated": 0.0557,
+    "first_close": 473.23999,
+    "last_close": 704.719971
+   },
+   "IWM": {
+    "file": "data/real/prices/yahoo/IWM.json",
+    "sha256": "e64243e5cb1f476108f0b2a326759daaf5c078330e63d0a97197784a4b2f2ba7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 9,
+    "splits_in_window": 0,
+    "median_volume_warmup": 28679400,
+    "beta_vs_fred_spx": 1.0746,
+    "sigma_idio_annual_estimated": 0.1129,
+    "first_close": 217.610001,
+    "last_close": 283.920013
+   },
+   "GLD": {
+    "file": "data/real/prices/yahoo/GLD.json",
+    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8386300,
+    "beta_vs_fred_spx": 0.0098,
+    "sigma_idio_annual_estimated": 0.1752,
+    "first_close": 238.660004,
+    "last_close": 391.73999
+   },
+   "UNG": {
+    "file": "data/real/prices/yahoo/UNG.json",
+    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7146500,
+    "beta_vs_fred_spx": 0.1868,
+    "sigma_idio_annual_estimated": 0.5976,
+    "first_close": 14.86,
+    "last_close": 10.36
+   },
+   "XLU": {
+    "file": "data/real/prices/yahoo/XLU.json",
+    "sha256": "14b54e4f6f4c8f304dd74a921163ea2ceb3b09c2fca6a585e9368497d2b68e9b",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 1,
+    "median_volume_warmup": 20680400,
+    "beta_vs_fred_spx": 0.3987,
+    "sigma_idio_annual_estimated": 0.153,
+    "first_close": 39.57,
+    "last_close": 41.32
+   },
+   "XBI": {
+    "file": "data/real/prices/yahoo/XBI.json",
+    "sha256": "51e3a7268333197c1fd3996d0ccf7e0247fc9f5d8ab22ca19c8137c6dfa5e654",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 7,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8979600,
+    "beta_vs_fred_spx": 0.9617,
+    "sigma_idio_annual_estimated": 0.207,
+    "first_close": 101.279999,
+    "last_close": 154.179993
+   },
+   "IBB": {
+    "file": "data/real/prices/yahoo/IBB.json",
+    "sha256": "1e1d0b457ea2d7ac5c34635d502fd444d1bf308bb3865c58eaf0286f33e0a86c",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1351300,
+    "beta_vs_fred_spx": 0.808,
+    "sigma_idio_annual_estimated": 0.1757,
+    "first_close": 148.089996,
+    "last_close": 202.399994
+   },
+   "TLT": {
+    "file": "data/real/prices/yahoo/TLT.json",
+    "sha256": "d823b49f9ceafa130626634af73ca48f96ee2ec142fa7c454cd3e9b95d78a7cd",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 24,
+    "splits_in_window": 0,
+    "median_volume_warmup": 35645800,
+    "beta_vs_fred_spx": 0.0711,
+    "sigma_idio_annual_estimated": 0.1344,
+    "first_close": 101.330002,
+    "last_close": 80.879997
+   },
+   "DKNG": {
+    "file": "data/real/prices/yahoo/DKNG.json",
+    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8211300,
+    "beta_vs_fred_spx": 1.2456,
+    "sigma_idio_annual_estimated": 0.3867,
+    "first_close": 38.240002,
+    "last_close": 24.33
+   },
+   "FLUT": {
+    "file": "data/real/prices/yahoo/FLUT.json",
+    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1685100,
+    "beta_vs_fred_spx": 1.064,
+    "sigma_idio_annual_estimated": 0.2996,
+    "first_close": 224.339996,
+    "last_close": 97.559998
+   },
+   "PENN": {
+    "file": "data/real/prices/yahoo/PENN.json",
+    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3509300,
+    "beta_vs_fred_spx": 1.5148,
+    "sigma_idio_annual_estimated": 0.4053,
+    "first_close": 20.02,
+    "last_close": 17.690001
+   },
+   "SRAD": {
+    "file": "data/real/prices/yahoo/SRAD.json",
+    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1079600,
+    "beta_vs_fred_spx": 0.9268,
+    "sigma_idio_annual_estimated": 0.3644,
+    "first_close": 11.79,
+    "last_close": 13.23
+   },
+   "GENI": {
+    "file": "data/real/prices/yahoo/GENI.json",
+    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3101800,
+    "beta_vs_fred_spx": 1.1936,
+    "sigma_idio_annual_estimated": 0.4525,
+    "first_close": 7.55,
+    "last_close": 6.62
+   },
+   "AAPL": {
+    "file": "data/real/prices/yahoo/AAPL.json",
+    "sha256": "38776602bb60f2b6440d84489175111e0ceac108b03b0ec225b6a602283f9b5c",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 47184000,
+    "beta_vs_fred_spx": 1.2994,
+    "sigma_idio_annual_estimated": 0.2126,
+    "first_close": 216.320007,
+    "last_close": 332.410004
+   },
+   "MSFT": {
+    "file": "data/real/prices/yahoo/MSFT.json",
+    "sha256": "2ac6726c2bd212f8485645dbbe15ecd7a83c4e279933c1a6e19e76d258d56ee9",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19619200,
+    "beta_vs_fred_spx": 0.9612,
+    "sigma_idio_annual_estimated": 0.1698,
+    "first_close": 431.339996,
+    "last_close": 490.299988
+   },
+   "NVDA": {
+    "file": "data/real/prices/yahoo/NVDA.json",
+    "sha256": "c5dc7ffae557c3b0844cf8a4cbe25ef661149e1d64b23e77c6185f489eeb8613",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 219176600,
+    "beta_vs_fred_spx": 1.9284,
+    "sigma_idio_annual_estimated": 0.3397,
+    "first_close": 116.779999,
+    "last_close": 213.899994
+   },
+   "JPM": {
+    "file": "data/real/prices/yahoo/JPM.json",
+    "sha256": "34ff4cdaeda7881ecaa0d0154c76959dc3ae237d6556f6aa3b550a02398ff8d9",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8259900,
+    "beta_vs_fred_spx": 1.0567,
+    "sigma_idio_annual_estimated": 0.185,
+    "first_close": 207.860001,
+    "last_close": 348.920013
+   },
+   "XOM": {
+    "file": "data/real/prices/yahoo/XOM.json",
+    "sha256": "08094b394bf9ba83cc1b8e8276807f3820e9beadd50bac06010d12d7a495cd62",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 14899500,
+    "beta_vs_fred_spx": 0.5349,
+    "sigma_idio_annual_estimated": 0.2162,
+    "first_close": 112.709999,
+    "last_close": 163.320007
+   },
+   "JNJ": {
+    "file": "data/real/prices/yahoo/JNJ.json",
+    "sha256": "79799cbff6bb5714899a40b68d6df4ab4d16a51d016a9de2521c655886f64a19",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7853100,
+    "beta_vs_fred_spx": 0.0475,
+    "sigma_idio_annual_estimated": 0.1912,
+    "first_close": 166.990005,
+    "last_close": 267.279999
+   },
+   "PG": {
+    "file": "data/real/prices/yahoo/PG.json",
+    "sha256": "5fc450dce9e23040193beae0a7a77647d6aee6bfbac0d6ad7fdb8cf75828e8cc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 6983900,
+    "beta_vs_fred_spx": 0.1897,
+    "sigma_idio_annual_estimated": 0.181,
+    "first_close": 177.240005,
+    "last_close": 147.020004
+   },
+   "TSLA": {
+    "file": "data/real/prices/yahoo/TSLA.json",
+    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 89441500,
+    "beta_vs_fred_spx": 2.4172,
+    "sigma_idio_annual_estimated": 0.5472,
+    "first_close": 226.779999,
+    "last_close": 358.079987
+   },
+   "MU": {
+    "file": "data/real/prices/yahoo/MU.json",
+    "sha256": "fe227afcb5ad8160b214b8775c154b0e976be03cdd8d9a3e34350b0547b791b8",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19746200,
+    "beta_vs_fred_spx": 2.1341,
+    "sigma_idio_annual_estimated": 0.458,
+    "first_close": 87.18,
+    "last_close": 926.549988
+   },
+   "T": {
+    "file": "data/real/prices/yahoo/T.json",
+    "sha256": "70a453ae44c18817aad52121eee5095de00893d1d20262aa65e1444ab361db39",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 32266200,
+    "beta_vs_fred_spx": 0.1491,
+    "sigma_idio_annual_estimated": 0.2256,
+    "first_close": 22.27,
+    "last_close": 25.860001
+   }
+  },
+  "fred": null,
+  "collected_from": "data/real (see data/real/collection_manifest.json)"
+ },
+ "ledger_summary": {
+  "participant": "ALL",
+  "fill_count": 772,
+  "order_days": 238,
+  "round_trips_closed": 358,
+  "round_trips_open": 0,
+  "gross_pnl_usd": 150098.2408,
+  "fees_usd": 1246.7718,
+  "net_pnl_usd": 148851.469,
+  "win_rate_pct": 56.15,
+  "average_holding_sessions": 53.363,
+  "total_notional_usd": 20852330.98,
+  "total_explicit_cost_usd": 1246.7718,
+  "total_modelled_execution_cost_usd": 5650.8194,
+  "median_participation_pct": 0.00032,
+  "max_participation_pct": 0.22894,
+  "slippage_vs_open_bps_mean": -0.841,
+  "slippage_vs_close_bps_mean": -7.231,
+  "symbols": [
+   "DKNG",
+   "FLUT",
+   "GLD",
+   "IBB",
+   "IWM",
+   "PENN",
+   "QQQ",
+   "SPY",
+   "TLT",
+   "UNG",
+   "XBI",
+   "XLU"
+  ]
+ },
+ "ledger": {
+  "fills": 772,
+  "round_trips": 358,
+  "net_pnl_usd": 148851.469,
+  "digest_sha256": "0f7061b9c761f5dbb1a9b0e01c8f51d6cae4663b5526dc311a970c02ee92cec3",
+  "files": {
+   "ledger_fills.jsonl": {
+    "sha256": "09dac5d87eb44c515fe872112e9860500cd87ce9fd0b836d07b3552b4e3bcb3d",
+    "bytes": 940209
+   },
+   "ledger_trips.jsonl": {
+    "sha256": "706d7da33ece31341e24663d0826d56fbf52a6aec6077c1d3810af64374d040e",
+    "bytes": 182463
+   },
+   "ledger_summary.json": {
+    "sha256": "bfa06cbb5e9320ffe106b8143319744a58049d8e96976cd4a1446cd7c1d27fad",
+    "bytes": 664
+   },
+   "ledger_fills.csv": {
+    "sha256": "400bb2d7261280b595e834f343cf5466e1d427f155b0df1eed0bde6ed2f21f0d",
+    "bytes": 313946
+   }
+  }
+ },
+ "signal_availability": {
+  "fda_orig_30d": "AVAILABLE",
+  "fda_orig_z": "AVAILABLE",
+  "fda_all_30d": "AVAILABLE",
+  "insider_buys_30d": "MISSING",
+  "insider_ceo_buys_30d": "MISSING",
+  "insider_buy_ratio_30d": "MISSING",
+  "mlb_games_7d": "AVAILABLE",
+  "mlb_home_win_rate_30d": "AVAILABLE",
+  "mlb_upsets_7d": "AVAILABLE",
+  "weather_cold_anomaly_10d": "AVAILABLE",
+  "weather_precip_30d_in": "AVAILABLE",
+  "kalshi_settled_30d": "AVAILABLE",
+  "kalshi_volume_30d": "MISSING",
+  "fred_slope_bps": "AVAILABLE",
+  "fred_slope_change_21d": "AVAILABLE",
+  "gold_close": "AVAILABLE",
+  "spy_dollar_volume_20d": "AVAILABLE",
+  "nfl_injury_report": "MISSING",
+  "nba_injury_report": "MISSING",
+  "insider_buys_30d::AAPL": "MISSING",
+  "insider_buys_30d::DKNG": "MISSING",
+  "insider_buys_30d::FLUT": "MISSING",
+  "insider_buys_30d::GENI": "MISSING",
+  "insider_buys_30d::GLD": "MISSING",
+  "insider_buys_30d::IBB": "MISSING",
+  "insider_buys_30d::IWM": "MISSING",
+  "insider_buys_30d::JNJ": "MISSING",
+  "insider_buys_30d::JPM": "MISSING",
+  "insider_buys_30d::MSFT": "MISSING",
+  "insider_buys_30d::MU": "MISSING",
+  "insider_buys_30d::NVDA": "MISSING",
+  "insider_buys_30d::PENN": "MISSING",
+  "insider_buys_30d::PG": "MISSING",
+  "insider_buys_30d::QQQ": "MISSING",
+  "insider_buys_30d::SPY": "MISSING",
+  "insider_buys_30d::SRAD": "MISSING",
+  "insider_buys_30d::T": "MISSING",
+  "insider_buys_30d::TLT": "MISSING",
+  "insider_buys_30d::TSLA": "MISSING",
+  "insider_buys_30d::UNG": "MISSING",
+  "insider_buys_30d::XBI": "MISSING",
+  "insider_buys_30d::XLU": "MISSING",
+  "insider_buys_30d::XOM": "MISSING",
+  "insider_ceo_buys_30d::AAPL": "MISSING",
+  "insider_ceo_buys_30d::DKNG": "MISSING",
+  "insider_ceo_buys_30d::FLUT": "MISSING",
+  "insider_ceo_buys_30d::GENI": "MISSING",
+  "insider_ceo_buys_30d::GLD": "MISSING",
+  "insider_ceo_buys_30d::IBB": "MISSING",
+  "insider_ceo_buys_30d::IWM": "MISSING",
+  "insider_ceo_buys_30d::JNJ": "MISSING",
+  "insider_ceo_buys_30d::JPM": "MISSING",
+  "insider_ceo_buys_30d::MSFT": "MISSING",
+  "insider_ceo_buys_30d::MU": "MISSING",
+  "insider_ceo_buys_30d::NVDA": "MISSING",
+  "insider_ceo_buys_30d::PENN": "MISSING",
+  "insider_ceo_buys_30d::PG": "MISSING",
+  "insider_ceo_buys_30d::QQQ": "MISSING",
+  "insider_ceo_buys_30d::SPY": "MISSING",
+  "insider_ceo_buys_30d::SRAD": "MISSING",
+  "insider_ceo_buys_30d::T": "MISSING",
+  "insider_ceo_buys_30d::TLT": "MISSING",
+  "insider_ceo_buys_30d::TSLA": "MISSING",
+  "insider_ceo_buys_30d::UNG": "MISSING",
+  "insider_ceo_buys_30d::XBI": "MISSING",
+  "insider_ceo_buys_30d::XLU": "MISSING",
+  "insider_ceo_buys_30d::XOM": "MISSING"
+ }
+}

@@ -1,104 +1,104 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-primary-seed20260918",
- "created_utc": "2026-09-18T02:35:59Z",
- "finalised_utc": "2026-09-18T02:36:00Z",
+ "created_utc": "2026-09-18T03:42:03Z",
+ "finalised_utc": "2026-09-18T03:42:04Z",
  "code": {
   "git": {
-   "commit": "8287b95228ecfdece642f19042bf489d6e6ffe3c",
+   "commit": "a3039f60e4942f6122ba6d344db9192e20acb30c",
    "branch": "arena/01a0b254-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
   "python_module_hashes": {
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
-   "sim/analytics.py": "fe474d5e5f13e91d047b8d3f3791f861887389279f6fbf65cb8383c9b7dbb001",
-   "sim/calendar.py": "aca4c539837ab6ef545bae63a8160d5824cb04fe89a5903a88900164e6f5df16",
-   "sim/cli.py": "60122083031b2bdaba0a1a70360ee5ddce4fe57259376ed39c20c7856a8bc409",
+   "sim/analytics.py": "3d7a209133268656f72ebdf9c388e63703566cdc169c727cb71ea0c05183e9a4",
+   "sim/calendar.py": "250bfee6820695c3bf715a13c097356f08eea5d0bed58a9bc95af3daf9f432da",
+   "sim/cli.py": "447c743f7ec03f4ce0ea08942fa6f73224f9fb201ffbbbbdfd7cace0f0ba1bb7",
    "sim/config.py": "e5ef91ff94e5bd24488233ebd5b43a740495f69eab9337daf06c1bdc05d87110",
    "sim/engine.py": "e552a725f6417b8c2b6ca0dd4f5eff9e1eb7ede48205a7fb326f21c9c30860f3",
-   "sim/ledger.py": "cecc54b0690c03feee4c4491377d3035f43f6d2cbd86a4d49f555ba0b1e4998f",
+   "sim/ledger.py": "df365e11d39aae63f98966e108d9ae32f55f9f3651c0f1743f400e91d216b903",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
-   "sim/masterfeed.py": "9522608404fde04a83326a443a14fee10f1b319246b8b323ac6d734ffec4b1c9",
+   "sim/masterfeed.py": "2a1747a9dba58eadd0d6dfe6a620331d01cef808717edf5b9dbbc149125fb3e9",
    "sim/memory.py": "c7b2390f379b220dac8ffd4737b07edd2ed69d940f270fa43c18755988c5452e",
    "sim/microstructure.py": "cb4d849f3d4e91172d93ed8d83fb47ce504ef51a6d81bf8d8b78fcbd49569f44",
    "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
-   "sim/realdata.py": "2d70738007144fa02baa3d808435d61d86dea4931590e430642cca8acf012fd5",
-   "sim/season2.py": "758a35181a7ae9693856331a471efdc5fa7a111278c4adce328236e064dd2d9f",
+   "sim/realdata.py": "e50b3e809644c1ba8985cd031f440250af9ab7d443960d8d6393fbfb085942fe",
+   "sim/season2.py": "6f0c4d6b91fefbc90dcc130777ce7123d7d519ab710ddbecdf66ff6e8288ee4e",
    "sim/strategies.py": "c428738ac9203b5c83273499f167d62274432966fb18b8faf9531f8856cebf73",
-   "sim/strategies_mf.py": "0306abfaf16a7ee99e3cde0a409f263357258b2a97045ae01c832e6099984afa",
+   "sim/strategies_mf.py": "50d227d8c1efe6d929907742b4c0386f499c067f6024e422a2f80b537578be5a",
    "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
   }
  },
  "files": {
   "reports/FDACatalyst_Rider.json": {
-   "sha256": "c729b04435c9d5249ed46ec1d90b42cf4638fd20f34da4e00477b84d62c5e0cd",
-   "bytes": 15203,
+   "sha256": "6bbe50402d7ade1d84b36936ae654091703c2e04f9f7ddcb2d5f18273fe1def7",
+   "bytes": 15163,
    "kind": "json"
   },
   "reports/FDA_ClusterFade.json": {
-   "sha256": "deff7f2ee7ddd736256d567b687eff9301180414ef7818aa866317abe28afc2b",
-   "bytes": 14970,
+   "sha256": "10f6b7e6e0dd698e85ce46a22afebc9fdecf70db92f45adb2b5fdf9b21e5ccd2",
+   "bytes": 15106,
    "kind": "json"
   },
   "reports/InsiderCopycat_Max.json": {
-   "sha256": "8d09e159cbc3338298c713ac5832e91c90a8a6f15d9a787a7cb5a625d37ebf7c",
-   "bytes": 13595,
+   "sha256": "158153f25aa96deb9f563ca87e0d363bb25918c6a0fbf3cb945d5dc9d25cdfb2",
+   "bytes": 13979,
    "kind": "json"
   },
   "reports/InsiderCluster_Alpha.json": {
-   "sha256": "3de17ba2962730a85feec924185fc232130e5cbeb980392255f26b7f25fb3272",
-   "bytes": 13420,
+   "sha256": "a823254e27a9dfd61d902aa3a3e79508a9f058870c17b8d04faef10fe340e6df",
+   "bytes": 13804,
    "kind": "json"
   },
   "reports/CEO_CFO_Conviction.json": {
-   "sha256": "dfbbc9912f1347659edf7fb06b8d2734a4a460c0ba035e99defd280c7165f2fb",
-   "bytes": 13542,
+   "sha256": "ad2dc18abfff60ceeb9c000c01274a6a11607e4913812abf5e5e03343a25f06b",
+   "bytes": 13926,
    "kind": "json"
   },
   "reports/MLB_Attention_Momo.json": {
-   "sha256": "530b9332cc024c3692ce5bd82635714cf992a01c8b7a89548be76d9d684ee84b",
-   "bytes": 13315,
+   "sha256": "2fd3fd76b51c6a2bdbf35c45c9cd627576962e2ceb3476faee9f70f29e14c191",
+   "bytes": 15701,
    "kind": "json"
   },
   "reports/MLB_Upset_Short.json": {
-   "sha256": "05f7d88d2653ccdfe9c63b7eb9679d2cef3e17843bd2ae573733942071c498a1",
-   "bytes": 13228,
+   "sha256": "31b2c4c79c929567c5c55ab698de02bd4ce67bf29270ffcfaac9ee5b159e719a",
+   "bytes": 15470,
    "kind": "json"
   },
   "reports/Weather_ColdSnap_Max.json": {
-   "sha256": "80dd0a03ff3043fae3d7e6976d6fc1b6b5bacb6107a6b5ef53341d80d7ba9949",
-   "bytes": 15295,
+   "sha256": "967e879b0d54e579a71b4438b8f86f8dfc192ca94b27a0121d9633c5f286ef64",
+   "bytes": 15293,
    "kind": "json"
   },
   "reports/Kalshi_Attention_Timer.json": {
-   "sha256": "2c44ad1c2dde3d7be2edbdbadd0f8384487e639418762bdcae6e6e728d2cf87b",
-   "bytes": 13334,
+   "sha256": "a2ce2bf1c8b52a2de374d760c858a92869ca1447cdbe21eba63d0ed3a459b111",
+   "bytes": 13718,
    "kind": "json"
   },
   "reports/GOLD_Trend_GLD.json": {
-   "sha256": "4f9143825a8c03f32d66ad6625e9cebf9553d37773dc8561bb9a417a9f032605",
-   "bytes": 15021,
+   "sha256": "b53b5788572fb0c5f6420dd369910eb24f5915f17733944e418b727963791510",
+   "bytes": 15019,
    "kind": "json"
   },
   "reports/PinePilot_EMA_Cross.json": {
-   "sha256": "193d9bfde8ebbe3a3f6962fb058e7c337f6b1b6ca6edfb2d7795d7d7a68aea06",
-   "bytes": 15660,
+   "sha256": "4c37c843aca99b834164ff4dc30b388e349c87d83146d13984e9955d92c9dc7b",
+   "bytes": 15658,
    "kind": "json"
   },
   "reports/LeapMaxLever_Momentum.json": {
-   "sha256": "a8f447ca1f79cdacc88ea0d96781ed6799aec350c6c817f922cbee348ce818b9",
-   "bytes": 15191,
+   "sha256": "b2900cb3ce630d38e457e10402a5fda43a562c2cb74fa062b25b3f9771abe7c1",
+   "bytes": 15189,
    "kind": "json"
   },
   "reports/YieldCurve_Rotator.json": {
-   "sha256": "71258d46769b0ee2ae16b17c48ae4ed9a037f423c6e614eecbf1e4e77ea179da",
-   "bytes": 15118,
+   "sha256": "2c91a89d38fa5188e74b581ce226a4f4d47377f7dd7e3d344ce6afbf42025097",
+   "bytes": 15116,
    "kind": "json"
   },
   "reports/InjuryFeed_Forward.json": {
-   "sha256": "5fd144e92fbe63ccae96c4eb93dab2294c34d8026c12efad395b6b0b6f2d737d",
-   "bytes": 13408,
+   "sha256": "ba6112554cc490a0ec8fa876b0bc26c5b46baf55dde20b7e07534593820a98e3",
+   "bytes": 13792,
    "kind": "json"
   },
   "market_report.json": {
@@ -107,13 +107,13 @@
    "kind": "json"
   },
   "factor_report.json": {
-   "sha256": "3fd072fcfdd6925c7fd6f20e5d6b2954f18af63038444584b1ab8c291d6a1e86",
+   "sha256": "75b6ffd39d8094a0f19a89f47420efeb04dfa095fd8c74e68fd74b7af1cec29f",
    "bytes": 1394,
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "bfda1692fa91204e9416515b696988828880a3f9a4669ab959766cccb55583cf",
-   "bytes": 7390,
+   "sha256": "a31a2d445624a91669c9195fbc2c2f66816d4d13feeae2cfa1b4e65964266365",
+   "bytes": 7520,
    "kind": "json"
   },
   "irregularities.json": {
@@ -122,78 +122,83 @@
    "kind": "json"
   },
   "participants.json": {
-   "sha256": "52f0f79f2349d80c268ad1c2f6754c483c79e5d7876a266696ecc9c882edfc19",
-   "bytes": 23217,
+   "sha256": "41b104379bd9bbd67e88fdca1ad2c50637ad4ef8bab62f0f7cf3056761158ccf",
+   "bytes": 24072,
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "e07876eb27de8ab8de29e25b26287086e0b162069eab1ec6660ffc1bfbc20548",
-   "bytes": 16672,
+   "sha256": "306c3a52f899aa1eb6fad8b26da5eec71c9518aa779009675913059a06f0a290",
+   "bytes": 35291,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "f2fe7642c63ea3c22a58747c0db88c718acad90d302923bb63e502b3d782a201",
-   "bytes": 18413,
+   "sha256": "139727d0f20f0db6653896bef1ace30b799a767daef3d8f31d84549cabc67dce",
+   "bytes": 26648,
+   "kind": "json"
+  },
+  "signal_status.json": {
+   "sha256": "fcc34ff58fe9aa6baa7e93f9c2fccea7d0c6c892bd034fb60edd1f24d11a1ea1",
+   "bytes": 10327,
    "kind": "json"
   },
   "signal_book.json": {
-   "sha256": "e812a91fc33f2a3adab2085df2493777219fe357fb92df1f786cb9996f31e7ff",
-   "bytes": 278044,
+   "sha256": "7eb795a5994bcae43631b8d0366b08696f45d92f4e2c3d6a661c704db5f772a5",
+   "bytes": 312498,
    "kind": "json"
   },
   "market_data.json": {
-   "sha256": "c3afd6346eb329cb460d63e1953f7845c9ed1a9b924958fda136f361b24967e0",
-   "bytes": 1260902,
+   "sha256": "4f200b850e97dd44582f87c065dde4f7d5fd8bdf680ecf69634460b9113395d1",
+   "bytes": 1277027,
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "7cd6569941d9c01f4cc1fd9b4b4d4ae60605b1c01d91d13d46e87d7be4beb09a",
+   "sha256": "3b4936efd2992fa8d10b88e8736958e2f9fca7daa39d96c2a94a970dd5771e31",
    "bytes": 507,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "8b844717affd5ce633ed341b0d201621a0866480aec3b6937c9f882bae10c18a",
-   "bytes": 7760,
+   "sha256": "0d676ec5aee06eb680346d925a5c8b8268620bbd960ee0cbc1abebde35990e11",
+   "bytes": 10196,
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "307a1b15a376806d7f0a93c43d4285c48711bb629b25093f6788e32a27ea3d97",
-   "bytes": 2033,
+   "sha256": "249a918cf5662530fba20c08bdfb18e0fce32d5f1d6675bfba7bde64b6122d52",
+   "bytes": 1510,
    "kind": "jsonl.gz",
-   "rows": 276
+   "rows": 168
   },
   "events/equity.jsonl.gz": {
-   "sha256": "3c1c62d36054a7e8550ad3dd9df1a7f3ff83e5b88314e22e530cde286548745f",
-   "bytes": 72870,
+   "sha256": "ee914b71a08164fe05f292e63d88ed818a6d0ada959e92522856517b4edee596",
+   "bytes": 75419,
    "kind": "jsonl.gz",
    "rows": 3514
   },
   "events/fills.jsonl.gz": {
-   "sha256": "41232b12db0def45dd97fa33aa0a205d46367ebfc8d87ee78673b8c06edcb180",
-   "bytes": 42563,
+   "sha256": "cf16a588e50dec84387092ce2fa9aff386f4f5bbde245cd74cb1a0b17fd33cf8",
+   "bytes": 59976,
    "kind": "jsonl.gz",
-   "rows": 598
+   "rows": 771
   },
   "events/margin.jsonl.gz": {
-   "sha256": "7a5f252aa9e12db8af83fe4959785f0d38af3e1e0fed1f2b8f266b1dacc65f89",
-   "bytes": 294,
+   "sha256": "88c9a00a11076de1adea3d755790080d86818fc82a7e42cd92b6b42a779bf9c8",
+   "bytes": 336,
    "kind": "jsonl.gz",
-   "rows": 6
+   "rows": 8
   },
   "events/orders.jsonl.gz": {
-   "sha256": "f7b5682573cde3f849ce13f9a174eb6ebb4f7e3eadacb8d65aa7ee1bff8011b7",
-   "bytes": 6017,
+   "sha256": "c682f6b33b53a6462dfc1326ef7dc24e6e7e07a08d0dc946cc25ae1e19fdd74c",
+   "bytes": 8004,
    "kind": "jsonl.gz",
-   "rows": 598
+   "rows": 771
   },
   "events/positions.jsonl.gz": {
-   "sha256": "8d7f1040f0720d2137ecaa978f4b09820c9c210d0cb01841b3375087d237f944",
-   "bytes": 60535,
+   "sha256": "ea0118252b03e34844bbe6de370ae3a814dc8c7ee805bf58974d325110391f52",
+   "bytes": 70036,
    "kind": "jsonl.gz",
-   "rows": 2348
+   "rows": 2729
   },
   "events/quotes.jsonl.gz": {
-   "sha256": "c5695748f7e88130da9752ce41e78314cd6cd084e6e895be2c641316e80f8dbc",
+   "sha256": "e6ba1b9f8c032962de7d01c535a1a4a28be34d5eb836d24be35b4ebc5d81ce7b",
    "bytes": 116692,
    "kind": "jsonl.gz",
    "rows": 6024
@@ -216,7 +221,7 @@
   {
    "rank": 1,
    "username": "@FDACatalyst_Rider",
-   "total_return_pct": 172.9248
+   "total_return_pct": 74.286
   },
   {
    "rank": 2,
@@ -419,10 +424,10 @@
   "beta": {
    "factor": "BETA",
    "description": "long high-declared-beta tercile, short low",
-   "cumulative_return_pct": 12.687,
-   "mean_daily_bps": 5.2,
-   "annualised_vol_pct": 14.88,
-   "sharpe": 0.88
+   "cumulative_return_pct": 8.32,
+   "mean_daily_bps": 3.65,
+   "annualised_vol_pct": 15.38,
+   "sharpe": 0.599
   },
   "low_vol": {
    "factor": "VOL",
@@ -442,9 +447,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-18T02:35:59Z",
-  "finished_utc": "2026-09-18T02:36:00Z",
-  "elapsed_seconds": 0.96
+  "started_utc": "2026-09-18T03:42:03Z",
+  "finished_utc": "2026-09-18T03:42:04Z",
+  "elapsed_seconds": 1.41
  },
  "irregularity_count": 0,
  "data_sources": {
@@ -454,278 +459,486 @@
     "sha256": "7353863ce2b1a9438c1be2922e0aef571e3813bf0ff57dbbf11b33c28a864fbc",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 60182500,
+    "beta_vs_fred_spx": 1.0362,
+    "sigma_idio_annual_estimated": 0.0151,
+    "first_close": 562.840027,
+    "last_close": 754.049988
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
     "sha256": "e8cfe01a120c538da1320474ba43d37432e8ebb3387eb489dc22eba738ffd85a",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 39072300,
+    "beta_vs_fred_spx": 1.2177,
+    "sigma_idio_annual_estimated": 0.0557,
+    "first_close": 473.23999,
+    "last_close": 704.719971
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
     "sha256": "e64243e5cb1f476108f0b2a326759daaf5c078330e63d0a97197784a4b2f2ba7",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 9,
+    "splits_in_window": 0,
+    "median_volume_warmup": 28679400,
+    "beta_vs_fred_spx": 1.0746,
+    "sigma_idio_annual_estimated": 0.1129,
+    "first_close": 217.610001,
+    "last_close": 283.920013
    },
    "GLD": {
     "file": "data/real/prices/yahoo/GLD.json",
     "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8386300,
+    "beta_vs_fred_spx": 0.0098,
+    "sigma_idio_annual_estimated": 0.1752,
+    "first_close": 238.660004,
+    "last_close": 391.73999
    },
    "UNG": {
     "file": "data/real/prices/yahoo/UNG.json",
     "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7146500,
+    "beta_vs_fred_spx": 0.1868,
+    "sigma_idio_annual_estimated": 0.5976,
+    "first_close": 14.86,
+    "last_close": 10.36
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
     "sha256": "14b54e4f6f4c8f304dd74a921163ea2ceb3b09c2fca6a585e9368497d2b68e9b",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 1,
+    "median_volume_warmup": 20680400,
+    "beta_vs_fred_spx": 0.3987,
+    "sigma_idio_annual_estimated": 0.153,
+    "first_close": 39.57,
+    "last_close": 41.32
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
     "sha256": "51e3a7268333197c1fd3996d0ccf7e0247fc9f5d8ab22ca19c8137c6dfa5e654",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 3
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 7,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8979600,
+    "beta_vs_fred_spx": 0.9617,
+    "sigma_idio_annual_estimated": 0.207,
+    "first_close": 101.279999,
+    "last_close": 154.179993
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
     "sha256": "1e1d0b457ea2d7ac5c34635d502fd444d1bf308bb3865c58eaf0286f33e0a86c",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1351300,
+    "beta_vs_fred_spx": 0.808,
+    "sigma_idio_annual_estimated": 0.1757,
+    "first_close": 148.089996,
+    "last_close": 202.399994
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
     "sha256": "d823b49f9ceafa130626634af73ca48f96ee2ec142fa7c454cd3e9b95d78a7cd",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 12
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 24,
+    "splits_in_window": 0,
+    "median_volume_warmup": 35645800,
+    "beta_vs_fred_spx": 0.0711,
+    "sigma_idio_annual_estimated": 0.1344,
+    "first_close": 101.330002,
+    "last_close": 80.879997
    },
    "DKNG": {
     "file": "data/real/prices/yahoo/DKNG.json",
     "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8211300,
+    "beta_vs_fred_spx": 1.2456,
+    "sigma_idio_annual_estimated": 0.3867,
+    "first_close": 38.240002,
+    "last_close": 24.33
    },
    "FLUT": {
     "file": "data/real/prices/yahoo/FLUT.json",
     "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1685100,
+    "beta_vs_fred_spx": 1.064,
+    "sigma_idio_annual_estimated": 0.2996,
+    "first_close": 224.339996,
+    "last_close": 97.559998
    },
    "PENN": {
     "file": "data/real/prices/yahoo/PENN.json",
     "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3509300,
+    "beta_vs_fred_spx": 1.5148,
+    "sigma_idio_annual_estimated": 0.4053,
+    "first_close": 20.02,
+    "last_close": 17.690001
    },
    "SRAD": {
     "file": "data/real/prices/yahoo/SRAD.json",
     "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1079600,
+    "beta_vs_fred_spx": 0.9268,
+    "sigma_idio_annual_estimated": 0.3644,
+    "first_close": 11.79,
+    "last_close": 13.23
    },
    "GENI": {
     "file": "data/real/prices/yahoo/GENI.json",
     "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3101800,
+    "beta_vs_fred_spx": 1.1936,
+    "sigma_idio_annual_estimated": 0.4525,
+    "first_close": 7.55,
+    "last_close": 6.62
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
     "sha256": "38776602bb60f2b6440d84489175111e0ceac108b03b0ec225b6a602283f9b5c",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 47184000,
+    "beta_vs_fred_spx": 1.2994,
+    "sigma_idio_annual_estimated": 0.2126,
+    "first_close": 216.320007,
+    "last_close": 332.410004
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
     "sha256": "2ac6726c2bd212f8485645dbbe15ecd7a83c4e279933c1a6e19e76d258d56ee9",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19619200,
+    "beta_vs_fred_spx": 0.9612,
+    "sigma_idio_annual_estimated": 0.1698,
+    "first_close": 431.339996,
+    "last_close": 490.299988
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
     "sha256": "c5dc7ffae557c3b0844cf8a4cbe25ef661149e1d64b23e77c6185f489eeb8613",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 219176600,
+    "beta_vs_fred_spx": 1.9284,
+    "sigma_idio_annual_estimated": 0.3397,
+    "first_close": 116.779999,
+    "last_close": 213.899994
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
     "sha256": "34ff4cdaeda7881ecaa0d0154c76959dc3ae237d6556f6aa3b550a02398ff8d9",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8259900,
+    "beta_vs_fred_spx": 1.0567,
+    "sigma_idio_annual_estimated": 0.185,
+    "first_close": 207.860001,
+    "last_close": 348.920013
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
     "sha256": "08094b394bf9ba83cc1b8e8276807f3820e9beadd50bac06010d12d7a495cd62",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 14899500,
+    "beta_vs_fred_spx": 0.5349,
+    "sigma_idio_annual_estimated": 0.2162,
+    "first_close": 112.709999,
+    "last_close": 163.320007
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
     "sha256": "79799cbff6bb5714899a40b68d6df4ab4d16a51d016a9de2521c655886f64a19",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7853100,
+    "beta_vs_fred_spx": 0.0475,
+    "sigma_idio_annual_estimated": 0.1912,
+    "first_close": 166.990005,
+    "last_close": 267.279999
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
     "sha256": "5fc450dce9e23040193beae0a7a77647d6aee6bfbac0d6ad7fdb8cf75828e8cc",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 6983900,
+    "beta_vs_fred_spx": 0.1897,
+    "sigma_idio_annual_estimated": 0.181,
+    "first_close": 177.240005,
+    "last_close": 147.020004
    },
    "TSLA": {
     "file": "data/real/prices/yahoo/TSLA.json",
     "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 0
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 89441500,
+    "beta_vs_fred_spx": 2.4172,
+    "sigma_idio_annual_estimated": 0.5472,
+    "first_close": 226.779999,
+    "last_close": 358.079987
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
     "sha256": "fe227afcb5ad8160b214b8775c154b0e976be03cdd8d9a3e34350b0547b791b8",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19746200,
+    "beta_vs_fred_spx": 2.1341,
+    "sigma_idio_annual_estimated": 0.458,
+    "first_close": 87.18,
+    "last_close": 926.549988
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
     "sha256": "70a453ae44c18817aad52121eee5095de00893d1d20262aa65e1444ab361db39",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
+    "url": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
-    "filled_sessions": 0,
-    "dividends_in_window": 4
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 32266200,
+    "beta_vs_fred_spx": 0.1491,
+    "sigma_idio_annual_estimated": 0.2256,
+    "first_close": 22.27,
+    "last_close": 25.860001
    }
   },
-  "fred": {
-   "spx": {
-    "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-    "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-    "source": "FRED SP500"
-   },
-   "vix": {
-    "file": "data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv",
-    "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553",
-    "source": "FRED VIXCLS"
-   }
-  },
+  "fred": null,
   "collected_from": "data/real (see data/real/collection_manifest.json)"
  },
  "ledger_summary": {
   "participant": "ALL",
-  "fill_count": 598,
-  "order_days": 234,
-  "round_trips_closed": 252,
+  "fill_count": 771,
+  "order_days": 238,
+  "round_trips_closed": 355,
   "round_trips_open": 0,
-  "gross_pnl_usd": 194579.5802,
-  "fees_usd": 472.4559,
-  "net_pnl_usd": 194107.1244,
-  "win_rate_pct": 77.78,
-  "average_holding_sessions": 81.54,
-  "total_notional_usd": 10376140.38,
-  "total_explicit_cost_usd": 472.4559,
-  "total_modelled_execution_cost_usd": 1823.3603,
-  "median_participation_pct": 0.00013,
-  "max_participation_pct": 0.2043,
-  "slippage_vs_open_bps_mean": -0.731,
-  "slippage_vs_close_bps_mean": -2.747,
+  "gross_pnl_usd": 151005.39,
+  "fees_usd": 1248.4265,
+  "net_pnl_usd": 149756.9635,
+  "win_rate_pct": 56.34,
+  "average_holding_sessions": 53.192,
+  "total_notional_usd": 20862489.23,
+  "total_explicit_cost_usd": 1248.4265,
+  "total_modelled_execution_cost_usd": 4846.8694,
+  "median_participation_pct": 0.00031,
+  "max_participation_pct": 0.22942,
+  "slippage_vs_open_bps_mean": -0.744,
+  "slippage_vs_close_bps_mean": -6.513,
   "symbols": [
+   "DKNG",
+   "FLUT",
    "GLD",
    "IBB",
    "IWM",
+   "PENN",
    "QQQ",
    "SPY",
    "TLT",
@@ -733,5 +946,98 @@
    "XBI",
    "XLU"
   ]
+ },
+ "ledger": {
+  "fills": 771,
+  "round_trips": 355,
+  "net_pnl_usd": 149756.9635,
+  "digest_sha256": "2adbced69d856193a44e16574456f411da486f867729dbc8b3e754a867fb9705",
+  "files": {
+   "ledger_fills.jsonl": {
+    "sha256": "f229e190b85e54509cb74f981e1d35ecb0f6a2d2f9f617b5d4f47ae5fe4ffa29",
+    "bytes": 938867
+   },
+   "ledger_trips.jsonl": {
+    "sha256": "170d2662fff0176068f64f553f22ba31aa76f2a3a9a514171dd9dbe3a249f121",
+    "bytes": 180900
+   },
+   "ledger_summary.json": {
+    "sha256": "0abb874c502c2fafe96047b346c5d9685edf839cdb2203d3f186c34d222509c4",
+    "bytes": 663
+   },
+   "ledger_fills.csv": {
+    "sha256": "9727078333a35b54757e737867cbb82e9f95ff285bb07bb32fdf1a86fddbb838",
+    "bytes": 313416
+   }
+  }
+ },
+ "signal_availability": {
+  "fda_orig_30d": "AVAILABLE",
+  "fda_orig_z": "AVAILABLE",
+  "fda_all_30d": "AVAILABLE",
+  "insider_buys_30d": "MISSING",
+  "insider_ceo_buys_30d": "MISSING",
+  "insider_buy_ratio_30d": "MISSING",
+  "mlb_games_7d": "AVAILABLE",
+  "mlb_home_win_rate_30d": "AVAILABLE",
+  "mlb_upsets_7d": "AVAILABLE",
+  "weather_cold_anomaly_10d": "AVAILABLE",
+  "weather_precip_30d_in": "AVAILABLE",
+  "kalshi_settled_30d": "AVAILABLE",
+  "kalshi_volume_30d": "MISSING",
+  "fred_slope_bps": "AVAILABLE",
+  "fred_slope_change_21d": "AVAILABLE",
+  "gold_close": "AVAILABLE",
+  "spy_dollar_volume_20d": "AVAILABLE",
+  "nfl_injury_report": "MISSING",
+  "nba_injury_report": "MISSING",
+  "insider_buys_30d::AAPL": "MISSING",
+  "insider_buys_30d::DKNG": "MISSING",
+  "insider_buys_30d::FLUT": "MISSING",
+  "insider_buys_30d::GENI": "MISSING",
+  "insider_buys_30d::GLD": "MISSING",
+  "insider_buys_30d::IBB": "MISSING",
+  "insider_buys_30d::IWM": "MISSING",
+  "insider_buys_30d::JNJ": "MISSING",
+  "insider_buys_30d::JPM": "MISSING",
+  "insider_buys_30d::MSFT": "MISSING",
+  "insider_buys_30d::MU": "MISSING",
+  "insider_buys_30d::NVDA": "MISSING",
+  "insider_buys_30d::PENN": "MISSING",
+  "insider_buys_30d::PG": "MISSING",
+  "insider_buys_30d::QQQ": "MISSING",
+  "insider_buys_30d::SPY": "MISSING",
+  "insider_buys_30d::SRAD": "MISSING",
+  "insider_buys_30d::T": "MISSING",
+  "insider_buys_30d::TLT": "MISSING",
+  "insider_buys_30d::TSLA": "MISSING",
+  "insider_buys_30d::UNG": "MISSING",
+  "insider_buys_30d::XBI": "MISSING",
+  "insider_buys_30d::XLU": "MISSING",
+  "insider_buys_30d::XOM": "MISSING",
+  "insider_ceo_buys_30d::AAPL": "MISSING",
+  "insider_ceo_buys_30d::DKNG": "MISSING",
+  "insider_ceo_buys_30d::FLUT": "MISSING",
+  "insider_ceo_buys_30d::GENI": "MISSING",
+  "insider_ceo_buys_30d::GLD": "MISSING",
+  "insider_ceo_buys_30d::IBB": "MISSING",
+  "insider_ceo_buys_30d::IWM": "MISSING",
+  "insider_ceo_buys_30d::JNJ": "MISSING",
+  "insider_ceo_buys_30d::JPM": "MISSING",
+  "insider_ceo_buys_30d::MSFT": "MISSING",
+  "insider_ceo_buys_30d::MU": "MISSING",
+  "insider_ceo_buys_30d::NVDA": "MISSING",
+  "insider_ceo_buys_30d::PENN": "MISSING",
+  "insider_ceo_buys_30d::PG": "MISSING",
+  "insider_ceo_buys_30d::QQQ": "MISSING",
+  "insider_ceo_buys_30d::SPY": "MISSING",
+  "insider_ceo_buys_30d::SRAD": "MISSING",
+  "insider_ceo_buys_30d::T": "MISSING",
+  "insider_ceo_buys_30d::TLT": "MISSING",
+  "insider_ceo_buys_30d::TSLA": "MISSING",
+  "insider_ceo_buys_30d::UNG": "MISSING",
+  "insider_ceo_buys_30d::XBI": "MISSING",
+  "insider_ceo_buys_30d::XLU": "MISSING",
+  "insider_ceo_buys_30d::XOM": "MISSING"
  }
 }

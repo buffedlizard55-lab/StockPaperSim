@@ -1,0 +1,393 @@
+{
+ "username": "@YieldCurve_Rotator",
+ "strategy_id": "YieldCurveRotator",
+ "archetype": "regime rotation",
+ "starting_cash": 100000.0,
+ "final_equity": 89913.31,
+ "net_pnl_usd": -10086.69,
+ "total_return_pct": -10.0867,
+ "cagr_pct": -10.1248,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -12.8658,
+  "max_drawdown_usd": -13237.86,
+  "peak_date": "2026-02-27",
+  "peak_equity": 102892.25,
+  "trough_date": "2026-09-15",
+  "trough_equity": 89654.38,
+  "recovery_date": null,
+  "sessions_underwater": 1,
+  "never_recovered": true,
+  "sharpe": -0.638,
+  "sortino": -0.9965,
+  "calmar": 0.787,
+  "daily_vol_pct": 0.8655,
+  "annualised_vol_pct": 13.739,
+  "skew": -0.0365,
+  "excess_kurtosis": 0.4716,
+  "best_session_pct": 2.5279,
+  "worst_session_pct": -2.8371,
+  "var_95_pct": -1.5011,
+  "cvar_95_pct": -1.8981,
+  "var_99_pct": -2.1004,
+  "cvar_99_pct": -2.5144
+ },
+ "market_relation": {
+  "beta": 0.256,
+  "alpha_annual_pct": -12.4528,
+  "r_squared": 0.0578,
+  "tracking_error_annual_pct": 13.337,
+  "information_ratio": -0.934,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 3.69,
+  "residual_return_pct": -13.776
+ },
+ "trades": {
+  "closed_trades": 4,
+  "open_trades": 0,
+  "wins": 0,
+  "losses": 4,
+  "win_rate_pct": 0.0,
+  "gross_win_usd": 0,
+  "gross_loss_usd": 16599.03,
+  "profit_factor": 0.0,
+  "avg_win_usd": 0.0,
+  "avg_loss_usd": -4149.76,
+  "expectancy_usd_per_trade": -4149.76,
+  "best_trade": {
+   "symbol": "TLT",
+   "net_pnl": -64.7,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-03-12",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "TLT",
+   "net_pnl": -16307.97,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "longest_win_streak": 0,
+  "longest_loss_streak": 4,
+  "avg_sessions_held": 202.0,
+  "median_sessions_held": 218.5,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "TLT": 251
+  },
+  "sum_of_tranche_sessions": 808,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 9,
+  "shares_traded": 3436,
+  "traded_notional_usd": 294832.87,
+  "spread_cost_usd": 17.18,
+  "depth_cost_usd": 6.53,
+  "impact_cost_usd": 4.95,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 10.31,
+  "regulatory_fee_usd": 3.17,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 42.14,
+  "total_cost_bps_of_traded": 1.429,
+  "total_cost_pct_of_starting_cash": 0.0421,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 31.99,
+   "spread_and_impact_pct": 68.01
+  },
+  "avg_execution_cost_bps_per_fill": 1.104,
+  "median_execution_cost_bps_per_fill": 0.96,
+  "worst_execution_cost_bps": 1.485,
+  "intraday_drift_usd": 5.16,
+  "avg_price_difference_bps_per_fill": 0.774,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 9,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 294832.76,
+  "spread_cost_usd": 17.18,
+  "depth_cost_usd": 6.53,
+  "impact_cost_usd": 4.95,
+  "intraday_drift_usd": 5.16,
+  "fees_usd": 13.48,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 47.3,
+  "shortfall_bps_of_paper": 1.604,
+  "friction_only_bps_of_paper": 1.429,
+  "worst_single_order_drift_usd": 5.92,
+  "best_single_order_drift_usd": -0.78,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 6512.34,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 6512.34,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 144.63,
+  "max_gross_pct_of_starting_cash": 153.37,
+  "avg_net_pct_of_starting_cash": 144.63,
+  "max_net_pct_of_starting_cash": 153.37,
+  "avg_leverage": 1.496,
+  "max_leverage": 1.522,
+  "sessions_flat": 1,
+  "avg_open_positions": 1.0
+ },
+ "turnover": {
+  "traded_notional_usd": 294832.87,
+  "annualised_turnover_x": 3.063
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "TLT",
+   "realized_pnl": -16599.03,
+   "open_pnl": 0.0,
+   "total_pnl": -16599.03,
+   "closed_trades": 4,
+   "fees": 13.48,
+   "all_in_cost_usd": 42.14
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 99003.25,
+   "end_equity": 97763.5,
+   "return_pct": -1.2522
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 97763.5,
+   "end_equity": 99784.03,
+   "return_pct": 2.0668
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 99784.03,
+   "end_equity": 100192.2,
+   "return_pct": 0.4091
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 100192.2,
+   "end_equity": 96215.47,
+   "return_pct": -3.9691
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 96215.47,
+   "end_equity": 96165.48,
+   "return_pct": -0.052
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 96165.48,
+   "end_equity": 102892.25,
+   "return_pct": 6.995
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 102892.25,
+   "end_equity": 96432.58,
+   "return_pct": -6.2781
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 96432.58,
+   "end_equity": 95221.11,
+   "return_pct": -1.2563
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 95221.11,
+   "end_equity": 95981.41,
+   "return_pct": 0.7985
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 95981.41,
+   "end_equity": 97647.42,
+   "return_pct": 1.7358
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 97647.42,
+   "end_equity": 91143.55,
+   "return_pct": -6.6606
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 91143.55,
+   "end_equity": 92155.14,
+   "return_pct": 1.1099
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 92155.14,
+   "end_equity": 89913.31,
+   "return_pct": -2.4327
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -16599.03,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 6512.34,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -42.14,
+  "total_net_pnl_usd": -10086.69,
+  "unexplained_residual_usd": 0.0,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -10.09% total return vs +14.41% for the index, -13.78pp residual after beta, -12.9% max drawdown, 0.04% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -10.09% - a 10,087 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 10.09% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 10.09% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -10.09% total, about +3.69pp is explained by carrying beta 0.26 against a +14.41% market (R^2 0.06); the residual -13.78pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "TLT contributed -16,599 USD (165% of net P&L) across 4 closed trades; TLT was the biggest drag at -16,599 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 42 USD (0.04% of starting capital, 1.1 bp per fill, 1.4 bp of the 294,833 USD traded). 68% of that was spread/depth/impact and 32% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "4 closed round trips, 0.0% winners, profit factor 0.00, average winner +0 vs average loser -4,150 USD, median holding 218 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 808 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: TLT long 2025-09-17 to 2026-09-16, -16,308 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -12.87% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 145% of starting capital, peak leverage 1.52x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were -0.04 skewed with excess kurtosis +0.47; historical 95% VaR -1.50%/day with CVaR -1.90%/day. Worst single session -2.84%, best +2.53%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: The curve is a slow signal; regime flips are rare and lagged."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Bond ETFs carry duration risk that is not modelled beyond price; The same series is used by everyone, so the information is priced."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@YieldCurve_Rotator (Yield Curve Rotator) ran the \"regime rotation\" archetype. Declared thesis: The 10-year minus 3-month Treasury spread is the canonical recession indicator and is published by FRED. The rotator holds equities while the curve is steepening and long bonds while it is flattening. Entry: Read DGS10 and DGS3MO from the collected FRED files; Steepening (21-day change positive) -> hold SPY and QQQ at 90% of equity each; Flattening -> hold TLT at 150% of equity. Exit: The regime flip is the exit; No stop loss. Sizing: 180% gross equities or 150% single bond ETF. Leverage: 1.8x gross. Cadence: daily, horizon weeks to months. Aggression 4/5. This participant was built to maximise return, not to manage risk: Ninety-percent weight per equity ETF on a macro trigger."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -10.09% over 251 sessions - -10,087 USD on 100,000 of paper capital, ending at 89,913. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 10.09% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 10.09% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -10.09% total, about +3.69pp is explained by carrying beta 0.26 against a +14.41% market (R^2 0.06); the residual -13.78pp is everything else - selection, timing, leverage and cost. TLT contributed -16,599 USD (165% of net P&L) across 4 closed trades; TLT was the biggest drag at -16,599 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 42 USD (0.04% of starting capital, 1.1 bp per fill, 1.4 bp of the 294,833 USD traded). 68% of that was spread/depth/impact and 32% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "4 closed round trips, 0.0% winners, profit factor 0.00, average winner +0 vs average loser -4,150 USD, median holding 218 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 808 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TLT long 2025-09-17 to 2026-09-16, -16,308 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -12.87% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 145% of starting capital, peak leverage 1.52x. Daily returns were -0.04 skewed with excess kurtosis +0.47; historical 95% VaR -1.50%/day with CVaR -1.90%/day. Worst single session -2.84%, best +2.53%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: The curve is a slow signal; regime flips are rare and lagged."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -10.09% in a market that returned +14.41%, and a residual of -13.78pp after beta - the trading itself destroyed value, not just the market direction. Finished at -10.09% - a 10,087 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [
+   "The curve is a slow signal; regime flips are rare and lagged"
+  ],
+  "failure_modes_untested": [
+   "Bond ETFs carry duration risk that is not modelled beyond price",
+   "The same series is used by everyone, so the information is priced"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 8
+}

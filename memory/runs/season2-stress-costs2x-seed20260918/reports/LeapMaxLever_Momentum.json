@@ -1,0 +1,393 @@
+{
+ "username": "@LeapMaxLever_Momentum",
+ "strategy_id": "LeapMaxLeverMomentum",
+ "archetype": "levered beta",
+ "starting_cash": 100000.0,
+ "final_equity": 138115.93,
+ "net_pnl_usd": 38115.93,
+ "total_return_pct": 38.1159,
+ "cagr_pct": 38.2937,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -22.3216,
+  "max_drawdown_usd": -25604.21,
+  "peak_date": "2025-10-29",
+  "peak_equity": 114705.84,
+  "trough_date": "2026-03-30",
+  "trough_equity": 89101.63,
+  "recovery_date": "2026-04-15",
+  "sessions_underwater": 11,
+  "never_recovered": false,
+  "sharpe": 1.055,
+  "sortino": 1.6067,
+  "calmar": 1.7155,
+  "daily_vol_pct": 2.3979,
+  "annualised_vol_pct": 38.065,
+  "skew": -0.0746,
+  "excess_kurtosis": 0.9772,
+  "best_session_pct": 7.1271,
+  "worst_session_pct": -9.0722,
+  "var_95_pct": -3.704,
+  "cvar_95_pct": -4.8355,
+  "var_99_pct": -5.5102,
+  "cvar_99_pct": -7.2562
+ },
+ "market_relation": {
+  "beta": 2.7344,
+  "alpha_annual_pct": 0.7639,
+  "r_squared": 0.8589,
+  "tracking_error_annual_pct": 14.299,
+  "information_ratio": 0.053,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 39.416,
+  "residual_return_pct": -1.3
+ },
+ "trades": {
+  "closed_trades": 4,
+  "open_trades": 0,
+  "wins": 4,
+  "losses": 0,
+  "win_rate_pct": 100.0,
+  "gross_win_usd": 37059.88,
+  "gross_loss_usd": 0,
+  "profit_factor": null,
+  "avg_win_usd": 9264.97,
+  "avg_loss_usd": 0.0,
+  "expectancy_usd_per_trade": 9264.97,
+  "best_trade": {
+   "symbol": "QQQ",
+   "net_pnl": 34993.88,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "QQQ",
+   "net_pnl": 158.91,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-01-02",
+   "direction": "long"
+  },
+  "longest_win_streak": 4,
+  "longest_loss_streak": 0,
+  "avg_sessions_held": 185.0,
+  "median_sessions_held": 208.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "QQQ": 251
+  },
+  "sum_of_tranche_sessions": 740,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 9,
+  "shares_traded": 788,
+  "traded_notional_usd": 516616.35,
+  "spread_cost_usd": 8.23,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 7.52,
+  "commission_usd": 9.0,
+  "exchange_fee_usd": 4.73,
+  "regulatory_fee_usd": 5.7,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 35.18,
+  "total_cost_bps_of_traded": 0.681,
+  "total_cost_pct_of_starting_cash": 0.0352,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 55.24,
+   "spread_and_impact_pct": 44.76
+  },
+  "avg_execution_cost_bps_per_fill": 2.252,
+  "median_execution_cost_bps_per_fill": 1.28,
+  "worst_execution_cost_bps": 7.385,
+  "intraday_drift_usd": -0.59,
+  "avg_price_difference_bps_per_fill": 0.219,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 9,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 516617.19,
+  "spread_cost_usd": 8.23,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 7.52,
+  "intraday_drift_usd": -0.59,
+  "fees_usd": 19.43,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 34.59,
+  "shortfall_bps_of_paper": 0.67,
+  "friction_only_bps_of_paper": 0.681,
+  "worst_single_order_drift_usd": 0.64,
+  "best_single_order_drift_usd": -0.95,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 1056.05,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 1056.05,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 227.36,
+  "max_gross_pct_of_starting_cash": 289.51,
+  "avg_net_pct_of_starting_cash": 227.36,
+  "max_net_pct_of_starting_cash": 289.51,
+  "avg_leverage": 1.898,
+  "max_leverage": 2.105,
+  "sessions_flat": 1,
+  "avg_open_positions": 1.0
+ },
+ "turnover": {
+  "traded_notional_usd": 516616.35,
+  "annualised_turnover_x": 4.316
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "QQQ",
+   "realized_pnl": 37059.88,
+   "open_pnl": 0.0,
+   "total_pnl": 37059.88,
+   "closed_trades": 4,
+   "fees": 19.43,
+   "all_in_cost_usd": 35.18
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 99637.55,
+   "end_equity": 103189.1,
+   "return_pct": 3.5645
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 103189.1,
+   "end_equity": 112528.34,
+   "return_pct": 9.0506
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 112528.34,
+   "end_equity": 109065.94,
+   "return_pct": -3.0769
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 109065.94,
+   "end_equity": 107648.01,
+   "return_pct": -1.3001
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 107648.01,
+   "end_equity": 110221.57,
+   "return_pct": 2.3907
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 110221.57,
+   "end_equity": 105322.69,
+   "return_pct": -4.4446
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 105322.69,
+   "end_equity": 95452.02,
+   "return_pct": -9.3718
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 95452.02,
+   "end_equity": 125880.18,
+   "return_pct": 31.878
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 125880.18,
+   "end_equity": 151111.65,
+   "return_pct": 20.044
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 151111.65,
+   "end_equity": 150722.64,
+   "return_pct": -0.2574
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 150722.64,
+   "end_equity": 132020.89,
+   "return_pct": -12.4081
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 132020.89,
+   "end_equity": 142526.4,
+   "return_pct": 7.9575
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 142526.4,
+   "end_equity": 138115.93,
+   "return_pct": -3.0945
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 37059.88,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 1056.05,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -35.18,
+  "total_net_pnl_usd": 38115.93,
+  "unexplained_residual_usd": 0.0,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "beat the market",
+  "headline": "Beat the market: +38.12% total return vs +14.41% for the index, -1.30pp residual after beta, -22.3% max drawdown, 0.04% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +38.12% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +23.70pp."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "factor",
+    "text": "The market premium this participant is built to harvest was live (+14.30% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +38.12% total, about +39.42pp is explained by carrying beta 2.73 against a +14.41% market (R^2 0.86); the residual -1.30pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "QQQ contributed +37,060 USD (97% of net P&L) across 4 closed trades; QQQ was the biggest drag at +37,060 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 35 USD (0.04% of starting capital, 2.3 bp per fill, 0.7 bp of the 516,616 USD traded). 45% of that was spread/depth/impact and 55% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "4 closed round trips, 100.0% winners, profit factor no losing trades, average winner +9,265 vs average loser +0 USD, median holding 208 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 740 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: QQQ long 2025-09-17 to 2026-01-02, +159 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -22.32% (-9.10% for the index), trough on 2026-03-30, recovered 2026-04-15. Average gross exposure 227% of starting capital, peak leverage 2.10x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were -0.07 skewed with excess kurtosis +0.98; historical 95% VaR -3.70%/day with CVaR -4.84%/day. Worst single session -9.07%, best +7.13%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: Contest-maximising leverage maximises ruin probability."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): The instrument is a declared proxy: The Leap trades futures, not ETFs; A single bad month at 1.9x is unrecoverable."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@LeapMaxLever_Momentum (Leap Max-Leverage Momentum) ran the \"levered beta\" archetype. Declared thesis: The Leap ranks on total return with all positions liquidated at the end of the contest. Under that payoff the best rank-seeking response is to lever the asset with the strongest trailing return and hold it to the bell - the same rule is tested here on SPY, QQQ and TLT. Entry: Rank SPY, QQQ and TLT by 63-session return, skipping the last 5 sessions; Hold the leader at 190% of equity. Exit: Rotate at the start of each month; Auto-liquidation at the competition end is enforced by the engine for every participant. Sizing: 190% of equity, single name. Leverage: 1.9x gross. Cadence: monthly, horizon 1-3 months. Aggression 5/5. This participant was built to maximise return, not to manage risk: Directly maximises the contest's own objective function."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +38.12% over 251 sessions - +38,116 USD on 100,000 of paper capital, ending at 138,116. Verdict: beat the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The market premium this participant is built to harvest was live (+14.30% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +38.12% total, about +39.42pp is explained by carrying beta 2.73 against a +14.41% market (R^2 0.86); the residual -1.30pp is everything else - selection, timing, leverage and cost. QQQ contributed +37,060 USD (97% of net P&L) across 4 closed trades; QQQ was the biggest drag at +37,060 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 35 USD (0.04% of starting capital, 2.3 bp per fill, 0.7 bp of the 516,616 USD traded). 45% of that was spread/depth/impact and 55% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "4 closed round trips, 100.0% winners, profit factor no losing trades, average winner +9,265 vs average loser +0 USD, median holding 208 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 740 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: QQQ long 2025-09-17 to 2026-01-02, +159 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -22.32% (-9.10% for the index), trough on 2026-03-30, recovered 2026-04-15. Average gross exposure 227% of starting capital, peak leverage 2.10x. Daily returns were -0.07 skewed with excess kurtosis +0.98; historical 95% VaR -3.70%/day with CVaR -4.84%/day. Worst single session -9.07%, best +7.13%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: Contest-maximising leverage maximises ruin probability."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It beat the index by 23.70pp, but after beta the residual is -1.30pp: the win came from carrying more market risk (beta 2.73) in an up market, not from the signal itself. Finished at +38.12% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +23.70pp."
+   }
+  ],
+  "failure_modes_fired": [
+   "Contest-maximising leverage maximises ruin probability"
+  ],
+  "failure_modes_untested": [
+   "The instrument is a declared proxy: The Leap trades futures, not ETFs",
+   "A single bad month at 1.9x is unrecoverable"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "beta",
+   "market"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 8
+}

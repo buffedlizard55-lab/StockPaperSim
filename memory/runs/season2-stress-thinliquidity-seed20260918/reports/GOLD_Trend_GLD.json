@@ -1,0 +1,391 @@
+{
+ "username": "@GOLD_Trend_GLD",
+ "strategy_id": "GoldMeltTrend",
+ "archetype": "time-series trend",
+ "starting_cash": 100000.0,
+ "final_equity": 132815.79,
+ "net_pnl_usd": 32815.79,
+ "total_return_pct": 32.8158,
+ "cagr_pct": 32.966,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -36.2775,
+  "max_drawdown_usd": -73445.0,
+  "peak_date": "2026-01-29",
+  "peak_equity": 202453.49,
+  "trough_date": "2026-09-10",
+  "trough_equity": 129008.49,
+  "recovery_date": null,
+  "sessions_underwater": 4,
+  "never_recovered": true,
+  "sharpe": 0.8828,
+  "sortino": 0.8431,
+  "calmar": 0.9087,
+  "daily_vol_pct": 2.869,
+  "annualised_vol_pct": 45.543,
+  "skew": -1.609,
+  "excess_kurtosis": 11.2478,
+  "best_session_pct": 12.3001,
+  "worst_session_pct": -19.3129,
+  "var_95_pct": -4.4878,
+  "cvar_95_pct": -8.1879,
+  "var_99_pct": -9.4646,
+  "cvar_99_pct": -13.9114
+ },
+ "market_relation": {
+  "beta": 0.5275,
+  "alpha_annual_pct": 32.6082,
+  "r_squared": 0.0223,
+  "tracking_error_annual_pct": 45.032,
+  "information_ratio": 0.724,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 7.604,
+  "residual_return_pct": 25.212
+ },
+ "trades": {
+  "closed_trades": 43,
+  "open_trades": 0,
+  "wins": 34,
+  "losses": 9,
+  "win_rate_pct": 79.07,
+  "gross_win_usd": 51121.14,
+  "gross_loss_usd": 18305.37,
+  "profit_factor": 2.7927,
+  "avg_win_usd": 1503.56,
+  "avg_loss_usd": -2033.93,
+  "expectancy_usd_per_trade": 763.16,
+  "best_trade": {
+   "symbol": "GLD",
+   "net_pnl": 20768.37,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-03-19",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "GLD",
+   "net_pnl": -13328.83,
+   "entry_date": "2026-04-15",
+   "exit_date": "2026-08-31",
+   "direction": "long"
+  },
+  "longest_win_streak": 33,
+  "longest_loss_streak": 6,
+  "avg_sessions_held": 73.09,
+  "median_sessions_held": 87.0,
+  "sessions_in_market": 234,
+  "per_symbol_sessions_in_market": {
+   "GLD": 234
+  },
+  "sum_of_tranche_sessions": 3143,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 108,
+  "shares_traded": 7294,
+  "traded_notional_usd": 3018156.74,
+  "spread_cost_usd": 41.19,
+  "depth_cost_usd": 11.05,
+  "impact_cost_usd": 125.38,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 21.88,
+  "regulatory_fee_usd": 22.6,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 222.11,
+  "total_cost_bps_of_traded": 0.736,
+  "total_cost_pct_of_starting_cash": 0.2221,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 20.03,
+   "spread_and_impact_pct": 79.97
+  },
+  "avg_execution_cost_bps_per_fill": 0.336,
+  "median_execution_cost_bps_per_fill": 0.264,
+  "worst_execution_cost_bps": 0.948,
+  "intraday_drift_usd": -3.54,
+  "avg_price_difference_bps_per_fill": 0.21,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 108,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 3018169.72,
+  "spread_cost_usd": 41.19,
+  "depth_cost_usd": 11.05,
+  "impact_cost_usd": 125.38,
+  "intraday_drift_usd": -3.54,
+  "fees_usd": 44.49,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 218.57,
+  "shortfall_bps_of_paper": 0.724,
+  "friction_only_bps_of_paper": 0.736,
+  "worst_single_order_drift_usd": 5.68,
+  "best_single_order_drift_usd": -5.79,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 0.0,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 0.0,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 150.34,
+  "max_gross_pct_of_starting_cash": 394.24,
+  "avg_net_pct_of_starting_cash": 150.34,
+  "max_net_pct_of_starting_cash": 394.24,
+  "avg_leverage": 1.062,
+  "max_leverage": 1.986,
+  "sessions_flat": 19,
+  "avg_open_positions": 0.92
+ },
+ "turnover": {
+  "traded_notional_usd": 3018156.74,
+  "annualised_turnover_x": 21.481
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "GLD",
+   "realized_pnl": 32815.77,
+   "open_pnl": 0.0,
+   "total_pnl": 32815.77,
+   "closed_trades": 43,
+   "fees": 44.47,
+   "all_in_cost_usd": 222.11
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 99117.55,
+   "end_equity": 109591.72,
+   "return_pct": 10.5674
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 109591.72,
+   "end_equity": 116433.78,
+   "return_pct": 6.2432
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 116433.78,
+   "end_equity": 128189.63,
+   "return_pct": 10.0966
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 128189.63,
+   "end_equity": 133209.71,
+   "return_pct": 3.9161
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 133209.71,
+   "end_equity": 163353.84,
+   "return_pct": 22.6291
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 163353.84,
+   "end_equity": 189894.1,
+   "return_pct": 16.2471
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 189894.1,
+   "end_equity": 144423.84,
+   "return_pct": -23.9451
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 144423.84,
+   "end_equity": 140263.24,
+   "return_pct": -2.8808
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 140263.24,
+   "end_equity": 140256.7,
+   "return_pct": -0.0047
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 140256.7,
+   "end_equity": 140207.96,
+   "return_pct": -0.0348
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 140207.96,
+   "end_equity": 140211.12,
+   "return_pct": 0.0023
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 140211.12,
+   "end_equity": 133560.06,
+   "return_pct": -4.7436
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 133560.06,
+   "end_equity": 132815.79,
+   "return_pct": -0.5572
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 32815.77,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 0.0,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -222.11,
+  "total_net_pnl_usd": 32815.79,
+  "unexplained_residual_usd": 0.02,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "beat the market",
+  "headline": "Beat the market: +32.82% total return vs +14.41% for the index, +25.21pp residual after beta, -36.3% max drawdown, 0.22% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +32.82% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +18.40pp."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +32.82% total, about +7.60pp is explained by carrying beta 0.53 against a +14.41% market (R^2 0.02); the residual +25.21pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "GLD contributed +32,816 USD (100% of net P&L) across 43 closed trades; GLD was the biggest drag at +32,816 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 222 USD (0.22% of starting capital, 0.3 bp per fill, 0.7 bp of the 3,018,157 USD traded). 80% of that was spread/depth/impact and 20% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "43 closed round trips, 79.1% winners, profit factor 2.79, average winner +1,504 vs average loser -2,034 USD, median holding 87 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 234 sessions held at least one position (the per-tranche holding periods above sum to 3143 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: GLD long 2026-04-15 to 2026-08-31, -13,329 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -36.28% (-9.10% for the index), trough on 2026-09-10, never recovered. Average gross exposure 150% of starting capital, peak leverage 1.99x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were -1.61 skewed with excess kurtosis +11.25; historical 95% VaR -4.49%/day with CVaR -8.19%/day. Worst single session -19.31%, best +12.30%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): GLD carries a 0.40% expense ratio and tracks spot with a small lag; The source project contains no price signal - the site states this."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@GOLD_Trend_GLD (Gold Trend (GLD)) ran the \"time-series trend\" archetype. Declared thesis: The GOLD project is a buyer's directory, not a market feed - its own README forbids price APIs. Rather than pretend otherwise, the gold participant trades GLD on the real ETF closes and uses the official LBMA fix only as a cross-reference. Entry: GLD close above its 50-session EMA and a positive 63-session return on the collected real bars; Hold GLD at 190% of equity. Exit: Exit when either condition fails; No stop loss. Sizing: 190% of equity in GLD. Leverage: 1.9x gross. Cadence: daily, horizon months. Aggression 4/5. This participant was built to maximise return, not to manage risk: Full-size directional exposure to the metal."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +32.82% over 251 sessions - +32,816 USD on 100,000 of paper capital, ending at 132,816. Verdict: beat the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +32.82% total, about +7.60pp is explained by carrying beta 0.53 against a +14.41% market (R^2 0.02); the residual +25.21pp is everything else - selection, timing, leverage and cost. GLD contributed +32,816 USD (100% of net P&L) across 43 closed trades; GLD was the biggest drag at +32,816 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 222 USD (0.22% of starting capital, 0.3 bp per fill, 0.7 bp of the 3,018,157 USD traded). 80% of that was spread/depth/impact and 20% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "43 closed round trips, 79.1% winners, profit factor 2.79, average winner +1,504 vs average loser -2,034 USD, median holding 87 sessions. Time in market, measured without double counting: 234 sessions held at least one position (the per-tranche holding periods above sum to 3143 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: GLD long 2026-04-15 to 2026-08-31, -13,329 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -36.28% (-9.10% for the index), trough on 2026-09-10, never recovered. Average gross exposure 150% of starting capital, peak leverage 1.99x. Daily returns were -1.61 skewed with excess kurtosis +11.25; historical 95% VaR -4.49%/day with CVaR -8.19%/day. Worst single session -19.31%, best +12.30%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It worked: it beat the index by 18.40pp and the excess survives a beta adjustment (+25.21pp residual), so the outperformance is not simply leverage on a rising market. Finished at +32.82% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +18.40pp."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "GLD carries a 0.40% expense ratio and tracks spot with a small lag",
+   "The source project contains no price signal - the site states this"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 107
+}

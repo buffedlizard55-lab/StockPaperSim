@@ -1,0 +1,416 @@
+[
+ {
+  "username": "@FDACatalyst_Rider",
+  "display_name": "FDA Catalyst Rider",
+  "signals": [
+   {
+    "signal": "fda_orig_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fda/openfda_decisions.jsonl"
+    ],
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "fda_orig_z",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fda/openfda_decisions.jsonl"
+    ],
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "fda_orig_30d",
+   "fda_orig_z"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@FDA_ClusterFade",
+  "display_name": "FDA Cluster Fade",
+  "signals": [
+   {
+    "signal": "fda_orig_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fda/openfda_decisions.jsonl"
+    ],
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "fda_all_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fda/openfda_decisions.jsonl"
+    ],
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "fda_orig_z",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fda/openfda_decisions.jsonl"
+    ],
+    "url": "https://api.fda.gov/drug/drugsfda.json",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "fda_orig_30d",
+   "fda_all_30d",
+   "fda_orig_z"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@InsiderCopycat_Max",
+  "display_name": "Insider Copycat",
+  "signals": [
+   {
+    "signal": "insider_buys_30d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "insider_buys_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "insider_buys_30d"
+  ],
+  "idle_reason": "no trades: waiting on insider_buys_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+ },
+ {
+  "username": "@InsiderCluster_Alpha",
+  "display_name": "Insider Cluster Alpha",
+  "signals": [
+   {
+    "signal": "insider_buys_30d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "insider_buy_ratio_30d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "insider_buys_30d",
+   "insider_buy_ratio_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "insider_buys_30d",
+   "insider_buy_ratio_30d"
+  ],
+  "idle_reason": "no trades: waiting on insider_buys_30d, insider_buy_ratio_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+ },
+ {
+  "username": "@CEO_CFO_Conviction",
+  "display_name": "CEO / CFO Conviction",
+  "signals": [
+   {
+    "signal": "insider_ceo_buys_30d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "insider_buys_30d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "insider_ceo_buys_30d",
+   "insider_buys_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "insider_ceo_buys_30d",
+   "insider_buys_30d"
+  ],
+  "idle_reason": "no trades: waiting on insider_ceo_buys_30d, insider_buys_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+ },
+ {
+  "username": "@MLB_Attention_Momo",
+  "display_name": "MLB Attention Momentum",
+  "signals": [
+   {
+    "signal": "mlb_games_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/mlb_games_2026.jsonl"
+    ],
+    "url": "https://statsapi.mlb.com/api/v1/schedule",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "mlb_upsets_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/mlb_games_2026.jsonl"
+    ],
+    "url": "https://statsapi.mlb.com/api/v1/schedule",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "mlb_games_7d",
+   "mlb_upsets_7d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@MLB_Upset_Short",
+  "display_name": "MLB Upset Short",
+  "signals": [
+   {
+    "signal": "mlb_upsets_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/mlb_games_2026.jsonl"
+    ],
+    "url": "https://statsapi.mlb.com/api/v1/schedule",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "mlb_home_win_rate_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/mlb_games_2026.jsonl"
+    ],
+    "url": "https://statsapi.mlb.com/api/v1/schedule",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "mlb_upsets_7d",
+   "mlb_home_win_rate_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@Weather_ColdSnap_Max",
+  "display_name": "Weather Cold Snap Max",
+  "signals": [
+   {
+    "signal": "weather_cold_anomaly_10d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/weather/USW00023272_daily.json"
+    ],
+    "url": "https://www.ncei.noaa.gov/access/services/data/v1",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "weather_precip_30d_in",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/weather/USW00023272_daily.json"
+    ],
+    "url": "https://www.ncei.noaa.gov/access/services/data/v1",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "weather_cold_anomaly_10d",
+   "weather_precip_30d_in"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@Kalshi_Attention_Timer",
+  "display_name": "Kalshi Attention Timer",
+  "signals": [
+   {
+    "signal": "kalshi_settled_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/kalshi/"
+    ],
+    "url": "https://api.elections.kalshi.com/trade-api/v2/markets",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "kalshi_volume_30d",
+    "state": "MISSING",
+    "files": [
+     "data/real/kalshi/"
+    ],
+    "url": "https://api.elections.kalshi.com/trade-api/v2/markets",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "kalshi_settled_30d",
+   "kalshi_volume_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "kalshi_volume_30d"
+  ],
+  "idle_reason": "no trades: waiting on kalshi_volume_30d (MISSING) from https://api.elections.kalshi.com/trade-api/v2/markets - every volume/open_interest/last_price field in the collected payload is null, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING"
+ },
+ {
+  "username": "@GOLD_Trend_GLD",
+  "display_name": "Gold Trend (GLD)",
+  "signals": [
+   {
+    "signal": "gold_close",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/prices/yahoo/GLD.json"
+    ],
+    "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD",
+    "sessions_actionable": null,
+    "price_derived": true
+   }
+  ],
+  "external_signals": [],
+  "signal_dependent": false,
+  "gate_armed": false,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@PinePilot_EMA_Cross",
+  "display_name": "PinePilot EMA Cross",
+  "signals": [],
+  "external_signals": [],
+  "signal_dependent": false,
+  "gate_armed": false,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@LeapMaxLever_Momentum",
+  "display_name": "Leap Max-Leverage Momentum",
+  "signals": [],
+  "external_signals": [],
+  "signal_dependent": false,
+  "gate_armed": false,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@YieldCurve_Rotator",
+  "display_name": "Yield Curve Rotator",
+  "signals": [
+   {
+    "signal": "fred_slope_bps",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
+    ],
+    "url": "https://fred.stlouisfed.org/series/DGS10",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "fred_slope_change_21d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
+    ],
+    "url": "https://fred.stlouisfed.org/series/DGS10",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "fred_slope_bps",
+   "fred_slope_change_21d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@InjuryFeed_Forward",
+  "display_name": "Injury Feed (forward probe)",
+  "signals": [
+   {
+    "signal": "nfl_injury_report",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://www.nfl.com/injuries/",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "nba_injury_report",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "nfl_injury_report",
+   "nba_injury_report"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "nfl_injury_report",
+   "nba_injury_report"
+  ],
+  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+ }
+]

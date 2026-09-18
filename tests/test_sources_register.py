@@ -412,6 +412,12 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         "https://docs.alpaca.markets/docs/market-data",
         # HTML-escaped form of a URL that IS registered.
         "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&amp;range=1y",
+        # Kalshi's API reference and its fixed-point migration note: the schema
+        # the collector reads, not data itself. The endpoint they document is
+        # registered (sim/realdata.py, and IR-41 links it), which is the link a
+        # reviewer needs to re-fetch the payload.
+        "https://docs.kalshi.com/getting_started/fixed_point_migration",
+        "https://docs.kalshi.com/api-reference/market/get-markets",
         # The secondary source behind IR-05, registered as SECONDARY at the
         # FINRA rule page and named in the irregularity entry.
         "https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/",

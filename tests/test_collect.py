@@ -203,6 +203,84 @@ class FetcherBehaviour(unittest.TestCase):
         self.assertEqual(collector.SOURCE_CLASS["nasdaq"], "SECONDARY")
 
 
+#: A settled market as the venue serves it now: numbers as fixed-point strings
+#: (contract counts) and dollar strings (prices), and no legacy integer fields.
+KALSHI_CURRENT = {
+    "ticker": "KXNFLGAME-26SEP17DETBUF-DET",
+    "event_ticker": "KXNFLGAME-26SEP17DETBUF",
+    "title": "Detroit wins",
+    "status": "finalized",
+    "result": "no",
+    "close_time": "2026-09-18T03:29:53Z",
+    "volume_fp": "30421098.89",
+    "volume_24h_fp": "29599985.21",
+    "open_interest_fp": "16869704.61",
+    "last_price_dollars": "0.0100",
+    "yes_bid_dollars": "0.0000",
+    "yes_ask_dollars": "1.0000",
+    "settlement_value_dollars": "0.0000",
+}
+
+#: The same market in the legacy spelling, which the reader still accepts.
+KALSHI_LEGACY = {
+    "ticker": "KXNFLGAME-26SEP17DETBUF-DET",
+    "event_ticker": "KXNFLGAME-26SEP17DETBUF",
+    "title": "Detroit wins",
+    "close_time": "2026-09-18T03:29:53Z",
+    "volume": 1234,
+    "open_interest": 567,
+    "last_price": 1,
+    "yes_bid": 0,
+    "yes_ask": 100,
+    "settlement_value": 0,
+}
+
+
+class KalshiSchema(unittest.TestCase):
+    """The venue re-spelled its numbers; the reader follows the payload.
+
+    The collection run of 2026-09-18 wrote a file whose every numeric column was
+    null, and the site published that as the venue leaving the fields empty. The
+    venue had not: it serves fixed-point contract counts and dollar strings now
+    and the collector was reading legacy integer names, so the absence was in the
+    reader (IR-41). These tests pin both spellings, and pin that a number the
+    payload does not carry is reported as absent rather than as zero.
+    """
+
+    def test_the_current_spelling_is_read_and_the_source_key_is_recorded(self):
+        row = collector.kalshi_market_row(KALSHI_CURRENT)
+        self.assertEqual(row["volume"], 30421098.89)
+        self.assertEqual(row["open_interest"], 16869704.61)
+        self.assertEqual(row["last_price"], 0.01)
+        self.assertEqual(row["yes_ask"], 1.0)
+        self.assertEqual(row["settlement_value"], 0.0)
+        self.assertEqual(row["source_keys"]["volume"], "volume_fp")
+        self.assertEqual(row["source_keys"]["last_price"], "last_price_dollars")
+        self.assertEqual(row["result"], "no")
+        self.assertEqual(row["source_class"], "OFFICIAL-VENDOR")
+
+    def test_the_legacy_spelling_is_still_read(self):
+        row = collector.kalshi_market_row(KALSHI_LEGACY)
+        self.assertEqual(row["volume"], 1234.0)
+        self.assertEqual(row["open_interest"], 567.0)
+        self.assertEqual(row["source_keys"]["volume"], "volume")
+        self.assertEqual(row["source_keys"]["last_price"], "last_price")
+
+    def test_an_absent_number_is_none_and_never_zero(self):
+        row = collector.kalshi_market_row({"ticker": "X", "volume_fp": ""})
+        self.assertIsNone(row["volume"])
+        self.assertIsNone(row["last_price"])
+        self.assertNotIn("volume", row["source_keys"])
+        # ...and the consumer's fallback still has something to read when only
+        # open interest is present.
+        self.assertIsNone(row["open_interest"])
+
+    def test_the_field_map_names_the_newest_spelling_first(self):
+        for canonical, keys in collector.KALSHI_NUMERIC_FIELDS:
+            self.assertTrue(keys, canonical)
+            self.assertTrue(keys[0].endswith(("_fp", "_dollars")), keys)
+
+
 class CompanyFeedFallback(unittest.TestCase):
     """ticker -> CIK when the bulk map is refused: the same publisher, another
     endpoint, and the substitution written down where the study can be read."""

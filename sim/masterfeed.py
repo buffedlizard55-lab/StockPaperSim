@@ -784,32 +784,37 @@ def _kalshi_signals(book: SignalBook, md, root: str) -> None:
                 continue
     events.sort()
     if values_present == 0:
-        # Observed on the second collection run: the venue's *list* endpoint
-        # returns market metadata with every numeric field null. A file that
-        # exists but carries no values is a missing signal, not an available one,
-        # and the strategy that depends on it must report DATA-MISSING.
+        # Guard for a payload that carries no number this code can read: a file
+        # that exists but holds no values is a missing signal, not an available
+        # one, and the strategy that depends on it must report DATA-MISSING.
+        #
+        # This branch fired on the second collection run, and the diagnosis
+        # published with it was wrong. The venue's *list* endpoint does carry
+        # numbers; the collector was reading the legacy integer field names
+        # ("volume", "last_price"), which the payload no longer has, because the
+        # venue moved to fixed-point spellings ("volume_fp": "30421098.89",
+        # "last_price_dollars": "0.0100"). Every number was absent from the
+        # reader, not from the response - and the site published that as the
+        # venue's doing (IR-41). The collector now reads either spelling and
+        # records which key each value came from; the branch stays so a future
+        # re-spelling reports DATA-MISSING rather than a column of zeros that
+        # looks like an observation of no activity.
         book.provenance["kalshi"] = {
             "file": "data/real/kalshi/*_settled.jsonl",
             "url": "https://api.elections.kalshi.com/trade-api/v2/markets"}
-        # The settled-market *counts* are real (the venue lists the contracts and
-        # their settlement dates), but the volume and price fields are null, so
-        # exactly one of the two arrays is computable. Registering them
-        # separately is the point: a strategy that only needs the calendar can
-        # trade, and a strategy that needs liquidity must report DATA-MISSING
-        # instead of receiving a row of zeros that looks like a real observation.
         for t in range(len(md.dates)):
             book.arrays["kalshi_settled_30d"][t] = float(
                 _count_in_window(events, md.dates, t, 30))
         book._register("kalshi_settled_30d", "AVAILABLE", rows_total, events,
                        ["data/real/kalshi/"],
-                       "settled-contract counts from the venue's own API; the price and "
-                       "volume fields in the same payload are null",
+                       "settled-contract counts from the venue's own API; no numeric "
+                       "field in the same payload could be read by this collector",
                        "https://api.elections.kalshi.com/trade-api/v2/markets")
         book._register("kalshi_volume_30d", "MISSING", rows_total, events,
                        ["data/real/kalshi/"],
-                       "every volume/open_interest/last_price field in the collected "
-                       "payload is null, so a volume signal cannot be computed from it "
-                       "- the participant that reads it reports DATA-MISSING",
+                       "no traded-volume field in the collected payload could be read, "
+                       "so a volume signal cannot be computed from it - the participant "
+                       "that reads it reports DATA-MISSING",
                        "https://api.elections.kalshi.com/trade-api/v2/markets")
         return
     for t in range(len(md.dates)):

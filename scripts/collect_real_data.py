@@ -955,6 +955,74 @@ def collect_weather(fetcher: Fetcher, out: str) -> dict:
 # --------------------------------------------------------------------------
 KALSHI_SERIES = ("KXNFLGAME", "KXNBA", "KXMLBGAME", "KXHIGHNY", "KXAAAGASM")
 
+#: The venue re-spelled its numbers.  A market no longer carries the legacy
+#: integers ("volume", "last_price"); it carries fixed-point contract counts
+#: ("volume_fp": "30421098.89") and dollar strings ("last_price_dollars":
+#: "0.0100"), and Kalshi's own migration page says the integer fields are legacy
+#: and will be deprecated.  Reading only the legacy spelling is what produced a
+#: file whose every numeric column was null, which the site then published as
+#: "the venue left them empty" - a conclusion drawn from an absence in the
+#: *reader*, not in the payload (IR-41).  Both spellings are accepted, newest
+#: first, and the key each value came from is written into the row.
+#:   SOURCE: https://docs.kalshi.com/getting_started/fixed_point_migration
+#:   (the market schema: https://docs.kalshi.com/api-reference/market/get-markets)
+KALSHI_NUMERIC_FIELDS: Tuple[Tuple[str, Tuple[str, ...]], ...] = (
+    ("volume", ("volume_fp", "volume")),
+    ("volume_24h", ("volume_24h_fp", "volume_24h")),
+    ("open_interest", ("open_interest_fp", "open_interest")),
+    ("last_price", ("last_price_dollars", "last_price")),
+    ("yes_bid", ("yes_bid_dollars", "yes_bid")),
+    ("yes_ask", ("yes_ask_dollars", "yes_ask")),
+    ("no_bid", ("no_bid_dollars", "no_bid")),
+    ("no_ask", ("no_ask_dollars", "no_ask")),
+    ("settlement_value", ("settlement_value_dollars", "settlement_value")),
+    ("liquidity", ("liquidity_dollars", "liquidity")),
+)
+
+
+def _number(value):
+    """A venue number, which may arrive as a fixed-point or dollar string."""
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    try:
+        return float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+
+
+def kalshi_market_row(market: dict) -> dict:
+    """One settled market, with the venue's numbers read from either spelling.
+
+    ``source_keys`` maps each value back to the key it came from, so a silent
+    re-spelling shows up as a changed mapping rather than as a column of nulls.
+    A field the payload does not carry is recorded as ``None`` - never as 0.0,
+    which would be an observation of zero activity that nobody made.  The
+    verbatim response is what the manifest's SHA-256 covers, so a reader can
+    re-fetch the URL and check both the numbers and the spelling.
+    """
+    row = {"ticker": market.get("ticker"),
+           "event_ticker": market.get("event_ticker"),
+           "title": market.get("title"),
+           "close_time": market.get("close_time"),
+           "status": market.get("status"),
+           "result": market.get("result"),
+           "source": "https://api.elections.kalshi.com/trade-api/v2/markets",
+           "source_class": "OFFICIAL-VENDOR"}
+    used: Dict[str, str] = {}
+    for canonical, keys in KALSHI_NUMERIC_FIELDS:
+        row[canonical] = None
+        for key in keys:
+            value = market.get(key)
+            if value in (None, ""):
+                continue
+            row[canonical] = _number(value)
+            used[canonical] = key
+            break
+    row["source_keys"] = used
+    return row
+
 
 def collect_kalshi(fetcher: Fetcher, out: str) -> dict:
     summary: Dict[str, dict] = {}
@@ -968,16 +1036,16 @@ def collect_kalshi(fetcher: Fetcher, out: str) -> dict:
             continue
         payload = json.loads(body.decode("utf-8"))
         markets = payload.get("markets") or []
-        rows = [{"ticker": m.get("ticker"), "event_ticker": m.get("event_ticker"),
-                 "title": m.get("title"), "close_time": m.get("close_time"),
-                 "settlement_value": m.get("settlement_value"),
-                 "yes_bid": m.get("yes_bid"), "yes_ask": m.get("yes_ask"),
-                 "last_price": m.get("last_price"), "volume": m.get("volume"),
-                 "open_interest": m.get("open_interest"),
-                 "source": "https://api.elections.kalshi.com/trade-api/v2/markets",
-                 "source_class": "OFFICIAL-VENDOR"} for m in markets]
+        rows = [kalshi_market_row(m) for m in markets]
         n = write_jsonl(os.path.join(out, "kalshi", f"{series}_settled.jsonl"), rows)
-        summary[series] = {"ok": True, "rows": n}
+        with_volume = sum(1 for r in rows if r.get("volume") is not None)
+        summary[series] = {"ok": True, "rows": n, "rows_with_volume": with_volume}
+        if rows and not with_volume:
+            # Say it in the run log too: a file whose every volume is null is a
+            # missing signal, and the reader should not have to open the JSONL to
+            # find that out.
+            print(f"  kalshi {series}: {n} rows, none carries a volume - "
+                  f"check the payload's field spelling against KALSHI_NUMERIC_FIELDS")
     return summary
 
 

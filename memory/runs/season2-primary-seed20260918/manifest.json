@@ -1,14 +1,14 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-primary-seed20260918",
- "created_utc": "2026-09-18T04:32:53Z",
- "finalised_utc": "2026-09-18T04:32:55Z",
+ "created_utc": "2026-09-18T04:57:57Z",
+ "finalised_utc": "2026-09-18T04:57:58Z",
  "code": {
   "git": {
-   "commit": "b16ba59a5dc90483630a3a97ee5b07ccc759feb2",
+   "commit": "899b5b8bbd6dea0f48c5f1130b8d72ed40df5b53",
    "branch": "arena/01a0b254-stockpapersim",
    "dirty": true,
-   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
+   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim"
   },
   "python_module_hashes": {
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
@@ -127,12 +127,12 @@
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "84bce5739705bc7010fd89d3cb37ea80668e87aafeb4414f0f652546940b5f70",
+   "sha256": "004d5caae53f86ebec81f123ca56a891f7bc324157ac7981a9348d5fb565ee3d",
    "bytes": 35583,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "d3961afb840cd6de475d51db554c705d3ecfad0305666fa2b1fce70bdd104e1e",
+   "sha256": "719abd860855df480b2ae9e95a70d511aebc2c689617016c30b140affd8b496c",
    "bytes": 27018,
    "kind": "json"
   },
@@ -142,63 +142,63 @@
    "kind": "json"
   },
   "signal_book.json": {
-   "sha256": "af1e4b98eeb8cbc7488ea1e7373aecf23f7aac73ad881608a5b79dceb27ebb60",
+   "sha256": "7deafa4c83b5e2fa5eaf06688d7df550c29fb45bf52febd7a151add6765a11e5",
    "bytes": 312790,
    "kind": "json"
   },
   "market_data.json": {
-   "sha256": "775e1e141c5776704c64687696cbfa1b385bb7bbdeb0b6e2fdc587acf18f34fc",
+   "sha256": "c84c32bfec6575a8279b255bf33000f6a1e190f6ad4d7b8144ec5cfc048041b8",
    "bytes": 1277027,
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "35c89ee6f445cb9607e9ed6df3dc8c48047e9b841c84d52770c973175c18e780",
+   "sha256": "35076156a8361a3bd9d0c8d8cd347d384a66f1d8492c520efd4bb6e0b56e41c1",
    "bytes": 507,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "efe4bdc518e927b6f6beb558377d875729d01a5fd202f218e6f1fdd80e8954f8",
+   "sha256": "556bd391153a29b132c376d5c771cd590ad003a7a012ff7a14820d2c0c95f19b",
    "bytes": 10196,
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "64ac8551bf78bbdb31bacfac905f114c243475fa39c3f74dd09d84be945f5b73",
+   "sha256": "2124086b8b92ab0727fbaef8e0b86d92aa540394a472b66df1ae53d2080e78ca",
    "bytes": 1510,
    "kind": "jsonl.gz",
    "rows": 168
   },
   "events/equity.jsonl.gz": {
-   "sha256": "e2b8d49b2b400746ccf4b5736456198c4e512029cd3db36381ab96af3ffa015a",
+   "sha256": "33e4a00836828cac2fbbf3c6b75502ba1dbb856274918a5770803ab2ef8c88f2",
    "bytes": 75419,
    "kind": "jsonl.gz",
    "rows": 3514
   },
   "events/fills.jsonl.gz": {
-   "sha256": "25ba26a4ebc3117301de83ccd53c43db499a846c51311579a670795aa9d07855",
+   "sha256": "e9ce7524d2fc29b296162eb3a2566f4b980e31a0ba1585bb667a9ab044a28822",
    "bytes": 59976,
    "kind": "jsonl.gz",
    "rows": 771
   },
   "events/margin.jsonl.gz": {
-   "sha256": "9969d55f0029d04ac2e4676fa6e2b28b6ba9a302c0cf8f6372516c5ac983dcca",
+   "sha256": "a4aaff09b05ac7bc3930a25be54d54aa21d7a591980e44c9e3831e3f8e1d9f9f",
    "bytes": 336,
    "kind": "jsonl.gz",
    "rows": 8
   },
   "events/orders.jsonl.gz": {
-   "sha256": "7035a324fcc7f1a0d001a58bb314366936e1ebb6473c2bdd34f08a8e598ed619",
+   "sha256": "05a74df58550de927bee3ac6a509f053dc82e7e171cbc505eb27bf37db7e8530",
    "bytes": 8004,
    "kind": "jsonl.gz",
    "rows": 771
   },
   "events/positions.jsonl.gz": {
-   "sha256": "e82ed700e535683b2230be35f26a6172ab47be7bc72065b9473ef25ab315983a",
+   "sha256": "1e35feedb9b216c40dcfc9b8defc70bd738a496bcc47c0fcb22790b1f1966081",
    "bytes": 70036,
    "kind": "jsonl.gz",
    "rows": 2729
   },
   "events/quotes.jsonl.gz": {
-   "sha256": "7c400d5ba1d286da975096e0478c19aa2fb9b04a10d7758dde32f1147f544257",
+   "sha256": "d827f309c06c2045b6dd52ad2fef9bc4a963aae054afc2d82ef428428528293b",
    "bytes": 116692,
    "kind": "jsonl.gz",
    "rows": 6024
@@ -447,16 +447,16 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-18T04:32:53Z",
-  "finished_utc": "2026-09-18T04:32:55Z",
-  "elapsed_seconds": 1.3
+  "started_utc": "2026-09-18T04:57:57Z",
+  "finished_utc": "2026-09-18T04:57:58Z",
+  "elapsed_seconds": 1.1
  },
  "irregularity_count": 0,
  "data_sources": {
   "market": {
    "SPY": {
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "76a2a5c8fa79e66cd60ad35e113e9e15b258d9f9b7202514a0a8d582bb3a5376",
+    "sha256": "66f9763b6a6e09625e2f51142c35c407b94ebe26f64bfc568887fe41c56d121a",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -475,7 +475,7 @@
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "8df09a16c564db57834cbf5e3284b7c80dc46ccd7b4cf2568a1a36aefe771d33",
+    "sha256": "b4fe5060af4498bebffe023bb18316a28f3ce050be0bb3d489a248c3e3a0c444",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -494,7 +494,7 @@
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "9aec469da0eb3af584a166a8692c8f74a2e31cad9020265d861aa50c2c099f3c",
+    "sha256": "5c8cc5bcaa7f839d64cea08320ffcfff9d4da2071a979b12a20064fb78675083",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -551,7 +551,7 @@
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "6dee7f427904f8ec1318774d90b1a606ed698236f21ecd4ffd6b52e3927d3d7b",
+    "sha256": "2d952dc82dac0f254dfd5718cef6bb204dc8d7c0cc6576350a95777d73c17544",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -570,7 +570,7 @@
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "00b523d8ee74d16b4c83f91f686b76465600232d4beb2f68be31911a3d88bac9",
+    "sha256": "54ba4320a6bdf8d94578d225dc4f1ba1fa66ba0e3aeaef6a11bb4516feda4664",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -589,7 +589,7 @@
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "62bc42f432f59198803f94d6f4612388205de8a6bc2146f0ddd825b7d19321af",
+    "sha256": "a82b3ec24c0e0834197255282d5439efed7c02ca4d378e0dfbf2b29fbf4a28b5",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -608,7 +608,7 @@
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "5555d6f434148f839233f16cfd0717f328a2ae82146a8eee8a3db6f9599373fb",
+    "sha256": "ea466f8353d9f90de70e461cbc53cc2f4064541007256d635f498cf42a0a574b",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -722,7 +722,7 @@
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "ff10e6538b0e488f4d558dc69d862ae2c0ccf8a69dbe600582399699f1a8e3ff",
+    "sha256": "7b95ad852474ce837802cde6a7bfaff3a7f5fc85852ed4ab99ae9a7a5de0ef66",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -741,7 +741,7 @@
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "fda2273bfcd2c5880562c06568c0cdee8c1051168260c6136f07e1108375921e",
+    "sha256": "d65a7cddcbdc673cf5cf1c0969b44f5358991e22350b1595a26a996e15459883",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -760,7 +760,7 @@
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "3cf9dea86fd2ed598c37095c66e63ec3f1e66a1552e3b17cf00407310f034a69",
+    "sha256": "54cd36eb72eea82be4c65598a6923d9351ed1682f23018ca149f7344a2edf278",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -779,7 +779,7 @@
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "94ecd3381ed881c6073dc4af6a10237d0c495e679b7d5161e9fc6975f94895aa",
+    "sha256": "9101d830b0a26d17940b891dd999bf0b1deb4297089416ddd21f32ebd16445d4",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -798,7 +798,7 @@
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "ac4c3a9fed4fb014bd7b684994ec3a0dd60dac87961e347dd528b1b1a2a6a7ef",
+    "sha256": "b568de3c056ad06dcab044197060b97f6cb5d0e11a714ca6ef7d79e8951cda71",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -817,7 +817,7 @@
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "96b748cccc6bd31664dd3677f72572c0c87ebb66228115e06697a1e14a9c8fe9",
+    "sha256": "1f42b35bb09fba6c44dcae11b2ca01d4de4319c12fcc533b04f175b5772392d7",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -836,7 +836,7 @@
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "87c99a8bc647428ff95727221baa7854c89d3dd37104c59d42445d8304aa1f70",
+    "sha256": "c2c7b514d300ea21fabaa83ec79f9f9d7aed7373b239a980f640b800e4af1e83",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -874,7 +874,7 @@
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "140dc39b32cc2104cfc89d292cedd448671c0f6cc8611dbf56728c670c637d62",
+    "sha256": "8b331a484fdf9399de89753d36b0a512b6af78c521a62f2f95dab91ca490da51",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -893,7 +893,7 @@
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "c8cf1cd7e6a4d35d6f2b4bf4a94d3199c08586a8f76e6dd1cdf5a00fa6732718",
+    "sha256": "aee7dcfd9c46166bf26fa952a9d39db32cd04d08a74e5e997ea452066adac141",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -951,10 +951,10 @@
   "fills": 771,
   "round_trips": 355,
   "net_pnl_usd": 149756.9635,
-  "digest_sha256": "eeb5a64af31b651de156e4cc33b919627c4ff7a2cb11dfd93aaa8643d1361e7b",
+  "digest_sha256": "bd0510d87eff14634ae44bbdef4c556dbc553aae0e36b8badd298c43ed4b0e54",
   "files": {
    "ledger_fills.jsonl": {
-    "sha256": "d22e738738dfd2c7f563b162f61fc118248a94a3d71b1e9a1326995be308602b",
+    "sha256": "b8cc7ad9d889ff8ce42aa74ec7e49e15d8a92c5127f15ac99d93d637212bc63a",
     "bytes": 938867
    },
    "ledger_trips.jsonl": {
@@ -966,7 +966,7 @@
     "bytes": 663
    },
    "ledger_fills.csv": {
-    "sha256": "74f1b293a34b128c3dc1bc94d295acb8a30a406f63b1dc065fb1f2087533365a",
+    "sha256": "911f8963283e06c3eb1143acd3cac9b5fc9e8e4a7b44756e60de2b7a61270a50",
     "bytes": 313416
    }
   }

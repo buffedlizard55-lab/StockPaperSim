@@ -40,7 +40,7 @@ import os
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .calendar import REPO_ROOT
-from .realdata import REAL_ROOT, Series, load_fred, load_series
+from .realdata import RealDataUnavailable, REAL_ROOT, Series, load_fred, load_series
 
 
 def _rel(path: str) -> str:
@@ -57,6 +57,14 @@ UNPROVEN = "UNPROVEN-MAPPING"
 NO_MARKET = "NO-TRADABLE-INSTRUMENT"
 
 BACKTESTED = "BACKTESTED"
+# Signals that are just a *real price of a traded instrument* under another
+# name (GLD's close, SPY's dollar volume).  A strategy that reads only these is
+# not waiting on an external dataset, so it must not be labelled
+# "signal-dependent": that label is what tells a reader a zero return means
+# "data missing" rather than "the rule never fired".  The first Season 2 run
+# labelled @GOLD_Trend_GLD signal-dependent on the strength of ``gold_close``,
+# which is GLD's own price.
+PRICE_DERIVED = ("gold_close", "spy_dollar_volume_20d")
 FORWARD_ONLY = "FORWARD-ONLY"
 
 #: The register.  ``evidence`` names the collected file(s) a backtest would
@@ -72,7 +80,11 @@ MASTER_SITE_SIGNALS: List[dict] = [
         "site_url": MASTER_SITE_URL,
         "official_url": "https://www.sec.gov/edgar/search/",
         "source_class": "OFFICIAL",
-        "status": FORWARD_ONLY,
+        # Backtestable: the CEO/CFO behaviour is read from the real Form 4 stream
+        # (which tags the reporting officer's title and its date), not from a
+        # project this directory does not contain. If the Form 4 collection does
+        # not land, the participant reports DATA-MISSING rather than trading.
+        "status": BACKTESTED,
         "mapping": STRONG,
         "mapping_note": (
             "The directory was enumerated from the official GitHub API "
@@ -466,6 +478,43 @@ def _count_in_window(event_dates: Sequence[str], dates: Sequence[str], t: int,
     return sum(1 for d in event_dates if lo <= d < hi)
 
 
+# -- League injury feeds (OFFICIAL documents, no retrievable archive) -------
+INJURY_SIGNALS = ("nfl_injury_report", "nba_injury_report")
+
+
+def _injury_signals(book: SignalBook, md, root: str) -> None:
+    """Register the two league injury feeds as forward-only signals.
+
+    The NFL publishes the weekly injury report as a live page and the NBA as a
+    dated PDF index; neither league offers an enumerable archive, so there is no
+    historical series to trade.  Both are registered explicitly - as MISSING
+    arrays with the official URL - so that "this strategy is waiting for data
+    that cannot be backfilled" is a published state of the competition rather
+    than a participant that silently returns 0.0%.
+    """
+    captured = sorted(
+        name for name in os.listdir(os.path.join(root, "sports", "official"))
+        if name.endswith(".raw")
+    ) if os.path.isdir(os.path.join(root, "sports", "official")) else []
+    evidence = [os.path.join("data/real/sports/official", name) for name in captured]
+    urls = {
+        "nfl_injury_report": "https://www.nfl.com/injuries/",
+        "nba_injury_report":
+            "https://official.nba.com/nba-injury-report-2025-26-season/",
+    }
+    for name in INJURY_SIGNALS:
+        book._blank(name)
+        book._register(
+            name, "MISSING", 0, [], evidence,
+            "official feed resolves"
+            + (f" (captured: {', '.join(captured)})" if captured
+               else " (not captured by the last collection run)")
+            + ", but the league publishes it as a live document with no "
+              "retrievable history, so it is forward-only and places no "
+              "backdated trades",
+            urls[name])
+
+
 def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
     """Build every signal from the collected files; missing files stay missing."""
     book = SignalBook(md.dates)
@@ -476,6 +525,7 @@ def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
     _kalshi_signals(book, md, root)
     _fred_signals(book, md, root)
     _yahoo_signals(book, md, root)
+    _injury_signals(book, md, root)
     book.finalise()
     return book
 
@@ -541,8 +591,19 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
         book._blank(f"insider_ceo_buys_30d::{symbol}")
     book._blank("insider_buy_ratio_30d")
     if not os.path.exists(path):
-        book._register("insider_buys_30d", "MISSING", 0, [], [],
-                       "no collected Form 4 file", "https://www.sec.gov/")
+        # Registered as MISSING *and* left as a real zero array: the site plots a
+        # series for every registered name, and a strategy that reads a missing
+        # signal must see 0.0 (which is what ``value`` returns) rather than a
+        # crash or an unregistered hole.  The unqualified names are blanked here
+        # as well, so the invariant "every registered name has an array" holds.
+        for name in ("insider_buys_30d", "insider_ceo_buys_30d",
+                     "insider_buy_ratio_30d"):
+            book._blank(name)
+        book._register_all(("insider_buys_30d", "insider_ceo_buys_30d",
+                            "insider_buy_ratio_30d"),
+                           "MISSING", 0, [], [],
+                           "no collected Form 4 file",
+                           "https://www.sec.gov/cgi-bin/browse-edgar")
         return
     buys: Dict[str, List[str]] = {s: [] for s in tickers}
     ceo_buys: Dict[str, List[str]] = {s: [] for s in tickers}
@@ -649,7 +710,8 @@ def _weather_signals(book: SignalBook, md, root: str) -> None:
         book._blank(name)
     if not os.path.exists(path):
         book._register("weather_cold_anomaly_10d", "MISSING", 0, [], [],
-                       "no collected NCEI file", "https://www.ncei.noaa.gov/")
+                       "no collected NCEI file",
+                       "https://www.ncei.noaa.gov/access/services/data/v1")
         return
     rows = json.loads(open(path, "r", encoding="utf-8").read())
     tmin: Dict[str, float] = {}
@@ -767,9 +829,9 @@ def _fred_signals(book: SignalBook, md, root: str) -> None:
     book._blank("fred_slope_bps")
     book._blank("fred_slope_change_21d")
     try:
-        dgs10, path10, _ = load_fred(root, "DGS10")
-        dgs3, _, _ = load_fred(root, "DGS3MO")
-    except Exception:  # noqa: BLE001 - missing file is a data state, not a crash
+        dgs10, path10, _ = load_fred("DGS10", root)
+        dgs3, _, _ = load_fred("DGS3MO", root)
+    except RealDataUnavailable:  # a missing file is a data state, not a crash
         book._register("fred_slope_bps", "MISSING", 0, [], [], "no collected yield files",
                        "https://fred.stlouisfed.org/series/DGS10")
         return
@@ -799,8 +861,8 @@ def _yahoo_signals(book: SignalBook, md, root: str) -> None:
         book._blank(name)
     files = []
     try:
-        series: Series = load_series(root, "GLD")
-    except Exception:  # noqa: BLE001
+        series: Series = load_series("GLD", root)
+    except RealDataUnavailable:  # a missing file is a data state, not a crash
         series = None
     for t in range(len(md.dates)):
         if "GLD" in md.instruments:

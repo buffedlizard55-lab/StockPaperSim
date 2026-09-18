@@ -43,7 +43,14 @@ def _open_write(path: str, compress: bool = False):
 
 
 def _reference(md, symbol: str, date: str) -> dict:
-    """Real bar for ``symbol`` on ``date`` plus the file it came from."""
+    """Real bar for ``symbol`` on ``date`` plus the file it came from.
+
+    ``md`` may be None: the ledger is written to be readable on its own, and a
+    caller who only wants the round-trip arithmetic (a test, or an audit of an
+    exported CSV) should not have to rebuild the whole market.
+    """
+    if md is None:
+        return {}
     try:
         t = md.dates.index(date)
         bar = md.bar(symbol, t)
@@ -197,10 +204,20 @@ def build_ledger(fills: Sequence[dict], md, username: str = "") -> dict:
         "net_pnl_usd": round(sum(t["net_pnl_usd"] for t in closed), 4),
         "win_rate_pct": (round(100.0 * sum(1 for t in closed if t["net_pnl_usd"] > 0)
                                / len(closed), 2) if closed else None),
-        "average_holding_sessions": (round(sum(
-            _sessions_between(t["entry_date"], t["exit_date"], md) for t in closed)
-            / len(closed), 2) if closed else None),
-        "total_notional_usd": round(sum(r["notional"] for r in rows), 2),
+        # Holding period is in *sessions*, which needs the market calendar. A
+        # caller who passed ``md=None`` (an audit of an exported tape, a test)
+        # gets None rather than a wrong number: a calendar-day difference would
+        # quietly disagree with every other holding figure in the ledger.
+        "average_holding_sessions": _mean(
+            [_sessions_between(t["entry_date"], t["exit_date"], md) for t in closed]
+            if md is not None else []),
+        # ``notional`` is the engine's own field. A tape that arrived from
+        # elsewhere (an exported CSV, a hand-built fixture) may not carry it, and
+        # traded notional is exactly quantity times price, so it is re-derived
+        # rather than raising - the ledger is the tool that checks other people's
+        # arithmetic and should not depend on their bookkeeping.
+        "total_notional_usd": round(sum(
+            r.get("notional") or r["filled_qty"] * r["avg_price"] for r in rows), 2),
         "total_explicit_cost_usd": round(sum(
             r.get("commission", 0.0) + r.get("exchange_fee", 0.0)
             + r.get("regulatory_fee", 0.0) - r.get("rebate", 0.0) for r in rows), 4),
@@ -222,14 +239,17 @@ def build_ledger(fills: Sequence[dict], md, username: str = "") -> dict:
     return {"fills": rows, "round_trips": trips, "summary": summary}
 
 
-def _sessions_between(entry: str, exit_date: str, md) -> int:
+def _sessions_between(entry: str, exit_date: str, md) -> Optional[int]:
+    """Sessions between two dates on the market calendar, or None if unknown."""
+    if md is None:
+        return None
     try:
         return md.dates.index(exit_date) - md.dates.index(entry)
     except ValueError:
         return 0
 
 
-def _mean(values: Sequence[float]) -> Optional[float]:
+def _mean(values: Sequence[Optional[float]]) -> Optional[float]:
     values = [v for v in values if v is not None]
     if not values:
         return None
@@ -288,7 +308,7 @@ def read_ledger(run_dir: str) -> Dict[str, List[dict]]:
     return {"fills": _read(LEDGER_FILLS), "round_trips": _read(LEDGER_TRIPS)}
 
 
-def verify_ledger(fills: Sequence[dict], md,
+def verify_ledger(fills: Sequence[dict], md=None,
                   engine_final_equity: Optional[float] = None,
                   engine_realized_pnl: Optional[float] = None,
                   carry: Optional[Sequence[dict]] = None,

@@ -138,7 +138,7 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "provides": "regular-season finals with dates, teams, scores and records",
      "note": "The league's own feed, used as the sports-attention clock."},
     {"id": "espn", "label": "ESPN scoreboard endpoints (NFL, NBA, NCAAF)",
-     "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+     "url": "https://site.api.espn.com/apis/site/v2/sports",
      "source_class": "SECONDARY", "path": "data/real/sports/",
      "provides": "dated NFL/NBA/NCAAF results for the attention signals",
      "note": "Secondary: the official league sites publish the same scores but "
@@ -166,7 +166,7 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "note": "The venue's own API. The payload's price and volume fields came "
              "back null, which is recorded rather than smoothed over."},
     {"id": "nasdaq", "label": "Nasdaq quote API (independent price cross-check)",
-     "url": "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf",
+     "url": "https://api.nasdaq.com/api/quote",
      "source_class": "SECONDARY", "path": "data/real/crosschecks/",
      "provides": "an independent publisher's daily closes for cross-checking the "
                  "price files used as reference",
@@ -178,6 +178,71 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "provides": "the mapping from each MasterSite project to a tradable signal",
      "note": "The mapping itself is this project's judgement, not a source claim; "
              "the register labels each one STRONG, WEAK or UNPROVEN."},
+    {"id": "sec_data", "label": "SEC structured data APIs (ticker map, submissions, filing archive)",
+     "url": "https://www.sec.gov/files/company_tickers.json",
+     "source_class": "OFFICIAL", "path": "data/real/sec/",
+     "provides": "the official ticker->CIK map, per-issuer submission indexes and the "
+                 "filing archive directory tree",
+     "note": "The ticker map answered HTTP 403 to an anonymous User-Agent from the "
+             "collection runner; it now sends a contact address in the UA as SEC's "
+             "own webmaster FAQ requires, and the outcome is recorded either way."},
+    {"id": "sec_submissions", "label": "SEC submissions API",
+     "url": "https://data.sec.gov/submissions/CIK",
+     "source_class": "OFFICIAL", "path": "data/real/sec/",
+     "provides": "an issuer's filing history, one JSON document per CIK",
+     "note": "Same 10-requests-per-second courtesy limit as the rest of EDGAR, so the "
+             "collector throttles to one request a second (SEC_MIN_INTERVAL)."},
+    {"id": "sec_archive", "label": "SEC EDGAR filing archive",
+     "url": "https://www.sec.gov/Archives/edgar/data",
+     "source_class": "OFFICIAL", "path": "data/real/sec/",
+     "provides": "the raw Form 4 XML documents the insider signals are parsed from",
+     "note": "The filing text itself, not a summary: the entry states the officer "
+             "title and transaction code, which is what the CEO/CFO filter needs."},
+    {"id": "sec_faq", "label": "SEC webmaster FAQ (automated-access policy)",
+     "url": "https://www.sec.gov/about/webmaster-frequently-asked-questions",
+     "source_class": "OFFICIAL", "path": "sim/realdata.py",
+     "provides": "the published rule that automated EDGAR access must declare a "
+                 "User-Agent with contact details",
+     "note": "Cited because the collector's header changed to comply with it."},
+    {"id": "fred_series", "label": "FRED series pages",
+     "url": "https://fred.stlouisfed.org/series/DGS10",
+     "source_class": "OFFICIAL", "path": "data/real/fred/",
+     "provides": "the human-readable page (units, revision policy) for the series "
+                 "the CSV downloads supply",
+     "note": "DGS10/DGS3MO supply the yield-curve signal; GOLDPMGBD228NLBM was "
+             "discontinued (404) and GOLDAMGBD228NLBM is collected beside it."},
+    {"id": "stooq", "label": "Stooq daily CSV (attempted second publisher)",
+     "url": "https://stooq.com/q/d/l",
+     "source_class": "SECONDARY", "path": "data/real/prices/stooq/",
+     "provides": "nothing: every request was refused",
+     "note": "Eight of eight requests came back \"Access denied\" from the collection "
+             "runner, so this publisher contributes no price file at all; the Nasdaq "
+             "quote API was added as the independent cross-check instead."},
+    {"id": "nba_static", "label": "NBA CDN schedule feed (attempted)",
+     "url": "https://cdn.nba.com/static/json/staticData/scheduleLeagueV2_1.json",
+     "source_class": "OFFICIAL", "path": "data/real/sports/",
+     "provides": "nothing: HTTP 403 from the collection runner",
+     "note": "Recorded as attempted rather than quietly dropped; the NBA injury "
+             "signal is forward-only regardless, because no archive exists."},
+    {"id": "nba_stats", "label": "NBA stats scoreboard endpoint (attempted)",
+     "url": "https://stats.nba.com/stats/scoreboardv3",
+     "source_class": "OFFICIAL", "path": "data/real/sports/",
+     "provides": "nothing: HTTP 403 from the collection runner",
+     "note": "The league's stats host rejects datacentre clients; the official "
+             "injury-report documents remain the citation for the forward probe."},
+    {"id": "nba_site", "label": "NBA official site (injury report index host)",
+     "url": "https://www.nba.com",
+     "source_class": "OFFICIAL", "path": "data/real/sports/",
+     "provides": "the league's own publication channel for the daily injury report",
+     "note": "Cited at the host because the injury-report path moves between "
+             "seasons; the stable season URL is registered beside it."},
+    {"id": "github", "label": "This repository (self-citation for provenance notes)",
+     "url": "https://github.com/buffedlizard55-lab/StockPaperSim",
+     "source_class": "ASSERTED", "path": ".",
+     "provides": "the commit and branch the collector records next to each file it "
+                 "writes",
+     "note": "Every data file is committed here with its SHA-256, so a reader can "
+             "check the season against the same bytes the run used."},
 )
 
 
@@ -216,8 +281,26 @@ class Series:
         return {b.date: b for b in self.bars}
 
 
+def _reject_swapped_arguments(series: str, root: str) -> None:
+    """Catch ``load_x(root, "SPY")`` - the argument order that once silently
+    switched every collected signal in Season 2 to MISSING.
+
+    Both loaders take ``(series, root)``.  A caller who passes them the other way
+    round used to get an exception that the signal builders swallowed as "no
+    data", which is the worst possible outcome: the site reported a missing
+    source and nothing said the file was sitting right there.  Raise a
+    ``TypeError`` - a programming error is not a data state.
+    """
+    looks_like_path = os.sep in str(series) or str(series) in (".", "..")
+    if looks_like_path:
+        raise TypeError(
+            f"argument order: {series!r} looks like a directory, so this call "
+            f"passed (root, series) instead of (series, root)")
+
+
 def load_series(symbol: str, root: str = REAL_ROOT) -> Series:
     """Read one collected vendor file. Raises if it is absent or empty."""
+    _reject_swapped_arguments(symbol, root)
     slug = symbol.replace("^", "_")
     path = os.path.join(root, "prices", "yahoo", f"{slug}.json")
     if not os.path.exists(path):
@@ -248,6 +331,7 @@ def load_fred(series: str, root: str = REAL_ROOT) -> Tuple[Dict[str, float], str
     shortens the warm-up, which is exactly the kind of defect the run manifest
     is supposed to expose, so the choice is also recorded in the diagnostics.
     """
+    _reject_swapped_arguments(series, root)
     directory = os.path.join(root, "fred")
     if not os.path.isdir(directory):
         raise RealDataUnavailable(f"no collected FRED directory at {directory}")
@@ -388,7 +472,13 @@ def build_real_market_data(root: str = REAL_ROOT,
         volume_in_competition = [b.volume for b in rows[first_competition:]]
         name, sector_name, asset_type = _NAME.get(
             symbol, (f"{symbol} (collected)", "unclassified", "EQUITY"))
-        dividends = [{"date": d.get("date"), "amount": d.get("amount"),
+        # ``ex_date`` is the key the engine and the season-1 market both read
+        # (``engine._build_dividend_map``), so the collected vendor field
+        # ``date`` is renamed here rather than leaking a second spelling.  An
+        # earlier revision of this loader wrote "date" and every subsequent
+        # Season 2 run died with KeyError: 'ex_date' - the trades that survived
+        # it are the reason the register now carries a "why" for each rename.
+        dividends = [{"ex_date": d.get("date"), "amount": d.get("amount"),
                       "provenance": "vendor event feed (secondary)"}
                      for d in series.dividends if d.get("date") in set(dates)]
         instruments[symbol] = Instrument(

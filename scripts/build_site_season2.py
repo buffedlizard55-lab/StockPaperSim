@@ -867,6 +867,54 @@ def _mean(values: Iterable[Optional[float]]) -> Optional[float]:
 
 # --------------------------------------------------------------------------
 
+#: Marker for the Season 2 links injected into Season 1's pages. Its presence is
+#: what makes ``inject_banner`` idempotent: a page that already carries the
+#: banner is returned unchanged, so the injection can be applied to a whole
+#: directory without tracking which files were already done.
+BANNER_MARK = 'id="season2-banner"'
+
+BANNER_CALLOUT = (
+    '<section id="season2-banner" class="card">'
+    '<h2>Season 2 is published: the same competition on real collected prices</h2>'
+    '<p>Season 1 above is a calibrated replay of the real S&amp;P 500 and VIX path. '
+    '<strong>Season 2</strong> runs fourteen further strategies on '
+    '<em>real collected prices</em> - every fill carries the daily bar it traded '
+    'against, the file it came from and its SHA-256 - with an independently '
+    're-derived trade ledger, a MasterFeed register of every source the brief '
+    'named, and two cost/liquidity stress panels.</p>'
+    '<p><a href="{p}season2/index.html">Season 2 overview</a> · '
+    '<a href="{p}season2/leaderboard.html">Leaderboard</a> · '
+    '<a href="{p}season2/ledger.html">Verified trade ledger</a> · '
+    '<a href="{p}season2/masterfeed.html">MasterFeed register</a> · '
+    '<a href="{p}season2/data.html">Data custody</a></p>'
+    '</section>')
+
+
+def inject_banner(html_text: str, callout: bool = True, prefix: str = "") -> str:
+    """Add the Season 2 links to a Season 1 page, once.
+
+    Two edits, both idempotent: a nav entry appended to the site's own ``<nav>``
+    (every page, so the Season 2 section is reachable from anywhere) and, on the
+    overview page only, a callout that says what Season 2 is.  The nav is found by
+    its ``</nav>`` close rather than by rewriting the nav list, because Season 1's
+    page shell is built by a different script and must stay the single owner of
+    its own markup.
+    """
+    if BANNER_MARK in html_text:
+        return html_text
+    nav_link = f'<a href="{prefix}season2/index.html">Season 2 (real prices)</a>'
+    if '</nav>' in html_text:
+        html_text = html_text.replace('</nav>', nav_link + '</nav>', 1)
+    if callout:
+        marker = '<main class="wrap">'
+        if marker in html_text:
+            html_text = html_text.replace(
+                marker, marker + "\n" + BANNER_CALLOUT.format(p=prefix), 1)
+        else:  # pragma: no cover - the shell always has a <main>
+            html_text = BANNER_CALLOUT.format(p=prefix) + html_text
+    return html_text
+
+
 def build(root: str, out: str, run_id: str = "") -> List[str]:
     d = Season2Site(root, run_id)
     written: List[str] = []
@@ -906,6 +954,24 @@ def build(root: str, out: str, run_id: str = "") -> List[str]:
     for name, payload in payloads.items():
         write(f"assets/data/season2/{name}",
               json.dumps(payload, indent=1, sort_keys=False) + "\n")
+
+    # Prune anything this builder no longer produces. ``docs/`` is committed and
+    # diffed against a fresh build in CI, and a JSON payload from an earlier
+    # revision of this script (``collected_data.json`` was observed) would keep
+    # being served - and keep being diffed - as if it were current. Season 1's
+    # builder prunes its participant pages for the same reason.
+    keep = set(written)
+    for base in ("season2", os.path.join("assets", "data", "season2")):
+        directory = os.path.join(out, base)
+        if not os.path.isdir(directory):
+            continue
+        for name in sorted(os.listdir(directory)):
+            rel = os.path.join(base, name)
+            path = os.path.join(directory, name)
+            if os.path.isdir(path):
+                continue
+            if rel not in keep:
+                os.remove(path)
     return written
 
 

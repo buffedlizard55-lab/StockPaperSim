@@ -790,7 +790,7 @@ class InjuryFeedForward(Strategy):
     #: site and the audit can all state which source a participant depends on, and
     #: so a strategy whose source is missing can be reported as DATA-MISSING rather
     #: than silently trading a column of zeros.
-    signal_names = ()
+    signal_names = ("nfl_injury_report", "nba_injury_report")
 
 
     spec = StrategySpec(

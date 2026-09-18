@@ -96,8 +96,12 @@ class TestLedger(unittest.TestCase):
     """The ledger must re-derive an account from its own fill tape."""
 
     def _fill(self, date, symbol, side, qty, price, commission=0.0, fee=0.0):
+        """A fill shaped like the engine's tape, so the ledger is tested on the
+        real schema (``notional`` and ``status`` included) rather than on a
+        fixture that quietly omits the fields under test."""
         return {"participant": "@T", "date": date, "symbol": symbol, "side": side,
                 "filled_qty": qty, "requested_qty": qty, "avg_price": price,
+                "notional": round(qty * price, 6), "status": "filled",
                 "commission": commission, "exchange_fee": fee, "regulatory_fee": 0.0,
                 "rebate": 0.0, "interval": 0, "reason": "test"}
 
@@ -244,19 +248,27 @@ class TestSeason2Roster(unittest.TestCase):
 
     def test_masterfeed_register_is_complete_for_the_brief(self):
         register = masterfeed.signal_register()
-        requested = {row["requested_as"] for row in register}
+        # The brief named the *site* projects; the register keys on the function
+        # ("weather") and carries the project name in ``repo``.  Accept either, so
+        # the test fails when a project is genuinely absent rather than when the
+        # naming convention differs from the brief's wording.
+        named = {row["requested_as"] for row in register}
+        named |= {row["repo"] for row in register if row.get("repo")}
         for item in ("CEO", "SFWeather", "Insider-trades", "TradingViewTheLeap",
                      "NFLInjuryReport", "NBAInjuryReport", "DrugAnalysis",
                      "Ncaa-football-alerts", "NFL-scoreboard", "MLB-Live-PBP",
                      "SportsPred", "GOLD", "Tradingview-pinescript-editor",
                      "KalshiPaperSim"):
-            self.assertIn(item, requested, f"{item} is missing from the register")
+            self.assertIn(item, named, f"{item} is missing from the register")
         for row in register:
             self.assertIn(row["source_class"], ("OFFICIAL", "OFFICIAL-VENDOR",
                                                 "SECONDARY", "ASSERTED"),
                           row)
-            self.assertIn(row["status"], ("FETCHED", "PARTIAL", "FORWARD-ONLY",
-                                          "NOT-RETRIEVABLE"), row)
+            # BACKTESTED = history retrievable and used here; FORWARD-ONLY = the
+            # source exists but no retrievable history does.  There is no
+            # third state: "not retrievable at all" would mean no source, and
+            # such a project is not in the register.
+            self.assertIn(row["status"], ("BACKTESTED", "FORWARD-ONLY"), row)
             self.assertIn(row["mapping"], ("STRONG-MAPPING", "WEAK-MAPPING",
                                            "UNPROVEN-MAPPING"), row)
             self.assertTrue(row["official_url"].startswith("https://"), row)

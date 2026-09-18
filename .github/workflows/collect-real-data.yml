@@ -120,12 +120,32 @@ jobs:
           if git diff --cached --quiet; then
             echo "no changes to commit"
           else
+            # The runner checked out the branch as it was when the run started;
+            # anything pushed in the meantime makes the commit land on a stale
+            # base and the push is rejected (observed: run 35299710970 collected
+            # successfully and then failed here, losing the whole collection).
+            # Rebase onto the branch tip before committing, then push with an
+            # explicit retry so a concurrent push cannot discard the data.
+            BRANCH="${{ github.ref_name }}"
+            git fetch --quiet origin "$BRANCH"
+            git rebase --quiet "origin/$BRANCH" || {
+              echo "::warning::could not rebase onto origin/$BRANCH; committing on the checked-out base"
+              git rebase --abort || true; }
             git commit -m "data: collect real market and event data from official sources
 
           Collected by scripts/collect_real_data.py on a GitHub runner because the
           development sandbox has no outbound network. Every request, status, byte
           count and SHA-256 is recorded in data/real/collection_manifest.json."
-            git push origin "HEAD:${{ github.ref_name }}"
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:${{ github.ref_name }}"; then
+                echo "pushed on attempt $attempt"
+                break
+              fi
+              echo "::warning::push attempt $attempt rejected; rebasing and retrying"
+              git fetch --quiet origin "$BRANCH"
+              git rebase --quiet "origin/$BRANCH" || git rebase --abort || true
+              [ "$attempt" = "3" ] && { echo "::error::could not push the collected data"; exit 1; }
+            done
           fi
 
       - name: Upload the collection manifest as an artifact

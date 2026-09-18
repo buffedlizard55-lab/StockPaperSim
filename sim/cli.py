@@ -433,16 +433,35 @@ def cmd_build_site(args: argparse.Namespace) -> int:
     if rc != 0:
         return rc
 
-    index_path = os.path.join(args.out, "index.html")
     try:
-        if os.path.exists(index_path):
-            with open(index_path, "r", encoding="utf-8") as handle:
-                html = handle.read()
-            with open(index_path, "w", encoding="utf-8") as handle:
-                handle.write(build_site_season2.inject_banner(html))
+        # Season 1's pages are complete before Season 2's are rendered, so the
+        # cross-links are injected here rather than by two builders that would
+        # each have to know about the other's files: the nav entry goes on every
+        # Season 1 page (so the Season 2 section is reachable from any of them)
+        # and the explanatory callout goes on the overview page only. The
+        # injection is idempotent, which matters because docs/ is diffed against
+        # a fresh build in CI.
+        for dirpath, dirnames, filenames in os.walk(args.out):
+            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets")]
+            for name in sorted(filenames):
+                if not name.endswith(".html"):
+                    continue
+                page_path = os.path.join(dirpath, name)
+                with open(page_path, "r", encoding="utf-8") as handle:
+                    html = handle.read()
+                # A page one directory down needs "../" to reach the Season 2
+                # section; getting this wrong published a nav link that 404'd on
+                # all twenty Season 1 participant pages (caught by the links test).
+                rel_dir = os.path.relpath(dirpath, args.out)
+                depth = 0 if rel_dir == "." else len(rel_dir.split(os.sep))
+                injected = build_site_season2.inject_banner(
+                    html, callout=(name == "index.html"), prefix="../" * depth)
+                if injected != html:
+                    with open(page_path, "w", encoding="utf-8") as handle:
+                        handle.write(injected)
         written = build_site_season2.build(args.memory_root, args.out, args.run)
         print(f"  season 2: {len(written)} pages under docs/season2/ "
-              f"(from run {build_site_season2.Season2Data(args.memory_root, args.run).run_id})")
+              f"(from run {build_site_season2.Season2Site(args.memory_root, args.run).run_id})")
     except SystemExit as exc:
         # No Season 2 run in this memory root (for example a scratch root built
         # only to check Season 1 determinism). Say so loudly rather than
@@ -489,9 +508,13 @@ def cmd_season2(args: argparse.Namespace) -> int:
         print(f"  fills {v['summary']['fill_count']:5d} | round trips "
               f"{v['summary']['round_trips_closed']:4d} | net P&L from round trips "
               f"${v['summary']['net_pnl_usd']:>14,.2f}")
+        bound = max((p.get("rounding_bound_usd") or 0.0)
+                    for p in v["per_participant"]) if v.get("per_participant") else 0.0
         print(f"  ledger digest {v['ledger_digest_sha256'][:16]}... | max |equity "
               f"residual| ${v['max_abs_equity_residual_usd']:,.4f} "
-              f"(must be 0.00: fills re-derived independently of the engine)")
+              f"(bound ${bound:,.4f}; the tape stores six-decimal prices, so a "
+              f"residual below the bound is rounding, not a discrepancy: "
+              f"{'inside' if v['all_residuals_within_rounding_bound'] else 'OUTSIDE'})")
         idle = [p["username"] for p in v["per_participant"]
                 if not p.get("sessions_with_orders")]
         if idle:
@@ -500,7 +523,20 @@ def cmd_season2(args: argparse.Namespace) -> int:
                                      "masterfeed.json"))
         missing = [k for k, a in mf["availability"].items() if a["state"] != "AVAILABLE"]
         if missing:
-            print(f"  signals with NO collected data: {', '.join(sorted(missing))}")
+            # Collapse the per-symbol arrays into one line each: 26 symbols x 2
+            # insider arrays buried the two signals a reader actually needs to
+            # see (Form 4 and the Kalshi volume column).
+            by_family: Dict[str, List[str]] = {}
+            for name in sorted(missing):
+                family, _, symbol = name.partition("::")
+                by_family.setdefault(family, []).append(symbol or name)
+            parts = []
+            for family, symbols in sorted(by_family.items()):
+                if len(symbols) == 1 and symbols[0] == family:
+                    parts.append(family)
+                else:
+                    parts.append(f"{family} ({len(symbols)} series)")
+            print(f"  signals with NO collected data: {', '.join(parts)}")
     print(f"\nledgers written under {args.memory_root}/runs/<run_id>/ledger_*.jsonl")
     return 0
 

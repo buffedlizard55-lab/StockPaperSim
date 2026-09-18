@@ -117,21 +117,42 @@ def _signal_status(md, roster) -> List[dict]:
     """
     book = getattr(md, "signals", None)
     availability = getattr(book, "availability", {}) if book else {}
+    price_derived = set(masterfeed.PRICE_DERIVED)
     rows: List[dict] = []
     for strategy in roster:
         names = []
+        external = []
         for name in getattr(strategy, "signal_names", ()):
             meta = availability.get(name, {})
+            external_names = [n for n in getattr(strategy, "signal_names", ())
+                              if n not in price_derived]
             names.append({"signal": name, "state": meta.get("state", "MISSING"),
                           "files": meta.get("files", []), "url": meta.get("url", ""),
-                          "sessions_actionable": None})
+                          "sessions_actionable": None,
+                          "price_derived": name in price_derived})
+        external = [n for n in getattr(strategy, "signal_names", ())
+                    if n not in price_derived]
+        waiting = [n for n in external if not book.available(n)] if book else []
+        idle_reason = None
+        if waiting:
+            first = waiting[0]
+            meta = availability.get(first, {})
+            idle_reason = (
+                f"no trades: waiting on {', '.join(waiting)} "
+                f"({meta.get('state', 'MISSING')}) from {meta.get('url') or 'n/a'} - "
+                f"{meta.get('note', '')}")
+        # Signal-dependent means "waits on a collected dataset other than the
+        # price of an instrument it can trade".  Reading GLD's close is not a
+        # data dependency; reading Form 4 filings is.
         rows.append({
             "username": strategy.spec.username,
             "display_name": strategy.spec.display_name,
             "signals": names,
-            "signal_dependent": bool(names),
-            "gate_armed": bool(names) and all(
-                n["state"] == "AVAILABLE" for n in names),
+            "external_signals": external,
+            "signal_dependent": bool(external),
+            "gate_armed": bool(external) and not waiting,
+            "waiting_on": waiting,
+            "idle_reason": idle_reason,
         })
     return rows
 

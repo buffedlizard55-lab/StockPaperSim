@@ -1000,8 +1000,33 @@ def build_narrative(report: dict, spec: dict, market: dict, factors: dict) -> di
     factors_of_interest = _relevant_factors(spec, factors)
     clauses: List[dict] = []
 
-    # 1. Headline verdict.
-    if ret > mkt + 5:
+    # 0. Did the strategy trade at all?
+    #
+    # A participant that placed no orders returns exactly 0.00%, and the generic
+    # branches below would have called that "lost money" - publishing the verdict
+    # for a loss next to a strategy that never entered the market. Season 2 made
+    # this visible: six participants return 0.00% because their source was not
+    # collected or their rule never fired, and a reader must be able to tell that
+    # apart from a strategy that traded and went nowhere.
+    orders = report.get("sessions_with_orders")
+    if orders is None:
+        orders = report["trades"].get("sessions_in_market", 0) or 0
+    idle = (not report["trades"]["closed_trades"]
+            and not report["trades"]["open_trades"] and not orders)
+
+    # 1. Headline verdict. The idle branch comes first, and the rest of the
+    # library still runs after it: an idle participant's factor clauses are how
+    # the page shows that the *signal* was missing rather than the edge absent.
+    if idle:
+        verdict = "no trades placed"
+        clauses.append(_c("verdict",
+                          "Placed no orders in this window: 0 fills, 0 round trips, "
+                          "ending at 0.00%. That is not a performance result - the "
+                          "entry condition never triggered (its data source was "
+                          "missing, or the rule was never satisfied), so this "
+                          "participant's return carries no information about the "
+                          "strategy itself."))
+    elif ret > mkt + 5:
         verdict = "beat the market"
         clauses.append(_c("verdict", f"Finished at {ret:+.2f}% against the S&P 500's "
                                      f"{mkt:+.2f}% over the same {report['sessions']} "

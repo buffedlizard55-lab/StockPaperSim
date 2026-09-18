@@ -1,0 +1,137 @@
+name: Live book (plan and settle)
+
+# WHY THIS IS MANUAL-ONLY
+# -----------------------
+# The Live Book is the one part of this project whose whole value comes from
+# being run repeatedly over time: a forward test that is never settled is just a
+# to-do list. A cron schedule is therefore the obvious thing to add here, and it
+# is deliberately NOT added, because this repository already decided against
+# scheduled data commits (see the comment at the top of collect-real-data.yml):
+# a schedule lets the repository change without a human reading the diff.
+#
+# The two ways to get a scheduled forward test, in the order this project would
+# prefer them:
+#
+#   1. a scheduled run that pushes to a dedicated branch and opens (or updates) a
+#      pull request, so the archive accumulates and a human still reads the diff;
+#   2. a scheduled run that commits straight to the default branch, with the
+#      retention and review question settled first.
+#
+# Both are policy decisions for the repository owner, so both are left to them
+# and the item is registered in research/REMAINING_WORK.json. Until one is
+# chosen, this workflow runs when a person asks it to.
+
+on:
+  workflow_dispatch:
+    inputs:
+      horizon:
+        description: "How many future sessions the projection must cover"
+        required: false
+        default: "3"
+      commit:
+        description: "Commit the updated live book back to this branch"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: live-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  live:
+    name: Plan the forward book and settle what has a verified bar
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity
+        run: python scripts/check_purity.py
+
+      - name: Verify the in-session official extracts against the runner's own files
+        # The three FRED series retrieved with the page-fetch tool were
+        # transcribed, which is the one place a wrong digit could have entered
+        # the repository. This re-checks them structurally, against the trading
+        # calendar of a runner-collected file, and against the two values the
+        # Federal Reserve Bank of New York's API published independently.
+        run: python scripts/verify_official_extracts.py
+
+      - name: Plan the forward book and run the rehearsal
+        env:
+          HORIZON: ${{ github.event.inputs.horizon || '3' }}
+        run: |
+          python3 -m sim.cli live --mode all --horizon "$HORIZON"
+
+      - name: Show the settled tape
+        run: |
+          python3 -m sim.cli live-blotter --only-filled --limit 20
+          python3 - <<'PY'
+          import json
+          m = json.load(open("memory/live/live-forward-2026-09-16/manifest.json"))
+          print(f"forward book: {len(m['pending_intents'])} intents still pending, "
+                f"planned on {m['plan_date']}")
+          print("status:", m["status"])
+          PY
+
+      - name: Rebuild the site from memory
+        run: python3 -m sim.cli build-site
+
+      - name: Published site matches the code and the memory
+        run: |
+          python3 scripts/independent_audit.py
+          python3 scripts/independent_audit_season2.py
+
+      - name: Commit the live book back to this branch
+        if: ${{ github.event.inputs.commit != 'false' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A memory/live docs/live docs/assets/data/live.json
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            BRANCH="${{ github.ref_name }}"
+            git fetch --quiet origin "$BRANCH"
+            git rebase --quiet "origin/$BRANCH" || {
+              echo "::warning::could not rebase onto origin/$BRANCH; committing on the checked-out base"
+              git rebase --abort || true; }
+            git commit -m "live: plan the forward book and settle verified intents
+
+          Produced by the Live book workflow: every intent records the observation it
+          was decided from, every fill records the bar it executed against, and the
+          audit re-derives the book from the raw tape before this commit is made."
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:$BRANCH"; then
+                echo "pushed on attempt $attempt"
+                break
+              fi
+              echo "::warning::push attempt $attempt rejected; rebasing and retrying"
+              git fetch --quiet origin "$BRANCH"
+              git rebase --quiet "origin/$BRANCH" || git rebase --abort || true
+              [ "$attempt" = "3" ] && { echo "::error::could not push the live book"; exit 1; }
+            done
+          fi
+
+      - name: Upload the live tape as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-book
+          path: |
+            memory/live/*/manifest.json
+            memory/live/*/leaderboard.json
+            memory/live/*/verification.json
+            memory/live/*/blotter.csv
+          if-no-files-found: warn
+          retention-days: 14

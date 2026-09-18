@@ -106,6 +106,11 @@ ARCHETYPE_FACTORS: Dict[str, Dict[str, float]] = {
     "informed-flow following": {"momentum": 0.5, "beta": 0.3},
     "event attention proxy": {"momentum": 0.5, "beta": 0.8},
     "regime rotation": {"momentum": 0.3, "beta": 0.6},
+    # Live-book archetypes.  Declared in the same table for the same reason:
+    # one reviewable place that says what each participant is built to harvest.
+    "volatility regime timing (official index)": {"beta": 1.0, "low_vol": 0.5},
+    "curve/carry rotation": {"beta": 0.6, "low_vol": 0.3},
+    "commodity-macro proxy": {"beta": 0.7, "momentum": 0.4},
 }
 
 

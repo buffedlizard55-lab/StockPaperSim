@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vol Control Max Leverage · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Vol Control Max Leverage <span class="muted">@VolControl_MaxLev</span></h1>
+<p class="lede">Moreira &amp; Muir scale exposure inversely to recent variance. Their result is a Sharpe improvement, and this roster is not scored on Sharpe, so the participant takes the scaling rule and inverts its purpose: it holds the leverage bound whenever the official VIX close is in its calmest tercile and drops to cash in the most volatile one. The interesting question is whether the scaling survives the execution delay.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -9.71%</div>
+    <div class="kpi-sub">$-9,707.30 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-17.30%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.453</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">85 fills</div>
+    <div class="kpi-sub">85 intents ·
+    0 refused · cost
+    0.003%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Vol Control Max Leverage (@VolControl_MaxLev) planned 85 forward intents and saw 85 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 90,292.70 USD on 100,000 starting cash: -9.71% with a worst peak-to-trough drawdown of -17.30% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 24.1pp.</li><li>Execution cost was 112.86 USD, 0.003% of 4,403,236 USD traded, at a mean slippage of 0.132 bps against the decision mid; median participation was 0.00013% of the session&#x27;s real volume (max 0.00054%).</li><li>40 round trips closed; win rate 40.0% and profit factor 0.5478. The largest single trip was 3,825.12 USD and the worst -3,568.08 USD.</li><li>Contribution by instrument: QQQ -10,806.22 USD was the biggest positive and QQQ -10,806.22 USD the biggest negative, out of 1 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>VIXCLS</code>, <code>SP500</code></p>
+<p><strong>Sizing:</strong> 1.95x / 1.0x / 0x ·
+<strong>leverage:</strong> up to 1.95x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> days to weeks</p>
+<h3>Entry rules</h3>
+<ul><li>Rank the official VIX close against its trailing 252-session distribution</li><li>Bottom tercile -&gt; target QQQ at 1.95x equity</li><li>Middle tercile -&gt; target QQQ at 1.0x</li><li>Top tercile -&gt; flat (cash earns the official SOFR)</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Re-evaluated daily against the same distribution</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Volatility-managed portfolios raise Sharpe ratios by scaling exposure inversely to recent realised variance — <a href="https://doi.org/10.1111/jofi.12513">Moreira &amp; Muir (2017), Journal of Finance 72(4)</a> <span class="muted small">[KNOWN-NOT-FETCHED]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Volatility clusters, so the entry into the calm regime is usually late</li><li>The rule is long in exactly the regime that precedes most crashes</li><li>Scaling is applied to the same instrument with no second asset, so it cannot harvest the diversification the paper relies on</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="neg">$-10,806.22</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 40 · still open:
+0</li>
+<li>Win rate: 40.00% · profit factor:
+0.5478</li>
+<li>Largest trip: $3,825.12 · worst trip:
+$-3,568.08</li>
+<li>Carry: $1,170.38 received,
+$1,338.14 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>596.0086</td>
+<td>2025-09-24</td>
+<td>599.5800</td><td>80</td>
+<td class="pos">
+$285.22</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.64)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>596.7976</td>
+<td>2025-10-01</td>
+<td>597.1600</td><td>80</td>
+<td class="pos">
+$28.50</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.28)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>596.7976</td>
+<td>2025-10-13</td>
+<td>599.6700</td><td>200</td>
+<td class="pos">
+$573.26</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 21.66 &gt;= 18.62)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-10-21</td><td>611.6500</td>
+<td>2025-10-23</td>
+<td>604.9000</td><td>160</td>
+<td class="neg">
+$-1,080.99</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.60 &gt;= 18.60)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-10-24</td><td>620.7800</td>
+<td>2025-10-29</td>
+<td>635.5900</td><td>40</td>
+<td class="pos">
+$592.15</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.42)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-10-24</td><td>620.7800</td>
+<td>2025-11-05</td>
+<td>618.4700</td><td>200</td>
+<td class="neg">
+$-463.23</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.00 &gt;= 18.39)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-06</td><td>621.8000</td>
+<td>2025-11-07</td>
+<td>608.3000</td><td>120</td>
+<td class="neg">
+$-1,620.74</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.50 &gt;= 18.48)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-06</td><td>621.8000</td>
+<td>2025-11-10</td>
+<td>618.9100</td><td>40</td>
+<td class="neg">
+$-115.85</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.08 &gt;= 18.57)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-11</td><td>620.5800</td>
+<td>2025-11-14</td>
+<td>599.5400</td><td>80</td>
+<td class="neg">
+$-1,683.69</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 20.00 &gt;= 18.60)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-11</td><td>620.5800</td>
+<td>2025-11-17</td>
+<td>606.2900</td><td>40</td>
+<td class="neg">
+$-571.85</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.83 &gt;= 18.62)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>612.9680</td>
+<td>2025-12-02</td>
+<td>619.4600</td><td>40</td>
+<td class="pos">
+$259.43</td>
+<td>None</td><td>vol-control: middle tercile (VIX 17.24)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>616.8653</td>
+<td>2025-12-09</td>
+<td>623.0100</td><td>80</td>
+<td class="pos">
+$491.08</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.66)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>618.8969</td>
+<td>2025-12-16</td>
+<td>608.2600</td><td>80</td>
+<td class="neg">
+$-851.44</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.50)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>619.1913</td>
+<td>2026-01-15</td>
+<td>626.5900</td><td>80</td>
+<td class="pos">
+$591.40</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.75)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>618.8025</td>
+<td>2026-01-21</td>
+<td>609.4600</td><td>200</td>
+<td class="neg">
+$-1,869.74</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 20.09 &gt;= 18.84)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>621.0304</td>
+<td>2026-01-30</td>
+<td>625.7100</td><td>80</td>
+<td class="pos">
+$373.87</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.88)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>622.4843</td>
+<td>2026-02-04</td>
+<td>615.0200</td><td>40</td>
+<td class="neg">
+$-298.82</td>
+<td>None</td><td>vol-control: middle tercile (VIX 18.00)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-26</td><td>622.4843</td>
+<td>2026-02-06</td>
+<td>600.1900</td><td>160</td>
+<td class="neg">
+$-3,568.08</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 21.77 &gt;= 18.96)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-02-09</td><td>607.5400</td>
+<td>2026-02-13</td>
+<td>600.4200</td><td>80</td>
+<td class="neg">
+$-570.10</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 20.82 &gt;= 18.98)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-02-09</td><td>607.5400</td>
+<td>2026-02-20</td>
+<td>600.1100</td><td>40</td>
+<td class="neg">
+$-297.45</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 20.23 &gt;= 19.03)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-02-26</td><td>615.6000</td>
+<td>2026-03-02</td>
+<td>598.8500</td><td>80</td>
+<td class="neg">
+$-1,340.50</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.86 &gt;= 18.96)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-02-26</td><td>615.6000</td>
+<td>2026-03-03</td>
+<td>596.3300</td><td>40</td>
+<td class="neg">
+$-771.05</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 21.44 &gt;= 18.96)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-15</td><td>629.0900</td>
+<td>2026-04-21</td>
+<td>648.4000</td><td>80</td>
+<td class="pos">
+$1,543.24</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.87 &gt;= 18.87)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-15</td><td>629.0900</td>
+<td>2026-04-22</td>
+<td>650.1400</td><td>40</td>
+<td class="pos">
+$841.22</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.50 &gt;= 18.87)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-27</td><td>663.4100</td>
+<td>2026-04-30</td>
+<td>665.3400</td><td>80</td>
+<td class="pos">
+$152.81</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.81 &gt;= 18.64)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-27</td><td>693.8620</td>
+<td>2026-06-08</td>
+<td>717.7900</td><td>160</td>
+<td class="pos">
+$3,825.12</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 21.51 &gt;= 18.17)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-27</td><td>693.8620</td>
+<td>2026-06-09</td>
+<td>722.9700</td><td>40</td>
+<td class="pos">
+$1,163.48</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.92 &gt;= 18.17)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-15</td><td>739.1550</td>
+<td>2026-06-18</td>
+<td>737.1800</td><td>160</td>
+<td class="neg">
+$-319.42</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.44 &gt;= 18.06)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-22</td><td>742.0400</td>
+<td>2026-06-24</td>
+<td>715.3500</td><td>80</td>
+<td class="neg">
+$-2,136.87</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 19.49 &gt;= 18.17)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-22</td><td>742.0400</td>
+<td>2026-06-25</td>
+<td>725.8900</td><td>40</td>
+<td class="neg">
+$-646.85</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.63 &gt;= 18.23)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-30</td><td>721.3480</td>
+<td>2026-07-09</td>
+<td>718.3200</td><td>40</td>
+<td class="neg">
+$-121.96</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.90)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-30</td><td>721.2204</td>
+<td>2026-07-14</td>
+<td>720.2100</td><td>40</td>
+<td class="neg">
+$-41.26</td>
+<td>None</td><td>vol-control: middle tercile (VIX 17.16)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-30</td><td>719.3803</td>
+<td>2026-07-17</td>
+<td>691.6400</td><td>40</td>
+<td class="neg">
+$-1,110.43</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.73)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-30</td><td>719.3803</td>
+<td>2026-07-20</td>
+<td>702.1400</td><td>160</td>
+<td class="neg">
+$-2,761.76</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.77 &gt;= 18.38)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-22</td><td>703.6400</td>
+<td>2026-07-24</td>
+<td>690.3900</td><td>120</td>
+<td class="neg">
+$-1,592.45</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 18.70 &gt;= 18.43)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-29</td><td>675.5300</td>
+<td>2026-07-30</td>
+<td>674.7600</td><td>80</td>
+<td class="neg">
+$-63.21</td>
+<td>None</td><td>vol-control: volatile tercile (VIX 20.66 &gt;= 18.56)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-29</td><td>691.2540</td>
+<td>2026-08-05</td>
+<td>726.2400</td><td>40</td>
+<td class="pos">
+$1,398.59</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.50)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-29</td><td>695.1692</td>
+<td>2026-09-10</td>
+<td>707.5400</td><td>40</td>
+<td class="pos">
+$494.00</td>
+<td>None</td><td>vol-control: middle tercile (VIX 16.46)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-29</td><td>696.8034</td>
+<td>2026-09-15</td>
+<td>708.7900</td><td>40</td>
+<td class="pos">
+$478.63</td>
+<td>None</td><td>vol-control: middle tercile (VIX 17.10)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-29</td><td>696.8034</td>
+<td>OPEN</td>
+<td>0.0000</td><td>160</td>
+<td class="neg">
+$-0.48</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-09-22</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-09-24</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-09-29</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-09-30</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-01</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-13</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-21</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-23</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-24</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-28</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-10-29</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-05</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-06</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-07</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-10</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-11</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-14</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-17</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-11-26</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-01</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-02</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-04</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-05</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-09</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-11</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-12</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-16</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-22</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2025-12-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-15</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-16</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-21</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-22</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-23</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-26</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-01-30</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-03</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-04</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-06</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-09</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-13</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-20</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-02-26</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-03-02</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-03-03</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-04-15</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-04-21</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-04-22</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-04-27</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-04-30</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-05-01</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-05-28</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-05-29</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-08</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-09</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-15</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-16</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-18</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-22</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-24</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-25</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-06-30</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-06</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-07</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-09</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-10</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-14</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-16</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-17</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-20</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-22</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-24</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-29</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-30</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-07-31</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-08-03</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-08-04</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-08-05</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-08-06</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-09-10</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-09-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr><tr><td>2026-09-15</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SP500, VIXCLS</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

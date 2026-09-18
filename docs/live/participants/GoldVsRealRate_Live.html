@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gold vs Real Rate Live · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Gold vs Real Rate Live <span class="muted">@GoldVsRealRate_Live</span></h1>
+<p class="lede">Gold has no cash flow, so its opportunity cost is the real rate. The official series collected here give the nominal 10-year yield and SOFR; their difference is a public proxy for the real rate. The participant holds gold levered while that proxy falls and holds duration instead while it rises.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -7.50%</div>
+    <div class="kpi-sub">$-7,495.39 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-25.37%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.2902</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">123 fills</div>
+    <div class="kpi-sub">123 intents ·
+    0 refused · cost
+    0.008%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Gold vs Real Rate Live (@GoldVsRealRate_Live) planned 123 forward intents and saw 123 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 92,504.61 USD on 100,000 starting cash: -7.50% with a worst peak-to-trough drawdown of -25.37% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 21.9pp.</li><li>Execution cost was 560.59 USD, 0.008% of 6,785,400 USD traded, at a mean slippage of 0.476 bps against the decision mid; median participation was 0.00158% of the session&#x27;s real volume (max 0.00992%).</li><li>52 round trips closed; win rate 51.92% and profit factor 0.8476. The largest single trip was 4,380.37 USD and the worst -4,302.84 USD.</li><li>Contribution by instrument: TLT +3,976.28 USD was the biggest positive and GLD -8,375.35 USD the biggest negative, out of 2 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>DGS10</code>, <code>SOFR</code>, <code>SP500</code></p>
+<p><strong>Sizing:</strong> up to 1.9x gross ·
+<strong>leverage:</strong> 1.2-1.9x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks to months</p>
+<h3>Entry rules</h3>
+<ul><li>proxy = DGS10 - SOFR, and its 21-session change</li><li>Proxy falling by more than 5bp -&gt; target GLD 1.9x</li><li>Proxy rising by more than 5bp -&gt; target TLT 1.2x</li><li>Otherwise hold GLD 0.7x</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily re-evaluation of the two official series</li></ul>
+<h3>Evidence base</h3>
+<ul><li>The LBMA gold price series FRED previously carried is discontinued (GOLDPMGBD228NLBM returns 404, verified 2026-09-18), so the gold leg here is the GLD instrument price and the signal is the rate pair, not a gold benchmark — <a href="https://fred.stlouisfed.org/series/GOLDPMGBD228NLBM">FRED series page for GOLDPMGBD228NLBM returned &#x27;page not found&#x27;</a> <span class="muted small">[KNOWN-NOT-FETCHED (verified 404)]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>DGS10 minus an overnight secured rate is not a real rate; it ignores inflation compensation entirely</li><li>GLD charges an expense ratio and holds bullion, so it is not the spot price</li><li>Gold&#x27;s reaction to rates is regime-dependent and has broken down for long stretches</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>GLD</td><td class="neg">$-8,375.35</td></tr><tr><td>TLT</td><td class="pos">$3,976.28</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 52 · still open:
+0</li>
+<li>Win rate: 51.92% · profit factor:
+0.8476</li>
+<li>Largest trip: $4,380.37 · worst trip:
+$-4,302.84</li>
+<li>Carry: $319.78 received,
+$1,521.12 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>GLD</td><td>long</td>
+<td>2025-09-18</td><td>336.2300</td>
+<td>2025-09-19</td>
+<td>336.5100</td><td>40</td>
+<td class="pos">
+$10.95</td>
+<td>None</td><td>gold-real-rate: proxy flat (-3.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-09-18</td><td>336.2300</td>
+<td>2025-09-25</td>
+<td>344.3900</td><td>200</td>
+<td class="pos">
+$1,630.77</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +13.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-09-18</td><td>336.2300</td>
+<td>2025-09-26</td>
+<td>345.8200</td><td>40</td>
+<td class="pos">
+$383.35</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +9.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-09-25</td><td>88.9254</td>
+<td>2025-10-01</td>
+<td>89.4400</td><td>1,300</td>
+<td class="pos">
+$660.98</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-10-01</td><td>357.0160</td>
+<td>2025-10-06</td>
+<td>362.1600</td><td>160</td>
+<td class="pos">
+$822.05</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +12.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-10-01</td><td>357.0160</td>
+<td>2025-10-07</td>
+<td>366.5100</td><td>40</td>
+<td class="pos">
+$379.51</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +27.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-10-06</td><td>88.8450</td>
+<td>2025-10-22</td>
+<td>91.9800</td><td>1,400</td>
+<td class="pos">
+$4,380.37</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy falling -22.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-10-22</td><td>378.4242</td>
+<td>2025-10-31</td>
+<td>370.4600</td><td>280</td>
+<td class="neg">
+$-2,231.69</td>
+<td>None</td><td>gold-real-rate: proxy flat (+5.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-10-22</td><td>378.4242</td>
+<td>2025-11-04</td>
+<td>363.4700</td><td>160</td>
+<td class="neg">
+$-2,393.65</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +8.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-10-22</td><td>378.4242</td>
+<td>2025-11-05</td>
+<td>366.3900</td><td>40</td>
+<td class="neg">
+$-481.61</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +20.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-11-04</td><td>89.6600</td>
+<td>2025-12-04</td>
+<td>88.9100</td><td>1,300</td>
+<td class="neg">
+$-983.02</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-12-04</td><td>386.9300</td>
+<td>2025-12-05</td>
+<td>389.1100</td><td>80</td>
+<td class="pos">
+$173.91</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +30.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-12-05</td><td>88.4492</td>
+<td>2025-12-10</td>
+<td>88.0000</td><td>1,200</td>
+<td class="neg">
+$-546.48</td>
+<td>None</td><td>gold-real-rate: proxy flat (-1.0bp)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-12-05</td><td>88.4492</td>
+<td>2025-12-11</td>
+<td>88.6900</td><td>100</td>
+<td class="pos">
+$23.46</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2025-12-10</td><td>387.4900</td>
+<td>2025-12-12</td>
+<td>399.1600</td><td>160</td>
+<td class="pos">
+$1,866.21</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +30.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-12-12</td><td>87.5300</td>
+<td>2026-01-15</td>
+<td>88.6300</td><td>1,300</td>
+<td class="pos">
+$1,421.95</td>
+<td>None</td><td>gold-real-rate: proxy flat (+3.0bp)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-12-12</td><td>87.5300</td>
+<td>2026-01-16</td>
+<td>88.1200</td><td>100</td>
+<td class="pos">
+$58.38</td>
+<td>None</td><td>gold-real-rate: proxy flat (-1.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-01-15</td><td>422.9200</td>
+<td>2026-01-20</td>
+<td>436.6800</td><td>160</td>
+<td class="pos">
+$2,200.61</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +16.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-01-20</td><td>86.7071</td>
+<td>2026-02-11</td>
+<td>88.0400</td><td>1,400</td>
+<td class="pos">
+$1,857.33</td>
+<td>None</td><td>gold-real-rate: proxy flat (-4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-02-11</td><td>460.6964</td>
+<td>2026-03-11</td>
+<td>476.1100</td><td>240</td>
+<td class="pos">
+$3,697.79</td>
+<td>None</td><td>gold-real-rate: proxy flat (-5.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-02-11</td><td>460.6964</td>
+<td>2026-03-16</td>
+<td>461.2500</td><td>160</td>
+<td class="pos">
+$87.59</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +12.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-16</td><td>87.1900</td>
+<td>2026-03-17</td>
+<td>87.3600</td><td>600</td>
+<td class="pos">
+$98.28</td>
+<td>None</td><td>gold-real-rate: proxy flat (+0.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-02-11</td><td>460.5716</td>
+<td>2026-03-18</td>
+<td>446.6400</td><td>120</td>
+<td class="neg">
+$-1,672.53</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +11.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-02-11</td><td>460.5716</td>
+<td>2026-03-20</td>
+<td>428.0800</td><td>40</td>
+<td class="neg">
+$-1,299.91</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +29.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-16</td><td>87.2340</td>
+<td>2026-04-15</td>
+<td>87.0100</td><td>1,500</td>
+<td class="neg">
+$-347.98</td>
+<td>None</td><td>gold-real-rate: proxy flat (-2.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-15</td><td>442.3786</td>
+<td>2026-04-17</td>
+<td>445.6300</td><td>240</td>
+<td class="pos">
+$776.65</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +12.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-04-17</td><td>87.0986</td>
+<td>2026-04-21</td>
+<td>86.9700</td><td>1,400</td>
+<td class="neg">
+$-191.18</td>
+<td>None</td><td>gold-real-rate: proxy flat (-1.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-15</td><td>436.4586</td>
+<td>2026-04-24</td>
+<td>431.3200</td><td>120</td>
+<td class="neg">
+$-618.44</td>
+<td>None</td><td>gold-real-rate: proxy flat (-3.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-15</td><td>434.6666</td>
+<td>2026-04-28</td>
+<td>420.7100</td><td>120</td>
+<td class="neg">
+$-1,676.58</td>
+<td>None</td><td>gold-real-rate: proxy flat (-0.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-15</td><td>434.6666</td>
+<td>2026-05-04</td>
+<td>418.8200</td><td>200</td>
+<td class="neg">
+$-3,172.29</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +13.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-05-04</td><td>85.2550</td>
+<td>2026-06-02</td>
+<td>85.8000</td><td>1,300</td>
+<td class="pos">
+$698.15</td>
+<td>None</td><td>gold-real-rate: proxy flat (+3.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-06-02</td><td>414.0900</td>
+<td>2026-06-03</td>
+<td>408.3700</td><td>80</td>
+<td class="neg">
+$-458.77</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +9.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-05-04</td><td>85.3882</td>
+<td>2026-06-05</td>
+<td>84.9800</td><td>1,400</td>
+<td class="neg">
+$-582.62</td>
+<td>None</td><td>gold-real-rate: proxy flat (+3.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-06-05</td><td>404.4000</td>
+<td>2026-06-08</td>
+<td>397.5000</td><td>80</td>
+<td class="neg">
+$-553.15</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +11.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-06-08</td><td>85.1657</td>
+<td>2026-06-12</td>
+<td>85.6300</td><td>1,400</td>
+<td class="pos">
+$638.86</td>
+<td>None</td><td>gold-real-rate: proxy flat (+3.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-06-12</td><td>395.3445</td>
+<td>2026-07-02</td>
+<td>377.4300</td><td>240</td>
+<td class="neg">
+$-4,302.84</td>
+<td>None</td><td>gold-real-rate: proxy flat (+0.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-06-12</td><td>395.3445</td>
+<td>2026-07-09</td>
+<td>378.5000</td><td>160</td>
+<td class="neg">
+$-2,697.37</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +13.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-06-12</td><td>395.3445</td>
+<td>2026-07-14</td>
+<td>374.5100</td><td>40</td>
+<td class="neg">
+$-833.94</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +9.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-07-09</td><td>84.4092</td>
+<td>2026-07-15</td>
+<td>84.0800</td><td>1,300</td>
+<td class="neg">
+$-438.31</td>
+<td>None</td><td>gold-real-rate: proxy flat (-1.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-07-15</td><td>372.1200</td>
+<td>2026-07-16</td>
+<td>367.4400</td><td>80</td>
+<td class="neg">
+$-375.50</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +6.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-07-16</td><td>84.0831</td>
+<td>2026-08-13</td>
+<td>82.5800</td><td>1,200</td>
+<td class="neg">
+$-1,813.17</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-08-13</td><td>402.1900</td>
+<td>2026-08-14</td>
+<td>402.1600</td><td>40</td>
+<td class="neg">
+$-1.78</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +6.0bp</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-08-13</td><td>402.1900</td>
+<td>2026-08-17</td>
+<td>402.3300</td><td>40</td>
+<td class="pos">
+$5.02</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +15.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-07-16</td><td>82.2372</td>
+<td>2026-08-20</td>
+<td>82.3600</td><td>1,200</td>
+<td class="pos">
+$137.94</td>
+<td>None</td><td>gold-real-rate: proxy flat (+0.0bp)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-07-16</td><td>82.2372</td>
+<td>2026-08-25</td>
+<td>83.1100</td><td>100</td>
+<td class="pos">
+$86.49</td>
+<td>None</td><td>gold-real-rate: proxy flat (-2.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-08-20</td><td>418.9714</td>
+<td>2026-08-27</td>
+<td>420.8100</td><td>120</td>
+<td class="pos">
+$218.84</td>
+<td>None</td><td>gold-real-rate: proxy flat (+1.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-08-20</td><td>418.9714</td>
+<td>2026-08-28</td>
+<td>422.2200</td><td>160</td>
+<td class="pos">
+$517.39</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +7.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-08-28</td><td>82.7869</td>
+<td>2026-09-01</td>
+<td>81.8800</td><td>1,200</td>
+<td class="neg">
+$-1,097.77</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-08-28</td><td>82.7869</td>
+<td>2026-09-02</td>
+<td>81.9800</td><td>100</td>
+<td class="neg">
+$-81.48</td>
+<td>None</td><td>gold-real-rate: proxy flat (+4.0bp)</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-09-01</td><td>399.0150</td>
+<td>2026-09-03</td>
+<td>410.6900</td><td>120</td>
+<td class="pos">
+$1,399.24</td>
+<td>None</td><td>gold-real-rate: opportunity-cost proxy rising +9.0bp</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>GLD</td><td>buy</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-09-19</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-09-25</td>
+<td>GLD</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-09-25</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-09-26</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-09-26</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-01</td>
+<td>TLT</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-01</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-02</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-06</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-06</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-07</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-07</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-22</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-22</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-23</td>
+<td>GLD</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-24</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-27</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-10-31</td>
+<td>GLD</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-11-04</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-11-04</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-11-05</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-11-05</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-04</td>
+<td>TLT</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-04</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-12-05</td>
+<td>GLD</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-12-05</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-08</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-10</td>
+<td>TLT</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-10</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-12-11</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-11</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-12-12</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2025-12-12</td>
+<td>TLT</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2025-12-15</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-01-15</td>
+<td>TLT</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-01-15</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-01-16</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-01-16</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-01-20</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-01-20</td>
+<td>TLT</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-01-21</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-02-11</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-02-11</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-02-12</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-02-13</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-02-17</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-02-18</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-02-24</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-03-11</td>
+<td>GLD</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-03-16</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-03-16</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-17</td>
+<td>TLT</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-17</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-03-18</td>
+<td>GLD</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-03-18</td>
+<td>TLT</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-19</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-20</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-15</td>
+<td>TLT</td><td>sell</td><td>1,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-04-15</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-16</td>
+<td>GLD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-17</td>
+<td>GLD</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-17</td>
+<td>TLT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-04-20</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-04-21</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-04-21</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-22</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-23</td>
+<td>GLD</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-24</td>
+<td>GLD</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-27</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-04-28</td>
+<td>GLD</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-05-04</td>
+<td>GLD</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-05-04</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-05-05</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-02</td>
+<td>TLT</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-02</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-03</td>
+<td>GLD</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-03</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-04</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-05</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-05</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-08</td>
+<td>GLD</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-08</td>
+<td>TLT</td><td>buy</td><td>1,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-09</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-12</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-06-12</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-15</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-16</td>
+<td>GLD</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-17</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-06-18</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-02</td>
+<td>GLD</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-09</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-09</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-07-10</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-07-14</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-15</td>
+<td>TLT</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-07-15</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-16</td>
+<td>GLD</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-07-16</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-07-17</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-13</td>
+<td>TLT</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-13</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-14</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-14</td>
+<td>TLT</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-17</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-17</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-20</td>
+<td>TLT</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-20</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-21</td>
+<td>GLD</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-25</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-26</td>
+<td>GLD</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-27</td>
+<td>GLD</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-28</td>
+<td>GLD</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-08-28</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-08-31</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-09-01</td>
+<td>TLT</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-09-01</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-09-02</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, SOFR, SP500, TLT_price</td></tr><tr><td>2026-09-02</td>
+<td>GLD</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr><tr><td>2026-09-03</td>
+<td>GLD</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, GLD_price, SOFR, SP500</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leap-Style Auto Liquidator · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Leap-Style Auto Liquidator <span class="muted">@LeapStyle_AutoLiquidate</span></h1>
+<p class="lede">The Leap ranks accounts on total return and liquidates everything at the end of the contest. The rule copied here is the contest&#x27;s, not a market view: hold the fastest-trailing strong asset at the leverage bound, add when the trail improves, and be flat on the final session. Futures are not available in this venue, so the instruments are the ETF proxies and that substitution is declared.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -35.34%</div>
+    <div class="kpi-sub">$-35,341.81 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-47.80%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.4247</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">24 fills</div>
+    <div class="kpi-sub">24 intents ·
+    0 refused · cost
+    0.005%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Leap-Style Auto Liquidator (@LeapStyle_AutoLiquidate) planned 24 forward intents and saw 24 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 64,658.19 USD on 100,000 starting cash: -35.34% with a worst peak-to-trough drawdown of -47.80% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 49.8pp.</li><li>Execution cost was 44.13 USD, 0.005% of 864,719 USD traded, at a mean slippage of 0.353 bps against the decision mid; median participation was 0.00016% of the session&#x27;s real volume (max 0.00222%).</li><li>10 round trips closed; win rate 30.0% and profit factor 0.1741. The largest single trip was 4,360.79 USD and the worst -23,557.39 USD.</li><li>Contribution by instrument: QQQ +4,360.79 USD was the biggest positive and TSLA -30,108.43 USD the biggest negative, out of 6 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>NASDAQCOM</code>, <code>VIXCLS</code></p>
+<p><strong>Sizing:</strong> 1.95x gross in one instrument ·
+<strong>leverage:</strong> 1.95x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> days to weeks</p>
+<h3>Entry rules</h3>
+<ul><li>Rank SPY, QQQ, IWM, GLD, TLT, NVDA, TSLA by 42-session return</li><li>Target the leader at 1.95x equity whenever the leader&#x27;s return is positive, measured on the official Nasdaq/VIX regime read</li><li>When the leader&#x27;s 42-session return is negative, target 0.6x TLT</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Rotate on rank change</li><li>Flatten everything on the final session of the competition window</li></ul>
+<h3>Evidence base</h3>
+<ul><li>The Leap&#x27;s published rules: total-return ranking, maximum leverage available to the account, all positions closed at the close of the competition — <a href="https://www.tradingview.com/the-leap/december-2025/rules/">TradingView The Leap - December 2025 rules</a> <span class="muted small">[FETCHED-VERIFIED]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Concentration into the fastest-trailing asset is the classic performance-chasing trade and it is documented to mean-revert</li><li>A one-session execution delay on a rank-rotation rule is expensive</li><li>The venue has no futures, so the leverage the real contest permits is approximated by a 2:1 equity margin account</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>TSLA</td><td class="neg">$-30,108.43</td></tr><tr><td>QQQ</td><td class="pos">$4,360.79</td></tr><tr><td>NVDA</td><td class="pos">$405.97</td></tr><tr><td>GLD</td><td class="pos">$152.19</td></tr><tr><td>TLT</td><td class="neg">$-1.50</td></tr><tr><td>IWM</td><td class="neg">$-0.84</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 10 · still open:
+0</li>
+<li>Win rate: 30.00% · profit factor:
+0.1741</li>
+<li>Largest trip: $4,360.79 · worst trip:
+$-23,557.39</li>
+<li>Carry: $81.16 received,
+$4,926.58 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>TSLA</td><td>long</td>
+<td>2025-09-18</td><td>431.9573</td>
+<td>2026-03-23</td>
+<td>373.0700</td><td>400</td>
+<td class="neg">
+$-23,557.39</td>
+<td>None</td><td>leap: no positive leader (best TLT -0.95%), duration park</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-09-18</td><td>431.9573</td>
+<td>2026-03-24</td>
+<td>376.5500</td><td>40</td>
+<td class="neg">
+$-2,216.54</td>
+<td>None</td><td>leap: no positive leader (best TLT -1.05%), duration park</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-06</td><td>428.8900</td>
+<td>2026-04-07</td>
+<td>427.8800</td><td>80</td>
+<td class="neg">
+$-82.00</td>
+<td>None</td><td>leap: no positive leader (best TLT -0.13%), duration park</td>
+</tr><tr><td>GLD</td><td>long</td>
+<td>2026-04-06</td><td>428.8900</td>
+<td>2026-04-13</td>
+<td>434.7600</td><td>40</td>
+<td class="pos">
+$234.19</td>
+<td>None</td><td>leap: no positive leader (best QQQ -0.53%), duration park</td>
+</tr><tr><td>NVDA</td><td>long</td>
+<td>2026-04-08</td><td>183.6200</td>
+<td>2026-04-13</td>
+<td>186.0200</td><td>300</td>
+<td class="pos">
+$716.99</td>
+<td>None</td><td>leap: no positive leader (best QQQ -0.53%), duration park</td>
+</tr><tr><td>NVDA</td><td>long</td>
+<td>2026-04-15</td><td>196.5400</td>
+<td>2026-07-30</td>
+<td>193.4400</td><td>100</td>
+<td class="neg">
+$-311.02</td>
+<td>None</td><td>leap: no positive leader (best IWM -1.18%), duration park</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-14</td><td>620.2300</td>
+<td>2026-07-30</td>
+<td>674.7600</td><td>80</td>
+<td class="pos">
+$4,360.79</td>
+<td>None</td><td>leap: no positive leader (best IWM -1.18%), duration park</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-06-09</td><td>411.0400</td>
+<td>2026-07-30</td>
+<td>302.6900</td><td>40</td>
+<td class="neg">
+$-4,334.50</td>
+<td>None</td><td>leap: no positive leader (best IWM -1.18%), duration park</td>
+</tr><tr><td>IWM</td><td>long</td>
+<td>2026-07-31</td><td>293.9471</td>
+<td>OPEN</td>
+<td>0.0000</td><td>280</td>
+<td class="neg">
+$-0.84</td>
+<td>None</td><td></td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-24</td><td>85.8740</td>
+<td>OPEN</td>
+<td>0.0000</td><td>500</td>
+<td class="neg">
+$-1.50</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>TSLA</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2025-09-19</td>
+<td>TSLA</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2025-09-22</td>
+<td>TSLA</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2025-09-23</td>
+<td>TSLA</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2025-10-02</td>
+<td>TSLA</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2026-03-23</td>
+<td>TSLA</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TLT_price, TSLA_price, VIXCLS</td></tr><tr><td>2026-03-24</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TLT_price, TSLA_price, VIXCLS</td></tr><tr><td>2026-03-24</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TLT_price, VIXCLS</td></tr><tr><td>2026-04-06</td>
+<td>GLD</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>GLD_price, NASDAQCOM, VIXCLS</td></tr><tr><td>2026-04-07</td>
+<td>GLD</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>GLD_price, NASDAQCOM, TLT_price, VIXCLS</td></tr><tr><td>2026-04-08</td>
+<td>NVDA</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, NVDA_price, VIXCLS</td></tr><tr><td>2026-04-09</td>
+<td>NVDA</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, NVDA_price, VIXCLS</td></tr><tr><td>2026-04-13</td>
+<td>GLD</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>GLD_price, NASDAQCOM, QQQ_price, VIXCLS</td></tr><tr><td>2026-04-13</td>
+<td>NVDA</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, NVDA_price, QQQ_price, VIXCLS</td></tr><tr><td>2026-04-13</td>
+<td>TLT</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, TLT_price, VIXCLS</td></tr><tr><td>2026-04-14</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, VIXCLS</td></tr><tr><td>2026-04-15</td>
+<td>NVDA</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, NVDA_price, VIXCLS</td></tr><tr><td>2026-06-09</td>
+<td>TSLA</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2026-07-30</td>
+<td>NVDA</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, NVDA_price, VIXCLS</td></tr><tr><td>2026-07-30</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, QQQ_price, VIXCLS</td></tr><tr><td>2026-07-30</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, TSLA_price, VIXCLS</td></tr><tr><td>2026-07-31</td>
+<td>IWM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, VIXCLS</td></tr><tr><td>2026-08-03</td>
+<td>IWM</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, VIXCLS</td></tr><tr><td>2026-08-04</td>
+<td>IWM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price, NASDAQCOM, VIXCLS</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

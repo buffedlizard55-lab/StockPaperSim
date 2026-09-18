@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Curve Steepener Max Beta · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Curve Steepener Max Beta <span class="muted">@CurveSteepener_MaxBeta</span></h1>
+<p class="lede">The 10-year minus 3-month Treasury spread is an official daily observation from two Treasury constant-maturity series. A steepening curve is the classic early-cycle signal and a flattening one is the late-cycle signal, so the participant holds high-beta cyclicals into steepening and long duration into flattening.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +3.99%</div>
+    <div class="kpi-sub">$3,990.77 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-14.78%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.2948</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">195 fills</div>
+    <div class="kpi-sub">195 intents ·
+    0 refused · cost
+    0.006%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Curve Steepener Max Beta (@CurveSteepener_MaxBeta) planned 195 forward intents and saw 195 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 103,990.77 USD on 100,000 starting cash: +3.99% with a worst peak-to-trough drawdown of -14.78% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 10.4pp.</li><li>Execution cost was 640.70 USD, 0.006% of 10,750,627 USD traded, at a mean slippage of 0.327 bps against the decision mid; median participation was 0.00149% of the session&#x27;s real volume (max 0.01226%).</li><li>88 round trips closed; win rate 55.68% and profit factor 1.1927. The largest single trip was 6,028.03 USD and the worst -5,728.57 USD.</li><li>Contribution by instrument: JPM +13,137.03 USD was the biggest positive and TLT -7,038.85 USD the biggest negative, out of 4 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>DGS10</code>, <code>DGS3MO</code></p>
+<p><strong>Sizing:</strong> up to 1.9x gross ·
+<strong>leverage:</strong> 1.8-1.9x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks to months</p>
+<h3>Entry rules</h3>
+<ul><li>spread = DGS10 - DGS3MO, and its 21-session change</li><li>Change &gt; +10bp -&gt; target JPM 0.9x, XOM 0.9x (cyclicals)</li><li>Change &lt; -10bp -&gt; target TLT 1.9x (duration)</li><li>Otherwise hold 1.0x SPY</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily re-evaluation of the same two official series</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li><li>The term spread is a monitored recession/cycle indicator published by the Federal Reserve Bank of St. Louis — <a href="https://fred.stlouisfed.org/series/DGS10">FRED series T10Y3M / DGS10 / DGS3MO</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>A 21-session change in a slow spread is mostly noise</li><li>Two single names (JPM, XOM) carry idiosyncratic risk that dominates a 10bp curve move</li><li>The 2024-2026 collected window contains an inverted curve, so the steepening branch may simply never fire</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>JPM</td><td class="pos">$13,137.03</td></tr><tr><td>TLT</td><td class="neg">$-7,038.85</td></tr><tr><td>SPY</td><td class="pos">$2,870.50</td></tr><tr><td>XOM</td><td class="neg">$-722.97</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 88 · still open:
+0</li>
+<li>Win rate: 55.68% · profit factor:
+1.1927</li>
+<li>Largest trip: $6,028.03 · worst trip:
+$-5,728.57</li>
+<li>Carry: $548.59 received,
+$2,713.49 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>SPY</td><td>long</td>
+<td>2025-09-18</td><td>661.9000</td>
+<td>2025-09-22</td>
+<td>662.2000</td><td>120</td>
+<td class="pos">
+$35.26</td>
+<td>None</td><td>curve-steepener: steepening +11.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-09-22</td><td>310.6757</td>
+<td>2025-10-03</td>
+<td>308.5000</td><td>280</td>
+<td class="neg">
+$-610.93</td>
+<td>None</td><td>curve-steepener: flat +0.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-22</td><td>112.5550</td>
+<td>2025-10-03</td>
+<td>111.9000</td><td>800</td>
+<td class="neg">
+$-528.93</td>
+<td>None</td><td>curve-steepener: flat +0.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-06</td><td>671.6200</td>
+<td>2025-10-07</td>
+<td>672.5300</td><td>120</td>
+<td class="pos">
+$108.46</td>
+<td>None</td><td>curve-steepener: steepening +15.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-10-07</td><td>308.8671</td>
+<td>2025-10-13</td>
+<td>305.6000</td><td>280</td>
+<td class="neg">
+$-916.53</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-10-07</td><td>114.1657</td>
+<td>2025-10-13</td>
+<td>111.5400</td><td>700</td>
+<td class="neg">
+$-1,842.32</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-14</td><td>657.1700</td>
+<td>2025-11-06</td>
+<td>676.4600</td><td>80</td>
+<td class="pos">
+$1,542.71</td>
+<td>None</td><td>curve-steepener: steepening +11.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-11-06</td><td>311.0000</td>
+<td>2025-11-07</td>
+<td>311.8800</td><td>120</td>
+<td class="pos">
+$104.86</td>
+<td>None</td><td>curve-steepener: flat +2.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-06</td><td>113.6400</td>
+<td>2025-11-07</td>
+<td>115.2000</td><td>500</td>
+<td class="pos">
+$776.92</td>
+<td>None</td><td>curve-steepener: flat +2.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-11-06</td><td>311.0000</td>
+<td>2025-11-12</td>
+<td>316.2600</td><td>40</td>
+<td class="pos">
+$210.15</td>
+<td>None</td><td>curve-steepener: flat +6.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-14</td><td>667.4400</td>
+<td>2025-11-14</td>
+<td>665.3800</td><td>80</td>
+<td class="neg">
+$-165.29</td>
+<td>None</td><td>curve-steepener: steepening +12.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-14</td><td>667.4400</td>
+<td>2025-11-19</td>
+<td>660.7800</td><td>40</td>
+<td class="neg">
+$-266.65</td>
+<td>None</td><td>curve-steepener: steepening +21.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-11-14</td><td>306.0257</td>
+<td>2025-11-26</td>
+<td>304.9900</td><td>280</td>
+<td class="neg">
+$-291.73</td>
+<td>None</td><td>curve-steepener: flat +5.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-14</td><td>118.6771</td>
+<td>2025-11-26</td>
+<td>114.4100</td><td>600</td>
+<td class="neg">
+$-2,563.99</td>
+<td>None</td><td>curve-steepener: flat +5.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-14</td><td>118.6771</td>
+<td>2025-12-01</td>
+<td>116.0900</td><td>100</td>
+<td class="neg">
+$-259.33</td>
+<td>None</td><td>curve-steepener: flat +2.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-11-28</td><td>680.8600</td>
+<td>2025-12-02</td>
+<td>681.9100</td><td>120</td>
+<td class="pos">
+$125.26</td>
+<td>None</td><td>curve-steepener: steepening +18.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2025-12-02</td><td>308.9557</td>
+<td>2026-01-13</td>
+<td>324.2800</td><td>280</td>
+<td class="pos">
+$4,289.07</td>
+<td>None</td><td>curve-steepener: flat +7.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-02</td><td>116.2357</td>
+<td>2026-01-13</td>
+<td>125.0000</td><td>600</td>
+<td class="pos">
+$5,254.85</td>
+<td>None</td><td>curve-steepener: flat +7.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-02</td><td>116.2357</td>
+<td>2026-01-14</td>
+<td>127.3400</td><td>100</td>
+<td class="pos">
+$1,109.81</td>
+<td>None</td><td>curve-steepener: flat +7.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-14</td><td>691.0100</td>
+<td>2026-01-29</td>
+<td>696.3900</td><td>120</td>
+<td class="pos">
+$644.86</td>
+<td>None</td><td>curve-steepener: steepening +12.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-01-29</td><td>302.4100</td>
+<td>2026-01-30</td>
+<td>305.2400</td><td>200</td>
+<td class="pos">
+$564.76</td>
+<td>None</td><td>curve-steepener: flat +7.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-01-29</td><td>140.3300</td>
+<td>2026-01-30</td>
+<td>138.7400</td><td>300</td>
+<td class="neg">
+$-478.86</td>
+<td>None</td><td>curve-steepener: flat +7.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-30</td><td>691.7900</td>
+<td>2026-02-02</td>
+<td>689.5800</td><td>40</td>
+<td class="neg">
+$-88.65</td>
+<td>None</td><td>curve-steepener: steepening +15.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-02-02</td><td>305.2229</td>
+<td>2026-02-04</td>
+<td>314.4000</td><td>240</td>
+<td class="pos">
+$2,201.03</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-01-29</td><td>139.9217</td>
+<td>2026-02-04</td>
+<td>144.1000</td><td>600</td>
+<td class="pos">
+$2,503.28</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-02-02</td><td>305.2229</td>
+<td>2026-02-06</td>
+<td>314.7000</td><td>40</td>
+<td class="pos">
+$378.84</td>
+<td>None</td><td>curve-steepener: flat +1.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-02-05</td><td>681.0800</td>
+<td>2026-02-11</td>
+<td>696.3900</td><td>160</td>
+<td class="pos">
+$2,448.61</td>
+<td>None</td><td>curve-steepener: flattening -10.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-02-11</td><td>88.0500</td>
+<td>2026-02-12</td>
+<td>88.3600</td><td>500</td>
+<td class="pos">
+$151.90</td>
+<td>None</td><td>curve-steepener: flat -8.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-02-12</td><td>694.2400</td>
+<td>2026-02-13</td>
+<td>681.6900</td><td>120</td>
+<td class="neg">
+$-1,506.74</td>
+<td>None</td><td>curve-steepener: flattening -13.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-02-11</td><td>89.6652</td>
+<td>2026-03-11</td>
+<td>87.7500</td><td>2,200</td>
+<td class="neg">
+$-4,227.11</td>
+<td>None</td><td>curve-steepener: flat -10.0bp</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-02-11</td><td>89.6652</td>
+<td>2026-03-12</td>
+<td>86.9100</td><td>100</td>
+<td class="neg">
+$-276.14</td>
+<td>None</td><td>curve-steepener: flat -4.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-12</td><td>670.6900</td>
+<td>2026-03-19</td>
+<td>656.9600</td><td>120</td>
+<td class="neg">
+$-1,648.34</td>
+<td>None</td><td>curve-steepener: steepening +17.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-12</td><td>670.6900</td>
+<td>2026-03-23</td>
+<td>658.0700</td><td>40</td>
+<td class="neg">
+$-505.05</td>
+<td>None</td><td>curve-steepener: steepening +26.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-03-19</td><td>288.2688</td>
+<td>2026-04-14</td>
+<td>309.8100</td><td>280</td>
+<td class="pos">
+$6,028.03</td>
+<td>None</td><td>curve-steepener: flat +4.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-03-19</td><td>159.5983</td>
+<td>2026-04-14</td>
+<td>150.0600</td><td>600</td>
+<td class="neg">
+$-5,728.57</td>
+<td>None</td><td>curve-steepener: flat +4.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-03-19</td><td>288.2688</td>
+<td>2026-04-15</td>
+<td>313.9500</td><td>40</td>
+<td class="pos">
+$1,026.74</td>
+<td>None</td><td>curve-steepener: flat -1.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-15</td><td>695.2700</td>
+<td>2026-04-17</td>
+<td>706.1400</td><td>120</td>
+<td class="pos">
+$1,301.91</td>
+<td>None</td><td>curve-steepener: steepening +14.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-04-17</td><td>312.4900</td>
+<td>2026-04-20</td>
+<td>310.8400</td><td>160</td>
+<td class="neg">
+$-266.02</td>
+<td>None</td><td>curve-steepener: flat +3.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-04-17</td><td>144.8700</td>
+<td>2026-04-20</td>
+<td>147.3800</td><td>300</td>
+<td class="pos">
+$750.23</td>
+<td>None</td><td>curve-steepener: flat +3.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-04-17</td><td>312.4900</td>
+<td>2026-04-21</td>
+<td>317.4800</td><td>40</td>
+<td class="pos">
+$199.09</td>
+<td>None</td><td>curve-steepener: flat +3.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-04-17</td><td>144.8700</td>
+<td>2026-04-22</td>
+<td>149.3600</td><td>100</td>
+<td class="pos">
+$448.07</td>
+<td>None</td><td>curve-steepener: flat -4.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-20</td><td>709.7900</td>
+<td>2026-04-30</td>
+<td>714.6300</td><td>80</td>
+<td class="pos">
+$385.53</td>
+<td>None</td><td>curve-steepener: steepening +10.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-04-30</td><td>309.0529</td>
+<td>2026-05-04</td>
+<td>310.6000</td><td>280</td>
+<td class="pos">
+$429.67</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-04-30</td><td>152.4933</td>
+<td>2026-05-04</td>
+<td>152.6500</td><td>600</td>
+<td class="pos">
+$88.40</td>
+<td>None</td><td>curve-steepener: flat +8.0bp</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-20</td><td>709.7900</td>
+<td>2026-05-05</td>
+<td>721.7700</td><td>40</td>
+<td class="pos">
+$478.36</td>
+<td>None</td><td>curve-steepener: steepening +14.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-05-05</td><td>308.1875</td>
+<td>2026-05-07</td>
+<td>314.6300</td><td>280</td>
+<td class="pos">
+$1,800.35</td>
+<td>None</td><td>curve-steepener: flat +5.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-05-05</td><td>153.1200</td>
+<td>2026-05-07</td>
+<td>146.7900</td><td>600</td>
+<td class="neg">
+$-3,803.53</td>
+<td>None</td><td>curve-steepener: flat +5.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-05-05</td><td>308.2582</td>
+<td>2026-05-11</td>
+<td>302.0900</td><td>240</td>
+<td class="neg">
+$-1,483.35</td>
+<td>None</td><td>curve-steepener: flat +9.0bp</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2026-05-08</td><td>145.8600</td>
+<td>2026-05-11</td>
+<td>146.0200</td><td>500</td>
+<td class="pos">
+$75.40</td>
+<td>None</td><td>curve-steepener: flat +9.0bp</td>
+</tr><tr><td>JPM</td><td>long</td>
+<td>2026-05-05</td><td>301.3373</td>
+<td>2026-05-29</td>
+<td>296.3800</td><td>320</td>
+<td class="neg">
+$-1,590.26</td>
+<td>None</td><td>curve-steepener: flat +9.0bp</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-09-22</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-09-22</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-09-22</td>
+<td>XOM</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-09-23</td>
+<td>JPM</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-09-23</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-10-03</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-10-03</td>
+<td>XOM</td><td>sell</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-10-06</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-10-07</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-10-07</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-10-07</td>
+<td>XOM</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-10-08</td>
+<td>JPM</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-10-08</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-10-13</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-10-13</td>
+<td>XOM</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-10-14</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-06</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-06</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-06</td>
+<td>XOM</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-11-07</td>
+<td>JPM</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-07</td>
+<td>XOM</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-11-07</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-10</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-12</td>
+<td>JPM</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-14</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-14</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-14</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-11-17</td>
+<td>JPM</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-17</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-11-19</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-11-26</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-11-26</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-11-28</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-12-01</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-12-02</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2025-12-02</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-12-02</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-12-03</td>
+<td>JPM</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2025-12-03</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2025-12-04</td>
+<td>JPM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-01-13</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-01-13</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-01-14</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-01-14</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-01-29</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-01-29</td>
+<td>JPM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-01-29</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-01-30</td>
+<td>JPM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-01-30</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-01-30</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-02</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-02</td>
+<td>JPM</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-02-02</td>
+<td>XOM</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-02-03</td>
+<td>JPM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-02-04</td>
+<td>JPM</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-02-04</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-02-05</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-06</td>
+<td>JPM</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-02-06</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-11</td>
+<td>SPY</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-11</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-12</td>
+<td>TLT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-12</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-13</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-02-13</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-17</td>
+<td>TLT</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-18</td>
+<td>TLT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-19</td>
+<td>TLT</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-02-20</td>
+<td>TLT</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-03-11</td>
+<td>TLT</td><td>sell</td><td>2,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-03-12</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr><tr><td>2026-03-12</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-03-13</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-03-19</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-03-19</td>
+<td>JPM</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-03-19</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-03-20</td>
+<td>JPM</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-03-20</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-03-23</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-03-23</td>
+<td>JPM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-03-26</td>
+<td>XOM</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-04-14</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-14</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-04-15</td>
+<td>JPM</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-15</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-04-17</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-04-17</td>
+<td>JPM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-17</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-04-20</td>
+<td>JPM</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-20</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-04-20</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-04-21</td>
+<td>JPM</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-21</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-04-22</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-04-30</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-04-30</td>
+<td>JPM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-04-30</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-01</td>
+<td>JPM</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-01</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-04</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-04</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-05</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-05-05</td>
+<td>JPM</td><td>buy</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-05</td>
+<td>XOM</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-06</td>
+<td>JPM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-07</td>
+<td>JPM</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-07</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-08</td>
+<td>JPM</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-08</td>
+<td>XOM</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-11</td>
+<td>JPM</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-11</td>
+<td>XOM</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-12</td>
+<td>JPM</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-12</td>
+<td>XOM</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-05-14</td>
+<td>JPM</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-29</td>
+<td>JPM</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, JPM_price</td></tr><tr><td>2026-05-29</td>
+<td>XOM</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, XOM_price</td></tr><tr><td>2026-06-01</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-06-17</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, SPY_price</td></tr><tr><td>2026-06-17</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DGS10, DGS3MO, TLT_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

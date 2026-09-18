@@ -57,8 +57,15 @@ class TestPublishedSite(unittest.TestCase):
                         "without .nojekyll, Pages skips assets/data/*.json")
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
-        season1 = [p for p in self.pages if not p.startswith("season2/")]
+        season1 = [p for p in self.pages
+                   if not p.startswith("season2/") and not p.startswith("live/")]
         self.assertEqual(len(season1), 32)      # 12 top level + 20 + index
+        # The Live Book is its own section: 7 index pages, one per participant,
+        # and its own payload under assets/data/live.json.
+        live = [p for p in self.pages if p.startswith("live/")]
+        self.assertGreaterEqual(len(live), 7)
+        self.assertTrue(os.path.exists(
+            os.path.join(DOCS, "assets", "data", "live.json")))
         # Season 2 publishes under docs/season2/: 7 index pages plus one per
         # participant, and it must not leak into Season 1's participant tree.
         season2 = [p for p in self.pages if p.startswith("season2/")]

@@ -39,6 +39,14 @@ jobs:
       - name: Memory checksums and data audits
         run: python -m sim.cli verify
 
+      # The three official FRED series retrieved with the page-fetch tool were
+      # transcribed by hand, which is the one place a wrong digit could have
+      # entered the repository. This checks them structurally, against the
+      # trading calendar of a runner-collected file, and against two values the
+      # Federal Reserve Bank of New York published independently.
+      - name: Verify the in-session official extracts
+        run: python scripts/verify_official_extracts.py
+
       - name: Irregularity register renders
         run: python -m sim.cli irregularities
 

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SOFR Pivot Rider · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>SOFR Pivot Rider <span class="muted">@SOFRPivot_Rider</span></h1>
+<p class="lede">SOFR is the secured funding rate the Federal Reserve Bank of New York publishes every business day. Its 21-session direction is a public read on whether funding conditions are easing. Easing regimes should favour long-duration and high-beta equity; a rising funding rate should not. The rate series was collected for this book, so unlike Season 1 the rule is measured on an official observation rather than a declared parameter.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +8.94%</div>
+    <div class="kpi-sub">$8,940.44 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-16.45%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.4977</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">179 fills</div>
+    <div class="kpi-sub">179 intents ·
+    0 refused · cost
+    0.005%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>SOFR Pivot Rider (@SOFRPivot_Rider) planned 179 forward intents and saw 179 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 108,940.44 USD on 100,000 starting cash: +8.94% with a worst peak-to-trough drawdown of -16.45% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 5.5pp.</li><li>Execution cost was 385.09 USD, 0.005% of 8,452,528 USD traded, at a mean slippage of 0.225 bps against the decision mid; median participation was 0.00014% of the session&#x27;s real volume (max 0.0097%).</li><li>80 round trips closed; win rate 50.0% and profit factor 1.4846. The largest single trip was 4,263.78 USD and the worst -3,240.88 USD.</li><li>Contribution by instrument: QQQ +11,084.45 USD was the biggest positive and TSLA -2,003.02 USD the biggest negative, out of 4 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>SOFR</code>, <code>SP500</code></p>
+<p><strong>Sizing:</strong> up to 1.95x gross ·
+<strong>leverage:</strong> 1.5-1.8x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks</p>
+<h3>Entry rules</h3>
+<ul><li>Compute the change in the official SOFR over 21 sessions</li><li>SOFR lower by more than 3bp -&gt; target long QQQ 1.5x plus TSLA 0.45x</li><li>SOFR higher by more than 5bp -&gt; target long TLT 1.8x (duration bid as growth expectations fade)</li><li>Otherwise hold 0.8x SPY</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Re-evaluated every session; the rate series, not a price, closes the position</li></ul>
+<h3>Evidence base</h3>
+<ul><li>The Federal Reserve Bank of New York publishes SOFR daily; the collected history and the publisher&#x27;s own API agree on both cross-checked observations — <a href="https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json">FRED series SOFR (data/real/fred/SOFR_2024-09-16_2026-09-17.csv)</a> <span class="muted small">[FETCHED-VERIFIED]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>A 21-session funding change is a noisy proxy for policy expectations; repo rates move on quarter-end and settlement mechanics unrelated to equity discount rates (the collected history shows a 23bp one-day jump on 2026-09-17 that is a settlement effect, not a policy signal)</li><li>TLT is a duration bet with its own convexity and rate-path risk</li><li>TSLA is a single-name residual risk wearing a macro signal</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="pos">$11,084.45</td></tr><tr><td>TSLA</td><td class="neg">$-2,003.02</td></tr><tr><td>SPY</td><td class="pos">$1,804.40</td></tr><tr><td>TLT</td><td class="pos">$129.07</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 80 · still open:
+0</li>
+<li>Win rate: 50.00% · profit factor:
+1.4846</li>
+<li>Largest trip: $4,263.78 · worst trip:
+$-3,240.88</li>
+<li>Carry: $855.25 received,
+$1,972.99 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>SPY</td><td>long</td>
+<td>2025-09-18</td><td>661.9000</td>
+<td>2025-09-19</td>
+<td>662.3300</td><td>120</td>
+<td class="pos">
+$50.86</td>
+<td>None</td><td>sofr-pivot: easing (-19.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-19</td><td>597.4567</td>
+<td>2025-10-21</td>
+<td>611.6400</td><td>200</td>
+<td class="pos">
+$2,835.43</td>
+<td>None</td><td>sofr-pivot: flat (+2.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-09-19</td><td>421.8300</td>
+<td>2025-10-21</td>
+<td>445.7500</td><td>40</td>
+<td class="pos">
+$956.55</td>
+<td>None</td><td>sofr-pivot: flat (+2.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-19</td><td>597.4567</td>
+<td>2025-10-22</td>
+<td>610.8200</td><td>40</td>
+<td class="pos">
+$534.29</td>
+<td>None</td><td>sofr-pivot: tightening (+9.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-09-19</td><td>421.8300</td>
+<td>2025-10-22</td>
+<td>443.4400</td><td>40</td>
+<td class="pos">
+$864.15</td>
+<td>None</td><td>sofr-pivot: tightening (+9.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-10-22</td><td>91.7530</td>
+<td>2025-10-31</td>
+<td>90.5500</td><td>1,900</td>
+<td class="neg">
+$-2,297.42</td>
+<td>None</td><td>sofr-pivot: easing (-20.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-10-22</td><td>91.7530</td>
+<td>2025-11-03</td>
+<td>89.6200</td><td>100</td>
+<td class="neg">
+$-213.92</td>
+<td>None</td><td>sofr-pivot: flat (+2.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-11-03</td><td>685.6700</td>
+<td>2025-11-04</td>
+<td>676.1000</td><td>80</td>
+<td class="neg">
+$-766.09</td>
+<td>None</td><td>sofr-pivot: easing (-7.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-04</td><td>621.0700</td>
+<td>2025-12-09</td>
+<td>623.0100</td><td>160</td>
+<td class="pos">
+$309.41</td>
+<td>None</td><td>sofr-pivot: flat (+4.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-11-04</td><td>454.4700</td>
+<td>2025-12-09</td>
+<td>437.5300</td><td>40</td>
+<td class="neg">
+$-677.85</td>
+<td>None</td><td>sofr-pivot: flat (+4.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-11-04</td><td>454.4700</td>
+<td>2025-12-10</td>
+<td>446.0600</td><td>40</td>
+<td class="neg">
+$-336.65</td>
+<td>None</td><td>sofr-pivot: flat (+1.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-10</td><td>682.5600</td>
+<td>2025-12-11</td>
+<td>685.1400</td><td>80</td>
+<td class="pos">
+$205.91</td>
+<td>None</td><td>sofr-pivot: easing (-3.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-04</td><td>621.8380</td>
+<td>2026-01-14</td>
+<td>622.2300</td><td>200</td>
+<td class="pos">
+$77.16</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2025-12-11</td><td>448.9600</td>
+<td>2026-01-14</td>
+<td>442.8000</td><td>80</td>
+<td class="neg">
+$-493.30</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-15</td><td>694.5800</td>
+<td>2026-01-16</td>
+<td>693.6500</td><td>80</td>
+<td class="neg">
+$-74.90</td>
+<td>None</td><td>sofr-pivot: easing (-9.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-16</td><td>616.3140</td>
+<td>2026-01-23</td>
+<td>619.7200</td><td>200</td>
+<td class="pos">
+$679.96</td>
+<td>None</td><td>sofr-pivot: flat (-2.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-01-16</td><td>439.5100</td>
+<td>2026-01-23</td>
+<td>447.4200</td><td>40</td>
+<td class="pos">
+$316.15</td>
+<td>None</td><td>sofr-pivot: flat (-2.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-26</td><td>623.2200</td>
+<td>2026-01-27</td>
+<td>628.9000</td><td>120</td>
+<td class="pos">
+$680.86</td>
+<td>None</td><td>sofr-pivot: flat (+0.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-01-16</td><td>442.2600</td>
+<td>2026-01-27</td>
+<td>437.4000</td><td>80</td>
+<td class="neg">
+$-389.30</td>
+<td>None</td><td>sofr-pivot: flat (+0.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-27</td><td>695.6150</td>
+<td>2026-01-29</td>
+<td>696.3900</td><td>40</td>
+<td class="pos">
+$30.75</td>
+<td>None</td><td>sofr-pivot: easing (-12.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-29</td><td>630.3467</td>
+<td>2026-02-02</td>
+<td>618.7000</td><td>80</td>
+<td class="neg">
+$-932.23</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-01-29</td><td>437.8100</td>
+<td>2026-02-02</td>
+<td>421.2800</td><td>80</td>
+<td class="neg">
+$-1,322.90</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-27</td><td>692.6025</td>
+<td>2026-02-03</td>
+<td>696.2100</td><td>40</td>
+<td class="pos">
+$144.05</td>
+<td>None</td><td>sofr-pivot: easing (-18.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-27</td><td>692.6025</td>
+<td>2026-02-04</td>
+<td>690.3400</td><td>40</td>
+<td class="neg">
+$-90.75</td>
+<td>None</td><td>sofr-pivot: easing (-6.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-29</td><td>620.4393</td>
+<td>2026-02-06</td>
+<td>600.1900</td><td>160</td>
+<td class="neg">
+$-3,240.88</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-02-03</td><td>424.2800</td>
+<td>2026-02-06</td>
+<td>400.8600</td><td>40</td>
+<td class="neg">
+$-937.05</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-29</td><td>620.4393</td>
+<td>2026-02-09</td>
+<td>607.5300</td><td>40</td>
+<td class="neg">
+$-516.62</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-02-03</td><td>424.2800</td>
+<td>2026-02-10</td>
+<td>418.0700</td><td>40</td>
+<td class="neg">
+$-248.65</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-02-09</td><td>689.4200</td>
+<td>2026-02-19</td>
+<td>683.8400</td><td>40</td>
+<td class="neg">
+$-223.45</td>
+<td>None</td><td>sofr-pivot: tightening (+8.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-02-19</td><td>89.4100</td>
+<td>2026-02-20</td>
+<td>89.6900</td><td>700</td>
+<td class="pos">
+$191.66</td>
+<td>None</td><td>sofr-pivot: flat (+3.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-02-09</td><td>685.8750</td>
+<td>2026-03-03</td>
+<td>675.0500</td><td>80</td>
+<td class="neg">
+$-866.50</td>
+<td>None</td><td>sofr-pivot: tightening (+6.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-03</td><td>88.9900</td>
+<td>2026-03-04</td>
+<td>89.2600</td><td>700</td>
+<td class="pos">
+$184.66</td>
+<td>None</td><td>sofr-pivot: flat (+2.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-04</td><td>681.6400</td>
+<td>2026-03-17</td>
+<td>672.3900</td><td>80</td>
+<td class="neg">
+$-740.50</td>
+<td>None</td><td>sofr-pivot: tightening (+5.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-17</td><td>87.3700</td>
+<td>2026-03-18</td>
+<td>87.3600</td><td>600</td>
+<td class="neg">
+$-9.72</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-18</td><td>668.3600</td>
+<td>2026-03-19</td>
+<td>656.9600</td><td>40</td>
+<td class="neg">
+$-456.25</td>
+<td>None</td><td>sofr-pivot: easing (-9.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-18</td><td>668.3600</td>
+<td>2026-03-23</td>
+<td>658.0700</td><td>40</td>
+<td class="neg">
+$-411.85</td>
+<td>None</td><td>sofr-pivot: easing (-5.0bp over 21 sessions)</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-17</td><td>87.3700</td>
+<td>2026-03-24</td>
+<td>85.7200</td><td>100</td>
+<td class="neg">
+$-165.62</td>
+<td>None</td><td>sofr-pivot: easing (-4.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-19</td><td>588.8120</td>
+<td>2026-03-26</td>
+<td>582.5900</td><td>200</td>
+<td class="neg">
+$-1,245.64</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-03-19</td><td>387.2700</td>
+<td>2026-03-26</td>
+<td>381.5900</td><td>80</td>
+<td class="neg">
+$-454.90</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-27</td><td>642.5100</td>
+<td>2026-03-30</td>
+<td>640.1000</td><td>80</td>
+<td class="neg">
+$-193.30</td>
+<td>None</td><td>sofr-pivot: easing (-4.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-30</td><td>565.8400</td>
+<td>2026-04-01</td>
+<td>581.4700</td><td>120</td>
+<td class="pos">
+$1,874.86</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-03-30</td><td>365.8700</td>
+<td>2026-04-01</td>
+<td>378.6200</td><td>80</td>
+<td class="pos">
+$1,019.50</td>
+<td>None</td><td>sofr-pivot: flat (-3.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-01</td><td>653.9100</td>
+<td>2026-04-02</td>
+<td>646.4100</td><td>40</td>
+<td class="neg">
+$-300.25</td>
+<td>None</td><td>sofr-pivot: easing (-5.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-30</td><td>571.2667</td>
+<td>2026-04-06</td>
+<td>586.2200</td><td>80</td>
+<td class="pos">
+$1,194.81</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-04-02</td><td>364.2100</td>
+<td>2026-04-06</td>
+<td>362.5800</td><td>40</td>
+<td class="neg">
+$-65.75</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-30</td><td>571.2667</td>
+<td>2026-04-07</td>
+<td>585.6300</td><td>40</td>
+<td class="pos">
+$573.80</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-04-02</td><td>364.2100</td>
+<td>2026-04-07</td>
+<td>346.4300</td><td>40</td>
+<td class="neg">
+$-711.73</td>
+<td>None</td><td>sofr-pivot: flat (-1.0bp over 21 sessions)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-06</td><td>656.2600</td>
+<td>2026-04-09</td>
+<td>674.8400</td><td>80</td>
+<td class="pos">
+$1,484.79</td>
+<td>None</td><td>sofr-pivot: easing (-6.0bp over 21 sessions)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-09</td><td>609.0140</td>
+<td>2026-04-14</td>
+<td>620.2000</td><td>200</td>
+<td class="pos">
+$2,233.41</td>
+<td>None</td><td>sofr-pivot: flat (-2.0bp over 21 sessions)</td>
+</tr><tr><td>TSLA</td><td>long</td>
+<td>2026-04-09</td><td>343.1600</td>
+<td>2026-04-14</td>
+<td>357.6700</td><td>120</td>
+<td class="pos">
+$1,739.57</td>
+<td>None</td><td>sofr-pivot: flat (-2.0bp over 21 sessions)</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-09-19</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-09-19</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-09-22</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-09-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-09-25</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-10-21</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-10-21</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-10-22</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-10-22</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-10-22</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-23</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-24</td>
+<td>TLT</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-27</td>
+<td>TLT</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-10-31</td>
+<td>TLT</td><td>sell</td><td>1,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-11-03</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2025-11-03</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-11-04</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-11-04</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-11-04</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-11-05</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-11-06</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-12-09</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-12-09</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-12-10</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-12-10</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-12-11</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2025-12-11</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-12-11</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2025-12-12</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2025-12-15</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-14</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-14</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-15</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-01-16</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-01-16</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-16</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-20</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-21</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-23</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-23</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-26</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-26</td>
+<td>TSLA</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-27</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-27</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-27</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-01-28</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-01-29</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-01-29</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-01-29</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-01-30</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-02</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-02</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-02-02</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-02-03</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-02-03</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-03</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-02-04</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-02-04</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-05</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-06</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-06</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-02-09</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-02-09</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-02-10</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-02-19</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-02-19</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-02-20</td>
+<td>TLT</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-02-20</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-03</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-03</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-04</td>
+<td>TLT</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-04</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-17</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-17</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-18</td>
+<td>TLT</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-18</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-19</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-19</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-03-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-23</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-24</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TLT_price</td></tr><tr><td>2026-03-24</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-25</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-26</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-26</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-03-27</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-30</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-03-30</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-03-30</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-03-31</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-01</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-01</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-01</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-04-02</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-04-02</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-02</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-06</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-06</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-06</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-04-07</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-07</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-07</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-04-09</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-04-09</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-09</td>
+<td>TSLA</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-10</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-14</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-04-14</td>
+<td>TSLA</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-04-15</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-05-05</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-05-05</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-05-05</td>
+<td>TSLA</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-05-06</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price, SOFR, SP500</td></tr><tr><td>2026-05-06</td>
+<td>TSLA</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, TSLA_price</td></tr><tr><td>2026-05-06</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr><tr><td>2026-05-07</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SOFR, SP500, SPY_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

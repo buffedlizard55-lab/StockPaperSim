@@ -243,6 +243,33 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "provides": "the league's own publication channel for the daily injury report",
      "note": "Cited at the host because the injury-report path moves between "
              "seasons; the stable season URL is registered beside it."},
+    {"id": "finra_regsho", "label": "FINRA REG SHO daily short-sale volume files",
+     "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260917.txt",
+     "source_class": "OFFICIAL", "path": "data/real/finra/",
+     "provides": "per-symbol daily short volume, short-exempt volume and TOTAL volume "
+                 "for every NMS stock, published by the self-regulatory organisation "
+                 "rather than by an aggregator",
+     "note": "Verified in-session for 2026-09-17 (AAPL total 13766217.054549, short "
+             "8061052.786287). It is the only free official source of daily total "
+             "volume per symbol this project has found, so it is the right anchor for "
+             "the participation and liquidity model. Roughly 13,000 symbols per day, "
+             "so the runner filters it to the traded universe before storing."},
+    {"id": "finra_regsho_daily", "label": "FINRA REG SHO daily short-sale volume, by date",
+     "url": "https://cdn.finra.org/equity/regsho/daily/",
+     "source_class": "OFFICIAL", "path": "data/real/finra/",
+     "provides": "one file per trading day, named CNMSshvolYYYYMMDD.txt, so the "
+                 "collector can walk back from the end of the window and keep the "
+                 "most recent sessions if its byte budget runs out",
+     "note": "The directory form is registered beside the concrete file because the "
+             "URL the collector builds from it contains a {date} placeholder, which "
+             "cannot be matched literally."},
+    {"id": "nyfed_sofr", "label": "Federal Reserve Bank of New York reference-rate API",
+     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json",
+     "source_class": "OFFICIAL", "path": "data/real/nyfed/",
+     "provides": "the publisher's own SOFR observations and percentiles, as a second "
+                 "source for the series FRED republishes",
+     "note": "Verified in-session: percentRate 3.85 for 2026-09-17 and 3.62 for "
+             "2026-09-16, matching the collected FRED SOFR file on both dates."},
     {"id": "github", "label": "This repository (self-citation for provenance notes)",
      "url": "https://github.com/buffedlizard55-lab/StockPaperSim",
      "source_class": "ASSERTED", "path": ".",

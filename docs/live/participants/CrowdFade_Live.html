@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crowd Fade Live · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Crowd Fade Live <span class="muted">@CrowdFade_Live</span></h1>
+<p class="lede">&#x27;Inverse WSB&#x27; is the most common contrarian claim on the forums. Without a sentiment feed the honest test is the price footprint the crowd leaves: a 3-session jump of more than two daily sigmas is faded. The participant is a short-horizon reversal rule standing in for the crowd-fade family, and the substitution is stated rather than hidden.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -45.90%</div>
+    <div class="kpi-sub">$-45,902.61 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-61.34%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.6259</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">12 fills</div>
+    <div class="kpi-sub">8 intents ·
+    0 refused · cost
+    0.005%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Crowd Fade Live (@CrowdFade_Live) planned 8 forward intents and saw 12 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 54,097.39 USD on 100,000 starting cash: -45.90% with a worst peak-to-trough drawdown of -61.34% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 60.3pp.</li><li>Execution cost was 25.13 USD, 0.005% of 491,419 USD traded, at a mean slippage of 0.334 bps against the decision mid; median participation was 0.00019% of the session&#x27;s real volume (max 0.00085%).</li><li>8 round trips closed; win rate 37.5% and profit factor 0.2899. The largest single trip was 7,926.41 USD and the worst -52,103.39 USD.</li><li>Contribution by instrument: NVDA +10,076.72 USD was the biggest positive and MU -55,743.91 USD the biggest negative, out of 5 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>2 margin event(s) were recorded (FINRA 4210 house maintenance), the first on 2026-04-24.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <em>none declared</em></p>
+<p><strong>Sizing:</strong> up to 1.8x gross across at most three names ·
+<strong>leverage:</strong> up to 1.8x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> one to five sessions</p>
+<h3>Entry rules</h3>
+<ul><li>3-session return above +2.5 daily sigmas on QQQ, NVDA, TSLA, MU or IWM -&gt; target short that name at 0.5x equity each</li><li>3-session return below -2.5 sigma -&gt; target long at 0.7x each</li><li>No more than three names at once, largest moves first</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Exit on the first session whose 1-session return has the opposite sign to the entry</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Short-horizon reversal is robust at daily and weekly horizons but fragile after costs — <a href="https://doi.org/10.1111/j.1540-6261.1990.tb05110.x">Jegadeesh (1990); Lehmann (1990)</a> <span class="muted small">[KNOWN-NOT-FETCHED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Fading momentum is the most expensive mistake in a trending tape</li><li>Shorting high-beta names into a squeeze is unbounded on paper</li><li>The execution delay removes the fastest part of the reversion, which is where the academic effect is concentrated</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>MU</td><td class="neg">$-55,743.91</td></tr><tr><td>NVDA</td><td class="pos">$10,076.72</td></tr><tr><td>QQQ</td><td class="pos">$7,926.41</td></tr><tr><td>IWM</td><td class="neg">$-6,357.23</td></tr><tr><td>TSLA</td><td class="neg">$-0.49</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 8 · still open:
+0</li>
+<li>Win rate: 37.50% · profit factor:
+0.2899</li>
+<li>Largest trip: $7,926.41 · worst trip:
+$-52,103.39</li>
+<li>Carry: $5,511.50 received,
+$0.00 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 2</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>MU</td><td>short</td>
+<td>2025-10-02</td><td>184.9500</td>
+<td>2025-12-23</td>
+<td>275.9400</td><td>40</td>
+<td class="neg">
+$-3,639.85</td>
+<td>None</td><td>crowd-fade: 3-session sigma extremes (MU z=+3.13)</td>
+</tr><tr><td>NVDA</td><td>short</td>
+<td>2025-10-29</td><td>207.9700</td>
+<td>2026-02-05</td>
+<td>174.9300</td><td>200</td>
+<td class="pos">
+$6,606.77</td>
+<td>None</td><td>crowd-fade: 3-session sigma extremes (NVDA z=-2.66)</td>
+</tr><tr><td>IWM</td><td>short</td>
+<td>2025-11-26</td><td>245.0500</td>
+<td>2026-04-27</td>
+<td>276.8300</td><td>200</td>
+<td class="neg">
+$-6,357.23</td>
+<td>None</td><td>forced liquidation after a maintenance-margin breach</td>
+</tr><tr><td>MU</td><td>short</td>
+<td>2025-10-02</td><td>184.9500</td>
+<td>2026-04-27</td>
+<td>510.5900</td><td>160</td>
+<td class="neg">
+$-52,103.39</td>
+<td>None</td><td>forced liquidation after a maintenance-margin breach</td>
+</tr><tr><td>NVDA</td><td>long</td>
+<td>2026-02-05</td><td>174.9300</td>
+<td>2026-04-27</td>
+<td>209.6400</td><td>100</td>
+<td class="pos">
+$3,469.95</td>
+<td>None</td><td>forced liquidation after a maintenance-margin breach</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-31</td><td>564.2900</td>
+<td>2026-04-27</td>
+<td>663.3900</td><td>80</td>
+<td class="pos">
+$7,926.41</td>
+<td>None</td><td>forced liquidation after a maintenance-margin breach</td>
+</tr><tr><td>MU</td><td>short</td>
+<td>2026-05-06</td><td>660.3400</td>
+<td>OPEN</td>
+<td>0.0000</td><td>40</td>
+<td class="neg">
+$-0.67</td>
+<td>None</td><td></td>
+</tr><tr><td>TSLA</td><td>short</td>
+<td>2026-05-12</td><td>441.4000</td>
+<td>OPEN</td>
+<td>0.0000</td><td>40</td>
+<td class="neg">
+$-0.49</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-10-02</td>
+<td>MU</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>MU_price</td></tr><tr><td>2025-10-29</td>
+<td>NVDA</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NVDA_price</td></tr><tr><td>2025-11-26</td>
+<td>IWM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IWM_price</td></tr><tr><td>2025-12-23</td>
+<td>MU</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>MU_price</td></tr><tr><td>2026-02-05</td>
+<td>NVDA</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NVDA_price</td></tr><tr><td>2026-03-31</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-05-06</td>
+<td>MU</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>MU_price</td></tr><tr><td>2026-05-12</td>
+<td>TSLA</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>TSLA_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

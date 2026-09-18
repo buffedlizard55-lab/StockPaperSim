@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Official sources · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../live/index.html">Overview</a><a class="" href="../live/forward.html">Upcoming trades</a><a class="" href="../live/leaderboard.html">Leaderboard</a><a class="" href="../live/blotter.html">Trade tape</a><a class="" href="../live/participants/index.html">Participants</a><a class="" href="../live/method.html">Clock &amp; margin</a><a class="active" href="../live/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Official sources</h1>
+<p class="lede">Everything this book reads that is not a price, plus the provenance of
+the prices it does read. A URL is only listed as official here after it was
+<em>retrieved</em>, and where a publisher's own reuse conditions were not read
+in-session this table says so instead of guessing, because that tag is exactly what
+decides whether a committed copy may be redistributed.</p>
+
+<h2>Official series used for signals, benchmark, calendar and financing</h2>
+<table class="participants">
+<thead><tr><th>series</th><th>publisher</th><th>class</th><th>frequency</th>
+<th>observations</th><th>file</th><th>links</th><th>what it is used for</th>
+<th>reuse tag as read</th></tr></thead>
+<tbody><tr>
+<td><code>DCOILWTICO</code><br><span class="muted small">Cushing, OK WTI crude oil spot price</span></td>
+<td>U.S. Energy Information Administration</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily</td>
+<td>497<br><span class="muted small">2024-09-16 →
+2026-09-15</span></td>
+<td><code>data/real/fred/DCOILWTICO_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">0ff80c6678f789029c92…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/DCOILWTICO">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO">CSV</a></td>
+<td>energy signal for the oil/dollar participant (executed through UNG, XOM)</td>
+<td>NOT-READ-IN-SESSION</td></tr><tr>
+<td><code>DGS10</code><br><span class="muted small">10-year Treasury constant-maturity yield</span></td>
+<td>U.S. Department of the Treasury</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily</td>
+<td>500<br><span class="muted small">2024-09-16 →
+2026-09-16</span></td>
+<td><code>data/real/fred/DGS10_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">ae61db7627abc63a2aa8…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/DGS10">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10">CSV</a></td>
+<td>long-rate signal for the duration and curve-slope participants</td>
+<td>NOT-READ-IN-SESSION</td></tr><tr>
+<td><code>DGS3MO</code><br><span class="muted small">3-month Treasury constant-maturity yield</span></td>
+<td>U.S. Department of the Treasury</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily</td>
+<td>500<br><span class="muted small">2024-09-16 →
+2026-09-16</span></td>
+<td><code>data/real/fred/DGS3MO_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">9c7d4e98ba21865bd69c…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/DGS3MO">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO">CSV</a></td>
+<td>short-rate leg of the curve-slope signal</td>
+<td>NOT-READ-IN-SESSION</td></tr><tr>
+<td><code>DJIA</code><br><span class="muted small">Dow Jones Industrial Average, daily close</span></td>
+<td>S&amp;P Dow Jones Indices LLC</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily, Close</td>
+<td>503<br><span class="muted small">2024-09-16 →
+2026-09-17</span></td>
+<td><code>data/real/fred/DJIA_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">37fc16a8d0caf901b420…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/DJIA">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA&amp;cosd=2024-09-16&amp;coed=2026-09-17">CSV</a></td>
+<td>the NYSE-listed blue-chip leg: benchmark and relative-strength signal against the Nasdaq leg (executed through SPY/QQQ)</td>
+<td>Copyrighted: Pre-Approval Required</td></tr><tr>
+<td><code>DTWEXBGS</code><br><span class="muted small">Nominal broad US dollar index (goods and services)</span></td>
+<td>Board of Governors of the Federal Reserve System</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily</td>
+<td>498<br><span class="muted small">2024-09-16 →
+2026-09-11</span></td>
+<td><code>data/real/fred/DTWEXBGS_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">9c76945d4cd89cdb02bf…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/DTWEXBGS">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTWEXBGS">CSV</a></td>
+<td>dollar-strength signal, the standard inverse driver of commodity exposure</td>
+<td>NOT-READ-IN-SESSION</td></tr><tr>
+<td><code>NASDAQCOM</code><br><span class="muted small">NASDAQ Composite Index, daily close</span></td>
+<td>Nasdaq, Inc.</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily, Close</td>
+<td>503<br><span class="muted small">2024-09-16 →
+2026-09-17</span></td>
+<td><code>data/real/fred/NASDAQCOM_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">c781a4a51d12434bd9dc…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/NASDAQCOM">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&amp;cosd=2024-09-16&amp;coed=2026-09-17">CSV</a></td>
+<td>the Nasdaq-market leg the brief asked for: benchmark and trend signal for the Nasdaq-listed sleeve (executed through QQQ)</td>
+<td>Notes carry &#x27;Copyright (c) 2016, NASDAQ OMX Group, Inc&#x27;; FRED&#x27;s reuse tag was not read in-session</td></tr><tr>
+<td><code>SOFR</code><br><span class="muted small">Secured Overnight Financing Rate - broad general collateral rate</span></td>
+<td>Federal Reserve Bank of New York</td>
+<td><span class="badge badge-ok">OFFICIAL</span></td>
+<td>Daily</td>
+<td>500<br><span class="muted small">2024-09-16 →
+2026-09-17</span></td>
+<td><code>data/real/fred/SOFR_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">6cb81337d24ef54f839e…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/SOFR">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&amp;cosd=2024-09-16&amp;coed=2026-09-17">CSV</a></td>
+<td>financing curve: interest credited on idle cash and charged on a margin debit, replacing Season 1&#x27;s zero risk-free rate</td>
+<td>not read in-session; the Federal Reserve Bank of New York publishes SOFR as a public reference rate</td></tr><tr>
+<td><code>SP500</code><br><span class="muted small">S&amp;P 500 index, daily close</span></td>
+<td>S&amp;P Dow Jones Indices LLC</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily, Close</td>
+<td>503<br><span class="muted small">2024-09-16 →
+2026-09-17</span></td>
+<td><code>data/real/fred/SP500_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">7113e8cb4b097027a68c…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/SP500">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500">CSV</a></td>
+<td>trading calendar (blank rows are the authoritative closed-day list), benchmark, market factor</td>
+<td>NOT-READ-IN-SESSION (read the series page before reuse)</td></tr><tr>
+<td><code>VIXCLS</code><br><span class="muted small">CBOE Volatility Index: VIX, daily close</span></td>
+<td>Cboe Global Markets (the index administrator); the observation is republished by FRED</td>
+<td><span class="badge badge-ok">OFFICIAL-PUBLISHER / FRED-REPUBLISHED</span></td>
+<td>Daily, Close</td>
+<td>517<br><span class="muted small">2024-09-16 →
+2026-09-16</span></td>
+<td><code>data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv</code><br>
+<code class="muted small">b167cbaa28d2924bcf46…</code></td>
+<td><a href="https://fred.stlouisfed.org/series/VIXCLS">series page</a> ·
+<a href="https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS">CSV</a></td>
+<td>volatility regime for the venue model and for regime-timed intents</td>
+<td>NOT-READ-IN-SESSION (read the series page before reuse)</td></tr></tbody></table>
+<p class="muted small">A blank observation is data, not a gap: FRED leaves the value
+empty on days the market is shut, and that is the authoritative closed-day list the
+trading calendar is built from. 0 registered series were missing from the
+collected directory at build time.</p>
+
+<h2>Auxiliary official endpoints</h2>
+<table class="participants">
+<thead><tr><th>endpoint</th><th>URL</th><th>class</th><th>role</th>
+<th>retrieval note</th></tr></thead>
+<tbody><tr><td>Federal Reserve Bank of New York reference-rate API (SOFR)</td>
+<td><a href="https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json">https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json</a></td>
+<td><span class="badge badge-ok">OFFICIAL</span></td><td>independent second publisher for the SOFR observations the financing curve accrues on; the collected FRED file and this API agree on both cross-checked dates</td>
+<td>Retrieved in-session. Returned percentRate 3.85 for 2026-09-17 and 3.62 for 2026-09-16, matching the collected FRED SOFR file line for line on those two dates.</td></tr><tr><td>Nasdaq Trader - U.S. Equity and Options Markets Holiday Schedule</td>
+<td><a href="https://www.nasdaqtrader.com/trader.aspx?id=calendar">https://www.nasdaqtrader.com/trader.aspx?id=calendar</a></td>
+<td><span class="badge badge-ok">OFFICIAL</span></td><td>the forward session projection: sessions after the last collected date are projected from this published calendar and labelled PROJECTED, never asserted as observations</td>
+<td>Read in-session. For the rest of 2026 it lists 2026-11-26 and 2026-12-25 as closures and 2026-11-27 and 2026-12-24 as 1:00 p.m. early closes; no 2027 dates are projected because the 2027 schedule was not read from the publisher.</td></tr><tr><td>Nasdaq - 2026 U.S. stock market holiday schedule (consumer page)</td>
+<td><a href="https://www.nasdaq.com/market-activity/stock-market-holiday-schedule">https://www.nasdaq.com/market-activity/stock-market-holiday-schedule</a></td>
+<td><span class="badge badge-ok">OFFICIAL</span></td><td>second publication of the same schedule, used to cross-check the Trader page</td>
+<td>Read in-session by search; it agrees with the Trader page row for row.</td></tr></tbody></table>
+
+<h2>Collected event signals the roster reads</h2>
+<table class="participants"><thead><tr><th>signal array</th><th>state</th></tr></thead>
+<tbody><tr><td><code>fda_all_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>fda_orig_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>fda_orig_z</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>fred_slope_bps</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>fred_slope_change_21d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>gold_close</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>insider_buy_ratio_30d</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::AAPL</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::DKNG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::FLUT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::GENI</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::GLD</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::IBB</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::IWM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::JNJ</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::JPM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::MSFT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::MU</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::NVDA</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::PENN</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::PG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::QQQ</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::SPY</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::SRAD</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::T</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::TLT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::TSLA</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::UNG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::XBI</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::XLU</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_buys_30d::XOM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::AAPL</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::DKNG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::FLUT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::GENI</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::GLD</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::IBB</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::IWM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::JNJ</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::JPM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::MSFT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::MU</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::NVDA</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::PENN</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::PG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::QQQ</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::SPY</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::SRAD</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::T</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::TLT</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::TSLA</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::UNG</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::XBI</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::XLU</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>insider_ceo_buys_30d::XOM</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>kalshi_settled_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>kalshi_volume_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>mlb_games_7d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>mlb_home_win_rate_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>mlb_upsets_7d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>nba_injury_report</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>nfl_injury_report</code></td><td><span class="badge badge-bad">MISSING</span></td></tr><tr><td><code>spy_dollar_volume_20d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>weather_cold_anomaly_10d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr><tr><td><code>weather_precip_30d_in</code></td><td><span class="badge badge-ok">AVAILABLE</span></td></tr></tbody></table>
+<p class="muted small">A <code>MISSING</code> row is why a participant places no
+intents: the rule is implemented and waiting on a dataset, and the participant page
+says which one. Nothing is back-filled with a price proxy.</p>
+
+<h2>Executable price provenance</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>source class</th></tr></thead>
+<tbody><tr><td>AAPL</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>DKNG</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>FLUT</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>GENI</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>GLD</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>IBB</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>IWM</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>JNJ</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>JPM</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>MSFT</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>MU</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>NVDA</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>PENN</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>PG</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>QQQ</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>SPY</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>SRAD</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>T</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>TLT</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>TSLA</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>UNG</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>XBI</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>XLU</td><td><span class="badge badge-warn">SECONDARY</span></td></tr><tr><td>XOM</td><td><span class="badge badge-warn">SECONDARY</span></td></tr></tbody></table>
+<p>Every executable bar comes from <code>data/real/prices/yahoo/*.json</code>, which
+the collector marks <strong>SECONDARY</strong>, and each fill on the tape names its
+reference file and that file's SHA-256. That is the whole reason
+<code>0.000%</code> of filled
+notional counts as official rather than 100%.</p>
+<p class="more"><a href="blotter.html">Check the tape against these files
+&rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

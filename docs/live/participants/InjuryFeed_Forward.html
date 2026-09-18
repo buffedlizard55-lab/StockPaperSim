@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Injury Feed Forward · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Injury Feed Forward <span class="muted">@InjuryFeed_Forward</span></h1>
+<p class="lede">Both leagues publish injury designations, and nothing archives them in a form this project may retrieve. A rule that trades sportsbook equities on injury-heavy weeks is therefore a genuine forward test with no history: it exists here to be measured from the day the collection starts, and to be honest that it has no sample yet.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +3.87%</div>
+    <div class="kpi-sub">$3,873.87 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">0.00%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    26.1329</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">0 fills</div>
+    <div class="kpi-sub">0 intents ·
+    0 refused · cost
+    0.000%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-warn">FORWARD-ONLY</span></div>
+    <div class="kpi-sub">Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design.</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Injury Feed Forward (@InjuryFeed_Forward) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>No trade ever executed, so the +3.87% is cash financing only (3,873.87 USD of official SOFR credit). The status is FORWARD-ONLY: Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design..</li><li>This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>nfl_injury_report</code>, <code>nba_injury_report</code></p>
+<p><strong>Sizing:</strong> up to 1.8x gross ·
+<strong>leverage:</strong> up to 1.8x gross ·
+<strong>cadence:</strong> weekly, executed the next session ·
+<strong>horizon:</strong> days</p>
+<h3>Entry rules</h3>
+<ul><li>Read the collected NFL/NBA injury-report documents for the current week</li><li>Heavy designation count at contending teams -&gt; target FLUT 0.8x, DKNG 0.6x, GENI 0.4x</li><li>Quiet week -&gt; target short PENN 0.5x</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Weekly re-evaluation</li></ul>
+<h3>Evidence base</h3>
+<ul><li>The NFL and NBA publish their own injury reports — <a href="https://www.nba.com/injury-report">Official league publication channels</a> <span class="muted small">[FORWARD-ONLY (no retrievable archive)]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>No historical sample exists, so nothing here can be backtested - only forward-tested</li><li>Injury news is public and heavily covered, so the informational content at the moment of publication is close to zero</li><li>The mapping from injuries to handle is a hypothesis, not a measurement</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td colspan="2">no closed trades</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 0 · still open:
+0</li>
+<li>Win rate: — · profit factor:
+—</li>
+<li>Largest trip: $0.00 · worst trip:
+$0.00</li>
+<li>Carry: $3,873.87 received,
+$0.00 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td colspan="10">no closed round trips</td></tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td colspan="7">no intents placed</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

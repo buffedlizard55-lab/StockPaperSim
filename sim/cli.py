@@ -15,6 +15,9 @@ from here, and no command requires interactive input:
     python3 -m sim.cli price-audit         # strict official-price eligibility audit
     python3 -m sim.cli season2             # Season 2: official prices, fail closed
     python3 -m sim.cli ledger --limit 20   # every round trip with verified prices
+    python3 -m sim.cli live --mode all      # plan the live forward book + rehearsal
+    python3 -m sim.cli live --mode forward  # upcoming intents only, nothing settles
+    python3 -m sim.cli live-blotter         # every filled forward trade, verified
     python3 -m sim.cli build-site          # regenerate the GitHub Pages site
     python3 -m sim.cli export fills out.csv
 """
@@ -30,7 +33,7 @@ import textwrap
 from typing import Dict, List, Optional, Sequence
 
 from . import analytics, config, engine, eligibility, ledger as ledger_mod, marketdata, memory
-from . import realdata, season2, universe
+from . import live, live_season, realdata, season2, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -435,6 +438,18 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         return rc
 
     try:
+        # The live book is a third section and its own builder, called between
+        # the two for the same reason Season 2 is called after Season 1: each
+        # builder owns its directory and CI diffs the whole tree afterwards.
+        import build_site_live  # type: ignore
+        live_written = build_site_live.build(args.memory_root, args.out)
+        print(f"  live book: {len(live_written)} pages under docs/live/")
+    except SystemExit as exc:
+        # A memory root without a live run (a scratch root built to test
+        # determinism, for example) must not publish an empty live section.
+        print(f"  live book: SKIPPED - {exc}")
+
+    try:
         # Season 1's pages are complete before Season 2's are rendered, so the
         # cross-links are injected here rather than by two builders that would
         # each have to know about the other's files: the nav entry goes on every
@@ -457,6 +472,14 @@ def cmd_build_site(args: argparse.Namespace) -> int:
                 depth = 0 if rel_dir == "." else len(rel_dir.split(os.sep))
                 injected = build_site_season2.inject_banner(
                     html, callout=(name == "index.html"), prefix="../" * depth)
+                # The Live Book is a third section whose pages are written by
+                # build_site_live above; its nav entry is injected here, next to
+                # Season 2's, so a Season-1-only build (which is what the
+                # published-site tests construct) produces no dangling link.
+                injected = injected.replace(
+                    "</nav>",
+                    f'<a href="{"../" * depth}live/index.html">Live Book</a></nav>', 1) \
+                    if "live/index.html" not in injected else injected
                 if injected != html:
                     with open(page_path, "w", encoding="utf-8") as handle:
                         handle.write(injected)
@@ -581,6 +604,165 @@ def cmd_ledger(args: argparse.Namespace) -> int:
               f"{t['entry_price']:>10.2f}{str(t['exit_date']):12s}"
               f"{(t['exit_price'] or 0):>10.2f}{t['quantity']:>8d}"
               f"{t['net_pnl_usd']:>12,.2f}  {str(t.get('exit_reason') or t.get('entry_reason'))[:44]}")
+    return 0
+
+
+# ==========================================================================
+# live: the forward book
+# ==========================================================================
+
+def cmd_live(args: argparse.Namespace) -> int:
+    """Plan the live forward book and/or run its walk-forward rehearsal."""
+    mode = args.mode
+    if mode in ("forward", "all"):
+        result = live_season.run_forward(root=args.memory_root, as_of=args.as_of,
+                                         horizon=args.horizon,
+                                         verbose=args.verbose)
+        manifest = result["manifest"]
+        print(f"LIVE FORWARD BOOK  {result['run_id']}")
+        print(f"  plan date {manifest['plan_date']} · last verified equity bar "
+              f"{manifest['last_verified_equity_session']} · last official "
+              f"observation {manifest['last_official_observation']}")
+        print(f"  {len(result['pending'])} upcoming intents, all PENDING-SETTLEMENT")
+        print(f"  {'participant':28s} {'intent':34s} {'shares':>9}  evidence")
+        for intent in result["pending"]:
+            evidence = next((f"{k}@{v.get('observation_date')}"
+                             for k, v in intent["evidence"].items()), "")
+            print(f"  {intent['participant']:28s} "
+                  f"{intent['side']+' '+intent['symbol']+' for '+intent['intended_session']:34s} "
+                  f"{intent['quantity']:9d}  {evidence}")
+        print(f"  projected sessions: {manifest['projected_sessions']} "
+              f"(from {manifest['projection']['source'] if 'projection' in manifest else live.PROJECTION_SOURCE})")
+        print(f"  verification: {result['verification']['verdict']} "
+              f"({result['verification']['checks']} checks)")
+        print(f"  memory: {result['run_dir']}")
+    if mode in ("rehearsal", "all"):
+        result = live_season.run_rehearsal(root=args.memory_root,
+                                           verbose=args.verbose)
+        board = result["leaderboard"]
+        bench = result["benchmark"]
+        print("\n" + "=" * 118)
+        print("LIVE WALK-FORWARD REHEARSAL  (decide at T, execute at T+1 on verified bars; "
+              f"benchmark {bench['title']} {bench['return_pct']:+.2f}%)")
+        print("=" * 118)
+        hdr = (f"{'#':>2} {'username':28s} {'return%':>9} {'net P&L $':>12} "
+               f"{'maxDD%':>8} {'fills':>6} {'cost%':>7} {'slip bps':>9} "
+               f"{'partial%':>9} {'status':>14}")
+        print(hdr)
+        print("-" * len(hdr))
+        for row in board:
+            print(f"{row['rank']:2d} {row['username']:28s} {row['total_return_pct']:+9.2f} "
+                  f"{row['net_pnl_usd']:+12,.0f} {row['max_drawdown_pct']:8.2f} "
+                  f"{row['fills']:6d} {row['execution_cost_pct']:7.3f} "
+                  f"{str(row['slippage_bps_mean']):>9} "
+                  f"{str(row['participation_pct_median']):>9} {row['data_status']:>14}")
+        print(f"\n  verification: {result['verification']['verdict']} "
+              f"({result['verification']['checks']} checks, "
+              f"{result['verification']['failure_count']} failures)")
+        print(f"  storage: {result['manifest']['storage']['bytes_per_row_average']} "
+              f"bytes/row over {result['manifest']['storage']['total_rows']} rows "
+              f"({result['manifest']['storage']['total_bytes_on_disk'] / 1024:.1f} KiB)")
+        print(f"  official-price coverage of filled notional: "
+              f"{result['coverage']['official_notional_share_pct']}% — "
+              f"{result['coverage']['verdict']}")
+        print(f"  memory: {result['run_dir']}")
+    return 0
+
+
+def cmd_live_blotter(args: argparse.Namespace) -> int:
+    """Print every settled intent with the bar it executed against."""
+    base = os.path.join(args.memory_root, live_season.LIVE_MEMORY_SUBDIR)
+    run_id = args.run
+    if not run_id:
+        runs = sorted(d for d in os.listdir(base)
+                      if args.kind in d) if os.path.isdir(base) else []
+        if not runs:
+            print(f"no live run matching kind {args.kind!r} under {base}")
+            return 1
+        run_id = runs[-1]
+    run_dir = os.path.join(base, run_id)
+    intents = live.read_live_run(run_dir).get("intents", [])
+    fills = {f.get("intent_id"): f for f in live.read_live_run(run_dir).get("fills", [])}
+    rows = [i for i in intents
+            if (not args.participant or i["participant"] == args.participant)
+            and (not args.only_filled or i["status"] in ("FILLED", "PARTIAL"))]
+    print(f"run {run_id} · {len(rows)} of {len(intents)} intents"
+          + (f" · participant {args.participant}" if args.participant else ""))
+    print(f"{'created':11s}{'session':11s}{'participant':26s}{'side':5s}{'symbol':7s}"
+          f"{'qty':>7s}{'px':>10s}{'cost $':>11s}{'slip bps':>9s}{'part%':>8s}  "
+          f"reference bar")
+    shown = sorted(rows, key=lambda r: (r["intended_session"], r["participant"]))
+    for intent in shown[:args.limit]:
+        fill = fills.get(intent["intent_id"], {})
+        price = fill.get("avg_price")
+        print(f"{intent['created_on']:11s}{intent['intended_session']:11s}"
+              f"{intent['participant']:26s}{intent['side']:5s}{intent['symbol']:7s}"
+              f"{intent['quantity']:7d}"
+              f"{(f'{price:,.2f}' if price is not None else 'n/a'):>10s}"
+              f"{(f'{fill.get(chr(116)+chr(111)+chr(116)+chr(97)+chr(108)+chr(95)+chr(99)+chr(111)+chr(115)+chr(116), 0):,.2f}'):>11s}"
+              f"{str(fill.get('slippage_bps', '')):>9s}"
+              f"{str(fill.get('participation_pct_of_session_volume', '')):>8s}"
+              f"  {fill.get('date', 'not settled')}"
+              f" {fill.get('reference_source_class', '')}")
+    if args.export:
+        import csv as _csv
+        fields = ["intent_id", "participant", "created_on", "intended_session",
+                  "symbol", "side", "quantity", "status", "settled_on", "avg_price",
+                  "filled_qty", "notional", "total_cost", "slippage_bps",
+                  "participation_pct_of_session_volume", "reference_close",
+                  "reference_file", "reference_sha256", "reference_source_class",
+                  "rule", "rationale"]
+        with open(args.export, "w", encoding="utf-8", newline="") as handle:
+            writer = _csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore",
+                                     lineterminator="\n")
+            writer.writeheader()
+            for intent in shown:
+                row = dict(intent)
+                row.update({k: v for k, v in fills.get(intent["intent_id"], {}).items()
+                            if k in fields})
+                writer.writerow(row)
+        print(f"wrote {len(shown)} rows to {args.export}")
+    return 0
+
+
+def cmd_live_report(args: argparse.Namespace) -> int:
+    """The live post-mortem for one participant."""
+    base = os.path.join(args.memory_root, live_season.LIVE_MEMORY_SUBDIR)
+    reports_path = os.path.join(base, args.run, "reports.json")
+    if not os.path.exists(reports_path):
+        print(f"no reports.json at {reports_path}; run 'sim.cli live --mode rehearsal' first")
+        return 1
+    with open(reports_path, "r", encoding="utf-8") as handle:
+        reports = json.load(handle)
+    key = args.username if args.username.startswith("@") else "@" + args.username
+    report = reports.get(key)
+    if report is None:
+        print(f"unknown participant {key!r}; known: {', '.join(sorted(reports))}")
+        return 1
+    summary = report["summary"]
+    print("=" * 100)
+    print(f"{report['spec']['display_name']}  ({key})   [{report['data_status']}]")
+    print("=" * 100)
+    print(f"archetype: {report['spec']['archetype']}")
+    print(f"thesis: {report['spec']['thesis']}")
+    print(f"return {summary['total_return_pct']:+.2f}%  net "
+          f"${summary['net_pnl_usd']:+,.2f}  maxDD {summary['max_drawdown_pct']:.2f}%  "
+          f"Sharpe {summary['sharpe']}  verdict: {summary['verdict']}")
+    print(f"intents {summary['intents_placed']}  filled {summary['intents_filled']}  "
+          f"rejected {summary['intents_rejected']}  superseded "
+          f"{summary['intents_cancelled']}  cost {summary['execution_cost_pct']:.3f}% "
+          f"of ${summary['traded_notional_usd']:,.0f}")
+    print("\nWhat caused the result:")
+    for line in report["narrative"]:
+        print(textwrap.fill(line, 96, initial_indent="  • ", subsequent_indent="    "))
+    print("\nCarry:", json.dumps(report["carry"], indent=1))
+    if report["trips"]:
+        print("\nRound trips (first 10):")
+        for trip in report["trips"][:10]:
+            print(f"  {trip['symbol']:7s}{trip['direction']:6s}{trip['entry_date']:12s}"
+                  f"{trip['entry_price']:>10.2f}{str(trip.get('exit_date')):12s}"
+                  f"{(trip.get('exit_price') or 0):>10.2f}{trip['quantity']:>8d}"
+                  f"{trip['net_pnl_usd']:>12,.2f}")
     return 0
 
 
@@ -795,6 +977,28 @@ def build_parser() -> argparse.ArgumentParser:
     bs.add_argument("--run", default="")
     bs.add_argument("--out", default=os.path.join(REPO_ROOT, "docs"))
     bs.set_defaults(func=cmd_build_site)
+
+    lv = sub.add_parser("live", help="plan the live forward book and run its walk-forward rehearsal")
+    lv.add_argument("--mode", choices=("forward", "rehearsal", "all"), default="all")
+    lv.add_argument("--as-of", default="", help="plan date (default: the last verified session)")
+    lv.add_argument("--horizon", type=int, default=3,
+                    help="how many future sessions the projection must cover")
+    lv.add_argument("--verbose", action="store_true")
+    lv.set_defaults(func=cmd_live)
+
+    lb = sub.add_parser("live-blotter", help="every live intent with the verified bar it executed against")
+    lb.add_argument("--run", default="")
+    lb.add_argument("--kind", default="live-", help="substring of the run id to open when --run is empty")
+    lb.add_argument("--participant", default="")
+    lb.add_argument("--only-filled", action="store_true")
+    lb.add_argument("--limit", type=int, default=40)
+    lb.add_argument("--export", default="")
+    lb.set_defaults(func=cmd_live_blotter)
+
+    lr = sub.add_parser("live-report", help="live post-mortem for one participant")
+    lr.add_argument("username")
+    lr.add_argument("--run", default=f"live-rehearsal-seed{live.LIVE_SEED}")
+    lr.set_defaults(func=cmd_live_report)
 
     ts = sub.add_parser("trade-sim", help="simulate placing a real trade with full microstructure & cost model")
     ts.add_argument("--symbol", default="SPY", help="ticker symbol (e.g. SPY, QQQ, AAPL, NVDA)")

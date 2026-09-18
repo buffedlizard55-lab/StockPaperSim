@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PinePilot EMA Live · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>PinePilot EMA Live <span class="muted">@PinePilot_EMA_Live</span></h1>
+<p class="lede">PinePilot is a Pine Script generator; the canonical script it produces is a fast/slow EMA cross. The rule here is that script on QQQ, with the whole position taken on the cross and no filter. Its value in this roster is as the simplest possible trend baseline a forward book can be measured against.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -8.23%</div>
+    <div class="kpi-sub">$-8,230.39 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-24.79%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.2525</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">29 fills</div>
+    <div class="kpi-sub">29 intents ·
+    0 refused · cost
+    0.003%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>PinePilot EMA Live (@PinePilot_EMA_Live) planned 29 forward intents and saw 29 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 91,769.61 USD on 100,000 starting cash: -8.23% with a worst peak-to-trough drawdown of -24.79% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 22.6pp.</li><li>Execution cost was 115.84 USD, 0.003% of 3,662,142 USD traded, at a mean slippage of 0.185 bps against the decision mid; median participation was 0.00041% of the session&#x27;s real volume (max 0.0013%).</li><li>18 round trips closed; win rate 22.22% and profit factor 0.6996. The largest single trip was 20,177.82 USD and the worst -5,058.44 USD.</li><li>Contribution by instrument: QQQ -9,189.91 USD was the biggest positive and QQQ -9,189.91 USD the biggest negative, out of 1 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <em>none declared</em></p>
+<p><strong>Sizing:</strong> 1.5x long, 1.0x short ·
+<strong>leverage:</strong> 1.5x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> days to weeks</p>
+<h3>Entry rules</h3>
+<ul><li>EMA(9) crossing above EMA(21) on QQQ -&gt; target 1.5x equity</li><li>EMA(9) crossing below EMA(21) -&gt; target short QQQ 1.0x</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Cross reversal only; no stop, no volatility filter</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Time-series momentum - an asset&#x27;s own past 12-month return predicts its next-month return across asset classes — <a href="https://doi.org/10.1016/j.jfineco.2011.11.003">Moskowitz, Ooi &amp; Pedersen (2012), Journal of Financial Economics 104(2)</a> <span class="muted small">[KNOWN-NOT-FETCHED]</span></li><li>PinePilot generates Pine Script strategies from a natural-language description; the EMA cross is its canonical output — <a href="https://buffedlizard55-lab.github.io/MasterSite/">PinePilot project on the MasterSite directory</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>A 9/21 EMA cross on a daily bar is a textbook whipsaw generator</li><li>Taking the whole position on the cross means the entry price is always the worst one of the move</li><li>No filter means it trades every chop</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="neg">$-9,189.91</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 18 · still open:
+0</li>
+<li>Win rate: 22.22% · profit factor:
+0.6996</li>
+<li>Largest trip: $20,177.82 · worst trip:
+$-5,058.44</li>
+<li>Carry: $2,136.09 received,
+$1,663.77 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>595.7200</td>
+<td>2025-11-18</td>
+<td>599.6000</td><td>240</td>
+<td class="pos">
+$929.72</td>
+<td>None</td><td>pinepilot: EMA9 613.64 &lt; EMA21 614.51</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2025-11-18</td><td>599.6000</td>
+<td>2025-12-02</td>
+<td>619.4800</td><td>160</td>
+<td class="neg">
+$-3,181.79</td>
+<td>None</td><td>pinepilot: EMA9 609.97 &gt; EMA21 609.85</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-02</td><td>619.5360</td>
+<td>2025-12-18</td>
+<td>609.7800</td><td>200</td>
+<td class="neg">
+$-1,952.43</td>
+<td>None</td><td>pinepilot: EMA9 613.98 &lt; EMA21 614.92</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2025-12-18</td><td>609.7800</td>
+<td>2025-12-24</td>
+<td>621.9900</td><td>120</td>
+<td class="neg">
+$-1,465.94</td>
+<td>None</td><td>pinepilot: EMA9 616.34 &gt; EMA21 615.69</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-24</td><td>623.0580</td>
+<td>2026-01-21</td>
+<td>609.4600</td><td>200</td>
+<td class="neg">
+$-2,720.84</td>
+<td>None</td><td>pinepilot: EMA9 619.30 &lt; EMA21 619.44</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-01-21</td><td>609.4600</td>
+<td>2026-01-26</td>
+<td>623.2200</td><td>120</td>
+<td class="neg">
+$-1,651.94</td>
+<td>None</td><td>pinepilot: EMA9 619.83 &gt; EMA21 619.61</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-26</td><td>625.4960</td>
+<td>2026-02-05</td>
+<td>600.2100</td><td>200</td>
+<td class="neg">
+$-5,058.44</td>
+<td>None</td><td>pinepilot: EMA9 619.99 &lt; EMA21 620.98</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-02-05</td><td>591.2275</td>
+<td>2026-04-10</td>
+<td>611.8600</td><td>160</td>
+<td class="neg">
+$-3,302.19</td>
+<td>None</td><td>pinepilot: EMA9 592.28 &gt; EMA21 591.38</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-10</td><td>613.0600</td>
+<td>2026-06-29</td>
+<td>713.9700</td><td>200</td>
+<td class="pos">
+$20,177.82</td>
+<td>None</td><td>pinepilot: EMA9 718.77 &lt; EMA21 718.89</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-06-29</td><td>713.9700</td>
+<td>2026-06-30</td>
+<td>724.2000</td><td>120</td>
+<td class="neg">
+$-1,230.11</td>
+<td>None</td><td>pinepilot: EMA9 719.83 &gt; EMA21 719.36</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-30</td><td>725.4820</td>
+<td>2026-07-08</td>
+<td>704.9300</td><td>200</td>
+<td class="neg">
+$-4,114.54</td>
+<td>None</td><td>pinepilot: EMA9 719.21 &lt; EMA21 719.69</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-07-08</td><td>704.9300</td>
+<td>2026-07-13</td>
+<td>717.7400</td><td>120</td>
+<td class="neg">
+$-1,539.69</td>
+<td>None</td><td>pinepilot: EMA9 720.12 &gt; EMA21 719.90</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-07-13</td><td>717.7400</td>
+<td>2026-07-14</td>
+<td>720.2000</td><td>120</td>
+<td class="pos">
+$292.68</td>
+<td>None</td><td>pinepilot: EMA9 718.45 &lt; EMA21 719.16</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-07-14</td><td>720.2000</td>
+<td>2026-08-07</td>
+<td>720.1700</td><td>120</td>
+<td class="pos">
+$1.08</td>
+<td>None</td><td>pinepilot: EMA9 703.16 &gt; EMA21 702.62</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-08-07</td><td>720.7275</td>
+<td>2026-09-03</td>
+<td>710.8300</td><td>160</td>
+<td class="neg">
+$-1,586.93</td>
+<td>None</td><td>pinepilot: EMA9 713.12 &lt; EMA21 713.28</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-09-03</td><td>710.8300</td>
+<td>2026-09-04</td>
+<td>719.3600</td><td>120</td>
+<td class="neg">
+$-1,026.10</td>
+<td>None</td><td>pinepilot: EMA9 714.03 &gt; EMA21 713.68</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-09-04</td><td>719.7475</td>
+<td>2026-09-15</td>
+<td>708.7800</td><td>160</td>
+<td class="neg">
+$-1,758.13</td>
+<td>None</td><td>pinepilot: EMA9 713.42 &lt; EMA21 713.76</td>
+</tr><tr><td>QQQ</td><td>short</td>
+<td>2026-09-15</td><td>708.7800</td>
+<td>OPEN</td>
+<td>0.0000</td><td>120</td>
+<td class="neg">
+$-2.14</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-11-18</td>
+<td>QQQ</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-12-02</td>
+<td>QQQ</td><td>buy</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-12-03</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-12-18</td>
+<td>QQQ</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-12-24</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2025-12-26</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-01-21</td>
+<td>QQQ</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-01-26</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-01-27</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-02-05</td>
+<td>QQQ</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-03-31</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-04-10</td>
+<td>QQQ</td><td>buy</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-04-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-04-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-06-29</td>
+<td>QQQ</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-06-30</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-07-01</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-07-02</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-07-08</td>
+<td>QQQ</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-07-13</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-07-14</td>
+<td>QQQ</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-08-07</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-08-10</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-09-03</td>
+<td>QQQ</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-09-04</td>
+<td>QQQ</td><td>buy</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-09-08</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr><tr><td>2026-09-15</td>
+<td>QQQ</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>QQQ_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

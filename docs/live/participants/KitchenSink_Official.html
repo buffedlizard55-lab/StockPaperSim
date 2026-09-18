@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kitchen Sink Official · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Kitchen Sink Official <span class="muted">@KitchenSink_Official</span></h1>
+<p class="lede">Season 1 had a participant that traded everything at once. This is the official-data version: it takes every collected official series, signs its 21-session change, and holds whatever the aggregate gesture implies. It exists as the placebo of the roster - if a careful single-series rule cannot beat this, the care was not worth anything.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +4.09%</div>
+    <div class="kpi-sub">$4,089.61 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-16.48%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.3371</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">200 fills</div>
+    <div class="kpi-sub">200 intents ·
+    0 refused · cost
+    0.005%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Kitchen Sink Official (@KitchenSink_Official) planned 200 forward intents and saw 200 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 104,089.61 USD on 100,000 starting cash: +4.09% with a worst peak-to-trough drawdown of -16.48% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 10.3pp.</li><li>Execution cost was 556.07 USD, 0.005% of 11,562,422 USD traded, at a mean slippage of 0.241 bps against the decision mid; median participation was 0.00018% of the session&#x27;s real volume (max 0.00977%).</li><li>82 round trips closed; win rate 51.22% and profit factor 1.1359. The largest single trip was 11,757.83 USD and the worst -5,605.49 USD.</li><li>Contribution by instrument: QQQ +9,261.50 USD was the biggest positive and TLT -3,754.42 USD the biggest negative, out of 3 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>NASDAQCOM</code>, <code>DJIA</code>, <code>SP500</code>, <code>VIXCLS</code>, <code>SOFR</code>, <code>DGS10</code>, <code>DCOILWTICO</code>, <code>DTWEXBGS</code></p>
+<p><strong>Sizing:</strong> up to 1.8x gross ·
+<strong>leverage:</strong> up to 1.8x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks</p>
+<h3>Entry rules</h3>
+<ul><li>For each official series compute the sign of its 21-session change</li><li>Score = (+1 for Nasdaq, Dow, S&amp;P, oil; -1 for VIX, SOFR, DGS10, dollar)</li><li>Score &gt;= +3 -&gt; target QQQ 1.8x; score &lt;= -3 -&gt; target TLT 1.5x; otherwise 0.8x SPY</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily recomputation of the same eight signs</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Stacking many weak, correlated signals is a common retail construction and a standard placebo in the factor literature: the combination inherits the components&#x27; correlation and adds no independent information — <a href="https://buffedlizard55-lab.github.io/StockPaperSim/docs/season2/participants/KitchenSink_AllIn.html">this project&#x27;s own placebo participant</a> <span class="muted small">[SELF-REFERENCE]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Eight correlated financial series do not make eight independent votes</li><li>A sign is the least informative statistic available: it throws away every magnitude</li><li>Stacked signals dilute whichever one is actually predictive</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="pos">$9,261.50</td></tr><tr><td>TLT</td><td class="neg">$-3,754.42</td></tr><tr><td>SPY</td><td class="neg">$-917.80</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 82 · still open:
+0</li>
+<li>Win rate: 51.22% · profit factor:
+1.1359</li>
+<li>Largest trip: $11,757.83 · worst trip:
+$-5,605.49</li>
+<li>Carry: $860.29 received,
+$1,507.01 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>SPY</td><td>long</td>
+<td>2025-09-18</td><td>661.9000</td>
+<td>2025-09-19</td>
+<td>662.3300</td><td>120</td>
+<td class="pos">
+$50.86</td>
+<td>None</td><td>kitchen-sink[riskon]: score +6 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-19</td><td>598.5514</td>
+<td>2025-10-07</td>
+<td>609.0200</td><td>280</td>
+<td class="pos">
+$2,929.47</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-08</td><td>670.2600</td>
+<td>2025-10-13</td>
+<td>660.6500</td><td>120</td>
+<td class="neg">
+$-1,153.94</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -4 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-10-13</td><td>90.2800</td>
+<td>2025-10-14</td>
+<td>90.6500</td><td>500</td>
+<td class="pos">
+$181.92</td>
+<td>None</td><td>kitchen-sink[undecided]: score +0 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-10-13</td><td>90.2800</td>
+<td>2025-10-16</td>
+<td>90.5100</td><td>100</td>
+<td class="pos">
+$22.38</td>
+<td>None</td><td>kitchen-sink[undecided]: score +1 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-10-14</td><td>660.3900</td>
+<td>2025-11-11</td>
+<td>679.9500</td><td>120</td>
+<td class="pos">
+$2,346.46</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-11-11</td><td>618.9714</td>
+<td>2025-11-18</td>
+<td>599.6000</td><td>280</td>
+<td class="neg">
+$-5,425.73</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-11-19</td><td>89.1619</td>
+<td>2025-12-01</td>
+<td>88.8400</td><td>1,500</td>
+<td class="neg">
+$-492.06</td>
+<td>None</td><td>kitchen-sink[undecided]: score -2 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-11-19</td><td>88.6472</td>
+<td>2025-12-03</td>
+<td>88.9100</td><td>900</td>
+<td class="pos">
+$230.98</td>
+<td>None</td><td>kitchen-sink[undecided]: score +0 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2025-11-19</td><td>88.6472</td>
+<td>2025-12-04</td>
+<td>88.9100</td><td>100</td>
+<td class="pos">
+$25.66</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-01</td><td>679.6950</td>
+<td>2025-12-05</td>
+<td>685.4600</td><td>80</td>
+<td class="pos">
+$460.71</td>
+<td>None</td><td>kitchen-sink[riskon]: score +6 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-05</td><td>625.2480</td>
+<td>2025-12-10</td>
+<td>623.8400</td><td>200</td>
+<td class="neg">
+$-282.83</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-10</td><td>682.5600</td>
+<td>2025-12-11</td>
+<td>685.1400</td><td>40</td>
+<td class="pos">
+$102.95</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-11</td><td>623.1340</td>
+<td>2025-12-15</td>
+<td>618.3600</td><td>200</td>
+<td class="neg">
+$-956.03</td>
+<td>None</td><td>kitchen-sink[undecided]: score +0 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>685.7400</td>
+<td>2025-12-16</td>
+<td>679.2200</td><td>40</td>
+<td class="neg">
+$-261.05</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-16</td><td>610.1860</td>
+<td>2025-12-18</td>
+<td>609.7900</td><td>160</td>
+<td class="neg">
+$-64.35</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-18</td><td>677.6000</td>
+<td>2025-12-19</td>
+<td>676.5900</td><td>40</td>
+<td class="neg">
+$-40.65</td>
+<td>None</td><td>kitchen-sink[riskon]: score +5 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-16</td><td>615.8360</td>
+<td>2026-01-02</td>
+<td>620.0500</td><td>200</td>
+<td class="pos">
+$841.56</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-16</td><td>615.8360</td>
+<td>2026-01-05</td>
+<td>619.3200</td><td>40</td>
+<td class="pos">
+$139.11</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-05</td><td>686.5400</td>
+<td>2026-01-07</td>
+<td>692.1900</td><td>40</td>
+<td class="pos">
+$225.75</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-05</td><td>686.5400</td>
+<td>2026-01-08</td>
+<td>688.8200</td><td>40</td>
+<td class="pos">
+$90.95</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-07</td><td>623.0400</td>
+<td>2026-01-09</td>
+<td>621.4000</td><td>160</td>
+<td class="neg">
+$-263.39</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-09</td><td>690.6400</td>
+<td>2026-01-12</td>
+<td>690.6700</td><td>40</td>
+<td class="pos">
+$0.95</td>
+<td>None</td><td>kitchen-sink[riskon]: score +7 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-12</td><td>624.2980</td>
+<td>2026-01-14</td>
+<td>622.2300</td><td>200</td>
+<td class="neg">
+$-414.84</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-01-14</td><td>691.0100</td>
+<td>2026-01-15</td>
+<td>694.5700</td><td>40</td>
+<td class="pos">
+$142.15</td>
+<td>None</td><td>kitchen-sink[riskon]: score +6 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-01-15</td><td>623.5600</td>
+<td>2026-02-05</td>
+<td>600.2100</td><td>240</td>
+<td class="neg">
+$-5,605.49</td>
+<td>None</td><td>kitchen-sink[undecided]: score +0 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-02-06</td><td>681.4700</td>
+<td>2026-03-02</td>
+<td>678.7000</td><td>80</td>
+<td class="neg">
+$-222.10</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -4 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-02</td><td>89.4940</td>
+<td>2026-03-05</td>
+<td>88.6200</td><td>1,400</td>
+<td class="neg">
+$-1,232.27</td>
+<td>None</td><td>kitchen-sink[undecided]: score -2 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-02</td><td>89.4940</td>
+<td>2026-03-06</td>
+<td>88.3200</td><td>100</td>
+<td class="neg">
+$-118.02</td>
+<td>None</td><td>kitchen-sink[undecided]: score -2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-06</td><td>673.4100</td>
+<td>2026-03-09</td>
+<td>666.3900</td><td>80</td>
+<td class="neg">
+$-562.10</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -3 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-09</td><td>88.3100</td>
+<td>2026-03-10</td>
+<td>88.8000</td><td>700</td>
+<td class="pos">
+$338.66</td>
+<td>None</td><td>kitchen-sink[undecided]: score -1 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-10</td><td>677.7200</td>
+<td>2026-03-11</td>
+<td>677.5800</td><td>40</td>
+<td class="neg">
+$-5.85</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -3 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-03-10</td><td>677.7200</td>
+<td>2026-03-12</td>
+<td>671.1500</td><td>40</td>
+<td class="neg">
+$-263.05</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -4 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-11</td><td>87.3160</td>
+<td>2026-04-08</td>
+<td>87.3600</td><td>1,400</td>
+<td class="pos">
+$50.41</td>
+<td>None</td><td>kitchen-sink[undecided]: score -2 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-03-11</td><td>87.3160</td>
+<td>2026-04-09</td>
+<td>86.6900</td><td>100</td>
+<td class="neg">
+$-63.40</td>
+<td>None</td><td>kitchen-sink[undecided]: score +0 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-09</td><td>674.8500</td>
+<td>2026-04-10</td>
+<td>681.3200</td><td>40</td>
+<td class="pos">
+$257.99</td>
+<td>None</td><td>kitchen-sink[riskon]: score +6 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-09</td><td>674.8500</td>
+<td>2026-04-13</td>
+<td>677.4000</td><td>40</td>
+<td class="pos">
+$101.19</td>
+<td>None</td><td>kitchen-sink[riskon]: score +6 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-10</td><td>612.5820</td>
+<td>2026-04-15</td>
+<td>629.0600</td><td>160</td>
+<td class="pos">
+$2,633.42</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-10</td><td>612.5820</td>
+<td>2026-04-16</td>
+<td>639.2000</td><td>40</td>
+<td class="pos">
+$1,063.95</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-15</td><td>698.1650</td>
+<td>2026-04-17</td>
+<td>706.1400</td><td>40</td>
+<td class="pos">
+$318.17</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-17</td><td>645.6000</td>
+<td>2026-04-20</td>
+<td>648.0300</td><td>80</td>
+<td class="pos">
+$192.84</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-04-15</td><td>703.4775</td>
+<td>2026-04-21</td>
+<td>710.2800</td><td>80</td>
+<td class="pos">
+$542.53</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-21</td><td>651.5400</td>
+<td>2026-05-11</td>
+<td>710.3500</td><td>200</td>
+<td class="pos">
+$11,757.83</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-21</td><td>700.1317</td>
+<td>2026-05-18</td>
+<td>711.5200</td><td>240</td>
+<td class="pos">
+$2,728.20</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-05-19</td><td>734.7900</td>
+<td>2026-05-21</td>
+<td>738.6400</td><td>80</td>
+<td class="pos">
+$306.29</td>
+<td>None</td><td>kitchen-sink[riskon]: score +4 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-05-21</td><td>716.0220</td>
+<td>2026-05-27</td>
+<td>732.9500</td><td>200</td>
+<td class="pos">
+$3,381.34</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-05-27</td><td>750.4700</td>
+<td>2026-06-01</td>
+<td>755.3500</td><td>80</td>
+<td class="pos">
+$388.66</td>
+<td>None</td><td>kitchen-sink[riskon]: score +3 of 8 official signs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-06-01</td><td>737.0400</td>
+<td>2026-06-02</td>
+<td>742.4000</td><td>80</td>
+<td class="pos">
+$427.08</td>
+<td>None</td><td>kitchen-sink[undecided]: score +2 of 8 official signs</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-05-27</td><td>754.8500</td>
+<td>2026-06-08</td>
+<td>743.3500</td><td>80</td>
+<td class="neg">
+$-921.72</td>
+<td>None</td><td>kitchen-sink[riskoff]: score -4 of 8 official signs</td>
+</tr><tr><td>TLT</td><td>long</td>
+<td>2026-06-08</td><td>85.2400</td>
+<td>2026-06-09</td>
+<td>84.9700</td><td>700</td>
+<td class="neg">
+$-194.56</td>
+<td>None</td><td>kitchen-sink[undecided]: score -2 of 8 official signs</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-09-19</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-09-22</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-09-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-09-24</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-10-07</td>
+<td>QQQ</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-10-08</td>
+<td>SPY</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-10-13</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-10-13</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-10-14</td>
+<td>TLT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-10-14</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-10-15</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-10-16</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-11-11</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-11-11</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-11-12</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-11-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-11-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-11-18</td>
+<td>QQQ</td><td>sell</td><td>280</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-11-19</td>
+<td>TLT</td><td>buy</td><td>1,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-11-20</td>
+<td>TLT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-12-01</td>
+<td>TLT</td><td>sell</td><td>1,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-12-01</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-02</td>
+<td>TLT</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-12-03</td>
+<td>TLT</td><td>sell</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-12-03</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-04</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2025-12-05</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-05</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-08</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-09</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-10</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-10</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-11</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-11</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-12</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-15</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-15</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-16</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-16</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-17</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-18</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-18</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-19</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2025-12-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-22</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2025-12-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-02</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-05</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-05</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-07</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-07</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-08</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-08</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-09</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-09</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-12</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-12</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-13</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-14</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-14</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-15</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-01-15</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-16</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-01-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-02-05</td>
+<td>QQQ</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-02-06</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-02</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-02</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-03</td>
+<td>TLT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-04</td>
+<td>TLT</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-05</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-06</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-06</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-09</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-09</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-10</td>
+<td>TLT</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-10</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-11</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-11</td>
+<td>TLT</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-12</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-03-12</td>
+<td>TLT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-03-13</td>
+<td>TLT</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-04-08</td>
+<td>TLT</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-04-09</td>
+<td>TLT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, TLT_price, </td></tr><tr><td>2026-04-09</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-10</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-10</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-13</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-13</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-15</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-15</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-16</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-16</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-17</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-17</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-20</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-20</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-21</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-04-21</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-22</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-04-24</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-11</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-12</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-18</td>
+<td>QQQ</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-19</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-05-21</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-05-21</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-22</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-26</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-27</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr><tr><td>2026-05-27</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-05-28</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-06-01</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, SOFR, SP500, SPY_price, </td></tr><tr><td>2026-06-01</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DGS10, DJIA, DTWEXBGS, NASDAQCOM, QQQ_price, SOFR, SP500, </td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

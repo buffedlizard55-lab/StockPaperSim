@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oil-Dollar Fade · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Oil-Dollar Fade <span class="muted">@OilDollar_FadeUNG</span></h1>
+<p class="lede">Crude oil and the trade-weighted dollar are the two official series that drive commodity-equity cash flows in opposite directions. The rule buys energy exposure when oil is rising and the dollar is falling, and shorts the natural-gas ETF when both move against it.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value neg">
+    -17.10%</div>
+    <div class="kpi-sub">$-17,104.94 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-33.19%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    -0.2351</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">136 fills</div>
+    <div class="kpi-sub">136 intents ·
+    0 refused · cost
+    0.086%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Oil-Dollar Fade (@OilDollar_FadeUNG) planned 136 forward intents and saw 136 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 82,895.06 USD on 100,000 starting cash: -17.10% with a worst peak-to-trough drawdown of -33.19% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 31.5pp.</li><li>Execution cost was 4,079.99 USD, 0.086% of 4,758,947 USD traded, at a mean slippage of 3.662 bps against the decision mid; median participation was 0.00359% of the session&#x27;s real volume (max 0.12632%).</li><li>71 round trips closed; win rate 38.03% and profit factor 0.626. The largest single trip was 6,880.43 USD and the worst -11,611.31 USD.</li><li>Contribution by instrument: XOM +16,457.85 USD was the biggest positive and UNG -37,146.44 USD the biggest negative, out of 2 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>DCOILWTICO</code>, <code>DTWEXBGS</code></p>
+<p><strong>Sizing:</strong> up to 1.8x gross ·
+<strong>leverage:</strong> 1.5-1.8x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks</p>
+<h3>Entry rules</h3>
+<ul><li>21-session return of official DCOILWTICO and of official DTWEXBGS</li><li>Oil up and dollar down -&gt; target XOM 1.0x plus UNG 0.8x</li><li>Oil down and dollar up -&gt; target short UNG 1.0x</li><li>Otherwise hold 0.5x XOM</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily re-evaluation; no stop</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li><li>The Federal Reserve publishes the nominal broad dollar index the signal reads — <a href="https://fred.stlouisfed.org/series/DTWEXBGS">FRED series DTWEXBGS (H.10 release)</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>UNG tracks front-month natural-gas futures with documented roll decay, so a correct gas call can still lose money through the wrapper</li><li>WTI spot and energy-equity earnings are not the same series</li><li>A two-condition macro filter fires rarely and can sit flat for months</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>UNG</td><td class="neg">$-37,146.44</td></tr><tr><td>XOM</td><td class="pos">$16,457.85</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 71 · still open:
+0</li>
+<li>Win rate: 38.03% · profit factor:
+0.626</li>
+<li>Largest trip: $6,880.43 · worst trip:
+$-11,611.31</li>
+<li>Carry: $2,343.54 received,
+$1,463.40 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>UNG</td><td>long</td>
+<td>2025-09-19</td><td>12.5200</td>
+<td>2025-09-22</td>
+<td>12.4800</td><td>5,900</td>
+<td class="neg">
+$-272.38</td>
+<td>None</td><td>oil-dollar: mixed: oil -1.8%/21d, dollar -0.8%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-18</td><td>114.5400</td>
+<td>2025-09-22</td>
+<td>112.4400</td><td>300</td>
+<td class="neg">
+$-631.85</td>
+<td>None</td><td>oil-dollar: mixed: oil -1.8%/21d, dollar -0.8%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2025-09-19</td><td>12.7067</td>
+<td>2025-09-26</td>
+<td>12.3900</td><td>5,700</td>
+<td class="neg">
+$-1,840.15</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.0%/21d, dollar +0.0%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-18</td><td>114.5775</td>
+<td>2025-09-26</td>
+<td>115.9500</td><td>300</td>
+<td class="pos">
+$409.90</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.0%/21d, dollar +0.0%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2025-09-29</td><td>12.5200</td>
+<td>2025-09-30</td>
+<td>13.0200</td><td>5,400</td>
+<td class="pos">
+$2,666.70</td>
+<td>None</td><td>oil-dollar: mixed: oil -1.1%/21d, dollar -0.1%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-18</td><td>115.1334</td>
+<td>2025-09-30</td>
+<td>113.3400</td><td>300</td>
+<td class="neg">
+$-539.88</td>
+<td>None</td><td>oil-dollar: mixed: oil -1.1%/21d, dollar -0.1%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2025-09-29</td><td>12.5200</td>
+<td>2025-10-08</td>
+<td>13.5200</td><td>100</td>
+<td class="pos">
+$99.38</td>
+<td>None</td><td>oil-dollar: oil -0.1%/21d against dollar +0.3%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-18</td><td>115.1334</td>
+<td>2025-10-08</td>
+<td>114.3700</td><td>400</td>
+<td class="neg">
+$-307.84</td>
+<td>None</td><td>oil-dollar: oil -0.1%/21d against dollar +0.3%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-08</td><td>13.5200</td>
+<td>2025-10-09</td>
+<td>13.2500</td><td>7,200</td>
+<td class="pos">
+$1,899.60</td>
+<td>None</td><td>oil-dollar: mixed: oil +0.6%/21d, dollar +0.5%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-09-18</td><td>114.6134</td>
+<td>2025-10-10</td>
+<td>112.2600</td><td>400</td>
+<td class="neg">
+$-943.81</td>
+<td>None</td><td>oil-dollar: oil -2.6%/21d against dollar +0.8%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3614</td>
+<td>2025-10-20</td>
+<td>12.5800</td><td>400</td>
+<td class="neg">
+$-89.91</td>
+<td>None</td><td>oil-dollar: oil -9.5%/21d against dollar +1.3%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3614</td>
+<td>2025-10-21</td>
+<td>12.9200</td><td>1,500</td>
+<td class="neg">
+$-847.15</td>
+<td>None</td><td>oil-dollar: oil -8.7%/21d against dollar +0.8%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3614</td>
+<td>2025-10-22</td>
+<td>13.1900</td><td>200</td>
+<td class="neg">
+$-166.95</td>
+<td>None</td><td>oil-dollar: oil -6.9%/21d against dollar +0.9%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3485</td>
+<td>2025-10-31</td>
+<td>13.1900</td><td>600</td>
+<td class="neg">
+$-508.58</td>
+<td>None</td><td>oil-dollar: oil -2.9%/21d against dollar +1.0%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3485</td>
+<td>2025-11-03</td>
+<td>13.3700</td><td>500</td>
+<td class="neg">
+$-513.82</td>
+<td>None</td><td>oil-dollar: oil -1.3%/21d against dollar +1.0%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-10</td><td>12.3485</td>
+<td>2025-11-04</td>
+<td>13.6800</td><td>7,000</td>
+<td class="neg">
+$-9,363.48</td>
+<td>None</td><td>oil-dollar: mixed: oil +0.8%/21d, dollar +0.8%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-04</td><td>113.3800</td>
+<td>2025-11-05</td>
+<td>114.0800</td><td>200</td>
+<td class="pos">
+$138.77</td>
+<td>None</td><td>oil-dollar: oil -0.4%/21d against dollar +1.4%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-04</td><td>113.3800</td>
+<td>2025-11-07</td>
+<td>115.2000</td><td>100</td>
+<td class="pos">
+$181.38</td>
+<td>None</td><td>oil-dollar: oil -3.6%/21d against dollar +1.0%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-05</td><td>13.8206</td>
+<td>2025-11-07</td>
+<td>13.9900</td><td>400</td>
+<td class="neg">
+$-70.22</td>
+<td>None</td><td>oil-dollar: oil -3.6%/21d against dollar +1.0%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-05</td><td>13.8206</td>
+<td>2025-11-12</td>
+<td>14.6200</td><td>300</td>
+<td class="neg">
+$-241.67</td>
+<td>None</td><td>oil-dollar: oil -2.3%/21d against dollar +0.2%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-05</td><td>13.8206</td>
+<td>2025-11-13</td>
+<td>14.7300</td><td>5,800</td>
+<td class="neg">
+$-5,310.25</td>
+<td>None</td><td>oil-dollar: mixed: oil -0.8%/21d, dollar -0.1%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-05</td><td>13.8206</td>
+<td>2025-11-14</td>
+<td>14.5000</td><td>100</td>
+<td class="neg">
+$-68.56</td>
+<td>None</td><td>oil-dollar: oil +0.0%/21d with dollar -0.3%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2025-11-14</td><td>14.5000</td>
+<td>2025-11-17</td>
+<td>14.5000</td><td>4,400</td>
+<td class="neg">
+$-27.13</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.0%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-13</td><td>118.5271</td>
+<td>2025-11-17</td>
+<td>118.9700</td><td>300</td>
+<td class="pos">
+$131.01</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.0%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2025-11-14</td><td>14.5000</td>
+<td>2025-11-24</td>
+<td>14.3000</td><td>100</td>
+<td class="neg">
+$-20.62</td>
+<td>None</td><td>oil-dollar: oil -0.7%/21d against dollar +0.8%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-13</td><td>118.5271</td>
+<td>2025-11-24</td>
+<td>117.1900</td><td>300</td>
+<td class="neg">
+$-402.99</td>
+<td>None</td><td>oil-dollar: oil -0.7%/21d against dollar +0.8%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-11-13</td><td>118.5271</td>
+<td>2025-11-26</td>
+<td>114.4100</td><td>100</td>
+<td class="neg">
+$-412.33</td>
+<td>None</td><td>oil-dollar: oil -6.5%/21d against dollar +0.6%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-24</td><td>14.2887</td>
+<td>2025-11-28</td>
+<td>14.6200</td><td>300</td>
+<td class="neg">
+$-101.24</td>
+<td>None</td><td>oil-dollar: oil -5.3%/21d against dollar +0.4%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-24</td><td>14.2887</td>
+<td>2025-12-01</td>
+<td>15.0300</td><td>300</td>
+<td class="neg">
+$-224.24</td>
+<td>None</td><td>oil-dollar: oil -3.9%/21d against dollar +0.3%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-24</td><td>14.2887</td>
+<td>2025-12-02</td>
+<td>15.2400</td><td>400</td>
+<td class="neg">
+$-382.98</td>
+<td>None</td><td>oil-dollar: oil -2.9%/21d against dollar +0.4%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-24</td><td>14.2887</td>
+<td>2025-12-03</td>
+<td>15.3400</td><td>5,100</td>
+<td class="neg">
+$-5,393.03</td>
+<td>None</td><td>oil-dollar: mixed: oil -4.2%/21d, dollar -0.1%/21d</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-11-24</td><td>14.2887</td>
+<td>2026-01-12</td>
+<td>10.7000</td><td>100</td>
+<td class="pos">
+$358.25</td>
+<td>None</td><td>oil-dollar: oil +1.0%/21d with dollar -0.4%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-01-12</td><td>10.7000</td>
+<td>2026-01-14</td>
+<td>10.5700</td><td>5,800</td>
+<td class="neg">
+$-789.93</td>
+<td>None</td><td>oil-dollar: mixed: oil +5.3%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>120.2050</td>
+<td>2026-01-14</td>
+<td>127.3400</td><td>200</td>
+<td class="pos">
+$1,425.76</td>
+<td>None</td><td>oil-dollar: mixed: oil +5.3%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-01-12</td><td>10.2188</td>
+<td>2026-01-16</td>
+<td>10.2300</td><td>5,600</td>
+<td class="pos">
+$28.31</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.8%/21d, dollar +0.0%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>123.1833</td>
+<td>2026-01-16</td>
+<td>128.9100</td><td>200</td>
+<td class="pos">
+$1,144.09</td>
+<td>None</td><td>oil-dollar: mixed: oil +3.8%/21d, dollar +0.0%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>128.0590</td>
+<td>2026-02-03</td>
+<td>138.6300</td><td>100</td>
+<td class="pos">
+$1,056.48</td>
+<td>None</td><td>oil-dollar: oil +7.6%/21d with dollar -1.2%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-01-21</td><td>13.5309</td>
+<td>2026-02-27</td>
+<td>11.5000</td><td>5,700</td>
+<td class="neg">
+$-11,611.31</td>
+<td>None</td><td>oil-dollar: mixed: oil +4.9%/21d, dollar +0.4%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>128.0590</td>
+<td>2026-02-27</td>
+<td>151.0000</td><td>300</td>
+<td class="pos">
+$6,880.43</td>
+<td>None</td><td>oil-dollar: mixed: oil +4.9%/21d, dollar +0.4%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-04-10</td><td>10.8323</td>
+<td>2026-04-15</td>
+<td>10.5200</td><td>6,000</td>
+<td class="neg">
+$-1,912.24</td>
+<td>None</td><td>oil-dollar: mixed: oil -5.5%/21d, dollar -1.4%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>138.4514</td>
+<td>2026-04-15</td>
+<td>148.6000</td><td>200</td>
+<td class="pos">
+$2,027.86</td>
+<td>None</td><td>oil-dollar: mixed: oil -5.5%/21d, dollar -1.4%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-04-10</td><td>10.6633</td>
+<td>2026-04-20</td>
+<td>10.8600</td><td>5,300</td>
+<td class="pos">
+$1,008.75</td>
+<td>None</td><td>oil-dollar: mixed: oil -10.6%/21d, dollar -1.7%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>141.0189</td>
+<td>2026-04-20</td>
+<td>147.3800</td><td>200</td>
+<td class="pos">
+$1,270.38</td>
+<td>None</td><td>oil-dollar: mixed: oil -10.6%/21d, dollar -1.7%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-04-23</td><td>10.6802</td>
+<td>2026-05-05</td>
+<td>10.8900</td><td>6,100</td>
+<td class="pos">
+$1,240.84</td>
+<td>None</td><td>oil-dollar: mixed: oil -3.1%/21d, dollar -1.5%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>144.5553</td>
+<td>2026-05-05</td>
+<td>153.1000</td><td>200</td>
+<td class="pos">
+$1,707.07</td>
+<td>None</td><td>oil-dollar: mixed: oil -3.1%/21d, dollar -1.5%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-05-08</td><td>10.8800</td>
+<td>2026-05-11</td>
+<td>10.9400</td><td>5,500</td>
+<td class="pos">
+$294.69</td>
+<td>None</td><td>oil-dollar: mixed: oil -0.8%/21d, dollar -0.7%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>145.0772</td>
+<td>2026-05-11</td>
+<td>146.0200</td><td>200</td>
+<td class="pos">
+$186.72</td>
+<td>None</td><td>oil-dollar: mixed: oil -0.8%/21d, dollar -0.7%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-05-08</td><td>11.0180</td>
+<td>2026-05-14</td>
+<td>10.8200</td><td>5,900</td>
+<td class="neg">
+$-1,206.07</td>
+<td>None</td><td>oil-dollar: mixed: oil +12.3%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>XOM</td><td>long</td>
+<td>2025-12-03</td><td>147.5503</td>
+<td>2026-05-14</td>
+<td>151.8900</td><td>200</td>
+<td class="pos">
+$866.07</td>
+<td>None</td><td>oil-dollar: mixed: oil +12.3%/21d, dollar +0.1%/21d</td>
+</tr><tr><td>UNG</td><td>long</td>
+<td>2026-05-08</td><td>11.0180</td>
+<td>2026-05-27</td>
+<td>11.0900</td><td>100</td>
+<td class="pos">
+$6.56</td>
+<td>None</td><td>oil-dollar: oil -0.8%/21d against dollar +0.4%/21d</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-19</td>
+<td>UNG</td><td>buy</td><td>6,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-19</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-22</td>
+<td>UNG</td><td>sell</td><td>5,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-22</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-25</td>
+<td>UNG</td><td>buy</td><td>5,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-25</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-26</td>
+<td>UNG</td><td>sell</td><td>5,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-26</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-29</td>
+<td>UNG</td><td>buy</td><td>5,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-29</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-09-30</td>
+<td>UNG</td><td>sell</td><td>5,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-09-30</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-10-08</td>
+<td>UNG</td><td>sell</td><td>7,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-08</td>
+<td>XOM</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-10-09</td>
+<td>UNG</td><td>buy</td><td>7,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-09</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-10-10</td>
+<td>UNG</td><td>sell</td><td>7,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-10</td>
+<td>XOM</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-10-13</td>
+<td>UNG</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-15</td>
+<td>UNG</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-17</td>
+<td>UNG</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-20</td>
+<td>UNG</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-21</td>
+<td>UNG</td><td>buy</td><td>1,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-22</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-28</td>
+<td>UNG</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-29</td>
+<td>UNG</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-10-31</td>
+<td>UNG</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-03</td>
+<td>UNG</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-04</td>
+<td>UNG</td><td>buy</td><td>7,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-04</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-05</td>
+<td>UNG</td><td>sell</td><td>6,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-05</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-06</td>
+<td>UNG</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-07</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-07</td>
+<td>UNG</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-12</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-13</td>
+<td>UNG</td><td>buy</td><td>5,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-13</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-14</td>
+<td>UNG</td><td>buy</td><td>4,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-14</td>
+<td>XOM</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-17</td>
+<td>UNG</td><td>sell</td><td>4,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-17</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-24</td>
+<td>UNG</td><td>sell</td><td>5,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-24</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-26</td>
+<td>UNG</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-11-26</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2025-11-28</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-12-01</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-12-02</td>
+<td>UNG</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-12-03</td>
+<td>UNG</td><td>buy</td><td>5,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2025-12-03</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-12</td>
+<td>UNG</td><td>buy</td><td>6,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-01-12</td>
+<td>XOM</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-14</td>
+<td>UNG</td><td>sell</td><td>5,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-01-14</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-15</td>
+<td>UNG</td><td>buy</td><td>5,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-01-15</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-16</td>
+<td>UNG</td><td>sell</td><td>5,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-01-16</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-21</td>
+<td>UNG</td><td>buy</td><td>4,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-01-21</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-01-22</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-02</td>
+<td>XOM</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-02-03</td>
+<td>XOM</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-02-03</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-04</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-09</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-10</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-27</td>
+<td>UNG</td><td>sell</td><td>5,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-02-27</td>
+<td>XOM</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-10</td>
+<td>UNG</td><td>buy</td><td>5,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-10</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-13</td>
+<td>UNG</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-15</td>
+<td>UNG</td><td>sell</td><td>6,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-15</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-17</td>
+<td>UNG</td><td>buy</td><td>5,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-17</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-20</td>
+<td>UNG</td><td>sell</td><td>5,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-20</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-23</td>
+<td>UNG</td><td>buy</td><td>5,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-04-23</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-04-24</td>
+<td>UNG</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-05</td>
+<td>UNG</td><td>sell</td><td>6,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-05</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-08</td>
+<td>UNG</td><td>buy</td><td>5,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-08</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-11</td>
+<td>UNG</td><td>sell</td><td>5,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-11</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-12</td>
+<td>UNG</td><td>buy</td><td>5,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-12</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-13</td>
+<td>UNG</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-14</td>
+<td>UNG</td><td>sell</td><td>5,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-14</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-27</td>
+<td>UNG</td><td>sell</td><td>7,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-27</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-05-28</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-05-29</td>
+<td>UNG</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-01</td>
+<td>UNG</td><td>buy</td><td>6,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-01</td>
+<td>XOM</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-06-02</td>
+<td>UNG</td><td>sell</td><td>6,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-02</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-06-04</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-05</td>
+<td>UNG</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-08</td>
+<td>UNG</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-09</td>
+<td>UNG</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-12</td>
+<td>UNG</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-15</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-17</td>
+<td>UNG</td><td>buy</td><td>6,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-17</td>
+<td>XOM</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-06-18</td>
+<td>UNG</td><td>sell</td><td>6,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-18</td>
+<td>XOM</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, XOM_price</td></tr><tr><td>2026-06-22</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-24</td>
+<td>UNG</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-25</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-06-30</td>
+<td>UNG</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-07-01</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-07-02</td>
+<td>UNG</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-07-08</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr><tr><td>2026-07-10</td>
+<td>UNG</td><td>sell</td><td>1,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DCOILWTICO, DTWEXBGS, UNG_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

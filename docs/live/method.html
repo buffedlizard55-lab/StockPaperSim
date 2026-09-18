@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clock &amp;amp; margin · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../live/index.html">Overview</a><a class="" href="../live/forward.html">Upcoming trades</a><a class="" href="../live/leaderboard.html">Leaderboard</a><a class="" href="../live/blotter.html">Trade tape</a><a class="" href="../live/participants/index.html">Participants</a><a class="active" href="../live/method.html">Clock &amp; margin</a><a class="" href="../live/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>The clock, the margin account and the carry</h1>
+<p class="lede">Three modelling decisions separate this book from every other part of
+the project. Each is enforced in code, not documented and hoped for.</p>
+
+<h2>1. No look-ahead, enforced at creation</h2>
+<ul>
+<li>A strategy is handed a context truncated at the plan session. Nothing dated after
+it is reachable: the official series are sliced, and every market accessor is bounded
+by the as-of index.</li>
+<li><code>place()</code> refuses any session that is not strictly after the plan date.
+Writing a same-session intent raises, because that would be a backtest.</li>
+<li>Every intent stores the observation date of each input it read. The verifier walks
+the tape and fails the run if any evidence date is later than the intent's plan
+date.</li>
+<li>Every intent's target session is resolved from the calendar: inside the collected
+window it is an <em>observation</em> (the FRED S&amp;P 500 blank rows are the
+authoritative holiday list), and past it a <em>projection</em> from Nasdaq's published
+schedule, labelled as such. An intent aimed at a session the official calendar says was
+closed <strong>expires</strong> instead of filling.</li>
+</ul>
+
+<h2>2. A real margin account, with liquidation</h2>
+<p>Sizing runs at the leverage bound the brief asks for, and the account that has to
+survive it is a Reg T margin account: 50% initial margin
+(<a href="https://www.federalreserve.gov/supervisionreg/regtcg.htm">Federal Reserve
+Board</a>) and a 30% house maintenance floor with a 2.0x gross bound
+(<a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">FINRA Rule
+4210</a>). An order is trimmed to the room that actually exists - shares that close a
+position free room and are never trimmed, shares that open one need room and, if they
+are a purchase, Reg T buying power - and the trim is recorded on the intent so the
+blotter shows the intended size, the allowed size and the reason they differ.</p>
+<p>A breach is not a note in a log. When a mark breaches the maintenance floor the
+broker liquidates the book at the next session's open through the same venue model, so
+the cost of being wrong is inside the result. The rehearsal contains
+4 such forced orders.</p>
+
+<h2>3. Carry, on an official rate</h2>
+<p>Idle cash earns the official SOFR and a margin debit pays SOFR plus a declared 3.5%
+spread, accrued per session with day-count ACT/360 (declared, because an overnight
+secured rate is quoted that way). SOFR has no observation on days the bond market is
+closed while the NYSE is open - the collected file shows blank rows on 2024-10-14,
+2024-11-11, 2025-10-13 and 2025-11-11 - so those sessions carry the last published
+rate forward and the carry rows say so rather than inventing one. The collected SOFR
+history and the Federal Reserve Bank of New York's own API agree on both cross-checked
+dates (3.85% on 2026-09-17, 3.62% on 2026-09-16).</p>
+
+<h2>Verification</h2>
+<p><span class="badge badge-ok">PASS</span> 9,377 checks,
+0 failures. The audit re-derives cash and positions from the
+fill tape plus the carry rows without asking the account what it thinks it holds, and
+compares both against the marked equity at the final session.</p>
+<p>cash and positions are re-derived here from the fill tape plus the carry rows, without asking LiveAccount what it thinks it holds; the tolerance is 2 cents, which is the worst case a per-fill rounding of fees to four decimals can produce over a few hundred fills.</p>
+
+<h2>Data efficiency</h2>
+<p>The book stores 13,135 rows in
+526.6 KiB, an average of
+<strong>41.05 bytes per row</strong>, as gzipped
+JSON Lines with sorted keys and compact separators so two runs produce identical bytes.
+The reference bar is stored once per fill - the fill is the unit a reader queries - and
+file digests live in the provenance document instead of being repeated on every row.
+The same tape is exported as <code>blotter.csv</code> for spreadsheet review.</p>
+<p class="more"><a href="sources.html">The official register these rules read
+&rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

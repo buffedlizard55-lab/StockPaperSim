@@ -521,3 +521,130 @@ behavior. Even after collection, the adapter records `NOT_AUTHORIZED_BY_TERMS` u
 Nasdaq redistribution permission is verified; that status cannot authorize a
 competition. The existing Yahoo files remain reproducible `SECONDARY` research data
 and are not silently replaced.
+
+---
+
+## Live Book session (2026-09-18 → 2026-09-19)
+
+The Live Book asked a question the earlier sessions had not: whether a strategy can
+place a trade for a session that has not happened yet and have it settled against a
+verified bar later. Answering it needed a new set of official, free, publicly
+available series (an index leg for the Nasdaq and the NYSE, and a financing rate),
+a calendar that is honest about which sessions are observations and which are
+projections, and a trading clock that cannot reach into the future. Everything
+retrieved in that session is recorded below, in the order it was checked.
+
+### Real market data retrieved (stored, checksummed)
+
+| # | Series | Publisher (as FRED states it) | URL | Result | Stored as |
+|---|---|---|---|---|---|
+| 1 | `NASDAQCOM` — NASDAQ Composite, daily close | Nasdaq, Inc. (Release: Nasdaq Daily Index Data) | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2024-09-16&coed=2026-09-17> | 200, 524 rows, 503 valued, 2024-09-16 → 2026-09-17 | `data/real/fred/NASDAQCOM_2024-09-16_2026-09-17.csv` |
+| 2 | `DJIA` — Dow Jones Industrial Average, daily close | S&P Dow Jones Indices LLC (Release: Dow Jones Averages) | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA&cosd=2024-09-16&coed=2026-09-17> | 200, 524 rows, 503 valued, 2024-09-16 → 2026-09-17 | `data/real/fred/DJIA_2024-09-16_2026-09-17.csv` |
+| 3 | `SOFR` — secured overnight financing rate | Federal Reserve Bank of New York | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&cosd=2024-09-16&coed=2026-09-17> | 200, 524 rows, 500 valued, 2024-09-16 → 2026-09-17 | `data/real/fred/SOFR_2024-09-16_2026-09-17.csv` |
+| 4 | `SP500` re-fetch (window refresh) | S&P Dow Jones Indices LLC | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500&cosd=2026-08-01&coed=2026-09-17> | 200, 34 rows; **identical to the committed file** on all 26 overlapping valued dates, including 2026-09-17 = 7637.76 | already committed |
+
+**The three new files are transcribed, so they were verified mechanically rather
+than by eye.** `scripts/verify_official_extracts.py` re-reads each file and checks
+that the header matches the registered series, that every date is ISO and strictly
+increasing with no weekend rows, that every value is a finite positive decimal, that
+the *valued* date set agrees with the runner-collected `SP500` file that has been
+in the repository since an earlier session, and that the stored bytes hash to the
+recorded SHA-256. It writes `data/real/fred/AGENT_FETCH_VERIFICATION.json` as the
+artefact and exits non-zero on any disagreement. The run found two genuine
+disagreements with the equity calendar, both investigated and both recorded as
+IR-52 rather than smoothed over:
+
+* SOFR has **no** observation on 2024-10-14, 2024-11-11, 2025-10-13 and 2025-11-11
+  — Columbus Day and Veterans Day, when the bond market is closed and the NYSE is
+  not.
+* SOFR **does** carry an observation on 2025-01-09 (4.30), when the NYSE and Nasdaq
+  were closed for the National Day of Mourning for President Jimmy Carter while the
+  bond market traded a shortened session.
+  * <https://ir.nasdaq.com/news-releases/news-release-details/nasdaq-announces-closure-its-us-markets-honor-national-day-0> — Nasdaq closed all U.S. equities and options markets on Thursday, January 9, 2025.
+  * <https://www.nasdaq.com/press-release/new-york-stock-exchange-will-close-markets-january-9-honor-passing-former-president> — NYSE Group closed all equity and options markets the same day.
+  * The money market ran a shortened session with a 2:00 p.m. ET close on SIFMA's recommendation, which is why a published SOFR observation exists for a day the equity market was shut.
+
+### Independent cross-check on the financing rate
+
+The same two dates were read from a **different official publisher's endpoint**, so
+the agreement is between two publishers rather than between a file and itself:
+
+* <https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json> → HTTP 200,
+  `percentRate` **3.85** for `effectiveDate` 2026-09-17 and **3.62** for 2026-09-16.
+* `data/real/fred/SOFR_2024-09-16_2026-09-17.csv` prints **3.85** for 2026-09-17 and
+  **3.62** for 2026-09-16.
+* `tests/test_live.py::TestOfficialFeed::test_cross_checked_sofr_values_match_the_publisher_api`
+  asserts both pairs, so the cross-check cannot rot silently.
+* The same API response shows a 23 bp one-day jump into quarter end (3.62 → 3.85),
+  which is a settlement effect and not a policy signal; the `@SOFRPivot_Rider`
+  participant page names that trap in its declared failure modes rather than
+  presenting the jump as an easing/tightening signal.
+
+### The forward session projection (publisher-verified)
+
+Sessions after the last collected date are not observations, so they are projected
+from the publisher's own calendar and labelled `PROJECTED` everywhere they appear.
+
+* <https://www.nasdaqtrader.com/trader.aspx?id=calendar> — "U.S. Equity and Options
+  Markets Holiday Schedule 2026". Read in-session. For the remainder of 2026 it
+  lists **2026-11-26** (Thanksgiving, closed), **2026-11-27** (early close,
+  1:00 p.m.), **2026-12-24** (early close, 1:00 p.m.) and **2026-12-25** (Christmas,
+  closed).
+* <https://www.nasdaq.com/market-activity/stock-market-holiday-schedule> — the
+  consumer page of the same schedule; it agrees row for row.
+* **No 2027 dates are projected.** The 2027 schedule was not read from the
+  publisher in this session, and guessing it would be exactly the invention the
+  module refuses to do. `PROJECTION_LIMIT = "2026-12-31"`.
+
+### Defects found by verification rather than by a failing test
+
+Three defects in the new code were found by reading what the book published, and all
+three are now regressions in `tests/test_live.py`:
+
+1. **Trades aimed at market holidays** (IR-49): 34 intents targeted 2025-12-25,
+   2026-01-01, 2026-04-03 and six other closures because the horizon projected
+   weekdays inside the collected window. Fixed by taking the horizon from the
+   collected session list and expiring any intent aimed at a known closure.
+2. **Maintenance calls recorded and ignored** (IR-50): `maintenance_breach` returned
+   `None` for non-positive equity, so `@CrowdFade_Live` finished the rehearsal at
+   −118.20% with a permanently negative balance. Fixed by liquidating a breached
+   book at the next session's open; the same run now ends at −45.90%.
+3. **`RealMarketData` is undefined** (IR-51): an annotation that only survives
+   because `from __future__ import annotations` never evaluates it.
+4. **The new tests rewrote committed memory.** `tests/test_live.py` called the
+   rehearsal with the default memory root, so running the suite regenerated
+   `memory/live/*` — which would make the published-site CI job's "rebuild docs/
+   and diff it" gate fail on every push, and did make the committed
+   `docs/assets/data/live.json` stale the first time. Every live test now writes
+   into its own temporary root and only *reads* the committed one, and
+   `test_the_test_suite_does_not_rewrite_the_committed_live_memory` asserts that
+   the published payload still matches the memory it was rendered from.
+
+### Sources checked and found *not* usable in this session
+
+| Attempt | URL | Result |
+|---|---|---|
+| Cboe delayed-quote JSON for `_VIX` | <https://cdn.cboe.com/api/global/delayed_quotes/indices/_VIX.json> | `AccessDenied` from the CDN for this client; the official VIX close is therefore read from FRED's republication of it, and the publisher stated there is Cboe Global Markets |
+| FRED series `GOLDPMGBD228NLBM` (LBMA gold PM fix) | <https://fred.stlouisfed.org/series/GOLDPMGBD228NLBM> | "page not found" — the series is discontinued, confirming the note already in `sim/realdata.py`. The gold participant therefore states that its signal is the rate pair and its instrument is GLD, not a gold benchmark |
+| FRED series `NYSECOM` (NYSE Composite) | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=NYSECOM&cosd=2026-09-10&coed=2026-09-17> | "page not found" — FRED does not carry that id, so the NYSE leg of the brief is implemented against the Dow Jones Industrial Average, which FRED does carry and which is stated as the NYSE-listed blue-chip leg on the page |
+| SEC XBRL frames endpoint | <https://data.sec.gov/api/xbrl/frames/us-gaap/EarningsPerShareDiluted/USD/CY2025Q4I.json> | `NoSuchKey` — the frame does not exist for that tag and period, so the compact fundamentals path was not used and is left for the next session |
+| FRED multi-series CSV with a window | <https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500,VIXCLS&cosd=2026-09-10&coed=2026-09-17> | Returned the full history of both series from 1990-01-02 in 22 pages, **ignoring `cosd`/`coed`**; a single `id` honours the window. Recorded as IR-53 |
+| Dispatching the collection workflow | `gh workflow run "Collect real market data" --ref arena/01a0b62b-stockpapersim` | HTTP **403 Resource not accessible by integration** (workflow id 361020102). The token can push and open pull requests but has no `actions:write`, so the runner-based collection — which is the only way to reach EDGAR from this project — could not be started. Recorded as IR-54 and as a P0 item in `REMAINING_WORK.json` |
+
+### FINRA's official daily short-sale volume file (verified, not yet collected)
+
+<https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260917.txt> returned HTTP 200
+with a pipe-delimited body `Date|Symbol|ShortVolume|ShortExemptVolume|TotalVolume|Market`.
+The 2026-09-17 rows read, verbatim:
+
+```
+20260917|AAPL|8061052.786287|14583|13766217.054549|B,Q,N
+20260917|A|716675.685028|6|927492.863747|B,Q,N
+```
+
+This is the only **official, free** source of daily *total* volume per symbol that
+this project has found, which makes it the right anchor for the participation and
+liquidity model instead of a secondary file's volume column. The whole file covers
+roughly 13,000 symbols in about 69 page-sized chunks, so it is a job for the
+runner's collector, filtered to the traded universe before storage — recorded as a
+P1 item rather than half-collected here.

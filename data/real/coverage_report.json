@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T02:30:43Z",
+ "generated_at": "2026-09-18T04:07:44Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -89,6 +89,7 @@
     "DTWEXBGS"
    ],
    "failed": [
+    "GOLDAMGBD228NLBM",
     "GOLDPMGBD228NLBM"
    ],
    "rows": {
@@ -99,6 +100,20 @@
     "DCOILWTICO": 497,
     "DTWEXBGS": 498
    }
+  },
+  "nasdaq": {
+   "ok": [],
+   "failed": [
+    "SPY",
+    "QQQ",
+    "GLD",
+    "XBI",
+    "DKNG",
+    "AAPL",
+    "MSFT",
+    "NVDA"
+   ],
+   "rows": {}
   },
   "sec": {
    "tickers_ok": [],
@@ -121,25 +136,41 @@
   },
   "espn": {
    "nfl": {
-    "rows": 0,
-    "chunks_failed": 6
+    "rows": 285,
+    "chunks_failed": 0
    },
    "ncaaf": {
-    "rows": 0,
-    "chunks_failed": 5
+    "rows": 282,
+    "chunks_failed": 0
    },
    "nba": {
     "rows": 0,
-    "chunks_failed": 8
+    "chunks_failed": 0
    },
    "mlb": {
     "rows": 0,
-    "chunks_failed": 6
+    "chunks_failed": 0
    }
   },
   "nba": {
    "ok": false,
    "rows": 0
+  },
+  "official_docs": {
+   "nba_injury_report_index": {
+    "ok": false
+   },
+   "nfl_injuries": {
+    "ok": true,
+    "bytes": 381285
+   },
+   "ncaa_scoreboard_fbs_2025_week10": {
+    "ok": true,
+    "bytes": 72675
+   },
+   "nba_stats_scoreboard_probe": {
+    "ok": false
+   }
   },
   "weather": {
    "USW00023272": {
@@ -156,7 +187,7 @@
   "kalshi": {
    "KXNFLGAME": {
     "ok": true,
-    "rows": 130
+    "rows": 132
    },
    "KXNBA": {
     "ok": true,
@@ -176,7 +207,7 @@
    }
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T02:30:43Z",
+   "generated_at": "2026-09-18T04:07:44Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -207,12 +238,19 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201247
+   "bytes": 2201242
   },
   {
-   "label": "Stooq daily CSV",
+   "label": "Stooq daily CSV (blocked)",
    "source_class": "SECONDARY",
    "path": "real/prices/stooq",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "Nasdaq quote API",
+   "source_class": "SECONDARY",
+   "path": "real/prices/nasdaq",
    "files": 0,
    "bytes": 0
   },
@@ -241,8 +279,8 @@
    "label": "League scoreboards",
    "source_class": "MIXED",
    "path": "real/sports",
-   "files": 6,
-   "bytes": 1643529
+   "files": 8,
+   "bytes": 2301937
   },
   {
    "label": "NOAA/NCEI daily summaries",
@@ -256,7 +294,7 @@
    "source_class": "OFFICIAL-VENDOR",
    "path": "real/kalshi",
    "files": 5,
-   "bytes": 241407
+   "bytes": 242148
   }
  ]
 }

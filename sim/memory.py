@@ -43,6 +43,7 @@ from __future__ import annotations
 
 import gzip
 import hashlib
+import io
 import json
 import math
 import os
@@ -164,7 +165,10 @@ class EventLogWriter:
         # instead of a file handle. Kept as two explicit branches.
         if compress:
             def opener(p: str):
-                return gzip.open(p, "wt", encoding="utf-8", compresslevel=6)
+                # A fixed mtime makes the gzip bytes (and therefore the run
+                # checksum) reproducible when the same event rows are replayed.
+                compressed = gzip.GzipFile(p, mode="wb", compresslevel=6, mtime=0)
+                return io.TextIOWrapper(compressed, encoding="utf-8")
         else:
             def opener(p: str):
                 return open(p, "w", encoding="utf-8")

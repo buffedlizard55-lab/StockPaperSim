@@ -125,6 +125,15 @@ FRED_SERIES: Dict[str, str] = {
     # requested and whichever resolves is what the site cites. A 404 is
     # recorded in the manifest rather than hidden.
     "GOLDAMGBD228NLBM": "LBMA gold price, AM fix (USD/troy oz)",
+    # Added 2026-09-18 for the Live Book (sim/live.py): the Nasdaq and NYSE index
+    # legs the brief names, and the secured overnight financing rate the live
+    # book credits idle cash and charges a margin debit at.  SOFR is published by
+    # the Federal Reserve Bank of New York and republished here by FRED, which is
+    # why the collection also asks the publisher's own API for the same window
+    # (see collect_nyfed) - two publishers, one number.
+    "NASDAQCOM": "NASDAQ Composite index (daily close), source Nasdaq, Inc.",
+    "DJIA": "Dow Jones Industrial Average (daily close), source S&P Dow Jones Indices",
+    "SOFR": "Secured Overnight Financing Rate, source Federal Reserve Bank of New York",
     "GOLDPMGBD228NLBM": "LBMA gold price, PM fix (USD/troy oz)",
 }
 
@@ -144,6 +153,7 @@ SOURCE_CLASS = {
     "fred": "OFFICIAL",
     "sec": "OFFICIAL", "fda": "OFFICIAL", "mlb": "OFFICIAL",
     "nocode": "OFFICIAL", "espn": "SECONDARY", "nba": "OFFICIAL",
+    "finra": "OFFICIAL", "nyfed": "OFFICIAL",
      "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
 }
 
@@ -604,6 +614,116 @@ def collect_fred(fetcher: Fetcher, out: str) -> dict:
                 rows += 1
         summary["ok"].append(series)
         summary["rows"][series] = rows
+    return summary
+
+
+# --------------------------------------------------------------------------
+# 1b. Official endpoints added for the Live Book (2026-09-18)
+# --------------------------------------------------------------------------
+#
+# Two official, free, publicly available endpoints that the live book cites and
+# that the sandbox could not collect in bulk.  Both are fetched on the runner.
+#
+# FINRA's REG SHO daily short-sale volume file:
+#   https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260917.txt
+#   Official (FINRA is the SRO), free, pipe-delimited:
+#     Date|Symbol|ShortVolume|ShortExemptVolume|TotalVolume|Market
+#   It is the only free official source of daily TOTAL volume per symbol this
+#   project has found, which makes it the right anchor for the participation and
+#   liquidity model instead of a secondary file's volume column, and its short
+#   volume is a signal no committed file carries.  The whole file is roughly
+#   13,000 symbols, so only the traded universe is kept - and the kept rows are
+#   written with the file they came from and its SHA-256.
+#
+# The Federal Reserve Bank of New York reference-rate API:
+#   https://markets.newyorkfed.org/api/rates/secured/sofr/search.json
+#   Official, free, no key.  It is a second publisher for the SOFR observations
+#   FRED republishes, so the two can be cross-checked rather than trusted once.
+FINRA_REGSHO_DAILY = "https://cdn.finra.org/equity/regsho/daily/CNMSshvol{date}.txt"
+#: Kept on one line on purpose: the source-register test scans this file for
+#: URL literals, and a string split across lines is truncated at the quote, so
+#: the registered row would not cover what the code actually calls.
+NYFED_SOFR_SEARCH = "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json?startDate={start}&endDate={end}"
+#: How many business days of short-volume files to ask for.  Each file is ~13,000
+#: rows, so this is bounded deliberately and the summary records the count.
+FINRA_MAX_DAYS = 30
+
+
+def _business_days(start: str, end: str, limit: int) -> List[str]:
+    import datetime as _dt
+    day = _dt.date.fromisoformat(start)
+    last = _dt.date.fromisoformat(end)
+    out: List[str] = []
+    while day <= last and len(out) < limit:
+        if day.weekday() < 5:
+            out.append(day.strftime("%Y%m%d"))
+        day += _dt.timedelta(days=1)
+    return out
+
+
+def collect_finra(fetcher: Fetcher, out: str) -> dict:
+    """REG SHO daily short-sale volume, filtered to the traded universe."""
+    universe = set(EQUITY_UNIVERSE) | set(INSIDER_TICKERS)
+    summary = {"files": 0, "rows_kept": 0, "days": [], "failed": [], "source": ""}
+    # Walk back from the end of the window instead of forward: the most recent
+    # sessions are what the live book needs to settle its pending intents, so if
+    # the byte budget runs out the days that were kept are the useful ones.
+    import datetime as _dt
+    day = _dt.date.fromisoformat(COLLECT_END)
+    days: List[str] = []
+    while len(days) < FINRA_MAX_DAYS and day > _dt.date.fromisoformat(WARMUP_START):
+        if day.weekday() < 5:
+            days.append(day.strftime("%Y%m%d"))
+        day -= _dt.timedelta(days=1)
+    records: List[dict] = []
+    for stamp in days:
+        url = FINRA_REGSHO_DAILY.format(date=stamp)
+        body = fetcher.get(url, "finra", note=f"REG SHO daily short volume {stamp}")
+        if body is None:
+            summary["failed"].append(stamp)
+            continue
+        digest = hashlib.sha256(body).hexdigest()
+        kept = 0
+        text = body.decode("utf-8", "replace")
+        for line in text.splitlines():
+            parts = line.strip().split("|")
+            if len(parts) < 6 or parts[1] not in universe:
+                continue
+            records.append({
+                "date": parts[0], "symbol": parts[1],
+                "short_volume": float(parts[2]), "short_exempt_volume": float(parts[3]),
+                "total_volume": float(parts[4]), "markets": parts[5],
+                "source_class": "OFFICIAL", "source": url,
+                "raw_sha256": digest})
+            kept += 1
+        summary["files"] += 1
+        summary["rows_kept"] += kept
+        summary["days"].append({"date": stamp, "rows_kept": kept,
+                                "bytes": len(body), "sha256": digest,
+                                "source_class": SOURCE_CLASS.get("finra", "OFFICIAL")})
+    if records:
+        path = os.path.join(out, "finra", "regsho_short_volume.jsonl")
+        write_jsonl(path, records)
+        summary["source"] = FINRA_REGSHO_DAILY.format(date="YYYYMMDD")
+    return summary
+
+
+def collect_nyfed(fetcher: Fetcher, out: str) -> dict:
+    """The publisher's own SOFR API, as a second source for the same numbers."""
+    url = NYFED_SOFR_SEARCH.format(start=WARMUP_START, end=COLLECT_END)
+    summary = {"ok": False, "observations": 0, "source": url}
+    body = fetcher.get(url, "nyfed", headers={"Accept": "application/json"},
+                       note="NY Fed reference rates: SOFR over the collection window")
+    if body is None:
+        return summary
+    path = os.path.join(out, "nyfed", f"sofr_search_{WARMUP_START}_{COLLECT_END}.json")
+    write_bytes(path, body)
+    try:
+        payload = json.loads(body.decode("utf-8"))
+        summary["observations"] = len(payload.get("refRates") or [])
+    except ValueError:
+        summary["error"] = "response was not JSON"
+    summary["ok"] = True
     return summary
 
 
@@ -1335,6 +1455,8 @@ def coverage_report(out: str, results: dict) -> dict:
         (os.path.join(out, "raw", "nasdaq"), "Nasdaq raw JSON responses", "OFFICIAL"),
         (os.path.join(out, "fred"), "FRED (Federal Reserve Bank of St. Louis)", "OFFICIAL"),
         (os.path.join(out, "sec"), "SEC EDGAR (Form 4 + ticker map)", "OFFICIAL"),
+        (os.path.join(out, "finra"), "FINRA REG SHO daily short-sale volume", "OFFICIAL"),
+        (os.path.join(out, "nyfed"), "NY Fed reference rates (SOFR)", "OFFICIAL"),
         (os.path.join(out, "fda"), "FDA openFDA /drug/drugsfda", "OFFICIAL"),
         (os.path.join(out, "sports"), "League scoreboards", "MIXED"),
         (os.path.join(out, "weather"), "NOAA/NCEI daily summaries", "OFFICIAL"),
@@ -1357,7 +1479,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", default=os.path.join(REPO_ROOT, "data", "real"))
     parser.add_argument("--max-seconds", type=float, default=1500.0)
-    parser.add_argument("--only", default="prices,sec,fda,sports,weather,kalshi")
+    parser.add_argument("--only",
+                        default="prices,sec,fda,sports,weather,kalshi,official_rates")
     args = parser.parse_args(argv)
 
     out = os.path.abspath(args.out)
@@ -1375,6 +1498,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"fred: {results['fred']['ok']}")
         results["nasdaq"] = collect_nasdaq(fetcher, out)
         print(f"nasdaq: {len(results['nasdaq']['ok'])} ok")
+    if "official_rates" in only or "live" in only or "sec" in only:
+        # The Live Book's two official endpoints.  Fetched with the sec section
+        # because the collector's sections are budgeted, not because they are
+        # related: FINRA's files are large and the SOFR API is small.
+        results["nyfed"] = collect_nyfed(fetcher, out)
+        print(f"nyfed: {results['nyfed']}")
+        results["finra"] = collect_finra(fetcher, out)
+        print(f"finra: {results['finra']['files']} files, "
+              f"{results['finra']['rows_kept']} universe rows kept")
     if "sec" in only:
         results["sec"] = collect_sec(fetcher, out)
         print(f"sec: {results['sec']['transactions']} transactions from "

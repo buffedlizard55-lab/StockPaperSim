@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FDA PDUFA Drifter · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>FDA PDUFA Drifter <span class="muted">@FDA_PDUFA_Drifter</span></h1>
+<p class="lede">openFDA publishes the FDA&#x27;s approvals with their decision dates. The live book reads the trailing-30-day count of original-application approvals and holds the biotech complex at the leverage bound while the approval rate is at or above its own median - the same event clock Season 2 traded, but now with every entry deferred to the next session so the drift has to survive the wait.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +65.18%</div>
+    <div class="kpi-sub">$65,182.29 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-15.63%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    1.5645</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">97 fills</div>
+    <div class="kpi-sub">97 intents ·
+    0 refused · cost
+    0.013%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>FDA PDUFA Drifter (@FDA_PDUFA_Drifter) planned 97 forward intents and saw 97 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 165,182.29 USD on 100,000 starting cash: +65.18% with a worst peak-to-trough drawdown of -15.63% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant beat the benchmark by 50.8pp.</li><li>Execution cost was 716.65 USD, 0.013% of 5,694,551 USD traded, at a mean slippage of 0.759 bps against the decision mid; median participation was 0.00652% of the session&#x27;s real volume (max 0.02455%).</li><li>35 round trips closed; win rate 48.57% and profit factor 3.18. The largest single trip was 38,647.65 USD and the worst -8,993.16 USD.</li><li>Contribution by instrument: XBI +54,853.44 USD was the biggest positive and IBB +11,928.63 USD the biggest negative, out of 2 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>fda_orig_30d</code>, <code>fda_orig_z</code></p>
+<p><strong>Sizing:</strong> up to 1.9x gross ·
+<strong>leverage:</strong> 1.9x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks</p>
+<h3>Entry rules</h3>
+<ul><li>Trailing 30-day count of openFDA original approvals vs its 252-session median</li><li>Count at or above the median -&gt; target XBI 1.5x plus IBB 0.4x</li><li>Count below the median -&gt; flat</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Flatten when the count falls back below the median</li></ul>
+<h3>Evidence base</h3>
+<ul><li>openFDA publishes the FDA&#x27;s own approval decisions with their decision dates, which is the event clock this participant reads — <a href="https://api.fda.gov/drug/drugsfda.json">openFDA drug/drugsfda endpoint (data/real/fda/openfda_decisions.jsonl)</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>The count is a sector-level proxy: many approvals belong to unlisted sponsors, so the signal can move with no listed stock behind it</li><li>Biotech is rate-sensitive, so a funding shock beats a good approval month</li><li>A one-session execution delay removes the announcement-day pop, which is exactly where a naive version of this rule earned its backtest</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>XBI</td><td class="pos">$54,853.44</td></tr><tr><td>IBB</td><td class="pos">$11,928.63</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 35 · still open:
+0</li>
+<li>Win rate: 48.57% · profit factor:
+3.18</li>
+<li>Largest trip: $38,647.65 · worst trip:
+$-8,993.16</li>
+<li>Carry: $1,994.13 received,
+$3,593.92 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>IBB</td><td>long</td>
+<td>2025-10-30</td><td>156.5400</td>
+<td>2025-11-04</td>
+<td>155.8000</td><td>100</td>
+<td class="neg">
+$-74.62</td>
+<td>None</td><td>fda-drift: 30d approvals 61 &lt; median 70</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2025-10-30</td><td>110.9231</td>
+<td>2025-11-04</td>
+<td>108.3200</td><td>1,300</td>
+<td class="neg">
+$-3,392.02</td>
+<td>None</td><td>fda-drift: 30d approvals 61 &lt; median 70</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2025-10-30</td><td>157.1100</td>
+<td>2025-12-02</td>
+<td>170.1500</td><td>200</td>
+<td class="pos">
+$2,606.77</td>
+<td>None</td><td>fda-drift: 30d approvals 66 &lt; median 71</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2025-11-06</td><td>109.9471</td>
+<td>2025-12-02</td>
+<td>119.7900</td><td>1,400</td>
+<td class="pos">
+$13,771.37</td>
+<td>None</td><td>fda-drift: 30d approvals 66 &lt; median 71</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-02-04</td><td>175.2100</td>
+<td>2026-02-10</td>
+<td>174.2000</td><td>100</td>
+<td class="neg">
+$-101.62</td>
+<td>None</td><td>fda-drift: 30d approvals 66 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-02-04</td><td>126.4531</td>
+<td>2026-02-10</td>
+<td>125.7900</td><td>1,300</td>
+<td class="neg">
+$-870.05</td>
+<td>None</td><td>fda-drift: 30d approvals 66 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-02-04</td><td>173.4700</td>
+<td>2026-02-24</td>
+<td>174.8200</td><td>100</td>
+<td class="pos">
+$134.38</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-02-11</td><td>125.0023</td>
+<td>2026-02-24</td>
+<td>127.3500</td><td>1,300</td>
+<td class="pos">
+$3,043.95</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-02-04</td><td>175.1200</td>
+<td>2026-03-31</td>
+<td>164.3500</td><td>200</td>
+<td class="neg">
+$-2,155.24</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-02-25</td><td>128.3731</td>
+<td>2026-03-31</td>
+<td>122.8600</td><td>1,200</td>
+<td class="neg">
+$-6,623.13</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-02-25</td><td>128.3731</td>
+<td>2026-04-01</td>
+<td>128.7800</td><td>100</td>
+<td class="pos">
+$40.07</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-04-02</td><td>167.7100</td>
+<td>2026-04-06</td>
+<td>169.2300</td><td>100</td>
+<td class="pos">
+$151.03</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-04-02</td><td>125.6800</td>
+<td>2026-04-06</td>
+<td>129.1300</td><td>700</td>
+<td class="pos">
+$2,408.80</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-04-02</td><td>167.7100</td>
+<td>2026-04-07</td>
+<td>167.9900</td><td>100</td>
+<td class="pos">
+$27.03</td>
+<td>None</td><td>fda-drift: 30d approvals 59 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-04-08</td><td>172.3800</td>
+<td>2026-05-08</td>
+<td>169.5400</td><td>100</td>
+<td class="neg">
+$-284.97</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 69</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-04-02</td><td>131.3575</td>
+<td>2026-05-08</td>
+<td>133.8500</td><td>1,200</td>
+<td class="pos">
+$2,980.26</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 69</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-04-08</td><td>172.3800</td>
+<td>2026-05-12</td>
+<td>169.9900</td><td>100</td>
+<td class="neg">
+$-239.97</td>
+<td>None</td><td>fda-drift: 30d approvals 61 &lt; median 68</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-05-18</td><td>165.9900</td>
+<td>2026-05-19</td>
+<td>163.4000</td><td>100</td>
+<td class="neg">
+$-259.96</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-05-18</td><td>130.9100</td>
+<td>2026-05-19</td>
+<td>127.2600</td><td>800</td>
+<td class="neg">
+$-2,927.05</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-05-18</td><td>165.5450</td>
+<td>2026-05-22</td>
+<td>169.0700</td><td>200</td>
+<td class="pos">
+$703.06</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-05-20</td><td>128.6660</td>
+<td>2026-05-22</td>
+<td>132.4800</td><td>1,000</td>
+<td class="pos">
+$3,805.08</td>
+<td>None</td><td>fda-drift: 30d approvals 65 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-06-05</td><td>174.8067</td>
+<td>2026-07-07</td>
+<td>197.7700</td><td>200</td>
+<td class="pos">
+$4,590.61</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-06-05</td><td>134.4050</td>
+<td>2026-07-07</td>
+<td>162.0200</td><td>1,400</td>
+<td class="pos">
+$38,647.65</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-06-05</td><td>189.5756</td>
+<td>2026-07-14</td>
+<td>189.5400</td><td>200</td>
+<td class="neg">
+$-9.13</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-08</td><td>162.1243</td>
+<td>2026-07-14</td>
+<td>155.7100</td><td>1,400</td>
+<td class="neg">
+$-8,993.16</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-06-05</td><td>188.7052</td>
+<td>2026-07-21</td>
+<td>186.2300</td><td>200</td>
+<td class="neg">
+$-497.04</td>
+<td>None</td><td>fda-drift: 30d approvals 63 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-15</td><td>153.7914</td>
+<td>2026-07-21</td>
+<td>151.0100</td><td>1,300</td>
+<td class="neg">
+$-3,627.95</td>
+<td>None</td><td>fda-drift: 30d approvals 63 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-06-05</td><td>188.7052</td>
+<td>2026-07-22</td>
+<td>188.3500</td><td>100</td>
+<td class="neg">
+$-36.53</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-15</td><td>153.7914</td>
+<td>2026-07-22</td>
+<td>153.6300</td><td>100</td>
+<td class="neg">
+$-17.08</td>
+<td>None</td><td>fda-drift: 30d approvals 64 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-07-23</td><td>186.2400</td>
+<td>2026-07-28</td>
+<td>190.0100</td><td>200</td>
+<td class="pos">
+$751.98</td>
+<td>None</td><td>fda-drift: 30d approvals 59 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-23</td><td>150.7862</td>
+<td>2026-07-28</td>
+<td>150.4900</td><td>1,200</td>
+<td class="neg">
+$-366.54</td>
+<td>None</td><td>fda-drift: 30d approvals 59 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-07-23</td><td>186.2400</td>
+<td>2026-07-29</td>
+<td>190.3800</td><td>100</td>
+<td class="pos">
+$412.99</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-23</td><td>150.7862</td>
+<td>2026-07-29</td>
+<td>149.2200</td><td>100</td>
+<td class="neg">
+$-157.54</td>
+<td>None</td><td>fda-drift: 30d approvals 62 &lt; median 67</td>
+</tr><tr><td>IBB</td><td>long</td>
+<td>2026-07-30</td><td>186.5100</td>
+<td>2026-08-31</td>
+<td>207.2200</td><td>300</td>
+<td class="pos">
+$6,209.86</td>
+<td>None</td><td>fda-drift: 30d approvals 56 &lt; median 68</td>
+</tr><tr><td>XBI</td><td>long</td>
+<td>2026-07-30</td><td>150.2637</td>
+<td>2026-08-31</td>
+<td>160.9800</td><td>1,600</td>
+<td class="pos">
+$17,130.78</td>
+<td>None</td><td>fda-drift: 30d approvals 56 &lt; median 68</td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-10-30</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2025-10-30</td>
+<td>XBI</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-10-31</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-03</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-04</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2025-11-04</td>
+<td>XBI</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-06</td>
+<td>IBB</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2025-11-06</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-07</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-10</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-11</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-11-25</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2025-12-02</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2025-12-02</td>
+<td>XBI</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-04</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-02-04</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-05</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-06</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-09</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-10</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-02-10</td>
+<td>XBI</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-11</td>
+<td>IBB</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-02-11</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-12</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-13</td>
+<td>XBI</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-24</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-02-24</td>
+<td>XBI</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-25</td>
+<td>IBB</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-02-25</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-26</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-02-27</td>
+<td>XBI</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-03-31</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-03-31</td>
+<td>XBI</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-01</td>
+<td>XBI</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-02</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-04-02</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-06</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-04-06</td>
+<td>XBI</td><td>sell</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-07</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-04-08</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-04-08</td>
+<td>XBI</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-09</td>
+<td>XBI</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-04-10</td>
+<td>XBI</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-08</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-08</td>
+<td>XBI</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-12</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-18</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-18</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-19</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-19</td>
+<td>XBI</td><td>sell</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-20</td>
+<td>IBB</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-20</td>
+<td>XBI</td><td>buy</td><td>700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-21</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-05-22</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-05-22</td>
+<td>XBI</td><td>sell</td><td>1,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-06-05</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-06-05</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-06-08</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-06-09</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-06-18</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-06-25</td>
+<td>IBB</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-06-29</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-07</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-07</td>
+<td>XBI</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-08</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-08</td>
+<td>XBI</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-09</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-10</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-13</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-14</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-14</td>
+<td>XBI</td><td>sell</td><td>1,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-15</td>
+<td>IBB</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-15</td>
+<td>XBI</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-16</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-17</td>
+<td>XBI</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-20</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-21</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-21</td>
+<td>XBI</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-22</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-22</td>
+<td>XBI</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-23</td>
+<td>IBB</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-23</td>
+<td>XBI</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-24</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-27</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-28</td>
+<td>IBB</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-28</td>
+<td>XBI</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-29</td>
+<td>IBB</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-29</td>
+<td>XBI</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-30</td>
+<td>IBB</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-07-30</td>
+<td>XBI</td><td>buy</td><td>900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-07-31</td>
+<td>XBI</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-08-03</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-08-04</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-08-10</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-08-20</td>
+<td>XBI</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr><tr><td>2026-08-31</td>
+<td>IBB</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>IBB_price, fda_orig_30d</td></tr><tr><td>2026-08-31</td>
+<td>XBI</td><td>sell</td><td>1,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XBI_price, fda_orig_30d</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

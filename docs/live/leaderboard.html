@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leaderboard · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../live/index.html">Overview</a><a class="" href="../live/forward.html">Upcoming trades</a><a class="active" href="../live/leaderboard.html">Leaderboard</a><a class="" href="../live/blotter.html">Trade tape</a><a class="" href="../live/participants/index.html">Participants</a><a class="" href="../live/method.html">Clock &amp; margin</a><a class="" href="../live/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Leaderboard</h1>
+<p class="lede">Ranked on total return over the rehearsal window
+2025-09-17 →
+2026-09-15, which is the metric the brief asks
+for. The benchmark is the official S&amp;P 500 daily close from FRED, which returned
++14.42% over the same sessions.</p>
+<table class="participants">
+<thead><tr><th>#</th><th>Username</th><th>Return</th><th>Net P&amp;L</th><th>Max DD</th>
+<th>Sharpe</th><th>Intents</th><th>Fills</th><th>Refused</th><th>Superseded</th>
+<th>Traded $</th><th>Cost</th><th>Slip bps</th><th>Part. med %</th>
+<th>Carry in</th><th>Carry out</th><th>Data</th><th>Verdict</th></tr></thead>
+<tbody><tr>
+<td>1</td>
+<td><a href="participants/FDA_PDUFA_Drifter.html">@FDA_PDUFA_Drifter</a>
+<br><span class="muted small">FDA PDUFA Drifter</span></td>
+<td class="pos">+65.18%</td>
+<td>$65,182.29</td><td>-15.63%</td>
+<td>1.5645</td>
+<td>97</td><td>97</td>
+<td>0</td><td>0</td>
+<td>5,694,551</td>
+<td>0.013%</td>
+<td>0.759</td>
+<td>0.00652</td>
+<td>$1,994.13</td>
+<td>$3,593.92</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>beat the benchmark by 50.8pp</td></tr><tr>
+<td>2</td>
+<td><a href="participants/DowNasdaq_SpreadMax.html">@DowNasdaq_SpreadMax</a>
+<br><span class="muted small">Dow/Nasdaq Spread Rotator</span></td>
+<td class="pos">+22.50%</td>
+<td>$22,501.42</td><td>-15.83%</td>
+<td>0.8482</td>
+<td>62</td><td>62</td>
+<td>0</td><td>0</td>
+<td>2,825,728</td>
+<td>0.002%</td>
+<td>0.098</td>
+<td>0.0001</td>
+<td>$56.64</td>
+<td>$4,959.69</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>beat the benchmark by 8.1pp</td></tr><tr>
+<td>3</td>
+<td><a href="participants/MLB_Attention_Live.html">@MLB_Attention_Live</a>
+<br><span class="muted small">MLB Attention Live</span></td>
+<td class="pos">+19.46%</td>
+<td>$19,463.65</td><td>-31.75%</td>
+<td>0.6093</td>
+<td>108</td><td>108</td>
+<td>0</td><td>0</td>
+<td>4,195,280</td>
+<td>0.075%</td>
+<td>5.166</td>
+<td>0.02608</td>
+<td>$2,579.42</td>
+<td>$2,061.18</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>beat the benchmark by 5.0pp</td></tr><tr>
+<td>4</td>
+<td><a href="participants/NasdaqMomentum_Max.html">@NasdaqMomentum_Max</a>
+<br><span class="muted small">Nasdaq Momentum Max</span></td>
+<td class="pos">+19.00%</td>
+<td>$18,996.02</td><td>-18.54%</td>
+<td>0.7239</td>
+<td>12</td><td>12</td>
+<td>0</td><td>0</td>
+<td>744,290</td>
+<td>0.002%</td>
+<td>0.11</td>
+<td>0.00024</td>
+<td>$229.18</td>
+<td>$4,863.34</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>beat the benchmark by 4.6pp</td></tr><tr>
+<td>5</td>
+<td><a href="participants/FDA_Fade_Live.html">@FDA_Fade_Live</a>
+<br><span class="muted small">FDA Fade Live</span></td>
+<td class="pos">+10.60%</td>
+<td>$10,598.94</td><td>-16.77%</td>
+<td>0.5475</td>
+<td>34</td><td>34</td>
+<td>0</td><td>0</td>
+<td>2,964,417</td>
+<td>0.013%</td>
+<td>0.732</td>
+<td>0.00806</td>
+<td>$3,933.82</td>
+<td>$1,022.86</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 3.8pp</td></tr><tr>
+<td>6</td>
+<td><a href="participants/SOFRPivot_Rider.html">@SOFRPivot_Rider</a>
+<br><span class="muted small">SOFR Pivot Rider</span></td>
+<td class="pos">+8.94%</td>
+<td>$8,940.44</td><td>-16.45%</td>
+<td>0.4977</td>
+<td>179</td><td>179</td>
+<td>0</td><td>0</td>
+<td>8,452,528</td>
+<td>0.005%</td>
+<td>0.225</td>
+<td>0.00014</td>
+<td>$855.25</td>
+<td>$1,972.99</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 5.5pp</td></tr><tr>
+<td>7</td>
+<td><a href="participants/VIXRegime_LiveMax.html">@VIXRegime_LiveMax</a>
+<br><span class="muted small">VIX Regime Live Max</span></td>
+<td class="pos">+8.88%</td>
+<td>$8,884.11</td><td>-19.13%</td>
+<td>0.4701</td>
+<td>53</td><td>53</td>
+<td>0</td><td>0</td>
+<td>3,675,717</td>
+<td>0.003%</td>
+<td>0.152</td>
+<td>0.00017</td>
+<td>$1,384.55</td>
+<td>$2,697.38</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 5.5pp</td></tr><tr>
+<td>8</td>
+<td><a href="participants/KitchenSink_Official.html">@KitchenSink_Official</a>
+<br><span class="muted small">Kitchen Sink Official</span></td>
+<td class="pos">+4.09%</td>
+<td>$4,089.61</td><td>-16.48%</td>
+<td>0.3371</td>
+<td>200</td><td>200</td>
+<td>0</td><td>0</td>
+<td>11,562,422</td>
+<td>0.005%</td>
+<td>0.241</td>
+<td>0.00018</td>
+<td>$860.29</td>
+<td>$1,507.01</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 10.3pp</td></tr><tr>
+<td>9</td>
+<td><a href="participants/CurveSteepener_MaxBeta.html">@CurveSteepener_MaxBeta</a>
+<br><span class="muted small">Curve Steepener Max Beta</span></td>
+<td class="pos">+3.99%</td>
+<td>$3,990.77</td><td>-14.78%</td>
+<td>0.2948</td>
+<td>195</td><td>195</td>
+<td>0</td><td>0</td>
+<td>10,750,627</td>
+<td>0.006%</td>
+<td>0.327</td>
+<td>0.00149</td>
+<td>$548.59</td>
+<td>$2,713.49</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 10.4pp</td></tr><tr>
+<td>10</td>
+<td><a href="participants/InsiderCluster_Live.html">@InsiderCluster_Live</a>
+<br><span class="muted small">Insider Cluster Live</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>26.1329</td>
+<td>0</td><td>0</td>
+<td>0</td><td>0</td>
+<td>0</td>
+<td>0.000%</td>
+<td>—</td>
+<td>—</td>
+<td>$3,873.87</td>
+<td>$0.00</td>
+<td><span class="badge badge-bad">DATA-MISSING</span></td>
+<td>no trades placed (DATA-MISSING)</td></tr><tr>
+<td>11</td>
+<td><a href="participants/InjuryFeed_Forward.html">@InjuryFeed_Forward</a>
+<br><span class="muted small">Injury Feed Forward</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>26.1329</td>
+<td>0</td><td>0</td>
+<td>0</td><td>0</td>
+<td>0</td>
+<td>0.000%</td>
+<td>—</td>
+<td>—</td>
+<td>$3,873.87</td>
+<td>$0.00</td>
+<td><span class="badge badge-warn">FORWARD-ONLY</span></td>
+<td>no trades placed (FORWARD-ONLY)</td></tr><tr>
+<td>12</td>
+<td><a href="participants/ORB_NextOpen_Probe.html">@ORB_NextOpen_Probe</a>
+<br><span class="muted small">ORB Next-Open Probe</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>26.1329</td>
+<td>0</td><td>0</td>
+<td>0</td><td>0</td>
+<td>0</td>
+<td>0.000%</td>
+<td>—</td>
+<td>—</td>
+<td>$3,873.87</td>
+<td>$0.00</td>
+<td><span class="badge badge-warn">FORWARD-ONLY</span></td>
+<td>no trades placed (FORWARD-ONLY)</td></tr><tr>
+<td>13</td>
+<td><a href="participants/Weather_ColdSnap_Live.html">@Weather_ColdSnap_Live</a>
+<br><span class="muted small">Weather Cold Snap Live</span></td>
+<td class="pos">+1.09%</td>
+<td>$1,087.24</td><td>-19.29%</td>
+<td>0.1479</td>
+<td>23</td><td>23</td>
+<td>0</td><td>0</td>
+<td>466,548</td>
+<td>0.098%</td>
+<td>3.418</td>
+<td>0.00272</td>
+<td>$2,022.40</td>
+<td>$0.00</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 13.3pp</td></tr><tr>
+<td>14</td>
+<td><a href="participants/GoldVsRealRate_Live.html">@GoldVsRealRate_Live</a>
+<br><span class="muted small">Gold vs Real Rate Live</span></td>
+<td class="neg">-7.50%</td>
+<td>$-7,495.39</td><td>-25.37%</td>
+<td>-0.2902</td>
+<td>123</td><td>123</td>
+<td>0</td><td>0</td>
+<td>6,785,400</td>
+<td>0.008%</td>
+<td>0.476</td>
+<td>0.00158</td>
+<td>$319.78</td>
+<td>$1,521.12</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 21.9pp</td></tr><tr>
+<td>15</td>
+<td><a href="participants/PinePilot_EMA_Live.html">@PinePilot_EMA_Live</a>
+<br><span class="muted small">PinePilot EMA Live</span></td>
+<td class="neg">-8.23%</td>
+<td>$-8,230.39</td><td>-24.79%</td>
+<td>-0.2525</td>
+<td>29</td><td>29</td>
+<td>0</td><td>0</td>
+<td>3,662,142</td>
+<td>0.003%</td>
+<td>0.185</td>
+<td>0.00041</td>
+<td>$2,136.09</td>
+<td>$1,663.77</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 22.6pp</td></tr><tr>
+<td>16</td>
+<td><a href="participants/VolControl_MaxLev.html">@VolControl_MaxLev</a>
+<br><span class="muted small">Vol Control Max Leverage</span></td>
+<td class="neg">-9.71%</td>
+<td>$-9,707.30</td><td>-17.30%</td>
+<td>-0.453</td>
+<td>85</td><td>85</td>
+<td>0</td><td>0</td>
+<td>4,403,236</td>
+<td>0.003%</td>
+<td>0.132</td>
+<td>0.00013</td>
+<td>$1,170.38</td>
+<td>$1,338.14</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 24.1pp</td></tr><tr>
+<td>17</td>
+<td><a href="participants/OilDollar_FadeUNG.html">@OilDollar_FadeUNG</a>
+<br><span class="muted small">Oil-Dollar Fade</span></td>
+<td class="neg">-17.10%</td>
+<td>$-17,104.94</td><td>-33.19%</td>
+<td>-0.2351</td>
+<td>136</td><td>136</td>
+<td>0</td><td>0</td>
+<td>4,758,947</td>
+<td>0.086%</td>
+<td>3.662</td>
+<td>0.00359</td>
+<td>$2,343.54</td>
+<td>$1,463.40</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 31.5pp</td></tr><tr>
+<td>18</td>
+<td><a href="participants/LeapStyle_AutoLiquidate.html">@LeapStyle_AutoLiquidate</a>
+<br><span class="muted small">Leap-Style Auto Liquidator</span></td>
+<td class="neg">-35.34%</td>
+<td>$-35,341.81</td><td>-47.80%</td>
+<td>-0.4247</td>
+<td>24</td><td>24</td>
+<td>0</td><td>0</td>
+<td>864,719</td>
+<td>0.005%</td>
+<td>0.353</td>
+<td>0.00016</td>
+<td>$81.16</td>
+<td>$4,926.58</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 49.8pp</td></tr><tr>
+<td>19</td>
+<td><a href="participants/CrowdFade_Live.html">@CrowdFade_Live</a>
+<br><span class="muted small">Crowd Fade Live</span></td>
+<td class="neg">-45.90%</td>
+<td>$-45,902.61</td><td>-61.34%</td>
+<td>-0.6259</td>
+<td>8</td><td>12</td>
+<td>0</td><td>0</td>
+<td>491,419</td>
+<td>0.005%</td>
+<td>0.334</td>
+<td>0.00019</td>
+<td>$5,511.50</td>
+<td>$0.00</td>
+<td><span class="badge badge-ok">READY</span></td>
+<td>lagged the benchmark by 60.3pp</td></tr></tbody></table>
+<p class="muted small">Sharpe is reported but never used to rank: the brief scores
+total return, and a levered rule that takes twice the drawdown for the same return is
+a winner under this scoring. The max-drawdown column is the price of that.</p>
+<h2>What each column means</h2>
+<ul>
+<li><strong>Refused</strong> — intents the venue or the margin account would not take
+(participation cap, no borrowing room, maintenance breach). A high number is a
+statement about size, not about the signal.</li>
+<li><strong>Superseded</strong> — a newer intent replaced an older one for the same
+symbol and session, so only one live order per symbol-session ever exists.</li>
+<li><strong>Cost</strong> — spread plus depth plus impact plus exchange and regulatory
+fees, over traded notional, from the same dated fee schedules the competition uses.</li>
+<li><strong>Carry in / out</strong> — interest credited on idle cash and charged on a
+margin debit at the official SOFR, day-count ACT/360 (declared).</li>
+</ul>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

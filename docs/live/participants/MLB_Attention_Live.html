@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLB Attention Live · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>MLB Attention Live <span class="muted">@MLB_Attention_Live</span></h1>
+<p class="lede">The official MLB StatsAPI schedule is a dated, public clock of how much live sport is happening. The participant takes the sportsbook and sports-data equities levered when the schedule is dense and upsets are frequent - a pure attention proxy, and labelled as one.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +19.46%</div>
+    <div class="kpi-sub">$19,463.65 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-31.75%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.6093</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">108 fills</div>
+    <div class="kpi-sub">108 intents ·
+    0 refused · cost
+    0.075%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>MLB Attention Live (@MLB_Attention_Live) planned 108 forward intents and saw 108 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 119,463.65 USD on 100,000 starting cash: +19.46% with a worst peak-to-trough drawdown of -31.75% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant beat the benchmark by 5.0pp.</li><li>Execution cost was 3,165.11 USD, 0.075% of 4,195,280 USD traded, at a mean slippage of 5.166 bps against the decision mid; median participation was 0.02608% of the session&#x27;s real volume (max 0.45907%).</li><li>51 round trips closed; win rate 62.75% and profit factor 1.3749. The largest single trip was 21,535.29 USD and the worst -10,130.16 USD.</li><li>Contribution by instrument: DKNG +21,035.29 USD was the biggest positive and SRAD -9,393.32 USD the biggest negative, out of 4 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>mlb_games_7d</code>, <code>mlb_upsets_7d</code></p>
+<p><strong>Sizing:</strong> up to 1.75x gross across three names ·
+<strong>leverage:</strong> up to 1.75x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> days to weeks</p>
+<h3>Entry rules</h3>
+<ul><li>Games scheduled in the trailing 7 days, from the official StatsAPI file</li><li>Dense week (&gt; median) and upsets in that window -&gt; target DKNG 0.7x, FLUT 0.55x, SRAD 0.5x</li><li>Sparse week -&gt; target short PENN 0.6x</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily re-evaluation of the same two event counts</li></ul>
+<h3>Evidence base</h3>
+<ul><li>MLB StatsAPI is the league&#x27;s own schedule and scoreboard service — <a href="https://statsapi.mlb.com/api/v1/schedule">MLB StatsAPI (data/real/sports/mlb_games_2026.jsonl)</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Schedule density is not revenue and not sentiment; the mapping from games played to gaming-equity returns is unproven (WEAK-MAPPING in the MasterFeed register)</li><li>The archive covers 2026-03-25 onwards, so any session before that has no signal and the participant stands aside</li><li>Four small-cap gaming names carry high idiosyncratic and regulatory risk</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>DKNG</td><td class="pos">$21,035.29</td></tr><tr><td>SRAD</td><td class="neg">$-9,393.32</td></tr><tr><td>FLUT</td><td class="pos">$3,454.90</td></tr><tr><td>PENN</td><td class="pos">$3,066.90</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 51 · still open:
+0</li>
+<li>Win rate: 62.75% · profit factor:
+1.3749</li>
+<li>Largest trip: $21,535.29 · worst trip:
+$-10,130.16</li>
+<li>Carry: $2,579.42 received,
+$2,061.18 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>20.8400</td>
+<td>2026-04-13</td>
+<td>22.0200</td><td>100</td>
+<td class="pos">
+$117.34</td>
+<td>None</td><td>mlb-attention: 93 games and 32 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.0091</td>
+<td>2026-04-23</td>
+<td>22.2600</td><td>400</td>
+<td class="pos">
+$497.68</td>
+<td>None</td><td>mlb-attention: 95 games and 29 upsets in 7 days vs median 0</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-03-31</td><td>102.8517</td>
+<td>2026-04-23</td>
+<td>105.0800</td><td>100</td>
+<td class="pos">
+$222.00</td>
+<td>None</td><td>mlb-attention: 95 games and 29 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.0091</td>
+<td>2026-04-29</td>
+<td>23.4100</td><td>100</td>
+<td class="pos">
+$239.42</td>
+<td>None</td><td>mlb-attention: 91 games and 38 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.0091</td>
+<td>2026-05-07</td>
+<td>24.2000</td><td>100</td>
+<td class="pos">
+$318.42</td>
+<td>None</td><td>mlb-attention: 94 games and 41 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.0091</td>
+<td>2026-05-12</td>
+<td>24.4900</td><td>100</td>
+<td class="pos">
+$347.42</td>
+<td>None</td><td>mlb-attention: 94 games and 40 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.0091</td>
+<td>2026-05-14</td>
+<td>24.5700</td><td>100</td>
+<td class="pos">
+$355.42</td>
+<td>None</td><td>mlb-attention: 90 games and 32 upsets in 7 days vs median 0</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-03-31</td><td>21.5663</td>
+<td>2026-06-15</td>
+<td>28.5200</td><td>3,100</td>
+<td class="pos">
+$21,535.29</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 90)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-03-31</td><td>104.3464</td>
+<td>2026-06-15</td>
+<td>109.7500</td><td>500</td>
+<td class="pos">
+$2,697.58</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 90)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-03-31</td><td>16.3911</td>
+<td>2026-06-15</td>
+<td>15.9000</td><td>3,700</td>
+<td class="neg">
+$-1,841.03</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 90)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-03-31</td><td>104.3464</td>
+<td>2026-06-16</td>
+<td>110.8200</td><td>100</td>
+<td class="pos">
+$646.51</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 90)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-06-15</td><td>21.8206</td>
+<td>2026-06-17</td>
+<td>22.0900</td><td>3,400</td>
+<td class="neg">
+$-938.59</td>
+<td>None</td><td>mlb-attention: 91 games and 43 upsets in 7 days vs median 90</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-06-17</td><td>28.7800</td>
+<td>2026-06-23</td>
+<td>25.4100</td><td>3,000</td>
+<td class="neg">
+$-10,130.16</td>
+<td>None</td><td>mlb-attention: sparse schedule (90 vs median 90)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-06-17</td><td>108.0300</td>
+<td>2026-06-23</td>
+<td>97.6100</td><td>600</td>
+<td class="neg">
+$-6,256.92</td>
+<td>None</td><td>mlb-attention: sparse schedule (90 vs median 90)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-03-31</td><td>15.8346</td>
+<td>2026-06-23</td>
+<td>14.4800</td><td>3,800</td>
+<td class="neg">
+$-5,172.32</td>
+<td>None</td><td>mlb-attention: sparse schedule (90 vs median 90)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-06-23</td><td>20.7000</td>
+<td>2026-06-24</td>
+<td>20.5000</td><td>800</td>
+<td class="pos">
+$154.70</td>
+<td>None</td><td>mlb-attention: 92 games and 44 upsets in 7 days vs median 90</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-06-24</td><td>25.0819</td>
+<td>2026-07-08</td>
+<td>26.6500</td><td>3,000</td>
+<td class="pos">
+$4,683.96</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-06-24</td><td>97.9900</td>
+<td>2026-07-08</td>
+<td>107.1000</td><td>400</td>
+<td class="pos">
+$3,640.64</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-03-31</td><td>14.7616</td>
+<td>2026-07-08</td>
+<td>15.6500</td><td>3,500</td>
+<td class="pos">
+$3,086.72</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-06-24</td><td>97.9900</td>
+<td>2026-07-09</td>
+<td>109.9200</td><td>100</td>
+<td class="pos">
+$1,192.15</td>
+<td>None</td><td>mlb-attention: sparse schedule (90 vs median 91)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-07-08</td><td>20.6786</td>
+<td>2026-07-13</td>
+<td>20.3800</td><td>3,500</td>
+<td class="pos">
+$1,021.83</td>
+<td>None</td><td>mlb-attention: 95 games and 37 upsets in 7 days vs median 91</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-06-24</td><td>26.7639</td>
+<td>2026-07-15</td>
+<td>25.1900</td><td>3,000</td>
+<td class="neg">
+$-4,741.94</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-13</td><td>112.8700</td>
+<td>2026-07-15</td>
+<td>109.9900</td><td>400</td>
+<td class="neg">
+$-1,155.38</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-07-13</td><td>15.6000</td>
+<td>2026-07-15</td>
+<td>15.1000</td><td>3,800</td>
+<td class="neg">
+$-1,924.72</td>
+<td>None</td><td>mlb-attention: sparse schedule (89 vs median 91)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-13</td><td>112.8700</td>
+<td>2026-07-16</td>
+<td>110.9200</td><td>100</td>
+<td class="neg">
+$-195.85</td>
+<td>None</td><td>mlb-attention: sparse schedule (73 vs median 91)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-07-15</td><td>20.8991</td>
+<td>2026-07-27</td>
+<td>20.6400</td><td>3,100</td>
+<td class="pos">
+$782.55</td>
+<td>None</td><td>mlb-attention: 95 games and 41 upsets in 7 days vs median 91</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-06-24</td><td>23.7153</td>
+<td>2026-07-29</td>
+<td>24.4500</td><td>3,300</td>
+<td class="pos">
+$2,402.50</td>
+<td>None</td><td>mlb-attention: sparse schedule (91 vs median 91)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>105.9600</td>
+<td>2026-07-29</td>
+<td>107.8200</td><td>400</td>
+<td class="pos">
+$740.63</td>
+<td>None</td><td>mlb-attention: sparse schedule (91 vs median 91)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-07-27</td><td>14.5700</td>
+<td>2026-07-29</td>
+<td>14.7500</td><td>3,700</td>
+<td class="pos">
+$641.95</td>
+<td>None</td><td>mlb-attention: sparse schedule (91 vs median 91)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-07-15</td><td>20.9472</td>
+<td>2026-07-30</td>
+<td>21.0800</td><td>1,700</td>
+<td class="neg">
+$-237.08</td>
+<td>None</td><td>mlb-attention: 93 games and 37 upsets in 7 days vs median 91</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>24.0500</td>
+<td>2026-08-04</td>
+<td>23.2900</td><td>100</td>
+<td class="neg">
+$-76.67</td>
+<td>None</td><td>mlb-attention: 96 games and 40 upsets in 7 days vs median 91</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>24.0500</td>
+<td>2026-08-06</td>
+<td>21.3700</td><td>100</td>
+<td class="neg">
+$-268.66</td>
+<td>None</td><td>mlb-attention: 93 games and 39 upsets in 7 days vs median 92</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-07-27</td><td>14.6095</td>
+<td>2026-08-06</td>
+<td>12.5200</td><td>400</td>
+<td class="neg">
+$-838.39</td>
+<td>None</td><td>mlb-attention: 93 games and 39 upsets in 7 days vs median 92</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>24.0500</td>
+<td>2026-08-07</td>
+<td>22.8900</td><td>2,900</td>
+<td class="neg">
+$-3,383.33</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 92)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>105.0480</td>
+<td>2026-08-07</td>
+<td>94.4000</td><td>400</td>
+<td class="neg">
+$-4,262.46</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 92)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-07-27</td><td>14.6095</td>
+<td>2026-08-07</td>
+<td>12.7700</td><td>3,700</td>
+<td class="neg">
+$-6,830.09</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 92)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-07-15</td><td>20.2298</td>
+<td>2026-08-10</td>
+<td>20.0300</td><td>1,300</td>
+<td class="pos">
+$251.12</td>
+<td>None</td><td>mlb-attention: 93 games and 37 upsets in 7 days vs median 92</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>23.7903</td>
+<td>2026-08-18</td>
+<td>25.2500</td><td>2,800</td>
+<td class="pos">
+$4,068.23</td>
+<td>None</td><td>mlb-attention: sparse schedule (93 vs median 93)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>96.5163</td>
+<td>2026-08-18</td>
+<td>96.1700</td><td>500</td>
+<td class="neg">
+$-177.25</td>
+<td>None</td><td>mlb-attention: sparse schedule (93 vs median 93)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-08-10</td><td>12.9449</td>
+<td>2026-08-18</td>
+<td>13.1800</td><td>3,800</td>
+<td class="pos">
+$868.91</td>
+<td>None</td><td>mlb-attention: sparse schedule (93 vs median 93)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-08-18</td><td>18.6700</td>
+<td>2026-08-19</td>
+<td>18.4600</td><td>1,100</td>
+<td class="pos">
+$223.76</td>
+<td>None</td><td>mlb-attention: 94 games and 46 upsets in 7 days vs median 93</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>24.3073</td>
+<td>2026-08-31</td>
+<td>24.8100</td><td>2,900</td>
+<td class="pos">
+$1,438.25</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>93.8944</td>
+<td>2026-08-31</td>
+<td>101.6100</td><td>500</td>
+<td class="pos">
+$3,853.66</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-08-10</td><td>12.8501</td>
+<td>2026-08-31</td>
+<td>12.9100</td><td>4,200</td>
+<td class="pos">
+$224.38</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-08-18</td><td>17.0362</td>
+<td>2026-09-02</td>
+<td>16.5500</td><td>3,800</td>
+<td class="pos">
+$1,822.51</td>
+<td>None</td><td>mlb-attention: 95 games and 42 upsets in 7 days vs median 93</td>
+</tr><tr><td>DKNG</td><td>long</td>
+<td>2026-07-30</td><td>23.9026</td>
+<td>2026-09-14</td>
+<td>25.0100</td><td>3,300</td>
+<td class="pos">
+$3,632.12</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>97.1741</td>
+<td>2026-09-14</td>
+<td>101.7400</td><td>500</td>
+<td class="pos">
+$2,278.82</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>SRAD</td><td>long</td>
+<td>2026-09-02</td><td>12.4300</td>
+<td>2026-09-14</td>
+<td>12.9800</td><td>4,400</td>
+<td class="pos">
+$2,391.57</td>
+<td>None</td><td>mlb-attention: sparse schedule (92 vs median 93)</td>
+</tr><tr><td>FLUT</td><td>long</td>
+<td>2026-07-27</td><td>97.1741</td>
+<td>2026-09-15</td>
+<td>99.4900</td><td>100</td>
+<td class="pos">
+$230.77</td>
+<td>None</td><td>mlb-attention: sparse schedule (91 vs median 93)</td>
+</tr><tr><td>PENN</td><td>short</td>
+<td>2026-08-18</td><td>17.8699</td>
+<td>OPEN</td>
+<td>0.0000</td><td>3,900</td>
+<td class="neg">
+$-13.90</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2026-03-31</td>
+<td>DKNG</td><td>buy</td><td>3,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-03-31</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-03-31</td>
+<td>SRAD</td><td>buy</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-02</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-09</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-13</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-16</td>
+<td>DKNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-17</td>
+<td>FLUT</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-23</td>
+<td>DKNG</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-23</td>
+<td>FLUT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-23</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-27</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-04-29</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-05-07</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-05-12</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-05-14</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-02</td>
+<td>DKNG</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-09</td>
+<td>DKNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-10</td>
+<td>FLUT</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-15</td>
+<td>DKNG</td><td>sell</td><td>3,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-15</td>
+<td>FLUT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-15</td>
+<td>PENN</td><td>sell</td><td>1,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-15</td>
+<td>SRAD</td><td>sell</td><td>3,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-16</td>
+<td>FLUT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-16</td>
+<td>PENN</td><td>sell</td><td>1,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-17</td>
+<td>DKNG</td><td>buy</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-17</td>
+<td>FLUT</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-17</td>
+<td>PENN</td><td>buy</td><td>3,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-17</td>
+<td>SRAD</td><td>buy</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-23</td>
+<td>DKNG</td><td>sell</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-23</td>
+<td>FLUT</td><td>sell</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-23</td>
+<td>PENN</td><td>sell</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-23</td>
+<td>SRAD</td><td>sell</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-24</td>
+<td>DKNG</td><td>buy</td><td>2,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-24</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-24</td>
+<td>PENN</td><td>buy</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-24</td>
+<td>SRAD</td><td>buy</td><td>3,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-06-25</td>
+<td>DKNG</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-07</td>
+<td>DKNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-08</td>
+<td>DKNG</td><td>sell</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-08</td>
+<td>FLUT</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-08</td>
+<td>PENN</td><td>sell</td><td>2,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-08</td>
+<td>SRAD</td><td>sell</td><td>3,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-09</td>
+<td>FLUT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-09</td>
+<td>PENN</td><td>sell</td><td>1,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-13</td>
+<td>DKNG</td><td>buy</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-13</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-13</td>
+<td>PENN</td><td>buy</td><td>3,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-13</td>
+<td>SRAD</td><td>buy</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-15</td>
+<td>DKNG</td><td>sell</td><td>3,000</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-15</td>
+<td>FLUT</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-15</td>
+<td>PENN</td><td>sell</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-15</td>
+<td>SRAD</td><td>sell</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-16</td>
+<td>FLUT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-16</td>
+<td>PENN</td><td>sell</td><td>1,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-20</td>
+<td>PENN</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-27</td>
+<td>DKNG</td><td>buy</td><td>3,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-27</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-27</td>
+<td>PENN</td><td>buy</td><td>3,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-27</td>
+<td>SRAD</td><td>buy</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-29</td>
+<td>DKNG</td><td>sell</td><td>3,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-29</td>
+<td>FLUT</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-29</td>
+<td>PENN</td><td>sell</td><td>1,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-29</td>
+<td>SRAD</td><td>sell</td><td>3,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-30</td>
+<td>DKNG</td><td>buy</td><td>3,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-30</td>
+<td>FLUT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-30</td>
+<td>PENN</td><td>buy</td><td>1,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-07-30</td>
+<td>SRAD</td><td>buy</td><td>3,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-04</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-04</td>
+<td>SRAD</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-06</td>
+<td>DKNG</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-06</td>
+<td>SRAD</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-07</td>
+<td>DKNG</td><td>sell</td><td>2,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-07</td>
+<td>FLUT</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-07</td>
+<td>PENN</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-07</td>
+<td>SRAD</td><td>sell</td><td>3,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-10</td>
+<td>DKNG</td><td>buy</td><td>2,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-10</td>
+<td>FLUT</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-10</td>
+<td>PENN</td><td>buy</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-10</td>
+<td>SRAD</td><td>buy</td><td>3,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-12</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-14</td>
+<td>DKNG</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-17</td>
+<td>FLUT</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-18</td>
+<td>DKNG</td><td>sell</td><td>2,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-18</td>
+<td>FLUT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-18</td>
+<td>PENN</td><td>sell</td><td>1,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-18</td>
+<td>SRAD</td><td>sell</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-19</td>
+<td>DKNG</td><td>buy</td><td>2,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-19</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-19</td>
+<td>PENN</td><td>buy</td><td>1,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-19</td>
+<td>SRAD</td><td>buy</td><td>3,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-20</td>
+<td>DKNG</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-21</td>
+<td>SRAD</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-31</td>
+<td>DKNG</td><td>sell</td><td>2,900</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-31</td>
+<td>FLUT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-31</td>
+<td>PENN</td><td>sell</td><td>1,600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-08-31</td>
+<td>SRAD</td><td>sell</td><td>4,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-01</td>
+<td>PENN</td><td>sell</td><td>2,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-02</td>
+<td>DKNG</td><td>buy</td><td>3,200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-02</td>
+<td>FLUT</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-02</td>
+<td>PENN</td><td>buy</td><td>3,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-02</td>
+<td>SRAD</td><td>buy</td><td>4,500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-14</td>
+<td>DKNG</td><td>sell</td><td>3,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DKNG_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-14</td>
+<td>FLUT</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-14</td>
+<td>PENN</td><td>sell</td><td>1,700</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-14</td>
+<td>SRAD</td><td>sell</td><td>4,400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>SRAD_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-15</td>
+<td>FLUT</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>FLUT_price, mlb_games_7d, mlb_upsets_7d</td></tr><tr><td>2026-09-15</td>
+<td>PENN</td><td>sell</td><td>2,100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>PENN_price, mlb_games_7d, mlb_upsets_7d</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

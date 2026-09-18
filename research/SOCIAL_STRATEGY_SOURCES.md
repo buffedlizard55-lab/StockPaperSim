@@ -59,6 +59,25 @@ implemented with the mapping labelled WEAK/UNPROVEN or excluded and said so.
 | S11 insider filing | `@InsiderCopycat_Max`, `@InsiderCluster_Alpha`, `@CEO_CFO_Conviction` | 2 | Implemented and gated on the collected Form 4 file; if the SEC collection does not land, they report DATA-MISSING and trade nothing. |
 | S12 event/attention | `@FDACatalyst_Rider`, `@FDA_ClusterFade`, `@MLB_Attention_Momo`, `@MLB_Upset_Short`, `@Weather_ColdSnap_Max`, `@YieldCurve_Rotator` | 2 | Traded on real event dates from official sources; the FDA participants are the season's best and worst, which is the honest result of one signal with two opposite implementations. |
 
+## 3. What the Live Book did with the same families
+
+The Live Book (`docs/live/`, `sim/strategies_live.py`) runs the same families with
+one structural difference: a rule plans after the close of session `T` and its order
+is settled against the bar of a **later** session. That removes the ability to trade
+the price a rule has just read, and it is why several of these results separate from
+their Season 2 counterparts.
+
+| Family | Username | What the forward test measured |
+|---|---|---|
+| S4 opening-range breakout | `@ORB_NextOpen_Probe` | **Not implemented**, declared FORWARD-ONLY with the reason on the page: the rule needs the first thirty minutes and this venue has one decision point per session. Placed no intents, which is the honest outcome. |
+| S5 momentum/trend | `@NasdaqMomentum_Max` (+19.00% on 12 trades), `@PinePilot_EMA_Live` (−8.23%), `@LeapStyle_AutoLiquidate` (−35.34%) | The slowest rule in the roster (a 210-session official-index trend) beat the fastest (a 9/21 EMA cross) by 27pp, and the contest-style rotation into the fastest-trailing asset lost a third of the account. Execution delay punished the high-turnover rules hardest. |
+| S6 PEAD | not implemented in the live roster | No earnings-date feed exists in the collected data, so the family is absent rather than approximated. It is registered as a P1 gap. |
+| S7 reversal | `@CrowdFade_Live` (−45.90%), `@FDA_Fade_Live` (+10.60%) | The crowd-fade rule was liquidated by the brokerage: two maintenance calls, four forced orders, −61.34% peak-to-trough. The FDA fade made money. Reversal is a coin toss here, which is what the literature says about it after costs. |
+| S9 leverage | every participant runs at the Reg T bound by design | The account that has to survive it is modelled: 2.0x gross cap, 50% initial margin, 30% house maintenance, liquidation at the next open on a breach. |
+| S11 insider filing | `@InsiderCluster_Live` | Implemented, gated, **DATA-MISSING**: the Form 4 stream is not in `data/real/sec/`, and the runner-based collection could not be dispatched from this session (HTTP 403, IR-54). It placed no intents and reports a measurement gap. |
+| S12 event/attention | `@MLB_Attention_Live` (+19.46%), `@Weather_ColdSnap_Live` (+1.09%), `@FDA_PDUFA_Drifter` (+65.18%), `@InjuryFeed_Forward` (FORWARD-ONLY) | Season 2's winner repeated: the openFDA approval clock levered into biotech. The weather proxy made almost nothing and the schedule-density proxy made 19%, which is a result about proxies, not about forecasts. |
+| New: official macro series | `@DowNasdaq_SpreadMax` (+22.50%), `@SOFRPivot_Rider` (+8.94%), `@VIXRegime_LiveMax` (+8.88%), `@VolControl_MaxLev` (−9.71%), `@CurveSteepener_MaxBeta` (+3.99%), `@OilDollar_FadeUNG` (−17.10%), `@GoldVsRealRate_Live` (−7.50%), `@KitchenSink_Official` (+4.09%) | Eight rules that only became testable once the Nasdaq Composite, Dow Jones and SOFR histories were collected. The relative-strength spread between the two official indices was the best of them; the volatility-scaled maximum-leverage rule lost 9.7%, which is what the literature would predict once the scaling is stripped of the diversification it was designed around. |
+
 ## 3. How the community claims were checked
 
 * **The strategies are implemented as declared, before the run.** Each roster

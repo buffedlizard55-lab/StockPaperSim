@@ -1,177 +1,233 @@
 [
-  {
-    "priority": "P2",
-    "title": "Point GitHub Pages at /docs and drop the root redirect",
-    "detail": "Pages is live and serving main, but its source path is the repository root, and changing it needs repository admin rights that this branch's automation does not have. The workaround in place is a root index.html that redirects to docs/index.html plus a root .nojekyll, so the canonical URL works today and nothing is duplicated - the redirect cannot go stale because every page, stylesheet and JSON file is served from under docs/. The remaining step for an admin is Settings -> Pages -> source: main, /docs, after which the root index.html and root .nojekyll can be deleted. Publishing the whole root also means memory/, data/ and the sources are downloadable from the Pages URL; that is no new exposure for a public repository, but /docs would serve only the site.",
-    "where": "repository Settings -> Pages (admin only) - index.html and .nojekyll at the repo root are the current workaround",
-    "effort": "two clicks for an admin, then delete two files"
-  },
-  {
-    "priority": "P0",
-    "title": "Collect and license an eligible official price set, then run strict Season 2",
-    "detail": "The Nasdaq historical and dividend adapters now retrieve the required symbols on a GitHub Actions runner, preserve raw responses and checksums, and normalize OHLCV with a complete-date audit. What remains is external: Nasdaq's public-site legal terms do not establish permission to redistribute the responses in this repository. Until a licensed/redistributable status is verified and recorded, `python3 -m sim.cli season2` fails closed and the Yahoo-backed run remains research-only.",
-    "where": "scripts/collect_real_data.py · sim/eligibility.py · .github/workflows/collect-real-data.yml · data/real/official_price_eligibility.json",
-    "effort": "licensing review plus one Actions collection run"
-  },
-  {
-    "priority": "P0",
-    "title": "Verify the two regulatory inputs that are still secondary or uncertain",
-    "detail": "Keep the FINRA fee schedule and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04) under periodic primary-source review; IR-05 is resolved for the current rates, but future rate changes require a new fetched schedule and re-run.",
-    "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
-    "effort": "an hour of reading"
-  },
-  {
-    "priority": "P1",
-    "title": "Minute-bar intraday engine",
-    "detail": "Expose multiple decision points per session on top of the existing intraday path, keep the order book alive across them, and add a closing-auction order type. This is what makes @GapAndGo_YOLO, @OvernightCarry_NO and @SpreadHarvester_MM measurable instead of caveated (L-03, IR-08).",
-    "where": "sim/microstructure.py (IntradayPath, ExecutionEngine) · sim/engine.py (session loop)",
-    "effort": "two to three weeks"
-  },
-  {
-    "priority": "P1",
-    "title": "Real event data: earnings calendar, EPS surprises, short interest",
-    "detail": "Replaces the price/volume proxies behind @DriftRider_PEAD and @SqueezeHunter_TF (IR-07) and lets the post-mortems attribute returns to identifiable events rather than to statistical drift. FINRA publishes short interest twice monthly; earnings dates are available from several vendors. Dividend and ex-date schedules belong here too: for 15 of the 17 instruments the ex-dates and per-share amounts are declared scenario parameters, not observations, and IR-31 showed that the accounting around them is where a season's short-side returns actually move. A real schedule would also let the ex-date price drop be checked against the tape instead of assumed.",
-    "where": "sim/universe.py (per-instrument event tables) · data/real/events/",
-    "effort": "a week"
-  },
-  {
-    "priority": "P1",
-    "title": "Formal significance testing on the results",
-    "detail": "Bootstrap confidence intervals for Sharpe, alpha and max drawdown; a Deflated Sharpe Ratio to account for having run twenty strategies; and a cross-scenario test of whether the winner's rank is distinguishable from chance. Right now the robustness panel shows the spread but does not test it (L-08).",
-    "where": "sim/analytics.py · docs/ results pages",
-    "effort": "a few days"
-  },
-  {
-    "priority": "P1",
-    "title": "Multi-season support and a season archive",
-    "detail": "Season 1 is hard-coded into config constants and the site copy. Generalising it needs a season registry, per-season memory namespaces, and an archive page that compares winners across seasons - which is also how the project would accumulate the many independent years that L-08 asks for.",
-    "where": "sim/config.py · sim/memory.py (run index) · scripts/build_site.py",
-    "effort": "a week"
-  },
-  {
-    "priority": "P1",
-    "title": "Financing curve: interest on cash and a margin debit rate",
-    "detail": "Removes the zero-risk-free-rate simplification (L-06). Accrue daily in Account.accrue_carry against a declared SOFR or T-bill series plus a spread, and subtract the same rate in the Sharpe numerator so the ratio stays internally consistent.",
-    "where": "sim/config.py (CostConfig) · sim/portfolio.py (accrue_carry) · sim/analytics.py",
-    "effort": "a day"
-  },
-  {
-    "priority": "P2",
-    "title": "Human participants: auth, order entry, per-user accounts",
-    "detail": "What separates this from the contests it was modelled on (L-07). Needs a web front end, an order-ticket API in front of the engine, and account state per user. The engine already isolates participants, so adding one at runtime is not a redesign.",
-    "where": "new service in front of sim/engine.py · docs/ site becomes an app",
-    "effort": "several weeks"
-  },
-  {
-    "priority": "P2",
-    "title": "Shared-book venue with aggregate participant flow",
-    "detail": "Let the twenty participants move the price for each other instead of trading independent replicas (L-04). Needs a deterministic per-interval clearing step and a new reproducibility argument, since order processing order starts to matter.",
-    "where": "sim/microstructure.py (ParticipantVenue → shared VenueDay state) · sim/engine.py",
-    "effort": "two weeks"
-  },
-  {
-    "priority": "P2",
-    "title": "Declarative strategy format so participants need not write Python",
-    "detail": "A JSON or small-DSL strategy definition interpreted by the engine, with the current twenty classes as reference implementations and a static check that a submitted definition cannot reference future data (L-15).",
-    "where": "sim/strategies.py (interpreter) · strategies/*.json",
-    "effort": "two weeks"
-  },
-  {
-    "priority": "P2",
-    "title": "Richer margin engine: SMA, house calls, PDT enforcement",
-    "detail": "Replace the flat gross-cap-plus-maintenance test with a special memorandum account computation, house-call sequencing, and real pattern-day-trader enforcement (L-11).",
-    "where": "sim/portfolio.py (Account.can_increase, maintenance_breach)",
-    "effort": "a week"
-  },
-  {
-    "priority": "P2",
-    "title": "Database-backed memory with the same query API",
-    "detail": "SQLite or DuckDB behind MemoryStore, keeping gzip JSON Lines as the export format, so the store survives far larger seasons and concurrent writers (L-14).",
-    "where": "sim/memory.py",
-    "effort": "a few days"
-  },
-  {
-    "priority": "P2",
-    "title": "Per-venue fee schedules and observed quote calibration",
-    "detail": "Replace the single blended maker/taker rate with real exchange fee schedules, and calibrate the spread and depth model against published Rule 605 execution-quality statistics rather than against a hand-set tick bound (L-10, IR-24).",
-    "where": "sim/config.py (CostConfig, LiquidityConfig) · sim/microstructure.py",
-    "effort": "a week"
-  },
-  {
-    "priority": "P2",
-    "title": "Explicit ex-date price adjustment for simulated dividends",
-    "detail": "Make the simulated price path step down on each declared ex-date instead of compensating through drift, so charts show what a real chart shows (L-16).",
-    "where": "sim/marketdata.py (build_replay)",
-    "effort": "half a day"
-  },
-  {
-    "priority": "P1",
-    "title": "Publish a venue-parameter sensitivity harness (the IR-29 answer)",
-    "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
-    "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
-    "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
-  },
-  {
-    "title": "Cite-hygiene job for the source register (networked, not in CI by design)",
-    "priority": "P2",
-    "effort": "S",
-    "detail": "IR-33 found two official URLs in the register returning 404, including one cited for a fee rate, and neither was caught because nothing opens the links after they are written. The register now requires a stored artefact behind a FETCHED-VERIFIED row, which fixes the rot-forward problem but not the rot-already-there problem: a link that was live when the excerpt was taken still goes stale silently a year later. The missing piece is a scheduled job that re-opens every URL in sim/config.py's register plus the links in the three research JSON files, classifies the response, and opens an issue listing the rows that moved. It must not be a merge gate: a red build because a regulator rate-limits a bot is worse than no build, and several of these hosts (sec.gov, finra.org, federalregister.gov) block unauthenticated automation intermittently. So it belongs in a weekly scheduled workflow with continue-on-error, reporting per-URL status, and the manual sweep recorded in VERIFICATION_LOG.md remains the backstop.",
-    "where": "new .github/workflows/cite-hygiene.yml; scripts/check_links.py with a fetch classifier that separates 404/410 (broken) from 403/429/timeout (blocked, needs a human)"
-  },
-  {
-    "title": "Collect the SEC Form 4 history and switch the three insider participants from DATA-MISSING to backtested",
-    "detail": "The insider strategies (@InsiderCopycat_Max, @InsiderCluster_Alpha, @CEO_CFO_Conviction) are implemented and gated on a collected Form 4 file under data/real/sec/. The collector requests the filing index and up to a bounded number of filings; until that file exists the signal book reports the array as MISSING and the participants trade nothing. Once it lands, re-run Season 2 and the same ledger will price their trades against the same real bars.",
-    "priority": "P0",
-    "effort": "half a day plus one collection run",
-    "where": "scripts/collect_real_data.py, sim/masterfeed.py::_insider_signals, memory/runs/season2-*"
-  },
-  {
-    "title": "Give the collector a schedule so forward-only strategies accumulate their own archive",
-    "detail": "The injury and pre-game-probability strategies can only ever be forward-tested. A daily or weekly cron on the existing collection workflow would build the archive that makes a future backtest possible, with the same manifest, hashing and per-file provenance the price files already have.",
-    "priority": "P1",
-    "effort": "one workflow change plus a retention policy",
-    "where": ".github/workflows/collect-real-data.yml, scripts/collect_real_data.py"
-  },
-  {
-    "title": "Publish a second, non-overlapping real season",
-    "detail": "One real year is one observation (L-17). The collector can fetch an arbitrarily long window from the same endpoints, so the cheap next step is a second season over a different year, traded by the same roster, with the cross-season rank correlation published next to the current leaderboard.",
-    "priority": "P1",
-    "effort": "one collection window plus a config label",
-    "where": "sim/realdata.py (SEASON2_START/END), sim/season2.py, docs/season2/"
-  },
-  {
-    "title": "Calibrate the venue against a real intraday print history",
-    "detail": "The intraday path, spread and impact models are the only remaining source of simulated prices. Comparing a modelled fill against the actual traded price at that minute for a sample of days and names would turn that from an assumption into a measured error distribution (L-21).",
-    "priority": "P1",
-    "effort": "a day, plus a source for intraday prints",
-    "where": "sim/microstructure.py, sim/marketdata.py, docs/season2/data.html"
-  },
-  {
-    "title": "Estimate the MasterSite signal mappings instead of asserting them",
-    "detail": "Every strategy page states a mapping strength that is currently a judgement (L-18). Regressing the instrument's returns on the signal at several lags, and publishing the coefficients with the same per-file provenance as the prices, would let the site say 'measured, and here is the standard error' instead of 'asserted'.",
-    "priority": "P2",
-    "effort": "one or two days per signal family",
-    "where": "sim/masterfeed.py, sim/analytics.py, docs/season2/masterfeed.html"
-  },
-  {
-    "title": "Re-collect the SEC Form 4 stream and let the three insider strategies trade",
-    "detail": "The collector's EDGAR User-Agent now carries a contact address as SEC's own FAQ requires, but the collection run that would prove it has not landed: the first run returned HTTP 403 on company_tickers.json, so data/real/sec/ is absent and @InsiderCopycat_Max, @InsiderCluster_Alpha and @CEO_CFO_Conviction sit idle. Once the file exists, the same run, ledger and audit pick it up with no code change - only the signal availability state changes.",
-    "priority": "P1",
-    "effort": "one collection run plus a season re-run",
-    "where": "scripts/collect_real_data.py, data/real/sec/, sim/masterfeed.py"
-  },
-  {
-    "title": "Collect the Kalshi volume column, or retire the attention-timer participant",
-    "detail": "The venue's settled-markets payload returned contract metadata with every numeric field empty, so kalshi_volume_30d is MISSING by construction and @Kalshi_Attention_Timer reports DATA-MISSING. Either a payload with real volume/open-interest is found (the v2 markets endpoint with a status filter is the first thing to try) or the participant should be retired rather than kept as a permanent zero.",
-    "priority": "P2",
-    "effort": "half a day to probe, one line to retire",
-    "where": "sim/masterfeed.py, scripts/collect_real_data.py"
-  },
-  {
-    "title": "Give the forward-only participants a live path",
-    "detail": "The NFL and NBA injury probes, the NCAA scoreboard and SportsPred place no trades by design because no archive exists. A scheduled collector that captures the official documents while a season is running would turn them from placeholders into the forward test the brief asked for, and would be the first genuinely live element of this project.",
-    "priority": "P2",
-    "effort": "a scheduled workflow plus a season of patience",
-    "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
-  }
+ {
+  "priority": "P2",
+  "title": "Point GitHub Pages at /docs and drop the root redirect",
+  "detail": "Pages is live and serving main, but its source path is the repository root, and changing it needs repository admin rights that this branch's automation does not have. The workaround in place is a root index.html that redirects to docs/index.html plus a root .nojekyll, so the canonical URL works today and nothing is duplicated - the redirect cannot go stale because every page, stylesheet and JSON file is served from under docs/. The remaining step for an admin is Settings -> Pages -> source: main, /docs, after which the root index.html and root .nojekyll can be deleted. Publishing the whole root also means memory/, data/ and the sources are downloadable from the Pages URL; that is no new exposure for a public repository, but /docs would serve only the site.",
+  "where": "repository Settings -> Pages (admin only) - index.html and .nojekyll at the repo root are the current workaround",
+  "effort": "two clicks for an admin, then delete two files"
+ },
+ {
+  "priority": "P0",
+  "title": "Collect and license an eligible official price set, then run strict Season 2",
+  "detail": "The Nasdaq historical and dividend adapters now retrieve the required symbols on a GitHub Actions runner, preserve raw responses and checksums, and normalize OHLCV with a complete-date audit. What remains is external: Nasdaq's public-site legal terms do not establish permission to redistribute the responses in this repository. Until a licensed/redistributable status is verified and recorded, `python3 -m sim.cli season2` fails closed and the Yahoo-backed run remains research-only.",
+  "where": "scripts/collect_real_data.py \u00b7 sim/eligibility.py \u00b7 .github/workflows/collect-real-data.yml \u00b7 data/real/official_price_eligibility.json",
+  "effort": "licensing review plus one Actions collection run"
+ },
+ {
+  "priority": "P0",
+  "title": "Verify the two regulatory inputs that are still secondary or uncertain",
+  "detail": "Keep the FINRA fee schedule and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04) under periodic primary-source review; IR-05 is resolved for the current rates, but future rate changes require a new fetched schedule and re-run.",
+  "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
+  "effort": "an hour of reading"
+ },
+ {
+  "priority": "P1",
+  "title": "Minute-bar intraday engine",
+  "detail": "Expose multiple decision points per session on top of the existing intraday path, keep the order book alive across them, and add a closing-auction order type. This is what makes @GapAndGo_YOLO, @OvernightCarry_NO and @SpreadHarvester_MM measurable instead of caveated (L-03, IR-08).",
+  "where": "sim/microstructure.py (IntradayPath, ExecutionEngine) \u00b7 sim/engine.py (session loop)",
+  "effort": "two to three weeks"
+ },
+ {
+  "priority": "P1",
+  "title": "Real event data: earnings calendar, EPS surprises, short interest",
+  "detail": "Replaces the price/volume proxies behind @DriftRider_PEAD and @SqueezeHunter_TF (IR-07) and lets the post-mortems attribute returns to identifiable events rather than to statistical drift. FINRA publishes short interest twice monthly; earnings dates are available from several vendors. Dividend and ex-date schedules belong here too: for 15 of the 17 instruments the ex-dates and per-share amounts are declared scenario parameters, not observations, and IR-31 showed that the accounting around them is where a season's short-side returns actually move. A real schedule would also let the ex-date price drop be checked against the tape instead of assumed.",
+  "where": "sim/universe.py (per-instrument event tables) \u00b7 data/real/events/",
+  "effort": "a week"
+ },
+ {
+  "priority": "P1",
+  "title": "Formal significance testing on the results",
+  "detail": "Bootstrap confidence intervals for Sharpe, alpha and max drawdown; a Deflated Sharpe Ratio to account for having run twenty strategies; and a cross-scenario test of whether the winner's rank is distinguishable from chance. Right now the robustness panel shows the spread but does not test it (L-08).",
+  "where": "sim/analytics.py \u00b7 docs/ results pages",
+  "effort": "a few days"
+ },
+ {
+  "priority": "P1",
+  "title": "Multi-season support and a season archive",
+  "detail": "Season 1 is hard-coded into config constants and the site copy. Generalising it needs a season registry, per-season memory namespaces, and an archive page that compares winners across seasons - which is also how the project would accumulate the many independent years that L-08 asks for.",
+  "where": "sim/config.py \u00b7 sim/memory.py (run index) \u00b7 scripts/build_site.py",
+  "effort": "a week"
+ },
+ {
+  "priority": "P1",
+  "title": "Financing curve: interest on cash and a margin debit rate",
+  "detail": "Removes the zero-risk-free-rate simplification (L-06). Accrue daily in Account.accrue_carry against a declared SOFR or T-bill series plus a spread, and subtract the same rate in the Sharpe numerator so the ratio stays internally consistent.",
+  "where": "sim/config.py (CostConfig) \u00b7 sim/portfolio.py (accrue_carry) \u00b7 sim/analytics.py",
+  "effort": "a day"
+ },
+ {
+  "priority": "P2",
+  "title": "Human participants: auth, order entry, per-user accounts",
+  "detail": "What separates this from the contests it was modelled on (L-07). Needs a web front end, an order-ticket API in front of the engine, and account state per user. The engine already isolates participants, so adding one at runtime is not a redesign.",
+  "where": "new service in front of sim/engine.py \u00b7 docs/ site becomes an app",
+  "effort": "several weeks"
+ },
+ {
+  "priority": "P2",
+  "title": "Shared-book venue with aggregate participant flow",
+  "detail": "Let the twenty participants move the price for each other instead of trading independent replicas (L-04). Needs a deterministic per-interval clearing step and a new reproducibility argument, since order processing order starts to matter.",
+  "where": "sim/microstructure.py (ParticipantVenue \u2192 shared VenueDay state) \u00b7 sim/engine.py",
+  "effort": "two weeks"
+ },
+ {
+  "priority": "P2",
+  "title": "Declarative strategy format so participants need not write Python",
+  "detail": "A JSON or small-DSL strategy definition interpreted by the engine, with the current twenty classes as reference implementations and a static check that a submitted definition cannot reference future data (L-15).",
+  "where": "sim/strategies.py (interpreter) \u00b7 strategies/*.json",
+  "effort": "two weeks"
+ },
+ {
+  "priority": "P2",
+  "title": "Richer margin engine: SMA, house calls, PDT enforcement",
+  "detail": "Replace the flat gross-cap-plus-maintenance test with a special memorandum account computation, house-call sequencing, and real pattern-day-trader enforcement (L-11).",
+  "where": "sim/portfolio.py (Account.can_increase, maintenance_breach)",
+  "effort": "a week"
+ },
+ {
+  "priority": "P2",
+  "title": "Database-backed memory with the same query API",
+  "detail": "SQLite or DuckDB behind MemoryStore, keeping gzip JSON Lines as the export format, so the store survives far larger seasons and concurrent writers (L-14).",
+  "where": "sim/memory.py",
+  "effort": "a few days"
+ },
+ {
+  "priority": "P2",
+  "title": "Per-venue fee schedules and observed quote calibration",
+  "detail": "Replace the single blended maker/taker rate with real exchange fee schedules, and calibrate the spread and depth model against published Rule 605 execution-quality statistics rather than against a hand-set tick bound (L-10, IR-24).",
+  "where": "sim/config.py (CostConfig, LiquidityConfig) \u00b7 sim/microstructure.py",
+  "effort": "a week"
+ },
+ {
+  "priority": "P2",
+  "title": "Explicit ex-date price adjustment for simulated dividends",
+  "detail": "Make the simulated price path step down on each declared ex-date instead of compensating through drift, so charts show what a real chart shows (L-16).",
+  "where": "sim/marketdata.py (build_replay)",
+  "effort": "half a day"
+ },
+ {
+  "priority": "P1",
+  "title": "Publish a venue-parameter sensitivity harness (the IR-29 answer)",
+  "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
+  "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
+  "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
+ },
+ {
+  "title": "Cite-hygiene job for the source register (networked, not in CI by design)",
+  "priority": "P2",
+  "effort": "S",
+  "detail": "IR-33 found two official URLs in the register returning 404, including one cited for a fee rate, and neither was caught because nothing opens the links after they are written. The register now requires a stored artefact behind a FETCHED-VERIFIED row, which fixes the rot-forward problem but not the rot-already-there problem: a link that was live when the excerpt was taken still goes stale silently a year later. The missing piece is a scheduled job that re-opens every URL in sim/config.py's register plus the links in the three research JSON files, classifies the response, and opens an issue listing the rows that moved. It must not be a merge gate: a red build because a regulator rate-limits a bot is worse than no build, and several of these hosts (sec.gov, finra.org, federalregister.gov) block unauthenticated automation intermittently. So it belongs in a weekly scheduled workflow with continue-on-error, reporting per-URL status, and the manual sweep recorded in VERIFICATION_LOG.md remains the backstop.",
+  "where": "new .github/workflows/cite-hygiene.yml; scripts/check_links.py with a fetch classifier that separates 404/410 (broken) from 403/429/timeout (blocked, needs a human)"
+ },
+ {
+  "title": "Collect the SEC Form 4 history and switch the three insider participants from DATA-MISSING to backtested",
+  "detail": "The insider strategies (@InsiderCopycat_Max, @InsiderCluster_Alpha, @CEO_CFO_Conviction) are implemented and gated on a collected Form 4 file under data/real/sec/. The collector requests the filing index and up to a bounded number of filings; until that file exists the signal book reports the array as MISSING and the participants trade nothing. Once it lands, re-run Season 2 and the same ledger will price their trades against the same real bars.",
+  "priority": "P0",
+  "effort": "half a day plus one collection run",
+  "where": "scripts/collect_real_data.py, sim/masterfeed.py::_insider_signals, memory/runs/season2-*"
+ },
+ {
+  "title": "Give the collector a schedule so forward-only strategies accumulate their own archive",
+  "detail": "The injury and pre-game-probability strategies can only ever be forward-tested. A daily or weekly cron on the existing collection workflow would build the archive that makes a future backtest possible, with the same manifest, hashing and per-file provenance the price files already have.",
+  "priority": "P1",
+  "effort": "one workflow change plus a retention policy",
+  "where": ".github/workflows/collect-real-data.yml, scripts/collect_real_data.py"
+ },
+ {
+  "title": "Publish a second, non-overlapping real season",
+  "detail": "One real year is one observation (L-17). The collector can fetch an arbitrarily long window from the same endpoints, so the cheap next step is a second season over a different year, traded by the same roster, with the cross-season rank correlation published next to the current leaderboard.",
+  "priority": "P1",
+  "effort": "one collection window plus a config label",
+  "where": "sim/realdata.py (SEASON2_START/END), sim/season2.py, docs/season2/"
+ },
+ {
+  "title": "Calibrate the venue against a real intraday print history",
+  "detail": "The intraday path, spread and impact models are the only remaining source of simulated prices. Comparing a modelled fill against the actual traded price at that minute for a sample of days and names would turn that from an assumption into a measured error distribution (L-21).",
+  "priority": "P1",
+  "effort": "a day, plus a source for intraday prints",
+  "where": "sim/microstructure.py, sim/marketdata.py, docs/season2/data.html"
+ },
+ {
+  "title": "Estimate the MasterSite signal mappings instead of asserting them",
+  "detail": "Every strategy page states a mapping strength that is currently a judgement (L-18). Regressing the instrument's returns on the signal at several lags, and publishing the coefficients with the same per-file provenance as the prices, would let the site say 'measured, and here is the standard error' instead of 'asserted'.",
+  "priority": "P2",
+  "effort": "one or two days per signal family",
+  "where": "sim/masterfeed.py, sim/analytics.py, docs/season2/masterfeed.html"
+ },
+ {
+  "title": "Re-collect the SEC Form 4 stream and let the three insider strategies trade",
+  "detail": "The collector's EDGAR User-Agent now carries a contact address as SEC's own FAQ requires, but the collection run that would prove it has not landed: the first run returned HTTP 403 on company_tickers.json, so data/real/sec/ is absent and @InsiderCopycat_Max, @InsiderCluster_Alpha and @CEO_CFO_Conviction sit idle. Once the file exists, the same run, ledger and audit pick it up with no code change - only the signal availability state changes.",
+  "priority": "P1",
+  "effort": "one collection run plus a season re-run",
+  "where": "scripts/collect_real_data.py, data/real/sec/, sim/masterfeed.py"
+ },
+ {
+  "title": "Collect the Kalshi volume column, or retire the attention-timer participant",
+  "detail": "The venue's settled-markets payload returned contract metadata with every numeric field empty, so kalshi_volume_30d is MISSING by construction and @Kalshi_Attention_Timer reports DATA-MISSING. Either a payload with real volume/open-interest is found (the v2 markets endpoint with a status filter is the first thing to try) or the participant should be retired rather than kept as a permanent zero.",
+  "priority": "P2",
+  "effort": "half a day to probe, one line to retire",
+  "where": "sim/masterfeed.py, scripts/collect_real_data.py"
+ },
+ {
+  "title": "Give the forward-only participants a live path",
+  "detail": "The NFL and NBA injury probes, the NCAA scoreboard and SportsPred place no trades by design because no archive exists. A scheduled collector that captures the official documents while a season is running would turn them from placeholders into the forward test the brief asked for, and would be the first genuinely live element of this project.",
+  "priority": "P2",
+  "effort": "a scheduled workflow plus a season of patience",
+  "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
+ },
+ {
+  "title": "Settle the live forward book: run the collection and the settlement pass",
+  "detail": "The live book has 16 intents pending on 2026-09-17 and will keep them pending until a verified bar for that session exists. Settling them needs one collected price file for that date plus the settlement pass, which is already implemented (LiveBook.settle is exercised by the rehearsal and expires closed-session intents). Nothing in the code is missing.",
+  "priority": "P0",
+  "effort": "one collection run plus one command",
+  "where": "scripts/collect_real_data.py --only prices, .github/workflows/collect-real-data.yml, sim/live.py (sell/settle), memory/live/"
+ },
+ {
+  "title": "Run the collection workflow (dispatch is blocked: HTTP 403 Resource not accessible by integration)",
+  "detail": "The insider participants cannot trade and the EDGAR User-Agent fix cannot be proven until the collector runs on a runner. 'gh workflow run \"Collect real market data\" --ref <branch>' returns 403 for this session's automation (workflow id 361020102): the token can push and open pull requests but has no actions:write permission, and the sandbox has no outbound HTTPS so it cannot fetch the files itself. Either a token with actions:write or a manual run from the Actions tab unblocks it.",
+  "priority": "P0",
+  "effort": "one run, once the permission exists",
+  "where": ".github/workflows/collect-real-data.yml, data/real/sec/, sim/masterfeed.py::_insider_signals"
+ },
+ {
+  "title": "Leave the copyright status of every FRED-republished index series",
+  "detail": "FRED tags DJIA 'Copyrighted: Pre-Approval Required' and NASDAQCOM's notes carry a NASDAQ OMX copyright. Those tags decide whether the committed CSVs may be redistributed, and they were never read for SP500, VIXCLS or SOFR. The register records what was read and says NOT-READ-IN-SESSION for the rest. This is the same question as the Nasdaq price licensing, and it should be settled for the whole register at once rather than one series at a time.",
+  "priority": "P0",
+  "effort": "an hour of reading nine series pages, then one column of the register",
+  "where": "sim/live.py (OFFICIAL_SERIES_REGISTER fred_copyright_tag), docs/live/sources.html"
+ },
+ {
+  "title": "Schedule the live book so the forward test accumulates a record",
+  "detail": "A forward test is only worth what its archive is. A scheduled workflow that collects prices/events on business days, runs 'sim.cli live --mode forward' to plan, settles any intents whose bar has arrived, writes docs/live/ and opens a pull request (rather than pushing to main, so a human reads the diff) is the difference between one rehearsal and a track record.",
+  "priority": "P1",
+  "effort": "one workflow plus a retention policy",
+  "where": ".github/workflows/, sim/live_season.py (run_forward), scripts/build_site_live.py"
+ },
+ {
+  "title": "Collect FINRA's REG SHO daily short-sale volume files for official per-symbol volume",
+  "detail": "cdn.finra.org/equity/regsho/daily/CNMSshvolYYYYMMDD.txt is official, free, undated-free and pipe-delimited: Date|Symbol|ShortVolume|ShortExemptVolume|TotalVolume|Market. It is the only free official source of daily total volume per symbol that this project has found, which makes it the right anchor for the participation and liquidity model instead of a secondary file's volume column - and it carries short volume, which no committed file has. The 2026-09-17 file was verified in-session (AAPL TotalVolume 13766217.054549, ShortVolume 8061052.786287) but the whole file is roughly 13,000 symbols and 69 pages, so it belongs in the runner's collector, filtered to the traded universe before it is stored.",
+  "priority": "P1",
+  "effort": "half a day in the collector, one run",
+  "where": "scripts/collect_real_data.py (a new 'finra' section), data/real/finra/, sim/microstructure.py (volume anchor)"
+ },
+ {
+  "title": "Give the live roster the intraday decision points it is missing",
+  "detail": "Two of the roster's most-wanted rules cannot run at all: the opening-range breakout (@ORB_NextOpen_Probe places no intents by design) and any stop that would trigger inside a session. Both need several decision points per session on top of the existing intraday path, which is the same P1 item that would make Season 1's three intraday participants measurable.",
+  "priority": "P1",
+  "effort": "two to three weeks, shared with the Season 1 item",
+  "where": "sim/microstructure.py (IntradayPath, ExecutionEngine), sim/live.py (settlement loop)"
+ },
+ {
+  "title": "Publish the live book's cost sensitivity as a panel",
+  "detail": "The rehearsal publishes one assumption set. Doubling the spread and impact and charging $1 per order would separate 'the signal worked' from 'the venue was cheap' for every live participant, which is exactly the exercise Season 2's stress runs perform for the Season 2 roster.",
+  "priority": "P2",
+  "effort": "a few hours, following sim/sensitivity.py as the template",
+  "where": "sim/live_season.py (a labels parameter), scripts/build_site_live.py"
+ },
+ {
+  "title": "Fix the undefined RealMarketData annotation",
+  "detail": "sim/realdata.py annotates its return as RealMarketData, which nothing defines; from __future__ import annotations means nothing fails, so no test caught it (IR-51). One line: annotate MarketData, or define the alias.",
+  "priority": "P2",
+  "effort": "one line plus a test that evaluates the annotation",
+  "where": "sim/realdata.py, sim/season2.py, tests/"
+ }
 ]

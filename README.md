@@ -5,6 +5,12 @@ personas**, with a real venue model (depth, spreads, market making, dated tick
 size, dated fees), a full audit trail, and a published GitHub Pages site.
 
 * **Season 1** - 20 personas on a replay of the **real S&P 500 and VIX path**.
+* **The Live Book** - 19 personas trading **forward**: an intent is written after
+  the close for a *future* session and settled only when that session has a
+  verified bar. Official, free series (Nasdaq Composite, Dow Jones, S&P 500, VIX,
+  SOFR, four macro series) drive the signals, the benchmark, the calendar and the
+  financing; the executable bars are still the collected Yahoo files marked
+  `SECONDARY`, and the book publishes that share as a number.
 * **Season 2** - 14 personas in a **reproducible research replay** on collected
   daily bars. The committed price files are Yahoo Finance data marked
   `SECONDARY`, so this run is **not eligible as an official-price competition**.
@@ -34,7 +40,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 47 flags this project raised against itself.
+> carries the 54 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -220,6 +226,129 @@ from the venue assumptions rather than from a fabricated seed panel.
 
 ---
 
+## The Live Book: trades placed for sessions that have not happened yet
+
+Seasons 1 and 2 both decide *and* execute inside the same session: a strategy
+reads the history strictly before session `t` and its orders fill at session `t`'s
+open. That is look-ahead free, but it is still not something a person can do —
+nobody places an order at today's opening print using information that only
+exists after today's close.
+
+The **Live Book** (`sim/live.py`, `sim/live_season.py`,
+`sim/strategies_live.py`) closes that gap, and it is the part of this project
+that answers the brief's question directly. A participant **plans after the close
+of session `T`** and writes an **intent** aimed at a future session. The intent is
+appended to a ledger the moment it is created, carrying every input the rule read
+— series name, observation date, value, file, SHA-256 — and it can never be
+edited. When the target session finally has a verified bar, the venue settles the
+intent through exactly the same microstructure model the competition uses: Rule
+612 tick grid, quoted spread, displayed depth, market-maker quotes, square-root
+impact, participation cap, dated exchange and regulatory fees.
+
+It runs in two states, and both are published:
+
+| | Planned on | Settled against | Published as |
+|---|---|---|---|
+| **Rehearsal** | 2025-09-17 → 2026-09-16, one session at a time | the next session's verified bar | a measurable leaderboard — this is the forward test |
+| **Forward book** | 2026-09-16, the last session with a verified equity bar | nothing yet: 16 intents target 2026-09-17 and are `PENDING` | a status page, and **no return at all** |
+
+That second row is the honest state of a live competition on day one. The page
+reports 16 open intents and the exact evidence behind each one, and it reports no
+performance, because none exists.
+
+**Rehearsal result (251 sessions, decide at `T`, settle at `T+1`).** 19
+participants, $100,000 each, ranked on total return. The official S&P 500 daily
+close returned **+14.42%** over the same window; **4 of 19 beat it**, the median
+return was **+3.87%**, and **three participants placed nothing at all** and say
+why instead of printing a zero.
+
+| # | Participant | Return | Max DD | Fills | Cost | Slip (bps) | Data |
+|---|---|---|---|---|---|---|---|
+| 1 | `@FDA_PDUFA_Drifter` | **+65.18%** | −15.63% | 97 | 0.013% | 0.76 | READY |
+| 2 | `@DowNasdaq_SpreadMax` | +22.50% | −15.83% | 62 | 0.002% | 0.10 | READY |
+| 3 | `@MLB_Attention_Live` | +19.46% | −31.75% | 108 | 0.075% | 5.17 | READY |
+| 4 | `@NasdaqMomentum_Max` | +19.00% | −18.54% | 12 | 0.002% | 0.11 | READY |
+| 5 | `@FDA_Fade_Live` | +10.60% | −16.77% | 34 | 0.013% | 0.73 | READY |
+| 6 | `@SOFRPivot_Rider` | +8.94% | −16.45% | 179 | 0.005% | 0.23 | READY |
+| 7 | `@VIXRegime_LiveMax` | +8.88% | −19.13% | 53 | 0.003% | 0.15 | READY |
+| 8 | `@KitchenSink_Official` | +4.09% | −16.48% | 200 | 0.005% | 0.24 | READY |
+| 9 | `@CurveSteepener_MaxBeta` | +3.99% | −14.78% | 195 | 0.006% | 0.33 | READY |
+| 10–12 | `@InsiderCluster_Live` · `@InjuryFeed_Forward` · `@ORB_NextOpen_Probe` | +3.87% (cash only) | 0.00% | 0 | 0.000% | — | DATA-MISSING / FORWARD-ONLY |
+| 13 | `@Weather_ColdSnap_Live` | +1.09% | −19.29% | 23 | 0.098% | 3.42 | READY |
+| 14 | `@GoldVsRealRate_Live` | −7.50% | −25.37% | 123 | 0.008% | 0.48 | READY |
+| 15 | `@PinePilot_EMA_Live` | −8.23% | −24.79% | 29 | 0.003% | 0.19 | READY |
+| 16 | `@VolControl_MaxLev` | −9.71% | −17.30% | 85 | 0.003% | 0.13 | READY |
+| 17 | `@OilDollar_FadeUNG` | −17.10% | −33.19% | 136 | 0.086% | 3.66 | READY |
+| 18 | `@LeapStyle_AutoLiquidate` | −35.34% | −47.80% | 24 | 0.005% | 0.35 | READY |
+| 19 | `@CrowdFade_Live` | **−45.90%** | −61.34% | 12 | 0.005% | 0.33 | READY |
+
+**What caused these returns.**
+
+* `@FDA_PDUFA_Drifter` is the rehearsal's winner and it is Season 2's winner
+  again: the openFDA approval-flow rule, levered into XBI/IBB. One session of
+  execution delay cost it a little and did not change the diagnosis — a hot
+  approval regime and a re-rating biotech sector.
+* `@CrowdFade_Live` is the clear failure, and the interesting part is *why*: it
+  faded three-session sigma extremes, drew a maintenance call, and the broker
+  liquidated it. Twelve fills, two margin events, −61% peak-to-trough. The rule
+  was not unlucky; fading a trending tape with size is the documented way to
+  lose, and here the venue charged it properly instead of letting the account
+  keep marking a negative balance.
+* `@LeapStyle_AutoLiquidate` −35.34% is the contest rule the brief named: rotate
+  into the fastest-trailing asset at the leverage bound and liquidate at the end.
+  It bought the top of the 42-session leader repeatedly. That is the honest
+  result of performance chasing measured rather than asserted.
+* `@NasdaqMomentum_Max` took **12 trades** to make +19.00%: the official Nasdaq
+  Composite's own 210-session trend, levered into QQQ. The fewest decisions in
+  the roster produced the fourth-best return.
+* The three idle participants are the other half of the result. Two are declared
+  forward-only because the data does not exist to backtest them, and one is
+  waiting on the SEC Form 4 stream. Their +3.87% is official SOFR credited on
+  idle cash, and their verdict column says *no trades placed* rather than
+  letting a cash return masquerade as a strategy result.
+
+**Verification and the clock.** 1,368 intents, 1,372 fills (four of them forced
+liquidations the broker generated), 607 round trips, audit **PASS on 9,377
+checks with zero failures**. The audit re-derives cash and positions from the
+fill tape plus the carry rows without asking the account what it thinks it holds;
+max cash residual **$0.000000**. Three clock properties are enforced in code:
+a forward intent can never target its own plan session; no input an intent
+records may be dated after the plan date; and a session the official calendar
+says was closed **expires** its intent instead of filling.
+
+**Where the official data is, and where it still is not.** The signals, the
+benchmark, the trading calendar and the financing rate are official, free and
+publicly available: the Nasdaq Composite, the Dow Jones Industrial Average, the
+S&P 500, VIX, SOFR and four macro series, retrieved from FRED's CSV downloads and
+recorded with publisher, observation range and SHA-256 (`sim/live.py`,
+`docs/live/sources.html`). Two of the three new series were cross-checked against
+a second official publisher: FRED's SOFR and the Federal Reserve Bank of New
+York's own reference-rate API agree on 3.85% for 2026-09-17 and 3.62% for
+2026-09-16. The **executable** prices are still the collected Yahoo research
+files marked `SECONDARY`, so the book publishes its official-price coverage as a
+number — **0.00% of filled notional** — rather than implying otherwise, and the
+official-price gate stays ineligible.
+
+**Data efficiency.** The whole rehearsal — intents, fills, round trips, equity
+marks, carry rows and settlement summaries — is **13,135 rows in 527 KiB
+(41.05 bytes per row)** of gzipped JSON Lines with sorted keys and compact
+separators, so two runs produce identical bytes; plus a `blotter.csv` export for
+spreadsheet review. The reference bar is stored once per fill, because the fill is
+the unit a reader queries, and file digests live in the provenance document
+instead of being repeated on every row.
+
+**Review it line by line:**
+
+```bash
+python3 -m sim.cli live --mode all        # plan the forward book, run the rehearsal
+python3 -m sim.cli live-blotter --export /tmp/live.csv
+python3 -m sim.cli live-report @CrowdFade_Live
+```
+
+→ <https://buffedlizard55-lab.github.io/StockPaperSim/docs/live/index.html>
+
+---
+
 ## What the venue models
 
 | Piece | Implementation | Source |
@@ -251,22 +380,27 @@ sim/            the engine - pure standard library, no third-party imports
   engine.py         the competition loop, accounts, margin, liquidation
   strategies.py     the 20 participants, each with academic_basis and thesis
   analytics.py      risk, attribution, robustness, post-mortem narratives
+  live.py           the forward book: official series, intents, settlement, margin
+  live_season.py    the rehearsal and the real forward book, published side by side
+  strategies_live.py the 19 live participants, each with plan(ctx) and a data status
   memory.py         append-only checksummed event store
   cli.py            run / leaderboard / report / verify / query / export /
                     irregularities / sources / build-site
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          433 tests - engine, venue, memory, site, registers, docs, README,
+tests/          472 tests - engine, venue, memory, site, live book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
 memory/         the audit trail: one directory per run, gzipped event streams,
-                per-file SHA-256 manifest, per-participant reports
-docs/           the published site (GitHub Pages serves this directory)
+                per-file SHA-256 manifest, per-participant reports; memory/live/
+                holds the forward book and its walk-forward rehearsal
+docs/           the published site (GitHub Pages serves this directory);
+                docs/live/ is the Live Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (47), LIMITATIONS.json (22),
-                REMAINING_WORK.json (25), MASTER_SITE_SIGNALS.md,
+                IRREGULARITIES.json (54), LIMITATIONS.json (26),
+                REMAINING_WORK.json (33), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -283,9 +417,12 @@ python3 -m sim.cli season2 --price-source yahoo --allow-secondary-research
                                         # explicit non-eligible research replay only
 python3 -m sim.cli trade-sim --symbol SPY --side buy --qty 500
                                         # simulate placing a real trade with full microstructure
+python3 -m sim.cli live --mode all      # plan the forward book + run the rehearsal
+python3 -m sim.cli live-blotter         # every live intent with its verified bar
+python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 433 tests
+python3 -m unittest discover -s tests   # 472 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -331,10 +468,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 47 flags, including the ones raised against this project's own modelling
+  — all 54 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 22 limitations, 25 items of remaining work in priority order, and what
+  — 26 limitations, 33 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)
@@ -355,3 +492,14 @@ manual review, and flag irregularities rather than paper over them.
    empirical study of real orders found a 3/5 power law instead, which would
    charge ~26% less impact at 10% of ADV. Documented as IR-26, not silently
    absorbed.
+5. **The live book has no settled forward trades yet.** Its forward state is 16
+   pending intents and nothing else; the measurable part is the walk-forward
+   rehearsal over already-collected sessions (L-26).
+6. **Index histories are not tradable instruments.** Every index rule (Nasdaq
+   Composite, Dow Jones, S&P 500, VIX) executes through an ETF proxy, so tracking
+   difference and fund fees sit between the signal and the P&L, and no index
+   series can ever satisfy the official-price gate for *fills* by itself (L-25).
+7. **Circadian granularity.** The live book has one decision point per session
+   and executes at the open or the close. A rule that needs the first thirty
+   minutes (an opening-range breakout) cannot be expressed here at all and is
+   published as a forward-only probe rather than approximated (L-24).

@@ -19,6 +19,7 @@ from urllib.parse import urlparse
 from fixtures import REPO_ROOT
 
 from sim import config, marketdata, masterfeed, realdata, strategies, strategies_mf
+from sim import live, strategies_live
 
 RESEARCH = os.path.join(REPO_ROOT, "research")
 REAL = os.path.join(REPO_ROOT, "data", "real")
@@ -56,6 +57,13 @@ ALLOWED_HOSTS = {
     "api.fda.gov", "statsapi.mlb.com", "www.ncei.noaa.gov",
     "api.elections.kalshi.com", "api.nasdaq.com", "www.nfl.com",
     "official.nba.com", "site.api.espn.com", "buffedlizard55-lab.github.io",
+    # Added 2026-09-18 with the Live Book: the Federal Reserve Bank of New
+    # York publishes SOFR through its own reference-rate API, and the Nasdaq
+    # Trader calendar is the publisher of the forward session projection.
+    "markets.newyorkfed.org",
+    # Added 2026-09-18: Nasdaq's own investor-relations release announcing the
+    # 2025-01-09 closure for the National Day of Mourning (IR-52).
+    "ir.nasdaq.com", "cdn.finra.org",
     # Added 2026-09-18 with the rest of the Season 2 register: the SEC's
     # structured-data host and archive, the attempted second publishers (NBA's
     # three hosts, Stooq), and the repository itself, which the provenance notes
@@ -445,6 +453,17 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         # page renders it row by row), so the official URL it names for each
         # project counts as a register entry a reader can follow.
         urls |= {row["official_url"] for row in masterfeed.signal_register()}
+        # The live forward book carries its own register of official, free,
+        # publicly available series and auxiliary publisher endpoints, and both
+        # are rendered on the live site's sources page. Adding them here is what
+        # keeps a URL quoted in sim/live.py or sim/strategies_live.py followable
+        # by a reader instead of merely present in source.
+        urls |= {row["url_series"] for row in live.OFFICIAL_SERIES_REGISTER}
+        urls |= {row["url_csv"] for row in live.OFFICIAL_SERIES_REGISTER}
+        urls |= {row["url"] for row in live.AUXILIARY_OFFICIAL_ENDPOINTS}
+        urls |= {e["url"] for s in strategies_live.build_live_roster()
+                 for e in s.spec.academic_basis if isinstance(e, dict) and e.get("url")}
+        urls.add(live.PROJECTION_SOURCE)
         # ...and the MasterSite project page it links to for the project itself.
         urls |= {row["site_url"] for row in masterfeed.signal_register()}
         urls.add(masterfeed.MASTER_SITE_URL)

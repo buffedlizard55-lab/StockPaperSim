@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="active" href="../live/index.html">Overview</a><a class="" href="../live/forward.html">Upcoming trades</a><a class="" href="../live/leaderboard.html">Leaderboard</a><a class="" href="../live/blotter.html">Trade tape</a><a class="" href="../live/participants/index.html">Participants</a><a class="" href="../live/method.html">Clock &amp; margin</a><a class="" href="../live/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+<section id="season2-banner" class="card"><h2>Season 2 is published with an explicit price-eligibility status</h2><p>Season 1 above is a calibrated replay of the real S&amp;P 500 and VIX path. <strong>Season 2</strong> preserves every collected price file, raw response, checksum and trade-ledger fact, but a public endpoint is not automatically an eligible official source. The current Yahoo-backed history is marked <strong>SECONDARY research</strong>; the official Nasdaq path fails closed until source, coverage, checksum and redistribution checks pass.</p><p><a href="../season2/index.html">Season 2 overview</a> · <a href="../season2/leaderboard.html">Leaderboard</a> · <a href="../season2/ledger.html">Verified trade ledger</a> · <a href="../season2/masterfeed.html">MasterFeed register</a> · <a href="../season2/data.html">Data custody</a></p></section>
+
+<h1>The Live Book</h1>
+<p class="lede">Every other part of this project decides <em>and</em> executes inside
+one session. This one does not. A strategy plans after the close of session
+<strong>T</strong>, its order is written down as an <em>intent</em> aimed at a future
+session, and the venue settles it only when that session has a verified bar. It is the
+closest thing here to placing a real trade, and it is the honest way to ask whether
+these rules survive having to wait.</p>
+
+<div class="card notice">
+  <strong>What this is not.</strong> The executable bars are the collected Yahoo
+  research files, which are <strong>SECONDARY</strong>. Signals, the benchmark, the
+  trading calendar and the financing rate are official, free and publicly available
+  (FRED-republished index and rate data, cross-checked against the Federal Reserve
+  Bank of New York's own reference-rate API). An official-price competition needs an
+  eligible official security-price archive, and no such archive exists in this
+  repository, so the live book publishes its official-price coverage as a number
+  instead of implying one: <strong>0.000%
+  of filled notional executed against an official reference bar.</strong>
+</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Live book status</div>
+    <div class="kpi-value"><span class="badge badge-warn">PENDING-SETTLEMENT</span></div>
+    <div class="kpi-sub">16 upcoming intents placed on
+    2026-09-16, none settled yet</div></div>
+  <div class="kpi"><div class="kpi-label">Rehearsal window</div>
+    <div class="kpi-value">2025-09-17 →
+    2026-09-15</div>
+    <div class="kpi-sub">250 plan sessions, decide at
+    T and settle at T+1</div></div>
+  <div class="kpi"><div class="kpi-label">Benchmark (official)</div>
+    <div class="kpi-value">+14.42%</div>
+    <div class="kpi-sub">S&amp;P 500 index, daily close · 2025-09-17
+    6600.35 → 2026-09-16
+    7551.81</div></div>
+  <div class="kpi"><div class="kpi-label">Verification</div>
+    <div class="kpi-value"><span class="badge badge-ok">PASS</span></div>
+    <div class="kpi-sub">9,377 checks, 0
+    failures, max cash residual $0.00</div></div>
+</div>
+
+<h2>What the rehearsal measured</h2>
+<p>16 of 19 participants traded. The best forward-tested rule was
+<strong>@FDA_PDUFA_Drifter</strong> at
+<strong>+65.18%</strong> and the worst was
+<strong>@CrowdFade_Live</strong> at
+<strong>-45.90%</strong>. 3 participants placed
+nothing, and their row says why rather than printing a zero: a missing dataset is a
+measurement gap, not a result.</p>
+
+<table class="participants">
+<thead><tr><th>#</th><th>Username</th><th>Return</th><th>Net P&amp;L</th>
+<th>Max DD</th><th>Fills</th><th>Cost</th><th>Slippage</th><th>Verdict</th></tr></thead>
+<tbody>
+<tr><td>1</td>
+<td><a href="participants/FDA_PDUFA_Drifter.html">@FDA_PDUFA_Drifter</a>
+<br><span class="muted small">commodity-macro proxy</span></td>
+<td class="pos">+65.18%</td>
+<td>$65,182.29</td><td>-15.63%</td>
+<td>97</td><td>0.013%</td>
+<td>0.759 bps</td>
+<td>beat the benchmark by 50.8pp</td></tr><tr><td>2</td>
+<td><a href="participants/DowNasdaq_SpreadMax.html">@DowNasdaq_SpreadMax</a>
+<br><span class="muted small">curve/carry rotation</span></td>
+<td class="pos">+22.50%</td>
+<td>$22,501.42</td><td>-15.83%</td>
+<td>62</td><td>0.002%</td>
+<td>0.098 bps</td>
+<td>beat the benchmark by 8.1pp</td></tr><tr><td>3</td>
+<td><a href="participants/MLB_Attention_Live.html">@MLB_Attention_Live</a>
+<br><span class="muted small">event attention proxy</span></td>
+<td class="pos">+19.46%</td>
+<td>$19,463.65</td><td>-31.75%</td>
+<td>108</td><td>0.075%</td>
+<td>5.166 bps</td>
+<td>beat the benchmark by 5.0pp</td></tr><tr><td>4</td>
+<td><a href="participants/NasdaqMomentum_Max.html">@NasdaqMomentum_Max</a>
+<br><span class="muted small">time-series trend</span></td>
+<td class="pos">+19.00%</td>
+<td>$18,996.02</td><td>-18.54%</td>
+<td>12</td><td>0.002%</td>
+<td>0.11 bps</td>
+<td>beat the benchmark by 4.6pp</td></tr><tr><td>5</td>
+<td><a href="participants/FDA_Fade_Live.html">@FDA_Fade_Live</a>
+<br><span class="muted small">contrarian reversal</span></td>
+<td class="pos">+10.60%</td>
+<td>$10,598.94</td><td>-16.77%</td>
+<td>34</td><td>0.013%</td>
+<td>0.732 bps</td>
+<td>lagged the benchmark by 3.8pp</td></tr><tr><td>6</td>
+<td><a href="participants/SOFRPivot_Rider.html">@SOFRPivot_Rider</a>
+<br><span class="muted small">curve/carry rotation</span></td>
+<td class="pos">+8.94%</td>
+<td>$8,940.44</td><td>-16.45%</td>
+<td>179</td><td>0.005%</td>
+<td>0.225 bps</td>
+<td>lagged the benchmark by 5.5pp</td></tr><tr><td>7</td>
+<td><a href="participants/VIXRegime_LiveMax.html">@VIXRegime_LiveMax</a>
+<br><span class="muted small">volatility regime timing (official index)</span></td>
+<td class="pos">+8.88%</td>
+<td>$8,884.11</td><td>-19.13%</td>
+<td>53</td><td>0.003%</td>
+<td>0.152 bps</td>
+<td>lagged the benchmark by 5.5pp</td></tr><tr><td>8</td>
+<td><a href="participants/KitchenSink_Official.html">@KitchenSink_Official</a>
+<br><span class="muted small">signal stacking</span></td>
+<td class="pos">+4.09%</td>
+<td>$4,089.61</td><td>-16.48%</td>
+<td>200</td><td>0.005%</td>
+<td>0.241 bps</td>
+<td>lagged the benchmark by 10.3pp</td></tr><tr><td>9</td>
+<td><a href="participants/CurveSteepener_MaxBeta.html">@CurveSteepener_MaxBeta</a>
+<br><span class="muted small">curve/carry rotation</span></td>
+<td class="pos">+3.99%</td>
+<td>$3,990.77</td><td>-14.78%</td>
+<td>195</td><td>0.006%</td>
+<td>0.327 bps</td>
+<td>lagged the benchmark by 10.4pp</td></tr><tr><td>10</td>
+<td><a href="participants/InsiderCluster_Live.html">@InsiderCluster_Live</a>
+<br><span class="muted small">informed-flow following</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>0</td><td>0.000%</td>
+<td>— bps</td>
+<td>no trades placed (DATA-MISSING)</td></tr><tr><td>11</td>
+<td><a href="participants/InjuryFeed_Forward.html">@InjuryFeed_Forward</a>
+<br><span class="muted small">event attention proxy</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>0</td><td>0.000%</td>
+<td>— bps</td>
+<td>no trades placed (FORWARD-ONLY)</td></tr><tr><td>12</td>
+<td><a href="participants/ORB_NextOpen_Probe.html">@ORB_NextOpen_Probe</a>
+<br><span class="muted small">intraday momentum</span></td>
+<td class="pos">+3.87%</td>
+<td>$3,873.87</td><td>0.00%</td>
+<td>0</td><td>0.000%</td>
+<td>— bps</td>
+<td>no trades placed (FORWARD-ONLY)</td></tr><tr><td>13</td>
+<td><a href="participants/Weather_ColdSnap_Live.html">@Weather_ColdSnap_Live</a>
+<br><span class="muted small">event attention proxy</span></td>
+<td class="pos">+1.09%</td>
+<td>$1,087.24</td><td>-19.29%</td>
+<td>23</td><td>0.098%</td>
+<td>3.418 bps</td>
+<td>lagged the benchmark by 13.3pp</td></tr><tr><td>14</td>
+<td><a href="participants/GoldVsRealRate_Live.html">@GoldVsRealRate_Live</a>
+<br><span class="muted small">commodity-macro proxy</span></td>
+<td class="neg">-7.50%</td>
+<td>$-7,495.39</td><td>-25.37%</td>
+<td>123</td><td>0.008%</td>
+<td>0.476 bps</td>
+<td>lagged the benchmark by 21.9pp</td></tr><tr><td>15</td>
+<td><a href="participants/PinePilot_EMA_Live.html">@PinePilot_EMA_Live</a>
+<br><span class="muted small">time-series trend</span></td>
+<td class="neg">-8.23%</td>
+<td>$-8,230.39</td><td>-24.79%</td>
+<td>29</td><td>0.003%</td>
+<td>0.185 bps</td>
+<td>lagged the benchmark by 22.6pp</td></tr><tr><td>16</td>
+<td><a href="participants/VolControl_MaxLev.html">@VolControl_MaxLev</a>
+<br><span class="muted small">volatility regime timing (official index)</span></td>
+<td class="neg">-9.71%</td>
+<td>$-9,707.30</td><td>-17.30%</td>
+<td>85</td><td>0.003%</td>
+<td>0.132 bps</td>
+<td>lagged the benchmark by 24.1pp</td></tr><tr><td>17</td>
+<td><a href="participants/OilDollar_FadeUNG.html">@OilDollar_FadeUNG</a>
+<br><span class="muted small">commodity-macro proxy</span></td>
+<td class="neg">-17.10%</td>
+<td>$-17,104.94</td><td>-33.19%</td>
+<td>136</td><td>0.086%</td>
+<td>3.662 bps</td>
+<td>lagged the benchmark by 31.5pp</td></tr><tr><td>18</td>
+<td><a href="participants/LeapStyle_AutoLiquidate.html">@LeapStyle_AutoLiquidate</a>
+<br><span class="muted small">levered beta</span></td>
+<td class="neg">-35.34%</td>
+<td>$-35,341.81</td><td>-47.80%</td>
+<td>24</td><td>0.005%</td>
+<td>0.353 bps</td>
+<td>lagged the benchmark by 49.8pp</td></tr><tr><td>19</td>
+<td><a href="participants/CrowdFade_Live.html">@CrowdFade_Live</a>
+<br><span class="muted small">short-term reversal</span></td>
+<td class="neg">-45.90%</td>
+<td>$-45,902.61</td><td>-61.34%</td>
+<td>12</td><td>0.005%</td>
+<td>0.334 bps</td>
+<td>lagged the benchmark by 60.3pp</td></tr>
+</tbody></table>
+
+<h2>How to read the two books</h2>
+<div class="charts">
+  <div class="card">
+    <h3>Upcoming trades (the real forward book)</h3>
+    <p>Planned from 2026-09-16, the last session with a
+    verified equity bar. Every intent is <code>PENDING</code> and will stay that way
+    until a future bar is collected, at which point the same code path that produced
+    the rehearsal settles it. Nothing is claimed about these trades yet, which is why
+    the page reports 16 open intents and no return.</p>
+    <p class="more"><a href="forward.html">See every upcoming trade and its evidence
+    &rarr;</a></p>
+  </div>
+  <div class="card">
+    <h3>Walk-forward rehearsal (the measurable part)</h3>
+    <p>Because no future bars exist yet, the same book is also stepped over sessions
+    whose bars are already collected, planning at T and settling at T+1. This is a
+    genuine forward test - unlike Season 2, which executes inside the session it
+    decides - and it is the number the leaderboard reports.</p>
+    <p class="more"><a href="leaderboard.html">Open the leaderboard &rarr;</a></p>
+  </div>
+</div>
+
+<h2>Why the delay matters</h2>
+<p>The difference between this book and Season 2 is one session of patience. That is
+not a cosmetic change: it removes the ability to trade on a price that does not exist
+yet, and it charges the strategy whatever the next session's opening spread and impact
+cost. Several rules in this roster were designed to buy the close they had just read -
+here they cannot, and their results separate accordingly.</p>
+<p class="more"><a href="method.html">The clock, the margin account and the carry
+&rarr;</a> · <a href="sources.html">Every official series, with its publisher and
+retrieval record &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

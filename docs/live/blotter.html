@@ -1,0 +1,5678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade tape · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../live/index.html">Overview</a><a class="" href="../live/forward.html">Upcoming trades</a><a class="" href="../live/leaderboard.html">Leaderboard</a><a class="active" href="../live/blotter.html">Trade tape</a><a class="" href="../live/participants/index.html">Participants</a><a class="" href="../live/method.html">Clock &amp; margin</a><a class="" href="../live/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Trade tape</h1>
+<p class="lede">Every fill in the rehearsal, newest first, with the verified bar it
+executed against. This is the page to check the brief's requirement line by line:
+price, date, entry, exit, slippage, participation and provenance, one row per trade.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Fills</div>
+    <div class="kpi-value">1,372</div>
+    <div class="kpi-sub">1,368 intents placed ·
+    607 round trips</div></div>
+  <div class="kpi"><div class="kpi-label">Forced liquidations</div>
+    <div class="kpi-value">4</div>
+    <div class="kpi-sub">orders the broker generated after a maintenance-margin
+    breach, charged the same spread and impact as any other order</div></div>
+  <div class="kpi"><div class="kpi-label">Storage</div>
+    <div class="kpi-value">41.05 B/row</div>
+    <div class="kpi-sub">13,135 rows in
+    526.6 KiB of gzipped JSON Lines,
+    plus a CSV export</div></div>
+  <div class="kpi"><div class="kpi-label">Reference bars by class</div>
+    <div class="kpi-value">SECONDARY</div>
+    <div class="kpi-sub">every fill names a file and a SHA-256</div></div>
+</div>
+
+<table class="participants">
+<thead><tr><th>session</th><th>participant</th><th>order</th><th>shares</th><th>price</th>
+<th>notional</th><th>cost</th><th>slip bps</th><th>slip vs close</th><th>part %</th>
+<th>class</th><th>reference bar</th><th>planned on</th><th>status</th></tr></thead>
+<tbody><tr>
+<td>2025-09-18</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>661.9000</td>
+<td>$79,428.00</td>
+<td>$1.17</td>
+<td>0.151</td>
+<td>-5.436</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>594.9100</td>
+<td>$95,185.60</td>
+<td>$1.74</td>
+<td>0.0</td>
+<td>-6.887</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>1,000</td>
+<td>94.8000</td>
+<td>$94,800.00</td>
+<td>$12.76</td>
+<td>1.055</td>
+<td>-194.456</td>
+<td>0.01077</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>280</td>
+<td>336.2300</td>
+<td>$94,144.40</td>
+<td>$3.61</td>
+<td>0.297</td>
+<td>18.175</td>
+<td>0.00188</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>661.9000</td>
+<td>$79,428.00</td>
+<td>$1.17</td>
+<td>0.151</td>
+<td>-5.436</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@LeapStyle_AutoLiquidate</td>
+<td>buy TSLA</td>
+<td>200</td>
+<td>428.8900</td>
+<td>$85,778.00</td>
+<td>$3.91</td>
+<td>0.466</td>
+<td>288.833</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@NasdaqMomentum_Max</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>594.9100</td>
+<td>$95,185.60</td>
+<td>$1.74</td>
+<td>0.0</td>
+<td>-6.887</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>400</td>
+<td>115.1700</td>
+<td>$46,068.00</td>
+<td>$4.17</td>
+<td>0.0</td>
+<td>108.839</td>
+<td>0.00273</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>594.9100</td>
+<td>$95,185.60</td>
+<td>$1.74</td>
+<td>0.0</td>
+<td>-6.887</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@SOFRPivot_Rider</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>661.9000</td>
+<td>$79,428.00</td>
+<td>$1.17</td>
+<td>0.151</td>
+<td>-5.436</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>594.9100</td>
+<td>$95,185.60</td>
+<td>$1.74</td>
+<td>0.0</td>
+<td>-6.887</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-18</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>594.9100</td>
+<td>$95,185.60</td>
+<td>$1.74</td>
+<td>0.0</td>
+<td>-6.887</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-17</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>500</td>
+<td>96.9900</td>
+<td>$48,495.00</td>
+<td>$5.82</td>
+<td>0.0</td>
+<td>145.398</td>
+<td>0.007</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>40</td>
+<td>336.5100</td>
+<td>$13,460.40</td>
+<td>$0.40</td>
+<td>0.0</td>
+<td>-78.719</td>
+<td>0.00027</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>662.3300</td>
+<td>$79,479.60</td>
+<td>$1.18</td>
+<td>0.0</td>
+<td>-20.642</td>
+<td>0.00012</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@LeapStyle_AutoLiquidate</td>
+<td>buy TSLA</td>
+<td>120</td>
+<td>421.8400</td>
+<td>$50,620.80</td>
+<td>$2.16</td>
+<td>0.474</td>
+<td>-99.28</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@NasdaqMomentum_Max</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>6,000</td>
+<td>12.5200</td>
+<td>$75,120.00</td>
+<td>$111.60</td>
+<td>7.994</td>
+<td>-39.777</td>
+<td>0.07877</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>400</td>
+<td>113.9100</td>
+<td>$45,564.00</td>
+<td>$4.20</td>
+<td>0.878</td>
+<td>96.614</td>
+<td>0.00103</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@SOFRPivot_Rider</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>662.3300</td>
+<td>$79,479.60</td>
+<td>$1.18</td>
+<td>0.0</td>
+<td>-20.642</td>
+<td>0.00012</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@SOFRPivot_Rider</td>
+<td>buy TSLA</td>
+<td>80</td>
+<td>421.8300</td>
+<td>$33,746.40</td>
+<td>$1.37</td>
+<td>0.237</td>
+<td>-99.514</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-19</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.3400</td>
+<td>$47,787.20</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-33.536</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-18</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>662.2000</td>
+<td>$79,464.00</td>
+<td>$1.18</td>
+<td>0.0</td>
+<td>-69.582</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>160</td>
+<td>309.8100</td>
+<td>$49,569.60</td>
+<td>$2.10</td>
+<td>0.323</td>
+<td>-84.176</td>
+<td>0.00213</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>500</td>
+<td>112.4500</td>
+<td>$56,225.00</td>
+<td>$5.39</td>
+<td>0.0</td>
+<td>38.386</td>
+<td>0.0032</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>597.7400</td>
+<td>$23,909.60</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>597.7400</td>
+<td>$71,728.80</td>
+<td>$1.22</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>0.00021</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@LeapStyle_AutoLiquidate</td>
+<td>buy TSLA</td>
+<td>40</td>
+<td>431.1200</td>
+<td>$17,244.80</td>
+<td>$0.64</td>
+<td>0.232</td>
+<td>-71.164</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@NasdaqMomentum_Max</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>597.7400</td>
+<td>$23,909.60</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,900</td>
+<td>12.4800</td>
+<td>$73,632.00</td>
+<td>$63.42</td>
+<td>8.006</td>
+<td>271.605</td>
+<td>0.06616</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>300</td>
+<td>112.4400</td>
+<td>$33,732.00</td>
+<td>$3.10</td>
+<td>0.889</td>
+<td>37.494</td>
+<td>0.00192</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.7400</td>
+<td>$47,819.20</td>
+<td>$0.78</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>597.7400</td>
+<td>$23,909.60</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-22</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>597.7400</td>
+<td>$23,909.60</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-74.062</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-19</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>120</td>
+<td>311.8300</td>
+<td>$37,419.60</td>
+<td>$1.50</td>
+<td>0.32</td>
+<td>-29.097</td>
+<td>0.0014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>112.7300</td>
+<td>$33,819.00</td>
+<td>$3.06</td>
+<td>0.887</td>
+<td>-107.064</td>
+<td>0.00118</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>602.3700</td>
+<td>$24,094.80</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>69.709</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@LeapStyle_AutoLiquidate</td>
+<td>buy TSLA</td>
+<td>40</td>
+<td>439.8900</td>
+<td>$17,595.60</td>
+<td>$0.64</td>
+<td>0.227</td>
+<td>329.693</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>602.3700</td>
+<td>$24,094.80</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>69.709</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-23</td><td>@VIXRegime_LiveMax</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>602.3600</td>
+<td>$96,377.60</td>
+<td>$1.70</td>
+<td>0.166</td>
+<td>69.542</td>
+<td>0.00025</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-22</td>
+<td>filled</td></tr><tr>
+<td>2025-09-24</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>599.5900</td>
+<td>$23,983.60</td>
+<td>$0.37</td>
+<td>0.166</td>
+<td>58.548</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-23</td>
+<td>filled</td></tr><tr>
+<td>2025-09-24</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>599.5800</td>
+<td>$47,966.40</td>
+<td>$0.78</td>
+<td>0.0</td>
+<td>58.38</td>
+<td>0.00016</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-23</td>
+<td>filled</td></tr><tr>
+<td>2025-09-25</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>200</td>
+<td>344.3900</td>
+<td>$68,878.00</td>
+<td>$2.52</td>
+<td>0.0</td>
+<td>-10.442</td>
+<td>0.00158</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-09-24</td>
+<td>filled</td></tr><tr>
+<td>2025-09-25</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>600</td>
+<td>88.8500</td>
+<td>$53,310.00</td>
+<td>$5.37</td>
+<td>0.0</td>
+<td>-14.61</td>
+<td>0.00201</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-09-24</td>
+<td>filled</td></tr><tr>
+<td>2025-09-25</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>5,600</td>
+<td>12.7100</td>
+<td>$71,176.00</td>
+<td>$98.64</td>
+<td>7.874</td>
+<td>95.314</td>
+<td>0.04305</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-24</td>
+<td>filled</td></tr><tr>
+<td>2025-09-25</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>114.6400</td>
+<td>$34,392.00</td>
+<td>$3.07</td>
+<td>0.0</td>
+<td>-82.187</td>
+<td>0.002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-24</td>
+<td>filled</td></tr><tr>
+<td>2025-09-25</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>592.2100</td>
+<td>$23,688.40</td>
+<td>$0.37</td>
+<td>0.169</td>
+<td>-22.24</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-24</td>
+<td>filled</td></tr><tr>
+<td>2025-09-26</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>40</td>
+<td>345.8200</td>
+<td>$13,832.80</td>
+<td>$0.41</td>
+<td>0.289</td>
+<td>-26.533</td>
+<td>0.00034</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-09-25</td>
+<td>filled</td></tr><tr>
+<td>2025-09-26</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>700</td>
+<td>88.9900</td>
+<td>$62,293.00</td>
+<td>$6.32</td>
+<td>0.0</td>
+<td>10.124</td>
+<td>0.00226</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-09-25</td>
+<td>filled</td></tr><tr>
+<td>2025-09-26</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,700</td>
+<td>12.3900</td>
+<td>$70,623.00</td>
+<td>$60.58</td>
+<td>-0.0</td>
+<td>-64.154</td>
+<td>0.06517</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-25</td>
+<td>filled</td></tr><tr>
+<td>2025-09-26</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>300</td>
+<td>115.9500</td>
+<td>$34,785.00</td>
+<td>$3.13</td>
+<td>0.862</td>
+<td>-108.343</td>
+<td>0.00162</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-25</td>
+<td>filled</td></tr><tr>
+<td>2025-09-29</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>5,500</td>
+<td>12.5200</td>
+<td>$68,860.00</td>
+<td>$95.30</td>
+<td>16.0</td>
+<td>-234.009</td>
+<td>0.05061</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-26</td>
+<td>filled</td></tr><tr>
+<td>2025-09-29</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>116.0600</td>
+<td>$34,818.00</td>
+<td>$3.09</td>
+<td>0.0</td>
+<td>161.093</td>
+<td>0.00156</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-26</td>
+<td>filled</td></tr><tr>
+<td>2025-09-29</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>599.1100</td>
+<td>$47,928.80</td>
+<td>$0.77</td>
+<td>0.0</td>
+<td>6.347</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-26</td>
+<td>filled</td></tr><tr>
+<td>2025-09-29</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>599.1100</td>
+<td>$23,964.40</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>6.347</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-26</td>
+<td>filled</td></tr><tr>
+<td>2025-09-30</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,400</td>
+<td>13.0200</td>
+<td>$70,308.00</td>
+<td>$57.44</td>
+<td>-0.0</td>
+<td>-38.256</td>
+<td>0.06616</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-09-29</td>
+<td>filled</td></tr><tr>
+<td>2025-09-30</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>300</td>
+<td>113.3400</td>
+<td>$34,002.00</td>
+<td>$3.19</td>
+<td>0.882</td>
+<td>52.328</td>
+<td>0.00166</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-09-29</td>
+<td>filled</td></tr><tr>
+<td>2025-09-30</td><td>@VIXRegime_LiveMax</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>598.4200</td>
+<td>$47,873.60</td>
+<td>$0.79</td>
+<td>0.167</td>
+<td>-32.48</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-29</td>
+<td>filled</td></tr><tr>
+<td>2025-09-30</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>598.4300</td>
+<td>$23,937.20</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-32.313</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-29</td>
+<td>filled</td></tr><tr>
+<td>2025-10-01</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>100.1200</td>
+<td>$10,012.00</td>
+<td>$0.97</td>
+<td>0.999</td>
+<td>-125.259</td>
+<td>0.00103</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-09-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-01</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>1,300</td>
+<td>89.4400</td>
+<td>$116,272.00</td>
+<td>$12.44</td>
+<td>1.118</td>
+<td>16.799</td>
+<td>0.0033</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-09-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-01</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>120</td>
+<td>356.1800</td>
+<td>$42,741.60</td>
+<td>$1.40</td>
+<td>0.28</td>
+<td>4.213</td>
+<td>0.00077</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-09-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-01</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>597.1600</td>
+<td>$47,772.80</td>
+<td>$0.77</td>
+<td>0.167</td>
+<td>-100.953</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-09-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-02</td><td>@CrowdFade_Live</td>
+<td>sell MU</td>
+<td>200</td>
+<td>184.9500</td>
+<td>$36,990.00</td>
+<td>$2.95</td>
+<td>0.541</td>
+<td>65.306</td>
+<td>0.0008</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/MU.json</code><br>
+<code class="muted small">b6edc050ee19bfdd67f1…</code></td>
+<td>2025-10-01</td>
+<td>filled</td></tr><tr>
+<td>2025-10-02</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>358.2700</td>
+<td>$28,661.60</td>
+<td>$0.85</td>
+<td>0.279</td>
+<td>98.086</td>
+<td>0.00049</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-01</td>
+<td>filled</td></tr><tr>
+<td>2025-10-02</td><td>@LeapStyle_AutoLiquidate</td>
+<td>buy TSLA</td>
+<td>40</td>
+<td>470.5500</td>
+<td>$18,822.00</td>
+<td>$0.65</td>
+<td>0.212</td>
+<td>792.431</td>
+<td>3e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-10-01</td>
+<td>filled</td></tr><tr>
+<td>2025-10-03</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>280</td>
+<td>308.5000</td>
+<td>$86,380.00</td>
+<td>$4.27</td>
+<td>0.324</td>
+<td>-49.35</td>
+<td>0.00464</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-10-02</td>
+<td>filled</td></tr><tr>
+<td>2025-10-03</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>800</td>
+<td>111.9000</td>
+<td>$89,520.00</td>
+<td>$9.53</td>
+<td>0.0</td>
+<td>-120.078</td>
+<td>0.00618</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-02</td>
+<td>filled</td></tr><tr>
+<td>2025-10-06</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>671.6200</td>
+<td>$80,594.40</td>
+<td>$1.10</td>
+<td>0.0</td>
+<td>0.149</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-03</td>
+<td>filled</td></tr><tr>
+<td>2025-10-06</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>160</td>
+<td>362.1600</td>
+<td>$57,945.60</td>
+<td>$1.89</td>
+<td>0.0</td>
+<td>-60.926</td>
+<td>0.00094</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-03</td>
+<td>filled</td></tr><tr>
+<td>2025-10-06</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>700</td>
+<td>88.7100</td>
+<td>$62,097.00</td>
+<td>$6.22</td>
+<td>0.0</td>
+<td>4.511</td>
+<td>0.00247</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-03</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>672.5300</td>
+<td>$80,703.60</td>
+<td>$1.11</td>
+<td>0.148</td>
+<td>50.963</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>160</td>
+<td>309.3600</td>
+<td>$49,497.60</td>
+<td>$1.90</td>
+<td>0.323</td>
+<td>54.275</td>
+<td>0.00189</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>500</td>
+<td>114.0800</td>
+<td>$57,040.00</td>
+<td>$5.39</td>
+<td>0.877</td>
+<td>-15.754</td>
+<td>0.00419</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>40</td>
+<td>366.5100</td>
+<td>$14,660.40</td>
+<td>$0.40</td>
+<td>0.0</td>
+<td>6.825</td>
+<td>0.00024</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>700</td>
+<td>88.9800</td>
+<td>$62,286.00</td>
+<td>$6.17</td>
+<td>1.124</td>
+<td>-22.427</td>
+<td>0.00241</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>280</td>
+<td>609.0200</td>
+<td>$170,525.60</td>
+<td>$2.96</td>
+<td>0.0</td>
+<td>74.606</td>
+<td>0.00048</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-07</td><td>@Weather_ColdSnap_Live</td>
+<td>buy XLU</td>
+<td>1,300</td>
+<td>45.0700</td>
+<td>$58,591.00</td>
+<td>$11.73</td>
+<td>0.0</td>
+<td>-4.436</td>
+<td>0.00395</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XLU.json</code><br>
+<code class="muted small">5dddbd83cab3a8b7cd08…</code></td>
+<td>2025-10-06</td>
+<td>filled</td></tr><tr>
+<td>2025-10-08</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>120</td>
+<td>308.2100</td>
+<td>$36,985.20</td>
+<td>$1.36</td>
+<td>0.0</td>
+<td>137.486</td>
+<td>0.00185</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-10-07</td>
+<td>filled</td></tr><tr>
+<td>2025-10-08</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>200</td>
+<td>114.3800</td>
+<td>$22,876.00</td>
+<td>$1.95</td>
+<td>0.0</td>
+<td>31.574</td>
+<td>0.00163</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-07</td>
+<td>filled</td></tr><tr>
+<td>2025-10-08</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>670.2600</td>
+<td>$80,431.20</td>
+<td>$1.10</td>
+<td>0.149</td>
+<td>-42.341</td>
+<td>0.0002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-07</td>
+<td>filled</td></tr><tr>
+<td>2025-10-08</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>7,300</td>
+<td>13.5200</td>
+<td>$98,696.00</td>
+<td>$84.49</td>
+<td>7.391</td>
+<td>320.611</td>
+<td>0.06002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-07</td>
+<td>filled</td></tr><tr>
+<td>2025-10-08</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>400</td>
+<td>114.3700</td>
+<td>$45,748.00</td>
+<td>$4.26</td>
+<td>0.874</td>
+<td>30.697</td>
+<td>0.00325</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-07</td>
+<td>filled</td></tr><tr>
+<td>2025-10-09</td><td>@FDA_Fade_Live</td>
+<td>sell XBI</td>
+<td>1,500</td>
+<td>105.8500</td>
+<td>$158,775.00</td>
+<td>$21.59</td>
+<td>0.945</td>
+<td>-62.899</td>
+<td>0.01235</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-08</td>
+<td>filled</td></tr><tr>
+<td>2025-10-09</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>7,200</td>
+<td>13.2500</td>
+<td>$95,400.00</td>
+<td>$155.61</td>
+<td>15.117</td>
+<td>400.314</td>
+<td>0.05988</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-08</td>
+<td>filled</td></tr><tr>
+<td>2025-10-09</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>114.4400</td>
+<td>$34,332.00</td>
+<td>$3.05</td>
+<td>0.874</td>
+<td>135.506</td>
+<td>0.00273</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-08</td>
+<td>filled</td></tr><tr>
+<td>2025-10-10</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>7,900</td>
+<td>12.4600</td>
+<td>$98,434.00</td>
+<td>$92.42</td>
+<td>-0.0</td>
+<td>105.434</td>
+<td>0.05317</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-09</td>
+<td>filled</td></tr><tr>
+<td>2025-10-10</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>400</td>
+<td>112.2600</td>
+<td>$44,904.00</td>
+<td>$4.22</td>
+<td>0.0</td>
+<td>138.174</td>
+<td>0.0029</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-09</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>280</td>
+<td>305.6000</td>
+<td>$85,568.00</td>
+<td>$3.64</td>
+<td>0.0</td>
+<td>-76.956</td>
+<td>0.0026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>700</td>
+<td>111.5400</td>
+<td>$78,078.00</td>
+<td>$8.05</td>
+<td>0.0</td>
+<td>-62.366</td>
+<td>0.0068</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>660.6500</td>
+<td>$79,278.00</td>
+<td>$1.24</td>
+<td>0.0</td>
+<td>-36.046</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@KitchenSink_Official</td>
+<td>buy TLT</td>
+<td>600</td>
+<td>90.2800</td>
+<td>$54,168.00</td>
+<td>$5.26</td>
+<td>0.0</td>
+<td>-32.019</td>
+<td>0.00214</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>300</td>
+<td>12.0200</td>
+<td>$3,606.00</td>
+<td>$2.65</td>
+<td>-0.0</td>
+<td>-131.363</td>
+<td>0.00193</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-13</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>599.6700</td>
+<td>$119,934.00</td>
+<td>$2.46</td>
+<td>0.167</td>
+<td>-38.87</td>
+<td>0.0003</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-10</td>
+<td>filled</td></tr><tr>
+<td>2025-10-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>657.1700</td>
+<td>$78,860.40</td>
+<td>$1.25</td>
+<td>0.0</td>
+<td>-76.408</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-13</td>
+<td>filled</td></tr><tr>
+<td>2025-10-14</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>1,000</td>
+<td>104.1300</td>
+<td>$104,130.00</td>
+<td>$12.56</td>
+<td>0.0</td>
+<td>-94.178</td>
+<td>0.01279</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-13</td>
+<td>filled</td></tr><tr>
+<td>2025-10-14</td><td>@KitchenSink_Official</td>
+<td>sell TLT</td>
+<td>500</td>
+<td>90.6500</td>
+<td>$45,325.00</td>
+<td>$4.43</td>
+<td>0.0</td>
+<td>-23.113</td>
+<td>0.00168</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-13</td>
+<td>filled</td></tr><tr>
+<td>2025-10-14</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>657.1700</td>
+<td>$52,573.60</td>
+<td>$0.80</td>
+<td>0.0</td>
+<td>-76.408</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-13</td>
+<td>filled</td></tr><tr>
+<td>2025-10-15</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>500</td>
+<td>105.5200</td>
+<td>$52,760.00</td>
+<td>$5.61</td>
+<td>0.948</td>
+<td>-262.988</td>
+<td>0.00418</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-14</td>
+<td>filled</td></tr><tr>
+<td>2025-10-15</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>666.8300</td>
+<td>$26,673.20</td>
+<td>$0.38</td>
+<td>0.15</td>
+<td>24.956</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-14</td>
+<td>filled</td></tr><tr>
+<td>2025-10-15</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>500</td>
+<td>11.9100</td>
+<td>$5,955.00</td>
+<td>$4.48</td>
+<td>-0.0</td>
+<td>25.253</td>
+<td>0.00378</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-14</td>
+<td>filled</td></tr><tr>
+<td>2025-10-16</td><td>@KitchenSink_Official</td>
+<td>sell TLT</td>
+<td>100</td>
+<td>90.5100</td>
+<td>$9,051.00</td>
+<td>$0.85</td>
+<td>1.104</td>
+<td>-90.869</td>
+<td>0.00025</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-15</td>
+<td>filled</td></tr><tr>
+<td>2025-10-17</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>600</td>
+<td>11.6100</td>
+<td>$6,966.00</td>
+<td>$5.40</td>
+<td>8.606</td>
+<td>-219.04</td>
+<td>0.00468</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-16</td>
+<td>filled</td></tr><tr>
+<td>2025-10-20</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>400</td>
+<td>12.5800</td>
+<td>$5,032.00</td>
+<td>$3.49</td>
+<td>7.955</td>
+<td>-270.688</td>
+<td>0.00192</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-17</td>
+<td>filled</td></tr><tr>
+<td>2025-10-20</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>6,800</td>
+<td>12.5700</td>
+<td>$85,476.00</td>
+<td>$76.14</td>
+<td>-0.0</td>
+<td>-278.422</td>
+<td>0.03265</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-17</td>
+<td>filled</td></tr><tr>
+<td>2025-10-21</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>1,500</td>
+<td>12.9200</td>
+<td>$19,380.00</td>
+<td>$14.76</td>
+<td>7.746</td>
+<td>-174.905</td>
+<td>0.00677</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-20</td>
+<td>filled</td></tr><tr>
+<td>2025-10-21</td><td>@SOFRPivot_Rider</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>611.6400</td>
+<td>$122,328.00</td>
+<td>$2.57</td>
+<td>0.0</td>
+<td>4.253</td>
+<td>0.00045</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-20</td>
+<td>filled</td></tr><tr>
+<td>2025-10-21</td><td>@SOFRPivot_Rider</td>
+<td>sell TSLA</td>
+<td>40</td>
+<td>445.7500</td>
+<td>$17,830.00</td>
+<td>$0.67</td>
+<td>0.225</td>
+<td>71.17</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-10-20</td>
+<td>filled</td></tr><tr>
+<td>2025-10-21</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>611.6500</td>
+<td>$97,864.00</td>
+<td>$1.95</td>
+<td>0.163</td>
+<td>4.416</td>
+<td>0.00036</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-20</td>
+<td>filled</td></tr><tr>
+<td>2025-10-21</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>600</td>
+<td>12.9200</td>
+<td>$7,752.00</td>
+<td>$5.50</td>
+<td>7.746</td>
+<td>-174.905</td>
+<td>0.00271</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-20</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>1,400</td>
+<td>91.9800</td>
+<td>$128,772.00</td>
+<td>$12.97</td>
+<td>1.087</td>
+<td>-8.69</td>
+<td>0.00459</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>372.7700</td>
+<td>$29,821.60</td>
+<td>$1.15</td>
+<td>0.537</td>
+<td>-119.54</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>200</td>
+<td>13.1900</td>
+<td>$2,638.00</td>
+<td>$1.73</td>
+<td>0.0</td>
+<td>99.541</td>
+<td>0.00146</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@SOFRPivot_Rider</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>610.8200</td>
+<td>$24,432.80</td>
+<td>$0.41</td>
+<td>0.0</td>
+<td>88.028</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@SOFRPivot_Rider</td>
+<td>sell TSLA</td>
+<td>40</td>
+<td>443.4400</td>
+<td>$17,737.60</td>
+<td>$0.67</td>
+<td>0.226</td>
+<td>101.829</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@SOFRPivot_Rider</td>
+<td>buy TLT</td>
+<td>900</td>
+<td>91.9900</td>
+<td>$82,791.00</td>
+<td>$7.99</td>
+<td>0.0</td>
+<td>-7.604</td>
+<td>0.00295</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-22</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>13.1900</td>
+<td>$3,957.00</td>
+<td>$2.64</td>
+<td>0.0</td>
+<td>99.541</td>
+<td>0.00218</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-21</td>
+<td>filled</td></tr><tr>
+<td>2025-10-23</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>240</td>
+<td>381.4700</td>
+<td>$91,552.80</td>
+<td>$4.60</td>
+<td>0.262</td>
+<td>70.751</td>
+<td>0.00175</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-22</td>
+<td>filled</td></tr><tr>
+<td>2025-10-23</td><td>@SOFRPivot_Rider</td>
+<td>buy TLT</td>
+<td>600</td>
+<td>91.6200</td>
+<td>$54,972.00</td>
+<td>$5.22</td>
+<td>1.091</td>
+<td>20.781</td>
+<td>0.00212</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-22</td>
+<td>filled</td></tr><tr>
+<td>2025-10-23</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>604.9000</td>
+<td>$96,784.00</td>
+<td>$1.98</td>
+<td>0.165</td>
+<td>-93.027</td>
+<td>0.00037</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-22</td>
+<td>filled</td></tr><tr>
+<td>2025-10-24</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>120</td>
+<td>378.5300</td>
+<td>$45,423.60</td>
+<td>$1.89</td>
+<td>0.528</td>
+<td>26.754</td>
+<td>0.0009</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-23</td>
+<td>filled</td></tr><tr>
+<td>2025-10-24</td><td>@SOFRPivot_Rider</td>
+<td>buy TLT</td>
+<td>300</td>
+<td>91.5900</td>
+<td>$27,477.00</td>
+<td>$2.55</td>
+<td>0.0</td>
+<td>13.119</td>
+<td>0.00106</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-23</td>
+<td>filled</td></tr><tr>
+<td>2025-10-24</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>615.9900</td>
+<td>$98,558.40</td>
+<td>$1.97</td>
+<td>0.0</td>
+<td>-17.987</td>
+<td>0.00034</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-23</td>
+<td>filled</td></tr><tr>
+<td>2025-10-27</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>40</td>
+<td>371.1400</td>
+<td>$14,845.60</td>
+<td>$0.50</td>
+<td>0.269</td>
+<td>112.531</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-24</td>
+<td>filled</td></tr><tr>
+<td>2025-10-27</td><td>@SOFRPivot_Rider</td>
+<td>buy TLT</td>
+<td>200</td>
+<td>91.3300</td>
+<td>$18,266.00</td>
+<td>$1.68</td>
+<td>1.095</td>
+<td>-49.03</td>
+<td>0.00067</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-24</td>
+<td>filled</td></tr><tr>
+<td>2025-10-27</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>624.5300</td>
+<td>$49,962.40</td>
+<td>$0.89</td>
+<td>0.16</td>
+<td>-56.68</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-24</td>
+<td>filled</td></tr><tr>
+<td>2025-10-27</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>5,800</td>
+<td>12.8600</td>
+<td>$74,588.00</td>
+<td>$110.61</td>
+<td>7.782</td>
+<td>-23.274</td>
+<td>0.04901</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-24</td>
+<td>filled</td></tr><tr>
+<td>2025-10-28</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>111.4500</td>
+<td>$11,145.00</td>
+<td>$0.96</td>
+<td>0.0</td>
+<td>-49.107</td>
+<td>0.00106</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-27</td>
+<td>filled</td></tr><tr>
+<td>2025-10-28</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>200</td>
+<td>12.4400</td>
+<td>$2,488.00</td>
+<td>$1.76</td>
+<td>8.032</td>
+<td>81.037</td>
+<td>0.00164</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-27</td>
+<td>filled</td></tr><tr>
+<td>2025-10-28</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>630.3600</td>
+<td>$25,214.40</td>
+<td>$0.41</td>
+<td>0.0</td>
+<td>-40.447</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-27</td>
+<td>filled</td></tr><tr>
+<td>2025-10-28</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>630.3600</td>
+<td>$50,428.80</td>
+<td>$0.90</td>
+<td>0.0</td>
+<td>-40.447</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-27</td>
+<td>filled</td></tr><tr>
+<td>2025-10-29</td><td>@CrowdFade_Live</td>
+<td>sell NVDA</td>
+<td>200</td>
+<td>207.9700</td>
+<td>$41,594.00</td>
+<td>$2.00</td>
+<td>0.481</td>
+<td>44.919</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/NVDA.json</code><br>
+<code class="muted small">e8c9fe33254a091dcfb1…</code></td>
+<td>2025-10-28</td>
+<td>filled</td></tr><tr>
+<td>2025-10-29</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>700</td>
+<td>12.1900</td>
+<td>$8,533.00</td>
+<td>$6.54</td>
+<td>8.197</td>
+<td>-16.38</td>
+<td>0.00619</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-28</td>
+<td>filled</td></tr><tr>
+<td>2025-10-29</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>635.6000</td>
+<td>$25,424.00</td>
+<td>$0.41</td>
+<td>0.157</td>
+<td>-2.674</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-28</td>
+<td>filled</td></tr><tr>
+<td>2025-10-29</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>635.5900</td>
+<td>$25,423.60</td>
+<td>$0.42</td>
+<td>0.0</td>
+<td>-2.832</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-28</td>
+<td>filled</td></tr><tr>
+<td>2025-10-30</td><td>@FDA_Fade_Live</td>
+<td>sell XBI</td>
+<td>1,700</td>
+<td>110.5700</td>
+<td>$187,969.00</td>
+<td>$25.61</td>
+<td>1.808</td>
+<td>-119.739</td>
+<td>0.01822</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-29</td>
+<td>filled</td></tr><tr>
+<td>2025-10-30</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy IBB</td>
+<td>200</td>
+<td>156.5400</td>
+<td>$31,308.00</td>
+<td>$2.70</td>
+<td>0.639</td>
+<td>-48.948</td>
+<td>0.00776</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/IBB.json</code><br>
+<code class="muted small">20849c9611587299a524…</code></td>
+<td>2025-10-29</td>
+<td>filled</td></tr><tr>
+<td>2025-10-30</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>900</td>
+<td>110.6000</td>
+<td>$99,540.00</td>
+<td>$11.72</td>
+<td>0.905</td>
+<td>-117.059</td>
+<td>0.00965</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-29</td>
+<td>filled</td></tr><tr>
+<td>2025-10-30</td><td>@VIXRegime_LiveMax</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>632.1600</td>
+<td>$101,145.60</td>
+<td>$2.05</td>
+<td>0.158</td>
+<td>97.596</td>
+<td>0.00026</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-10-29</td>
+<td>filled</td></tr><tr>
+<td>2025-10-31</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>300</td>
+<td>111.8700</td>
+<td>$33,561.00</td>
+<td>$3.27</td>
+<td>0.894</td>
+<td>-74.527</td>
+<td>0.00251</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-31</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>280</td>
+<td>370.4600</td>
+<td>$103,728.80</td>
+<td>$5.69</td>
+<td>0.27</td>
+<td>63.566</td>
+<td>0.00253</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-10-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-31</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>600</td>
+<td>13.1900</td>
+<td>$7,914.00</td>
+<td>$5.50</td>
+<td>7.587</td>
+<td>-45.283</td>
+<td>0.00359</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-30</td>
+<td>filled</td></tr><tr>
+<td>2025-10-31</td><td>@SOFRPivot_Rider</td>
+<td>sell TLT</td>
+<td>1,900</td>
+<td>90.5500</td>
+<td>$172,045.00</td>
+<td>$18.17</td>
+<td>1.104</td>
+<td>28.796</td>
+<td>0.00497</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-30</td>
+<td>filled</td></tr><tr>
+<td>2025-11-03</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>110.9900</td>
+<td>$11,099.00</td>
+<td>$0.97</td>
+<td>0.901</td>
+<td>102.858</td>
+<td>0.00066</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-10-31</td>
+<td>filled</td></tr><tr>
+<td>2025-11-03</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>500</td>
+<td>13.3700</td>
+<td>$6,685.00</td>
+<td>$4.55</td>
+<td>7.485</td>
+<td>-283.43</td>
+<td>0.00332</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-10-31</td>
+<td>filled</td></tr><tr>
+<td>2025-11-03</td><td>@SOFRPivot_Rider</td>
+<td>sell TLT</td>
+<td>100</td>
+<td>89.6200</td>
+<td>$8,962.00</td>
+<td>$0.85</td>
+<td>0.0</td>
+<td>-13.372</td>
+<td>0.00025</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-10-31</td>
+<td>filled</td></tr><tr>
+<td>2025-11-03</td><td>@SOFRPivot_Rider</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>685.6700</td>
+<td>$54,853.60</td>
+<td>$0.83</td>
+<td>0.0</td>
+<td>34.097</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-10-31</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@FDA_PDUFA_Drifter</td>
+<td>sell IBB</td>
+<td>100</td>
+<td>155.8000</td>
+<td>$15,580.00</td>
+<td>$1.16</td>
+<td>0.642</td>
+<td>-17.94</td>
+<td>0.00486</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/IBB.json</code><br>
+<code class="muted small">20849c9611587299a524…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@FDA_PDUFA_Drifter</td>
+<td>sell XBI</td>
+<td>1,300</td>
+<td>108.3200</td>
+<td>$140,816.00</td>
+<td>$19.00</td>
+<td>0.923</td>
+<td>25.916</td>
+<td>0.00951</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>160</td>
+<td>363.4700</td>
+<td>$58,155.20</td>
+<td>$2.74</td>
+<td>0.275</td>
+<td>31.74</td>
+<td>0.00139</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>700</td>
+<td>89.7800</td>
+<td>$62,846.00</td>
+<td>$6.21</td>
+<td>0.0</td>
+<td>-17.79</td>
+<td>0.00265</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>7,000</td>
+<td>13.6800</td>
+<td>$95,760.00</td>
+<td>$153.69</td>
+<td>14.641</td>
+<td>-179.469</td>
+<td>0.04313</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>113.3800</td>
+<td>$34,014.00</td>
+<td>$2.95</td>
+<td>0.0</td>
+<td>-66.585</td>
+<td>0.00178</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@SOFRPivot_Rider</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>676.1000</td>
+<td>$54,088.00</td>
+<td>$0.84</td>
+<td>0.148</td>
+<td>12.736</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>623.2900</td>
+<td>$49,863.20</td>
+<td>$0.91</td>
+<td>0.16</td>
+<td>65.24</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-04</td><td>@SOFRPivot_Rider</td>
+<td>buy TSLA</td>
+<td>80</td>
+<td>454.4700</td>
+<td>$36,357.60</td>
+<td>$1.44</td>
+<td>0.22</td>
+<td>229.82</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-11-03</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>40</td>
+<td>366.3900</td>
+<td>$14,655.60</td>
+<td>$0.51</td>
+<td>0.0</td>
+<td>-3.274</td>
+<td>0.00048</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>600</td>
+<td>89.5200</td>
+<td>$53,712.00</td>
+<td>$5.26</td>
+<td>1.117</td>
+<td>62.95</td>
+<td>0.00134</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>6,400</td>
+<td>13.8200</td>
+<td>$88,448.00</td>
+<td>$78.23</td>
+<td>-0.0</td>
+<td>139.398</td>
+<td>0.0512</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>200</td>
+<td>114.0800</td>
+<td>$22,816.00</td>
+<td>$1.93</td>
+<td>0.876</td>
+<td>35.186</td>
+<td>0.00161</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>618.4900</td>
+<td>$49,479.20</td>
+<td>$0.93</td>
+<td>0.0</td>
+<td>-76.852</td>
+<td>0.00016</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-05</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>618.4700</td>
+<td>$123,694.00</td>
+<td>$2.77</td>
+<td>0.323</td>
+<td>-77.173</td>
+<td>0.00041</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-04</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>676.4600</td>
+<td>$54,116.80</td>
+<td>$0.84</td>
+<td>0.147</td>
+<td>91.749</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>160</td>
+<td>311.0000</td>
+<td>$49,760.00</td>
+<td>$2.34</td>
+<td>0.322</td>
+<td>-77.213</td>
+<td>0.00222</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>500</td>
+<td>113.6400</td>
+<td>$56,820.00</td>
+<td>$5.18</td>
+<td>0.0</td>
+<td>-75.109</td>
+<td>0.00352</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy IBB</td>
+<td>100</td>
+<td>157.6800</td>
+<td>$15,768.00</td>
+<td>$1.17</td>
+<td>0.0</td>
+<td>-47.339</td>
+<td>0.00611</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/IBB.json</code><br>
+<code class="muted small">20849c9611587299a524…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>800</td>
+<td>109.2800</td>
+<td>$87,424.00</td>
+<td>$10.68</td>
+<td>0.915</td>
+<td>-0.915</td>
+<td>0.00705</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>200</td>
+<td>13.8400</td>
+<td>$2,768.00</td>
+<td>$1.77</td>
+<td>-0.0</td>
+<td>-232.886</td>
+<td>0.00104</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>621.7900</td>
+<td>$24,871.60</td>
+<td>$0.42</td>
+<td>0.0</td>
+<td>165.449</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-06</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>160</td>
+<td>621.8000</td>
+<td>$99,488.00</td>
+<td>$2.09</td>
+<td>0.161</td>
+<td>165.612</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-05</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>120</td>
+<td>311.8800</td>
+<td>$37,425.60</td>
+<td>$1.65</td>
+<td>0.321</td>
+<td>-74.154</td>
+<td>0.00164</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>500</td>
+<td>115.2000</td>
+<td>$57,600.00</td>
+<td>$5.30</td>
+<td>0.868</td>
+<td>-172.326</td>
+<td>0.00291</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>667.9100</td>
+<td>$26,716.40</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>-45.605</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>300</td>
+<td>108.3400</td>
+<td>$32,502.00</td>
+<td>$3.35</td>
+<td>0.0</td>
+<td>-56.902</td>
+<td>0.00198</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>100</td>
+<td>115.2000</td>
+<td>$11,520.00</td>
+<td>$0.93</td>
+<td>0.868</td>
+<td>-172.326</td>
+<td>0.00058</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>400</td>
+<td>13.9900</td>
+<td>$5,596.00</td>
+<td>$3.59</td>
+<td>7.153</td>
+<td>28.674</td>
+<td>0.0029</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-07</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>120</td>
+<td>608.3000</td>
+<td>$72,996.00</td>
+<td>$1.51</td>
+<td>0.164</td>
+<td>-23.616</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-06</td>
+<td>filled</td></tr><tr>
+<td>2025-11-10</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>677.2400</td>
+<td>$27,089.60</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>-61.634</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-07</td>
+<td>filled</td></tr><tr>
+<td>2025-11-10</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>120</td>
+<td>618.9100</td>
+<td>$74,269.20</td>
+<td>$1.52</td>
+<td>0.161</td>
+<td>-69.316</td>
+<td>0.00021</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-07</td>
+<td>filled</td></tr><tr>
+<td>2025-11-10</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>110.2800</td>
+<td>$11,028.00</td>
+<td>$0.98</td>
+<td>0.0</td>
+<td>17.259</td>
+<td>0.00087</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-07</td>
+<td>filled</td></tr><tr>
+<td>2025-11-10</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>618.9100</td>
+<td>$24,756.40</td>
+<td>$0.43</td>
+<td>0.161</td>
+<td>-69.316</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-07</td>
+<td>filled</td></tr><tr>
+<td>2025-11-11</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>620.5800</td>
+<td>$49,646.40</td>
+<td>$0.90</td>
+<td>0.161</td>
+<td>-15.928</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-10</td>
+<td>filled</td></tr><tr>
+<td>2025-11-11</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>109.8800</td>
+<td>$10,988.00</td>
+<td>$0.98</td>
+<td>0.0</td>
+<td>-362.249</td>
+<td>0.00073</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-10</td>
+<td>filled</td></tr><tr>
+<td>2025-11-11</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>679.9500</td>
+<td>$81,594.00</td>
+<td>$1.28</td>
+<td>0.0</td>
+<td>-44.656</td>
+<td>0.0002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-10</td>
+<td>filled</td></tr><tr>
+<td>2025-11-11</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>620.5800</td>
+<td>$49,646.40</td>
+<td>$0.90</td>
+<td>0.161</td>
+<td>-15.928</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-10</td>
+<td>filled</td></tr><tr>
+<td>2025-11-11</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>620.5800</td>
+<td>$74,469.60</td>
+<td>$1.43</td>
+<td>0.161</td>
+<td>-15.928</td>
+<td>0.00027</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-10</td>
+<td>filled</td></tr><tr>
+<td>2025-11-12</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>40</td>
+<td>316.2600</td>
+<td>$12,650.40</td>
+<td>$0.44</td>
+<td>0.0</td>
+<td>-129.522</td>
+<td>0.00038</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-11</td>
+<td>filled</td></tr><tr>
+<td>2025-11-12</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>624.8500</td>
+<td>$24,994.00</td>
+<td>$0.41</td>
+<td>0.16</td>
+<td>60.7</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-11</td>
+<td>filled</td></tr><tr>
+<td>2025-11-12</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>624.8500</td>
+<td>$74,982.00</td>
+<td>$1.41</td>
+<td>0.16</td>
+<td>60.7</td>
+<td>0.00025</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-11</td>
+<td>filled</td></tr><tr>
+<td>2025-11-12</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>14.6200</td>
+<td>$4,386.00</td>
+<td>$2.65</td>
+<td>0.0</td>
+<td>-20.478</td>
+<td>0.00283</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-11</td>
+<td>filled</td></tr><tr>
+<td>2025-11-13</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>120</td>
+<td>617.5300</td>
+<td>$74,103.60</td>
+<td>$1.42</td>
+<td>0.162</td>
+<td>150.065</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-12</td>
+<td>filled</td></tr><tr>
+<td>2025-11-13</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>617.5400</td>
+<td>$24,701.60</td>
+<td>$0.40</td>
+<td>0.0</td>
+<td>150.23</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-12</td>
+<td>filled</td></tr><tr>
+<td>2025-11-13</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>5,800</td>
+<td>14.7300</td>
+<td>$85,434.00</td>
+<td>$111.30</td>
+<td>13.596</td>
+<td>-54.018</td>
+<td>0.04385</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-12</td>
+<td>filled</td></tr><tr>
+<td>2025-11-13</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>118.6300</td>
+<td>$35,589.00</td>
+<td>$3.01</td>
+<td>0.0</td>
+<td>-13.469</td>
+<td>0.00173</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-12</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>665.3800</td>
+<td>$53,230.40</td>
+<td>$0.82</td>
+<td>0.0</td>
+<td>-97.48</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>160</td>
+<td>307.5300</td>
+<td>$49,204.80</td>
+<td>$2.33</td>
+<td>0.65</td>
+<td>129.114</td>
+<td>0.00155</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>400</td>
+<td>118.4500</td>
+<td>$47,380.00</td>
+<td>$4.13</td>
+<td>0.0</td>
+<td>-70.417</td>
+<td>0.00234</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>665.3900</td>
+<td>$53,231.20</td>
+<td>$0.80</td>
+<td>0.15</td>
+<td>-97.331</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>599.5500</td>
+<td>$23,982.00</td>
+<td>$0.41</td>
+<td>0.0</td>
+<td>-152.908</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>4,600</td>
+<td>14.5000</td>
+<td>$66,700.00</td>
+<td>$77.16</td>
+<td>6.901</td>
+<td>-41.209</td>
+<td>0.03617</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>400</td>
+<td>118.4500</td>
+<td>$47,380.00</td>
+<td>$4.13</td>
+<td>0.0</td>
+<td>-70.417</td>
+<td>0.00234</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-14</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>599.5400</td>
+<td>$47,963.20</td>
+<td>$0.90</td>
+<td>0.167</td>
+<td>-153.073</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-13</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>120</td>
+<td>304.0200</td>
+<td>$36,482.40</td>
+<td>$1.62</td>
+<td>0.658</td>
+<td>121.517</td>
+<td>0.00144</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>118.9800</td>
+<td>$35,694.00</td>
+<td>$2.98</td>
+<td>0.84</td>
+<td>110.469</td>
+<td>0.00187</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>669.7100</td>
+<td>$26,788.40</td>
+<td>$0.38</td>
+<td>0.149</td>
+<td>60.691</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@FDA_Fade_Live</td>
+<td>sell XBI</td>
+<td>1,000</td>
+<td>113.5000</td>
+<td>$113,500.00</td>
+<td>$14.58</td>
+<td>0.881</td>
+<td>-115.824</td>
+<td>0.00806</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>4,400</td>
+<td>14.5000</td>
+<td>$63,800.00</td>
+<td>$49.11</td>
+<td>-0.0</td>
+<td>269.122</td>
+<td>0.04163</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>300</td>
+<td>118.9700</td>
+<td>$35,691.00</td>
+<td>$3.03</td>
+<td>0.0</td>
+<td>109.619</td>
+<td>0.00187</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-17</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>606.2900</td>
+<td>$24,251.60</td>
+<td>$0.41</td>
+<td>0.165</td>
+<td>43.568</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-14</td>
+<td>filled</td></tr><tr>
+<td>2025-11-18</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>662.0900</td>
+<td>$79,450.80</td>
+<td>$1.28</td>
+<td>0.151</td>
+<td>30.451</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-17</td>
+<td>filled</td></tr><tr>
+<td>2025-11-18</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>280</td>
+<td>599.6000</td>
+<td>$167,888.00</td>
+<td>$3.91</td>
+<td>0.333</td>
+<td>55.173</td>
+<td>0.00034</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-17</td>
+<td>filled</td></tr><tr>
+<td>2025-11-18</td><td>@PinePilot_EMA_Live</td>
+<td>sell QQQ</td>
+<td>400</td>
+<td>599.6000</td>
+<td>$239,840.00</td>
+<td>$6.04</td>
+<td>0.333</td>
+<td>55.173</td>
+<td>0.00048</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-17</td>
+<td>filled</td></tr><tr>
+<td>2025-11-18</td><td>@VIXRegime_LiveMax</td>
+<td>sell QQQ</td>
+<td>280</td>
+<td>599.6000</td>
+<td>$167,888.00</td>
+<td>$3.91</td>
+<td>0.333</td>
+<td>55.173</td>
+<td>0.00034</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-17</td>
+<td>filled</td></tr><tr>
+<td>2025-11-19</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>660.7800</td>
+<td>$26,431.20</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>-27.919</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-18</td>
+<td>filled</td></tr><tr>
+<td>2025-11-19</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>597.0800</td>
+<td>$47,766.40</td>
+<td>$0.89</td>
+<td>0.167</td>
+<td>-46.51</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-18</td>
+<td>filled</td></tr><tr>
+<td>2025-11-19</td><td>@KitchenSink_Official</td>
+<td>buy TLT</td>
+<td>1,100</td>
+<td>89.2400</td>
+<td>$98,164.00</td>
+<td>$9.86</td>
+<td>1.12</td>
+<td>40.504</td>
+<td>0.00427</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-11-18</td>
+<td>filled</td></tr><tr>
+<td>2025-11-20</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>611.6200</td>
+<td>$24,464.80</td>
+<td>$0.41</td>
+<td>0.0</td>
+<td>443.083</td>
+<td>3e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-19</td>
+<td>filled</td></tr><tr>
+<td>2025-11-20</td><td>@KitchenSink_Official</td>
+<td>buy TLT</td>
+<td>500</td>
+<td>88.9900</td>
+<td>$44,495.00</td>
+<td>$4.31</td>
+<td>0.0</td>
+<td>-26.897</td>
+<td>0.00152</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-11-19</td>
+<td>filled</td></tr><tr>
+<td>2025-11-24</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,800</td>
+<td>14.3000</td>
+<td>$82,940.00</td>
+<td>$64.36</td>
+<td>6.988</td>
+<td>-76.336</td>
+<td>0.0748</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-21</td>
+<td>filled</td></tr><tr>
+<td>2025-11-24</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>300</td>
+<td>117.1900</td>
+<td>$35,157.00</td>
+<td>$3.04</td>
+<td>0.853</td>
+<td>105.2</td>
+<td>0.00166</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-21</td>
+<td>filled</td></tr><tr>
+<td>2025-11-25</td><td>@FDA_PDUFA_Drifter</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>119.8400</td>
+<td>$11,984.00</td>
+<td>$1.01</td>
+<td>0.0</td>
+<td>-126.061</td>
+<td>0.00095</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-24</td>
+<td>filled</td></tr><tr>
+<td>2025-11-25</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>240</td>
+<td>603.5300</td>
+<td>$144,847.20</td>
+<td>$3.38</td>
+<td>0.331</td>
+<td>-88.029</td>
+<td>0.00042</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-24</td>
+<td>filled</td></tr><tr>
+<td>2025-11-25</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>5,300</td>
+<td>13.6400</td>
+<td>$72,292.00</td>
+<td>$57.71</td>
+<td>7.326</td>
+<td>-137.383</td>
+<td>0.05023</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-24</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@CrowdFade_Live</td>
+<td>sell IWM</td>
+<td>200</td>
+<td>245.0500</td>
+<td>$49,010.00</td>
+<td>$2.19</td>
+<td>0.0</td>
+<td>-90.983</td>
+<td>0.00058</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/IWM.json</code><br>
+<code class="muted small">4f6191d7931ac8755dec…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>280</td>
+<td>304.9900</td>
+<td>$85,397.20</td>
+<td>$4.46</td>
+<td>0.328</td>
+<td>-86.14</td>
+<td>0.00354</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>600</td>
+<td>114.4100</td>
+<td>$68,646.00</td>
+<td>$6.60</td>
+<td>0.0</td>
+<td>-31.367</td>
+<td>0.00515</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>500</td>
+<td>14.1600</td>
+<td>$7,080.00</td>
+<td>$4.55</td>
+<td>7.057</td>
+<td>-63.158</td>
+<td>0.00496</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>100</td>
+<td>114.4100</td>
+<td>$11,441.00</td>
+<td>$0.93</td>
+<td>0.0</td>
+<td>-31.367</td>
+<td>0.00086</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-26</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>612.5200</td>
+<td>$73,502.40</td>
+<td>$1.46</td>
+<td>0.163</td>
+<td>-28.489</td>
+<td>0.00028</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-25</td>
+<td>filled</td></tr><tr>
+<td>2025-11-28</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>680.8600</td>
+<td>$81,703.20</td>
+<td>$1.30</td>
+<td>0.0</td>
+<td>-37.022</td>
+<td>0.00024</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-26</td>
+<td>filled</td></tr><tr>
+<td>2025-11-28</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>14.6200</td>
+<td>$4,386.00</td>
+<td>$2.61</td>
+<td>0.0</td>
+<td>-74.678</td>
+<td>0.00498</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-26</td>
+<td>filled</td></tr><tr>
+<td>2025-11-28</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>616.1100</td>
+<td>$73,933.20</td>
+<td>$1.47</td>
+<td>0.0</td>
+<td>-50.706</td>
+<td>0.00052</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-26</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>100</td>
+<td>116.0900</td>
+<td>$11,609.00</td>
+<td>$0.93</td>
+<td>0.861</td>
+<td>-46.3</td>
+<td>0.00079</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>1,000</td>
+<td>121.8600</td>
+<td>$121,860.00</td>
+<td>$14.33</td>
+<td>0.821</td>
+<td>167.71</td>
+<td>0.0091</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@KitchenSink_Official</td>
+<td>sell TLT</td>
+<td>1,500</td>
+<td>88.8400</td>
+<td>$133,260.00</td>
+<td>$13.86</td>
+<td>1.125</td>
+<td>7.886</td>
+<td>0.00319</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>678.8100</td>
+<td>$27,152.40</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>-21.462</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>15.0300</td>
+<td>$4,509.00</td>
+<td>$2.62</td>
+<td>6.658</td>
+<td>-118.343</td>
+<td>0.00246</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>613.6400</td>
+<td>$24,545.60</td>
+<td>$0.42</td>
+<td>0.163</td>
+<td>-57.196</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>613.6400</td>
+<td>$49,091.20</td>
+<td>$0.92</td>
+<td>0.163</td>
+<td>-57.196</td>
+<td>0.0002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-01</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>15.0300</td>
+<td>$4,509.00</td>
+<td>$2.62</td>
+<td>6.658</td>
+<td>-118.343</td>
+<td>0.00246</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-11-28</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell SPY</td>
+<td>120</td>
+<td>681.9100</td>
+<td>$81,829.20</td>
+<td>$1.31</td>
+<td>0.146</td>
+<td>5.575</td>
+<td>0.00019</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>160</td>
+<td>308.7500</td>
+<td>$49,400.00</td>
+<td>$2.31</td>
+<td>0.324</td>
+<td>28.258</td>
+<td>0.00221</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>400</td>
+<td>116.4500</td>
+<td>$46,580.00</td>
+<td>$4.09</td>
+<td>0.859</td>
+<td>92.737</td>
+<td>0.00274</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@FDA_PDUFA_Drifter</td>
+<td>sell IBB</td>
+<td>200</td>
+<td>170.1500</td>
+<td>$34,030.00</td>
+<td>$3.02</td>
+<td>0.588</td>
+<td>54.958</td>
+<td>0.0069</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/IBB.json</code><br>
+<code class="muted small">20849c9611587299a524…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@FDA_PDUFA_Drifter</td>
+<td>sell XBI</td>
+<td>1,400</td>
+<td>119.7900</td>
+<td>$167,706.00</td>
+<td>$22.82</td>
+<td>0.835</td>
+<td>112.274</td>
+<td>0.00635</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@KitchenSink_Official</td>
+<td>buy TLT</td>
+<td>900</td>
+<td>88.5900</td>
+<td>$79,731.00</td>
+<td>$8.08</td>
+<td>1.129</td>
+<td>-24.772</td>
+<td>0.00326</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>400</td>
+<td>15.2400</td>
+<td>$6,096.00</td>
+<td>$3.53</td>
+<td>0.0</td>
+<td>187.166</td>
+<td>0.00394</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>280</td>
+<td>619.4800</td>
+<td>$173,454.40</td>
+<td>$4.04</td>
+<td>0.323</td>
+<td>-40.514</td>
+<td>0.00051</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@VIXRegime_LiveMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>619.4700</td>
+<td>$24,778.80</td>
+<td>$0.42</td>
+<td>0.161</td>
+<td>-40.675</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>619.4600</td>
+<td>$24,778.40</td>
+<td>$0.42</td>
+<td>0.0</td>
+<td>-40.836</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-02</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>400</td>
+<td>15.2400</td>
+<td>$6,096.00</td>
+<td>$3.53</td>
+<td>0.0</td>
+<td>187.166</td>
+<td>0.00394</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-01</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>80</td>
+<td>307.2100</td>
+<td>$24,576.80</td>
+<td>$1.00</td>
+<td>0.325</td>
+<td>-157.627</td>
+<td>0.00094</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>115.9500</td>
+<td>$34,785.00</td>
+<td>$2.99</td>
+<td>0.0</td>
+<td>-157.046</td>
+<td>0.00178</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@KitchenSink_Official</td>
+<td>sell TLT</td>
+<td>900</td>
+<td>88.9100</td>
+<td>$80,019.00</td>
+<td>$8.24</td>
+<td>1.124</td>
+<td>-16.842</td>
+<td>0.00387</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>680.5800</td>
+<td>$27,223.20</td>
+<td>$0.38</td>
+<td>0.147</td>
+<td>-48.4</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>5,100</td>
+<td>15.3400</td>
+<td>$78,234.00</td>
+<td>$86.69</td>
+<td>6.523</td>
+<td>-84.034</td>
+<td>0.04604</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>115.9500</td>
+<td>$34,785.00</td>
+<td>$2.99</td>
+<td>0.0</td>
+<td>-157.046</td>
+<td>0.00178</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-03</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>619.6200</td>
+<td>$49,569.60</td>
+<td>$0.92</td>
+<td>0.0</td>
+<td>-62.548</td>
+<td>0.00017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-02</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy JPM</td>
+<td>40</td>
+<td>313.2700</td>
+<td>$12,530.80</td>
+<td>$0.45</td>
+<td>0.319</td>
+<td>-89.529</td>
+<td>0.00042</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>1,300</td>
+<td>88.9100</td>
+<td>$115,583.00</td>
+<td>$12.14</td>
+<td>0.0</td>
+<td>37.254</td>
+<td>0.00509</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>386.9300</td>
+<td>$30,954.40</td>
+<td>$0.91</td>
+<td>0.258</td>
+<td>-5.166</td>
+<td>0.00118</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@KitchenSink_Official</td>
+<td>sell TLT</td>
+<td>100</td>
+<td>88.9100</td>
+<td>$8,891.00</td>
+<td>$0.85</td>
+<td>0.0</td>
+<td>37.254</td>
+<td>0.00039</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>624.9300</td>
+<td>$24,997.20</td>
+<td>$0.42</td>
+<td>0.0</td>
+<td>31.945</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@Weather_ColdSnap_Live</td>
+<td>sell XLU</td>
+<td>100</td>
+<td>43.7700</td>
+<td>$4,377.00</td>
+<td>$0.85</td>
+<td>1.143</td>
+<td>13.727</td>
+<td>0.00064</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XLU.json</code><br>
+<code class="muted small">5dddbd83cab3a8b7cd08…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-04</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>100</td>
+<td>15.2900</td>
+<td>$1,529.00</td>
+<td>$0.84</td>
+<td>0.0</td>
+<td>-236.271</td>
+<td>0.00078</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-03</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>80</td>
+<td>389.1100</td>
+<td>$31,128.80</td>
+<td>$0.90</td>
+<td>0.257</td>
+<td>69.092</td>
+<td>0.00085</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>900</td>
+<td>88.5600</td>
+<td>$79,704.00</td>
+<td>$8.10</td>
+<td>1.129</td>
+<td>44.233</td>
+<td>0.00274</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>685.4600</td>
+<td>$54,836.80</td>
+<td>$0.83</td>
+<td>0.145</td>
+<td>-3.354</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>624.3900</td>
+<td>$49,951.20</td>
+<td>$0.90</td>
+<td>0.16</td>
+<td>-17.426</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>624.3900</td>
+<td>$24,975.60</td>
+<td>$0.41</td>
+<td>0.16</td>
+<td>-17.426</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-05</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>200</td>
+<td>16.3800</td>
+<td>$3,276.00</td>
+<td>$1.72</td>
+<td>6.108</td>
+<td>6.108</td>
+<td>0.00082</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-04</td>
+<td>filled</td></tr><tr>
+<td>2025-12-08</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>900</td>
+<td>125.1700</td>
+<td>$112,653.00</td>
+<td>$12.99</td>
+<td>1.598</td>
+<td>122.109</td>
+<td>0.00931</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-05</td>
+<td>filled</td></tr><tr>
+<td>2025-12-08</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>400</td>
+<td>88.2000</td>
+<td>$35,280.00</td>
+<td>$3.45</td>
+<td>1.134</td>
+<td>36.414</td>
+<td>0.00124</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-05</td>
+<td>filled</td></tr><tr>
+<td>2025-12-08</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>627.2200</td>
+<td>$50,177.60</td>
+<td>$0.90</td>
+<td>0.159</td>
+<td>47.094</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-05</td>
+<td>filled</td></tr><tr>
+<td>2025-12-08</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>300</td>
+<td>15.4900</td>
+<td>$4,647.00</td>
+<td>$2.61</td>
+<td>0.0</td>
+<td>278.699</td>
+<td>0.00162</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-05</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>400</td>
+<td>123.0900</td>
+<td>$49,236.00</td>
+<td>$4.88</td>
+<td>0.812</td>
+<td>156.778</td>
+<td>0.00415</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>623.0200</td>
+<td>$24,920.80</td>
+<td>$0.41</td>
+<td>0.16</td>
+<td>-32.477</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@SOFRPivot_Rider</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>623.0100</td>
+<td>$99,681.60</td>
+<td>$2.00</td>
+<td>0.0</td>
+<td>-32.637</td>
+<td>0.00043</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@SOFRPivot_Rider</td>
+<td>sell TSLA</td>
+<td>40</td>
+<td>437.5300</td>
+<td>$17,501.20</td>
+<td>$0.65</td>
+<td>0.229</td>
+<td>-171.62</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>623.0100</td>
+<td>$49,840.80</td>
+<td>$0.90</td>
+<td>0.0</td>
+<td>-32.637</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-09</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>500</td>
+<td>14.5900</td>
+<td>$7,295.00</td>
+<td>$4.61</td>
+<td>6.849</td>
+<td>347.518</td>
+<td>0.00272</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-08</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>1,200</td>
+<td>88.0000</td>
+<td>$105,600.00</td>
+<td>$11.01</td>
+<td>-0.0</td>
+<td>-35.103</td>
+<td>0.00256</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>385.9600</td>
+<td>$30,876.80</td>
+<td>$0.89</td>
+<td>0.259</td>
+<td>-79.424</td>
+<td>0.00088</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>623.8400</td>
+<td>$124,768.00</td>
+<td>$2.60</td>
+<td>0.16</td>
+<td>-60.069</td>
+<td>0.00036</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>682.5600</td>
+<td>$27,302.40</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>-72.865</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@SOFRPivot_Rider</td>
+<td>sell TSLA</td>
+<td>40</td>
+<td>446.0600</td>
+<td>$17,842.40</td>
+<td>$0.65</td>
+<td>0.224</td>
+<td>-119.393</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@SOFRPivot_Rider</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>682.5600</td>
+<td>$54,604.80</td>
+<td>$0.81</td>
+<td>0.0</td>
+<td>-72.865</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-10</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>500</td>
+<td>14.3000</td>
+<td>$7,150.00</td>
+<td>$4.64</td>
+<td>-0.0</td>
+<td>28.05</td>
+<td>0.00333</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-09</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>100</td>
+<td>122.0200</td>
+<td>$12,202.00</td>
+<td>$1.02</td>
+<td>0.819</td>
+<td>-81.287</td>
+<td>0.00142</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>100</td>
+<td>88.6900</td>
+<td>$8,869.00</td>
+<td>$0.85</td>
+<td>0.0</td>
+<td>56.696</td>
+<td>0.00037</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>389.0200</td>
+<td>$31,121.60</td>
+<td>$0.85</td>
+<td>0.0</td>
+<td>-107.313</td>
+<td>0.00071</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>685.1400</td>
+<td>$27,405.60</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>-58.476</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>623.8300</td>
+<td>$74,859.60</td>
+<td>$1.37</td>
+<td>0.16</td>
+<td>-27.974</td>
+<td>0.00021</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@SOFRPivot_Rider</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>685.1400</td>
+<td>$54,811.20</td>
+<td>$0.81</td>
+<td>0.0</td>
+<td>-58.476</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>623.8300</td>
+<td>$49,906.40</td>
+<td>$0.86</td>
+<td>0.16</td>
+<td>-27.974</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@SOFRPivot_Rider</td>
+<td>buy TSLA</td>
+<td>80</td>
+<td>448.9600</td>
+<td>$35,916.80</td>
+<td>$1.37</td>
+<td>0.222</td>
+<td>46.32</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-11</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>623.8300</td>
+<td>$24,953.20</td>
+<td>$0.40</td>
+<td>0.16</td>
+<td>-27.974</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-10</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>120</td>
+<td>622.0800</td>
+<td>$74,649.60</td>
+<td>$1.39</td>
+<td>0.0</td>
+<td>137.87</td>
+<td>0.00016</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@GoldVsRealRate_Live</td>
+<td>sell GLD</td>
+<td>160</td>
+<td>399.1600</td>
+<td>$63,865.60</td>
+<td>$1.93</td>
+<td>0.0</td>
+<td>94.072</td>
+<td>0.00095</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>800</td>
+<td>87.3800</td>
+<td>$69,904.00</td>
+<td>$7.05</td>
+<td>0.0</td>
+<td>4.58</td>
+<td>0.0017</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>622.0900</td>
+<td>$49,767.20</td>
+<td>$0.86</td>
+<td>0.16</td>
+<td>138.033</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>622.0900</td>
+<td>$24,883.60</td>
+<td>$0.40</td>
+<td>0.16</td>
+<td>138.033</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>622.0900</td>
+<td>$24,883.60</td>
+<td>$0.40</td>
+<td>0.16</td>
+<td>138.033</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>800</td>
+<td>12.7100</td>
+<td>$10,168.00</td>
+<td>$7.63</td>
+<td>7.862</td>
+<td>-15.711</td>
+<td>0.00425</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-12</td><td>@Weather_ColdSnap_Live</td>
+<td>buy XLU</td>
+<td>100</td>
+<td>43.1700</td>
+<td>$4,317.00</td>
+<td>$0.83</td>
+<td>0.0</td>
+<td>79.383</td>
+<td>0.00058</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XLU.json</code><br>
+<code class="muted small">5dddbd83cab3a8b7cd08…</code></td>
+<td>2025-12-11</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>618.3600</td>
+<td>$98,937.60</td>
+<td>$1.98</td>
+<td>0.162</td>
+<td>128.084</td>
+<td>0.00032</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>685.7400</td>
+<td>$54,859.20</td>
+<td>$0.80</td>
+<td>0.0</td>
+<td>73.598</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@GoldVsRealRate_Live</td>
+<td>buy TLT</td>
+<td>600</td>
+<td>87.7300</td>
+<td>$52,638.00</td>
+<td>$5.24</td>
+<td>1.14</td>
+<td>37.757</td>
+<td>0.0021</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>618.3600</td>
+<td>$123,672.00</td>
+<td>$2.57</td>
+<td>0.162</td>
+<td>128.084</td>
+<td>0.0004</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>685.7400</td>
+<td>$27,429.60</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>73.598</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>618.3700</td>
+<td>$24,734.80</td>
+<td>$0.40</td>
+<td>0.0</td>
+<td>128.247</td>
+<td>8e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-15</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>300</td>
+<td>12.5700</td>
+<td>$3,771.00</td>
+<td>$2.70</td>
+<td>-0.0</td>
+<td>88.283</td>
+<td>0.00186</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-12</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>679.2300</td>
+<td>$54,338.40</td>
+<td>$0.78</td>
+<td>0.0</td>
+<td>5.303</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>679.2200</td>
+<td>$27,168.80</td>
+<td>$0.38</td>
+<td>0.147</td>
+<td>5.156</td>
+<td>3e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>608.2700</td>
+<td>$72,992.40</td>
+<td>$1.35</td>
+<td>0.164</td>
+<td>-56.886</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>608.2600</td>
+<td>$48,660.80</td>
+<td>$0.87</td>
+<td>0.0</td>
+<td>-57.049</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>200</td>
+<td>12.0200</td>
+<td>$2,404.00</td>
+<td>$1.76</td>
+<td>8.313</td>
+<td>-66.116</td>
+<td>0.00111</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-16</td><td>@Weather_ColdSnap_Live</td>
+<td>buy XLU</td>
+<td>100</td>
+<td>43.2100</td>
+<td>$4,321.00</td>
+<td>$0.83</td>
+<td>2.315</td>
+<td>39.498</td>
+<td>0.00052</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XLU.json</code><br>
+<code class="muted small">5dddbd83cab3a8b7cd08…</code></td>
+<td>2025-12-15</td>
+<td>filled</td></tr><tr>
+<td>2025-12-17</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>613.0600</td>
+<td>$49,044.80</td>
+<td>$0.86</td>
+<td>0.0</td>
+<td>210.69</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-16</td>
+<td>filled</td></tr><tr>
+<td>2025-12-17</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>613.0600</td>
+<td>$49,044.80</td>
+<td>$0.86</td>
+<td>0.0</td>
+<td>210.69</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-16</td>
+<td>filled</td></tr><tr>
+<td>2025-12-17</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>400</td>
+<td>12.4100</td>
+<td>$4,964.00</td>
+<td>$3.64</td>
+<td>-0.0</td>
+<td>-181.962</td>
+<td>0.00325</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-16</td>
+<td>filled</td></tr><tr>
+<td>2025-12-18</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>609.7900</td>
+<td>$24,391.60</td>
+<td>$0.41</td>
+<td>0.164</td>
+<td>11.164</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-17</td>
+<td>filled</td></tr><tr>
+<td>2025-12-18</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>609.7900</td>
+<td>$97,566.40</td>
+<td>$1.95</td>
+<td>0.164</td>
+<td>11.164</td>
+<td>0.0002</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-17</td>
+<td>filled</td></tr><tr>
+<td>2025-12-18</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>677.6000</td>
+<td>$27,104.00</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>16.705</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-17</td>
+<td>filled</td></tr><tr>
+<td>2025-12-18</td><td>@PinePilot_EMA_Live</td>
+<td>sell QQQ</td>
+<td>320</td>
+<td>609.7800</td>
+<td>$195,129.60</td>
+<td>$4.44</td>
+<td>0.328</td>
+<td>11.0</td>
+<td>0.00041</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-17</td>
+<td>filled</td></tr><tr>
+<td>2025-12-18</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>500</td>
+<td>12.6900</td>
+<td>$6,345.00</td>
+<td>$4.55</td>
+<td>0.0</td>
+<td>548.628</td>
+<td>0.00315</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-17</td>
+<td>filled</td></tr><tr>
+<td>2025-12-19</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>611.9500</td>
+<td>$24,478.00</td>
+<td>$0.41</td>
+<td>0.0</td>
+<td>-82.651</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-18</td>
+<td>filled</td></tr><tr>
+<td>2025-12-19</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>676.6000</td>
+<td>$27,064.00</td>
+<td>$0.37</td>
+<td>0.147</td>
+<td>-58.626</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-18</td>
+<td>filled</td></tr><tr>
+<td>2025-12-19</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>676.5900</td>
+<td>$27,063.60</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>-58.773</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-18</td>
+<td>filled</td></tr><tr>
+<td>2025-12-19</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>611.9600</td>
+<td>$48,956.80</td>
+<td>$0.87</td>
+<td>0.163</td>
+<td>-82.489</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-18</td>
+<td>filled</td></tr><tr>
+<td>2025-12-19</td><td>@Weather_ColdSnap_Live</td>
+<td>sell UNG</td>
+<td>500</td>
+<td>12.0700</td>
+<td>$6,035.00</td>
+<td>$4.62</td>
+<td>8.278</td>
+<td>-98.441</td>
+<td>0.00399</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-18</td>
+<td>filled</td></tr><tr>
+<td>2025-12-22</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>683.9500</td>
+<td>$27,358.00</td>
+<td>$0.37</td>
+<td>0.146</td>
+<td>-12.85</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-19</td>
+<td>filled</td></tr><tr>
+<td>2025-12-22</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>621.3500</td>
+<td>$49,708.00</td>
+<td>$0.88</td>
+<td>0.0</td>
+<td>34.56</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-19</td>
+<td>filled</td></tr><tr>
+<td>2025-12-22</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>621.3500</td>
+<td>$24,854.00</td>
+<td>$0.40</td>
+<td>0.0</td>
+<td>34.56</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-19</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@CrowdFade_Live</td>
+<td>buy MU</td>
+<td>40</td>
+<td>275.9400</td>
+<td>$11,037.60</td>
+<td>$0.72</td>
+<td>0.724</td>
+<td>-11.944</td>
+<td>0.00019</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/MU.json</code><br>
+<code class="muted small">b6edc050ee19bfdd67f1…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>683.9100</td>
+<td>$54,712.80</td>
+<td>$0.78</td>
+<td>0.146</td>
+<td>-58.87</td>
+<td>0.00012</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>618.2100</td>
+<td>$24,728.40</td>
+<td>$0.39</td>
+<td>0.162</td>
+<td>-62.69</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>618.2100</td>
+<td>$24,728.40</td>
+<td>$0.39</td>
+<td>0.162</td>
+<td>-62.69</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>618.2100</td>
+<td>$24,728.40</td>
+<td>$0.39</td>
+<td>0.162</td>
+<td>-62.69</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-23</td><td>@Weather_ColdSnap_Live</td>
+<td>buy UNG</td>
+<td>6,800</td>
+<td>12.1600</td>
+<td>$82,688.00</td>
+<td>$144.80</td>
+<td>8.23</td>
+<td>-573.643</td>
+<td>0.02802</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2025-12-22</td>
+<td>filled</td></tr><tr>
+<td>2025-12-24</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>621.9900</td>
+<td>$24,879.60</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>-31.093</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-23</td>
+<td>filled</td></tr><tr>
+<td>2025-12-24</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>240</td>
+<td>621.9900</td>
+<td>$149,277.60</td>
+<td>$3.00</td>
+<td>0.0</td>
+<td>-31.093</td>
+<td>0.0013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-23</td>
+<td>filled</td></tr><tr>
+<td>2025-12-26</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>624.6600</td>
+<td>$24,986.40</td>
+<td>$0.38</td>
+<td>0.0</td>
+<td>12.342</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-24</td>
+<td>filled</td></tr><tr>
+<td>2025-12-26</td><td>@FDA_Fade_Live</td>
+<td>sell XBI</td>
+<td>1,300</td>
+<td>125.8700</td>
+<td>$163,631.00</td>
+<td>$19.97</td>
+<td>1.589</td>
+<td>71.211</td>
+<td>0.02299</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-24</td>
+<td>filled</td></tr><tr>
+<td>2025-12-26</td><td>@PinePilot_EMA_Live</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>624.6600</td>
+<td>$49,972.80</td>
+<td>$0.82</td>
+<td>0.0</td>
+<td>12.342</td>
+<td>0.00028</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-24</td>
+<td>filled</td></tr><tr>
+<td>2025-12-30</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>900</td>
+<td>123.1500</td>
+<td>$110,835.00</td>
+<td>$12.54</td>
+<td>0.812</td>
+<td>121.641</td>
+<td>0.01142</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2025-12-29</td>
+<td>filled</td></tr><tr>
+<td>2026-01-02</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>620.0500</td>
+<td>$49,604.00</td>
+<td>$0.83</td>
+<td>0.161</td>
+<td>113.029</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-31</td>
+<td>filled</td></tr><tr>
+<td>2026-01-02</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>620.0500</td>
+<td>$124,010.00</td>
+<td>$2.33</td>
+<td>0.161</td>
+<td>113.029</td>
+<td>0.00032</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2025-12-31</td>
+<td>filled</td></tr><tr>
+<td>2026-01-05</td><td>@DowNasdaq_SpreadMax</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>619.3200</td>
+<td>$24,772.80</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>21.522</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-02</td>
+<td>filled</td></tr><tr>
+<td>2026-01-05</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>686.5400</td>
+<td>$27,461.60</td>
+<td>$0.36</td>
+<td>0.0</td>
+<td>-17.158</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-02</td>
+<td>filled</td></tr><tr>
+<td>2026-01-05</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>40</td>
+<td>619.3200</td>
+<td>$24,772.80</td>
+<td>$0.39</td>
+<td>0.0</td>
+<td>21.522</td>
+<td>9e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-02</td>
+<td>filled</td></tr><tr>
+<td>2026-01-05</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>686.5400</td>
+<td>$54,923.20</td>
+<td>$0.74</td>
+<td>0.0</td>
+<td>-17.158</td>
+<td>0.00011</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-02</td>
+<td>filled</td></tr><tr>
+<td>2026-01-06</td><td>@DowNasdaq_SpreadMax</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>687.9300</td>
+<td>$27,517.20</td>
+<td>$0.36</td>
+<td>0.0</td>
+<td>-56.085</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-05</td>
+<td>filled</td></tr><tr>
+<td>2026-01-06</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>400</td>
+<td>119.9900</td>
+<td>$47,996.00</td>
+<td>$4.48</td>
+<td>0.0</td>
+<td>-172.004</td>
+<td>0.00478</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2026-01-05</td>
+<td>filled</td></tr><tr>
+<td>2026-01-07</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>692.1900</td>
+<td>$27,687.60</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>37.849</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-06</td>
+<td>filled</td></tr><tr>
+<td>2026-01-07</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>623.0400</td>
+<td>$49,843.20</td>
+<td>$0.82</td>
+<td>0.0</td>
+<td>-15.705</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-06</td>
+<td>filled</td></tr><tr>
+<td>2026-01-08</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>688.8200</td>
+<td>$27,552.80</td>
+<td>$0.37</td>
+<td>0.0</td>
+<td>-10.007</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-07</td>
+<td>filled</td></tr><tr>
+<td>2026-01-08</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>623.0400</td>
+<td>$49,843.20</td>
+<td>$0.82</td>
+<td>0.16</td>
+<td>41.421</td>
+<td>0.00016</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-07</td>
+<td>filled</td></tr><tr>
+<td>2026-01-09</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>160</td>
+<td>621.4000</td>
+<td>$99,424.00</td>
+<td>$1.82</td>
+<td>0.16</td>
+<td>-83.779</td>
+<td>0.00032</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-08</td>
+<td>filled</td></tr><tr>
+<td>2026-01-09</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>690.6400</td>
+<td>$27,625.60</td>
+<td>$0.36</td>
+<td>0.145</td>
+<td>-49.419</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-08</td>
+<td>filled</td></tr><tr>
+<td>2026-01-12</td><td>@FDA_Fade_Live</td>
+<td>sell XBI</td>
+<td>1,400</td>
+<td>123.9700</td>
+<td>$173,558.00</td>
+<td>$22.00</td>
+<td>0.807</td>
+<td>3.228</td>
+<td>0.01376</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2026-01-09</td>
+<td>filled</td></tr><tr>
+<td>2026-01-12</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>690.6700</td>
+<td>$27,626.80</td>
+<td>$0.37</td>
+<td>0.145</td>
+<td>-64.589</td>
+<td>6e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-09</td>
+<td>filled</td></tr><tr>
+<td>2026-01-12</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>622.3100</td>
+<td>$74,677.20</td>
+<td>$1.30</td>
+<td>0.0</td>
+<td>-77.491</td>
+<td>0.00032</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-09</td>
+<td>filled</td></tr><tr>
+<td>2026-01-12</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>6,000</td>
+<td>10.7000</td>
+<td>$64,200.00</td>
+<td>$115.38</td>
+<td>18.727</td>
+<td>-429.338</td>
+<td>0.0215</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2026-01-09</td>
+<td>filled</td></tr><tr>
+<td>2026-01-12</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>300</td>
+<td>124.4600</td>
+<td>$37,338.00</td>
+<td>$3.43</td>
+<td>0.0</td>
+<td>34.669</td>
+<td>0.00196</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-09</td>
+<td>filled</td></tr><tr>
+<td>2026-01-13</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell JPM</td>
+<td>280</td>
+<td>324.2800</td>
+<td>$90,798.40</td>
+<td>$4.60</td>
+<td>0.616</td>
+<td>430.364</td>
+<td>0.00145</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/JPM.json</code><br>
+<code class="muted small">169021a2b0a0985c1c42…</code></td>
+<td>2026-01-12</td>
+<td>filled</td></tr><tr>
+<td>2026-01-13</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>600</td>
+<td>125.0000</td>
+<td>$75,000.00</td>
+<td>$7.82</td>
+<td>-0.0</td>
+<td>-121.701</td>
+<td>0.00278</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-12</td>
+<td>filled</td></tr><tr>
+<td>2026-01-13</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>900</td>
+<td>123.3800</td>
+<td>$111,042.00</td>
+<td>$12.63</td>
+<td>1.621</td>
+<td>-37.949</td>
+<td>0.01069</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2026-01-12</td>
+<td>filled</td></tr><tr>
+<td>2026-01-13</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>627.2800</td>
+<td>$50,182.40</td>
+<td>$0.83</td>
+<td>0.159</td>
+<td>16.607</td>
+<td>0.00018</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-12</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>sell XOM</td>
+<td>100</td>
+<td>127.3400</td>
+<td>$12,734.00</td>
+<td>$1.02</td>
+<td>0.785</td>
+<td>-219.662</td>
+<td>0.00036</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@CurveSteepener_MaxBeta</td>
+<td>buy SPY</td>
+<td>120</td>
+<td>691.0100</td>
+<td>$82,921.20</td>
+<td>$1.16</td>
+<td>0.145</td>
+<td>9.416</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@FDA_Fade_Live</td>
+<td>buy XBI</td>
+<td>500</td>
+<td>123.7800</td>
+<td>$61,890.00</td>
+<td>$6.24</td>
+<td>0.0</td>
+<td>-239.71</td>
+<td>0.00458</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XBI.json</code><br>
+<code class="muted small">fe9eeb851e6faba2a718…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@KitchenSink_Official</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>622.2300</td>
+<td>$124,446.00</td>
+<td>$2.38</td>
+<td>0.161</td>
+<td>43.257</td>
+<td>0.00028</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@KitchenSink_Official</td>
+<td>buy SPY</td>
+<td>40</td>
+<td>691.0100</td>
+<td>$27,640.40</td>
+<td>$0.36</td>
+<td>0.145</td>
+<td>9.416</td>
+<td>4e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,800</td>
+<td>10.5700</td>
+<td>$61,306.00</td>
+<td>$66.08</td>
+<td>-0.0</td>
+<td>322.266</td>
+<td>0.01576</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>200</td>
+<td>127.3400</td>
+<td>$25,468.00</td>
+<td>$2.22</td>
+<td>0.785</td>
+<td>-219.662</td>
+<td>0.00072</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@SOFRPivot_Rider</td>
+<td>sell QQQ</td>
+<td>200</td>
+<td>622.2300</td>
+<td>$124,446.00</td>
+<td>$2.38</td>
+<td>0.161</td>
+<td>43.257</td>
+<td>0.00028</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-14</td><td>@SOFRPivot_Rider</td>
+<td>sell TSLA</td>
+<td>80</td>
+<td>442.8000</td>
+<td>$35,424.00</td>
+<td>$1.37</td>
+<td>0.226</td>
+<td>81.967</td>
+<td>0.00014</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2026-01-13</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>1,300</td>
+<td>88.6300</td>
+<td>$115,219.00</td>
+<td>$11.84</td>
+<td>1.128</td>
+<td>36.236</td>
+<td>0.00342</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>423.0300</td>
+<td>$33,842.40</td>
+<td>$1.04</td>
+<td>0.237</td>
+<td>-7.086</td>
+<td>0.00056</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@KitchenSink_Official</td>
+<td>sell SPY</td>
+<td>40</td>
+<td>694.5700</td>
+<td>$27,782.80</td>
+<td>$0.36</td>
+<td>0.0</td>
+<td>33.659</td>
+<td>5e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>120</td>
+<td>626.6000</td>
+<td>$75,192.00</td>
+<td>$1.28</td>
+<td>0.0</td>
+<td>77.519</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@OilDollar_FadeUNG</td>
+<td>buy UNG</td>
+<td>5,500</td>
+<td>10.2100</td>
+<td>$56,155.00</td>
+<td>$99.78</td>
+<td>9.804</td>
+<td>-87.379</td>
+<td>0.02314</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@OilDollar_FadeUNG</td>
+<td>buy XOM</td>
+<td>200</td>
+<td>129.1400</td>
+<td>$25,828.00</td>
+<td>$2.21</td>
+<td>0.774</td>
+<td>0.774</td>
+<td>0.00115</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@SOFRPivot_Rider</td>
+<td>buy SPY</td>
+<td>80</td>
+<td>694.5800</td>
+<td>$55,566.40</td>
+<td>$0.74</td>
+<td>0.144</td>
+<td>33.803</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-15</td><td>@VolControl_MaxLev</td>
+<td>sell QQQ</td>
+<td>80</td>
+<td>626.5900</td>
+<td>$50,127.20</td>
+<td>$0.83</td>
+<td>0.159</td>
+<td>77.358</td>
+<td>0.00015</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-14</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@GoldVsRealRate_Live</td>
+<td>sell TLT</td>
+<td>100</td>
+<td>88.1200</td>
+<td>$8,812.00</td>
+<td>$0.84</td>
+<td>1.134</td>
+<td>36.446</td>
+<td>0.00022</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TLT.json</code><br>
+<code class="muted small">b2914ca7451d1c04fbe9…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@GoldVsRealRate_Live</td>
+<td>buy GLD</td>
+<td>80</td>
+<td>422.8100</td>
+<td>$33,824.80</td>
+<td>$1.05</td>
+<td>0.237</td>
+<td>36.079</td>
+<td>0.00038</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/GLD.json</code><br>
+<code class="muted small">545093d31c9d8284e3b5…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@KitchenSink_Official</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>625.5100</td>
+<td>$50,040.80</td>
+<td>$0.81</td>
+<td>0.16</td>
+<td>68.409</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@OilDollar_FadeUNG</td>
+<td>sell UNG</td>
+<td>5,600</td>
+<td>10.2300</td>
+<td>$57,288.00</td>
+<td>$64.13</td>
+<td>-0.0</td>
+<td>-96.805</td>
+<td>0.03754</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/UNG.json</code><br>
+<code class="muted small">eb7bcc0769945fb2c40f…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@OilDollar_FadeUNG</td>
+<td>sell XOM</td>
+<td>200</td>
+<td>128.9100</td>
+<td>$25,782.00</td>
+<td>$2.25</td>
+<td>0.0</td>
+<td>-75.448</td>
+<td>0.00121</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/XOM.json</code><br>
+<code class="muted small">4a2c7d18351df35d3cb2…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@SOFRPivot_Rider</td>
+<td>sell SPY</td>
+<td>80</td>
+<td>693.6500</td>
+<td>$55,492.00</td>
+<td>$0.76</td>
+<td>0.144</td>
+<td>28.772</td>
+<td>0.0001</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/SPY.json</code><br>
+<code class="muted small">e0f05aaf67be23da1db2…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@SOFRPivot_Rider</td>
+<td>buy QQQ</td>
+<td>80</td>
+<td>625.5100</td>
+<td>$50,040.80</td>
+<td>$0.81</td>
+<td>0.16</td>
+<td>68.409</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@SOFRPivot_Rider</td>
+<td>buy TSLA</td>
+<td>80</td>
+<td>439.5100</td>
+<td>$35,160.80</td>
+<td>$1.33</td>
+<td>0.228</td>
+<td>45.943</td>
+<td>0.00013</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/TSLA.json</code><br>
+<code class="muted small">6916f4c63d07180ce9ef…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr>
+<td>2026-01-16</td><td>@VolControl_MaxLev</td>
+<td>buy QQQ</td>
+<td>40</td>
+<td>625.5100</td>
+<td>$25,020.40</td>
+<td>$0.38</td>
+<td>0.16</td>
+<td>68.409</td>
+<td>7e-05</td>
+<td><span class="badge badge-warn">SECONDARY</span></td>
+<td><code>data/real/prices/yahoo/QQQ.json</code><br>
+<code class="muted small">ae9ec3c0b0b8e0f5cd28…</code></td>
+<td>2026-01-15</td>
+<td>filled</td></tr><tr><td colspan="14" class="muted">… 972 more rows are in <code>memory/live/*/fills.jsonl.gz</code> and <code>blotter.csv</code>.</td></tr></tbody></table>
+
+<p class="muted small">The <code>planned on</code> column is the point of the whole
+section: it is strictly earlier than the session column for every row, which is what
+makes this a forward test rather than a backtest. The audit re-derives that property
+from the raw tape and fails the run if any row violates it.</p>
+<p class="more"><a href="method.html">How the clock, the margin account and the
+verification work &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

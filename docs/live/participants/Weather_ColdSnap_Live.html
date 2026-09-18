@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weather Cold Snap Live · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Weather Cold Snap Live <span class="muted">@Weather_ColdSnap_Live</span></h1>
+<p class="lede">NOAA/NCEI daily station records are the official observation of heating demand at two US stations. The proxy trade is natural gas and utilities: a cold anomaly should lift both with a lag, and the participant is explicit that the mapping is weak and is being tested rather than asserted.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +1.09%</div>
+    <div class="kpi-sub">$1,087.24 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-19.29%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.1479</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">23 fills</div>
+    <div class="kpi-sub">23 intents ·
+    0 refused · cost
+    0.098%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Weather Cold Snap Live (@Weather_ColdSnap_Live) planned 23 forward intents and saw 23 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 101,087.24 USD on 100,000 starting cash: +1.09% with a worst peak-to-trough drawdown of -19.29% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 13.3pp.</li><li>Execution cost was 457.13 USD, 0.098% of 466,548 USD traded, at a mean slippage of 3.418 bps against the decision mid; median participation was 0.00272% of the session&#x27;s real volume (max 0.05023%).</li><li>12 round trips closed; win rate 16.67% and profit factor 1.8539. The largest single trip was 8,164.92 USD and the worst -1,717.76 USD.</li><li>Contribution by instrument: UNG +4,073.67 USD was the biggest positive and XLU -134.82 USD the biggest negative, out of 2 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>weather_cold_anomaly_10d</code>, <code>weather_precip_30d_in</code></p>
+<p><strong>Sizing:</strong> up to 1.8x gross ·
+<strong>leverage:</strong> 1.6-1.8x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> days</p>
+<h3>Entry rules</h3>
+<ul><li>10-day minimum-temperature anomaly from the collected NOAA files</li><li>Anomaly below -5 degC -&gt; target UNG 1.0x plus XLU 0.8x</li><li>Anomaly above +5 degC -&gt; target short UNG 0.8x</li><li>Otherwise hold XLU 0.6x</li></ul>
+<h3>Exit rules</h3>
+<ul><li>Daily re-evaluation of the anomaly</li></ul>
+<h3>Evidence base</h3>
+<ul><li>NOAA/NCEI station records are the official daily observations for the two stations this participant reads — <a href="https://www.ncei.noaa.gov/access/services/data/v1">NOAA NCEI access services v1 (data/real/weather/)</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Two stations are not a national weather map</li><li>The gas-futures roll and the utility rate base are unrelated to a single cold week</li><li>Weather is the most heavily forecast variable in the market, so the anomaly may already be priced</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>UNG</td><td class="pos">$4,073.67</td></tr><tr><td>XLU</td><td class="neg">$-134.82</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 12 · still open:
+0</li>
+<li>Win rate: 16.67% · profit factor:
+1.8539</li>
+<li>Largest trip: $8,164.92 · worst trip:
+$-1,717.76</li>
+<li>Carry: $2,022.40 received,
+$0.00 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>12.5700</td>
+<td>2025-10-21</td>
+<td>12.9200</td><td>600</td>
+<td class="neg">
+$-213.70</td>
+<td>None</td><td>weather-proxy: warm anomaly +8.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>12.5700</td>
+<td>2025-10-22</td>
+<td>13.1900</td><td>300</td>
+<td class="neg">
+$-187.85</td>
+<td>None</td><td>weather-proxy: warm anomaly +7.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>12.5700</td>
+<td>2025-10-27</td>
+<td>12.8600</td><td>5,800</td>
+<td class="neg">
+$-1,717.76</td>
+<td>None</td><td>weather-proxy: anomaly inside +/-5degC (+5.0)</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.6202</td>
+<td>2025-12-01</td>
+<td>15.0300</td><td>300</td>
+<td class="neg">
+$-424.79</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.6202</td>
+<td>2025-12-02</td>
+<td>15.2400</td><td>400</td>
+<td class="neg">
+$-650.39</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>XLU</td><td>long</td>
+<td>2025-10-07</td><td>45.0700</td>
+<td>2025-12-04</td>
+<td>43.7700</td><td>100</td>
+<td class="neg">
+$-130.62</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.6202</td>
+<td>2025-12-04</td>
+<td>15.2900</td><td>100</td>
+<td class="neg">
+$-167.60</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.6202</td>
+<td>2025-12-05</td>
+<td>16.3800</td><td>200</td>
+<td class="neg">
+$-553.20</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.6202</td>
+<td>2025-12-08</td>
+<td>15.4900</td><td>300</td>
+<td class="neg">
+$-562.79</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.4698</td>
+<td>2025-12-18</td>
+<td>12.6900</td><td>500</td>
+<td class="pos">
+$386.83</td>
+<td>None</td><td>weather-proxy: warm anomaly +10.0degC over 10 days</td>
+</tr><tr><td>UNG</td><td>short</td>
+<td>2025-10-20</td><td>13.3669</td>
+<td>2025-12-23</td>
+<td>12.1600</td><td>6,800</td>
+<td class="pos">
+$8,164.92</td>
+<td>None</td><td>weather-proxy: anomaly inside +/-5degC (+5.0)</td>
+</tr><tr><td>XLU</td><td>long</td>
+<td>2025-10-07</td><td>44.8014</td>
+<td>OPEN</td>
+<td>0.0000</td><td>1,400</td>
+<td class="neg">
+$-4.20</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-10-07</td>
+<td>XLU</td><td>buy</td><td>1,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XLU_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-10-20</td>
+<td>UNG</td><td>sell</td><td>6,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-10-21</td>
+<td>UNG</td><td>buy</td><td>600</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-10-22</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-10-27</td>
+<td>UNG</td><td>buy</td><td>5,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-11-25</td>
+<td>UNG</td><td>sell</td><td>5,300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-01</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-02</td>
+<td>UNG</td><td>buy</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-04</td>
+<td>XLU</td><td>sell</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XLU_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-04</td>
+<td>UNG</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-05</td>
+<td>UNG</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-08</td>
+<td>UNG</td><td>buy</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-09</td>
+<td>UNG</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-10</td>
+<td>UNG</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-12</td>
+<td>UNG</td><td>sell</td><td>800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-12</td>
+<td>XLU</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XLU_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-15</td>
+<td>UNG</td><td>sell</td><td>300</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-16</td>
+<td>UNG</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-16</td>
+<td>XLU</td><td>buy</td><td>100</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>XLU_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-17</td>
+<td>UNG</td><td>sell</td><td>400</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-18</td>
+<td>UNG</td><td>buy</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-19</td>
+<td>UNG</td><td>sell</td><td>500</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr><tr><td>2025-12-23</td>
+<td>UNG</td><td>buy</td><td>6,800</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>UNG_price, weather_cold_anomaly_10d</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

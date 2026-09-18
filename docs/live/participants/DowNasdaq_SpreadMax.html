@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dow/Nasdaq Spread Rotator · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Dow/Nasdaq Spread Rotator <span class="muted">@DowNasdaq_SpreadMax</span></h1>
+<p class="lede">The brief names both Nasdaq and NYSE. The official histories for both now exist (FRED DJIA, source: S&amp;P Dow Jones Indices; FRED NASDAQCOM, source: Nasdaq, Inc.), so the relative-strength spread between the two indices can be measured instead of asserted. The participant holds the stronger leg through SPY or QQQ.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +22.50%</div>
+    <div class="kpi-sub">$22,501.42 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-15.83%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.8482</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">62 fills</div>
+    <div class="kpi-sub">62 intents ·
+    0 refused · cost
+    0.002%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Dow/Nasdaq Spread Rotator (@DowNasdaq_SpreadMax) planned 62 forward intents and saw 62 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 122,501.42 USD on 100,000 starting cash: +22.50% with a worst peak-to-trough drawdown of -15.83% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant beat the benchmark by 8.1pp.</li><li>Execution cost was 63.98 USD, 0.002% of 2,825,728 USD traded, at a mean slippage of 0.098 bps against the decision mid; median participation was 0.0001% of the session&#x27;s real volume (max 0.00054%).</li><li>22 round trips closed; win rate 54.55% and profit factor 8.4625. The largest single trip was 9,513.89 USD and the worst -1,218.67 USD.</li><li>Contribution by instrument: QQQ +22,448.14 USD was the biggest positive and SPY +3,989.18 USD the biggest negative, out of 2 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>DJIA</code>, <code>NASDAQCOM</code></p>
+<p><strong>Sizing:</strong> 1.8-1.9x gross in a single leg, 1.8x split when undecided ·
+<strong>leverage:</strong> ~1.9x gross ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> weeks to months</p>
+<h3>Entry rules</h3>
+<ul><li>Compute each index&#x27;s 63-session return from the official series</li><li>Long the stronger leg at 1.90x equity through SPY (Dow leg) or QQQ (Nasdaq leg)</li><li>If the two returns are within 1pp, hold both at 0.9x each</li></ul>
+<h3>Exit rules</h3>
+<ul><li>The spread is recomputed every session; a flip rotates the book</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Time-series momentum - an asset&#x27;s own past 12-month return predicts its next-month return across asset classes — <a href="https://doi.org/10.1016/j.jfineco.2011.11.003">Moskowitz, Ooi &amp; Pedersen (2012), Journal of Financial Economics 104(2)</a> <span class="muted small">[KNOWN-NOT-FETCHED]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Two highly correlated indices differ mostly in sector weight, so the spread is a sector bet in disguise</li><li>Rotating on a 63-session window is a short signal for a slow spread; whipsaw is the base case</li><li>SPY and QQQ track their indices imperfectly, so part of any measured spread is tracking noise</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="pos">$22,448.14</td></tr><tr><td>SPY</td><td class="pos">$3,989.18</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 22 · still open:
+0</li>
+<li>Win rate: 54.55% · profit factor:
+8.4625</li>
+<li>Largest trip: $9,513.89 · worst trip:
+$-1,218.67</li>
+<li>Carry: $56.64 received,
+$4,959.69 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>596.0086</td>
+<td>2025-11-10</td>
+<td>618.9100</td><td>120</td>
+<td class="pos">
+$2,747.43</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +6.85% vs Nasdaq +7.57%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>607.1492</td>
+<td>2025-11-13</td>
+<td>617.5300</td><td>120</td>
+<td class="pos">
+$1,244.96</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +7.44% vs Nasdaq +7.81%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-11-14</td><td>666.8300</td>
+<td>2025-11-18</td>
+<td>662.0900</td><td>120</td>
+<td class="neg">
+$-569.54</td>
+<td>None</td><td>dow-vs-nasdaq: Nasdaq leg stronger (+6.54% vs +3.71%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>604.9110</td>
+<td>2025-12-12</td>
+<td>622.0800</td><td>120</td>
+<td class="pos">
+$2,059.54</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +6.26% vs Nasdaq +6.56%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>604.9110</td>
+<td>2025-12-15</td>
+<td>618.3600</td><td>160</td>
+<td class="pos">
+$2,150.86</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+5.61% vs +3.79%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-17</td><td>613.0600</td>
+<td>2025-12-18</td>
+<td>609.7900</td><td>40</td>
+<td class="neg">
+$-131.05</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+3.78% vs +0.99%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-17</td><td>613.0600</td>
+<td>2025-12-19</td>
+<td>611.9500</td><td>40</td>
+<td class="neg">
+$-44.65</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+3.53% vs +1.66%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>681.7483</td>
+<td>2025-12-23</td>
+<td>683.9100</td><td>80</td>
+<td class="pos">
+$172.44</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +4.47% vs Nasdaq +3.79%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-23</td><td>621.6200</td>
+<td>2026-01-02</td>
+<td>620.0500</td><td>80</td>
+<td class="neg">
+$-126.10</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+3.49% vs +2.14%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-12-23</td><td>621.6200</td>
+<td>2026-01-05</td>
+<td>619.3200</td><td>40</td>
+<td class="neg">
+$-92.25</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+4.00% vs +1.71%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>683.5772</td>
+<td>2026-03-18</td>
+<td>668.3500</td><td>80</td>
+<td class="neg">
+$-1,218.67</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow -3.02% vs Nasdaq -3.09%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-19</td><td>590.0333</td>
+<td>2026-03-25</td>
+<td>589.1400</td><td>80</td>
+<td class="neg">
+$-71.96</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (-4.18% vs -6.63%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-03-19</td><td>590.0333</td>
+<td>2026-03-26</td>
+<td>582.5900</td><td>40</td>
+<td class="neg">
+$-297.98</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (-4.00% vs -6.40%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>671.4798</td>
+<td>2026-04-09</td>
+<td>674.8400</td><td>80</td>
+<td class="pos">
+$267.21</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow -3.14% vs Nasdaq -3.87%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>673.4499</td>
+<td>2026-04-13</td>
+<td>677.4000</td><td>40</td>
+<td class="pos">
+$157.20</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow -2.74% vs Nasdaq -2.46%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2025-12-15</td><td>673.4499</td>
+<td>2026-04-15</td>
+<td>695.2600</td><td>160</td>
+<td class="pos">
+$3,486.34</td>
+<td>None</td><td>dow-vs-nasdaq: Nasdaq leg stronger (-0.40% vs -2.13%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-13</td><td>642.6575</td>
+<td>2026-07-17</td>
+<td>691.6300</td><td>120</td>
+<td class="pos">
+$5,874.25</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +8.44% vs Nasdaq +7.77%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-13</td><td>642.6575</td>
+<td>2026-07-20</td>
+<td>702.1400</td><td>160</td>
+<td class="pos">
+$9,513.89</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+7.34% vs +5.88%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-13</td><td>685.2792</td>
+<td>2026-07-24</td>
+<td>690.3900</td><td>120</td>
+<td class="pos">
+$610.85</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+4.49% vs +1.95%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-07-20</td><td>743.8829</td>
+<td>2026-09-10</td>
+<td>758.0300</td><td>120</td>
+<td class="pos">
+$1,695.04</td>
+<td>None</td><td>dow-vs-nasdaq: within 1pp (Dow +2.97% vs Nasdaq +2.24%)</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-09-11</td><td>715.6800</td>
+<td>2026-09-14</td>
+<td>703.3300</td><td>80</td>
+<td class="neg">
+$-989.65</td>
+<td>None</td><td>dow-vs-nasdaq: Dow leg stronger (+3.39% vs +2.03%)</td>
+</tr><tr><td>SPY</td><td>long</td>
+<td>2026-07-20</td><td>750.5959</td>
+<td>OPEN</td>
+<td>0.0000</td><td>280</td>
+<td class="neg">
+$-0.84</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-09-22</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-10</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-11</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-12</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-13</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-14</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-11-17</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-11-18</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-11-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-11-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-12</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-15</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-15</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-12-16</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-12-17</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-18</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-19</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-19</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-12-22</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-12-23</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2025-12-23</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-24</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2025-12-26</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-01-02</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-01-05</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-01-05</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-01-06</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-03-18</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-03-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-03-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-03-25</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-03-26</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-03-26</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-03-27</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-04-09</td>
+<td>SPY</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-04-10</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-04-13</td>
+<td>SPY</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-04-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-04-14</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-04-15</td>
+<td>SPY</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-04-15</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-04-16</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-04-17</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-04-20</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-05-11</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-07-17</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-07-20</td>
+<td>QQQ</td><td>sell</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-07-20</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-07-21</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-07-21</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-07-24</td>
+<td>QQQ</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-07-24</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-07-27</td>
+<td>SPY</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-07-28</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-09-10</td>
+<td>SPY</td><td>sell</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-09-11</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-09-14</td>
+<td>QQQ</td><td>sell</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, QQQ_price</td></tr><tr><td>2026-09-14</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-09-15</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr><tr><td>2026-09-16</td>
+<td>SPY</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>DJIA, NASDAQCOM, SPY_price</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

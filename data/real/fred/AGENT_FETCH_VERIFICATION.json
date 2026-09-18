@@ -1,0 +1,163 @@
+{
+ "generated_utc": "2026-09-18T21:11:45Z",
+ "purpose": "structural, calendar and independent-value verification of the official-source extracts retrieved in-session, because the sandbox cannot run the networked collector",
+ "calendar_reference": {
+  "file": "SP500_2024-09-16_2026-09-17.csv",
+  "status": "OK: 503 valued observations read from the runner-collected SP500_2024-09-16_2026-09-17.csv"
+ },
+ "files": [
+  {
+   "file": "NASDAQCOM_2024-09-16_2026-09-17.csv",
+   "series": "NASDAQCOM",
+   "title": "NASDAQ Composite Index (daily close)",
+   "publisher": "Nasdaq, Inc.",
+   "republished_by": "Federal Reserve Bank of St. Louis (FRED)",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2024-09-16&coed=2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "retrieved_utc": "2026-09-18T20:35:00Z",
+   "retrieved_by": "agent page-fetch tool (sandbox has no outbound HTTPS)",
+   "complete": true,
+   "pages_read": 2,
+   "bytes": 10830,
+   "sha256": "c781a4a51d12434bd9dc78eda903045174001fbd7f33ad1af4d414ff25cdac63",
+   "value_column": "NASDAQCOM",
+   "rows": 523,
+   "first_date": "2024-09-16",
+   "last_date": "2026-09-17",
+   "valued_observations": 503,
+   "blank_observations": 20,
+   "first_valued_date": "2024-09-16",
+   "last_valued_date": "2026-09-17",
+   "structure_problems": [],
+   "calendar_vs_sp500": {
+    "reference_valued_dates": 503,
+    "dates_in_sp500_but_not_here": [],
+    "dates_here_but_not_in_sp500": []
+   },
+   "calendar_status": "OK: identical trading calendar",
+   "status": "VERIFIED"
+  },
+  {
+   "file": "DJIA_2024-09-16_2026-09-17.csv",
+   "series": "DJIA",
+   "title": "Dow Jones Industrial Average (daily close)",
+   "publisher": "S&P Dow Jones Indices LLC",
+   "republished_by": "Federal Reserve Bank of St. Louis (FRED)",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA&cosd=2024-09-16&coed=2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "retrieved_utc": "2026-09-18T20:36:00Z",
+   "retrieved_by": "agent page-fetch tool (sandbox has no outbound HTTPS)",
+   "complete": true,
+   "pages_read": 2,
+   "bytes": 10334,
+   "sha256": "37fc16a8d0caf901b420c7c1041f2ab39f053ee0b4e072468b4a27d7d830faa4",
+   "value_column": "DJIA",
+   "rows": 524,
+   "first_date": "2024-09-16",
+   "last_date": "2026-09-17",
+   "valued_observations": 503,
+   "blank_observations": 21,
+   "first_valued_date": "2024-09-16",
+   "last_valued_date": "2026-09-17",
+   "structure_problems": [],
+   "calendar_vs_sp500": {
+    "reference_valued_dates": 503,
+    "dates_in_sp500_but_not_here": [],
+    "dates_here_but_not_in_sp500": []
+   },
+   "calendar_status": "OK: identical trading calendar",
+   "status": "VERIFIED"
+  },
+  {
+   "file": "SOFR_2024-09-16_2026-09-17.csv",
+   "series": "SOFR",
+   "title": "Secured Overnight Financing Rate - broad general collateral rate",
+   "publisher": "Federal Reserve Bank of New York",
+   "republished_by": "Federal Reserve Bank of St. Louis (FRED)",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&cosd=2024-09-16&coed=2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "retrieved_utc": "2026-09-18T20:38:00Z",
+   "retrieved_by": "agent page-fetch tool (sandbox has no outbound HTTPS)",
+   "complete": true,
+   "pages_read": 2,
+   "bytes": 8310,
+   "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+   "value_column": "SOFR",
+   "rows": 524,
+   "first_date": "2024-09-16",
+   "last_date": "2026-09-17",
+   "valued_observations": 500,
+   "blank_observations": 24,
+   "first_valued_date": "2024-09-16",
+   "last_valued_date": "2026-09-17",
+   "structure_problems": [],
+   "calendar_vs_sp500": {
+    "reference_valued_dates": 503,
+    "dates_in_sp500_but_not_here": [
+     "2024-10-14",
+     "2024-11-11",
+     "2025-10-13",
+     "2025-11-11"
+    ],
+    "dates_here_but_not_in_sp500": [
+     "2025-01-09"
+    ]
+   },
+   "calendar_status": "OK: differences are publisher-side and every one is explained below",
+   "explained_divergences": {
+    "bond_market_closed_equity_open": [
+     {
+      "date": "2024-10-14",
+      "why": "bond market closure (SIFMA-recommended)"
+     },
+     {
+      "date": "2024-11-11",
+      "why": "bond market closure (SIFMA-recommended)"
+     },
+     {
+      "date": "2025-10-13",
+      "why": "bond market closure (SIFMA-recommended)"
+     },
+     {
+      "date": "2025-11-11",
+      "why": "bond market closure (SIFMA-recommended)"
+     }
+    ],
+    "bond_market_open_equity_closed": [
+     {
+      "date": "2025-01-09",
+      "why": "U.S. equity markets closed for the National Day of Mourning for President Jimmy Carter; bond market open with a shortened session, so SOFR published and SP500 did not"
+     }
+    ]
+   },
+   "status": "VERIFIED"
+  }
+ ],
+ "crosschecks": [
+  {
+   "file": "SOFR_2024-09-16_2026-09-17.csv",
+   "series": "SOFR",
+   "date": "2026-09-17",
+   "observed": "3.85",
+   "endpoint": "https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json",
+   "publisher": "Federal Reserve Bank of New York (reference-rate API)",
+   "note": "NY Fed API returned percentRate 3.85 for effectiveDate 2026-09-17; FRED's republished SOFR must print the same number.",
+   "file_value": "3.85",
+   "status": "MATCH"
+  },
+  {
+   "file": "SOFR_2024-09-16_2026-09-17.csv",
+   "series": "SOFR",
+   "date": "2026-09-16",
+   "observed": "3.62",
+   "endpoint": "https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json",
+   "publisher": "Federal Reserve Bank of New York (reference-rate API)",
+   "note": "second observation, so a single coincidence cannot carry the check",
+   "file_value": "3.62",
+   "status": "MATCH"
+  }
+ ],
+ "failures": [],
+ "failure_count": 0,
+ "verdict": "PASS"
+}

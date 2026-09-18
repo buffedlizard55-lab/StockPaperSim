@@ -53,6 +53,7 @@ NAV = [
     ("season2/data.html", "Data custody"),
     ("season2/participants/index.html", "Participants"),
     ("simulator.html", "Live Simulator"),
+    ("live/index.html", "Live Book"),
     ("index.html", "Season 1"),
 ]
 

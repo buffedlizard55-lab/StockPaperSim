@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Participants · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+<section id="season2-banner" class="card"><h2>Season 2 is published with an explicit price-eligibility status</h2><p>Season 1 above is a calibrated replay of the real S&amp;P 500 and VIX path. <strong>Season 2</strong> preserves every collected price file, raw response, checksum and trade-ledger fact, but a public endpoint is not automatically an eligible official source. The current Yahoo-backed history is marked <strong>SECONDARY research</strong>; the official Nasdaq path fails closed until source, coverage, checksum and redistribution checks pass.</p><p><a href="../../season2/index.html">Season 2 overview</a> · <a href="../../season2/leaderboard.html">Leaderboard</a> · <a href="../../season2/ledger.html">Verified trade ledger</a> · <a href="../../season2/masterfeed.html">MasterFeed register</a> · <a href="../../season2/data.html">Data custody</a></p></section>
+
+<h1>Participants</h1>
+<p class="lede">One page per strategy: what it was built to harvest, the exact rule it
+ran, every intent it placed with its evidence, its round trips, and a post-mortem
+generated from its own numbers that says what caused the result.</p>
+<div class="charts"><div class="card">
+<h3><a href="CrowdFade_Live.html">@CrowdFade_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Crowd Fade Live ·
+short-term reversal</p>
+<p class="neg">
+<strong>-45.90%</strong> · 12 fills ·
+max DD -61.34%</p>
+<p>&#x27;Inverse WSB&#x27; is the most common contrarian claim on the forums. Without a sentiment feed the honest test is the price footprint the crowd leaves: a 3-session jump of more than two daily sigmas is faded. The participant is a short-horizon reversal rule standin…</p>
+<p class="more"><a href="CrowdFade_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="CurveSteepener_MaxBeta.html">@CurveSteepener_MaxBeta</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Curve Steepener Max Beta ·
+curve/carry rotation</p>
+<p class="pos">
+<strong>+3.99%</strong> · 195 fills ·
+max DD -14.78%</p>
+<p>The 10-year minus 3-month Treasury spread is an official daily observation from two Treasury constant-maturity series. A steepening curve is the classic early-cycle signal and a flattening one is the late-cycle signal, so the participant holds high-beta cyclic…</p>
+<p class="more"><a href="CurveSteepener_MaxBeta.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="DowNasdaq_SpreadMax.html">@DowNasdaq_SpreadMax</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Dow/Nasdaq Spread Rotator ·
+curve/carry rotation</p>
+<p class="pos">
+<strong>+22.50%</strong> · 62 fills ·
+max DD -15.83%</p>
+<p>The brief names both Nasdaq and NYSE. The official histories for both now exist (FRED DJIA, source: S&amp;P Dow Jones Indices; FRED NASDAQCOM, source: Nasdaq, Inc.), so the relative-strength spread between the two indices can be measured instead of asserted. The p…</p>
+<p class="more"><a href="DowNasdaq_SpreadMax.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="FDA_Fade_Live.html">@FDA_Fade_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">FDA Fade Live ·
+contrarian reversal</p>
+<p class="pos">
+<strong>+10.60%</strong> · 34 fills ·
+max DD -16.77%</p>
+<p>Season 2&#x27;s best and worst participants were the same signal traded in opposite directions. The live book keeps both, because that pair is the cleanest available test of whether an FDA approval burst is good news for the whole biotech complex or an overreaction…</p>
+<p class="more"><a href="FDA_Fade_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="FDA_PDUFA_Drifter.html">@FDA_PDUFA_Drifter</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">FDA PDUFA Drifter ·
+commodity-macro proxy</p>
+<p class="pos">
+<strong>+65.18%</strong> · 97 fills ·
+max DD -15.63%</p>
+<p>openFDA publishes the FDA&#x27;s approvals with their decision dates. The live book reads the trailing-30-day count of original-application approvals and holds the biotech complex at the leverage bound while the approval rate is at or above its own median - the sam…</p>
+<p class="more"><a href="FDA_PDUFA_Drifter.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="GoldVsRealRate_Live.html">@GoldVsRealRate_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Gold vs Real Rate Live ·
+commodity-macro proxy</p>
+<p class="neg">
+<strong>-7.50%</strong> · 123 fills ·
+max DD -25.37%</p>
+<p>Gold has no cash flow, so its opportunity cost is the real rate. The official series collected here give the nominal 10-year yield and SOFR; their difference is a public proxy for the real rate. The participant holds gold levered while that proxy falls and hol…</p>
+<p class="more"><a href="GoldVsRealRate_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="InjuryFeed_Forward.html">@InjuryFeed_Forward</a>
+<span class="badge badge-warn">FORWARD-ONLY</span></h3>
+<p class="muted small">Injury Feed Forward ·
+event attention proxy</p>
+<p class="pos">
+<strong>+3.87%</strong> · 0 fills ·
+max DD 0.00%</p>
+<p>Both leagues publish injury designations, and nothing archives them in a form this project may retrieve. A rule that trades sportsbook equities on injury-heavy weeks is therefore a genuine forward test with no history: it exists here to be measured from the da…</p>
+<p class="more"><a href="InjuryFeed_Forward.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="InsiderCluster_Live.html">@InsiderCluster_Live</a>
+<span class="badge badge-bad">DATA-MISSING</span></h3>
+<p class="muted small">Insider Cluster Live ·
+informed-flow following</p>
+<p class="pos">
+<strong>+3.87%</strong> · 0 fills ·
+max DD 0.00%</p>
+<p>SEC Form 4 is the primary filing for insider transactions and it carries the execution date, price and the reporting officer&#x27;s title. This participant buys a name when two or more insiders bought it in the open market inside ten days. It is implemented and gat…</p>
+<p class="more"><a href="InsiderCluster_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="KitchenSink_Official.html">@KitchenSink_Official</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Kitchen Sink Official ·
+signal stacking</p>
+<p class="pos">
+<strong>+4.09%</strong> · 200 fills ·
+max DD -16.48%</p>
+<p>Season 1 had a participant that traded everything at once. This is the official-data version: it takes every collected official series, signs its 21-session change, and holds whatever the aggregate gesture implies. It exists as the placebo of the roster - if a…</p>
+<p class="more"><a href="KitchenSink_Official.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="LeapStyle_AutoLiquidate.html">@LeapStyle_AutoLiquidate</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Leap-Style Auto Liquidator ·
+levered beta</p>
+<p class="neg">
+<strong>-35.34%</strong> · 24 fills ·
+max DD -47.80%</p>
+<p>The Leap ranks accounts on total return and liquidates everything at the end of the contest. The rule copied here is the contest&#x27;s, not a market view: hold the fastest-trailing strong asset at the leverage bound, add when the trail improves, and be flat on the…</p>
+<p class="more"><a href="LeapStyle_AutoLiquidate.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="MLB_Attention_Live.html">@MLB_Attention_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">MLB Attention Live ·
+event attention proxy</p>
+<p class="pos">
+<strong>+19.46%</strong> · 108 fills ·
+max DD -31.75%</p>
+<p>The official MLB StatsAPI schedule is a dated, public clock of how much live sport is happening. The participant takes the sportsbook and sports-data equities levered when the schedule is dense and upsets are frequent - a pure attention proxy, and labelled as …</p>
+<p class="more"><a href="MLB_Attention_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="NasdaqMomentum_Max.html">@NasdaqMomentum_Max</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Nasdaq Momentum Max ·
+time-series trend</p>
+<p class="pos">
+<strong>+19.00%</strong> · 12 fills ·
+max DD -18.54%</p>
+<p>The Nasdaq Composite&#x27;s own trailing return is the signal: the brief asks for a Nasdaq leg, and this is the only version of it whose signal is an official index history rather than a proxy. The rule is the 12-month time-series momentum of the index, executed th…</p>
+<p class="more"><a href="NasdaqMomentum_Max.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="ORB_NextOpen_Probe.html">@ORB_NextOpen_Probe</a>
+<span class="badge badge-warn">FORWARD-ONLY</span></h3>
+<p class="muted small">ORB Next-Open Probe ·
+intraday momentum</p>
+<p class="pos">
+<strong>+3.87%</strong> · 0 fills ·
+max DD 0.00%</p>
+<p>The opening-range breakout is the most-posted day-trading rule on YouTube and r/daytrading, and the published academic version of it (Zarattini &amp; Aziz) needs intraday bars and finds the edge in abnormally active names. This participant exists to record what wo…</p>
+<p class="more"><a href="ORB_NextOpen_Probe.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="OilDollar_FadeUNG.html">@OilDollar_FadeUNG</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Oil-Dollar Fade ·
+commodity-macro proxy</p>
+<p class="neg">
+<strong>-17.10%</strong> · 136 fills ·
+max DD -33.19%</p>
+<p>Crude oil and the trade-weighted dollar are the two official series that drive commodity-equity cash flows in opposite directions. The rule buys energy exposure when oil is rising and the dollar is falling, and shorts the natural-gas ETF when both move against…</p>
+<p class="more"><a href="OilDollar_FadeUNG.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="PinePilot_EMA_Live.html">@PinePilot_EMA_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">PinePilot EMA Live ·
+time-series trend</p>
+<p class="neg">
+<strong>-8.23%</strong> · 29 fills ·
+max DD -24.79%</p>
+<p>PinePilot is a Pine Script generator; the canonical script it produces is a fast/slow EMA cross. The rule here is that script on QQQ, with the whole position taken on the cross and no filter. Its value in this roster is as the simplest possible trend baseline …</p>
+<p class="more"><a href="PinePilot_EMA_Live.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="SOFRPivot_Rider.html">@SOFRPivot_Rider</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">SOFR Pivot Rider ·
+curve/carry rotation</p>
+<p class="pos">
+<strong>+8.94%</strong> · 179 fills ·
+max DD -16.45%</p>
+<p>SOFR is the secured funding rate the Federal Reserve Bank of New York publishes every business day. Its 21-session direction is a public read on whether funding conditions are easing. Easing regimes should favour long-duration and high-beta equity; a rising fu…</p>
+<p class="more"><a href="SOFRPivot_Rider.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="VIXRegime_LiveMax.html">@VIXRegime_LiveMax</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">VIX Regime Live Max ·
+volatility regime timing (official index)</p>
+<p class="pos">
+<strong>+8.88%</strong> · 53 fills ·
+max DD -19.13%</p>
+<p>The official VIX close (FRED VIXCLS) is a published observation, not a model output, so a regime rule built on it is testable without a volatility model. The participant holds maximum equity leverage in the calm regime and flips short when the index itself bre…</p>
+<p class="more"><a href="VIXRegime_LiveMax.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="VolControl_MaxLev.html">@VolControl_MaxLev</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Vol Control Max Leverage ·
+volatility regime timing (official index)</p>
+<p class="neg">
+<strong>-9.71%</strong> · 85 fills ·
+max DD -17.30%</p>
+<p>Moreira &amp; Muir scale exposure inversely to recent variance. Their result is a Sharpe improvement, and this roster is not scored on Sharpe, so the participant takes the scaling rule and inverts its purpose: it holds the leverage bound whenever the official VIX …</p>
+<p class="more"><a href="VolControl_MaxLev.html">Full post-mortem &rarr;</a></p>
+</div><div class="card">
+<h3><a href="Weather_ColdSnap_Live.html">@Weather_ColdSnap_Live</a>
+<span class="badge badge-ok">READY</span></h3>
+<p class="muted small">Weather Cold Snap Live ·
+event attention proxy</p>
+<p class="pos">
+<strong>+1.09%</strong> · 23 fills ·
+max DD -19.29%</p>
+<p>NOAA/NCEI daily station records are the official observation of heating demand at two US stations. The proxy trade is natural gas and utilities: a cold anomaly should lift both with a lag, and the participant is explicit that the mapping is weak and is being t…</p>
+<p class="more"><a href="Weather_ColdSnap_Live.html">Full post-mortem &rarr;</a></p>
+</div></div>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nasdaq Momentum Max · StockPaperSim Live Book</title>
+<meta name="description" content="A forward-tested paper-trading book: every strategy
+writes an intent after the close and the venue settles it against a later verified
+daily bar, with the reference file, SHA-256, participation and slippage recorded per
+trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Live Book · intents placed for future sessions, settled on
+    collected verified bars</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Nasdaq Momentum Max <span class="muted">@NasdaqMomentum_Max</span></h1>
+<p class="lede">The Nasdaq Composite&#x27;s own trailing return is the signal: the brief asks for a Nasdaq leg, and this is the only version of it whose signal is an official index history rather than a proxy. The rule is the 12-month time-series momentum of the index, executed through QQQ at the leverage bound.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="kpi-label">Forward-tested return</div>
+    <div class="kpi-value pos">
+    +19.00%</div>
+    <div class="kpi-sub">$18,996.02 net on
+    $100,000.00 starting cash</div></div>
+  <div class="kpi"><div class="kpi-label">Risk</div>
+    <div class="kpi-value">-18.54%</div>
+    <div class="kpi-sub">max drawdown · Sharpe
+    0.7239</div></div>
+  <div class="kpi"><div class="kpi-label">Execution</div>
+    <div class="kpi-value">12 fills</div>
+    <div class="kpi-sub">12 intents ·
+    0 refused · cost
+    0.002%</div></div>
+  <div class="kpi"><div class="kpi-label">Data status</div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">all declared inputs present</div></div>
+</div>
+
+<h2>Why the result is what it is</h2>
+<ul><li>Nasdaq Momentum Max (@NasdaqMomentum_Max) planned 12 forward intents and saw 12 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 118,996.02 USD on 100,000 starting cash: +19.00% with a worst peak-to-trough drawdown of -18.54% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant beat the benchmark by 4.6pp.</li><li>Execution cost was 15.61 USD, 0.002% of 744,290 USD traded, at a mean slippage of 0.11 bps against the decision mid; median participation was 0.00024% of the session&#x27;s real volume (max 0.00049%).</li><li>4 round trips closed; win rate 25.0% and profit factor 0.3164. The largest single trip was 963.66 USD and the worst -2,380.52 USD.</li><li>Contribution by instrument: QQQ -2,082.20 USD was the biggest positive and QQQ -2,082.20 USD the biggest negative, out of 1 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
+
+<h2>The rule as it ran</h2>
+<p><strong>Inputs:</strong> <code>NASDAQCOM</code>, <code>SOFR</code></p>
+<p><strong>Sizing:</strong> up to 1.95x gross, inside the 2.0x house leverage bound ·
+<strong>leverage:</strong> 1.8-1.95x gross when long, 0.8x when short ·
+<strong>cadence:</strong> every session, executed the next session ·
+<strong>horizon:</strong> months</p>
+<h3>Entry rules</h3>
+<ul><li>Read the official NASDAQCOM daily close (FRED, source: Nasdaq, Inc.)</li><li>If the index&#x27;s 210-session return is positive and the close is above its 200-session mean, target long QQQ at 1.95x equity</li><li>If both are negative, target short QQQ at 0.8x equity</li><li>Otherwise stand flat</li></ul>
+<h3>Exit rules</h3>
+<ul><li>The rule reverses only when the sign of both conditions flips; there is no stop and no volatility target</li></ul>
+<h3>Evidence base</h3>
+<ul><li>Time-series momentum - an asset&#x27;s own past 12-month return predicts its next-month return across asset classes — <a href="https://doi.org/10.1016/j.jfineco.2011.11.003">Moskowitz, Ooi &amp; Pedersen (2012), Journal of Financial Economics 104(2)</a> <span class="muted small">[KNOWN-NOT-FETCHED]</span></li><li>Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here — <a href="https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210">Federal Reserve Board Reg T; FINRA Rule 4210</a> <span class="muted small">[FETCHED-VERIFIED]</span></li></ul>
+<h3>Declared failure modes</h3>
+<ul><li>Time-series momentum is documented to crash at turning points; the 200-session filter does not remove that, it delays it</li><li>The index signal is measured on the index while the trade is in QQQ, so tracking and fees sit between signal and P&amp;L</li><li>Leverage turns a 10% index drawdown into a 20% account drawdown</li></ul>
+
+<h2>Contribution by instrument</h2>
+<table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
+<tbody><tr><td>QQQ</td><td class="neg">$-2,082.20</td></tr></tbody></table>
+
+<h2>Post-mortem statistics</h2>
+<ul>
+<li>Round trips closed: 4 · still open:
+0</li>
+<li>Win rate: 25.00% · profit factor:
+0.3164</li>
+<li>Largest trip: $963.66 · worst trip:
+$-2,380.52</li>
+<li>Carry: $229.18 received,
+$4,863.34 paid at SOFR
+(ACT/360 (declared)); rate source
+<span class="badge badge-ok">OFFICIAL</span></li>
+<li>Margin events: 0</li>
+</ul>
+
+<h2>Round trips</h2>
+<table class="participants">
+<thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
+<th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
+</tr></thead>
+<tbody><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>596.0086</td>
+<td>2026-03-16</td>
+<td>600.0300</td><td>240</td>
+<td class="pos">
+$963.66</td>
+<td>None</td><td>nasdaq-momentum: mixed: 210-session return +18.16%, close vs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>601.4064</td>
+<td>2026-03-19</td>
+<td>589.5100</td><td>200</td>
+<td class="neg">
+$-2,380.52</td>
+<td>None</td><td>nasdaq-momentum: mixed: 210-session return +15.91%, close vs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2025-09-18</td><td>601.4064</td>
+<td>2026-03-24</td>
+<td>584.8000</td><td>40</td>
+<td class="neg">
+$-664.50</td>
+<td>None</td><td>nasdaq-momentum: mixed: 210-session return +14.65%, close vs</td>
+</tr><tr><td>QQQ</td><td>long</td>
+<td>2026-04-09</td><td>612.8900</td>
+<td>OPEN</td>
+<td>0.0000</td><td>280</td>
+<td class="neg">
+$-0.84</td>
+<td>None</td><td></td>
+</tr></tbody></table>
+
+<h2>Intents placed</h2>
+<table class="participants">
+<thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
+<th>settlement note</th><th>evidence read</th></tr></thead>
+<tbody><tr><td>2025-09-18</td>
+<td>QQQ</td><td>buy</td><td>160</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2025-09-19</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2025-09-22</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-03-16</td>
+<td>QQQ</td><td>sell</td><td>240</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-03-17</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-03-18</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-03-19</td>
+<td>QQQ</td><td>sell</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-03-24</td>
+<td>QQQ</td><td>sell</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-04-09</td>
+<td>QQQ</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-04-10</td>
+<td>QQQ</td><td>buy</td><td>80</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-04-13</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr><tr><td>2026-04-16</td>
+<td>QQQ</td><td>buy</td><td>40</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>NASDAQCOM, QQQ_price, SOFR</td></tr></tbody></table>
+<p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    strategy writes an intent after the close of one session and the venue settles it
+    against a later verified daily bar through the same microstructure model the
+    competition uses. Signals, the benchmark, the trading calendar and the financing
+    rate are official, free and publicly available; the executable bars are the
+    collected Yahoo research files marked <strong>SECONDARY</strong>, so this is not an
+    official-price competition and every page says what share of traded notional used
+    an official reference price. Nothing here is investment advice.</p>
+    <p>Generated by <code>scripts/build_site_live.py</code> from
+    <code>memory/live/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

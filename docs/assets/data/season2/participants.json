@@ -40,7 +40,11 @@
   "why_return_seeking": "Biotech sector swings are among the largest of any US industry ETF, and the signal is an official dated event stream rather than a price derivative.",
   "factor_exposure": {
    "momentum": 1.0
-  }
+  },
+  "signal_names": [
+   "fda_orig_30d",
+   "fda_orig_z"
+  ]
  },
  {
   "username": "@FDA_ClusterFade",
@@ -78,7 +82,12 @@
   "factor_exposure": {
    "reversal": 1.0,
    "momentum": -1.0
-  }
+  },
+  "signal_names": [
+   "fda_orig_30d",
+   "fda_all_30d",
+   "fda_orig_z"
+  ]
  },
  {
   "username": "@InsiderCopycat_Max",
@@ -122,7 +131,10 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.3
-  }
+  },
+  "signal_names": [
+   "insider_buys_30d"
+  ]
  },
  {
   "username": "@InsiderCluster_Alpha",
@@ -160,7 +172,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.3
-  }
+  },
+  "signal_names": [
+   "insider_buys_30d",
+   "insider_buy_ratio_30d"
+  ]
  },
  {
   "username": "@CEO_CFO_Conviction",
@@ -198,7 +214,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.3
-  }
+  },
+  "signal_names": [
+   "insider_ceo_buys_30d",
+   "insider_buys_30d"
+  ]
  },
  {
   "username": "@MLB_Attention_Momo",
@@ -235,7 +255,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.8
-  }
+  },
+  "signal_names": [
+   "mlb_games_7d",
+   "mlb_upsets_7d"
+  ]
  },
  {
   "username": "@MLB_Upset_Short",
@@ -272,7 +296,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.8
-  }
+  },
+  "signal_names": [
+   "mlb_upsets_7d",
+   "mlb_home_win_rate_30d"
+  ]
  },
  {
   "username": "@Weather_ColdSnap_Max",
@@ -309,7 +337,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.8
-  }
+  },
+  "signal_names": [
+   "weather_cold_anomaly_10d",
+   "weather_precip_30d_in"
+  ]
  },
  {
   "username": "@Kalshi_Attention_Timer",
@@ -346,7 +378,11 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.8
-  }
+  },
+  "signal_names": [
+   "kalshi_settled_30d",
+   "kalshi_volume_30d"
+  ]
  },
  {
   "username": "@GOLD_Trend_GLD",
@@ -383,7 +419,10 @@
   "factor_exposure": {
    "momentum": 1.0,
    "beta": 0.5
-  }
+  },
+  "signal_names": [
+   "gold_close"
+  ]
  },
  {
   "username": "@PinePilot_EMA_Cross",
@@ -420,7 +459,8 @@
   "factor_exposure": {
    "momentum": 1.0,
    "beta": 0.5
-  }
+  },
+  "signal_names": []
  },
  {
   "username": "@LeapMaxLever_Momentum",
@@ -457,7 +497,8 @@
   "factor_exposure": {
    "beta": 1.0,
    "market": 1.0
-  }
+  },
+  "signal_names": []
  },
  {
   "username": "@YieldCurve_Rotator",
@@ -495,7 +536,11 @@
   "factor_exposure": {
    "momentum": 0.3,
    "beta": 0.6
-  }
+  },
+  "signal_names": [
+   "fred_slope_bps",
+   "fred_slope_change_21d"
+  ]
  },
  {
   "username": "@InjuryFeed_Forward",
@@ -536,6 +581,10 @@
   "factor_exposure": {
    "momentum": 0.5,
    "beta": 0.8
-  }
+  },
+  "signal_names": [
+   "nfl_injury_report",
+   "nba_injury_report"
+  ]
  }
 ]

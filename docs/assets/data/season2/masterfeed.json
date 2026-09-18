@@ -3,13 +3,17 @@
  "register": [
   {
    "id": "CEO",
+   "signals": [
+    "insider_ceo_buys_30d",
+    "insider_buys_30d"
+   ],
    "requested_as": "CEO",
    "repo": null,
    "title": "No project named 'CEO' exists in the directory",
    "site_url": "https://buffedlizard55-lab.github.io/MasterSite/",
    "official_url": "https://www.sec.gov/edgar/search/",
    "source_class": "OFFICIAL",
-   "status": "FORWARD-ONLY",
+   "status": "BACKTESTED",
    "mapping": "STRONG-MAPPING",
    "mapping_note": "The directory was enumerated from the official GitHub API (39 public repositories) and from the site's own data file: there is no CEO-named project. The closest real feed for CEO behaviour is SEC Form 4, which is tagged with the officer's title, so a CEO/CFO-only filter is implemented on the real Form 4 stream instead of inventing a source.",
    "evidence": [
@@ -31,6 +35,10 @@
   },
   {
    "id": "SFWeather",
+   "signals": [
+    "weather_cold_anomaly_10d",
+    "weather_precip_30d_in"
+   ],
    "requested_as": "weather",
    "repo": "SFWeather",
    "title": "SFWeather - 94122 rainy-season outlook",
@@ -51,6 +59,10 @@
   },
   {
    "id": "Insider-trades",
+   "signals": [
+    "insider_buys_30d",
+    "insider_buy_ratio_30d"
+   ],
    "requested_as": "insider trades",
    "repo": "Insider-trades",
    "title": "Insider-trades - SEC EDGAR Form 4 toolkit",
@@ -80,6 +92,7 @@
   },
   {
    "id": "TradingViewTheLeap",
+   "signals": [],
    "requested_as": "TheLeap",
    "repo": "TradingViewTheLeap",
    "title": "The Leap - verified competition research",
@@ -103,6 +116,7 @@
   },
   {
    "id": "NFLInjuryReport",
+   "signals": [],
    "requested_as": "NFL Injury",
    "repo": "NFLInjuryReport",
    "title": "NFL Injury Report - 32 team tracker",
@@ -124,6 +138,7 @@
   },
   {
    "id": "NBAInjuryReport",
+   "signals": [],
    "requested_as": "NBA Injury",
    "repo": "NBAInjuryReport",
    "title": "NBA Injury Watch - 30 team monitor",
@@ -146,6 +161,11 @@
   },
   {
    "id": "DrugAnalysis",
+   "signals": [
+    "fda_orig_30d",
+    "fda_orig_z",
+    "fda_all_30d"
+   ],
    "requested_as": "FDA Decisions Drug Analysis",
    "repo": "DrugAnalysis",
    "title": "DrugAnalysis - FDA decisions and biotech reactions",
@@ -166,6 +186,7 @@
   },
   {
    "id": "Ncaa-football-alerts",
+   "signals": [],
    "requested_as": "NCAA Scoreboard",
    "repo": "Ncaa-football-alerts",
    "title": "Ncaa-football-alerts",
@@ -187,6 +208,10 @@
   },
   {
    "id": "NFL-scoreboard",
+   "signals": [
+    "mlb_games_7d",
+    "mlb_upsets_7d"
+   ],
    "requested_as": "NFL scoreboard",
    "repo": "NFL-scoreboard",
    "title": "NFL-scoreboard",
@@ -208,6 +233,11 @@
   },
   {
    "id": "MLB-Live-PBP",
+   "signals": [
+    "mlb_games_7d",
+    "mlb_upsets_7d",
+    "mlb_home_win_rate_30d"
+   ],
    "requested_as": "MLB Scoreboard",
    "repo": "MLB-Live-PBP",
    "title": "MLB pitch-by-pitch / scoreboard feeds",
@@ -229,6 +259,7 @@
   },
   {
    "id": "SportsPred",
+   "signals": [],
    "requested_as": "Sports Pred",
    "repo": "SportsPred",
    "title": "SportsPred - game prediction models",
@@ -247,6 +278,9 @@
   },
   {
    "id": "GOLD",
+   "signals": [
+    "gold_close"
+   ],
    "requested_as": "Gold",
    "repo": "GOLD",
    "title": "GOLD - solid-gold engagement ring buyer's guide",
@@ -267,6 +301,7 @@
   },
   {
    "id": "Tradingview-pinescript-editor",
+   "signals": [],
    "requested_as": "PinePilot",
    "repo": "Tradingview-pinescript-editor",
    "title": "PinePilot - Pine Script editor and strategy lab",
@@ -290,6 +325,10 @@
   },
   {
    "id": "KalshiPaperSim",
+   "signals": [
+    "kalshi_settled_30d",
+    "kalshi_volume_30d"
+   ],
    "requested_as": "Kalshi (competition design reference)",
    "repo": "KalshiPaperSim",
    "title": "KalshiPaperSim - paper-trading competition lab",
@@ -319,7 +358,33 @@
     "2026-09-14"
    ],
    "files": [
-    "real/fda/openfda_decisions.jsonl"
+    "data/real/fda/openfda_decisions.jsonl"
+   ],
+   "note": "approvals of original applications with status AP, by decision date",
+   "url": "https://api.fda.gov/drug/drugsfda.json"
+  },
+  "fda_orig_z": {
+   "state": "AVAILABLE",
+   "rows": 1680,
+   "window": [
+    "2024-09-16",
+    "2026-09-14"
+   ],
+   "files": [
+    "data/real/fda/openfda_decisions.jsonl"
+   ],
+   "note": "approvals of original applications with status AP, by decision date",
+   "url": "https://api.fda.gov/drug/drugsfda.json"
+  },
+  "fda_all_30d": {
+   "state": "AVAILABLE",
+   "rows": 1680,
+   "window": [
+    "2024-09-16",
+    "2026-09-14"
+   ],
+   "files": [
+    "data/real/fda/openfda_decisions.jsonl"
    ],
    "note": "approvals of original applications with status AP, by decision date",
    "url": "https://api.fda.gov/drug/drugsfda.json"
@@ -333,9 +398,57 @@
    ],
    "files": [],
    "note": "no collected Form 4 file",
-   "url": "https://www.sec.gov/"
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
+  },
+  "insider_ceo_buys_30d": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "no collected Form 4 file",
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
+  },
+  "insider_buy_ratio_30d": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "no collected Form 4 file",
+   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
   },
   "mlb_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 2291,
+   "window": [
+    "2026-03-25",
+    "2026-09-17"
+   ],
+   "files": [
+    "data/real/sports/mlb_games_2026.jsonl"
+   ],
+   "note": "MLB regular-season finals, official league feed",
+   "url": "https://statsapi.mlb.com/api/v1/schedule"
+  },
+  "mlb_home_win_rate_30d": {
+   "state": "AVAILABLE",
+   "rows": 2291,
+   "window": [
+    "2026-03-25",
+    "2026-09-17"
+   ],
+   "files": [
+    "data/real/sports/mlb_games_2026.jsonl"
+   ],
+   "note": "MLB regular-season finals, official league feed",
+   "url": "https://statsapi.mlb.com/api/v1/schedule"
+  },
+  "mlb_upsets_7d": {
    "state": "AVAILABLE",
    "rows": 2291,
    "window": [
@@ -361,6 +474,19 @@
    "note": "NCEI daily summaries, San Francisco station USW00023272",
    "url": "https://www.ncei.noaa.gov/access/services/data/v1"
   },
+  "weather_precip_30d_in": {
+   "state": "AVAILABLE",
+   "rows": 721,
+   "window": [
+    "2024-09-16",
+    "2026-09-13"
+   ],
+   "files": [
+    "data/real/weather/USW00023272_daily.json"
+   ],
+   "note": "NCEI daily summaries, San Francisco station USW00023272",
+   "url": "https://www.ncei.noaa.gov/access/services/data/v1"
+  },
   "kalshi_settled_30d": {
    "state": "AVAILABLE",
    "rows": 610,
@@ -371,10 +497,36 @@
    "files": [
     "data/real/kalshi/"
    ],
-   "note": "settled-contract counts and volumes from the venue's own API",
+   "note": "settled-contract counts from the venue's own API; the price and volume fields in the same payload are null",
+   "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
+  },
+  "kalshi_volume_30d": {
+   "state": "MISSING",
+   "rows": 610,
+   "window": [
+    "2026-07-31",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/kalshi/"
+   ],
+   "note": "every volume/open_interest/last_price field in the collected payload is null, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING",
    "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
   },
   "fred_slope_bps": {
+   "state": "AVAILABLE",
+   "rows": 500,
+   "window": [
+    "2024-09-16",
+    "2026-09-16"
+   ],
+   "files": [
+    "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
+   ],
+   "note": "10-year minus 3-month Treasury constant-maturity yields",
+   "url": "https://fred.stlouisfed.org/series/DGS10"
+  },
+  "fred_slope_change_21d": {
    "state": "AVAILABLE",
    "rows": 500,
    "window": [
@@ -399,11 +551,574 @@
    ],
    "note": "GLD closes from the collected vendor file",
    "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD"
+  },
+  "spy_dollar_volume_20d": {
+   "state": "AVAILABLE",
+   "rows": 502,
+   "window": [
+    "2024-09-16",
+    "2026-09-16"
+   ],
+   "files": [
+    "data/real/prices/yahoo/GLD.json"
+   ],
+   "note": "GLD closes from the collected vendor file",
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD"
+  },
+  "nfl_injury_report": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "url": "https://www.nfl.com/injuries/"
+  },
+  "nba_injury_report": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "official feed resolves (not captured by the last collection run), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
+  },
+  "insider_buys_30d::AAPL": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::DKNG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::FLUT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::GENI": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::GLD": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::IBB": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::IWM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::JNJ": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::JPM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::MSFT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::MU": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::NVDA": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::PENN": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::PG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::QQQ": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::SPY": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::SRAD": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::T": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::TLT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::TSLA": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::UNG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::XBI": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::XLU": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_buys_30d::XOM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::AAPL": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::DKNG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::FLUT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::GENI": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::GLD": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::IBB": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::IWM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::JNJ": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::JPM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::MSFT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::MU": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::NVDA": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::PENN": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::PG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::QQQ": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::SPY": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::SRAD": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::T": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::TLT": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::TSLA": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::UNG": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::XBI": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::XLU": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
+  },
+  "insider_ceo_buys_30d::XOM": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "array was filled but never registered as sourced - treated as missing on purpose",
+   "url": ""
   }
  },
  "provenance": {
   "fda": {
-   "file": "real/fda/openfda_decisions.jsonl",
+   "file": "data/real/fda/openfda_decisions.jsonl",
    "url": "https://api.fda.gov/drug/drugsfda.json"
   },
   "mlb": {
@@ -421,6 +1136,122 @@
   "fred": {
    "file": "data/real/fred/DGS10_2024-09-16_2026-09-17.csv",
    "url": "https://fred.stlouisfed.org/series/DGS10"
+  }
+ },
+ "fire_counts": {
+  "fda_orig_30d": {
+   "sessions_actionable": 251,
+   "sessions_in_window": 251,
+   "last_value": 44.0,
+   "state": "AVAILABLE"
+  },
+  "fda_orig_z": {
+   "sessions_actionable": 251,
+   "sessions_in_window": 251,
+   "last_value": -2.0642,
+   "state": "AVAILABLE"
+  },
+  "fda_all_30d": {
+   "sessions_actionable": 251,
+   "sessions_in_window": 251,
+   "last_value": 195.0,
+   "state": "AVAILABLE"
+  },
+  "insider_buy_ratio_30d": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "insider_buys_30d": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "insider_ceo_buys_30d": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "mlb_games_7d": {
+   "sessions_actionable": 120,
+   "sessions_in_window": 251,
+   "last_value": 90.0,
+   "state": "AVAILABLE"
+  },
+  "mlb_home_win_rate_30d": {
+   "sessions_actionable": 119,
+   "sessions_in_window": 251,
+   "last_value": 0.5586,
+   "state": "AVAILABLE"
+  },
+  "mlb_upsets_7d": {
+   "sessions_actionable": 118,
+   "sessions_in_window": 251,
+   "last_value": 39.0,
+   "state": "AVAILABLE"
+  },
+  "weather_cold_anomaly_10d": {
+   "sessions_actionable": 95,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "weather_precip_30d_in": {
+   "sessions_actionable": 237,
+   "sessions_in_window": 251,
+   "last_value": 0.03,
+   "state": "AVAILABLE"
+  },
+  "kalshi_settled_30d": {
+   "sessions_actionable": 32,
+   "sessions_in_window": 251,
+   "last_value": 446.0,
+   "state": "AVAILABLE"
+  },
+  "kalshi_volume_30d": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "fred_slope_bps": {
+   "sessions_actionable": 250,
+   "sessions_in_window": 251,
+   "last_value": 89.0,
+   "state": "AVAILABLE"
+  },
+  "fred_slope_change_21d": {
+   "sessions_actionable": 250,
+   "sessions_in_window": 251,
+   "last_value": 7.0,
+   "state": "AVAILABLE"
+  },
+  "gold_close": {
+   "sessions_actionable": 251,
+   "sessions_in_window": 251,
+   "last_value": 391.74,
+   "state": "AVAILABLE"
+  },
+  "spy_dollar_volume_20d": {
+   "sessions_actionable": 251,
+   "sessions_in_window": 251,
+   "last_value": 29103697902.34,
+   "state": "AVAILABLE"
+  },
+  "nfl_injury_report": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "nba_injury_report": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
   }
  }
 }

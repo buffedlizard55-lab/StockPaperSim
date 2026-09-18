@@ -158,6 +158,53 @@ jobs:
             done
           fi
 
+      # A collection changes the bytes the published season was derived from: the
+      # site and the run memory embed a SHA-256 per price file, and the custody
+      # page prints it. Pushing data without re-deriving the season therefore
+      # leaves main publishing hashes that no longer exist - observed after run
+      # 35305919022, where the merge of the collector's own commit made the
+      # published custody page stale (IR-47). Re-deriving here keeps the two in
+      # step, and it is deliberately a separate step from the data commit above
+      # so that a failure here cannot lose the collection.
+      - name: Re-derive the season and the site from the new files
+        if: ${{ github.event.inputs.commit != 'false' }}
+        run: |
+          python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity
+          # The site is rebuilt BEFORE the audits, not after: the Season 2 audit
+          # re-reads the published pages and compares every number they quote with
+          # the memory, so a collection that legitimately moves a number would fail
+          # the gate against the previous run's pages (IR-48, observed after run
+          # 35318147506). Rebuilding first makes the audits read the pages that are
+          # about to be committed; they are still the gate, and nothing in them was
+          # skipped or weakened.
+          python3 -m sim.cli build-site
+          python3 scripts/independent_audit.py
+          python3 scripts/independent_audit_season2.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A memory docs
+          if git diff --cached --quiet; then
+            echo "no changes to re-derive"
+          else
+            BRANCH="${{ github.ref_name }}"
+            git commit -m "data: re-derive Season 2 and the site from the collected files
+
+          The published season embeds a SHA-256 per price file, so a collection is
+          only complete once the season, the ledger, the registers and the site
+          have been re-derived from the new bytes. Produced by the collector
+          workflow, with both independent audits run as a gate before the commit."
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:$BRANCH"; then
+                echo "pushed on attempt $attempt"
+                break
+              fi
+              echo "::warning::push attempt $attempt rejected; rebasing and retrying"
+              git fetch --quiet origin "$BRANCH"
+              git rebase --quiet "origin/$BRANCH" || git rebase --abort || true
+              [ "$attempt" = "3" ] && { echo "::error::could not push the re-derived season"; exit 1; }
+            done
+          fi
+
       - name: Upload the collection manifest as an artifact
         if: always()
         uses: actions/upload-artifact@v4

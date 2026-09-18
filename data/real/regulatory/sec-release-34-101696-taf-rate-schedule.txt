@@ -1,0 +1,63 @@
+SOURCE: https://www.federalregister.gov/documents/2024/11/27/2024-27764/self-regulatory-organizations-financial-industry-regulatory-authority-inc-notice-of-filing-and
+        "Self-Regulatory Organizations; Financial Industry Regulatory Authority,
+        Inc.; Notice of Filing and Immediate Effectiveness of a Proposed Rule
+        Change To Adjust FINRA Fees To Provide Sustainable Funding for FINRA's
+        Regulatory Mission"
+        Release No. 34-101696; File No. SR-FINRA-2024-019; 89 FR 93709
+        (23 pages, published 2024-11-27)
+Publisher: U.S. Securities and Exchange Commission (Federal Register)
+Retrieved: 2026-09-18 (fetched; the rate table is on printed page 93714)
+
+WHY THIS FILE EXISTS
+  The 2025 half of the Trade Activity Fee schedule in
+  config.FINRA_TAF_PER_SHARE ("2025-01-01", 0.000166) and
+  config.FINRA_TAF_MAX_PER_TRADE ("2025-01-01", 8.30). FINRA's Schedule A page
+  is served as the current version only - the 2026 one - and Season 1's
+  sessions from 2025-09-17 to 2025-12-31 are costed at the 2025 rate, so the
+  2025 number needs a primary citation of its own. This is the Commission's
+  publication of the FINRA filing that set it, and its rate table carries a
+  "2025 (no change)" column beside the 2026 column. Closes IR-05 with
+  finra-schedule-a-section-1-taf.txt.
+
+QUOTED (Section II.A.1, "Trading Activity Fee", printed page 93714)
+  "The current TAF rates, which reflect the fee adjustments made from 2022
+  through 2024, are:
+  (1) $0.000166 per share for each sale of a covered equity security, with a
+  maximum charge of $8.30 per trade;
+  (2) $0.00279 per contract for each sale of an option;
+  (3) $0.00011 per contract for each round turn transaction of a security
+  future, provided there is a minimum charge of $0.014 per round turn
+  transaction;
+  (4) $0.00105 per bond for each sale of a covered TRACE-Eligible Security
+  (other than an Asset-Backed Security) and/or municipal security, with a
+  maximum charge of $1.05 per trade; and
+  (5) $0.00000105 times the value, as reported to TRACE, of a sale of an
+  Asset-Backed Security, with a maximum charge of $1.05 per trade."
+
+  "FINRA is proposing the following changes to its TAF rates between 2026 and
+  2029:" - table, row "Covered Equity Security", columns 2024 (current) /
+  2025 (no change) / 2026 / 2027 / 2028 / 2029:
+    "$0.000166 per share (up to $8.30 max per trade) | $0.000166 per share
+     (up to $8.30 max per trade) | $0.000195 per share (up to $9.79 max per
+     trade) | $0.000232 per share (up to $11.61 max per trade) | $0.000240
+     per share (up to $12.05 max per trade) | $0.000249 per share (up to
+     $12.50 max per trade)."
+
+  Footnote 39: "If the execution price for a covered security is less than the
+  TAF rate ($0.000166 for covered equity securities, $0.00279 for covered
+  options contracts, or $0.014 for a security future) on a per share, per
+  contract, or round turn transaction basis, then no fee is assessed."
+
+WHAT THIS DOES AND DOES NOT ESTABLISH
+  Establishes the 2025 rate ($0.000166/share, $8.30 maximum) from the
+  Commission's own publication of the filing that set it, and corroborates the
+  2026 rate ($0.000195/share, $9.79 maximum) that Schedule A states as the
+  operative 2026 version. The two documents agree to the digit, which is why
+  config's schedule is unchanged by this verification: only its evidence
+  label moved.
+
+  It also establishes what the schedule is NOT: a filing that phases rates in
+  through 2029 (2027 $0.000232/$11.61, 2028 $0.000240/$12.05, 2029
+  $0.000249/$12.50). Both published seasons end 2026-09-16, so none of those
+  later steps apply - but a future season crossing 2027-01-01 would need them,
+  and this file is where the numbers for that are already stored.

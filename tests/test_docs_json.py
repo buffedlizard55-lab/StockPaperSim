@@ -58,7 +58,7 @@ class TestPublishedSite(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
         season1 = [p for p in self.pages if not p.startswith("season2/")]
-        self.assertEqual(len(season1), 30)      # 10 top level + 20 + index
+        self.assertEqual(len(season1), 31)      # 11 top level + 20 + index
         # Season 2 publishes under docs/season2/: 7 index pages plus one per
         # participant, and it must not leak into Season 1's participant tree.
         season2 = [p for p in self.pages if p.startswith("season2/")]
@@ -241,7 +241,12 @@ class TestPublishedSite(unittest.TestCase):
         self.assertIn("$8.30 per trade from 2025-01-01", text)
         self.assertIn("$9.79 per trade from 2026-01-01", text)
         self.assertIn(config.fee_coverage_start(), text)
-        self.assertRegex(text, r"(?i)secondary source")   # the TAF caveat
+        # The TAF caveat used to read "rate and cap from a secondary source,
+        # see IR-05". Since 2026-09-18 both schedules are primary-sourced, so
+        # the guard is the source being named - not the caveat being present.
+        self.assertIn("section-1-member-regulatory-fees", text)
+        self.assertIn("2024-27764", text)
+        self.assertRegex(text, r"IR-05 is closed")
 
     def test_the_tick_size_exemption_is_explained_on_the_site(self):
         text = _read("methodology.html") + _read("irregularities.html")
@@ -270,9 +275,14 @@ class TestPublishedSite(unittest.TestCase):
         with open(os.path.join(REPO_ROOT, "research", "REMAINING_WORK.json"),
                   encoding="utf-8") as fh:
             rows = json.load(fh)
-        html = _read("limitations.html")
+        # Compare the rendered *text*: the page escapes apostrophes and
+        # ampersands, and a title that says "collector's" must not fail this
+        # check because the markup says &#x27;. Unescaping the page is the
+        # honest comparison; escaping the expected string was the previous
+        # approach and it only worked while no title contained an apostrophe.
+        page = html.unescape(_read("limitations.html"))
         for row in rows:
-            self.assertIn(row["title"][:30].replace("&", "&amp;"), html,
+            self.assertIn(row["title"][:30], page,
                           f"remaining work not published: {row['title'][:40]}")
 
     def test_every_participant_page_has_the_why_it_worked_section(self):

@@ -1,0 +1,63 @@
+SOURCE: https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data
+Publisher: U.S. Securities and Exchange Commission
+Page date: 2021-03-23 (as printed on the page; the fair-access section and the
+           declared-bot header table are what is quoted below)
+Retrieved: 2026-09-18
+
+WHY THIS FILE EXISTS
+--------------------
+Season 2's insider study reads SEC EDGAR: the official ticker->CIK map, each
+issuer's submissions index, and the Form 4 XML the transactions are parsed from.
+Whether the collector is allowed to make those requests is not a matter of
+folklore - SEC publishes the header set it expects from an automated client, and
+this page is where it does so.
+
+It was retrieved after the collection run of 2026-09-18 (run 35307463165 on
+arena/01a0b254-stockpapersim) was answered HTTP 403 for
+https://www.sec.gov/files/company_tickers.json, and the manifest could only say
+"HTTP 403": it recorded neither the headers that were sent nor why the request
+was refused. The collector was declaring a User-Agent with a contact address but
+leaving urllib's default Accept-Encoding: identity. Both headers in the
+published set are now sent, the manifest records the status, the attempt count
+and the first characters of a refusal body, and the endpoint has a fallback
+(the per-company filing feed) so that a refusal of one document does not become
+a refusal of the whole study.
+
+QUOTED (fair access, and the declared-bot header table, verbatim)
+-----------------------------------------------------------------
+"Current max request rate: 10 requests/second."
+
+"To ensure everyone has equitable access to SEC EDGAR content, please use
+efficient scripting. Download only what you need and please moderate requests to
+minimize server load."
+
+"The SEC does not allow botnets or automated tools to crawl the site. Any
+request that has been identified as part of a botnet or an automated tool
+outside of the acceptable policy will be managed to ensure fair access for all
+users."
+
+"Please declare your user agent in request headers:
+
+Sample Declared Bot Request Headers:
+
+| User-Agent:      | Sample Company Name AdminContact@<sample company domain>.com |
+| Accept-Encoding: | gzip, deflate |
+| Host:            | www.sec.gov |"
+
+WHAT THIS DOES AND DOES NOT ESTABLISH
+-------------------------------------
+It establishes the client's obligations in the publisher's own words: a
+User-Agent in the shape "<name> <contact address>", an Accept-Encoding of
+"gzip, deflate", and a request rate at or below ten per second. The collector
+sends all three - SEC_UA, BASE_HEADERS and SEC_MIN_INTERVAL (0.13s, about eight
+per second) in scripts/collect_real_data.py - and its tests pin the header set.
+
+It does NOT establish that a compliant request will be answered. A 403 can come
+from the source address's reputation rather than from anything the client sends,
+and that distinction cannot be made from here: the requests are made on a GitHub
+runner, not in the development sandbox. What the collector can do, and now does,
+is record the headers, the status, the attempt count and the publisher's own
+refusal text, so the next run answers the question from evidence instead of from
+a guess. One option is deliberately not taken: no browser User-Agent is sent,
+because misrepresenting the client to a regulator to obtain a file is not a
+thing this project is willing to do to close a data gap.

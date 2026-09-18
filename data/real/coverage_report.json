@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T07:22:50Z",
+ "generated_at": "2026-09-18T12:35:59Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -164,7 +164,7 @@
    },
    "nfl_injuries": {
     "ok": true,
-    "bytes": 381285
+    "bytes": 381253
    },
    "ncaa_scoreboard_fbs_2025_week10": {
     "ok": true,
@@ -177,12 +177,12 @@
   "weather": {
    "USW00023272": {
     "ok": true,
-    "rows": 721,
+    "rows": 723,
     "label": "San Francisco (downtown / SFO-area co-op station)"
    },
    "USW00023234": {
     "ok": true,
-    "rows": 728,
+    "rows": 730,
     "label": "San Francisco International Airport"
    }
   },
@@ -214,7 +214,7 @@
    }
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T07:22:50Z",
+   "generated_at": "2026-09-18T12:35:59Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -245,7 +245,7 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201278
+   "bytes": 2201214
   },
   {
    "label": "Stooq daily CSV (blocked)",
@@ -287,21 +287,21 @@
    "source_class": "MIXED",
    "path": "real/sports",
    "files": 8,
-   "bytes": 2301958
+   "bytes": 2301926
   },
   {
    "label": "NOAA/NCEI daily summaries",
    "source_class": "OFFICIAL",
    "path": "real/weather",
    "files": 2,
-   "bytes": 123147
+   "bytes": 123487
   },
   {
    "label": "Kalshi trade API (settled markets)",
    "source_class": "OFFICIAL-VENDOR",
    "path": "real/kalshi",
    "files": 5,
-   "bytes": 520529
+   "bytes": 520553
   }
  ]
 }

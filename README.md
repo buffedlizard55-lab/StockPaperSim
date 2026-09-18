@@ -235,7 +235,7 @@ from the venue assumptions rather than from a fabricated seed panel.
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    56-row verified-source register
+                    57-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -249,7 +249,7 @@ sim/            the engine - pure standard library, no third-party imports
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          394 tests - engine, venue, memory, site, registers, docs, README
+tests/          403 tests - engine, venue, memory, site, registers, collector, docs, README
 data/real/      verbatim FRED and Yahoo downloads, with checksums
 memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports
@@ -269,7 +269,7 @@ python3 -m sim.cli report --user @GapAndGo_YOLO     # full post-mortem
 python3 -m sim.cli verify               # checksum every run + data audits
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 394 tests
+python3 -m unittest discover -s tests   # 403 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -303,7 +303,7 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 62-row register (56 source rows plus 6 provider rows), every URL
+  — the 63-row register (57 source rows plus 6 provider rows), every URL
   clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not

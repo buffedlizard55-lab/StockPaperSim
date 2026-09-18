@@ -574,6 +574,14 @@ def all_verified_sources() -> List[dict]:
                  "2025 sessions are costed against, because FINRA serves only "
                  "the current version of Schedule A. Excerpt: "
                  "data/real/regulatory/sec-release-34-101696-taf-rate-schedule.txt"},
+        {"claim": "SEC's stated rules for an automated client reading EDGAR: declare a User-Agent naming the client with a contact address ('Sample Company Name AdminContact@<sample company domain>.com'), send 'Accept-Encoding: gzip, deflate', and stay at or below 10 requests per second - the three requirements scripts/collect_real_data.py is built to meet when it reads the Form 4 filings",
+         "url": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+         "publisher": "U.S. Securities and Exchange Commission (Accessing EDGAR Data)",
+         "status": FETCHED_VERIFIED,
+         "note": "fetched 2026-09-18 after the collector's ticker->CIK request "
+                 "was answered HTTP 403; the declared-bot header table and the "
+                 "10-requests/second fair-access limit are quoted verbatim in "
+                 "data/real/regulatory/sec-accessing-edgar-data-headers.txt"},
         {"claim": "Tiered round-lot definition: 100 shares up to $250, 40 to $1,000, 10 to $10,000, 1 share above",
          "url": "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.600",
          "publisher": "eCFR / SEC Rule 600(b)(93)",

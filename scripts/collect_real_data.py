@@ -40,6 +40,7 @@ USAGE
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import os
@@ -50,6 +51,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+import zlib
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -63,13 +65,40 @@ SEASON_START = "2025-09-17"
 SEASON_END = "2026-09-16"
 COLLECT_END = "2026-09-17"
 
-# SEC's webmaster FAQ requires an automated client to identify itself with a
-# contact address; the first collection run was answered HTTP 403 with a UA that
-# had only a URL.  https://www.sec.gov/about/webmaster-frequently-asked-questions
-SEC_UA = ("StockPaperSim/2.0 (academic paper-trading simulation; "
-          "contact buffedlizard55-lab@users.noreply.github.com)")
+# The header set SEC asks an automated client to send, quoted from the page it
+# publishes them on ("Accessing EDGAR Data", retrieved 2026-09-18, excerpt kept
+# at data/real/regulatory/sec-accessing-edgar-data-headers.txt):
+#
+#   Sample Declared Bot Request Headers:
+#     User-Agent:      Sample Company Name AdminContact@<sample company domain>.com
+#     Accept-Encoding: gzip, deflate
+#     Host:            www.sec.gov
+#
+# The collector's first version declared a User-Agent with a contact address but
+# left urllib's default ``Accept-Encoding: identity``, and the collection run of
+# 2026-09-18 was answered HTTP 403 for the ticker->CIK map.  Both headers in the
+# published set are now sent, the UA in the published shape (a name followed by a
+# contact address), and what came back is recorded in the manifest either way.
+#   SOURCE: https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data
+SEC_UA = "StockPaperSim buffedlizard55-lab@users.noreply.github.com"
 BROWSER_UA = ("Mozilla/5.0 (compatible; StockPaperSim/2.0; "
               "+https://github.com/buffedlizard55-lab/StockPaperSim)")
+
+# What every request sends before a caller adds anything: SEC's documented
+# Accept-Encoding, and an Accept that does not pretend to be a browser.
+BASE_HEADERS: Dict[str, str] = {"Accept": "*/*", "Accept-Encoding": "gzip, deflate"}
+
+#: Per-kind policy for how many attempts a URL gets and how long each may take.
+#: Nasdaq's quote API has timed out on every run so far - eight symbols, three
+#: attempts each, 45 seconds per attempt, which is eighteen of the collection's
+#: twenty-five minutes spent proving the same timeout, and the reason the SEC
+#: section (which runs next) did not start until minute nineteen.  The failure is
+#: recorded exactly as before; the policy changes how long the run spends proving
+#: it, not what the record says.
+FETCH_POLICY: Dict[str, dict] = {
+    "nasdaq": {"tries": 2, "timeout": 20.0},
+}
+DEFAULT_FETCH_POLICY: dict = {"tries": 3, "timeout": 45.0}
 
 # Yahoo tickers.  ^GSPC is included specifically as an independent copy of the
 # S&P 500 index so the FRED SP500 series can be cross-checked against it.
@@ -110,8 +139,33 @@ SOURCE_CLASS = {
     "fred": "OFFICIAL",
     "sec": "OFFICIAL", "fda": "OFFICIAL", "mlb": "OFFICIAL",
     "nocode": "OFFICIAL", "espn": "SECONDARY", "nba": "OFFICIAL",
-    "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
+     "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
 }
+
+
+def _decode_body(raw: bytes, content_encoding: Optional[str]) -> bytes:
+    """Undo the transport encoding, so a hash is of the representation.
+
+    ``Accept-Encoding: gzip, deflate`` is what SEC's published header set asks
+    for and what every host here supports, but urllib does not decompress for
+    us.  The byte count and SHA-256 recorded in the manifest are of the decoded
+    bytes - the same bytes a reader gets when they re-fetch the URL by hand.
+    """
+    enc = (content_encoding or "").strip().lower()
+    if enc in ("gzip", "x-gzip"):
+        return gzip.decompress(raw)
+    if enc == "deflate":
+        try:
+            return zlib.decompress(raw)
+        except zlib.error:
+            return zlib.decompress(raw, -zlib.MAX_WBITS)
+    return raw
+
+
+def _snippet(body: bytes, limit: int = 300) -> str:
+    """First ``limit`` characters of a response body, whitespace flattened."""
+    text = body.decode("utf-8", "replace")
+    return re.sub(r"\s+", " ", text).strip()[:limit]
 
 
 class Fetcher:
@@ -137,30 +191,50 @@ class Fetcher:
         return self.budget_exhausted
 
     def get(self, url: str, kind: str, headers: Optional[Dict[str, str]] = None,
-            interval: float = GENERIC_MIN_INTERVAL, tries: int = 3,
-            note: str = "") -> Optional[bytes]:
+            interval: float = GENERIC_MIN_INTERVAL, tries: Optional[int] = None,
+            note: str = "", timeout: Optional[float] = None) -> Optional[bytes]:
         if self.timed_out():
             return None
+        policy = FETCH_POLICY.get(kind, DEFAULT_FETCH_POLICY)
+        tries = policy["tries"] if tries is None else tries
+        timeout = policy["timeout"] if timeout is None else timeout
         host_key = url.split("/")[2]
-        hdrs = {"User-Agent": SEC_UA, "Accept": "*/*"}
+        hdrs = {"User-Agent": SEC_UA}
+        hdrs.update(BASE_HEADERS)
         hdrs.update(headers or {})
         last_error = ""
+        last_status = 0
+        error_body = ""
+        attempts = 0
         for attempt in range(tries):
+            attempts = attempt + 1
             self._wait(host_key, interval)
             try:
                 req = urllib.request.Request(url, headers=hdrs)
-                with urllib.request.urlopen(req, timeout=45) as resp:  # noqa: S310
-                    body = resp.read()
+                with urllib.request.urlopen(req, timeout=timeout) as resp:  # noqa: S310
+                    body = _decode_body(resp.read(), resp.headers.get("Content-Encoding"))
                     self.manifest.append({
                         "url": url, "kind": kind, "source_class": SOURCE_CLASS.get(kind, "UNKNOWN"),
                         "status": int(resp.status), "bytes": len(body),
                         "sha256": hashlib.sha256(body).hexdigest(),
-                        "ok": True, "note": note,
+                        "ok": True, "attempts": attempts, "note": note,
                         "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                     })
                     return body
             except urllib.error.HTTPError as exc:
+                # The status code is what a reader needs to compare with a
+                # re-fetch, so it is recorded as itself rather than as 0; the
+                # body is where SEC explains a refusal ("Undeclared Automated
+                # Tool" and the header it wants are in there), so the first
+                # characters of it are kept too.
+                last_status = int(exc.code)
                 last_error = f"HTTP {exc.code}"
+                try:
+                    error_body = _snippet(_decode_body(
+                        exc.read(), exc.headers.get("Content-Encoding")
+                        if exc.headers else None))
+                except Exception:  # noqa: BLE001 - a body we cannot read is not a new failure
+                    error_body = ""
                 if exc.code in (400, 401, 403, 404, 410):
                     break
             except Exception as exc:  # noqa: BLE001 - network variety is unbounded
@@ -168,7 +242,8 @@ class Fetcher:
             time.sleep(0.8 * (attempt + 1))
         self.manifest.append({
             "url": url, "kind": kind, "source_class": SOURCE_CLASS.get(kind, "UNKNOWN"),
-            "status": 0, "bytes": 0, "sha256": "", "ok": False, "error": last_error,
+            "status": last_status, "bytes": 0, "sha256": "", "ok": False,
+            "attempts": attempts, "error": last_error, "error_body": error_body,
             "note": note, "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         })
         return None
@@ -395,18 +470,95 @@ def collect_fred(fetcher: Fetcher, out: str) -> dict:
 # --------------------------------------------------------------------------
 # 2. SEC EDGAR - Form 4 insider filings (OFFICIAL, primary).
 # --------------------------------------------------------------------------
+SEC_TICKER_MAP = "https://www.sec.gov/files/company_tickers.json"
+#: Per-company filing feed, the fallback when the bulk map is refused.  Same host
+#: as the map and a different script, so the outcome separates "this one document
+#: was refused" from "this client may not read sec.gov at all".
+SEC_COMPANY_FEED = ("https://www.sec.gov/cgi-bin/browse-edgar?"
+                    "action=getcompany&CIK={ticker}&type=4&owner=include"
+                    "&count=10&output=atom")
+SEC_CIK_TAG = re.compile(r"<cik>\s*(\d+)\s*</cik>", re.I)
+SEC_CIK_IN_URL = re.compile(r"CIK=(\d{10})")
+SEC_TICKERS_TAG = re.compile(r"<tickers>\s*([^<]*?)\s*</tickers>", re.I)
+
+
+def cik_from_company_feed(body: bytes, ticker: str) -> Optional[int]:
+    """The CIK named by one company feed, or None if the feed does not name it.
+
+    Tolerant on purpose: the tag is the documented shape and the same number is
+    also printed inside a URL on the page.  A feed that names a different ticker
+    than the one asked for is rejected rather than used, because the mapping is
+    what decides which company's filings get read.
+    """
+    text = body.decode("utf-8", "replace")
+    named = [t.strip().upper() for t in SEC_TICKERS_TAG.findall(text)]
+    if named and ticker.upper() not in named:
+        return None
+    match = SEC_CIK_TAG.search(text) or SEC_CIK_IN_URL.search(text)
+    if not match:
+        return None
+    return int(match.group(1))
+
+
+def _sec_cik_map(fetcher: Fetcher, out: str, summary: dict) -> Optional[Dict[str, int]]:
+    """ticker -> CIK for the issuers this study reads, with its source recorded.
+
+    The official bulk map is requested first, with the header set SEC publishes.
+    If it is refused, the per-company feed is asked once per insider ticker
+    instead: it is the same publisher and a different endpoint, and its CIK is
+    enough to continue into the submissions API, so a refusal of one document
+    does not become a refusal of the whole insider study.  A third option -
+    presenting a browser User-Agent - is deliberately not implemented: this
+    project does not misrepresent its client to a regulator, and a 403 that says
+    why is worth more than a 200 that does not say how it was obtained.
+    """
+    body = fetcher.get(SEC_TICKER_MAP, "sec", headers={"Accept": "application/json"},
+                       interval=SEC_MIN_INTERVAL, note="official ticker->CIK map")
+    if body is not None:
+        write_bytes(os.path.join(out, "sec", "company_tickers.json"), body)
+        mapping = json.loads(body.decode("utf-8"))
+        rows = {str(row["ticker"]).upper(): int(row["cik_str"])
+                for row in mapping.values()}
+        summary["cik_map_source"] = "company_tickers.json (official bulk map)"
+        return {t: rows[t] for t in INSIDER_TICKERS if t in rows}
+
+    summary["errors"].append(
+        "company_tickers.json refused; falling back to the per-company feed")
+    resolved: Dict[str, int] = {}
+    for ticker in INSIDER_TICKERS:
+        feed = fetcher.get(SEC_COMPANY_FEED.format(ticker=ticker), "sec",
+                           interval=SEC_MIN_INTERVAL,
+                           note=f"{ticker} company feed (ticker->CIK fallback)")
+        if feed is None:
+            continue
+        cik = cik_from_company_feed(feed, ticker)
+        if cik is None:
+            summary["errors"].append(f"{ticker}: company feed named no CIK")
+            continue
+        resolved[ticker] = cik
+    if resolved:
+        summary["cik_map_source"] = "per-company feed (browse-edgar, atom)"
+        write_json(os.path.join(out, "sec", "cik_map.json"), {
+            "window": [WARMUP_START, COLLECT_END],
+            "source": ("https://www.sec.gov/cgi-bin/browse-edgar?"
+                       "action=getcompany&type=4"),
+            "why": ("company_tickers.json was refused; the CIK in each company's "
+                    "own filing feed is the same identifier, so the study "
+                    "continues from it and says so here."),
+            "map": resolved,
+        })
+        return resolved
+    return None
+
+
 def collect_sec(fetcher: Fetcher, out: str) -> dict:
     summary = {"tickers_ok": [], "tickers_failed": [], "filings": 0,
-               "transactions": 0, "skipped_tickers": [], "errors": []}
-    tickers_body = fetcher.get("https://www.sec.gov/files/company_tickers.json", "sec",
-                               headers={"Accept": "application/json"},
-                               interval=SEC_MIN_INTERVAL, note="official ticker->CIK map")
-    if tickers_body is None:
-        summary["errors"].append("company_tickers.json unavailable")
+               "transactions": 0, "skipped_tickers": [], "errors": [],
+               "cik_map_source": ""}
+    ticker_to_cik = _sec_cik_map(fetcher, out, summary)
+    if not ticker_to_cik:
+        summary["errors"].append("no ticker->CIK mapping could be retrieved")
         return summary
-    write_bytes(os.path.join(out, "sec", "company_tickers.json"), tickers_body)
-    mapping = json.loads(tickers_body.decode("utf-8"))
-    ticker_to_cik = {str(row["ticker"]).upper(): int(row["cik_str"]) for row in mapping.values()}
 
     transactions: List[dict] = []
     index_rows: List[dict] = []

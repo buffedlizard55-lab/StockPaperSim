@@ -537,6 +537,133 @@ charged at the previous rate. The stored 2027-2029 columns are what a future
 season would need, and the networked cite-hygiene job in `REMAINING_WORK.json`
 is the mechanism that would notice the change.
 
+## 4j. The venue-parameter sensitivity harness: IR-29's knife edge, measured
+
+IR-29 recorded that snapping displayed quotes back onto the Rule 612 tick grid -
+a change of at most half a cent - moved two participants by 28.3pp and 32.9pp on
+the identical seed. That was a finding about the *model*, and it was honest but
+inert: a reader of the season still saw one path and one ordering. This pass
+turns it into an artefact.
+
+**What was built.** `sim/sensitivity.py`, driven by `python3 -m sim.cli
+sensitivity`, moves 14 declared modelling choices one at a time and re-runs the
+season after each: the quoted-spread coefficient and every per-tier spread bound
+one tick wider and one tick tighter, two depth-growth settings, non-displayed
+liquidity off, the impact coefficient 20% either way, the impact exponent at 0.6
+instead of 0.5 (IR-26), tick snapping removed (IR-29's own perturbation), one
+market maker fewer, the taker fee at 1.5x the Rule 610(c) cap, and maker rebates
+at zero. It publishes per-participant returns and ranks for every point of the
+grid to `memory/sensitivity.json`, which `scripts/build_site.py` renders as
+`docs/sensitivity.html` and `docs/assets/data/sensitivity.json`.
+
+**Two rules make the differences attributable to the parameter.** The replay is
+built once, from the shipped configuration, and every run in the grid trades
+those same bars - the panel is therefore a measurement about the published
+season, not about a nearby re-draw. And each point moves exactly one declared
+value; the two model-form switches (`snap_quotes_to_tick`, `impact_exponent`)
+are keyword arguments on the execution engine rather than `CompetitionConfig`
+fields, so the published fingerprint `e563b5e41deb6ad8` cannot move when they do
+(`tests/test_sensitivity.py` asserts they are not config attributes, alongside
+the grid's self-consistency).
+
+**The check that makes it a measurement of the published season.** The grid's
+base run - the shipped configuration, re-run inside the harness - reproduces
+`memory/runs/season1-primary-seed20260917/leaderboard.json` for all 20
+participants to every published decimal, and reports the same fingerprint. The
+deltas below are therefore deltas from the published season.
+
+**What it found.**
+
+| Statistic | Value |
+|---|---|
+| Single-parameter moves | 14 |
+| Participants whose rank moves at all | 17 of 20 |
+| Largest rank move across the grid | 6 places |
+| Largest return swing | 92.2pp |
+| Winner/loser sign flips anywhere in the grid | 12 |
+| Mean Spearman correlation with the published ordering | 0.9754 (worst 0.9444) |
+
+The largest swing is `@IlliquidRocket_Degen`: published at **+15.8%**, it returns
+**-76.4%** when every tier's quoted spread is one tick wider and **-73.8%** when
+the taker fee is 1.5x. It is also the participant that trades the names where
+those bounds actually bind. The four moves that change no ranking at all in
+Season 1 (`hidden_liquidity_off`, `maker_rebate_off`, `makers_3`,
+`depth_growth_2.0`; Spearman 1.0) are as informative as the ones that do: they
+say those choices are not what this season's ordering rests on. The move that
+reorders most is the literal one-tick-wider spread (0.9489), and the worst
+single correlation is the lower impact coefficient (0.9444).
+
+**What it does not say.** This is a sensitivity band over declared model
+choices, not a sampling confidence interval: it holds the seed fixed and says
+nothing about idiosyncratic risk (that is the six-scenario panel's job), and the
+participants' *levels* remain single-path numbers. The page states both.
+
+## 4k. The Kalshi column was readable all along, and the fix is proven by the collection
+
+IR-41 recorded that the venue's settled-markets endpoint "returns contract metadata
+for the requested window - ticker, title, close time - with every numeric field
+(volume, open interest, last price, settlement value, bid and ask) left empty by
+the venue", and Season 2 was published with `kalshi_volume_30d` MISSING and
+`@Kalshi_Attention_Timer` idle.
+
+**That diagnosis was wrong, and wrong in the direction that hides a signal.** A
+live settled-market request on 2026-09-17 returned, for
+`KXNFLGAME-26SEP17DETBUF-BUF`, `volume_fp "30421098.89"`,
+`open_interest_fp "16869704.61"`, `last_price_dollars`, `yes_bid_dollars`,
+`yes_ask_dollars` and `settlement_value_dollars` - with the pre-migration integer
+names (`volume`, `open_interest`, `last_price`, ...) absent from the payload
+entirely. The venue migrated its numeric fields to fixed-point names and says so:
+`*_fp` are contract counts and `*_dollars` are dollar values, and the migration
+note states the integer fields are legacy and will be deprecated. The fault was
+the reader, not the venue, which is why the correction is a mapping change in
+`scripts/collect_real_data.py` (commit 106725e) rather than a new source.
+
+**Proven by the collection, not by the code reading.** The next runner-side
+collection (2026-09-18) wrote `data/real/kalshi/*.jsonl`, and the committed files
+show every numeric column populated: **612 settled-market rows across the four
+non-empty series, every one with a real volume and open interest**, and every row
+carrying `source_keys` that name the exact venue field each value came from
+(`{"volume": "volume_fp", "open_interest": "open_interest_fp", ...}`).
+`data/real/coverage_report.json` records `rows_with_volume` per series (132, 200,
+200, 80). The fifth series, `KXNBA`, is empty because the venue really does
+return no settled NBA markets for the window - that one is a fact about the
+venue, and it is now distinguishable from a parsing failure, which is what
+`source_keys` and the per-series count are for.
+
+**What the corrected collection changed, and what it did not.** Season 2 was
+re-derived from the new files. Exactly one participant moved:
+
+| Participant | Was | Now | Change |
+|---|---|---|---|
+| `@Kalshi_Attention_Timer` | 0.00% (DATA-MISSING, 0 trades) | **-1.98%** (14 round trips) | the signal became testable, and lost money |
+| `@InjuryFeed_Forward` | 0.00% | 0.00% | unchanged, but rank 10-11 swaps with the above |
+
+Every other participant's return, and the leader, is unchanged to the published
+decimal. The season's aggregates moved with the new fills: **771 to 797 fills**,
+**355 to 369 round trips**, **$149,756.96 to $147,774.32** of net round-trip P&L,
+$20.86m to $21.22m of notional, win rate 56.34% to 55.28%. The verdict on the
+signal is the honest one: testable, and losing.
+
+**A second defect found in the same pass (IR-48).** The collector's re-derive step
+ran the audits *before* rebuilding the site. The Season 2 audit re-reads the
+published pages and compares every number they quote with the memory, so the
+moment a collection legitimately moved a number the gate failed on the previous
+run's pages - `Kalshi_Attention_Timer.html does not quote the published return
+-1.98%` - and, because that step runs after the data is committed, the branch was
+left holding the new collection with the season and site not re-derived: the
+stale-artefact condition IR-47 was about, reached by a different route. The
+workflow now rebuilds the site before the audits (season2, build-site, audit,
+audit). Nothing in the audits was weakened; they remain the gate. Verified by
+hand on the same sequence: 2,681 checks, 0 failures for Season 2 and 1,146, 0
+failures for the run-level audit.
+
+**What was published, and what replaced it.** The claim that the venue served
+empty numeric fields was on the site, in the README and in this register until
+2026-09-18. It is corrected in place in all three, with the artefact named
+(`data/real/kalshi/*.jsonl`, `data/real/coverage_report.json`, commit 106725e for
+the reader) and with the re-derived season published from the corrected files -
+no number was relabelled, quiet-edited or left standing in two versions.
+
 ## 6. Audits run on the simulation itself
 
 
@@ -559,5 +686,5 @@ These are internal consistency checks, all reproduced by the test suite
 | Order-of-iteration audit | AST sweep: no `for` loop in `sim/strategies.py` iterates a set |
 | Site freshness | `docs/` is byte-identical to a fresh `build-site` from the committed memory (CI fails if it drifts), and the published config fingerprint equals `CompetitionConfig.fingerprint()` |
 | Look-ahead | strategies see only `t-1` and earlier data when deciding (`tests/test_strategies.py`) |
-| **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the primary season (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). **763 / 763 pass.** Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
+| **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the Season 1 primary and 383 on the Season 2 primary - **1,146 in total, all passing** (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). The Season 2-specific audit, `scripts/independent_audit_season2.py`, adds 2,681 checks of its own. Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
 | README self-description | `tests/test_readme_claims.py` recomputes the suite's test count, the register size and the three research-file counts, and re-reads all 20 leaderboard rows against `memory/runs/season1-primary-seed20260917/leaderboard.json` |

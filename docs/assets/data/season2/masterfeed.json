@@ -497,11 +497,11 @@
    "files": [
     "data/real/kalshi/"
    ],
-   "note": "settled-contract counts from the venue's own API; no numeric field in the same payload could be read by this collector",
+   "note": "settled-contract counts and volumes from the venue's own API",
    "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
   },
   "kalshi_volume_30d": {
-   "state": "MISSING",
+   "state": "AVAILABLE",
    "rows": 612,
    "window": [
     "2026-07-31",
@@ -510,7 +510,7 @@
    "files": [
     "data/real/kalshi/"
    ],
-   "note": "no traded-volume field in the collected payload could be read, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING",
+   "note": "settled-contract counts and volumes from the venue's own API",
    "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
   },
   "fred_slope_bps": {
@@ -1218,10 +1218,10 @@
    "state": "AVAILABLE"
   },
   "kalshi_volume_30d": {
-   "sessions_actionable": 0,
+   "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 0.0,
-   "state": "MISSING"
+   "last_value": 790220737.08,
+   "state": "AVAILABLE"
   },
   "fred_slope_bps": {
    "sessions_actionable": 250,

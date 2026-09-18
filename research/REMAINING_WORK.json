@@ -98,13 +98,6 @@
     "effort": "half a day"
   },
   {
-    "priority": "P1",
-    "title": "Publish a venue-parameter sensitivity harness (the IR-29 answer)",
-    "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
-    "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
-    "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
-  },
-  {
     "title": "Cite-hygiene job for the source register (networked, not in CI by design)",
     "priority": "P2",
     "effort": "S",
@@ -152,13 +145,6 @@
     "priority": "P1",
     "effort": "one collection run plus a season re-run",
     "where": "scripts/collect_real_data.py, data/real/sec/, sim/masterfeed.py"
-  },
-  {
-    "title": "Collect the Kalshi volume column, or retire the attention-timer participant",
-    "detail": "The venue's settled-markets payload returned contract metadata with every numeric field empty, so kalshi_volume_30d is MISSING by construction and @Kalshi_Attention_Timer reports DATA-MISSING. Either a payload with real volume/open-interest is found (the v2 markets endpoint with a status filter is the first thing to try) or the participant should be retired rather than kept as a permanent zero.",
-    "priority": "P2",
-    "effort": "half a day to probe, one line to retire",
-    "where": "sim/masterfeed.py, scripts/collect_real_data.py"
   },
   {
     "title": "Give the forward-only participants a live path",

@@ -381,16 +381,25 @@ class LiquidityModel:
 
 
 class ImpactModel:
-    """Square-root market impact with permanent and temporary components."""
+    """Market impact with permanent and temporary components.
 
-    def __init__(self, cfg: config.ImpactConfig) -> None:
+    ``exponent`` is 0.5 (square root) by default, the convention the execution
+    literature and vendor models use.  Almgren, Thum, Hauptmann & Li (2005)
+    measured a 3/5 power instead and rejected the square root for temporary
+    impact, which is recorded as IR-26; the sensitivity harness moves this
+    exponent and publishes what it does to the ranking rather than leaving the
+    choice as an unmeasured assumption.
+    """
+
+    def __init__(self, cfg: config.ImpactConfig, *, exponent: float = 0.5) -> None:
         self.cfg = cfg
+        self.exponent = exponent
 
     def impact_return(self, qty: int, adv: float, sigma_daily: float) -> float:
         if adv <= 0 or qty <= 0:
             return 0.0
         participation = qty / adv
-        return self.cfg.coefficient * sigma_daily * math.sqrt(participation)
+        return self.cfg.coefficient * sigma_daily * (participation ** self.exponent)
 
     def split(self, impact_return: float) -> Tuple[float, float]:
         permanent = impact_return * self.cfg.permanent_share
@@ -705,12 +714,26 @@ class ParticipantVenue:
 
 
 class ExecutionEngine:
-    """Turns participant orders into costed fills against the simulated venue."""
+    """Turns participant orders into costed fills against the simulated venue.
 
-    def __init__(self, cfg: config.CompetitionConfig) -> None:
+    ``snap_quotes_to_tick`` and ``impact_exponent`` are model-form switches that
+    exist so the sensitivity harness (sim/sensitivity.py, and IR-29/IR-26) can
+    measure what the two documented modelling choices are worth: without tick
+    snapping the re-centred ladder publishes prices no exchange could display,
+    and a 3/5 exponent is the form Almgren, Thum, Hauptmann & Li (2005) measured
+    instead of the square root.  Both default to the shipped behaviour, and
+    neither is a CompetitionConfig field - the configuration fingerprint, and
+    therefore the replay the published season was generated from, must not move
+    because a sensitivity knob exists.
+    """
+
+    def __init__(self, cfg: config.CompetitionConfig, *,
+                 snap_quotes_to_tick: bool = True,
+                 impact_exponent: float = 0.5) -> None:
         self.cfg = cfg
+        self.snap_quotes_to_tick = snap_quotes_to_tick
         self.liquidity = LiquidityModel(cfg.liquidity)
-        self.impact = ImpactModel(cfg.impact)
+        self.impact = ImpactModel(cfg.impact, exponent=impact_exponent)
         self.costs = CostModel(cfg.costs)
 
     # -- venue construction ------------------------------------------------
@@ -762,7 +785,8 @@ class ExecutionEngine:
         #   (see research/IRREGULARITIES.json IR-28: found and fixed here)
         tick = config.minimum_tick(mid)
         raw_mid = (bids[0][0] + asks[0][0]) / 2.0 if bids and asks else mid
-        shift = round((mid - raw_mid) / tick) * tick
+        shift = (round((mid - raw_mid) / tick) * tick if self.snap_quotes_to_tick
+                 else mid - raw_mid)
         bids = [(round(p + shift, 6), s) for p, s in bids]
         asks = [(round(p + shift, 6), s) for p, s in asks]
         book = OrderBook(bids, asks, tick, self.liquidity, mid)

@@ -309,15 +309,16 @@ class TestFullBuild(unittest.TestCase):
         self.assertFalse(missing, f"broken links: {missing[:10]}")
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
-        self.assertEqual(len(site.NAV), 10)
+        # 11 since the venue-sensitivity page landed (IR-29).
+        self.assertEqual(len(site.NAV), 11)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
             self.assertRegex(html, r'<nav[^>]*class="[^"]*\bnav\b[^"]*"', rel)
             for _href, label in site.NAV:
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
-            for label in ("Leaderboard", "Strategies", "Market", "Methodology",
-                          "Data", "Sources", "Irregularities", "Limitations",
-                          "Participants"):
+            for label in ("Leaderboard", "Strategies", "Market", "Venue sensitivity",
+                          "Methodology", "Data", "Sources", "Irregularities",
+                          "Limitations", "Participants"):
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
             self.assertIn('class="site-footer"', html, rel)
             self.assertIn("assets/site.js" if rel.count("/") == 0

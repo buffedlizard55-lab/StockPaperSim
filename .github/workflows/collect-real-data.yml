@@ -160,9 +160,16 @@ jobs:
         if: ${{ github.event.inputs.commit != 'false' }}
         run: |
           python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity
+          # The site is rebuilt BEFORE the audits, not after: the Season 2 audit
+          # re-reads the published pages and compares every number they quote with
+          # the memory, so a collection that legitimately moves a number would fail
+          # the gate against the previous run's pages (IR-48, observed after run
+          # 35318147506). Rebuilding first makes the audits read the pages that are
+          # about to be committed; they are still the gate, and nothing in them was
+          # skipped or weakened.
+          python3 -m sim.cli build-site
           python3 scripts/independent_audit.py
           python3 scripts/independent_audit_season2.py
-          python3 -m sim.cli build-site
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A memory docs

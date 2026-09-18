@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Venue &amp;amp; parameter sensitivity · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="market.html">Market &amp; factors</a><a class="active" href="sensitivity.html">Venue sensitivity</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (real prices)</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Venue-parameter sensitivity</h1>
+<p class="lede">The published season depends on a handful of <em>modelling
+choices</em> that are not facts about the market: how wide the simulated spread
+is, whether non-displayed liquidity can fill at the touch, the exponent on the
+market-impact curve, how many market makers quote. This page moves one of those
+choices at a time and re-runs the identical season on the identical real market
+path &mdash; same seed, same bars, every parameter except the named one held
+fixed &mdash; so what changes is attributable to the parameter and not to a
+different draw. The reason it exists is IR-29: snapping quotes onto the
+Reg&nbsp;NMS Rule&nbsp;612 tick grid moved two participants' returns by 28&ndash;33
+percentage points, and a project that publishes a ranking owes the reader a
+measurement of that knife edge rather than a disclaimer about it.</p>
+
+<div class="cards">
+  <div class="stat"><strong>14</strong>
+    <span>single-parameter moves</span></div>
+  <div class="stat"><strong>17/20</strong>
+    <span>participants whose rank moves at all</span></div>
+  <div class="stat"><strong>6</strong>
+    <span>largest rank move</span></div>
+  <div class="stat"><strong>92.2pp</strong>
+    <span>largest return swing</span></div>
+  <div class="stat"><strong>0.975</strong>
+    <span>mean rank correlation vs base</span></div>
+  <div class="stat"><strong>12</strong>
+    <span>winner/loser sign flips</span></div>
+</div>
+
+<section class="card "><h2>What the published season says</h2>
+<p class="muted small">Base run <code>e563b5e41deb6ad8</code>,
+seed 20260917, window 2025-09-17
+&rarr; 2026-09-16. Five highest-ranked
+participants, quoted for orientation only; the full table is on the
+<a href="leaderboard.html">leaderboard</a>.</p>
+<table class="data"><thead><tr><th>Rank</th><th>Username</th><th>Return</th></tr></thead><tbody><tr><td>1</td><td>@BetaChaser_3xProxy</td><td><span class="pos">+108.39%</span></td></tr><tr><td>2</td><td>@SectorRotator_AlphaX</td><td><span class="pos">+100.92%</span></td></tr><tr><td>3</td><td>@MeanRev_Z2Sigma</td><td><span class="pos">+74.27%</span></td></tr><tr><td>4</td><td>@MomentumMax_12x1</td><td><span class="pos">+51.21%</span></td></tr><tr><td>5</td><td>@BuyHold_MaxBeta</td><td><span class="pos">+45.29%</span></td></tr></tbody></table></section>
+
+<section class="card "><h2>The grid</h2><table class="data"><thead><tr><th>Move</th><th>Parameter</th><th>Baseline &rarr; perturbed</th><th>Kind</th><th>Why this is a choice</th></tr></thead><tbody><tr><td><code>spread_k_x0.8</code></td><td><code>liquidity.spread_k_ticks</code></td><td>0.05 &rarr; <strong>0.04</strong></td><td>config value</td><td>The quoted-spread coefficient is a SIM CHOICE: 20% tighter quotes everywhere, with the per-tier tick bounds unchanged.</td></tr><tr><td><code>spread_k_x1.2</code></td><td><code>liquidity.spread_k_ticks</code></td><td>0.05 &rarr; <strong>0.06</strong></td><td>config value</td><td>The same choice in the other direction: 20% wider quotes.</td></tr><tr><td><code>spread_ticks_plus1</code></td><td><code>liquidity min/max_spread_ticks</code></td><td>mega 1-3 … micro 2-30 &rarr; <strong>every tier +1</strong></td><td>config value</td><td>The literal venue perturbation: the quoted spread is one tick wider wherever a bound binds, which is what a reader pictures when they ask how much a tick of spread costs a strategy. Every tier&#x27;s floor and ceiling moves; the size of the move in cents is therefore price-dependent, exactly as it is in the market.</td></tr><tr><td><code>spread_ticks_minus1</code></td><td><code>liquidity min/max_spread_ticks</code></td><td>mega 1-3 … micro 2-30 &rarr; <strong>every tier -1 (floor 1)</strong></td><td>config value</td><td>The other side of the same venue rule: one tick tighter, with the floor held at one tick because a one-tick quote is the tightest any venue can publish. It is also the direction that makes the MODEL&#x27;s choice of per-tier ceilings visible as a cost.</td></tr><tr><td><code>depth_growth_1.2</code></td><td><code>liquidity.depth_growth</code></td><td>1.6 &rarr; <strong>1.2</strong></td><td>config value</td><td>How fast displayed size grows away from the touch. A flatter ladder: less size behind the touch at every level above it.</td></tr><tr><td><code>depth_growth_2.0</code></td><td><code>liquidity.depth_growth</code></td><td>1.6 &rarr; <strong>2.0</strong></td><td>config value</td><td>A steeper ladder: more size one and two levels in.</td></tr><tr><td><code>hidden_liquidity_off</code></td><td><code>liquidity.hidden_liquidity</code></td><td>True &rarr; <strong>False</strong></td><td>config value</td><td>Non-displayed liquidity at the touch models the off-exchange share of volume (FINRA OTC Transparency). Turning it off is the conservative case: only the displayed ladder can fill.</td></tr><tr><td><code>impact_coef_x0.8</code></td><td><code>impact.coefficient</code></td><td>0.55 &rarr; <strong>0.44</strong></td><td>config value</td><td>The square-root impact coefficient is a SIM CHOICE inside the published 0.1-1.0 range; this is its lower edge.</td></tr><tr><td><code>impact_coef_x1.2</code></td><td><code>impact.coefficient</code></td><td>0.55 &rarr; <strong>0.66</strong></td><td>config value</td><td>The same square-root coefficient 20% higher: 0.66 instead of 0.55, still inside the published 0.1-1.0 range.</td></tr><tr><td><code>impact_exponent_0.6</code></td><td><code>impact_exponent</code></td><td>0.5 &rarr; <strong>0.6</strong></td><td>venue model switch</td><td>IR-26: Almgren, Thum, Hauptmann &amp; Li (2005) measured a 3/5 power law and explicitly rejected the square root for temporary impact. The exponent is a model form, not a config value, so it moves as a venue override.</td></tr><tr><td><code>tick_snap_off</code></td><td><code>snap_quotes_to_tick</code></td><td>True &rarr; <strong>False</strong></td><td>venue model switch</td><td>IR-29: without snapping, the re-centred ladder publishes prices that are not on the Rule 612 grid - what the engine did before IR-28. The published season is the snapped one; this measures what half a tick is worth to the ranking.</td></tr><tr><td><code>makers_3</code></td><td><code>market_maker.num_makers</code></td><td>4 &rarr; <strong>3</strong></td><td>config value</td><td>Number of competing market makers (Avellaneda-Stoikov, SIM CHOICE): one fewer dealer quoting each side.</td></tr><tr><td><code>taker_fee_x1.5</code></td><td><code>costs.taker_fee_per_share</code></td><td>0.003 &rarr; <strong>0.0045</strong></td><td>config value</td><td>The taker fee sits at the Rule 610(c) access-fee cap; this asks what a cap 50% higher would have done. A legal constant does not move in the model - it is perturbed here only as a cost sensitivity.</td></tr><tr><td><code>maker_rebate_off</code></td><td><code>costs.maker_rebate_per_share</code></td><td>0.002 &rarr; <strong>0.0</strong></td><td>config value</td><td>Maker rebates to zero: the case where passive liquidity is not paid for its fill.</td></tr></tbody>One row per run. The market path, the seed, the participant roster and every other parameter are identical across rows.</table></section>
+
+<section class="card "><h2>Per-participant response, worst first</h2><table class="data"><thead><tr><th>Username</th><th>Base</th><th>Worst</th><th>Best</th><th>Range (pp)</th><th>Stdev (pp)</th><th>Base rank</th><th>Rank range</th><th>Max rank move</th><th>Sign flips</th></tr></thead><tbody><tr><td><a href="participants/IlliquidRocket_Degen.html">@IlliquidRocket_Degen</a></td><td><span class="pos">+15.80%</span></td><td><span class="neg">-76.44%</span></td><td><span class="pos">+23.15%</span></td><td>99.6</td><td>39.7</td><td>13</td><td>9&ndash;19</td><td>6</td><td><span class="badge badge-warn">6</span></td></tr><tr><td><a href="participants/OneBigBet_Concentra.html">@OneBigBet_Concentra</a></td><td><span class="pos">+40.63%</span></td><td><span class="pos">+16.47%</span></td><td><span class="pos">+98.46%</span></td><td>82.0</td><td>18.8</td><td>7</td><td>3&ndash;12</td><td>5</td><td>0</td></tr><tr><td><a href="participants/DriftRider_PEAD.html">@DriftRider_PEAD</a></td><td><span class="pos">+20.70%</span></td><td><span class="pos">+3.93%</span></td><td><span class="pos">+25.48%</span></td><td>21.6</td><td>6.2</td><td>10</td><td>9&ndash;14</td><td>4</td><td>0</td></tr><tr><td><a href="participants/MeanRev_Z2Sigma.html">@MeanRev_Z2Sigma</a></td><td><span class="pos">+74.27%</span></td><td><span class="pos">+39.74%</span></td><td><span class="pos">+74.88%</span></td><td>35.1</td><td>10.2</td><td>3</td><td>3&ndash;6</td><td>3</td><td>0</td></tr><tr><td><a href="participants/OverreactionFade_LT.html">@OverreactionFade_LT</a></td><td><span class="pos">+42.14%</span></td><td><span class="pos">+39.67%</span></td><td><span class="pos">+63.16%</span></td><td>23.5</td><td>8.5</td><td>6</td><td>3&ndash;7</td><td>3</td><td>0</td></tr><tr><td><a href="participants/SqueezeHunter_TF.html">@SqueezeHunter_TF</a></td><td><span class="neg">-1.85%</span></td><td><span class="neg">-2.17%</span></td><td><span class="pos">+6.01%</span></td><td>8.2</td><td>3.3</td><td>17</td><td>14&ndash;17</td><td>3</td><td><span class="badge badge-warn">6</span></td></tr><tr><td><a href="participants/MomentumMax_12x1.html">@MomentumMax_12x1</a></td><td><span class="pos">+51.21%</span></td><td><span class="pos">+51.20%</span></td><td><span class="pos">+51.22%</span></td><td>0.0</td><td>0.0</td><td>4</td><td>3&ndash;6</td><td>2</td><td>0</td></tr><tr><td><a href="participants/BuyHold_MaxBeta.html">@BuyHold_MaxBeta</a></td><td><span class="pos">+45.29%</span></td><td><span class="pos">+45.22%</span></td><td><span class="pos">+45.33%</span></td><td>0.1</td><td>0.0</td><td>5</td><td>5&ndash;7</td><td>2</td><td>0</td></tr><tr><td><a href="participants/OvernightCarry_NO.html">@OvernightCarry_NO</a></td><td><span class="pos">+8.97%</span></td><td><span class="pos">+8.62%</span></td><td><span class="pos">+9.07%</span></td><td>0.5</td><td>0.1</td><td>14</td><td>12&ndash;15</td><td>2</td><td>0</td></tr><tr><td><a href="participants/KitchenSink_AllIn.html">@KitchenSink_AllIn</a></td><td><span class="pos">+8.96%</span></td><td><span class="pos">+2.79%</span></td><td><span class="pos">+9.49%</span></td><td>6.7</td><td>2.6</td><td>15</td><td>13&ndash;15</td><td>2</td><td>0</td></tr><tr><td><a href="participants/TrendSurfer_GoldenX.html">@TrendSurfer_GoldenX</a></td><td><span class="pos">+30.11%</span></td><td><span class="pos">+30.09%</span></td><td><span class="pos">+30.11%</span></td><td>0.0</td><td>0.0</td><td>8</td><td>7&ndash;8</td><td>1</td><td>0</td></tr><tr><td><a href="participants/VIXRegime_Timer.html">@VIXRegime_Timer</a></td><td><span class="pos">+28.36%</span></td><td><span class="pos">+28.33%</span></td><td><span class="pos">+28.36%</span></td><td>0.0</td><td>0.0</td><td>9</td><td>8&ndash;9</td><td>1</td><td>0</td></tr><tr><td><a href="participants/Contrarian_DeepValue.html">@Contrarian_DeepValue</a></td><td><span class="pos">+18.88%</span></td><td><span class="pos">+18.87%</span></td><td><span class="pos">+18.88%</span></td><td>0.0</td><td>0.0</td><td>11</td><td>10&ndash;11</td><td>1</td><td>0</td></tr><tr><td><a href="participants/DonchianBreakout_20.html">@DonchianBreakout_20</a></td><td><span class="pos">+18.23%</span></td><td><span class="pos">+18.23%</span></td><td><span class="pos">+18.24%</span></td><td>0.0</td><td>0.0</td><td>12</td><td>11&ndash;12</td><td>1</td><td>0</td></tr><tr><td><a href="participants/PairsArb_ZScore2.html">@PairsArb_ZScore2</a></td><td><span class="pos">+1.00%</span></td><td><span class="pos">+1.00%</span></td><td><span class="pos">+1.00%</span></td><td>0.0</td><td>0.0</td><td>16</td><td>15&ndash;17</td><td>1</td><td>0</td></tr><tr><td><a href="participants/VolCarry_LowHigh.html">@VolCarry_LowHigh</a></td><td><span class="neg">-29.99%</span></td><td><span class="neg">-30.01%</span></td><td><span class="neg">-29.99%</span></td><td>0.0</td><td>0.0</td><td>18</td><td>17&ndash;18</td><td>1</td><td>0</td></tr><tr><td><a href="participants/SpreadHarvester_MM.html">@SpreadHarvester_MM</a></td><td><span class="neg">-34.45%</span></td><td><span class="neg">-44.56%</span></td><td><span class="neg">-33.99%</span></td><td>10.6</td><td>3.0</td><td>19</td><td>18&ndash;19</td><td>1</td><td>0</td></tr><tr><td><a href="participants/BetaChaser_3xProxy.html">@BetaChaser_3xProxy</a></td><td><span class="pos">+108.39%</span></td><td><span class="pos">+108.19%</span></td><td><span class="pos">+108.42%</span></td><td>0.2</td><td>0.1</td><td>1</td><td>1&ndash;1</td><td>0</td><td>0</td></tr><tr><td><a href="participants/SectorRotator_AlphaX.html">@SectorRotator_AlphaX</a></td><td><span class="pos">+100.92%</span></td><td><span class="pos">+100.90%</span></td><td><span class="pos">+100.92%</span></td><td>0.0</td><td>0.0</td><td>2</td><td>2&ndash;2</td><td>0</td><td>0</td></tr><tr><td><a href="participants/GapAndGo_YOLO.html">@GapAndGo_YOLO</a></td><td><span class="neg">-91.75%</span></td><td><span class="neg">-91.92%</span></td><td><span class="neg">-91.74%</span></td><td>0.2</td><td>0.0</td><td>20</td><td>20&ndash;20</td><td>0</td><td>0</td></tr></tbody>Worst and best are the extreme returns across the grid. A large range means the published return is mostly a statement about the venue model, not about the strategy.</table></section>
+
+<section class="card "><h2>How much of the ordering survives each move</h2><table class="data"><thead><tr><th>Move</th><th>Spearman vs base</th></tr></thead><tbody><tr><td><code>spread_k_x0.8</code></td><td>+0.9910</td></tr><tr><td><code>spread_k_x1.2</code></td><td>+0.9759</td></tr><tr><td><code>spread_ticks_plus1</code></td><td>+0.9489</td></tr><tr><td><code>spread_ticks_minus1</code></td><td>+0.9955</td></tr><tr><td><code>depth_growth_1.2</code></td><td>+0.9684</td></tr><tr><td><code>depth_growth_2.0</code></td><td>+1.0000</td></tr><tr><td><code>hidden_liquidity_off</code></td><td>+1.0000</td></tr><tr><td><code>impact_coef_x0.8</code></td><td>+0.9444</td></tr><tr><td><code>impact_coef_x1.2</code></td><td>+0.9534</td></tr><tr><td><code>impact_exponent_0.6</code></td><td>+0.9459</td></tr><tr><td><code>tick_snap_off</code></td><td>+0.9699</td></tr><tr><td><code>makers_3</code></td><td>+1.0000</td></tr><tr><td><code>taker_fee_x1.5</code></td><td>+0.9624</td></tr><tr><td><code>maker_rebate_off</code></td><td>+1.0000</td></tr></tbody>Rank correlation between the base ranking and the perturbed ranking. 1.0 means the ordering is unchanged.</table></section>
+
+<section class="card "><h2>What this does and does not say</h2>
+<ul>
+  <li>It is a <strong>sensitivity band over declared model choices</strong>, not a
+  confidence interval. It says nothing about idiosyncratic risk; the
+  seed-to-seed panel on the <a href="market.html#robustness">market page</a>
+  is the separate measurement of that.</li>
+  <li>The real market path is held fixed by construction: one replay is built
+  from the shipped configuration and every run in the grid trades those bars.
+  Perturbations that are not config values (<code>snap_quotes_to_tick</code>,
+  <code>impact_exponent</code>) are deliberately passed as engine overrides rather
+  than added to the configuration, so the published fingerprint
+  <code>e563b5e41deb6ad8</code> continues to
+  describe the season exactly as it was run.</li>
+  <li>Regulatory constants do <em>not</em> move here. The Rule 612 tick grid and
+  the Rule 610(c) access-fee cap are law, and the season is what it is under
+  them; the fee grid is perturbed only as a cost <em>sensitivity</em>, and the
+  row says so.</li>
+  <li>Participants pushed at least once from profit to loss:
+  <ul><li><code>@IlliquidRocket_Degen</code></li></ul></li>
+</ul></section>
+
+<p class="muted small">Nothing on this page is investment advice.</p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

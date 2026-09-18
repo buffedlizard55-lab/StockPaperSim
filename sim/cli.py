@@ -14,6 +14,7 @@ from here, and no command requires interactive input:
     python3 -m sim.cli sources             # the verified-source register
     python3 -m sim.cli season2             # Season 2: real collected prices
     python3 -m sim.cli ledger --limit 20   # every round trip with verified prices
+    python3 -m sim.cli sensitivity         # venue-parameter sensitivity grid
     python3 -m sim.cli build-site          # regenerate the GitHub Pages site
     python3 -m sim.cli export fills out.csv
 """
@@ -29,7 +30,7 @@ import textwrap
 from typing import Dict, List, Optional, Sequence
 
 from . import analytics, config, engine, ledger as ledger_mod, marketdata, memory
-from . import realdata, season2, universe
+from . import realdata, season2, sensitivity, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -541,6 +542,44 @@ def cmd_season2(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_sensitivity(args: argparse.Namespace) -> int:
+    """Re-run the season with one venue parameter moved at a time (IR-29)."""
+    cfg = config.CompetitionConfig()
+    seed = int(args.seed) if args.seed else cfg.seed
+    print(f"StockPaperSim :: venue-parameter sensitivity :: {cfg.season}")
+    print(f"window {cfg.start} -> {cfg.end} | seed {seed} | "
+          f"{len(sensitivity.PERTURBATIONS)} perturbations")
+    print("building the replay once, from the shipped configuration ...", flush=True)
+    md = marketdata.build_replay(cfg, seed=seed)
+    print(f"  {len(md.dates)} sessions; every run below trades these same bars")
+    report = sensitivity.run_grid(cfg, md, seed=seed, verbose=args.verbose)
+    out = args.out or os.path.join(memory.DEFAULT_ROOT, "sensitivity.json")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    with open(out, "w", encoding="utf-8") as handle:
+        json.dump(report, handle, indent=1)
+        handle.write("\n")
+    summary = report["summary"]
+    print(f"\nSENSITIVITY ({summary['n_perturbations']} single-parameter moves, "
+          f"one shared market path)")
+    print(f"{'participant':24s} {'base%':>9} {'worst%':>9} {'best%':>9} "
+          f"{'range_pp':>9} {'max_rank_move':>14}")
+    for row in report["by_participant"][:12]:
+        span = row["max_return_pct"] - row["min_return_pct"]
+        print(f"{row['username']:24s} {row['base_return_pct']:+9.2f} "
+              f"{row['min_return_pct']:+9.2f} {row['max_return_pct']:+9.2f} "
+              f"{span:9.2f} {row['max_abs_rank_change']:14d}")
+    print(f"\n  participants whose rank moves at all : "
+          f"{summary['participants_with_rank_change']} of {summary['n_participants']}")
+    print(f"  largest rank move                    : {summary['max_abs_rank_change']}")
+    print(f"  largest return swing                 : "
+          f"{summary['max_abs_return_swing_pp']}pp")
+    print(f"  mean rank correlation vs the base    : {summary['mean_spearman']} "
+          f"(worst {summary['min_spearman']})")
+    print(f"  sign flips (a winner becoming a loser): {summary['sign_flips']}")
+    print(f"\nwritten to {out}")
+    return 0
+
+
 def cmd_ledger(args: argparse.Namespace) -> int:
     store = _store(args)
     run_id = _resolve_run(args, store)
@@ -648,6 +687,14 @@ def build_parser() -> argparse.ArgumentParser:
                     help="comma-separated assumption sets")
     s2.add_argument("--verbose", action="store_true")
     s2.set_defaults(func=cmd_season2)
+
+    sn = sub.add_parser("sensitivity",
+                        help="venue-parameter sensitivity grid (the IR-29 answer)")
+    sn.add_argument("--seed", default="", help="defaults to the primary seed")
+    sn.add_argument("--out", default="",
+                    help="defaults to memory/sensitivity.json")
+    sn.add_argument("--verbose", action="store_true")
+    sn.set_defaults(func=cmd_sensitivity)
 
     lg = sub.add_parser("ledger", help="inspect the verified trade ledger")
     lg.add_argument("--run", default="")

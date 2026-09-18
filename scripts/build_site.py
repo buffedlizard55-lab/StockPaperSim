@@ -270,6 +270,7 @@ NAV = [
     ("leaderboard.html", "Leaderboard"),
     ("strategies.html", "Strategies"),
     ("market.html", "Market &amp; factors"),
+    ("sensitivity.html", "Venue sensitivity"),
     ("methodology.html", "Methodology"),
     ("data.html", "Data provenance"),
     ("sources.html", "Sources"),
@@ -525,6 +526,10 @@ class SiteData:
         self.market_data = self.store.load(self.run_id, "market_data.json") or {}
         self.equity_panel = self.store.equity_panel(self.run_id)
         self.panel = self._robustness()
+        # The venue-parameter grid (sim/sensitivity.py, the IR-29 answer).  It is
+        # a measurement about the published season rather than a run in the
+        # store, so it lives as one JSON artifact: memory/sensitivity.json.
+        self.sensitivity = _load_sensitivity()
 
     @staticmethod
     def _pick_primary(run_ids: Sequence[str]) -> str:
@@ -1802,6 +1807,160 @@ def _load_static_irregularities() -> List[dict]:
     return []
 
 
+def _load_sensitivity() -> dict:
+    """The published venue-parameter grid, or {} when it has not been run.
+
+    It is deliberately not a run in the memory store: the grid is a measurement
+    *about* the published season, not another season, and it must not be
+    mistaken for one in the scenario panel.
+    """
+    path = os.path.join(REPO_ROOT, "memory", "sensitivity.json")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh)
+    return {}
+
+
+def build_sensitivity(d: SiteData) -> str:
+    s = d.sensitivity or {}
+    summary = s.get("summary") or {}
+    rows = s.get("by_participant") or []
+    if not rows:
+        body = """
+<h1>Venue-parameter sensitivity</h1>
+<p class="lede">How much of the Season 1 ranking survives a change to the model's
+own venue assumptions? This page has not been generated yet &mdash; the grid has
+not been run against the published configuration, so there is nothing to show
+and nothing will be invented to fill the space.</p>
+<div class="card"><h2>Reproducing it</h2>
+<pre><code>python3 -m sim.cli sensitivity --verbose</code></pre>
+<p class="muted small">That writes <code>memory/sensitivity.json</code>; the next
+<code>build-site</code> publishes it here. The grid is defined in
+<code>sim/sensitivity.py</code>.</p></div>
+"""
+        return page("Venue &amp; parameter sensitivity", body, "sensitivity.html")
+
+    base = s.get("base") or {}
+    pert_rows = []
+    for p in s.get("perturbations") or []:
+        kind = ("venue model switch" if p.get("kind") == "venue"
+                else "config value")
+        pert_rows.append([
+            f'<code>{ESC(p.get("name", ""))}</code>',
+            f'<code>{ESC(str(p.get("parameter", "")))}</code>',
+            f'{ESC(str(p.get("baseline")))} &rarr; <strong>{ESC(str(p.get("value")))}</strong>',
+            kind,
+            ESC(p.get("why", "")),
+        ])
+    rank_rows = []
+    for name, rho in (summary.get("spearman_by_perturbation") or {}).items():
+        rank_rows.append([f'<code>{ESC(name)}</code>',
+                          num(rho, "{:+.4f}") if rho is not None else NA])
+    part_rows = []
+    for r in rows:
+        span = (r["max_return_pct"] - r["min_return_pct"]
+                if _is_finite(r.get("max_return_pct")) and _is_finite(r.get("min_return_pct"))
+                else None)
+        flips = r.get("sign_flips", 0)
+        part_rows.append([
+            f'<a href="participants/{_slug(r["username"])}.html">{ESC(r["username"])}</a>',
+            signed(r["base_return_pct"], 2),
+            signed(r["min_return_pct"], 2),
+            signed(r["max_return_pct"], 2),
+            num(span, F1) if span is not None else NA,
+            num(r.get("stdev_pp"), F1),
+            str(r["base_rank"]),
+            f'{r["best_rank"]}&ndash;{r["worst_rank"]}',
+            str(r["max_abs_rank_change"]),
+            badge(str(flips), "warn" if flips else "ok") if flips else "0",
+        ])
+    below = summary.get("participants_pushed_below_zero") or []
+    below_html = ("".join(f'<li><code>{ESC(u)}</code></li>' for u in below)
+                  if below else "<li>none</li>")
+    base_lb = [[str(row["rank"]), ESC(row["username"]),
+                signed(row["total_return_pct"], 2)]
+               for row in (base.get("leaderboard") or [])[:5]]
+    body = f"""
+<h1>Venue-parameter sensitivity</h1>
+<p class="lede">The published season depends on a handful of <em>modelling
+choices</em> that are not facts about the market: how wide the simulated spread
+is, whether non-displayed liquidity can fill at the touch, the exponent on the
+market-impact curve, how many market makers quote. This page moves one of those
+choices at a time and re-runs the identical season on the identical real market
+path &mdash; same seed, same bars, every parameter except the named one held
+fixed &mdash; so what changes is attributable to the parameter and not to a
+different draw. The reason it exists is IR-29: snapping quotes onto the
+Reg&nbsp;NMS Rule&nbsp;612 tick grid moved two participants' returns by 28&ndash;33
+percentage points, and a project that publishes a ranking owes the reader a
+measurement of that knife edge rather than a disclaimer about it.</p>
+
+<div class="cards">
+  <div class="stat"><strong>{num(summary.get("n_perturbations"), F0)}</strong>
+    <span>single-parameter moves</span></div>
+  <div class="stat"><strong>{num(summary.get("participants_with_rank_change"), F0)}/{num(summary.get("n_participants"), F0)}</strong>
+    <span>participants whose rank moves at all</span></div>
+  <div class="stat"><strong>{num(summary.get("max_abs_rank_change"), F0)}</strong>
+    <span>largest rank move</span></div>
+  <div class="stat"><strong>{num(summary.get("max_abs_return_swing_pp"), F1)}pp</strong>
+    <span>largest return swing</span></div>
+  <div class="stat"><strong>{num(summary.get("mean_spearman"), "{:.3f}")}</strong>
+    <span>mean rank correlation vs base</span></div>
+  <div class="stat"><strong>{num(summary.get("sign_flips"), F0)}</strong>
+    <span>winner/loser sign flips</span></div>
+</div>
+
+{card("What the published season says", f'''
+<p class="muted small">Base run <code>{ESC(str(base.get("config_fingerprint", "")))}</code>,
+seed {ESC(str(base.get("seed", "")))}, window {ESC(str((base.get("window") or {}).get("start", "")))}
+&rarr; {ESC(str((base.get("window") or {}).get("end", "")))}. Five highest-ranked
+participants, quoted for orientation only; the full table is on the
+<a href="leaderboard.html">leaderboard</a>.</p>
+{table(["Rank", "Username", "Return"], base_lb)}''')}
+
+{card("The grid", table(["Move", "Parameter", "Baseline &rarr; perturbed", "Kind", "Why this is a choice"],
+                        pert_rows, foot="One row per run. The market path, the seed, "
+                        "the participant roster and every other parameter are identical "
+                        "across rows."))}
+
+{card("Per-participant response, worst first",
+      table(["Username", "Base", "Worst", "Best", "Range (pp)", "Stdev (pp)",
+             "Base rank", "Rank range", "Max rank move", "Sign flips"],
+            part_rows,
+            foot="Worst and best are the extreme returns across the grid. "
+                 "A large range means the published return is mostly a statement "
+                 "about the venue model, not about the strategy."))}
+
+{card("How much of the ordering survives each move",
+      table(["Move", "Spearman vs base"], rank_rows,
+            foot="Rank correlation between the base ranking and the perturbed "
+                 "ranking. 1.0 means the ordering is unchanged."))}
+
+{card("What this does and does not say", f'''
+<ul>
+  <li>It is a <strong>sensitivity band over declared model choices</strong>, not a
+  confidence interval. It says nothing about idiosyncratic risk; the
+  seed-to-seed panel on the <a href="market.html#robustness">market page</a>
+  is the separate measurement of that.</li>
+  <li>The real market path is held fixed by construction: one replay is built
+  from the shipped configuration and every run in the grid trades those bars.
+  Perturbations that are not config values (<code>snap_quotes_to_tick</code>,
+  <code>impact_exponent</code>) are deliberately passed as engine overrides rather
+  than added to the configuration, so the published fingerprint
+  <code>{ESC(str(base.get("config_fingerprint", "")))}</code> continues to
+  describe the season exactly as it was run.</li>
+  <li>Regulatory constants do <em>not</em> move here. The Rule 612 tick grid and
+  the Rule 610(c) access-fee cap are law, and the season is what it is under
+  them; the fee grid is perturbed only as a cost <em>sensitivity</em>, and the
+  row says so.</li>
+  <li>Participants pushed at least once from profit to loss:
+  <ul>{below_html}</ul></li>
+</ul>''')}
+
+<p class="muted small">Nothing on this page is investment advice.</p>
+"""
+    return page("Venue &amp; parameter sensitivity", body, "sensitivity.html")
+
+
 def build_limitations(d: SiteData) -> str:
     items = _load_limitations()
     cards = "".join(
@@ -2055,6 +2214,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     write("leaderboard.html", build_leaderboard(d))
     write("strategies.html", build_strategies(d))
     write("market.html", build_market(d))
+    write("sensitivity.html", build_sensitivity(d))
     write("methodology.html", build_methodology(d))
     write("data.html", build_data(d))
     write("sources.html", build_sources(d))
@@ -2090,6 +2250,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     write("assets/data/market.json", json.dumps(d.market, indent=1))
     write("assets/data/factors.json", json.dumps(d.factors, indent=1))
     write("assets/data/robustness.json", json.dumps(d.panel, indent=1))
+    write("assets/data/sensitivity.json", json.dumps(d.sensitivity, indent=1))
     write("assets/data/participants.json", json.dumps(d.participants, indent=1))
     write("assets/data/manifest.json", json.dumps({
         k: v for k, v in d.manifest.items() if k != "files"}, indent=1))

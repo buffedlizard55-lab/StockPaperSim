@@ -3,111 +3,126 @@
  "strategy_id": "KalshiAttentionTimer",
  "archetype": "event attention proxy",
  "starting_cash": 100000.0,
- "final_equity": 100000.0,
- "net_pnl_usd": 0.0,
- "total_return_pct": 0.0,
- "cagr_pct": 0.0,
+ "final_equity": 97919.65,
+ "net_pnl_usd": -2080.35,
+ "total_return_pct": -2.0803,
+ "cagr_pct": -2.0885,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": 0.0,
-  "max_drawdown_usd": 0.0,
+  "max_drawdown_pct": -6.2523,
+  "max_drawdown_usd": -6252.33,
   "peak_date": "2025-09-17",
   "peak_equity": 100000.0,
-  "trough_date": "2025-09-17",
-  "trough_equity": 100000.0,
-  "recovery_date": "2025-09-17",
-  "sessions_underwater": 0,
+  "trough_date": "2026-08-06",
+  "trough_equity": 93747.67,
+  "recovery_date": "2026-08-26",
+  "sessions_underwater": 14,
   "never_recovered": false,
-  "sharpe": 0.0,
-  "sortino": 0.0,
-  "calmar": null,
-  "daily_vol_pct": 0.0,
-  "annualised_vol_pct": 0.0,
-  "skew": 0.0,
-  "excess_kurtosis": 0.0,
-  "best_session_pct": 0.0,
-  "worst_session_pct": 0.0,
-  "var_95_pct": 0.0,
-  "cvar_95_pct": 0.0,
-  "var_99_pct": 0.0,
-  "cvar_99_pct": 0.0
+  "sharpe": -0.168,
+  "sortino": -0.0883,
+  "calmar": 0.334,
+  "daily_vol_pct": 0.6154,
+  "annualised_vol_pct": 9.77,
+  "skew": -1.1003,
+  "excess_kurtosis": 19.6581,
+  "best_session_pct": 3.404,
+  "worst_session_pct": -4.2017,
+  "var_95_pct": -0.364,
+  "cvar_95_pct": -1.6926,
+  "var_99_pct": -1.9456,
+  "cvar_99_pct": -3.2911
  },
  "market_relation": {
-  "beta": 0.0,
-  "alpha_annual_pct": 0.0,
-  "r_squared": 0.0,
-  "tracking_error_annual_pct": 0.0,
-  "information_ratio": null,
+  "beta": -0.0575,
+  "alpha_annual_pct": -0.8126,
+  "r_squared": 0.0058,
+  "tracking_error_annual_pct": 9.742,
+  "information_ratio": -0.083,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 0.0,
-  "residual_return_pct": 0.0
+  "beta_contribution_pct": -0.829,
+  "residual_return_pct": -1.251
  },
  "trades": {
-  "closed_trades": 0,
+  "closed_trades": 14,
   "open_trades": 0,
-  "wins": 0,
-  "losses": 0,
-  "win_rate_pct": 0.0,
-  "gross_win_usd": 0,
-  "gross_loss_usd": 0,
-  "profit_factor": null,
-  "avg_win_usd": 0.0,
-  "avg_loss_usd": 0.0,
-  "expectancy_usd_per_trade": 0.0,
-  "best_trade": null,
-  "worst_trade": null,
-  "longest_win_streak": 0,
-  "longest_loss_streak": 0,
-  "avg_sessions_held": 0.0,
-  "median_sessions_held": 0.0,
-  "sessions_in_market": 0,
-  "per_symbol_sessions_in_market": {},
-  "sum_of_tranche_sessions": 0,
-  "tranche_intervals_overlap": false,
-  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot; sessions_in_market is the union of those intervals."
+  "wins": 4,
+  "losses": 10,
+  "win_rate_pct": 28.571,
+  "gross_win_usd": 2021.84,
+  "gross_loss_usd": 4102.19,
+  "profit_factor": 0.4929,
+  "avg_win_usd": 505.46,
+  "avg_loss_usd": -410.22,
+  "expectancy_usd_per_trade": -148.6,
+  "best_trade": {
+   "symbol": "UNG",
+   "net_pnl": 1926.97,
+   "entry_date": "2026-08-03",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "XLU",
+   "net_pnl": -3835.73,
+   "entry_date": "2026-08-03",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "longest_win_streak": 2,
+  "longest_loss_streak": 5,
+  "avg_sessions_held": 18.07,
+  "median_sessions_held": 18.0,
+  "sessions_in_market": 32,
+  "per_symbol_sessions_in_market": {
+   "XLU": 32,
+   "UNG": 32
+  },
+  "sum_of_tranche_sessions": 253,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 0,
-  "shares_traded": 0,
-  "traded_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
-  "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
-  "commission_usd": 0.0,
-  "exchange_fee_usd": 0.0,
-  "regulatory_fee_usd": 0.0,
+  "fills": 26,
+  "shares_traded": 23708,
+  "traded_notional_usd": 356926.83,
+  "spread_cost_usd": 118.54,
+  "depth_cost_usd": 125.82,
+  "impact_cost_usd": 97.39,
+  "commission_usd": 26.0,
+  "exchange_fee_usd": 142.25,
+  "regulatory_fee_usd": 5.97,
   "rebate_usd": 0.0,
-  "total_cost_usd": 0,
-  "total_cost_bps_of_traded": 0.0,
-  "total_cost_pct_of_starting_cash": 0.0,
-  "net_liquidity_provider": true,
+  "total_cost_usd": 515.97,
+  "total_cost_bps_of_traded": 14.456,
+  "total_cost_pct_of_starting_cash": 0.516,
+  "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": null,
-   "spread_and_impact_pct": null
+   "explicit_fees_pct": 33.76,
+   "spread_and_impact_pct": 66.24
   },
-  "avg_execution_cost_bps_per_fill": 0.0,
-  "median_execution_cost_bps_per_fill": 0.0,
-  "worst_execution_cost_bps": 0.0,
-  "intraday_drift_usd": 0.0,
-  "avg_price_difference_bps_per_fill": 0.0,
+  "avg_execution_cost_bps_per_fill": 11.647,
+  "median_execution_cost_bps_per_fill": 9.431,
+  "worst_execution_cost_bps": 28.976,
+  "intraday_drift_usd": -9.71,
+  "avg_price_difference_bps_per_fill": 3.37,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 0,
+  "orders": 26,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
-  "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
-  "intraday_drift_usd": 0.0,
-  "fees_usd": 0.0,
+  "paper_notional_usd": 356632.86,
+  "spread_cost_usd": 118.54,
+  "depth_cost_usd": 125.82,
+  "impact_cost_usd": 97.39,
+  "intraday_drift_usd": -9.71,
+  "fees_usd": 174.22,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 0.0,
-  "shortfall_bps_of_paper": 0.0,
-  "friction_only_bps_of_paper": 0.0,
-  "worst_single_order_drift_usd": 0.0,
-  "best_single_order_drift_usd": 0.0,
+  "total_shortfall_usd": 506.26,
+  "shortfall_bps_of_paper": 14.196,
+  "friction_only_bps_of_paper": 14.468,
+  "worst_single_order_drift_usd": 66.47,
+  "best_single_order_drift_usd": -82.69,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
@@ -121,20 +136,39 @@
   "day_trade_count": 0
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 0.0,
-  "max_gross_pct_of_starting_cash": 0.0,
-  "avg_net_pct_of_starting_cash": 0.0,
-  "max_net_pct_of_starting_cash": 0.0,
-  "avg_leverage": 0.0,
-  "max_leverage": 0.0,
-  "sessions_flat": 251,
-  "avg_open_positions": 0.0
+  "avg_gross_pct_of_starting_cash": 19.53,
+  "max_gross_pct_of_starting_cash": 163.94,
+  "avg_net_pct_of_starting_cash": 19.53,
+  "max_net_pct_of_starting_cash": 163.94,
+  "avg_leverage": 0.198,
+  "max_leverage": 1.621,
+  "sessions_flat": 220,
+  "avg_open_positions": 0.25
  },
  "turnover": {
-  "traded_notional_usd": 0.0,
-  "annualised_turnover_x": 0.0
+  "traded_notional_usd": 356926.83,
+  "annualised_turnover_x": 3.589
  },
- "contribution_by_symbol": [],
+ "contribution_by_symbol": [
+  {
+   "symbol": "UNG",
+   "realized_pnl": 1953.14,
+   "open_pnl": 0.0,
+   "total_pnl": 1953.14,
+   "closed_trades": 5,
+   "fees": 133.4,
+   "all_in_cost_usd": 450.66
+  },
+  {
+   "symbol": "XLU",
+   "realized_pnl": -4033.49,
+   "open_pnl": 0.0,
+   "total_pnl": -4033.49,
+   "closed_trades": 9,
+   "fees": 40.82,
+   "all_in_cost_usd": 65.3
+  }
+ ],
  "monthly_returns": [
   {
    "month": "2025-09",
@@ -217,59 +251,75 @@
    "month": "2026-08",
    "sessions": 21,
    "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "end_equity": 100981.14,
+   "return_pct": 0.9811
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 100981.14,
+   "end_equity": 97919.65,
+   "return_pct": -3.0317
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": 0,
-  "open_position_pnl_usd": 0,
+  "realized_trading_pnl_usd": -2080.35,
+  "open_position_pnl_usd": 0.0,
   "dividends_usd": 0.0,
   "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
-  "execution_costs_already_netted_usd": 0,
-  "total_net_pnl_usd": 0.0,
+  "execution_costs_already_netted_usd": -515.97,
+  "total_net_pnl_usd": -2080.35,
   "unexplained_residual_usd": 0.0,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
-  "verdict": "no trades placed",
-  "headline": "No trades placed: +0.00% total return vs +14.41% for the index, +0.00pp residual after beta, 0.0% max drawdown, 0.00% of capital lost to execution costs.",
+  "verdict": "lost money",
+  "headline": "Lost money: -2.08% total return vs +14.41% for the index, -1.25pp residual after beta, -6.3% max drawdown, 0.52% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "Finished at -2.08% - a 2,080 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 2.08% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "kind": "factor",
-    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 2.08% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "kind": "attribution",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -2.08% total, about -0.83pp is explained by carrying beta -0.06 against a +14.41% market (R^2 0.01); the residual -1.25pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "UNG contributed +1,953 USD (-94% of net P&L) across 5 closed trades; XLU was the biggest drag at -4,033 USD."
    },
    {
     "kind": "costs",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 516 USD (0.52% of starting capital, 11.6 bp per fill, 14.5 bp of the 356,927 USD traded). 66% of that was spread/depth/impact and 34% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "14 closed round trips, 28.6% winners, profit factor 0.49, average winner +505 vs average loser -410 USD, median holding 18 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 32 sessions held at least one position (the per-tranche holding periods above sum to 253 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: XLU long 2026-08-03 to 2026-09-16, -3,836 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x."
+    "text": "Worst peak-to-trough drawdown -6.25% (-9.10% for the index), trough on 2026-08-06, recovered 2026-08-26. Average gross exposure 20% of starting capital, peak leverage 1.62x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Daily returns were -1.10 skewed with excess kurtosis +19.66; historical 95% VaR -0.36%/day with CVaR -1.69%/day. Worst single session -4.20%, best +3.40%."
    },
    {
     "kind": "caveat",
@@ -295,27 +345,27 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +0.00% over 251 sessions - +0 USD on 100,000 of paper capital, ending at 100,000. Verdict: no trades placed."
+    "text": "Outcome: -2.08% over 251 sessions - -2,080 USD on 100,000 of paper capital, ending at 97,920. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 2.08% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 2.08% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -2.08% total, about -0.83pp is explained by carrying beta -0.06 against a +14.41% market (R^2 0.01); the residual -1.25pp is everything else - selection, timing, leverage and cost. UNG contributed +1,953 USD (-94% of net P&L) across 5 closed trades; XLU was the biggest drag at -4,033 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 516 USD (0.52% of starting capital, 11.6 bp per fill, 14.5 bp of the 356,927 USD traded). 66% of that was spread/depth/impact and 34% was explicit fees and rebates."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": ""
+    "text": "14 closed round trips, 28.6% winners, profit factor 0.49, average winner +505 vs average loser -410 USD, median holding 18 sessions. Time in market, measured without double counting: 32 sessions held at least one position (the per-tranche holding periods above sum to 253 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: XLU long 2026-08-03 to 2026-09-16, -3,836 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x. Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Worst peak-to-trough drawdown -6.25% (-9.10% for the index), trough on 2026-08-06, recovered 2026-08-26. Average gross exposure 20% of starting capital, peak leverage 1.62x. Daily returns were -1.10 skewed with excess kurtosis +19.66; historical 95% VaR -0.36%/day with CVaR -1.69%/day. Worst single session -4.20%, best +3.40%."
    },
    {
     "title": "Regime context (real market data)",
@@ -331,7 +381,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: +0.00% in a market that returned +14.41%, and a residual of +0.00pp after beta - the trading itself destroyed value, not just the market direction. Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "It did not work: -2.08% in a market that returned +14.41%, and a residual of -1.25pp after beta - the trading itself destroyed value, not just the market direction. Finished at -2.08% - a 2,080 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],
@@ -348,5 +398,5 @@
  },
  "errors": [],
  "account_closed_early": false,
- "sessions_with_orders": 0
+ "sessions_with_orders": 21
 }

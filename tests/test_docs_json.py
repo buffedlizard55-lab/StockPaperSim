@@ -58,7 +58,7 @@ class TestPublishedSite(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
         season1 = [p for p in self.pages if not p.startswith("season2/")]
-        self.assertEqual(len(season1), 30)      # 10 top level + 20 + index
+        self.assertEqual(len(season1), 31)      # 11 top level + 20 + index
         # Season 2 publishes under docs/season2/: 7 index pages plus one per
         # participant, and it must not leak into Season 1's participant tree.
         season2 = [p for p in self.pages if p.startswith("season2/")]

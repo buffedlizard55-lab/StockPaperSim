@@ -63,6 +63,11 @@ ALLOWED_HOSTS = {
     # for the access policy it follows.
     "data.sec.gov", "cdn.nba.com", "stats.nba.com", "www.nba.com",
     "github.com",
+    # Added 2026-09-18 with IR-41's correction: the venue's own migration note,
+    # which is the primary source for the *_fp / *_dollars field names the
+    # collector now reads. Unknown-host rejection is the point of this set, so a
+    # citation is never allow-listed without opening the page.
+    "docs.kalshi.com",
 }
 
 

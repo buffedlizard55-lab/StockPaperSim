@@ -285,7 +285,7 @@
    },
    {
     "signal": "kalshi_volume_30d",
-    "state": "MISSING",
+    "state": "AVAILABLE",
     "files": [
      "data/real/kalshi/"
     ],
@@ -299,11 +299,9 @@
    "kalshi_volume_30d"
   ],
   "signal_dependent": true,
-  "gate_armed": false,
-  "waiting_on": [
-   "kalshi_volume_30d"
-  ],
-  "idle_reason": "no trades: waiting on kalshi_volume_30d (MISSING) from https://api.elections.kalshi.com/trade-api/v2/markets - no traded-volume field in the collected payload could be read, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING"
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
  },
  {
   "username": "@GOLD_Trend_GLD",

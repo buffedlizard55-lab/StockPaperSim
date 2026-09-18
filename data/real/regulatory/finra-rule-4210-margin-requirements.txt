@@ -1,0 +1,18 @@
+SOURCE: https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210
+        "Margin Requirements"
+Publisher: FINRA
+Retrieved: 2026-09-17 (fetched; the page renders the full rule text)
+
+WHY THIS FILE EXISTS
+  4210 is the rule body that config.MarginConfig's pattern-day-trader threshold
+  and the day-trade counter refer to. Paragraph (f)(8)(B) is the day-trading
+  section; its text and the six counting examples are reproduced in
+  finra-regulatory-notice-21-13.txt alongside this directory, which carries the
+  interpretations that decide the arithmetic.
+
+USED FOR
+  * the $25,000 special maintenance minimum for pattern day traders, reported
+    (not enforced) by config.MarginConfig.pdt_equity_threshold;
+  * the definition of day trading that sim/portfolio.py::_count_day_trade
+    implements, together with the "except for positions held overnight"
+    carve-out that keeps @OvernightCarry_NO at zero intraday round trips.

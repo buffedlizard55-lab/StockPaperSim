@@ -1,0 +1,26 @@
+SOURCE: https://www.finra.org/rules-guidance/guidance/trading-activity-fee
+        "Trading Activity Fee"
+Publisher: FINRA
+Retrieved: 2026-09-17
+
+WHY THIS FILE EXISTS
+  config.FINRA_TAF_PER_SHARE and FINRA_TAF_MAX_PER_TRADE put a dated
+  fee schedule on every sell a participant makes. This is the only
+  FINRA-published page about that fee that this environment could read.
+
+QUOTED
+  "Details of the Trading Activity Fee - including the securities it applies
+  to, transactions that are exempt from the fee and the fee rates - are in
+  Section 1 of Schedule A to FINRA's By-Laws."
+
+  "Effective July 1, 2026, FINRA will migrate the current TAF system to the
+  E-Bill platform to streamline reporting and enhance system functionality."
+
+WHAT THIS DOES AND DOES NOT ESTABLISH
+  It establishes that the TAF is levied on SALES of covered equity securities
+  and that the rate table lives in Schedule A, which is a PDF this environment
+  could not read. So the numbers in config.FINRA_TAF_PER_SHARE (0.000166/share
+  to 2025-12-31, 0.000195/share from 2026-01-01) and the per-trade cap
+  (8.30 then 9.79) remain status SECONDARY in the register: corroborated by
+  two independent broker fee schedules, not verified against the primary.
+  Recorded as IR-05; the 2026 migration is recorded as IR-33 context.

@@ -16,9 +16,9 @@
   {
     "id": "L-03",
     "severity": "high",
-    "title": "Decisions happen once per session, so intraday strategies are structurally mis-measured",
-    "detail": "Strategies see prior-session history plus today's opening quote and act once. Three participants are built around intraday behaviour - @GapAndGo_YOLO (open-range momentum), @OvernightCarry_NO (close-to-open premium, see IR-08) and @SpreadHarvester_MM (passive quoting) - and for all three the engine's granularity, not the strategy's merit, dominates the result. A real market maker requotes in milliseconds; this one requotes daily. Their pages carry the caveat, but a caveat is not a measurement.",
-    "fix": "A minute-bar engine: intraday paths already exist internally (13 intervals per session), so the work is exposing multiple decision points per session, an order book that persists across them, and a close-auction order type."
+    "title": "Decisions happen once per session; a decision can be *worked* at the open or the close, never mid-session",
+    "detail": "A participant writes one order list per session. Since IR-34 each order can carry at_close, which works it against the venue's final interval instead of the first, so a market-on-close exit and an overnight-only entry are now expressible and are what GapAndGo and OvernightCarry use. What is still not expressible is any mid-session reaction: no strategy can see a print at interval 5 and act on it, so a stop that in real life would trigger at noon is modelled as triggering at the next scheduled decision. Intraday scalping, vwap-following and reaction-to-news strategies remain out of reach, and any result quoted for a strategy whose edge is claimed to be intra-hour should be read as a coarse approximation of it.",
+    "fix": "Closed for the part that was a venue limitation rather than a data one: Order.at_close plus engine routing (IR-34). The mid-session reaction limitation is a daily-bar replay limitation and needs the minute-bar engine in REMAINING_WORK."
   },
   {
     "id": "L-04",
@@ -109,6 +109,6 @@
     "severity": "low",
     "title": "Dividends are paid without a matching ex-date price drop",
     "detail": "Real price series gap down on the ex-date; the simulated series do not. For non-anchored names the generator compensates by removing the declared window dividend yield from the price drift, so total return is not double counted, but the day-to-day price path does not show the ex-date step that a real chart would. AAPL is exempt because its anchor is a real unadjusted close that already contains the real drops.",
-    "fix": "Apply an explicit multiplicative ex-date adjustment to the simulated close series on each declared ex-date and stop subtracting the yield from drift."
+    "fix": "Partly reversed: rather than force the price path to drop, the venue now charges the short side the dividend it owes (IR-31), so total return is consistent for long and short books whichever convention the price path follows. A real ex-date drop on simulated names is still not modelled, which is why the adjustment item stays in REMAINING_WORK: the two mechanisms must not both be applied without checking that the yield is not being charged twice."
   }
 ]

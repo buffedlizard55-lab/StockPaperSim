@@ -1,0 +1,33 @@
+SOURCE: https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330
+        "Customer Protection - Permissible Use of Customers' Securities"
+Publisher: FINRA
+Retrieved: 2026-09-17 (fetched and read in full)
+Amendment history shown on the page: "Amended by SR-FINRA-2013-035 partially
+effective May 1, 2014 and fully effective October 28, 2014."
+
+WHY THIS FILE EXISTS
+  It is the rule-side statement that a firm borrowing a customer's securities
+  has to tell the customer about dividends it will owe on them. The venue's
+  short positions are borrowers, so a dividend going ex while a position is
+  short is a payment the short owes, not a dividend the short misses. That is
+  the manufactured dividend in sim/portfolio.py::Account.settle_dividend and
+  irregularity IR-31.
+
+QUOTED, Rule 4330(b)(2)(B)(ii), which lists what the borrower must disclose to
+the lending customer; item (g) in full:
+
+  "g. potential tax implications, including payments deemed cash-in-lieu of
+  dividend paid on securities while on loan; and"
+
+Also quoted, 4330(b)(2)(B)(ii)(f), which is why the venue models a borrow fee at
+all and treats availability as conditional:
+
+  "f. that the securities may be 'hard-to-borrow' because of short-selling or
+  may be used to satisfy delivery requirements resulting from short sales;"
+
+NOTE ON THE PREVIOUS CITATION
+  IR-31 as first drafted linked "finra.org/rules-guidance/rulebooks/finra-rules/4337".
+  That URL returns 404: the securities-lending customer-protection rule is
+  4330, not 4337 (4337 does not exist in the current rulebook). Recorded as
+  IR-33 rather than quietly corrected, because a citation that looks right and
+  is wrong is the failure mode this project is trying to surface.

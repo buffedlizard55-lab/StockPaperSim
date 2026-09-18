@@ -30,7 +30,7 @@
   {
     "priority": "P1",
     "title": "Real event data: earnings calendar, EPS surprises, short interest",
-    "detail": "Replaces the price/volume proxies behind @DriftRider_PEAD and @SqueezeHunter_TF (IR-07) and lets the post-mortems attribute returns to identifiable events rather than to statistical drift. FINRA publishes short interest twice monthly; earnings dates are available from several vendors.",
+    "detail": "Replaces the price/volume proxies behind @DriftRider_PEAD and @SqueezeHunter_TF (IR-07) and lets the post-mortems attribute returns to identifiable events rather than to statistical drift. FINRA publishes short interest twice monthly; earnings dates are available from several vendors. Dividend and ex-date schedules belong here too: for 15 of the 17 instruments the ex-dates and per-share amounts are declared scenario parameters, not observations, and IR-31 showed that the accounting around them is where a season's short-side returns actually move. A real schedule would also let the ex-date price drop be checked against the tape instead of assumed.",
     "where": "sim/universe.py (per-instrument event tables) · data/real/events/",
     "effort": "a week"
   },
@@ -110,5 +110,12 @@
     "detail": "Re-run the season under small perturbations of each venue parameter - tick snapping, hidden liquidity on/off, spread ticks +/-1, the impact exponent at 0.5 vs 0.6, maker rebate on/off - and publish the resulting distribution of returns and rank changes per participant. IR-29 shows a half-tick change moved one participant 28.3pp, so a single-path ranking is not a skill ordering; this harness is what would turn that from a caveat into a measurement, and it would also settle the square-root vs 3/5-power impact question empirically inside the model rather than only citing the literature.",
     "where": "sim/cli.py (a new 'sensitivity' subcommand) - analytics.robustness_panel is the template; publish as robustness.html plus assets/data/sensitivity.json",
     "effort": "a day; each full six-scenario run is about 14 seconds, so a 12-perturbation grid is a few minutes of compute"
+  },
+  {
+    "title": "Cite-hygiene job for the source register (networked, not in CI by design)",
+    "priority": "P2",
+    "effort": "S",
+    "detail": "IR-33 found two official URLs in the register returning 404, including one cited for a fee rate, and neither was caught because nothing opens the links after they are written. The register now requires a stored artefact behind a FETCHED-VERIFIED row, which fixes the rot-forward problem but not the rot-already-there problem: a link that was live when the excerpt was taken still goes stale silently a year later. The missing piece is a scheduled job that re-opens every URL in sim/config.py's register plus the links in the three research JSON files, classifies the response, and opens an issue listing the rows that moved. It must not be a merge gate: a red build because a regulator rate-limits a bot is worse than no build, and several of these hosts (sec.gov, finra.org, federalregister.gov) block unauthenticated automation intermittently. So it belongs in a weekly scheduled workflow with continue-on-error, reporting per-URL status, and the manual sweep recorded in VERIFICATION_LOG.md remains the backstop.",
+    "where": "new .github/workflows/cite-hygiene.yml; scripts/check_links.py with a fetch classifier that separates 404/410 (broken) from 403/429/timeout (blocked, needs a human)"
   }
 ]

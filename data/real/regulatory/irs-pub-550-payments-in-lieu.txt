@@ -1,0 +1,26 @@
+SOURCE: https://www.irs.gov/publications/p550
+        "Publication 550 (2025), Investment Income and Expenses"
+Publisher: Internal Revenue Service
+Retrieved: 2026-09-17
+
+WHY THIS FILE EXISTS
+  Corroboration, from the tax side, of the direction of the cash flow the venue
+  was missing before IR-31 was fixed: the SHORT side pays.
+
+SUBSTANCE, as published in Pub. 550 chapter 4 "Short Sales" and chapter 1
+"Investment Income and Expenses":
+
+  * A taxpayer who borrows stock to make a short sale "may have to remit to the
+    lender payments in lieu of the dividends distributed while you maintain your
+    short position."
+  * Those payments in lieu are reportable as ordinary income by the recipient
+    lender, and are not qualified dividends; the payer's deduction is limited by
+    the holding-period rules (a short sale closed within 45 days cannot deduct
+    the payment at all, it adjusts basis instead).
+
+CONSEQUENCE FOR THIS SIMULATION
+  A short position that spans an ex-date owes the dividend. Before the fix the
+  venue let the short keep the ex-date price decline without charging it, which
+  is not a simplification but a transfer of wealth from the (unmodelled) lender
+  to the short seller. sim/portfolio.py now charges
+  abs(entitled_qty at open) * per_share as a dividend_in_lieu carry event.

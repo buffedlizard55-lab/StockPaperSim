@@ -16,6 +16,8 @@ evaluated from official data places nothing and says so.
 
 from __future__ import annotations
 
+import datetime as dt
+
 from typing import Dict, List, Optional, Sequence
 
 from . import treasury
@@ -69,6 +71,12 @@ class OfficialStrategy:
                 "data_status": self.data_status, "data_note": self.data_note,
                 "max_gross_leverage": self.max_gross_leverage}
 
+
+def _years_between(start: str, end: str) -> Optional[float]:
+    """Signed years from ``start`` to ``end``, or ``None`` if either is missing."""
+    if not start or not end:
+        return None
+    return (dt.date.fromisoformat(end) - dt.date.fromisoformat(start)).days / 365.0
 
 # --------------------------------------------------------------------------
 # 1. The base case: buy bills, hold to maturity, roll
@@ -373,44 +381,70 @@ class BellyMeanReversion_FiveY(OfficialStrategy):
 class TIPSBreakeven_Rider(OfficialStrategy):
     username = "@TIPSBreakeven_Rider"
     family = "inflation"
-    thesis = ("Buy inflation-protected paper at auction and fund it by shorting the "
-              "matching nominal when the breakeven implied by the two auctions is "
-              "below the realised CPI change the official series shows. Both legs are "
-              "auction results: the nominal price and the TIPS price are printed, and "
-              "the breakeven is arithmetic on them rather than a model.")
+    thesis = ("Buy inflation-protected paper at auction when the breakeven implied by "
+              "the official observations sits below the inflation the official CPI index "
+              "has actually delivered. The two sides of that comparison are read at the "
+              "same horizon: the nominal yield comes from the Treasury's par curve at the "
+              "TIPS security's own remaining maturity, and realised inflation comes from "
+              "the BLS index over the same number of years. The rule bids at the next "
+              "announced TIPS auction, so the entry price is a published one.")
     research_basis = (
         {"label": "TreasuryDirect: TIPS auction results (adjusted price, index ratio, accrued interest)",
          "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"},
         {"label": "Treasury: TIPS index ratios and reference CPI",
          "url": "https://www.treasurydirect.gov/auctions/announcements-data-results/"},
+        {"label": "BLS Consumer Price Index (all items), as republished by FRED",
+         "url": "https://fred.stlouisfed.org/series/CPIAUCSL"},
     )
     max_gross_leverage = 4.0
 
     def plan(self, ctx) -> None:
-        tips = [a for a in ctx.recent_auctions(limit=120)
-                if (a.tips or "").lower() == "yes" and a.high_yield is not None]
-        if not tips:
+        priced = [a for a in ctx.recent_auctions(limit=200)
+                  if a.is_tips and a.high_yield is not None and a.maturity_date]
+        if not priced:
             ctx.note("no TIPS auction with a published high yield in the collected window")
             return
-        latest = max(tips, key=lambda a: a.auction_date)
-        nominal_yield = ctx.yield_at(10.0)
-        if latest.high_yield is None or nominal_yield is None:
+        latest = max(priced, key=lambda a: a.auction_date)
+        tenor = _years_between(ctx.session, latest.maturity_date)
+        if tenor is None or tenor <= 0:
+            ctx.note(f"{latest.cusip} matures before this session, so no horizon can be read")
+            return
+        realised = ctx.realised_inflation(tenor)
+        if realised is None:
+            window = ctx.inflation_window_years()
+            ctx.note(f"the collected CPI series reaches back {window} years, short of the "
+                     f"{tenor:.2f}-year horizon this TIPS pays over; the rule does not "
+                     f"quietly compare a shorter window")
+            return
+        nominal_yield = ctx.yield_at(tenor)
+        if nominal_yield is None:
+            ctx.note(f"the par curve has no observation at {tenor:.2f} years")
             return
         breakeven = nominal_yield - latest.high_yield
-        realised = ctx.realised_inflation_5y()
-        if realised is None:
-            ctx.note("no realised inflation observation available")
-            return
         if breakeven >= realised:
-            ctx.note(f"breakeven {breakeven:.2f}% is not below realised {realised:.2f}%")
+            ctx.note(f"{tenor:.2f}-year breakeven {breakeven:.2f}% is not below realised "
+                     f"inflation {realised:.2f}%")
             return
-        if any(p.cusip == latest.cusip for p in ctx.held()):
+        cusips = {lot.cusip for lot in ctx.account.lots}
+        if latest.cusip in cusips:
+            ctx.note(f"already holding {latest.cusip}")
             return
-        ctx.buy_secondary(latest.cusip, ctx.equity() * self.max_gross_leverage * 0.9,
-                          rule="buy TIPS while the implied breakeven is below realised inflation",
-                          rationale=(f"breakeven {breakeven:.2f}% (10-year {nominal_yield:.2f}% "
-                                      f"- TIPS {latest.high_yield:.2f}%) vs realised "
-                                      f"{realised:.2f}%"))
+        upcoming = [a for a in ctx.upcoming_auctions(types=("TIPS",))
+                    if a.auction_date >= ctx.session]
+        budget = ctx.equity() * self.max_gross_leverage * 0.9
+        rationale = (f"{tenor:.2f}-year breakeven {breakeven:.2f}% "
+                     f"({nominal_yield:.2f}% nominal at that tenor - {latest.high_yield:.2f}% "
+                     f"TIPS) against realised CPI {realised:.2f}% over {tenor:.2f} years")
+        if upcoming:
+            ctx.buy_at_auction(min(upcoming, key=lambda a: a.auction_date), budget,
+                               rule="bid for inflation-protected paper while the breakeven "
+                                    "at the security's own tenor is below realised inflation",
+                               rationale=rationale)
+            return
+        ctx.buy_secondary(latest.cusip, budget,
+                          rule="buy TIPS while the breakeven at the security's own tenor is "
+                               "below realised inflation",
+                          rationale=rationale)
 
 
 # --------------------------------------------------------------------------

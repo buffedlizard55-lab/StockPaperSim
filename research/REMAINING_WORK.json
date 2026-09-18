@@ -285,5 +285,26 @@
   "priority": "P1",
   "effort": "one workflow plus a season of patience",
   "where": ".github/workflows/, sim/official_season.py, docs/official/forward.html"
+ },
+ {
+  "title": "Widen the CPI file and re-run the official book so the inflation rule can trade",
+  "detail": "The inflation participant stood aside on all 250 sessions because the collected CPI series covers one year and the security it was looking at pays over twenty-nine (L-36). The collector now asks FRED for the index from 1990, so one collection run on a runner closes the gap; the run has to be followed by 'python3 -m sim.cli official' and a site rebuild, because the leaderboard, the reports and the audit report are all committed artefacts of that run. Until then the rule's return is interest on cash and the site says so on its page.",
+  "priority": "P0",
+  "effort": "one collection run plus one re-run and site rebuild",
+  "where": "scripts/collect_real_data.py, data/real/fred, memory/official, docs/official"
+ },
+ {
+  "title": "Let an official-lane rule target the issue date instead of the next session",
+  "detail": "Most rejected orders in the official book are when-issued refusals: a rule wants a security the Treasury auctioned this week but does not issue until next week, and the venue books no when-issued trade, so the order is refused and the rule loses the session. 1,182 of 2,662 intents were refused, and the largest single reason is when-issued. The venue is right to refuse; the rules should instead aim at the first session on or after the issue date, which is what a participant who reads the announcement would do. The comment on the settlement path names the issue date, so the information a rule needs is already in the intent's own evidence.",
+  "priority": "P1",
+  "effort": "one helper on OfficialContext plus a re-run and re-audit",
+  "where": "sim/officialbook.py, sim/strategies_official.py"
+ },
+ {
+  "title": "Publish the standing-aside record for the equity books too",
+  "detail": "The official lane now stores what each rule said when it decided not to trade (notes.jsonl.gz) and its participant pages publish the reasons ranked by how often they recurred, which is how the mixed-horizon defect in IR-61 stayed invisible until it was read. The equity books - Season 1, Season 2 and the Live Book - record only intent states, so a participant that spends a season doing nothing there is documented by the absence of orders rather than by its own reasons.",
+  "priority": "P2",
+  "effort": "one stream per book plus a card on the participant pages",
+  "where": "sim/engine.py, sim/live.py, scripts/build_site.py, scripts/build_site_live.py"
  }
 ]

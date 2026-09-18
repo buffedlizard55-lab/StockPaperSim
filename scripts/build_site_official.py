@@ -209,6 +209,11 @@ class OfficialSite:
         self.trips = _jsonl(os.path.join(self.run_dir, "trips.jsonl.gz"))
         self.fills = _jsonl(os.path.join(self.run_dir, "fills.jsonl.gz"))
         self.intents = _jsonl(os.path.join(self.run_dir, "intents.jsonl.gz"))
+        #: What the rules said when they decided not to trade.  The stream is
+        #: optional because runs written before it existed have no file, and a
+        #: missing stream must degrade to "nothing recorded", not to an error.
+        notes_path = os.path.join(self.run_dir, "notes.jsonl.gz")
+        self.notes = _jsonl(notes_path) if os.path.exists(notes_path) else []
         self.forward = (_json(os.path.join(self.forward_dir, "forward_intents.json"))
                         if self.forward_dir else {})
         ledger_dir = os.path.join(self.base, "ledger")
@@ -242,6 +247,27 @@ class OfficialSite:
 
     def intents_for(self, username: str) -> List[dict]:
         return self._named(self.intents, username)
+
+    def notes_for(self, username: str, limit: int = 6) -> List[dict]:
+        """The reasons one rule gave for standing aside, most frequent first.
+
+        The rule writes these itself at the session it decided, and the venue
+        stores them; the site is only grouping them.  A rule that never traded
+        has to be able to show why, and this is the only place that answer can
+        come from - a sentence written on the page afterwards would be a claim
+        about the rule rather than a record of it.
+        """
+        rows = self._named(self.notes, username)
+        grouped: Dict[str, dict] = {}
+        for row in rows:
+            entry = grouped.setdefault(row["note"], {"note": row["note"], "sessions": 0,
+                                                     "first": row["session"],
+                                                     "last": row["session"]})
+            entry["sessions"] += 1
+            entry["first"] = min(entry["first"], row["session"])
+            entry["last"] = max(entry["last"], row["session"])
+        ordered = sorted(grouped.values(), key=lambda r: (-r["sessions"], r["note"]))
+        return ordered[:limit]
 
     def exit_kinds(self) -> Dict[str, int]:
         counts: Dict[str, int] = {}
@@ -665,6 +691,22 @@ def build_participant(d: OfficialSite, username: str) -> str:
          "primary at the published price, secondary derived", ""),
     ]))
     body.append(card("Why it worked, or why it did not", f"<ul>{drivers}</ul>"))
+    stood_aside = d.notes_for(username)
+    if stood_aside:
+        rows = [[f'{r["sessions"]:,}', ESC(r["first"]), ESC(r["last"]),
+                 ESC(r["note"])] for r in stood_aside]
+        body.append(card("Why it stood aside", f"""
+<p>These are the reasons the rule itself gave, at the session it decided, for not
+sending an order. They are the rule's own words, stored when the decision was
+made and grouped here - not written afterwards.</p>
+{table(["Sessions", "First", "Last", "Reason"], rows)}
+"""))
+    elif not trips:
+        body.append(card("Why it stood aside", """
+<p>This run predates the standing-aside stream, so the reasons are not recoverable
+from the stored tape; the order states on the previous card still show that nothing
+filled.</p>
+"""))
     if trade_rows:
         body.append(card("Settled trades", table(
             ["Entry", "Exit", "Security", "Side", "Face", "Entry price", "Exit price",

@@ -42,9 +42,17 @@ jobs:
       # The audit imports nothing from sim/: it re-derives the official book from
       # the Treasury's tape files and the run's streams with its own arithmetic,
       # which is the only way a mistake shared by the engine and its own
-      # verification becomes visible.
+      # verification becomes visible. It writes its report into the committed
+      # memory, and the diff below fails the job if a fresh audit disagrees with
+      # the report the README quotes - so the published check count is a
+      # re-derived number rather than a sentence somebody typed.
       - name: Independent audit of the official auction book
-        run: python scripts/independent_audit_official.py
+        run: |
+          python scripts/independent_audit_official.py --json memory/official/ledger/independent_audit.json
+          if ! git diff --exit-code --stat -- memory/official/ledger/independent_audit.json; then
+            echo "::error::the committed independent-audit report is stale - commit the fresh one"
+            exit 1
+          fi
 
       # The three official FRED series retrieved with the page-fetch tool were
       # transcribed by hand, which is the one place a wrong digit could have

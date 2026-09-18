@@ -1,7 +1,7 @@
 {
  "participant": "@TIPSBreakeven_Rider",
  "family": "inflation",
- "thesis": "Buy inflation-protected paper at auction and fund it by shorting the matching nominal when the breakeven implied by the two auctions is below the realised CPI change the official series shows. Both legs are auction results: the nominal price and the TIPS price are printed, and the breakeven is arithmetic on them rather than a model.",
+ "thesis": "Buy inflation-protected paper at auction when the breakeven implied by the official observations sits below the inflation the official CPI index has actually delivered. The two sides of that comparison are read at the same horizon: the nominal yield comes from the Treasury's par curve at the TIPS security's own remaining maturity, and realised inflation comes from the BLS index over the same number of years. The rule bids at the next announced TIPS auction, so the entry price is a published one.",
  "data_status": "READY",
  "data_note": "",
  "drivers": [

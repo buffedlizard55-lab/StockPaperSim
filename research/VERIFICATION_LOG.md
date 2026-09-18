@@ -720,3 +720,54 @@ The official lane answers that part of the brief with the instrument family wher
 publisher *does* print the price of every trade: US Treasury auctions. The
 limitations that remain are registered as L-27 to L-35, and the next session's
 queue is in `REMAINING_WORK.json`, headed by the SEC 403.
+
+## Official Auction Book, second pass (2026-09-19): the reasons a rule stood aside
+
+Pass 1 built the lane and its audit; this pass went looking for the failure mode a
+green verification cannot see — a rule that does nothing and looks patient. The
+tape was read account by account, the collection run that landed during the pass
+was merged first (it brought the three DFII real-yield series and the Treasury
+tapes), and the book was re-run and re-audited afterwards.
+
+| | |
+|---|---|
+| Run | `memory/official/official-rehearsal-seed20260918` — 250 official sessions, 2025-09-17 → 2026-09-16, 14 participants, $100,000 each |
+| Verification | **PASS** — 7,573 checks, 0 failures, largest equity residual $0.035155 |
+| Independent audit | **PASS** — 1,864 checks, 0 failures, report at `memory/official/ledger/independent_audit.json` |
+| Activity | 2,662 intents, 300 fills, 189 settled round trips; 1,182 refused, 1,170 superseded |
+| Winner | `@TIPSBreakeven_Rider` **+5.58%** — with **zero orders**: the return is the official SOFR credit on idle cash |
+| Median | **−24.20%**; best participant that actually traded: `@AuctionStrength_Follow` **+4.40%** (4 trips) |
+
+### The defect this pass found (IR-61)
+
+The inflation rule compared a **ten-year** nominal breakeven with a **five-year**
+realised inflation rate, while buying whichever TIPS had auctioned most recently —
+a security with 29 years left. Three horizons were being called one breakeven.
+Nothing failed when it was wrong, because the rule's other outcome was *also* no
+orders: renaming the realised-inflation helper made the planning call raise
+`AttributeError`, the venue's per-rule guard turned that into a private
+`PLAN-ERROR` flag, and the standings looked identical either way.
+
+Fixed by reading both legs at the security's own remaining maturity, and by making
+the venue keep what the rule says when it decides not to trade.
+
+### What the fix changed about the published record
+
+| | |
+|---|---|
+| `notes.jsonl.gz` | new stream beside the other six: `{session, participant, note}`, 723 rows this run |
+| Participant pages | a **Why it stood aside** card, reasons ranked by how often they recurred |
+| `buy_at_auction` | a bid for an auction that has not priced yet is sized at the newest published price of the same type and term, and the rationale records that this was a sizing input (L-37) — the executed price is unchanged: the auction's own published number |
+| `OfficialRates._find` | picks the **longest** collected window of a series instead of the first name that sorts (the CPI index now has more than one file requested) |
+| Collector | `FRED_SERIES_WINDOWS["CPIAUCSL"] = "1990-01-01"` — a five-year realised rate cannot come from one year of observations, and narrowing the rule's window to fit the file would have been the wrong repair |
+| CI | the independent audit now writes its report into the committed memory and fails if the committed copy changes, so the check count the README quotes is re-derived, not typed |
+
+### The same class of defect, one layer up: the README's own paragraph
+
+The official section of `README.md` was written at the end of pass 1 quoting that
+run's numbers. Merging the collection run and fixing IR-61 replaced every one of
+them — winner, return, trip count and the verification count all moved — and
+nothing failed, because no test read that section. `tests/test_readme_claims.py`
+now re-derives the paragraph from `memory/official/…/leaderboard.json`, the
+manifest and the committed audit report, including the requirement that a winner
+with zero trades is described as cash interest rather than as a strategy result.

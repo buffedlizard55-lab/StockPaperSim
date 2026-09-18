@@ -5,36 +5,37 @@
  "data_status": "READY",
  "data_note": "",
  "drivers": [
-  "Best trade: 3-Year 91282CPC9 (long, primary-auction to secondary-curve) 2025-10-07 to 2025-10-16 for $278.05.",
-  "2 of 2 closed trades made money; coupons paid $0.00 and financing cost $-39,388.72.",
+  "Best trade: 3-Year 91282CPP0 (long, primary-auction to secondary-curve) 2025-12-08 to 2025-12-16 for $1,647.15.",
+  "Worst trade: 10-Year 91282CNS6 (primary-auction to secondary-curve) 2025-09-18 to 2025-11-28 for $-5,781.25.",
+  "14 of 31 closed trades made money; coupons paid $0.00 and financing cost $-26,820.26.",
   "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
  ],
  "verdict": "lost money",
  "metrics": {
   "participant": "@ConcessionFade_Notes",
   "family": "auction cycle",
-  "final_equity": 70874.44,
-  "return_pct": -29.1256,
+  "final_equity": 51287.65,
+  "return_pct": -48.7123,
   "return_at_ruin_pct": null,
-  "max_drawdown_pct": -29.1379,
-  "sharpe": -2.6143,
-  "trades": 2,
-  "open_positions": 2,
+  "max_drawdown_pct": -48.7213,
+  "sharpe": -1.7276,
+  "trades": 31,
+  "open_positions": 1,
   "coupon_income": 0.0,
   "financing": 0.0,
-  "debit_interest": -39388.72,
-  "cash_credit": 17.38,
-  "realised_pnl": 308.22,
+  "debit_interest": -26820.26,
+  "cash_credit": 504.54,
+  "realised_pnl": -10905.72,
   "margin_events": 0,
-  "intents": 603,
-  "filled_intents": 6,
-  "waiting_intents": 380,
-  "rejected_intents": 82,
+  "intents": 451,
+  "filled_intents": 63,
+  "waiting_intents": 0,
+  "rejected_intents": 307,
   "data_status": "READY",
   "official_price_coverage": 1.0,
   "ruined_on": null,
   "status": "ACTIVE",
-  "rank": 8
+  "rank": 9
  },
  "intents": [
   {
@@ -101,7 +102,7 @@
    "target_session": "2025-09-23",
    "cusip": "91282CPB1",
    "side": "buy",
-   "face": 717200.0,
+   "face": 674300.0,
    "rule": "bid the next announced note auction and exit five sessions after issue",
    "rationale": "2-Year 91282CPB1 announced 2025-09-18 for auction 2025-09-23",
    "status": "PARTIAL",
@@ -124,10 +125,10 @@
     "session": "2025-09-23",
     "cusip": "91282CPB1",
     "side": "buy",
-    "face": 75800.0,
+    "face": 48000.0,
     "price_per100": 99.864119,
     "kind": "PRIMARY-AUCTION",
-    "cash_delta": -75697.0,
+    "cash_delta": -47934.78,
     "note": "non-competitive award at the official price",
     "liquidity": {
      "offering_amount": 69000000000.0,
@@ -140,12 +141,12 @@
      "maximum_noncompetitive_award": 10000000.0,
      "minimum_to_issue": 100.0,
      "multiples_to_issue": 100.0,
-     "request_as_pct_of_noncompetitive_accepted": 0.0241997,
-     "request_as_pct_of_total_accepted": 0.00010411,
-     "request_as_pct_of_offering": 0.00010986
+     "request_as_pct_of_noncompetitive_accepted": 0.01532435,
+     "request_as_pct_of_total_accepted": 6.592e-05,
+     "request_as_pct_of_offering": 6.957e-05
     },
     "closed_face": 0.0,
-    "opened_face": 75800.0,
+    "opened_face": 48000.0,
     "trips_closed": []
    }
   },
@@ -157,7 +158,7 @@
    "target_session": "2025-10-01",
    "cusip": "91282CPB1",
    "side": "sell",
-   "face": 75800.0,
+   "face": 48000.0,
    "rule": "exit five sessions after the auction",
    "rationale": "concession fade",
    "status": "FILLED",
@@ -182,10 +183,10 @@
     "session": "2025-10-01",
     "cusip": "91282CPB1",
     "side": "sell",
-    "face": 75800.0,
+    "face": 48000.0,
     "price_per100": 99.903918,
     "kind": "SECONDARY-CURVE",
-    "cash_delta": 75727.17,
+    "cash_delta": 47953.88,
     "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
     "liquidity": {
      "offering_amount": 69000000000.0,
@@ -195,7 +196,7 @@
      "security_term": "2-Year",
      "auction_date": "2025-09-23"
     },
-    "closed_face": 75800.0,
+    "closed_face": 48000.0,
     "opened_face": 0.0,
     "trips_closed": [
      "T00001"
@@ -210,7 +211,7 @@
    "target_session": "2025-10-07",
    "cusip": "91282CPC9",
    "side": "buy",
-   "face": 706200.0,
+   "face": 636800.0,
    "rule": "bid the next announced note auction and exit five sessions after issue",
    "rationale": "3-Year 91282CPC9 announced 2025-10-02 for auction 2025-10-07",
    "status": "PARTIAL",
@@ -233,10 +234,10 @@
     "session": "2025-10-07",
     "cusip": "91282CPC9",
     "side": "buy",
-    "face": 63100.0,
+    "face": 18500.0,
     "price_per100": 99.785614,
     "kind": "PRIMARY-AUCTION",
-    "cash_delta": -62964.72,
+    "cash_delta": -18460.34,
     "note": "non-competitive award at the official price",
     "liquidity": {
      "offering_amount": 58000000000.0,
@@ -249,12 +250,68 @@
      "maximum_noncompetitive_award": 10000000.0,
      "minimum_to_issue": 100.0,
      "multiples_to_issue": 100.0,
-     "request_as_pct_of_noncompetitive_accepted": 0.04107797,
-     "request_as_pct_of_total_accepted": 0.00010681,
-     "request_as_pct_of_offering": 0.00010879
+     "request_as_pct_of_noncompetitive_accepted": 0.01204346,
+     "request_as_pct_of_total_accepted": 3.132e-05,
+     "request_as_pct_of_offering": 3.19e-05
     },
     "closed_face": 0.0,
-    "opened_face": 63100.0,
+    "opened_face": 18500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00020",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-07",
+   "target_session": "2025-10-08",
+   "cusip": "91282CNT4",
+   "side": "buy",
+   "face": 651200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "9-Year 10-Month 91282CNT4 announced 2025-10-02 for auction 2025-10-08",
+   "status": "PARTIAL",
+   "settled_on": "2025-10-08",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-02",
+     "auction_date": "2025-10-08",
+     "security_term": "9-Year 10-Month",
+     "offering_amount": 39000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00020",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-08",
+    "cusip": "91282CNT4",
+    "side": "buy",
+    "face": 3300.0,
+    "price_per100": 101.057226,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3334.89,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "noncompetitive_accepted": 78344500.0,
+     "competitive_accepted": 38921677000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.48,
+     "soma_accepted": 723968800.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00421217,
+     "request_as_pct_of_total_accepted": 8.31e-06,
+     "request_as_pct_of_offering": 8.46e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 3300.0,
     "trips_closed": []
    }
   },
@@ -266,7 +323,7 @@
    "target_session": "2025-10-16",
    "cusip": "91282CPC9",
    "side": "sell",
-   "face": 63100.0,
+   "face": 18500.0,
    "rule": "exit five sessions after the auction",
    "rationale": "concession fade",
    "status": "FILLED",
@@ -291,10 +348,10 @@
     "session": "2025-10-16",
     "cusip": "91282CPC9",
     "side": "sell",
-    "face": 63100.0,
+    "face": 18500.0,
     "price_per100": 100.226267,
     "kind": "SECONDARY-CURVE",
-    "cash_delta": 63242.77,
+    "cash_delta": 18541.86,
     "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
     "liquidity": {
      "offering_amount": 58000000000.0,
@@ -304,7 +361,7 @@
      "security_term": "3-Year",
      "auction_date": "2025-10-07"
     },
-    "closed_face": 63100.0,
+    "closed_face": 18500.0,
     "opened_face": 0.0,
     "trips_closed": [
      "T00002"
@@ -312,14 +369,67 @@
    }
   },
   {
-   "intent_id": "ConcessionFade_Notes-00036",
+   "intent_id": "ConcessionFade_Notes-00028",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-16",
+   "target_session": "2025-10-17",
+   "cusip": "91282CNT4",
+   "side": "sell",
+   "face": 3300.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-10-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-16"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00028",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-17",
+    "cusip": "91282CNT4",
+    "side": "sell",
+    "face": 3300.0,
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 3365.64,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 3300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00037",
    "participant": "@ConcessionFade_Notes",
    "kind": "AUCTION-BID",
    "created_on": "2025-10-22",
    "target_session": "2025-10-23",
    "cusip": "91282CPH8",
    "side": "buy",
-   "face": 694200.0,
+   "face": 695700.0,
    "rule": "bid the next announced note auction and exit five sessions after issue",
    "rationale": "5-Year 91282CPH8 announced 2025-10-16 for auction 2025-10-23",
    "status": "PARTIAL",
@@ -337,15 +447,15 @@
     }
    },
    "fill": {
-    "intent_id": "ConcessionFade_Notes-00036",
+    "intent_id": "ConcessionFade_Notes-00037",
     "participant": "@ConcessionFade_Notes",
     "session": "2025-10-23",
     "cusip": "91282CPH8",
     "side": "buy",
-    "face": 50400.0,
+    "face": 40700.0,
     "price_per100": 99.873728,
     "kind": "PRIMARY-AUCTION",
-    "cash_delta": -50336.36,
+    "cash_delta": -40648.61,
     "note": "non-competitive award at the official price",
     "liquidity": {
      "offering_amount": 26000000000.0,
@@ -358,13 +468,3009 @@
      "maximum_noncompetitive_award": 10000000.0,
      "minimum_to_issue": 100.0,
      "multiples_to_issue": 100.0,
-     "request_as_pct_of_noncompetitive_accepted": 0.03524655,
-     "request_as_pct_of_total_accepted": 0.00018332,
-     "request_as_pct_of_offering": 0.00019385
+     "request_as_pct_of_noncompetitive_accepted": 0.02846299,
+     "request_as_pct_of_total_accepted": 0.00014804,
+     "request_as_pct_of_offering": 0.00015654
     },
     "closed_face": 0.0,
-    "opened_face": 50400.0,
+    "opened_face": 40700.0,
     "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00091",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-11-26",
+   "target_session": "2025-11-28",
+   "cusip": "91282CNS6",
+   "side": "sell",
+   "face": 706800.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-11-28",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-11-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+     "observation_date": "2025-11-26"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00091",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-11-28",
+    "cusip": "91282CNS6",
+    "side": "sell",
+    "face": 706800.0,
+    "price_per100": 101.054399,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 714252.49,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 19000000000.0,
+     "total_accepted": 19000003700.0,
+     "bid_to_cover": 2.41,
+     "competitive_tendered": null,
+     "security_term": "9-Year 8-Month",
+     "auction_date": "2025-11-20"
+    },
+    "closed_face": 706800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00100",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-05",
+   "target_session": "2025-12-08",
+   "cusip": "91282CPP0",
+   "side": "buy",
+   "face": 621800.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CPP0 announced 2025-12-04 for auction 2025-12-08",
+   "status": "FILLED",
+   "settled_on": "2025-12-08",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-12-04",
+     "auction_date": "2025-12-08",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00100",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-08",
+    "cusip": "91282CPP0",
+    "side": "buy",
+    "face": 621800.0,
+    "price_per100": 99.678628,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -619801.71,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000067800.0,
+     "noncompetitive_accepted": 175752800.0,
+     "competitive_accepted": 57719315000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.64,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.35379237,
+     "request_as_pct_of_total_accepted": 0.00107207,
+     "request_as_pct_of_offering": 0.00107207
+    },
+    "closed_face": 0.0,
+    "opened_face": 621800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00102",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-08",
+   "target_session": "2025-12-09",
+   "cusip": "91282CPJ4",
+   "side": "buy",
+   "face": 625900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "9-Year 11-Month 91282CPJ4 announced 2025-12-04 for auction 2025-12-09",
+   "status": "PARTIAL",
+   "settled_on": "2025-12-09",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-12-04",
+     "auction_date": "2025-12-09",
+     "security_term": "9-Year 11-Month",
+     "offering_amount": 39000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00102",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-09",
+    "cusip": "91282CPJ4",
+    "side": "buy",
+    "face": 24700.0,
+    "price_per100": 98.585013,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -24350.5,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000048600.0,
+     "noncompetitive_accepted": 95122600.0,
+     "competitive_accepted": 38904926000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.55,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02596649,
+     "request_as_pct_of_total_accepted": 6.333e-05,
+     "request_as_pct_of_offering": 6.333e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 24700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00108",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-15",
+   "target_session": "2025-12-16",
+   "cusip": "91282CPP0",
+   "side": "sell",
+   "face": 621800.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-12-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-12-15"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00108",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-16",
+    "cusip": "91282CPP0",
+    "side": "sell",
+    "face": 621800.0,
+    "price_per100": 99.943529,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 621448.86,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000067800.0,
+     "bid_to_cover": 2.64,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2025-12-08"
+    },
+    "closed_face": 621800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00118",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-19",
+   "target_session": "2025-12-22",
+   "cusip": "91282CPS4",
+   "side": "buy",
+   "face": 626000.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CPS4 announced 2025-12-18 for auction 2025-12-22",
+   "status": "FILLED",
+   "settled_on": "2025-12-22",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-12-18",
+     "auction_date": "2025-12-22",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00118",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-22",
+    "cusip": "91282CPS4",
+    "side": "buy",
+    "face": 626000.0,
+    "price_per100": 99.762479,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -624513.12,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 76353747100.0,
+     "noncompetitive_accepted": 298192900.0,
+     "competitive_accepted": 68696877000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.54,
+     "soma_accepted": 7353677200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.20993122,
+     "request_as_pct_of_total_accepted": 0.00081987,
+     "request_as_pct_of_offering": 0.00090725
+    },
+    "closed_face": 0.0,
+    "opened_face": 626000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00121",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-12-22",
+   "target_session": "2025-12-23",
+   "cusip": "91282CPG0",
+   "side": "buy",
+   "face": 621300.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "1-Year 10-Month 91282CPG0 announced 2025-12-18 for auction 2025-12-23",
+   "status": "PARTIAL",
+   "settled_on": "2025-12-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-12-18",
+     "auction_date": "2025-12-23",
+     "security_term": "1-Year 10-Month",
+     "offering_amount": 28000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00121",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-23",
+    "cusip": "91282CPG0",
+    "side": "buy",
+    "face": 3100.0,
+    "price_per100": 100.089539,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3102.78,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000004500.0,
+     "noncompetitive_accepted": 12894500.0,
+     "competitive_accepted": 27987110000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.75,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02404126,
+     "request_as_pct_of_total_accepted": 1.107e-05,
+     "request_as_pct_of_offering": 1.107e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 3100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00131",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-30",
+   "target_session": "2025-12-31",
+   "cusip": "91282CPH8",
+   "side": "sell",
+   "face": 40700.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-12-31",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+     "observation_date": "2025-12-30"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00131",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-31",
+    "cusip": "91282CPH8",
+    "side": "sell",
+    "face": 40700.0,
+    "price_per100": 98.342731,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 40025.49,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 24000000000.0,
+     "total_accepted": 26557802400.0,
+     "bid_to_cover": 2.62,
+     "competitive_tendered": null,
+     "security_term": "4-Year 10-Month",
+     "auction_date": "2025-12-18"
+    },
+    "closed_face": 40700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00133",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-30",
+   "target_session": "2025-12-31",
+   "cusip": "91282CPS4",
+   "side": "sell",
+   "face": 626000.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-12-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-12-30"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00133",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-12-31",
+    "cusip": "91282CPS4",
+    "side": "sell",
+    "face": 626000.0,
+    "price_per100": 99.817964,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 624860.45,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 76353747100.0,
+     "bid_to_cover": 2.54,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-12-22"
+    },
+    "closed_face": 626000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00134",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-12-31",
+   "target_session": "2026-01-02",
+   "cusip": "91282CPG0",
+   "side": "sell",
+   "face": 3100.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-01-02",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-12-31",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-12-31"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00134",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-01-02",
+    "cusip": "91282CPG0",
+    "side": "sell",
+    "face": 3100.0,
+    "price_per100": 93.350886,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2893.88,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000004500.0,
+     "bid_to_cover": 3.75,
+     "competitive_tendered": null,
+     "security_term": "1-Year 10-Month",
+     "auction_date": "2025-12-23"
+    },
+    "closed_face": 3100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00008"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00144",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-01-14",
+   "target_session": "2026-01-15",
+   "cusip": "91282CPJ4",
+   "side": "sell",
+   "face": 24700.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-01-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-01-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-01-14"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00144",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-01-15",
+    "cusip": "91282CPJ4",
+    "side": "sell",
+    "face": 24700.0,
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 24381.99,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 50351940000.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-01-12"
+    },
+    "closed_face": 24700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00009"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00148",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-01-21",
+   "target_session": "2026-01-22",
+   "cusip": "91282CPU9",
+   "side": "buy",
+   "face": 623900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "10-Year 91282CPU9 announced 2026-01-15 for auction 2026-01-22",
+   "status": "FILLED",
+   "settled_on": "2026-01-22",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-01-15",
+     "auction_date": "2026-01-22",
+     "security_term": "10-Year",
+     "offering_amount": 21000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00148",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-01-22",
+    "cusip": "91282CPU9",
+    "side": "buy",
+    "face": 623900.0,
+    "price_per100": 99.193557,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -618868.6,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 21000000000.0,
+     "total_accepted": 21000013300.0,
+     "noncompetitive_accepted": 133060800.0,
+     "competitive_accepted": 20866952500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.38,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.4688834,
+     "request_as_pct_of_total_accepted": 0.00297095,
+     "request_as_pct_of_offering": 0.00297095
+    },
+    "closed_face": 0.0,
+    "opened_face": 623900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00150",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-01-23",
+   "target_session": "2026-01-26",
+   "cusip": "91282CGH8",
+   "side": "buy",
+   "face": 637300.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CGH8 announced 2026-01-22 for auction 2026-01-26",
+   "status": "PARTIAL",
+   "settled_on": "2026-01-26",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-01-22",
+     "auction_date": "2026-01-26",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00150",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-01-26",
+    "cusip": "91282CGH8",
+    "side": "buy",
+    "face": 94000.0,
+    "price_per100": 99.84698,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -93856.16,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 73862272800.0,
+     "noncompetitive_accepted": 349661200.0,
+     "competitive_accepted": 68645358000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.75,
+     "soma_accepted": 4862253600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02688317,
+     "request_as_pct_of_total_accepted": 0.00012726,
+     "request_as_pct_of_offering": 0.00013623
+    },
+    "closed_face": 0.0,
+    "opened_face": 94000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00153",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-01-28",
+   "target_session": "2026-01-29",
+   "cusip": "91282CPY1",
+   "side": "buy",
+   "face": 642600.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "7-Year 91282CPY1 announced 2026-01-22 for auction 2026-01-29",
+   "status": "PARTIAL",
+   "settled_on": "2026-01-29",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-01-22",
+     "auction_date": "2026-01-29",
+     "security_term": "7-Year",
+     "offering_amount": 44000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00153",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-01-29",
+    "cusip": "91282CPY1",
+    "side": "buy",
+    "face": 1200.0,
+    "price_per100": 99.890756,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -1198.69,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 47100610800.0,
+     "noncompetitive_accepted": 111308400.0,
+     "competitive_accepted": 43888735000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.45,
+     "soma_accepted": 3100567400.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00107809,
+     "request_as_pct_of_total_accepted": 2.55e-06,
+     "request_as_pct_of_offering": 2.73e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 1200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00156",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-02",
+   "target_session": "2026-02-03",
+   "cusip": "91282CGH8",
+   "side": "sell",
+   "face": 94000.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-02-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-02",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-02"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00156",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-03",
+    "cusip": "91282CGH8",
+    "side": "sell",
+    "face": 94000.0,
+    "price_per100": 99.867289,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 93875.25,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 73862272800.0,
+     "bid_to_cover": 2.75,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2026-01-26"
+    },
+    "closed_face": 94000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00010"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00162",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-05",
+   "target_session": "2026-02-06",
+   "cusip": "91282CPY1",
+   "side": "sell",
+   "face": 1200.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-02-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-05"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00162",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-06",
+    "cusip": "91282CPY1",
+    "side": "sell",
+    "face": 1200.0,
+    "price_per100": 100.128455,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1201.54,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 47100610800.0,
+     "bid_to_cover": 2.45,
+     "competitive_tendered": null,
+     "security_term": "7-Year",
+     "auction_date": "2026-01-29"
+    },
+    "closed_face": 1200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00011"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00167",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-02-09",
+   "target_session": "2026-02-10",
+   "cusip": "91282CQA2",
+   "side": "buy",
+   "face": 648400.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CQA2 announced 2026-02-04 for auction 2026-02-10",
+   "status": "PARTIAL",
+   "settled_on": "2026-02-10",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-02-04",
+     "auction_date": "2026-02-10",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00167",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-10",
+    "cusip": "91282CQA2",
+    "side": "buy",
+    "face": 107600.0,
+    "price_per100": 99.948932,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -107545.05,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 74434541200.0,
+     "noncompetitive_accepted": 165278500.0,
+     "competitive_accepted": 57729734400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.62,
+     "soma_accepted": 16434528300.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.06510224,
+     "request_as_pct_of_total_accepted": 0.00014456,
+     "request_as_pct_of_offering": 0.00018552
+    },
+    "closed_face": 0.0,
+    "opened_face": 107600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00175",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-02-18",
+   "target_session": "2026-02-19",
+   "cusip": "91282CQA2",
+   "side": "sell",
+   "face": 107600.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-02-19",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-02-18",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-02-18"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00175",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-19",
+    "cusip": "91282CQA2",
+    "side": "sell",
+    "face": 107600.0,
+    "price_per100": 100.000696,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 107600.75,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 74434541200.0,
+     "bid_to_cover": 2.62,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2026-02-10"
+    },
+    "closed_face": 107600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00012"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00181",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-02-23",
+   "target_session": "2026-02-24",
+   "cusip": "91282CQB0",
+   "side": "buy",
+   "face": 682700.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CQB0 announced 2026-02-19 for auction 2026-02-24",
+   "status": "PARTIAL",
+   "settled_on": "2026-02-24",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-02-19",
+     "auction_date": "2026-02-24",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00181",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-24",
+    "cusip": "91282CQB0",
+    "side": "buy",
+    "face": 123100.0,
+    "price_per100": 99.84677,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -122911.37,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77265995400.0,
+     "noncompetitive_accepted": 332794900.0,
+     "competitive_accepted": 68667373900.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.63,
+     "soma_accepted": 8265826600.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.03698975,
+     "request_as_pct_of_total_accepted": 0.00015932,
+     "request_as_pct_of_offering": 0.00017841
+    },
+    "closed_face": 0.0,
+    "opened_face": 123100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00183",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-02-24",
+   "target_session": "2026-02-25",
+   "cusip": "91282CPX3",
+   "side": "buy",
+   "face": 676900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "1-Year 11-Month 91282CPX3 announced 2026-02-19 for auction 2026-02-25",
+   "status": "PARTIAL",
+   "settled_on": "2026-02-25",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-02-19",
+     "auction_date": "2026-02-25",
+     "security_term": "1-Year 11-Month",
+     "offering_amount": 28000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00183",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-25",
+    "cusip": "91282CPX3",
+    "side": "buy",
+    "face": 3500.0,
+    "price_per100": 99.998219,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3499.94,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000124100.0,
+     "noncompetitive_accepted": 17426600.0,
+     "competitive_accepted": 27982697500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 3.01,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02008424,
+     "request_as_pct_of_total_accepted": 1.25e-05,
+     "request_as_pct_of_offering": 1.25e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 3500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00185",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-02-25",
+   "target_session": "2026-02-26",
+   "cusip": "91282CQC8",
+   "side": "buy",
+   "face": 682200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "7-Year 91282CQC8 announced 2026-02-19 for auction 2026-02-26",
+   "status": "PARTIAL",
+   "settled_on": "2026-02-26",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-02-19",
+     "auction_date": "2026-02-26",
+     "security_term": "7-Year",
+     "offering_amount": 44000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00185",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-02-26",
+    "cusip": "91282CQC8",
+    "side": "buy",
+    "face": 10400.0,
+    "price_per100": 99.755866,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -10374.61,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 49270982800.0,
+     "noncompetitive_accepted": 45268600.0,
+     "competitive_accepted": 43954752400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.5,
+     "soma_accepted": 5270961800.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02297398,
+     "request_as_pct_of_total_accepted": 2.111e-05,
+     "request_as_pct_of_offering": 2.364e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 10400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00190",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-03",
+   "target_session": "2026-03-04",
+   "cusip": "91282CQB0",
+   "side": "sell",
+   "face": 123100.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-03-04",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-03"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00190",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-03-04",
+    "cusip": "91282CQB0",
+    "side": "sell",
+    "face": 123100.0,
+    "price_per100": 99.683473,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 122710.36,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77265995400.0,
+     "bid_to_cover": 2.63,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2026-02-24"
+    },
+    "closed_face": 123100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00013"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00195",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-05",
+   "target_session": "2026-03-06",
+   "cusip": "91282CQC8",
+   "side": "sell",
+   "face": 10400.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-03-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-05"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00195",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-03-06",
+    "cusip": "91282CQC8",
+    "side": "sell",
+    "face": 10400.0,
+    "price_per100": 98.914687,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 10287.13,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 49270982800.0,
+     "bid_to_cover": 2.5,
+     "competitive_tendered": null,
+     "security_term": "7-Year",
+     "auction_date": "2026-02-26"
+    },
+    "closed_face": 10400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00014"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00202",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-03-09",
+   "target_session": "2026-03-10",
+   "cusip": "91282CQE4",
+   "side": "buy",
+   "face": 668000.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CQE4 announced 2026-03-05 for auction 2026-03-10",
+   "status": "PARTIAL",
+   "settled_on": "2026-03-10",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-03-05",
+     "auction_date": "2026-03-10",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00202",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-03-10",
+    "cusip": "91282CQE4",
+    "side": "buy",
+    "face": 91200.0,
+    "price_per100": 99.777186,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -90996.79,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58014637500.0,
+     "noncompetitive_accepted": 129850600.0,
+     "competitive_accepted": 57770165000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.55,
+     "soma_accepted": 14621900.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.07023456,
+     "request_as_pct_of_total_accepted": 0.0001572,
+     "request_as_pct_of_offering": 0.00015724
+    },
+    "closed_face": 0.0,
+    "opened_face": 91200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00216",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-17",
+   "target_session": "2026-03-18",
+   "cusip": "91282CQE4",
+   "side": "sell",
+   "face": 91200.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-03-18",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-17",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-17"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00216",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-03-18",
+    "cusip": "91282CQE4",
+    "side": "sell",
+    "face": 91200.0,
+    "price_per100": 99.268856,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 90533.2,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58014637500.0,
+     "bid_to_cover": 2.55,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2026-03-10"
+    },
+    "closed_face": 91200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00015"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00234",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-26",
+   "target_session": "2026-03-27",
+   "cusip": "91282CPX3",
+   "side": "sell",
+   "face": 3500.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-03-27",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-26"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00234",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-03-27",
+    "cusip": "91282CPX3",
+    "side": "sell",
+    "face": 3500.0,
+    "price_per100": 92.632358,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 3242.13,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000002700.0,
+     "bid_to_cover": 2.78,
+     "competitive_tendered": null,
+     "security_term": "1-Year 10-Month",
+     "auction_date": "2026-03-25"
+    },
+    "closed_face": 3500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00016"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00244",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-04-06",
+   "target_session": "2026-04-07",
+   "cusip": "91282CQJ3",
+   "side": "buy",
+   "face": 567400.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CQJ3 announced 2026-04-02 for auction 2026-04-07",
+   "status": "PARTIAL",
+   "settled_on": "2026-04-07",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-04-02",
+     "auction_date": "2026-04-07",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00244",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-04-07",
+    "cusip": "91282CQJ3",
+    "side": "buy",
+    "face": 19000.0,
+    "price_per100": 99.938277,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -18988.27,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 68285499500.0,
+     "noncompetitive_accepted": 186471200.0,
+     "competitive_accepted": 57813627900.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.68,
+     "soma_accepted": 10285400400.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01018924,
+     "request_as_pct_of_total_accepted": 2.782e-05,
+     "request_as_pct_of_offering": 3.276e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 19000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00252",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-14",
+   "target_session": "2026-04-15",
+   "cusip": "91282CQJ3",
+   "side": "sell",
+   "face": 19000.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-04-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-04-14"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00252",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-04-15",
+    "cusip": "91282CQJ3",
+    "side": "sell",
+    "face": 19000.0,
+    "price_per100": 100.238483,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 19045.31,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 68285499500.0,
+     "bid_to_cover": 2.68,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2026-04-07"
+    },
+    "closed_face": 19000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00017"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00263",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-04-22",
+   "target_session": "2026-04-23",
+   "cusip": "91282CQP9",
+   "side": "buy",
+   "face": 586700.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "5-Year 91282CQP9 announced 2026-04-16 for auction 2026-04-23",
+   "status": "PARTIAL",
+   "settled_on": "2026-04-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-04-16",
+     "auction_date": "2026-04-23",
+     "security_term": "5-Year",
+     "offering_amount": 26000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00263",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-04-23",
+    "cusip": "91282CQP9",
+    "side": "buy",
+    "face": 25200.0,
+    "price_per100": 99.67422,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -25117.9,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 26000000000.0,
+     "total_accepted": 29272293000.0,
+     "noncompetitive_accepted": 184527300.0,
+     "competitive_accepted": 25815479000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.57,
+     "soma_accepted": 3272286700.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01365652,
+     "request_as_pct_of_total_accepted": 8.609e-05,
+     "request_as_pct_of_offering": 9.692e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 25200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00267",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-04-24",
+   "target_session": "2026-04-27",
+   "cusip": "91282CQK0",
+   "side": "buy",
+   "face": 596900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "5-Year 91282CQK0 announced 2026-04-23 for auction 2026-04-27",
+   "status": "PARTIAL",
+   "settled_on": "2026-04-27",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-04-23",
+     "auction_date": "2026-04-27",
+     "security_term": "5-Year",
+     "offering_amount": 70000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00267",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-04-27",
+    "cusip": "91282CQK0",
+    "side": "buy",
+    "face": 3900.0,
+    "price_per100": 99.640273,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -3885.97,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "noncompetitive_accepted": 124455100.0,
+     "competitive_accepted": 69875552600.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.33,
+     "soma_accepted": 8810002900.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00313366,
+     "request_as_pct_of_total_accepted": 4.95e-06,
+     "request_as_pct_of_offering": 5.57e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 3900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00277",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-04",
+   "target_session": "2026-05-05",
+   "cusip": "91282CQK0",
+   "side": "sell",
+   "face": 3900.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-05-05",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-04",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-05-04"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00277",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-05-05",
+    "cusip": "91282CQK0",
+    "side": "sell",
+    "face": 3900.0,
+    "price_per100": 99.083896,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 3864.27,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "bid_to_cover": 2.33,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-04-27"
+    },
+    "closed_face": 3900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00018"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00319",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-28",
+   "target_session": "2026-05-29",
+   "cusip": "91282CPU9",
+   "side": "sell",
+   "face": 623900.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-05-29",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-28",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+     "observation_date": "2026-05-28"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00319",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-05-29",
+    "cusip": "91282CPU9",
+    "side": "sell",
+    "face": 623900.0,
+    "price_per100": 98.609484,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 615224.57,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 19000000000.0,
+     "total_accepted": 19000007500.0,
+     "bid_to_cover": 2.52,
+     "competitive_tendered": null,
+     "security_term": "9-Year 8-Month",
+     "auction_date": "2026-05-21"
+    },
+    "closed_face": 623900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00019"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00330",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-08",
+   "target_session": "2026-06-09",
+   "cusip": "91282CQV6",
+   "side": "buy",
+   "face": 501700.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CQV6 announced 2026-06-04 for auction 2026-06-09",
+   "status": "FILLED",
+   "settled_on": "2026-06-09",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-06-04",
+     "auction_date": "2026-06-09",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00330",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-09",
+    "cusip": "91282CQV6",
+    "side": "buy",
+    "face": 501700.0,
+    "price_per100": 99.812958,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -500761.61,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000019200.0,
+     "noncompetitive_accepted": 261616100.0,
+     "competitive_accepted": 57733403100.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.64,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.19176954,
+     "request_as_pct_of_total_accepted": 0.000865,
+     "request_as_pct_of_offering": 0.000865
+    },
+    "closed_face": 0.0,
+    "opened_face": 501700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00332",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-09",
+   "target_session": "2026-06-10",
+   "cusip": "91282CQQ7",
+   "side": "buy",
+   "face": 506800.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "9-Year 11-Month 91282CQQ7 announced 2026-06-04 for auction 2026-06-10",
+   "status": "PARTIAL",
+   "settled_on": "2026-06-10",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-06-04",
+     "auction_date": "2026-06-10",
+     "security_term": "9-Year 11-Month",
+     "offering_amount": 39000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00332",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-10",
+    "cusip": "91282CQQ7",
+    "side": "buy",
+    "face": 33000.0,
+    "price_per100": 98.703094,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -32572.02,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000001000.0,
+     "noncompetitive_accepted": 85320600.0,
+     "competitive_accepted": 38914680400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.57,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.03867765,
+     "request_as_pct_of_total_accepted": 8.462e-05,
+     "request_as_pct_of_offering": 8.462e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 33000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00338",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-06-16",
+   "target_session": "2026-06-17",
+   "cusip": "91282CQV6",
+   "side": "sell",
+   "face": 501700.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-06-17",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-06-16",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-06-16"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00338",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-17",
+    "cusip": "91282CQV6",
+    "side": "sell",
+    "face": 501700.0,
+    "price_per100": 99.707292,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 500231.48,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000019200.0,
+     "bid_to_cover": 2.64,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2026-06-09"
+    },
+    "closed_face": 501700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00020"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00346",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-22",
+   "target_session": "2026-06-23",
+   "cusip": "91282CQY0",
+   "side": "buy",
+   "face": 492300.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CQY0 announced 2026-06-18 for auction 2026-06-23",
+   "status": "PARTIAL",
+   "settled_on": "2026-06-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-06-18",
+     "auction_date": "2026-06-23",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00346",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-23",
+    "cusip": "91282CQY0",
+    "side": "buy",
+    "face": 490000.0,
+    "price_per100": 99.878432,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -489404.32,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 79328705800.0,
+     "noncompetitive_accepted": 759106400.0,
+     "competitive_accepted": 68035905000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.64,
+     "soma_accepted": 10328694400.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.06454958,
+     "request_as_pct_of_total_accepted": 0.00061768,
+     "request_as_pct_of_offering": 0.00071014
+    },
+    "closed_face": 0.0,
+    "opened_face": 490000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00349",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-06-23",
+   "target_session": "2026-06-24",
+   "cusip": "91282CQM6",
+   "side": "buy",
+   "face": 491000.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "1-Year 10-Month 91282CQM6 announced 2026-06-18 for auction 2026-06-24",
+   "status": "PARTIAL",
+   "settled_on": "2026-06-24",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-06-18",
+     "auction_date": "2026-06-24",
+     "security_term": "1-Year 10-Month",
+     "offering_amount": 28000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00349",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-24",
+    "cusip": "91282CQM6",
+    "side": "buy",
+    "face": 6600.0,
+    "price_per100": 100.04098,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -6602.7,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000162200.0,
+     "noncompetitive_accepted": 19087200.0,
+     "competitive_accepted": 27981075000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.99,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.03457815,
+     "request_as_pct_of_total_accepted": 2.357e-05,
+     "request_as_pct_of_offering": 2.357e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 6600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00357",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-06-29",
+   "target_session": "2026-06-30",
+   "cusip": "91282CQP9",
+   "side": "sell",
+   "face": 25200.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-06-30",
+   "settle_note": "filled on the official curve: present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-06-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+     "observation_date": "2026-06-29"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00357",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-06-30",
+    "cusip": "91282CQP9",
+    "side": "sell",
+    "face": 25200.0,
+    "price_per100": 96.773702,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 24386.97,
+    "note": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "liquidity": {
+     "offering_amount": 24000000000.0,
+     "total_accepted": 27592591700.0,
+     "bid_to_cover": 2.61,
+     "competitive_tendered": null,
+     "security_term": "4-Year 10-Month",
+     "auction_date": "2026-06-18"
+    },
+    "closed_face": 25200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00021"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00360",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-06-30",
+   "target_session": "2026-07-01",
+   "cusip": "91282CQY0",
+   "side": "sell",
+   "face": 490000.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-07-01",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-06-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-06-30"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00360",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-01",
+    "cusip": "91282CQY0",
+    "side": "sell",
+    "face": 490000.0,
+    "price_per100": 99.914503,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 489581.06,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 79328705800.0,
+     "bid_to_cover": 2.64,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2026-06-23"
+    },
+    "closed_face": 490000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00022"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00361",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-01",
+   "target_session": "2026-07-02",
+   "cusip": "91282CQM6",
+   "side": "sell",
+   "face": 6600.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-07-02",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-01",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-01"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00361",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-02",
+    "cusip": "91282CQM6",
+    "side": "sell",
+    "face": 6600.0,
+    "price_per100": 92.18659,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 6084.31,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 28000000000.0,
+     "total_accepted": 28000162200.0,
+     "bid_to_cover": 2.99,
+     "competitive_tendered": null,
+     "security_term": "1-Year 10-Month",
+     "auction_date": "2026-06-24"
+    },
+    "closed_face": 6600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00023"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00366",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-07-06",
+   "target_session": "2026-07-07",
+   "cusip": "91282CQZ7",
+   "side": "buy",
+   "face": 487200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CQZ7 announced 2026-07-02 for auction 2026-07-07",
+   "status": "FILLED",
+   "settled_on": "2026-07-07",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-07-02",
+     "auction_date": "2026-07-07",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00366",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-07",
+    "cusip": "91282CQZ7",
+    "side": "buy",
+    "face": 487200.0,
+    "price_per100": 99.849217,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -486465.39,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 64031643800.0,
+     "noncompetitive_accepted": 195461400.0,
+     "competitive_accepted": 57799547000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.6,
+     "soma_accepted": 6031635400.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.24925637,
+     "request_as_pct_of_total_accepted": 0.00076087,
+     "request_as_pct_of_offering": 0.00084
+    },
+    "closed_face": 0.0,
+    "opened_face": 487200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00372",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-14",
+   "target_session": "2026-07-15",
+   "cusip": "91282CQQ7",
+   "side": "sell",
+   "face": 33000.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-07-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-14"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00372",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-15",
+    "cusip": "91282CQQ7",
+    "side": "sell",
+    "face": 33000.0,
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 32562.24,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 43055875200.0,
+     "bid_to_cover": 2.59,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2026-07-08"
+    },
+    "closed_face": 33000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00024"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00373",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-07-14",
+   "target_session": "2026-07-15",
+   "cusip": "91282CQZ7",
+   "side": "sell",
+   "face": 487200.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-07-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-07-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-07-14"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00373",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-15",
+    "cusip": "91282CQZ7",
+    "side": "sell",
+    "face": 487200.0,
+    "price_per100": 99.846122,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 486450.31,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 64031643800.0,
+     "bid_to_cover": 2.6,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2026-07-07"
+    },
+    "closed_face": 487200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00025"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00378",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-07-22",
+   "target_session": "2026-07-23",
+   "cusip": "91282CRE3",
+   "side": "buy",
+   "face": 482800.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "10-Year 91282CRE3 announced 2026-07-16 for auction 2026-07-23",
+   "status": "FILLED",
+   "settled_on": "2026-07-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-07-16",
+     "auction_date": "2026-07-23",
+     "security_term": "10-Year",
+     "offering_amount": 21000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00378",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-23",
+    "cusip": "91282CRE3",
+    "side": "buy",
+    "face": 482800.0,
+    "price_per100": 99.768091,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -481680.34,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 21000000000.0,
+     "total_accepted": 23321784700.0,
+     "noncompetitive_accepted": 136711000.0,
+     "competitive_accepted": 20863290000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.3,
+     "soma_accepted": 2321783700.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.35315373,
+     "request_as_pct_of_total_accepted": 0.00207017,
+     "request_as_pct_of_offering": 0.00229905
+    },
+    "closed_face": 0.0,
+    "opened_face": 482800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00380",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-07-24",
+   "target_session": "2026-07-27",
+   "cusip": "91282CRA1",
+   "side": "buy",
+   "face": 472900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "5-Year 91282CRA1 announced 2026-07-23 for auction 2026-07-27",
+   "status": "PARTIAL",
+   "settled_on": "2026-07-27",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-07-23",
+     "auction_date": "2026-07-27",
+     "security_term": "5-Year",
+     "offering_amount": 70000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00380",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-27",
+    "cusip": "91282CRA1",
+    "side": "buy",
+    "face": 41300.0,
+    "price_per100": 99.853357,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -41239.44,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 77739280900.0,
+     "noncompetitive_accepted": 144786500.0,
+     "competitive_accepted": 69805215000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.28,
+     "soma_accepted": 7739279400.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.02852476,
+     "request_as_pct_of_total_accepted": 5.313e-05,
+     "request_as_pct_of_offering": 5.9e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 41300.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00381",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-07-27",
+   "target_session": "2026-07-28",
+   "cusip": "91282CRC7",
+   "side": "buy",
+   "face": 470400.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "7-Year 91282CRC7 announced 2026-07-23 for auction 2026-07-28",
+   "status": "PARTIAL",
+   "settled_on": "2026-07-28",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-07-23",
+     "auction_date": "2026-07-28",
+     "security_term": "7-Year",
+     "offering_amount": 44000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00381",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-07-28",
+    "cusip": "91282CRC7",
+    "side": "buy",
+    "face": 8100.0,
+    "price_per100": 99.416549,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -8052.74,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 48864691000.0,
+     "noncompetitive_accepted": 90527200.0,
+     "competitive_accepted": 43909474000.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.49,
+     "soma_accepted": 4864689800.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00894759,
+     "request_as_pct_of_total_accepted": 1.658e-05,
+     "request_as_pct_of_offering": 1.841e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 8100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00385",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-03",
+   "target_session": "2026-08-04",
+   "cusip": "91282CRA1",
+   "side": "sell",
+   "face": 41300.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-08-04",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-08-03"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00385",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-04",
+    "cusip": "91282CRA1",
+    "side": "sell",
+    "face": 41300.0,
+    "price_per100": 100.20184,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 41383.36,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 77739280900.0,
+     "bid_to_cover": 2.28,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-07-27"
+    },
+    "closed_face": 41300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00026"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00387",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-04",
+   "target_session": "2026-08-05",
+   "cusip": "91282CRC7",
+   "side": "sell",
+   "face": 8100.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-08-05",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-04",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-08-04"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00387",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-05",
+    "cusip": "91282CRC7",
+    "side": "sell",
+    "face": 8100.0,
+    "price_per100": 99.437765,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 8054.46,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 44000000000.0,
+     "total_accepted": 48864691000.0,
+     "bid_to_cover": 2.49,
+     "competitive_tendered": null,
+     "security_term": "7-Year",
+     "auction_date": "2026-07-28"
+    },
+    "closed_face": 8100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00027"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00396",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-08-10",
+   "target_session": "2026-08-11",
+   "cusip": "91282CRG8",
+   "side": "buy",
+   "face": 466200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CRG8 announced 2026-08-05 for auction 2026-08-11",
+   "status": "PARTIAL",
+   "settled_on": "2026-08-11",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-08-05",
+     "auction_date": "2026-08-11",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00396",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-11",
+    "cusip": "91282CRG8",
+    "side": "buy",
+    "face": 36900.0,
+    "price_per100": 99.885444,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -36857.73,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 72670580300.0,
+     "noncompetitive_accepted": 349775600.0,
+     "competitive_accepted": 57400241500.0,
+     "competitive_tendered": 156700220000.0,
+     "bid_to_cover": 2.71,
+     "soma_accepted": 14670563200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.01054962,
+     "request_as_pct_of_total_accepted": 5.078e-05,
+     "request_as_pct_of_offering": 6.362e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 36900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00398",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-08-11",
+   "target_session": "2026-08-12",
+   "cusip": "91282CRF0",
+   "side": "buy",
+   "face": 467300.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "10-Year 91282CRF0 announced 2026-08-05 for auction 2026-08-12",
+   "status": "PARTIAL",
+   "settled_on": "2026-08-12",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-08-05",
+     "auction_date": "2026-08-12",
+     "security_term": "10-Year",
+     "offering_amount": 42000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00398",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-12",
+    "cusip": "91282CRF0",
+    "side": "buy",
+    "face": 2800.0,
+    "price_per100": 99.540696,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -2787.14,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 42000000000.0,
+     "total_accepted": 52623557100.0,
+     "noncompetitive_accepted": 178432300.0,
+     "competitive_accepted": 41821613600.0,
+     "competitive_tendered": 106155266000.0,
+     "bid_to_cover": 2.53,
+     "soma_accepted": 10623511200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00156922,
+     "request_as_pct_of_total_accepted": 5.32e-06,
+     "request_as_pct_of_offering": 6.67e-06
+    },
+    "closed_face": 0.0,
+    "opened_face": 2800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00404",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-08-18",
+   "target_session": "2026-08-19",
+   "cusip": "91282CRG8",
+   "side": "sell",
+   "face": 36900.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-08-19",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-08-18",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-08-18"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00404",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-19",
+    "cusip": "91282CRG8",
+    "side": "sell",
+    "face": 36900.0,
+    "price_per100": 100.001375,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 36900.51,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 72670580300.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 156700220000.0,
+     "security_term": "3-Year",
+     "auction_date": "2026-08-11"
+    },
+    "closed_face": 36900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00028"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00415",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-08-24",
+   "target_session": "2026-08-25",
+   "cusip": "91282CRH6",
+   "side": "buy",
+   "face": 475900.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CRH6 announced 2026-08-20 for auction 2026-08-25",
+   "status": "PARTIAL",
+   "settled_on": "2026-08-25",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-08-20",
+     "auction_date": "2026-08-25",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00415",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-08-25",
+    "cusip": "91282CRH6",
+    "side": "buy",
+    "face": 60500.0,
+    "price_per100": 99.849966,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -60409.23,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77870538900.0,
+     "noncompetitive_accepted": 737951900.0,
+     "competitive_accepted": 68107241800.0,
+     "competitive_tendered": 178430485000.0,
+     "bid_to_cover": 2.6,
+     "soma_accepted": 8870345200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00819837,
+     "request_as_pct_of_total_accepted": 7.769e-05,
+     "request_as_pct_of_offering": 8.768e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 60500.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00430",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-01",
+   "target_session": "2026-09-02",
+   "cusip": "91282CRH6",
+   "side": "sell",
+   "face": 60500.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-09-02",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-01",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-01"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00430",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-09-02",
+    "cusip": "91282CRH6",
+    "side": "sell",
+    "face": 60500.0,
+    "price_per100": 99.499045,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 60196.92,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77870538900.0,
+     "bid_to_cover": 2.6,
+     "competitive_tendered": 178430485000.0,
+     "security_term": "2-Year",
+     "auction_date": "2026-08-25"
+    },
+    "closed_face": 60500.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00029"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00438",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2026-09-04",
+   "target_session": "2026-09-08",
+   "cusip": "91282CRL7",
+   "side": "buy",
+   "face": 454000.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CRL7 announced 2026-09-03 for auction 2026-09-08",
+   "status": "PARTIAL",
+   "settled_on": "2026-09-08",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2026-09-03",
+     "auction_date": "2026-09-08",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+     "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+     "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00438",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-09-08",
+    "cusip": "91282CRL7",
+    "side": "buy",
+    "face": 19800.0,
+    "price_per100": 99.724933,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -19745.54,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000088800.0,
+     "noncompetitive_accepted": 275925100.0,
+     "competitive_accepted": 57619163700.0,
+     "competitive_tendered": 157491500000.0,
+     "bid_to_cover": 2.72,
+     "soma_accepted": 0.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.00717586,
+     "request_as_pct_of_total_accepted": 3.414e-05,
+     "request_as_pct_of_offering": 3.414e-05
+    },
+    "closed_face": 0.0,
+    "opened_face": 19800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00448",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-14",
+   "target_session": "2026-09-15",
+   "cusip": "91282CRF0",
+   "side": "sell",
+   "face": 2800.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-09-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-14"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00448",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-09-15",
+    "cusip": "91282CRF0",
+    "side": "sell",
+    "face": 2800.0,
+    "price_per100": 97.094654,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2718.65,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39000040000.0,
+     "bid_to_cover": 2.71,
+     "competitive_tendered": 105714440000.0,
+     "security_term": "9-Year 11-Month",
+     "auction_date": "2026-09-09"
+    },
+    "closed_face": 2800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00030"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00450",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-09-15",
+   "target_session": "2026-09-16",
+   "cusip": "91282CRL7",
+   "side": "sell",
+   "face": 19800.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2026-09-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-09-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-09-15"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00450",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2026-09-16",
+    "cusip": "91282CRL7",
+    "side": "sell",
+    "face": 19800.0,
+    "price_per100": 98.770745,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 19556.61,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 58000088800.0,
+     "bid_to_cover": 2.72,
+     "competitive_tendered": 157491500000.0,
+     "security_term": "3-Year",
+     "auction_date": "2026-09-08"
+    },
+    "closed_face": 19800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00031"
+    ]
    }
   }
  ],
@@ -376,7 +3482,7 @@
    "security_type": "Note",
    "security_term": "2-Year",
    "direction": "long",
-   "face": 75800.0,
+   "face": 48000.0,
    "entry_date": "2025-09-23",
    "entry_price_per100": 99.864119,
    "entry_kind": "PRIMARY-AUCTION",
@@ -410,8 +3516,8 @@
    "coupon_income": 0.0,
    "financing": 0.0,
    "fees": 0.0,
-   "pnl": 30.17,
-   "total_pnl": 30.17,
+   "pnl": 19.1,
+   "total_pnl": 19.1,
    "return_on_cost_pct": 0.039853,
    "holding_days": 8,
    "liquidity": {
@@ -432,7 +3538,7 @@
    "security_type": "Note",
    "security_term": "3-Year",
    "direction": "long",
-   "face": 63100.0,
+   "face": 18500.0,
    "entry_date": "2025-10-07",
    "entry_price_per100": 99.785614,
    "entry_kind": "PRIMARY-AUCTION",
@@ -466,8 +3572,8 @@
    "coupon_income": 0.0,
    "financing": 0.0,
    "fees": 0.0,
-   "pnl": 278.05,
-   "total_pnl": 278.05,
+   "pnl": 81.52,
+   "total_pnl": 81.52,
    "return_on_cost_pct": 0.4416,
    "holding_days": 9,
    "liquidity": {
@@ -477,6 +3583,1626 @@
     "competitive_tendered": null,
     "security_term": "3-Year",
     "auction_date": "2025-10-07"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CNT4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 3300.0,
+   "entry_date": "2025-10-08",
+   "entry_price_per100": 101.057226,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-10-08",
+    "issue_date": "2025-10-15",
+    "maturity_date": "2035-08-15",
+    "field": "pricePer100",
+    "value": 101.057226,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-10-17",
+   "exit_price_per100": 101.989087,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.989087,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.00663,
+     "remaining_years": 9.8329,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 30.75,
+   "total_pnl": 30.75,
+   "return_on_cost_pct": 0.922112,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39723990300.0,
+    "bid_to_cover": 2.48,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2025-10-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CNS6",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 706800.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 101.872346,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-09-18",
+    "issue_date": "2025-09-30",
+    "maturity_date": "2035-07-15",
+    "field": "pricePer100",
+    "value": 101.872346,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-11-28",
+   "exit_price_per100": 101.054399,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 101.054399,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "session": "2025-11-28",
+    "evidence": {
+     "field": "DFII5/DFII10",
+     "real_yield_pct": 1.754022,
+     "remaining_years": 9.6329,
+     "indexation": "the mark is a clean real price: inflation indexation of principal and coupon is NOT modelled"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -5781.25,
+   "total_pnl": -5781.25,
+   "return_on_cost_pct": -0.802914,
+   "holding_days": 71,
+   "liquidity": {
+    "offering_amount": 19000000000.0,
+    "total_accepted": 19000003700.0,
+    "bid_to_cover": 2.41,
+    "competitive_tendered": null,
+    "security_term": "9-Year 8-Month",
+    "auction_date": "2025-11-20"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPP0",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 621800.0,
+   "entry_date": "2025-12-08",
+   "entry_price_per100": 99.678628,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-12-08",
+    "issue_date": "2025-12-15",
+    "maturity_date": "2028-12-15",
+    "field": "pricePer100",
+    "value": 99.678628,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-16",
+   "exit_price_per100": 99.943529,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.943529,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-12-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.52,
+     "remaining_years": 3.0,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1647.15,
+   "total_pnl": 1647.15,
+   "return_on_cost_pct": 0.265755,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 58000067800.0,
+    "bid_to_cover": 2.64,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2025-12-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPH8",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 40700.0,
+   "entry_date": "2025-10-23",
+   "entry_price_per100": 99.873728,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-10-23",
+    "issue_date": "2025-10-31",
+    "maturity_date": "2030-10-15",
+    "field": "pricePer100",
+    "value": 99.873728,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-31",
+   "exit_price_per100": 98.342731,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.342731,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "session": "2025-12-31",
+    "evidence": {
+     "field": "DFII5",
+     "real_yield_pct": 1.47,
+     "remaining_years": 4.7918,
+     "indexation": "the mark is a clean real price: inflation indexation of principal and coupon is NOT modelled"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -623.12,
+   "total_pnl": -623.12,
+   "return_on_cost_pct": -1.532933,
+   "holding_days": 69,
+   "liquidity": {
+    "offering_amount": 24000000000.0,
+    "total_accepted": 26557802400.0,
+    "bid_to_cover": 2.62,
+    "competitive_tendered": null,
+    "security_term": "4-Year 10-Month",
+    "auction_date": "2025-12-18"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPS4",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 626000.0,
+   "entry_date": "2025-12-22",
+   "entry_price_per100": 99.762479,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-12-22",
+    "issue_date": "2025-12-31",
+    "maturity_date": "2027-12-31",
+    "field": "pricePer100",
+    "value": 99.762479,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-12-31",
+   "exit_price_per100": 99.817964,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.817964,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-12-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.47,
+     "remaining_years": 2.0,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 347.34,
+   "total_pnl": 347.34,
+   "return_on_cost_pct": 0.055617,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 76353747100.0,
+    "bid_to_cover": 2.54,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-12-22"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00008",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPG0",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 3100.0,
+   "entry_date": "2025-12-23",
+   "entry_price_per100": 100.089539,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-12-23",
+    "issue_date": "2025-12-26",
+    "maturity_date": "2027-10-31",
+    "field": "pricePer100",
+    "value": 100.089539,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-01-02",
+   "exit_price_per100": 93.350886,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 93.350886,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-02",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.47,
+     "remaining_years": 1.8274,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -208.9,
+   "total_pnl": -208.9,
+   "return_on_cost_pct": -6.732625,
+   "holding_days": 10,
+   "liquidity": {
+    "offering_amount": 28000000000.0,
+    "total_accepted": 28000004500.0,
+    "bid_to_cover": 3.75,
+    "competitive_tendered": null,
+    "security_term": "1-Year 10-Month",
+    "auction_date": "2025-12-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00009",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPJ4",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 24700.0,
+   "entry_date": "2025-12-09",
+   "entry_price_per100": 98.585013,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-12-09",
+    "issue_date": "2025-12-15",
+    "maturity_date": "2035-11-15",
+    "field": "pricePer100",
+    "value": 98.585013,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-01-15",
+   "exit_price_per100": 98.712516,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.712516,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-01-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.158685,
+     "remaining_years": 9.8384,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 31.49,
+   "total_pnl": 31.49,
+   "return_on_cost_pct": 0.129333,
+   "holding_days": 37,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 50351940000.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-01-12"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00010",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CGH8",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 94000.0,
+   "entry_date": "2026-01-26",
+   "entry_price_per100": 99.84698,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-01-26",
+    "issue_date": "2026-02-02",
+    "maturity_date": "2028-01-31",
+    "field": "pricePer100",
+    "value": 99.84698,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-02-03",
+   "exit_price_per100": 99.867289,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.867289,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.569342,
+     "remaining_years": 1.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 19.09,
+   "total_pnl": 19.09,
+   "return_on_cost_pct": 0.02034,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 73862272800.0,
+    "bid_to_cover": 2.75,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2026-01-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00011",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPY1",
+   "security_type": "Note",
+   "security_term": "7-Year",
+   "direction": "long",
+   "face": 1200.0,
+   "entry_date": "2026-01-29",
+   "entry_price_per100": 99.890756,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-01-29",
+    "issue_date": "2026-02-02",
+    "maturity_date": "2033-01-31",
+    "field": "pricePer100",
+    "value": 99.890756,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-02-06",
+   "exit_price_per100": 100.128455,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.128455,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.978795,
+     "remaining_years": 6.989,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 2.85,
+   "total_pnl": 2.85,
+   "return_on_cost_pct": 0.237959,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 44000000000.0,
+    "total_accepted": 47100610800.0,
+    "bid_to_cover": 2.45,
+    "competitive_tendered": null,
+    "security_term": "7-Year",
+    "auction_date": "2026-01-29"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00012",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQA2",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 107600.0,
+   "entry_date": "2026-02-10",
+   "entry_price_per100": 99.948932,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-02-10",
+    "issue_date": "2026-02-17",
+    "maturity_date": "2029-02-15",
+    "field": "pricePer100",
+    "value": 99.948932,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-02-19",
+   "exit_price_per100": 100.000696,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.000696,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-02-19",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.499753,
+     "remaining_years": 2.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 55.7,
+   "total_pnl": 55.7,
+   "return_on_cost_pct": 0.05179,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 74434541200.0,
+    "bid_to_cover": 2.62,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2026-02-10"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00013",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQB0",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 123100.0,
+   "entry_date": "2026-02-24",
+   "entry_price_per100": 99.84677,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-02-24",
+    "issue_date": "2026-03-02",
+    "maturity_date": "2028-02-29",
+    "field": "pricePer100",
+    "value": 99.84677,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-03-04",
+   "exit_price_per100": 99.683473,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.683473,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.540329,
+     "remaining_years": 1.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -201.02,
+   "total_pnl": -201.02,
+   "return_on_cost_pct": -0.163548,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77265995400.0,
+    "bid_to_cover": 2.63,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2026-02-24"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00014",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQC8",
+   "security_type": "Note",
+   "security_term": "7-Year",
+   "direction": "long",
+   "face": 10400.0,
+   "entry_date": "2026-02-26",
+   "entry_price_per100": 99.755866,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-02-26",
+    "issue_date": "2026-03-02",
+    "maturity_date": "2033-02-28",
+    "field": "pricePer100",
+    "value": 99.755866,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-03-06",
+   "exit_price_per100": 98.914687,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.914687,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.928849,
+     "remaining_years": 6.989,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -87.48,
+   "total_pnl": -87.48,
+   "return_on_cost_pct": -0.843238,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 44000000000.0,
+    "total_accepted": 49270982800.0,
+    "bid_to_cover": 2.5,
+    "competitive_tendered": null,
+    "security_term": "7-Year",
+    "auction_date": "2026-02-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00015",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQE4",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 91200.0,
+   "entry_date": "2026-03-10",
+   "entry_price_per100": 99.777186,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-03-10",
+    "issue_date": "2026-03-16",
+    "maturity_date": "2029-03-15",
+    "field": "pricePer100",
+    "value": 99.777186,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-03-18",
+   "exit_price_per100": 99.268856,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.268856,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-18",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.76,
+     "remaining_years": 2.9945,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -463.6,
+   "total_pnl": -463.6,
+   "return_on_cost_pct": -0.509465,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 58014637500.0,
+    "bid_to_cover": 2.55,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2026-03-10"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00016",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPX3",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 3500.0,
+   "entry_date": "2026-02-25",
+   "entry_price_per100": 99.998219,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-02-25",
+    "issue_date": "2026-02-27",
+    "maturity_date": "2028-01-31",
+    "field": "pricePer100",
+    "value": 99.998219,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-03-27",
+   "exit_price_per100": 92.632358,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 92.632358,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.863425,
+     "remaining_years": 1.8493,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -257.81,
+   "total_pnl": -257.81,
+   "return_on_cost_pct": -7.365992,
+   "holding_days": 30,
+   "liquidity": {
+    "offering_amount": 28000000000.0,
+    "total_accepted": 28000002700.0,
+    "bid_to_cover": 2.78,
+    "competitive_tendered": null,
+    "security_term": "1-Year 10-Month",
+    "auction_date": "2026-03-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00017",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQJ3",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 19000.0,
+   "entry_date": "2026-04-07",
+   "entry_price_per100": 99.938277,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-04-07",
+    "issue_date": "2026-04-15",
+    "maturity_date": "2029-04-15",
+    "field": "pricePer100",
+    "value": 99.938277,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-04-15",
+   "exit_price_per100": 100.238483,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.238483,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-04-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.790151,
+     "remaining_years": 3.0027,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 57.04,
+   "total_pnl": 57.04,
+   "return_on_cost_pct": 0.300391,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 68285499500.0,
+    "bid_to_cover": 2.68,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2026-04-07"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00018",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQK0",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 3900.0,
+   "entry_date": "2026-04-27",
+   "entry_price_per100": 99.640273,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-04-27",
+    "issue_date": "2026-04-30",
+    "maturity_date": "2031-04-30",
+    "field": "pricePer100",
+    "value": 99.640273,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-05-05",
+   "exit_price_per100": 99.083896,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.083896,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-05",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.079397,
+     "remaining_years": 4.989,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -21.7,
+   "total_pnl": -21.7,
+   "return_on_cost_pct": -0.558386,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78810010600.0,
+    "bid_to_cover": 2.33,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-04-27"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00019",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPU9",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 623900.0,
+   "entry_date": "2026-01-22",
+   "entry_price_per100": 99.193557,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-01-22",
+    "issue_date": "2026-01-30",
+    "maturity_date": "2036-01-15",
+    "field": "pricePer100",
+    "value": 99.193557,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-05-29",
+   "exit_price_per100": 98.609484,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.609484,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "session": "2026-05-29",
+    "evidence": {
+     "field": "DFII5/DFII10",
+     "real_yield_pct": 2.036729,
+     "remaining_years": 9.6384,
+     "indexation": "the mark is a clean real price: inflation indexation of principal and coupon is NOT modelled"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -3644.03,
+   "total_pnl": -3644.03,
+   "return_on_cost_pct": -0.588822,
+   "holding_days": 127,
+   "liquidity": {
+    "offering_amount": 19000000000.0,
+    "total_accepted": 19000007500.0,
+    "bid_to_cover": 2.52,
+    "competitive_tendered": null,
+    "security_term": "9-Year 8-Month",
+    "auction_date": "2026-05-21"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00020",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQV6",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 501700.0,
+   "entry_date": "2026-06-09",
+   "entry_price_per100": 99.812958,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-09",
+    "issue_date": "2026-06-15",
+    "maturity_date": "2029-06-15",
+    "field": "pricePer100",
+    "value": 99.812958,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-06-17",
+   "exit_price_per100": 99.707292,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.707292,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-06-17",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.229918,
+     "remaining_years": 2.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -530.13,
+   "total_pnl": -530.13,
+   "return_on_cost_pct": -0.105864,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 58000019200.0,
+    "bid_to_cover": 2.64,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2026-06-09"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00021",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQP9",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 25200.0,
+   "entry_date": "2026-04-23",
+   "entry_price_per100": 99.67422,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-04-23",
+    "issue_date": "2026-04-30",
+    "maturity_date": "2031-04-15",
+    "field": "pricePer100",
+    "value": 99.67422,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-06-30",
+   "exit_price_per100": 96.773702,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 96.773702,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "session": "2026-06-30",
+    "evidence": {
+     "field": "DFII5",
+     "real_yield_pct": 1.93,
+     "remaining_years": 4.7945,
+     "indexation": "the mark is a clean real price: inflation indexation of principal and coupon is NOT modelled"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -730.93,
+   "total_pnl": -730.93,
+   "return_on_cost_pct": -2.909998,
+   "holding_days": 68,
+   "liquidity": {
+    "offering_amount": 24000000000.0,
+    "total_accepted": 27592591700.0,
+    "bid_to_cover": 2.61,
+    "competitive_tendered": null,
+    "security_term": "4-Year 10-Month",
+    "auction_date": "2026-06-18"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00022",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQY0",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 490000.0,
+   "entry_date": "2026-06-23",
+   "entry_price_per100": 99.878432,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-23",
+    "issue_date": "2026-06-30",
+    "maturity_date": "2028-06-30",
+    "field": "pricePer100",
+    "value": 99.878432,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-01",
+   "exit_price_per100": 99.914503,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.914503,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.17,
+     "remaining_years": 2.0,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 176.75,
+   "total_pnl": 176.75,
+   "return_on_cost_pct": 0.036115,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 79328705800.0,
+    "bid_to_cover": 2.64,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2026-06-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00023",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQM6",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 6600.0,
+   "entry_date": "2026-06-24",
+   "entry_price_per100": 100.04098,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-24",
+    "issue_date": "2026-06-26",
+    "maturity_date": "2028-04-30",
+    "field": "pricePer100",
+    "value": 100.04098,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-02",
+   "exit_price_per100": 92.18659,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 92.18659,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-02",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.109425,
+     "remaining_years": 1.8301,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -518.39,
+   "total_pnl": -518.39,
+   "return_on_cost_pct": -7.851173,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 28000000000.0,
+    "total_accepted": 28000162200.0,
+    "bid_to_cover": 2.99,
+    "competitive_tendered": null,
+    "security_term": "1-Year 10-Month",
+    "auction_date": "2026-06-24"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00024",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQQ7",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 33000.0,
+   "entry_date": "2026-06-10",
+   "entry_price_per100": 98.703094,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-06-10",
+    "issue_date": "2026-06-15",
+    "maturity_date": "2036-05-15",
+    "field": "pricePer100",
+    "value": 98.703094,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-15",
+   "exit_price_per100": 98.673452,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.673452,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.541525,
+     "remaining_years": 9.8411,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -9.78,
+   "total_pnl": -9.78,
+   "return_on_cost_pct": -0.030031,
+   "holding_days": 35,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 43055875200.0,
+    "bid_to_cover": 2.59,
+    "competitive_tendered": null,
+    "security_term": "9-Year 10-Month",
+    "auction_date": "2026-07-08"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00025",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CQZ7",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 487200.0,
+   "entry_date": "2026-07-07",
+   "entry_price_per100": 99.849217,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-07-07",
+    "issue_date": "2026-07-15",
+    "maturity_date": "2029-07-15",
+    "field": "pricePer100",
+    "value": 99.849217,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-07-15",
+   "exit_price_per100": 99.846122,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.846122,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-07-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.18011,
+     "remaining_years": 3.0027,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -15.08,
+   "total_pnl": -15.08,
+   "return_on_cost_pct": -0.0031,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 64031643800.0,
+    "bid_to_cover": 2.6,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2026-07-07"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00026",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRA1",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 41300.0,
+   "entry_date": "2026-07-27",
+   "entry_price_per100": 99.853357,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-07-27",
+    "issue_date": "2026-07-31",
+    "maturity_date": "2031-07-31",
+    "field": "pricePer100",
+    "value": 99.853357,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-08-04",
+   "exit_price_per100": 100.20184,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.20184,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-04",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.329671,
+     "remaining_years": 4.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 143.92,
+   "total_pnl": 143.92,
+   "return_on_cost_pct": 0.348995,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 77739280900.0,
+    "bid_to_cover": 2.28,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-07-27"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00027",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRC7",
+   "security_type": "Note",
+   "security_term": "7-Year",
+   "direction": "long",
+   "face": 8100.0,
+   "entry_date": "2026-07-28",
+   "entry_price_per100": 99.416549,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2026-07-28",
+    "issue_date": "2026-07-31",
+    "maturity_date": "2033-07-31",
+    "field": "pricePer100",
+    "value": 99.416549,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-08-05",
+   "exit_price_per100": 99.437765,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.437765,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-05",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.469425,
+     "remaining_years": 6.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.72,
+   "total_pnl": 1.72,
+   "return_on_cost_pct": 0.021341,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 44000000000.0,
+    "total_accepted": 48864691000.0,
+    "bid_to_cover": 2.49,
+    "competitive_tendered": null,
+    "security_term": "7-Year",
+    "auction_date": "2026-07-28"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00028",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRG8",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 36900.0,
+   "entry_date": "2026-08-11",
+   "entry_price_per100": 99.885444,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2026-08-11",
+    "issue_date": "2026-08-17",
+    "maturity_date": "2029-08-15",
+    "field": "pricePer100",
+    "value": 99.885444,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-08-19",
+   "exit_price_per100": 100.001375,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.001375,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-08-19",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.249507,
+     "remaining_years": 2.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 42.78,
+   "total_pnl": 42.78,
+   "return_on_cost_pct": 0.116064,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 72670580300.0,
+    "bid_to_cover": 2.71,
+    "competitive_tendered": 156700220000.0,
+    "security_term": "3-Year",
+    "auction_date": "2026-08-11"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00029",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRH6",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 60500.0,
+   "entry_date": "2026-08-25",
+   "entry_price_per100": 99.849966,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2026-08-25",
+    "issue_date": "2026-08-31",
+    "maturity_date": "2028-08-31",
+    "field": "pricePer100",
+    "value": 99.849966,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-09-02",
+   "exit_price_per100": 99.499045,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.499045,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-09-02",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.38937,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -212.31,
+   "total_pnl": -212.31,
+   "return_on_cost_pct": -0.351448,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77870538900.0,
+    "bid_to_cover": 2.6,
+    "competitive_tendered": 178430485000.0,
+    "security_term": "2-Year",
+    "auction_date": "2026-08-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00030",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRF0",
+   "security_type": "Note",
+   "security_term": "10-Year",
+   "direction": "long",
+   "face": 2800.0,
+   "entry_date": "2026-08-12",
+   "entry_price_per100": 99.540696,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2026-08-12",
+    "issue_date": "2026-08-17",
+    "maturity_date": "2036-08-15",
+    "field": "pricePer100",
+    "value": 99.540696,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-09-15",
+   "exit_price_per100": 97.094654,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.094654,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-09-15",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.997699,
+     "remaining_years": 9.9233,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -68.49,
+   "total_pnl": -68.49,
+   "return_on_cost_pct": -2.457329,
+   "holding_days": 34,
+   "liquidity": {
+    "offering_amount": 39000000000.0,
+    "total_accepted": 39000040000.0,
+    "bid_to_cover": 2.71,
+    "competitive_tendered": 105714440000.0,
+    "security_term": "9-Year 11-Month",
+    "auction_date": "2026-09-09"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00031",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CRL7",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 19800.0,
+   "entry_date": "2026-09-08",
+   "entry_price_per100": 99.724933,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+    "publisher": "U.S. Department of the Treasury (TreasuryDirect)",
+    "auction_date": "2026-09-08",
+    "issue_date": "2026-09-15",
+    "maturity_date": "2029-09-15",
+    "field": "pricePer100",
+    "value": 99.724933,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2026-09-16",
+   "exit_price_per100": 98.770745,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.770745,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-09-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.82,
+     "remaining_years": 3.0,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -188.93,
+   "total_pnl": -188.93,
+   "return_on_cost_pct": -0.95682,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 58000088800.0,
+    "bid_to_cover": 2.72,
+    "competitive_tendered": 157491500000.0,
+    "security_term": "3-Year",
+    "auction_date": "2026-09-08"
    },
    "source_class": "OFFICIAL",
    "official_price_coverage": 1.0

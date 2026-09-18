@@ -620,5 +620,16 @@
   "links": [
    "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query"
   ]
+ },
+ {
+  "id": "IR-61",
+  "topic": "The TIPS breakeven rule compared a ten-year breakeven with a five-year realised inflation rate",
+  "severity": "medium",
+  "detail": "The inflation participant's declared rule read its nominal leg at a fixed ten years (the 10-year point of the official par curve) and its inflation leg over a fixed sixty months (five years of the CPI index), then compared the two as though they were one breakeven. The security it bought was whatever TIPS auctioned most recently, whose remaining maturity can be twenty-nine years, so the comparison mixed three horizons. Found while wiring the standing-aside record into the site: renaming the helper made the planning call raise AttributeError, the venue's per-rule exception guard turned that into a PLAN-ERROR flag and carried on, and the rule kept producing no orders - which is the same symptom the mixed comparison had, and is why nothing in the standings looked wrong. No published run depended on it: the participant held no security and closed no trade under either version.",
+  "resolution": "Fixed before this branch was merged. Both legs are now read at the security's own remaining maturity - the nominal yield from the par curve at that tenor, realised inflation from the CPI index over the same number of years - and when the collected history is too short the rule records that reason and stands aside instead of substituting a shorter window. The venue stores those reasons (notes.jsonl.gz) and the participant page publishes them, so a rule that does nothing can no longer look like a rule that is merely patient.",
+  "links": [
+   "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
+   "https://fred.stlouisfed.org/series/CPIAUCSL"
+  ]
  }
 ]

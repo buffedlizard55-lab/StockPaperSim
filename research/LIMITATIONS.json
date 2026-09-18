@@ -243,5 +243,19 @@
   "severity": "medium",
   "detail": "The brief asks for insider-trade signals from the MasterSite review. The signal is defined and the strategy is on the roster, but with the SEC extracts refused (L-27) there is no official insider transaction data in the repository, so any participant trading that signal would be trading on nothing. The rule therefore plans no orders and the participant page says why, rather than substituting a secondary aggregator for an official filing.",
   "fix": "Resolve L-27, then run the insider rules over the collected quarters and publish their trade tapes alongside the others."
+ },
+ {
+  "id": "L-36",
+  "title": "The collected CPI history is one year, so the inflation rule cannot compute its own horizon",
+  "severity": "medium",
+  "detail": "The TIPS breakeven rule compares the breakeven at a security's remaining maturity with realised CPI inflation over the same number of years. The repository's CPI file (data/real/fred/CPIAUCSL_2024-09-16_2026-09-17.csv) holds 25 monthly observations, and no longer history was ever collected, so no realised rate beyond about one year exists to compare against. Grown-up TIPS reopen at ten, twenty and thirty years, so on every one of the 250 sessions the rule recorded that the series was too short and stood aside rather than shorten the window it was asked for - which is why its +5.58% is interest on idle cash and not a trading result. The collector now requests the index from 1990 (scripts/collect_real_data.py, FRED_SERIES_WINDOWS) and picks the longest file it finds; the wider file only exists after the next collection run on a runner.",
+  "fix": "Run .github/workflows/collect-official-book.yml (section fred) so the wider CPIAUCSL file lands, then re-run 'python3 -m sim.cli official' and rebuild the site: the rule can then compare the breakeven and realised inflation over the same horizon, and its trades will be the first ones this lane can attribute to an inflation view rather than to the absence of any view."
+ },
+ {
+  "id": "L-37",
+  "title": "A bid on an auction that has not priced yet is sized from the newest published price of the same term",
+  "severity": "low",
+  "detail": "A non-competitive bid is an order for a face amount, and the book turns a dollar target into face at a price. When the auction has not happened yet the Treasury has published no price for it, so the venue uses the newest published price for the same security type and term (par if the book has never seen that term) and records that in the bid's rationale. Only the face amount depends on that estimate: the cash the account pays is this auction's own published price, read at settlement, and the leverage check is re-run against it. The residual risk is that a large move in the days before an auction changes how much face the target implies, which moves position size slightly away from the declared dollar target.",
+  "fix": "Nothing to correct in the price path; the item is registered because a reader comparing a strategy's declared dollar target with its settled face should know which price converted one into the other. If the lane ever collects a Treasury announcement its own price expectation, the sizing price should be that instead."
  }
 ]

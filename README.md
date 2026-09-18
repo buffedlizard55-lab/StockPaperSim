@@ -40,7 +40,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 60 flags this project raised against itself.
+> carries the 61 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -252,23 +252,37 @@ may run at its own declared leverage cap and may be wiped out — the venue clos
 positions at the official mark when equity falls below 5% of gross exposure, and
 an account that reaches zero is wound up at exactly −100% and stops trading.
 
-**Result.** 160 settled round trips from 243 fills and 2,814 intents; the winner
-is `@DurationTrend_TenX` at **+18.25%**, and the median is negative. Financing is
-SOFR + 25 bp on debits and shorts and idle cash earns SOFR, which is why a
-participant that never traded can still show a small positive return. Every trade
-row carries its entry and exit price, both dates, the auction's own offering
-amount and bid-to-cover, the field name the price came from and that file's
-SHA-256.
+**Result.** 189 settled round trips from 300 fills and 2,662 intents; the best
+return is `@TIPSBreakeven_Rider` at **+5.58%**, and that participant placed no
+order at all - its return is the official SOFR credit on idle cash. The median
+return is **-24.20%**, and every rule that took duration risk lost money: the best
+rule that actually traded is `@AuctionStrength_Follow` at **+4.40%** over four
+round trips, while `@LongBond_MaxDur` ends at **-90.10%**. Financing is SOFR +
+25 bp on debits and shorts and idle cash earns SOFR, which is why a participant
+that never traded can still show a small positive return. Every trade row carries
+its entry and exit price, both dates, the auction's own offering amount and
+bid-to-cover, the field name the price came from and that file's SHA-256.
+
+**Why the winner is a rule that never traded.** The venue records the reason a
+rule gave for standing aside, at the session it decided, and the participant
+pages publish those reasons ranked by how often they recurred. The inflation rule
+gave the same one on all 250 sessions: *"the collected CPI series reaches back
+0.999 years, short of the 29.43-year horizon this TIPS pays over; the rule does
+not quietly compare a shorter window"*. Both legs of that comparison are now read
+at the security's own remaining maturity (IR-61), and the collector asks for the
+index from 1990, so the next collection run lets the rule compare like with like
+instead of standing aside (L-36).
 
 **Verification, twice.** `sim/official_season.py` re-reads the tape and checks
 eight families of property (published price on every primary fill, bill price
 formula on every published bill price, two-publisher agreement, no look-ahead, no
 equity residual, maturity dates, price classes, and no reachable secondary path):
-**7,947 checks, 0 failures**. Then
-`scripts/independent_audit_official.py` — which imports **nothing** from `sim/`
-and re-derives everything from the raw Treasury tapes and the run's own streams —
-adds **1,624 checks**, including the two-publisher comparison on every primary
-price the book actually executed.
+**7,573 checks, 0 failures**. Then `scripts/independent_audit_official.py` - which
+imports **nothing** from `sim/` and re-derives everything from the raw Treasury
+tapes and the run's own streams - adds **1,864 checks**, including the
+two-publisher comparison on every primary price the book actually executed. CI
+rewrites that report and fails if the committed copy changes, so the number here
+cannot drift from the run.
 
 **What it cannot do, and says so.** An equity or ETF price that is official *and*
 redistributable does not exist for this project (Nasdaq's normalised archive
@@ -276,11 +290,13 @@ needs an entitlement; the free publisher pages forbid redistribution), so the
 equity books stay SECONDARY and the coverage number stays visible. The official
 lane answers that part of the brief with the instrument family where a publisher
 prints the price of every trade. The remaining gaps are registered as **L-27** to
-**L-35** — the withheld SEC insider extracts (HTTP 403 from the collection
+**L-37** — the withheld SEC insider extracts (HTTP 403 from the collection
 runner), the derived secondary leg, TIPS marked without inflation indexation,
 same-day settlement of auction awards, a house maintenance rule rather than a
-cited one, assumed secondary depth, and the mixed-class totals in the unified
-trade store.
+cited one, assumed secondary depth, the mixed-class totals in the unified trade
+store, a CPI file too short for the horizon the inflation rule needs, and a bid on
+an auction that has not priced yet being sized from the newest published price of
+the same term.
 
 ---
 
@@ -456,7 +472,7 @@ scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py and independent_audit_official.py
                 (re-derive every published number from the raw streams and the
                 Treasury's own tapes; import no project code)
-tests/          491 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
+tests/          495 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -467,8 +483,8 @@ docs/           the published site (GitHub Pages serves this directory);
                 docs/live/ is the Live Book section and docs/official/ the
                 Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (60), LIMITATIONS.json (35),
-                REMAINING_WORK.json (41), MASTER_SITE_SIGNALS.md,
+                IRREGULARITIES.json (61), LIMITATIONS.json (37),
+                REMAINING_WORK.json (44), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -490,7 +506,7 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 491 tests
+python3 -m unittest discover -s tests   # 495 tests
 python3 -m sim.cli official             # run the official auction book
 python3 -m sim.cli official-blotter     # every settled official trade + evidence
 python3 -m sim.cli trades               # the unified store across every book
@@ -540,10 +556,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 60 flags, including the ones raised against this project's own modelling
+  — all 61 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 35 limitations, 41 items of remaining work in priority order, and what
+  — 37 limitations, 44 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

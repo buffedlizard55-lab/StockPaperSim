@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import statistics
 import unittest
 
 from fixtures import REPO_ROOT
@@ -322,3 +323,99 @@ class TestReadmeMeasuredClaims(unittest.TestCase):
                 r["final_equity"] - r["starting_cash"] - r["net_pnl_usd"], 0.0,
                 delta=0.005, msg=f"{user}'s published report does not close",
             )
+
+
+class TestOfficialBookClaims(unittest.TestCase):
+    """The README's official-book paragraph, re-derived from the run's memory.
+
+    Why this class exists: the paragraph was written by hand once, quoting a
+    run's numbers, and the next run replaced every one of them - the winner
+    changed from a duration rule to a participant that never traded, the trip
+    count moved, and the verification count fell because a defect had been fixed.
+    Nothing failed, because nothing checked. The official lane is the part of
+    this project whose whole claim is that its numbers come from published
+    prices, so a sentence about it has to be re-derived from the same artefacts
+    the site is built from, exactly as the Season 1 and Season 2 tables are.
+    """
+
+    RUN = "official-rehearsal-seed20260918"
+
+    @classmethod
+    def setUpClass(cls):
+        with open(README, "r", encoding="utf-8") as fh:
+            cls.text = fh.read()
+        # Scoped to the official section: the Season 2 paragraph quotes a
+        # verification count of its own, and an unscoped search would check the
+        # official numbers against the wrong season's prose (which is exactly the
+        # mistake this class was written to catch).
+        cls.section = cls.text.split("## The Official Auction Book", 1)[1]
+        cls.section = cls.section.split("\n## ", 1)[0]
+        cls.flat = re.sub(r"\s+", " ", cls.section)
+        cls.run_dir = os.path.join(REPO_ROOT, "memory", "official", cls.RUN)
+        with open(os.path.join(cls.run_dir, "leaderboard.json"), encoding="utf-8") as fh:
+            cls.board = json.load(fh)
+        with open(os.path.join(cls.run_dir, "manifest.json"), encoding="utf-8") as fh:
+            cls.manifest = json.load(fh)
+
+    def _claim(self, pattern: str):
+        m = re.search(pattern, self.flat)
+        self.assertIsNotNone(m, f"the README no longer states {pattern!r}")
+        return m.groups()
+
+    def test_counts_come_from_the_run(self):
+        counts = self.manifest["counts"]
+        trips, fills, intents = self._claim(
+            r"(\d+) settled round trips from ([\d,]+) fills and ([\d,]+) intents")
+        self.assertEqual(int(trips), counts["trips"])
+        self.assertEqual(int(fills.replace(",", "")), counts["fills"])
+        self.assertEqual(int(intents.replace(",", "")), counts["intents"])
+        # Fills are intents, not trades: the stream writes one row per fill and a
+        # partially filled order can produce more than one, so the two counts are
+        # checked against their own stream sizes.
+        for stream in ("fills", "intents"):
+            self.assertEqual(counts[stream], self.manifest["storage"]["streams"][stream]["rows"],
+                             f"the manifest's {stream} count disagrees with its own stream")
+
+    def test_winner_and_median_come_from_the_leaderboard(self):
+        rows = self.board["participants"]
+        best = max(rows, key=lambda r: r["return_pct"])
+        name, value = self._claim(r"best return is `@([A-Za-z0-9_]+)` at \*\*([+-][\d.]+)%\*\*")
+        self.assertEqual(name, best["participant"].lstrip("@"))
+        self.assertAlmostEqual(float(value), best["return_pct"], delta=0.005)
+        median = statistics.median(r["return_pct"] for r in rows)
+        (claimed,) = self._claim(r"median return is \*\*([+-][\d.]+)%\*\*")
+        self.assertAlmostEqual(float(claimed), median, delta=0.005,
+                               msg="the README's median is not this run's median")
+        # A winner that made no trade is the interesting case and has to be said
+        # out loud: its return is the venue's cash credit, not a strategy result.
+        if best["trades"] == 0:
+            self.assertIn("placed no order at all", self.flat,
+                          "the best return belongs to a participant with no trades, so the "
+                          "README must say that its return is cash interest")
+            self.assertIn("idle cash", self.flat)
+
+    def test_participant_and_session_counts_match_the_run(self):
+        (participants,) = self._claim(
+            r"as declared before the first session\.\*\* (\d+) strategies, one")
+        self.assertEqual(int(participants), len(self.board["participants"]))
+        (sessions,) = self._claim(r"2025-09-17 . 2026-09-16 \((\d+) official sessions\)")
+        self.assertEqual(int(sessions), self.board["sessions"])
+        self.assertEqual(self.manifest["window"]["sessions"], self.board["sessions"])
+
+    def test_verification_counts_match_the_manifest_and_the_audit(self):
+        verification = self.manifest["verification"]
+        checks, failures = self._claim(r"\*\*([\d,]+) checks, ([\d,]+) failures\*\*")
+        self.assertEqual(int(checks.replace(",", "")), verification["checks"])
+        self.assertEqual(int(failures.replace(",", "")), len(verification["failures"]))
+        self.assertEqual(verification["verdict"], "PASS")
+        # The independent audit's own report is committed beside the run; the
+        # README's second number has to be the one in that file, and CI rewrites
+        # the file before diffing it, so a stale report cannot survive there.
+        report_path = os.path.join(REPO_ROOT, "memory", "official", "ledger",
+                                   "independent_audit.json")
+        with open(report_path, encoding="utf-8") as fh:
+            report = json.load(fh)
+        (audit_checks,) = self._claim(r"adds \*\*([\d,]+) checks\*\*")
+        self.assertEqual(int(audit_checks.replace(",", "")), report["checks"])
+        self.assertEqual(report["failures"], [],
+                         "the committed independent audit report has failures")

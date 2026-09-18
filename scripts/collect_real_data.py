@@ -641,17 +641,36 @@ def _us_date_to_iso(text: str) -> str:
     return _dt.datetime.strptime(text.strip(), "%m/%d/%Y").date().isoformat()
 
 
+#: Series whose measure needs more history than the season window gives it.
+#: The CPI index is the case that matters: a five-year realised inflation rate
+#: cannot be computed from the season's own year of observations, and the
+#: alternative - quietly shortening the window the rule asked for - would make a
+#: rule that compares a ten-year breakeven with a one-year realised rate look as
+#: though it had compared like with like.  The index itself is a public series,
+#: so the fix is to carry the history rather than to weaken the rule.
+FRED_SERIES_WINDOWS: Dict[str, str] = {
+    # 1990 rather than "as far back as FRED has" because the TIPS rule compares
+    # a breakeven at the security's own maturity with realised inflation over
+    # the same number of years, and the longest-dated TIPS this book sees are
+    # reopens of 30-year securities: a 2026 security needs index observations
+    # from the mid-1990s.  The file is one monthly series (about 430 rows for
+    # 36 years), so carrying the history costs nothing worth economising on.
+    "CPIAUCSL": "1990-01-01",
+}
+
+
 def collect_fred(fetcher: Fetcher, out: str) -> dict:
     summary = {"ok": [], "failed": [], "rows": {}}
     for series, description in FRED_SERIES.items():
+        start = FRED_SERIES_WINDOWS.get(series, WARMUP_START)
         url = (f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series}"
-               f"&cosd={WARMUP_START}&coed={COLLECT_END}")
+               f"&cosd={start}&coed={COLLECT_END}")
         body = fetcher.get(url, "fred", headers={"User-Agent": BROWSER_UA},
                            note=f"{series}: {description}")
         if body is None:
             summary["failed"].append(series)
             continue
-        path = os.path.join(out, "fred", f"{series}_{WARMUP_START}_{COLLECT_END}.csv")
+        path = os.path.join(out, "fred", f"{series}_{start}_{COLLECT_END}.csv")
         write_bytes(path, body)
         rows = 0
         for line in body.decode("utf-8", "replace").splitlines()[1:]:

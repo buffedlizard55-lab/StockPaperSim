@@ -59,92 +59,34 @@
   "offering_amount": 90000000000.0
  },
  {
-  "intent_id": "ConcessionFade_Notes-00601",
+  "intent_id": "ConcessionFade_Notes-00451",
   "participant": "@ConcessionFade_Notes",
   "kind": "SECONDARY-ORDER",
   "side": "sell",
-  "cusip": "91282CNS6",
-  "face": 706800.0,
-  "created_on": "2026-09-16",
-  "target_session": "2026-09-17",
-  "status": "PENDING",
-  "rule": "exit five sessions after the auction",
-  "rationale": "concession fade",
-  "evidence": {
-   "par_curve": {
-    "observation_date": "2026-09-16",
-    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
-    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
-    "source": "U.S. Treasury daily par yield curve",
-    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
-   },
-   "mark": {
-    "derivation": "last mark",
-    "observation_date": "2026-09-16"
-   }
-  },
-  "security_term": null,
-  "issue_date": null,
-  "maturity_date": null,
-  "offering_amount": null
- },
- {
-  "intent_id": "ConcessionFade_Notes-00602",
-  "participant": "@ConcessionFade_Notes",
-  "kind": "SECONDARY-ORDER",
-  "side": "sell",
-  "cusip": "91282CPH8",
-  "face": 50400.0,
-  "created_on": "2026-09-16",
-  "target_session": "2026-09-17",
-  "status": "PENDING",
-  "rule": "exit five sessions after the auction",
-  "rationale": "concession fade",
-  "evidence": {
-   "par_curve": {
-    "observation_date": "2026-09-16",
-    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
-    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
-    "source": "U.S. Treasury daily par yield curve",
-    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
-   },
-   "mark": {
-    "derivation": "last mark",
-    "observation_date": "2026-09-16"
-   }
-  },
-  "security_term": null,
-  "issue_date": null,
-  "maturity_date": null,
-  "offering_amount": null
- },
- {
-  "intent_id": "ConcessionFade_Notes-00603",
-  "participant": "@ConcessionFade_Notes",
-  "kind": "AUCTION-BID",
-  "side": "buy",
   "cusip": "91282CRE3",
-  "face": 522800.0,
+  "face": 482800.0,
   "created_on": "2026-09-16",
   "target_session": "2026-09-17",
   "status": "PENDING",
-  "rule": "bid the next announced note auction and exit five sessions after issue",
-  "rationale": "9-Year 10-Month 91282CRE3 announced 2026-09-10 for auction 2026-09-17",
+  "rule": "exit five sessions after the auction",
+  "rationale": "concession fade",
   "evidence": {
-   "auction_notice": {
-    "observation_date": "2026-09-10",
-    "auction_date": "2026-09-17",
-    "security_term": "9-Year 10-Month",
-    "offering_amount": 19000000000.0,
-    "source": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
-    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
-    "publisher": "U.S. Department of the Treasury (TreasuryDirect)"
+   "par_curve": {
+    "observation_date": "2026-09-16",
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+    "source": "U.S. Treasury daily par yield curve",
+    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+   },
+   "mark": {
+    "derivation": "present value of the security's own real coupon and par at the official H.15 real yield for its remaining maturity",
+    "observation_date": "2026-09-16"
    }
   },
-  "security_term": "9-Year 10-Month",
-  "issue_date": "2026-09-30",
-  "maturity_date": "2036-07-15",
-  "offering_amount": 19000000000.0
+  "security_term": null,
+  "issue_date": null,
+  "maturity_date": null,
+  "offering_amount": null
  },
  {
   "intent_id": "CurveFlattener_2s10s-00495",

@@ -208,12 +208,27 @@ class OfficialRates:
                 dates=dates, values=values)
 
     def _find(self, sid: str) -> Optional[str]:
+        """The longest collected copy of a series.
+
+        More than one window can be committed for the same series (the CPI index
+        is carried from 2015 because a five-year realised rate needs the
+        history), so the file with the earliest start date wins and ties go to
+        the latest end date.  Picking the first name that sorted would silently
+        prefer a short window.
+        """
         if not os.path.isdir(self.root):
             return None
+        best: Optional[Tuple[Tuple[str, str], str]] = None
         for name in sorted(os.listdir(self.root)):
-            if name.startswith(sid + "_") and name.endswith(".csv"):
-                return os.path.join(self.root, name)
-        return None
+            if not (name.startswith(sid + "_") and name.endswith(".csv")):
+                continue
+            parts = name[:-4].split("_")
+            start = parts[1] if len(parts) > 2 else ""
+            end = parts[2] if len(parts) > 2 else ""
+            key = (start, end)
+            if best is None or key < best[0]:
+                best = (key, os.path.join(self.root, name))
+        return best[1] if best else None
 
     def get(self, sid: str) -> Optional[SeriesView]:
         return self.series.get(sid)
@@ -594,6 +609,11 @@ class OfficialBook:
         self.sessions: List[str] = [d for d in curve.dates() if start <= d <= end]
         self.marks: List[dict] = []
         self.margin_events: List[dict] = []
+        #: What the rules said when they decided not to trade.  A rule that
+        #: stands aside has to be able to explain itself on the site, and the
+        #: explanation is only worth having if it is the one the rule actually
+        #: wrote at the time rather than a sentence typed afterwards.
+        self.notes: List[dict] = []
         self.irregularities: List[dict] = []
         self._counters: Dict[str, int] = {}
         self._marks: Dict[str, float] = {}
@@ -783,6 +803,10 @@ class OfficialBook:
             new = account.intents[before:]
             for intent in new:
                 self._check_evidence(intent, session)
+            for text in getattr(ctx, "notes", []):
+                self.notes.append({"session": session,
+                                   "participant": strategy.username,
+                                   "note": str(text)})
             self._supersede(account, new)
             created.extend(new)
         return created
@@ -1348,6 +1372,20 @@ class OfficialBook:
             self.margin_events.append(event)
 
     # -- daily record ------------------------------------------------------
+    def note_summary(self, participant: str, limit: int = 6) -> List[dict]:
+        """The most frequent standing-aside reasons for one participant."""
+        counts: Dict[str, dict] = {}
+        for row in self.notes:
+            if row["participant"] != participant:
+                continue
+            entry = counts.setdefault(row["note"], {"note": row["note"], "sessions": 0,
+                                                    "first": row["session"],
+                                                    "last": row["session"]})
+            entry["sessions"] += 1
+            entry["last"] = row["session"]
+        ordered = sorted(counts.values(), key=lambda r: -r["sessions"])
+        return ordered[:limit]
+
     def record_marks(self, session: str) -> None:
         self._marks = self.mark_prices(session)
         for strategy in self.roster:
@@ -1545,22 +1583,48 @@ class OfficialContext:
         view = self.rates.get(sid)
         return view.change_bp(self.session, n) if view else None
 
-    def realised_inflation_5y(self) -> Optional[float]:
-        """Realised CPI inflation over five years, from the official index.
+    def realised_inflation(self, years: float = 5.0) -> Optional[float]:
+        """Realised CPI inflation over ``years``, from the official index.
 
         ``CPIAUCSL`` is the Bureau of Labor Statistics' own all-items index as
-        republished by FRED, and the change over 60 monthly observations is
-        arithmetic on it.  A rule that cannot find the series gets ``None`` and
-        says so, rather than substituting a guess.
+        republished by FRED.  The measure is the total change between the latest
+        observation at or before the session and the observation closest to
+        ``years`` earlier, which is the arithmetic a reader can repeat from the
+        same file:
+
+            realised = (index_latest / index_years_ago - 1) x 100
+
+        The series must actually reach back that far.  A five-year realised rate
+        cannot be computed from one year of observations, and the honest answer
+        is then ``None`` - which the caller must turn into a reason for standing
+        aside, not into a shorter window quietly substituted for the one the
+        rule asked for.  ``inflation_window_years`` reports how far back the
+        collected series actually reaches.
         """
         view = self.rates.get("CPIAUCSL")
         if view is None:
             return None
-        levels = [v for d, v in zip(view.dates, view.values)
-                  if d <= self.session]
-        if len(levels) < 61 or levels[-61] <= 0:
+        rows = [(d, v) for d, v in zip(view.dates, view.values)
+                if d <= self.session and v > 0]
+        if len(rows) < 2:
             return None
-        return (levels[-1] / levels[-61] - 1.0) * 100.0
+        latest_date, latest = rows[-1]
+        cutoff = (dt.date.fromisoformat(latest_date)
+                  - dt.timedelta(days=int(round(365.25 * years)))).isoformat()
+        earlier = [row for row in rows if row[0] <= cutoff]
+        if not earlier:
+            return None
+        return (latest / earlier[-1][1] - 1.0) * 100.0
+
+    def inflation_window_years(self) -> Optional[float]:
+        """How far back the collected CPI series actually reaches, in years."""
+        view = self.rates.get("CPIAUCSL")
+        if view is None:
+            return None
+        dates = [d for d in view.dates if d <= self.session]
+        if len(dates) < 2:
+            return None
+        return round(_days_between(dates[0], dates[-1]) / 365.25, 3)
 
     def sessions_since(self, date: str) -> Optional[int]:
         dates = [d for d in self.curve.dates() if d <= self.session]
@@ -1649,16 +1713,50 @@ class OfficialContext:
             "url": ("https://home.treasury.gov/resource-center/data-chart-center/"
                     "interest-rates/TextView?type=daily_treasury_yield_curve")}}
 
+    def _sizing_price(self, auction: treasury.Auction) -> Optional[float]:
+        """A price to convert a dollar target into a face amount.
+
+        The book executes at exactly one price: the one the Treasury publishes
+        for the auction.  An auction that has not happened yet has no such
+        price, and a non-competitive bid is a request for a *face amount*, so
+        the only thing the missing price affects is how much face a dollar
+        target becomes.  For a security the book has never seen priced, that
+        estimate is par (a bill's face is its par, and a coupon security's
+        price is close to it) and the intent says so.
+        """
+        published = auction.execution_price()
+        if published is not None:
+            return float(published)
+        seen = [a for a in self._book.auctions.auctions.values()
+                if a.security_type == auction.security_type
+                and (a.term or a.security_term) == (auction.term or auction.security_term)
+                and a.auction_date <= self.session]
+        if seen:
+            newest = max(seen, key=lambda a: a.auction_date)
+            price = newest.execution_price()
+            if price is not None:
+                return float(price)
+        return 100.0
+
     def buy_at_auction(self, auction: treasury.Auction, market_value: float,
                        rule: str, rationale: str) -> None:
-        """Bid non-competitively for ``market_value`` of face at the official price."""
-        price = auction.execution_price()
+        """Bid non-competitively for ``market_value`` of face at the official price.
+
+        The bid is sized with the newest published price for the same security
+        type and term; the *cost* the account pays at settlement is the published
+        price of this auction, read at settlement time, never the sizing price.
+        """
+        price = self._sizing_price(auction)
         if price is None:
             self.note(f"{auction.cusip} has no official price yet")
             return
         face = self._round_face(market_value / price * 100.0, auction)
         if face <= 0:
             return
+        if auction.execution_price() is None:
+            rationale = (f"{rationale} [sized at {price:.6f} per 100, the newest "
+                         f"published price for the same type and term; the executed "
+                         f"price is the one this auction publishes]")
         self._book.submit(self._strategy, INTENT_BID, auction.auction_date,
                           auction.cusip, "buy", face, rule, rationale,
                           evidence={"auction_notice": {
@@ -1743,7 +1841,7 @@ class OfficialContext:
 # Persistence
 # --------------------------------------------------------------------------
 
-STREAMS = ("intents", "fills", "trips", "marks", "carry", "margin")
+STREAMS = ("intents", "fills", "trips", "marks", "carry", "margin", "notes")
 
 
 def _write_stream(path: str, rows: Sequence[dict]) -> dict:
@@ -1787,6 +1885,8 @@ def write_book(book: OfficialBook, run_dir: str,
         "carry": _write_stream(os.path.join(run_dir, "carry.jsonl"), carry),
         "margin": _write_stream(os.path.join(run_dir, "margin.jsonl"),
                                 book.margin_events),
+        "notes": _write_stream(os.path.join(run_dir, "notes.jsonl"),
+                               book.notes),
     }
     blotter = os.path.join(run_dir, "blotter.csv")
     fields = ["trip_id", "participant", "cusip", "security_type", "security_term",

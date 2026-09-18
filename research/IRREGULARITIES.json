@@ -351,5 +351,124 @@
     "detail": "The site footer printed 'git commit 71b3d9062d2c' beside a season that commit could not have generated. The run memory in the repository was produced from a working tree carrying the then-uncommitted IR-31, IR-32 and IR-34 engine fixes, so the manifest recorded the parent commit as the run's code. The manifest itself was honest about this - it stores code.git.dirty=true and a SHA-256 of every sim/ module - but nothing a human reads showed it. A reader who took the footer at their word would check out 71b3d90, re-run seed 20260917, get @GapAndGo_YOLO at -86.57% instead of the published -91.75%, and reasonably conclude the site was inventing numbers. Found by reading the live Pages deployment after PR #3 merged, that is, by looking at the artefact the project ships rather than at its own test suite, which stayed green throughout.",
     "resolution": "Four changes, and the second and third were only visible by re-running the season rather than by reading the code that wrote it. (a0) scripts/build_site.py gains provenance_sentence(), which renders the dirty state into the footer and points at the per-module hashes as the reproducible fingerprint, so a bare commit id can no longer overstate what it proves; guarded in tests/test_site_builder.py, including a check that the published index.html footer agrees with the manifest it was built from. (b) All six scenarios were re-run from a clean committed tree, so the memory now on main names a commit that contains the code which ran - the leaderboard and the market report came out byte-identical to the run they replaced (leaderboard sha 6cce7f0d9b3f679f for the file, top return 108.39), and the manifest now records commit edbeaa71e674 with dirty=false and 12 module hashes - the reproducibility claim exercised on the published artefact rather than on a scratch copy. Residual limit stated, not fixed: after a squash merge main does not contain the PR-head commit a manifest names, so durable provenance remains the module hashes, not the commit string.",
     "links": []
+  },
+  {
+    "id": "IR-36",
+    "severity": "high",
+    "topic": "The intraday path inside every Season 2 bar is modelled, not real",
+    "detail": "Season 2 trades real daily open, high, low, close and volume, but the sequence of prices between the open and the close is not observable from daily data. Orders are filled inside the real bar's range by a declared intraday path that opens at the real open, respects the real high and low, and closes at the real close. Two participants filling on the same day therefore see different prices than the tape did, even though every one of them is inside the real day's range.",
+    "resolution": "Declared on every Season 2 page, in sim/marketdata.py's fill rule, and in the run manifest; the fill price is never outside the real [low, high] range, and the ledger records the real bar next to each fill so a reader can see the modelled slippage directly. Making this real requires a consolidated-tape (SIP) history, which is not freely redistributable.",
+    "links": [
+      "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule",
+      "https://fred.stlouisfed.org/series/SP500"
+    ]
+  },
+  {
+    "id": "IR-37",
+    "severity": "medium",
+    "topic": "Yahoo Finance is an aggregator, not the consolidated tape",
+    "detail": "Every Season 2 price is read from the Yahoo Finance chart API, whose class is recorded as SECONDARY. Yahoo's closes agree with the exchange's official closing prices to within a tick in the overwhelming majority of sessions, but they are not the primary record, and a vendor revision would silently change a published fill price.",
+    "resolution": "Each price file is committed with its SHA-256, the run records the hash, and scripts/independent_audit_season2.py re-hashes the files and re-checks every traded bar against them. The SPY series is additionally cross-checked against FRED's S&P 500 index (return correlation 0.9965 over the whole two-year window) and against an independent publisher via the Nasdaq quote API, with both comparisons published.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY",
+      "https://fred.stlouisfed.org/series/SP500",
+      "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf"
+    ]
+  },
+  {
+    "id": "IR-38",
+    "severity": "medium",
+    "topic": "Dividends come from a vendor event feed, not the issuer",
+    "detail": "Cash dividends, the manufactured dividends charged on short positions, and the share adjustments on splits are taken from the vendored event payload attached to each price file. The issuer's own announcement and the exchange's ex-date notice are the primary records; the vendor's ex-date and amount can differ from them by a session or a rounding cent.",
+    "resolution": "Every participant page lists the dividends used, the ledger separates dividend carry from trading P&L, and the data page states the source class. Companies with no dividend in the window are marked as such rather than assumed to pay one.",
+    "links": [
+      "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany",
+      "https://fred.stlouisfed.org/series/SP500"
+    ]
+  },
+  {
+    "id": "IR-39",
+    "severity": "high",
+    "topic": "Real prices are one realisation, so there is no seed panel in Season 2",
+    "detail": "Season 1 published a robustness panel across synthetic idiosyncratic draws. Season 2 cannot: there is exactly one history of prices, and running the same season again produces the same numbers. Rankings that would move across draws in Season 1 can look stable here for the wrong reason, and the sample size is one.",
+    "resolution": "Instead of a fake seed panel, Season 2 publishes a venue-stress panel: the identical real bars re-traded with doubled spreads and impact plus a $1-per-order commission, and with halved displayed depth and a 5% participation cap. Every participant's return is published under all three assumptions, and the stress page names the largest movers.",
+    "links": [
+      "https://www.tradingview.com/the-leap/december-2025/rules/",
+      "https://www.trade-ideas.com/stock-trading-competition/"
+    ]
+  },
+  {
+    "id": "IR-40",
+    "severity": "high",
+    "topic": "A strategy whose official source has no retrievable history places no trades at all",
+    "detail": "The NFL and NBA injury reports and the pre-game model predictions that four of the brief's items refer to are published as live documents: the leagues do not expose a queryable archive of past seasons, and the projects do not archive their own outputs. A backtest for those strategies would have to be built from data this project cannot verify.",
+    "resolution": "Those participants are registered with their official endpoint, marked FORWARD-ONLY in the MasterFeed register, report DATA-MISSING in the signal book, and place no backdated trades; the site shows them at 0.00% with the reason on the page, and the next collection cycle is what turns them into backtestable participants.",
+    "links": [
+      "https://www.nfl.com/injuries/",
+      "https://official.nba.com/nba-injury-report-2025-26-season/"
+    ]
+  },
+  {
+    "id": "IR-41",
+    "severity": "medium",
+    "topic": "The Kalshi settled-market payload carries no prices or volumes",
+    "detail": "The venue's own settled-markets endpoint returns contract metadata for the requested window - ticker, title, close time - with every numeric field (volume, open interest, last price, settlement value, bid and ask) left empty by the venue. A strategy that reads volume from it would read a column of zeros and mistake it for a real observation of no activity.",
+    "resolution": "The signal book registers the settled-count array as available (that part of the payload is real) and the volume array as MISSING with the reason recorded; the participant that needs volume reports DATA-MISSING and trades nothing. The collection manifest keeps the failed and empty responses side by side.",
+    "links": [
+      "https://api.elections.kalshi.com/trade-api/v2/markets"
+    ]
+  },
+  {
+    "id": "IR-42",
+    "severity": "low",
+    "topic": "Vendor volume is consolidated across venues and cannot be attributed to one display",
+    "detail": "Share volume comes from the vendor's consolidated daily print. The participation model uses it as the denominator, so a fill's participation rate is measured against the whole market's volume for that session, not against the shares displayed at the touch on the venue the order was routed to.",
+    "resolution": "The participation rate is published per fill next to the real volume it was computed from, the venue's displayed depth is a separate declared model, and the stress panel halves that depth so the effect of the assumption is visible rather than argued about.",
+    "links": [
+      "https://www.nasdaqtrader.com/Trader.aspx?id=TradeActivityRpt",
+      "https://www.sec.gov/rules/final/34-51808.pdf"
+    ]
+  },
+  {
+    "id": "IR-43",
+    "severity": "medium",
+    "topic": "Event dates are reliable, but event knowledge is not the same as event availability",
+    "detail": "An FDA decision dated 2026-03-14 reaches a participant at the next session's open in this simulation, which assumes the decision was public before the market opened on the following trading day. For weekend and holiday decisions that is conservative; for a decision published after the close it is not, and a real desk would sometimes see it intraday.",
+    "resolution": "Signals are windowed strictly before the session they are read on, so no participant can read a same-session event; the assumption being made is availability at the next open, and it is stated here rather than left implicit. Nothing is backdated: every count uses the source's own date field.",
+    "links": [
+      "https://api.fda.gov/drug/drugsfda.json",
+      "https://statsapi.mlb.com/api/v1/schedule"
+    ]
+  },
+  {
+    "id": "IR-44",
+    "severity": "high",
+    "topic": "Two signal builders called the loaders with the arguments swapped, so the site reported real files as MISSING",
+    "detail": "sim/realdata.load_fred and load_series take (series, root). sim/masterfeed.py called load_fred(root, 'DGS10') and load_series(root, 'GLD'), and both builders caught the resulting exception as 'no collected data'. The first Season 2 run therefore published fred_slope_bps, fred_slope_change_21d and gold_close as MISSING even though the FRED yield CSVs and the GLD price file were sitting in data/real/, and @YieldCurve_Rotator placed no trades for a reason that was not true.",
+    "resolution": "Argument order corrected, the broad except narrowed to RealDataUnavailable so a programming error can no longer masquerade as a data state, and realdata now raises TypeError when the first argument looks like a directory. Verified by re-running the season: both signals are AVAILABLE with 500 observations and @YieldCurve_Rotator trades.",
+    "links": [
+      "https://fred.stlouisfed.org/series/DGS10",
+      "https://fred.stlouisfed.org/series/DGS3MO"
+    ]
+  },
+  {
+    "id": "IR-45",
+    "severity": "high",
+    "topic": "The collected dividend events were loaded under the vendor's field name, which stopped every Season 2 run",
+    "detail": "sim/realdata.load_series returns the vendor payload's rows keyed 'date', but the engine and the Season 1 market both read 'ex_date'. The Season 2 loader passed the vendor rows straight through, so each run died with KeyError: 'ex_date' while building the dividend map - a crash, not a silent error, which is why it was caught within a minute of the first re-run attempt.",
+    "resolution": "The loader renames the field to 'ex_date' at the point it builds the instrument, keeping one spelling across both seasons; the dividend is still the vendor's own event with the vendor's own date, and IR-11 continues to record that the event feed is secondary.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
+    ]
+  },
+  {
+    "id": "IR-46",
+    "severity": "medium",
+    "topic": "A participant that never traded was published with the verdict for a loss",
+    "detail": "The narrative library's headline branch was reached by total return alone, so a participant that placed no orders (0.00% because its data was missing) received the 'lost money' verdict and a clause describing a dollar loss on starting capital. Five of Season 2's fourteen participants are in that state, so the published leaderboard would have attached a performance judgement to strategies that never entered the market.",
+    "resolution": "A first branch now fires on measured order activity: 0 fills, 0 round trips and 0 sessions with orders produce the verdict 'no trades placed' and a clause that states the return carries no information about the strategy. The leaderboard, the participant pages and the README's Season 2 table all carry that verdict, and a test re-derives the table cell by cell against the run.",
+    "links": [
+      "https://buffedlizard55-lab.github.io/MasterSite/"
+    ]
   }
 ]

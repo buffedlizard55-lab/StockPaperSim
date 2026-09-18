@@ -1,0 +1,412 @@
+{
+ "username": "@MLB_Attention_Momo",
+ "strategy_id": "MLBAttentionMomo",
+ "archetype": "event attention proxy",
+ "starting_cash": 100000.0,
+ "final_equity": 123407.48,
+ "net_pnl_usd": 23407.48,
+ "total_return_pct": 23.4075,
+ "cagr_pct": 23.5109,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -28.2551,
+  "max_drawdown_usd": -45857.89,
+  "peak_date": "2026-06-11",
+  "peak_equity": 162299.66,
+  "trough_date": "2026-09-01",
+  "trough_equity": 116441.78,
+  "recovery_date": null,
+  "sessions_underwater": 10,
+  "never_recovered": true,
+  "sharpe": 0.6725,
+  "sortino": 0.7646,
+  "calmar": 0.8321,
+  "daily_vol_pct": 3.0891,
+  "annualised_vol_pct": 49.038,
+  "skew": 0.9966,
+  "excess_kurtosis": 6.8851,
+  "best_session_pct": 14.1949,
+  "worst_session_pct": -12.6911,
+  "var_95_pct": -4.5775,
+  "cvar_95_pct": -6.8253,
+  "var_99_pct": -8.2907,
+  "cvar_99_pct": -10.8749
+ },
+ "market_relation": {
+  "beta": 0.3658,
+  "alpha_annual_pct": 27.7083,
+  "r_squared": 0.0093,
+  "tracking_error_annual_pct": 48.81,
+  "information_ratio": 0.568,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 5.273,
+  "residual_return_pct": 18.134
+ },
+ "trades": {
+  "closed_trades": 108,
+  "open_trades": 0,
+  "wins": 57,
+  "losses": 51,
+  "win_rate_pct": 52.778,
+  "gross_win_usd": 88711.33,
+  "gross_loss_usd": 65303.85,
+  "profit_factor": 1.3584,
+  "avg_win_usd": 1556.34,
+  "avg_loss_usd": -1280.47,
+  "expectancy_usd_per_trade": 216.74,
+  "best_trade": {
+   "symbol": "PENN",
+   "net_pnl": 19173.1,
+   "entry_date": "2026-03-26",
+   "exit_date": "2026-06-02",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "PENN",
+   "net_pnl": -13853.62,
+   "entry_date": "2026-07-29",
+   "exit_date": "2026-08-28",
+   "direction": "long"
+  },
+  "longest_win_streak": 22,
+  "longest_loss_streak": 13,
+  "avg_sessions_held": 21.44,
+  "median_sessions_held": 18.5,
+  "sessions_in_market": 118,
+  "per_symbol_sessions_in_market": {
+   "PENN": 118,
+   "DKNG": 116,
+   "FLUT": 116
+  },
+  "sum_of_tranche_sessions": 2315,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 210,
+  "shares_traded": 149070,
+  "traded_notional_usd": 4421830.98,
+  "spread_cost_usd": 745.35,
+  "depth_cost_usd": 637.22,
+  "impact_cost_usd": 1044.85,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 447.21,
+  "regulatory_fee_usd": 60.19,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 2934.82,
+  "total_cost_bps_of_traded": 6.637,
+  "total_cost_pct_of_starting_cash": 2.9348,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 17.29,
+   "spread_and_impact_pct": 82.71
+  },
+  "avg_execution_cost_bps_per_fill": 4.321,
+  "median_execution_cost_bps_per_fill": 3.931,
+  "worst_execution_cost_bps": 18.56,
+  "intraday_drift_usd": 47.67,
+  "avg_price_difference_bps_per_fill": 2.911,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 210,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 4421248.86,
+  "spread_cost_usd": 745.35,
+  "depth_cost_usd": 637.22,
+  "impact_cost_usd": 1044.85,
+  "intraday_drift_usd": 47.67,
+  "fees_usd": 507.4,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 2982.49,
+  "shortfall_bps_of_paper": 6.746,
+  "friction_only_bps_of_paper": 6.638,
+  "worst_single_order_drift_usd": 41.14,
+  "best_single_order_drift_usd": -44.66,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 0.0,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 0.0,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 88.73,
+  "max_gross_pct_of_starting_cash": 290.6,
+  "avg_net_pct_of_starting_cash": 88.73,
+  "max_net_pct_of_starting_cash": 290.6,
+  "avg_leverage": 0.696,
+  "max_leverage": 1.904,
+  "sessions_flat": 140,
+  "avg_open_positions": 1.34
+ },
+ "turnover": {
+  "traded_notional_usd": 4421830.98,
+  "annualised_turnover_x": 38.814
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "DKNG",
+   "realized_pnl": 15644.8,
+   "open_pnl": 0.0,
+   "total_pnl": 15644.8,
+   "closed_trades": 36,
+   "fees": 194.0,
+   "all_in_cost_usd": 1018.6
+  },
+  {
+   "symbol": "PENN",
+   "realized_pnl": 11857.57,
+   "open_pnl": 0.0,
+   "total_pnl": 11857.57,
+   "closed_trades": 40,
+   "fees": 255.83,
+   "all_in_cost_usd": 1537.42
+  },
+  {
+   "symbol": "FLUT",
+   "realized_pnl": -4094.89,
+   "open_pnl": 0.0,
+   "total_pnl": -4094.89,
+   "closed_trades": 32,
+   "fees": 57.62,
+   "all_in_cost_usd": 378.81
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 100000.0,
+   "end_equity": 103228.39,
+   "return_pct": 3.2284
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 103228.39,
+   "end_equity": 121971.27,
+   "return_pct": 18.1567
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 121971.27,
+   "end_equity": 123062.69,
+   "return_pct": 0.8948
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 123062.69,
+   "end_equity": 142902.75,
+   "return_pct": 16.1219
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 142902.75,
+   "end_equity": 146451.57,
+   "return_pct": 2.4834
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 146451.57,
+   "end_equity": 122750.55,
+   "return_pct": -16.1835
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 122750.55,
+   "end_equity": 123407.48,
+   "return_pct": 0.5352
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 23407.48,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 0.0,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -2934.82,
+  "total_net_pnl_usd": 23407.48,
+  "unexplained_residual_usd": 0.0,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "beat the market",
+  "headline": "Beat the market: +23.41% total return vs +14.41% for the index, +18.13pp residual after beta, -28.3% max drawdown, 2.93% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +23.41% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +8.99pp."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +23.41% total, about +5.27pp is explained by carrying beta 0.37 against a +14.41% market (R^2 0.01); the residual +18.13pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "DKNG contributed +15,645 USD (67% of net P&L) across 36 closed trades; FLUT was the biggest drag at -4,095 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 2,935 USD (2.93% of starting capital, 4.3 bp per fill, 6.6 bp of the 4,421,831 USD traded). 83% of that was spread/depth/impact and 17% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "108 closed round trips, 52.8% winners, profit factor 1.36, average winner +1,556 vs average loser -1,280 USD, median holding 18 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 118 sessions held at least one position (the per-tranche holding periods above sum to 2315 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: PENN long 2026-07-29 to 2026-08-28, -13,854 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -28.26% (-9.10% for the index), trough on 2026-09-01, never recovered. Average gross exposure 89% of starting capital, peak leverage 1.90x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +1.00 skewed with excess kurtosis +6.89; historical 95% VaR -4.58%/day with CVaR -6.83%/day. Worst single session -12.69%, best +14.19%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Baseball attention is a weaker handle driver than football; The mapping from games played to betting revenue is asserted, not estimated - the site labels it WEAK-MAPPING; Sportsbook equities are driven mainly by regulation and taxes."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@MLB_Attention_Momo (MLB Attention Momentum) ran the \"event attention proxy\" archetype. Declared thesis: Betting handle follows attention, and attention follows a dense slate of games. The participant holds sportsbook and sports-data equities while the trailing week's MLB calendar is busier than its trailing median. Entry: Count MLB finals in the trailing 7 calendar days from the official StatsAPI schedule file; When the count is above the trailing-60-session median, hold DKNG, FLUT and PENN at 60% of equity each. Exit: Flatten when the count falls below the median; No stop loss. Sizing: 60% per name, three names = 1.8x gross. Leverage: 1.8x gross. Cadence: weekly check, horizon weeks. Aggression 4/5. This participant was built to maximise return, not to manage risk: Concentrated basket with no hedge and no stop."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +23.41% over 251 sessions - +23,407 USD on 100,000 of paper capital, ending at 123,407. Verdict: beat the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +23.41% total, about +5.27pp is explained by carrying beta 0.37 against a +14.41% market (R^2 0.01); the residual +18.13pp is everything else - selection, timing, leverage and cost. DKNG contributed +15,645 USD (67% of net P&L) across 36 closed trades; FLUT was the biggest drag at -4,095 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 2,935 USD (2.93% of starting capital, 4.3 bp per fill, 6.6 bp of the 4,421,831 USD traded). 83% of that was spread/depth/impact and 17% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "108 closed round trips, 52.8% winners, profit factor 1.36, average winner +1,556 vs average loser -1,280 USD, median holding 18 sessions. Time in market, measured without double counting: 118 sessions held at least one position (the per-tranche holding periods above sum to 2315 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: PENN long 2026-07-29 to 2026-08-28, -13,854 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -28.26% (-9.10% for the index), trough on 2026-09-01, never recovered. Average gross exposure 89% of starting capital, peak leverage 1.90x. Daily returns were +1.00 skewed with excess kurtosis +6.89; historical 95% VaR -4.58%/day with CVaR -6.83%/day. Worst single session -12.69%, best +14.19%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It worked: it beat the index by 8.99pp and the excess survives a beta adjustment (+18.13pp residual), so the outperformance is not simply leverage on a rising market. Finished at +23.41% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +8.99pp."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Baseball attention is a weaker handle driver than football",
+   "The mapping from games played to betting revenue is asserted, not estimated - the site labels it WEAK-MAPPING",
+   "Sportsbook equities are driven mainly by regulation and taxes"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 97
+}

@@ -1,0 +1,392 @@
+{
+ "username": "@FDACatalyst_Rider",
+ "strategy_id": "FDACatalystRider",
+ "archetype": "post-event drift",
+ "starting_cash": 100000.0,
+ "final_equity": 173112.7,
+ "net_pnl_usd": 73112.7,
+ "total_return_pct": 73.1127,
+ "cagr_pct": 73.4916,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -18.4623,
+  "max_drawdown_usd": -23023.35,
+  "peak_date": "2025-11-28",
+  "peak_equity": 124704.73,
+  "trough_date": "2026-04-06",
+  "trough_equity": 101681.38,
+  "recovery_date": "2026-06-17",
+  "sessions_underwater": 51,
+  "never_recovered": false,
+  "sharpe": 1.7878,
+  "sortino": 2.4222,
+  "calmar": 3.9806,
+  "daily_vol_pct": 2.1552,
+  "annualised_vol_pct": 34.213,
+  "skew": 0.4033,
+  "excess_kurtosis": 1.9507,
+  "best_session_pct": 8.8806,
+  "worst_session_pct": -6.3104,
+  "var_95_pct": -3.2774,
+  "cvar_95_pct": -4.5839,
+  "var_99_pct": -5.3616,
+  "cvar_99_pct": -5.7245
+ },
+ "market_relation": {
+  "beta": 1.159,
+  "alpha_annual_pct": 44.4669,
+  "r_squared": 0.191,
+  "tracking_error_annual_pct": 30.772,
+  "information_ratio": 1.445,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 16.707,
+  "residual_return_pct": 56.406
+ },
+ "trades": {
+  "closed_trades": 48,
+  "open_trades": 0,
+  "wins": 21,
+  "losses": 27,
+  "win_rate_pct": 43.75,
+  "gross_win_usd": 108634.47,
+  "gross_loss_usd": 35743.99,
+  "profit_factor": 3.0392,
+  "avg_win_usd": 5173.07,
+  "avg_loss_usd": -1323.85,
+  "expectancy_usd_per_trade": 1518.55,
+  "best_trade": {
+   "symbol": "XBI",
+   "net_pnl": 40871.3,
+   "entry_date": "2026-05-19",
+   "exit_date": "2026-07-06",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "XBI",
+   "net_pnl": -10191.31,
+   "entry_date": "2026-02-24",
+   "exit_date": "2026-03-30",
+   "direction": "long"
+  },
+  "longest_win_streak": 7,
+  "longest_loss_streak": 17,
+  "avg_sessions_held": 25.17,
+  "median_sessions_held": 16.5,
+  "sessions_in_market": 220,
+  "per_symbol_sessions_in_market": {
+   "XBI": 212,
+   "IBB": 137
+  },
+  "sum_of_tranche_sessions": 1208,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 112,
+  "shares_traded": 41982,
+  "traded_notional_usd": 5787925.82,
+  "spread_cost_usd": 353.19,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 882.55,
+  "commission_usd": 112.0,
+  "exchange_fee_usd": 251.89,
+  "regulatory_fee_usd": 41.31,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 1640.93,
+  "total_cost_bps_of_traded": 2.835,
+  "total_cost_pct_of_starting_cash": 1.6409,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 24.69,
+   "spread_and_impact_pct": 75.31
+  },
+  "avg_execution_cost_bps_per_fill": 6.628,
+  "median_execution_cost_bps_per_fill": 5.193,
+  "worst_execution_cost_bps": 66.17,
+  "intraday_drift_usd": -0.5,
+  "avg_price_difference_bps_per_fill": 1.045,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 112,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 5787961.82,
+  "spread_cost_usd": 353.19,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 882.55,
+  "intraday_drift_usd": -0.5,
+  "fees_usd": 405.2,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 1640.43,
+  "shortfall_bps_of_paper": 2.834,
+  "friction_only_bps_of_paper": 2.835,
+  "worst_single_order_drift_usd": 14.26,
+  "best_single_order_drift_usd": -12.34,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 222.17,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 222.17,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 109.2,
+  "max_gross_pct_of_starting_cash": 298.61,
+  "avg_net_pct_of_starting_cash": 109.2,
+  "max_net_pct_of_starting_cash": 298.61,
+  "avg_leverage": 0.871,
+  "max_leverage": 1.939,
+  "sessions_flat": 33,
+  "avg_open_positions": 1.35
+ },
+ "turnover": {
+  "traded_notional_usd": 5787925.82,
+  "annualised_turnover_x": 46.899
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "XBI",
+   "realized_pnl": 68711.67,
+   "open_pnl": 0.0,
+   "total_pnl": 68711.67,
+   "closed_trades": 40,
+   "fees": 371.98,
+   "all_in_cost_usd": 1540.76
+  },
+  {
+   "symbol": "IBB",
+   "realized_pnl": 4178.81,
+   "open_pnl": 0.0,
+   "total_pnl": 4178.81,
+   "closed_trades": 8,
+   "fees": 33.22,
+   "all_in_cost_usd": 100.18
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100000.0,
+   "end_equity": 102852.02,
+   "return_pct": 2.852
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 102852.02,
+   "end_equity": 124704.73,
+   "return_pct": 21.2467
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 124704.73,
+   "end_equity": 122292.9,
+   "return_pct": -1.934
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 122292.9,
+   "end_equity": 122295.72,
+   "return_pct": 0.0023
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 122295.72,
+   "end_equity": 118436.39,
+   "return_pct": -3.1557
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 118436.39,
+   "end_equity": 105631.22,
+   "return_pct": -10.8119
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 105631.22,
+   "end_equity": 105491.24,
+   "return_pct": -0.1325
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 105491.24,
+   "end_equity": 114297.15,
+   "return_pct": 8.3475
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 114297.15,
+   "end_equity": 154511.19,
+   "return_pct": 35.1838
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 154511.19,
+   "end_equity": 143671.37,
+   "return_pct": -7.0156
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 143671.37,
+   "end_equity": 173129.7,
+   "return_pct": 20.504
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 173129.7,
+   "end_equity": 173112.7,
+   "return_pct": -0.0098
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 72890.48,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 222.17,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -1640.93,
+  "total_net_pnl_usd": 73112.7,
+  "unexplained_residual_usd": 0.05,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "beat the market",
+  "headline": "Beat the market: +73.11% total return vs +14.41% for the index, +56.41pp residual after beta, -18.5% max drawdown, 1.64% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +73.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +58.70pp."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +73.11% total, about +16.71pp is explained by carrying beta 1.16 against a +14.41% market (R^2 0.19); the residual +56.41pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "XBI contributed +68,712 USD (94% of net P&L) across 40 closed trades; IBB was the biggest drag at +4,179 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 1,641 USD (1.64% of starting capital, 6.6 bp per fill, 2.8 bp of the 5,787,926 USD traded). 75% of that was spread/depth/impact and 25% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "48 closed round trips, 43.8% winners, profit factor 3.04, average winner +5,173 vs average loser -1,324 USD, median holding 16 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 220 sessions held at least one position (the per-tranche holding periods above sum to 1208 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: XBI long 2026-02-24 to 2026-03-30, -10,191 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -18.46% (-9.10% for the index), trough on 2026-04-06, recovered 2026-06-17. Average gross exposure 109% of starting capital, peak leverage 1.94x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.40 skewed with excess kurtosis +1.95; historical 95% VaR -3.28%/day with CVaR -4.58%/day. Worst single session -6.31%, best +8.88%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "Declared failure mode(s) that actually fired: Biotech is high-beta to rates; a hot approval regime cannot beat a rate shock; Monthly-to-quarterly regime changes mean the position can be stale for weeks."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@FDACatalyst_Rider (FDA Catalyst Rider) ran the \"post-event drift\" archetype. Declared thesis: openFDA's own decision dates show when the FDA's approval flow accelerates. A hot approval regime raises the sector's expected cash-flow news and biotech re-rates with a lag; the rider holds the sector at the Reg T limit while the regime lasts. Entry: Count approvals of original applications with status AP whose decision date falls in the trailing 30 calendar days (openFDA); Enter XBI at 150% of equity when that count is at or above its trailing 252-session median; Add IBB at 40% of equity when the count exceeds the median by 25%. Exit: Flatten when the trailing-30-day count falls back below the median; No stop loss: the regime, not the drawdown, closes the position. Sizing: 150% XBI plus up to 40% IBB; 1.9x gross, Reg T initial margin 50%. Leverage: 1.9x gross. Cadence: daily check, weeks-long holds, horizon weeks. Aggression 5/5. This participant was built to maximise return, not to manage risk: Biotech sector swings are among the largest of any US industry ETF, and the signal is an official dated event stream rather than a price derivative."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +73.11% over 251 sessions - +73,113 USD on 100,000 of paper capital, ending at 173,113. Verdict: beat the market."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +73.11% total, about +16.71pp is explained by carrying beta 1.16 against a +14.41% market (R^2 0.19); the residual +56.41pp is everything else - selection, timing, leverage and cost. XBI contributed +68,712 USD (94% of net P&L) across 40 closed trades; IBB was the biggest drag at +4,179 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 1,641 USD (1.64% of starting capital, 6.6 bp per fill, 2.8 bp of the 5,787,926 USD traded). 75% of that was spread/depth/impact and 25% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "48 closed round trips, 43.8% winners, profit factor 3.04, average winner +5,173 vs average loser -1,324 USD, median holding 16 sessions. Time in market, measured without double counting: 220 sessions held at least one position (the per-tranche holding periods above sum to 1208 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: XBI long 2026-02-24 to 2026-03-30, -10,191 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -18.46% (-9.10% for the index), trough on 2026-04-06, recovered 2026-06-17. Average gross exposure 109% of starting capital, peak leverage 1.94x. Daily returns were +0.40 skewed with excess kurtosis +1.95; historical 95% VaR -3.28%/day with CVaR -4.58%/day. Worst single session -6.31%, best +8.88%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "Declared failure mode(s) that actually fired: Biotech is high-beta to rates; a hot approval regime cannot beat a rate shock; Monthly-to-quarterly regime changes mean the position can be stale for weeks."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It worked: it beat the index by 58.70pp and the excess survives a beta adjustment (+56.41pp residual), so the outperformance is not simply leverage on a rising market. Finished at +73.11% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +58.70pp."
+   }
+  ],
+  "failure_modes_fired": [
+   "Biotech is high-beta to rates; a hot approval regime cannot beat a rate shock",
+   "Monthly-to-quarterly regime changes mean the position can be stale for weeks"
+  ],
+  "failure_modes_untested": [],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 97
+}

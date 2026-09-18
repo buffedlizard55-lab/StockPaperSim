@@ -12,6 +12,8 @@ from here, and no command requires interactive input:
     python3 -m sim.cli verify              # checksums + data audits
     python3 -m sim.cli irregularities      # every IR-xx flag raised
     python3 -m sim.cli sources             # the verified-source register
+    python3 -m sim.cli season2             # Season 2: real collected prices
+    python3 -m sim.cli ledger --limit 20   # every round trip with verified prices
     python3 -m sim.cli build-site          # regenerate the GitHub Pages site
     python3 -m sim.cli export fills out.csv
 """
@@ -19,13 +21,15 @@ from here, and no command requires interactive input:
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import sys
 import textwrap
 from typing import Dict, List, Optional, Sequence
 
-from . import analytics, config, engine, marketdata, memory, universe
+from . import analytics, config, engine, ledger as ledger_mod, marketdata, memory
+from . import realdata, season2, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -418,16 +422,176 @@ def cmd_sources(args: argparse.Namespace) -> int:
 
 
 def cmd_build_site(args: argparse.Namespace) -> int:
+    """Build both seasons into docs/: Season 1 pages, then Season 2 pages."""
     sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
     import build_site  # type: ignore
-    return build_site.main(argv=[
+    import build_site_season2  # type: ignore
+
+    rc = build_site.main(argv=[
         "--memory-root", args.memory_root, "--out", args.out] +
         (["--run", args.run] if args.run else []))
+    if rc != 0:
+        return rc
+
+    try:
+        # Season 1's pages are complete before Season 2's are rendered, so the
+        # cross-links are injected here rather than by two builders that would
+        # each have to know about the other's files: the nav entry goes on every
+        # Season 1 page (so the Season 2 section is reachable from any of them)
+        # and the explanatory callout goes on the overview page only. The
+        # injection is idempotent, which matters because docs/ is diffed against
+        # a fresh build in CI.
+        for dirpath, dirnames, filenames in os.walk(args.out):
+            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets")]
+            for name in sorted(filenames):
+                if not name.endswith(".html"):
+                    continue
+                page_path = os.path.join(dirpath, name)
+                with open(page_path, "r", encoding="utf-8") as handle:
+                    html = handle.read()
+                # A page one directory down needs "../" to reach the Season 2
+                # section; getting this wrong published a nav link that 404'd on
+                # all twenty Season 1 participant pages (caught by the links test).
+                rel_dir = os.path.relpath(dirpath, args.out)
+                depth = 0 if rel_dir == "." else len(rel_dir.split(os.sep))
+                injected = build_site_season2.inject_banner(
+                    html, callout=(name == "index.html"), prefix="../" * depth)
+                if injected != html:
+                    with open(page_path, "w", encoding="utf-8") as handle:
+                        handle.write(injected)
+        written = build_site_season2.build(args.memory_root, args.out, args.run)
+        print(f"  season 2: {len(written)} pages under docs/season2/ "
+              f"(from run {build_site_season2.Season2Site(args.memory_root, args.run).run_id})")
+    except SystemExit as exc:
+        # No Season 2 run in this memory root (for example a scratch root built
+        # only to check Season 1 determinism). Say so loudly rather than
+        # publishing a Season 2 section that would silently be empty.
+        print(f"  season 2: SKIPPED - {exc}")
+    return rc
 
 
 # ==========================================================================
 # Argument parsing
 # ==========================================================================
+
+# ==========================================================================
+# season2 + ledger
+# ==========================================================================
+
+def cmd_season2(args: argparse.Namespace) -> int:
+    labels = tuple(s.strip() for s in args.labels.split(",") if s.strip())
+    print(f"StockPaperSim :: {season2.SEASON2_NAME} :: {season2.SEASON2_SEASON}")
+    print(f"window {realdata.SEASON2_START} -> {realdata.SEASON2_END} | "
+          f"assumptions {', '.join(labels)}")
+    print("building the real market from data/real/prices + data/real/fred ...",
+          flush=True)
+    records = season2.run_season2(root=args.memory_root, labels=labels,
+                                  verbose=args.verbose)
+    primary = records[0]
+    _print_leaderboard(primary["leaderboard"], primary["market"])
+    if len(records) > 1:
+        print("\nSTRESS PANEL - every participant, same real prices, harder venue")
+        names = [r["username"] for r in records[0]["leaderboard"]]
+        head = f"{'participant':26s}" + "".join(f"{lbl:>20s}" for lbl in
+                                                [r["label"] for r in records])
+        print(head)
+        for name in names:
+            cells = []
+            for rec in records:
+                row = next((r for r in rec["leaderboard"] if r["username"] == name), None)
+                cells.append(f"{row['total_return_pct']:>19.1f}%" if row else f"{'n/a':>20s}")
+            print(f"{name:26s}" + "".join(cells))
+    for rec in records:
+        v = _read_json(os.path.join(args.memory_root, "runs", rec["run_id"],
+                                    "verification.json"))
+        print(f"\n{rec['run_id']}")
+        print(f"  fills {v['summary']['fill_count']:5d} | round trips "
+              f"{v['summary']['round_trips_closed']:4d} | net P&L from round trips "
+              f"${v['summary']['net_pnl_usd']:>14,.2f}")
+        bound = max((p.get("rounding_bound_usd") or 0.0)
+                    for p in v["per_participant"]) if v.get("per_participant") else 0.0
+        print(f"  ledger digest {v['ledger_digest_sha256'][:16]}... | max |equity "
+              f"residual| ${v['max_abs_equity_residual_usd']:,.4f} "
+              f"(bound ${bound:,.4f}; the tape stores six-decimal prices, so a "
+              f"residual below the bound is rounding, not a discrepancy: "
+              f"{'inside' if v['all_residuals_within_rounding_bound'] else 'OUTSIDE'})")
+        idle = [p["username"] for p in v["per_participant"]
+                if not p.get("sessions_with_orders")]
+        if idle:
+            print(f"  no trades at all: {', '.join(idle)}")
+        mf = _read_json(os.path.join(args.memory_root, "runs", rec["run_id"],
+                                     "masterfeed.json"))
+        missing = [k for k, a in mf["availability"].items() if a["state"] != "AVAILABLE"]
+        if missing:
+            # Collapse the per-symbol arrays into one line each: 26 symbols x 2
+            # insider arrays buried the two signals a reader actually needs to
+            # see (Form 4 and the Kalshi volume column).
+            by_family: Dict[str, List[str]] = {}
+            for name in sorted(missing):
+                family, _, symbol = name.partition("::")
+                by_family.setdefault(family, []).append(symbol or name)
+            parts = []
+            for family, symbols in sorted(by_family.items()):
+                if len(symbols) == 1 and symbols[0] == family:
+                    parts.append(family)
+                else:
+                    parts.append(f"{family} ({len(symbols)} series)")
+            print(f"  signals with NO collected data: {', '.join(parts)}")
+    print(f"\nledgers written under {args.memory_root}/runs/<run_id>/ledger_*.jsonl")
+    return 0
+
+
+def cmd_ledger(args: argparse.Namespace) -> int:
+    store = _store(args)
+    run_id = _resolve_run(args, store)
+    run_dir = store.run_dir(run_id)
+    doc = ledger_mod.read_ledger(run_dir)
+    trips = doc["round_trips"]
+    fills = doc["fills"]
+    if args.participant:
+        trips = [t for t in trips if t.get("participant") == args.participant]
+        fills = [f for f in fills if f.get("participant") == args.participant]
+    if args.only_closed:
+        trips = [t for t in trips if t.get("status") == "closed"]
+    if args.export:
+        dest = args.export
+        os.makedirs(os.path.dirname(os.path.abspath(dest)), exist_ok=True)
+        with open(dest, "w", encoding="utf-8", newline="") as handle:
+            fields = ["symbol", "direction", "status", "entry_date", "entry_price",
+                      "exit_date", "exit_price", "quantity", "gross_pnl_usd", "fees_usd",
+                      "net_pnl_usd", "entry_fill_count", "exit_reason"]
+            writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+            writer.writeheader()
+            for row in sorted(trips, key=lambda t: (t["symbol"], t["entry_date"])):
+                writer.writerow(row)
+        print(f"wrote {len(trips)} round trips to {dest}")
+        return 0
+    summary = _read_json(os.path.join(run_dir, ledger_mod.LEDGER_SUMMARY))
+    print(f"run {run_id} | fills {summary['fill_count']} | closed trips "
+          f"{summary['round_trips_closed']} | open {summary['round_trips_open']}")
+    print(f"  gross ${summary['gross_pnl_usd']:,.2f} | fees "
+          f"${summary['fees_usd']:,.2f} | net ${summary['net_pnl_usd']:,.2f}")
+    print(f"  median participation {summary['median_participation_pct']}% of real "
+          f"session volume | max {summary['max_participation_pct']}%")
+    print(f"  mean slippage vs real open {summary['slippage_vs_open_bps_mean']} bps | "
+          f"vs real close {summary['slippage_vs_close_bps_mean']} bps")
+    shown = sorted(trips, key=lambda t: -abs(t.get("net_pnl_usd", 0)))[:args.limit]
+    print("\n" + f"{'symbol':7s}{'dir':6s}{'entry':12s}{'entry px':>10s}{'exit':12s}"
+          f"{'exit px':>10s}{'qty':>8s}{'net $':>12s}  reason")
+    for t in shown:
+        print(f"{t['symbol']:7s}{t['direction']:6s}{t['entry_date']:12s}"
+              f"{t['entry_price']:>10.2f}{str(t['exit_date']):12s}"
+              f"{(t['exit_price'] or 0):>10.2f}{t['quantity']:>8d}"
+              f"{t['net_pnl_usd']:>12,.2f}  {str(t.get('exit_reason') or t.get('entry_reason'))[:44]}")
+    return 0
+
+
+def _read_json(path: str) -> dict:
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as handle:
+        return json.load(handle)
+
 
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="sim.cli", description=__doc__,
@@ -478,6 +642,20 @@ def build_parser() -> argparse.ArgumentParser:
     ex.add_argument("dest")
     ex.add_argument("--run", default="")
     ex.set_defaults(func=cmd_export)
+
+    s2 = sub.add_parser("season2", help="run the real-price MasterFeed season")
+    s2.add_argument("--labels", default="primary,stress-costs2x,stress-thinliquidity",
+                    help="comma-separated assumption sets")
+    s2.add_argument("--verbose", action="store_true")
+    s2.set_defaults(func=cmd_season2)
+
+    lg = sub.add_parser("ledger", help="inspect the verified trade ledger")
+    lg.add_argument("--run", default="")
+    lg.add_argument("--participant", default="")
+    lg.add_argument("--limit", type=int, default=25)
+    lg.add_argument("--only-closed", action="store_true")
+    lg.add_argument("--export", default="", help="write the round trips to this CSV")
+    lg.set_defaults(func=cmd_ledger)
 
     bs = sub.add_parser("build-site", help="regenerate the GitHub Pages site")
     bs.add_argument("--run", default="")

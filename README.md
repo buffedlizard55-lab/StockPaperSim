@@ -1,9 +1,14 @@
 # StockPaperSim
 
-A one-year paper-trading stock competition between **20 return-seeking strategy
-personas**, run on a replay of the **real S&P 500 and VIX path**, with a real
-venue model (depth, spreads, market making, dated tick size, dated fees), a full
-audit trail, and a published GitHub Pages site.
+A one-year paper-trading stock competition between **return-seeking strategy
+personas**, with a real venue model (depth, spreads, market making, dated tick
+size, dated fees), a full audit trail, and a published GitHub Pages site.
+
+* **Season 1** - 20 personas on a replay of the **real S&P 500 and VIX path**.
+* **Season 2** - 14 personas on **real collected prices** for 26 instruments
+  (daily bars, dividends and splits), trading signals built from the official
+  sources the brief named: SEC Form 4 filings, openFDA decisions, MLB StatsAPI,
+  NOAA/NCEI station records, FRED yields and gold, and the Kalshi venue API.
 
 **Live site:** <https://buffedlizard55-lab.github.io/StockPaperSim/> →
 [`docs/index.html`](docs/index.html)
@@ -25,7 +30,16 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 35 flags this project raised against itself.
+> carries the 46 flags this project raised against itself.
+>
+> **Season 2 is different, and better.** It trades only the bars that were
+> collected from real publishers, every fill is matched to the daily bar it came
+> from (the page prints the file and its SHA-256 next to the slippage), and an
+> independent audit re-derives the whole season from those files. What it is
+> *not* is a live feed: prices are end-of-day, so the venue is a daily-bar
+> simulation with modelled intraday path and costs. Read
+> [`docs/season2/index.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/season2/index.html)
+> for the custody chain and the two stress panels.
 
 ---
 
@@ -121,6 +135,83 @@ gets.
 
 ---
 
+## Season 2 result: the same competition on real collected prices
+
+Season 2 is the answer to the brief's first requirement - *trade only on real,
+verified, dated prices, and log everything*. Window **2025-09-17 → 2026-09-16**
+(251 sessions), $100,000 each, ranked on total return. Benchmark: the real S&P
+500 returned **+14.41%** over the same window (FRED `SP500`); **5 of 14
+participants beat it** and **5 never traded at all**, which the site reports as
+*no trades placed* rather than as a 0.00% performance.
+
+| # | Participant | Return | Max DD | Sharpe | Beta | Trades | Cost | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| 1 | `@FDACatalyst_Rider` | **+74.3%** | −18.3% | 1.81 | 1.16 | 46 | 0.82% | beat the market |
+| 2 | `@LeapMaxLever_Momentum` | +38.1% | −22.3% | 1.06 | 2.73 | 4 | 0.02% | beat the market |
+| 3 | `@GOLD_Trend_GLD` | +32.8% | −36.3% | 0.88 | 0.53 | 43 | 0.21% | beat the market |
+| 4 | `@MLB_Attention_Momo` | +23.8% | −28.1% | 0.68 | 0.36 | 105 | 2.59% | beat the market |
+| 5 | `@PinePilot_EMA_Cross` | +18.8% | −12.1% | 0.79 | 1.77 | 49 | 0.03% | roughly matched the market |
+| 6 | `@FDA_ClusterFade` | +2.8% | −22.3% | 0.25 | −0.16 | 34 | 0.45% | made money but lagged the index |
+| 7 | `@InsiderCopycat_Max` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
+| 8 | `@InsiderCluster_Alpha` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
+| 9 | `@CEO_CFO_Conviction` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (no Form 4 file) |
+| 10 | `@Kalshi_Attention_Timer` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (venue volume empty) |
+| 11 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed (forward-only probe) |
+| 12 | `@MLB_Upset_Short` | −9.6% | −11.3% | −0.78 | −0.02 | 22 | 0.59% | lost money |
+| 13 | `@YieldCurve_Rotator` | −10.1% | −12.9% | −0.64 | 0.26 | 4 | 0.04% | lost money |
+| 14 | `@Weather_ColdSnap_Max` | −11.2% | −40.4% | −0.07 | −0.19 | 49 | 1.36% | lost money |
+
+**What that says, honestly.** The winner is a leveraged biotech bet and the deepest
+loser is *the same signal traded the other way*
+(`@FDA_ClusterFade`, which fights the approval-count trend) - one real signal, two
+opposite implementations, and the difference between first and last. Nothing here
+is a claim that FDA approvals predict XBI. The idle five are the other half of the
+result: `@InsiderCopycat_Max`, `@InsiderCluster_Alpha` and `@CEO_CFO_Conviction`
+need the SEC Form 4 collection (HTTP 403 on the anonymous User-Agent, since fixed
+in the collector but not yet re-collected); `@Kalshi_Attention_Timer` reads a
+venue payload whose volume fields came back empty; `@InjuryFeed_Forward` is a
+declared forward-only probe with no retrievable archive. The site labels each one
+*DATA-MISSING* with the URL and the reason, which is the difference between "we
+tested it and it did not work" and "we could not test it".
+
+**Verification.** 771 fills and 355 round trips, net round-trip P&L
+**$149,756.96** on $20.9m of traded notional, ledger digest `2adbced6…`. The
+account is re-derived from the raw fill tape by code that never imports the
+engine: max |equity residual| **$0.0072** against a per-account rounding bound of
+$2.925 (the tape stores six-decimal prices). Median participation is 0.00013% of a
+session's volume and the largest single fill is 0.23% of it. The independent audit
+re-reads every published number: **2,591 checks, 0 failures**, plus 1,108 more in
+the Season 1 audit. Cost sensitivity is published as a panel, not a footnote:
+doubling spreads, impact and fees costs the leader 1.2pp and halving the venue's
+depth costs 0.1pp, while `@Weather_ColdSnap_Max` loses 0.8pp to the fee-doubling
+alone.
+
+**Data custody.** 26 instruments, 502 sessions (251 warm-up + 251 competition),
+58 collected files under `data/real/`, every request logged with status, bytes and
+SHA-256 in `data/real/collection_manifest.json`. Season 2's own registers live at
+`docs/season2/masterfeed.html` (the 14 MasterSite projects the brief named, each
+with source class, mapping strength and whether history was retrievable),
+`docs/season2/ledger.html` (every fill with the reference bar, the file and the
+participation) and `docs/season2/data.html` (the full custody chain).
+
+**How Season 2 is built and checked.**
+
+```bash
+python3 scripts/collect_real_data.py --out data/real   # on a runner with network
+python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity
+python3 -m sim.cli ledger --run season2-primary-seed20260918 --participant @FDACatalyst_Rider
+python3 scripts/independent_audit_season2.py           # 2,591 checks, no project imports
+python3 -m sim.cli build-site                          # Season 1 + Season 2 into docs/
+```
+
+Three assumption sets run the same real prices through the same participants:
+`primary`, `stress-costs2x` (double spreads, double impact, $1/order, double the
+per-share taker fee) and `stress-thinliquidity` (half the participation cap and
+half the touch size). Real prices are one realisation, so the sensitivity comes
+from the venue assumptions rather than from a fabricated seed panel.
+
+---
+
 ## What the venue models
 
 | Piece | Implementation | Source |
@@ -158,14 +249,15 @@ sim/            the engine - pure standard library, no third-party imports
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py (re-derives every published number from
                 the raw event streams; imports no project code)
-tests/          369 tests - engine, venue, memory, site, registers, docs, README
+tests/          394 tests - engine, venue, memory, site, registers, docs, README
 data/real/      verbatim FRED and Yahoo downloads, with checksums
 memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports
 docs/           the published site (GitHub Pages serves this directory)
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (35), LIMITATIONS.json (16),
-                REMAINING_WORK.json (17)
+                IRREGULARITIES.json (46), LIMITATIONS.json (22),
+                REMAINING_WORK.json (25), MASTER_SITE_SIGNALS.md,
+                SOCIAL_STRATEGY_SOURCES.md
 ```
 
 ## Run it
@@ -177,7 +269,7 @@ python3 -m sim.cli report --user @GapAndGo_YOLO     # full post-mortem
 python3 -m sim.cli verify               # checksum every run + data audits
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 369 tests
+python3 -m unittest discover -s tests   # 394 tests
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -223,10 +315,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 35 flags, including the ones raised against this project's own modelling
+  — all 46 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 16 limitations, 17 items of remaining work in priority order, and what
+  — 22 limitations, 25 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

@@ -1,0 +1,839 @@
+{
+ "diagnostics": {
+  "season": "Season 2 (real collected prices)",
+  "window": {
+   "warmup_start": "2024-09-16",
+   "start": "2025-09-17",
+   "end": "2026-09-16"
+  },
+  "sessions": {
+   "warmup": 251,
+   "competition": 251
+  },
+  "calendar_source": {
+   "series": "FRED SP500 observation dates",
+   "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+   "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500"
+  },
+  "volatility_source": {
+   "series": "FRED VIXCLS",
+   "file": "data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv",
+   "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS"
+  },
+  "price_series": {
+   "SPY": {
+    "file": "data/real/prices/yahoo/SPY.json",
+    "sha256": "595e3d9ecb47a2b5e846b4dde0ffa44a734d3f20aac0abba3fc8da6b4aabfe1b",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 60182500,
+    "beta_vs_fred_spx": 1.0362,
+    "sigma_idio_annual_estimated": 0.0151,
+    "first_close": 562.840027,
+    "last_close": 754.049988
+   },
+   "QQQ": {
+    "file": "data/real/prices/yahoo/QQQ.json",
+    "sha256": "c957d374ef5f4d34c5da56aee06496c7c2ea1a7d5b1b0f71aeb33b8cd193380d",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 39072300,
+    "beta_vs_fred_spx": 1.2177,
+    "sigma_idio_annual_estimated": 0.0557,
+    "first_close": 473.23999,
+    "last_close": 704.719971
+   },
+   "IWM": {
+    "file": "data/real/prices/yahoo/IWM.json",
+    "sha256": "b5b36797bea2775b28f2e4cca11616516354c1524dba22fad505c24ffa3efadb",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 9,
+    "splits_in_window": 0,
+    "median_volume_warmup": 28679400,
+    "beta_vs_fred_spx": 1.0746,
+    "sigma_idio_annual_estimated": 0.1129,
+    "first_close": 217.610001,
+    "last_close": 283.920013
+   },
+   "GLD": {
+    "file": "data/real/prices/yahoo/GLD.json",
+    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8386300,
+    "beta_vs_fred_spx": 0.0098,
+    "sigma_idio_annual_estimated": 0.1752,
+    "first_close": 238.660004,
+    "last_close": 391.73999
+   },
+   "UNG": {
+    "file": "data/real/prices/yahoo/UNG.json",
+    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7146500,
+    "beta_vs_fred_spx": 0.1868,
+    "sigma_idio_annual_estimated": 0.5976,
+    "first_close": 14.86,
+    "last_close": 10.36
+   },
+   "XLU": {
+    "file": "data/real/prices/yahoo/XLU.json",
+    "sha256": "5c3da81ffbb30d6d9678b34fd78ec264ace406f1975e21c8ad3c02f064dba8c5",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 1,
+    "median_volume_warmup": 20680400,
+    "beta_vs_fred_spx": 0.3987,
+    "sigma_idio_annual_estimated": 0.153,
+    "first_close": 39.57,
+    "last_close": 41.32
+   },
+   "XBI": {
+    "file": "data/real/prices/yahoo/XBI.json",
+    "sha256": "628dc12e0625cb104617e15f9e2bf802d1e70bb63db7b4e90cfa88a2fa91a689",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 7,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8979600,
+    "beta_vs_fred_spx": 0.9617,
+    "sigma_idio_annual_estimated": 0.207,
+    "first_close": 101.279999,
+    "last_close": 154.179993
+   },
+   "IBB": {
+    "file": "data/real/prices/yahoo/IBB.json",
+    "sha256": "65143858120b6de0600ac78612bf950a0db00c76012948e0790fccf1411dd3b7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1351300,
+    "beta_vs_fred_spx": 0.808,
+    "sigma_idio_annual_estimated": 0.1757,
+    "first_close": 148.089996,
+    "last_close": 202.399994
+   },
+   "TLT": {
+    "file": "data/real/prices/yahoo/TLT.json",
+    "sha256": "6d72fa9607b0d363e5a6b16e4e110db0f9c0e9c6459fe283a55b6cf1598f8d40",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 24,
+    "splits_in_window": 0,
+    "median_volume_warmup": 35645800,
+    "beta_vs_fred_spx": 0.0711,
+    "sigma_idio_annual_estimated": 0.1344,
+    "first_close": 101.330002,
+    "last_close": 80.879997
+   },
+   "DKNG": {
+    "file": "data/real/prices/yahoo/DKNG.json",
+    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8211300,
+    "beta_vs_fred_spx": 1.2456,
+    "sigma_idio_annual_estimated": 0.3867,
+    "first_close": 38.240002,
+    "last_close": 24.33
+   },
+   "FLUT": {
+    "file": "data/real/prices/yahoo/FLUT.json",
+    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1685100,
+    "beta_vs_fred_spx": 1.064,
+    "sigma_idio_annual_estimated": 0.2996,
+    "first_close": 224.339996,
+    "last_close": 97.559998
+   },
+   "PENN": {
+    "file": "data/real/prices/yahoo/PENN.json",
+    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3509300,
+    "beta_vs_fred_spx": 1.5148,
+    "sigma_idio_annual_estimated": 0.4053,
+    "first_close": 20.02,
+    "last_close": 17.690001
+   },
+   "SRAD": {
+    "file": "data/real/prices/yahoo/SRAD.json",
+    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 1079600,
+    "beta_vs_fred_spx": 0.9268,
+    "sigma_idio_annual_estimated": 0.3644,
+    "first_close": 11.79,
+    "last_close": 13.23
+   },
+   "GENI": {
+    "file": "data/real/prices/yahoo/GENI.json",
+    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 3101800,
+    "beta_vs_fred_spx": 1.1936,
+    "sigma_idio_annual_estimated": 0.4525,
+    "first_close": 7.55,
+    "last_close": 6.62
+   },
+   "AAPL": {
+    "file": "data/real/prices/yahoo/AAPL.json",
+    "sha256": "05a9b8ae5417049fe32f02e03c50a3c614389075dda61bf18aca1d1d89d10ad1",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 47184000,
+    "beta_vs_fred_spx": 1.2994,
+    "sigma_idio_annual_estimated": 0.2126,
+    "first_close": 216.320007,
+    "last_close": 332.410004
+   },
+   "MSFT": {
+    "file": "data/real/prices/yahoo/MSFT.json",
+    "sha256": "6b3f6c7134801a7d0ef6f69a0fa892a817bb4d7b67dd6d509a74831b001bf2df",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19619200,
+    "beta_vs_fred_spx": 0.9612,
+    "sigma_idio_annual_estimated": 0.1698,
+    "first_close": 431.339996,
+    "last_close": 490.299988
+   },
+   "NVDA": {
+    "file": "data/real/prices/yahoo/NVDA.json",
+    "sha256": "85ef835135dbf2083772b286d64cbbf8d1d21d70206899e114fc91a07d9c5e56",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 219176600,
+    "beta_vs_fred_spx": 1.9284,
+    "sigma_idio_annual_estimated": 0.3397,
+    "first_close": 116.779999,
+    "last_close": 213.899994
+   },
+   "JPM": {
+    "file": "data/real/prices/yahoo/JPM.json",
+    "sha256": "436410f2fbaf1b435dd5a1b582488132f9a51cb54eab03b28f824c4dd1adee0d",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 8259900,
+    "beta_vs_fred_spx": 1.0567,
+    "sigma_idio_annual_estimated": 0.185,
+    "first_close": 207.860001,
+    "last_close": 348.920013
+   },
+   "XOM": {
+    "file": "data/real/prices/yahoo/XOM.json",
+    "sha256": "e7bac2abc4b3bfc4b767c30fe7695ecd562eb92944098bafad2785ce8981b37f",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 14899500,
+    "beta_vs_fred_spx": 0.5349,
+    "sigma_idio_annual_estimated": 0.2162,
+    "first_close": 112.709999,
+    "last_close": 163.320007
+   },
+   "JNJ": {
+    "file": "data/real/prices/yahoo/JNJ.json",
+    "sha256": "9402a9666023c89047c8855fe1b599bbf440cb95ef2c14429a3e0c529889dcf8",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 7853100,
+    "beta_vs_fred_spx": 0.0475,
+    "sigma_idio_annual_estimated": 0.1912,
+    "first_close": 166.990005,
+    "last_close": 267.279999
+   },
+   "PG": {
+    "file": "data/real/prices/yahoo/PG.json",
+    "sha256": "c13ce03f2a6c9d9880a0a205648fbff47f2b108a38acc6021d29393516bd2fa1",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 6983900,
+    "beta_vs_fred_spx": 0.1897,
+    "sigma_idio_annual_estimated": 0.181,
+    "first_close": 177.240005,
+    "last_close": 147.020004
+   },
+   "TSLA": {
+    "file": "data/real/prices/yahoo/TSLA.json",
+    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 0,
+    "splits_in_window": 0,
+    "median_volume_warmup": 89441500,
+    "beta_vs_fred_spx": 2.4172,
+    "sigma_idio_annual_estimated": 0.5472,
+    "first_close": 226.779999,
+    "last_close": 358.079987
+   },
+   "MU": {
+    "file": "data/real/prices/yahoo/MU.json",
+    "sha256": "32770539ba7a344662cb0176cb2fbdfd42e4a9be0b000828aede6a60195f5b85",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 19746200,
+    "beta_vs_fred_spx": 2.1341,
+    "sigma_idio_annual_estimated": 0.458,
+    "first_close": 87.18,
+    "last_close": 926.549988
+   },
+   "T": {
+    "file": "data/real/prices/yahoo/T.json",
+    "sha256": "4bb0add334694703bcb49e54e9c47f598318565ca926991c78f861373c50160a",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "url": "",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "bars_in_window": 502,
+    "sessions_forward_filled": 0,
+    "forward_filled_dates": [],
+    "dividends_in_window": 8,
+    "splits_in_window": 0,
+    "median_volume_warmup": 32266200,
+    "beta_vs_fred_spx": 0.1491,
+    "sigma_idio_annual_estimated": 0.2256,
+    "first_close": 22.27,
+    "last_close": 25.860001
+   }
+  },
+  "dropped_series": [],
+  "sessions_forward_filled_total": 0,
+  "volume_in_competition_min": {
+   "AAPL": 17910600,
+   "DKNG": 2796100,
+   "FLUT": 709700,
+   "GENI": 1044900,
+   "GLD": 3700000,
+   "IBB": 583400,
+   "IWM": 10555700,
+   "JNJ": 2316700,
+   "JPM": 3914500,
+   "MSFT": 5855900,
+   "MU": 12914700,
+   "NVDA": 65528500,
+   "PENN": 1151200,
+   "PG": 3259200,
+   "QQQ": 18468700,
+   "SPY": 27422300,
+   "SRAD": 287700,
+   "T": 13904100,
+   "TLT": 12719700,
+   "TSLA": 23345200,
+   "UNG": 3662800,
+   "XBI": 3303100,
+   "XLU": 5761000,
+   "XOM": 6137400
+  },
+  "modelled_not_real": [
+   "the intraday path inside each real daily bar",
+   "the venue's quoted spread and displayed depth",
+   "the square-root impact model and the participation cap",
+   "borrow fees and market-maker behaviour"
+  ],
+  "spx_total_return_pct_real": 14.3043
+ },
+ "inventory": {
+  "root": "data/real",
+  "file_count": 60,
+  "bytes": 8873124,
+  "files": [
+   {
+    "path": "data/real/collection_manifest.json",
+    "bytes": 67248,
+    "sha256": "5c444d9cd4bb5517a864a7373c862bfa80ceaca9ee455d66347eb9704a8d1322"
+   },
+   {
+    "path": "data/real/coverage_report.json",
+    "bytes": 5344,
+    "sha256": "fc0d6b3ebff09264e8f3f2061cf06db9cb2ffba4066f80f8d3a2d355604a739c"
+   },
+   {
+    "path": "data/real/crosschecks/price_crosscheck.json",
+    "bytes": 723,
+    "sha256": "eb142fc0396d9cd435a03e5b78bff7a33026dc44b82db008285c18742cc29ebc"
+   },
+   {
+    "path": "data/real/fda/openfda_decisions.jsonl",
+    "bytes": 3854213,
+    "sha256": "57f63923e6a78bcc41640ff48881b5578f7e1dbc4bd6353d6ccb72bb53a65097"
+   },
+   {
+    "path": "data/real/fred/DCOILWTICO_2024-09-16_2026-09-17.csv",
+    "bytes": 8805,
+    "sha256": "0ff80c6678f789029c923054d592acd6b8646bdc9e0303fa72c973f636b38ed9"
+   },
+   {
+    "path": "data/real/fred/DGS10_2024-09-16_2026-09-17.csv",
+    "bytes": 8299,
+    "sha256": "ae61db7627abc63a2aa8874ea0136b6bc8e5c6e9273dc81193585fd257e810f9"
+   },
+   {
+    "path": "data/real/fred/DGS3MO_2024-09-16_2026-09-17.csv",
+    "bytes": 8300,
+    "sha256": "9c7d4e98ba21865bd69ce5769a2085d6e4e34ac8a40a39a5b54e16312a0238d8"
+   },
+   {
+    "path": "data/real/fred/DTWEXBGS_2024-09-16_2026-09-17.csv",
+    "bytes": 10250,
+    "sha256": "9c76945d4cd89cdb02bf2b478e104f1393e299812777b09a483bec6295ed45fd"
+   },
+   {
+    "path": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+    "bytes": 9832,
+    "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce"
+   },
+   {
+    "path": "data/real/fred/SP500_2025-09-17_2026-09-16.csv",
+    "bytes": 4912,
+    "sha256": "189cc6ee0862bb94fc32cf6bb37d443b37e61286a2cfd5aa87b72983caef70ab"
+   },
+   {
+    "path": "data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv",
+    "bytes": 8885,
+    "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553"
+   },
+   {
+    "path": "data/real/fred/VIXCLS_2025-09-17_2026-09-16.csv",
+    "bytes": 4446,
+    "sha256": "0a4933afdfff1e0b864d5bcf078d18e16a4fb16c682ed8e485f2dcf02d07fba2"
+   },
+   {
+    "path": "data/real/kalshi/KXAAAGASM_settled.jsonl",
+    "bytes": 31120,
+    "sha256": "8d986ca91b948334a9a5e38c092d781f1cc552ea3386cf8df5238baea1dac82f"
+   },
+   {
+    "path": "data/real/kalshi/KXHIGHNY_settled.jsonl",
+    "bytes": 80674,
+    "sha256": "edca0b2d203de32ed2c4bb8a12a14ff562a292782c6526cb42c49075e91b4f5e"
+   },
+   {
+    "path": "data/real/kalshi/KXMLBGAME_settled.jsonl",
+    "bytes": 75603,
+    "sha256": "fc3556124c792ba3f7dae3778636e34b754dd40df594af549b733ddd9bb32b2c"
+   },
+   {
+    "path": "data/real/kalshi/KXNBA_settled.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/kalshi/KXNFLGAME_settled.jsonl",
+    "bytes": 54751,
+    "sha256": "e46c3a3526cd21335a08550c103f48b44e8b665e1972a9300432dfa53a79d9e4"
+   },
+   {
+    "path": "data/real/prices/yahoo/AAPL.json",
+    "bytes": 87767,
+    "sha256": "05a9b8ae5417049fe32f02e03c50a3c614389075dda61bf18aca1d1d89d10ad1"
+   },
+   {
+    "path": "data/real/prices/yahoo/DKNG.json",
+    "bytes": 81490,
+    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef"
+   },
+   {
+    "path": "data/real/prices/yahoo/FLUT.json",
+    "bytes": 86182,
+    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0"
+   },
+   {
+    "path": "data/real/prices/yahoo/GENI.json",
+    "bytes": 73382,
+    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1"
+   },
+   {
+    "path": "data/real/prices/yahoo/GLD.json",
+    "bytes": 87077,
+    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40"
+   },
+   {
+    "path": "data/real/prices/yahoo/IBB.json",
+    "bytes": 87336,
+    "sha256": "65143858120b6de0600ac78612bf950a0db00c76012948e0790fccf1411dd3b7"
+   },
+   {
+    "path": "data/real/prices/yahoo/IWM.json",
+    "bytes": 88144,
+    "sha256": "b5b36797bea2775b28f2e4cca11616516354c1524dba22fad505c24ffa3efadb"
+   },
+   {
+    "path": "data/real/prices/yahoo/JNJ.json",
+    "bytes": 87135,
+    "sha256": "9402a9666023c89047c8855fe1b599bbf440cb95ef2c14429a3e0c529889dcf8"
+   },
+   {
+    "path": "data/real/prices/yahoo/JPM.json",
+    "bytes": 87070,
+    "sha256": "436410f2fbaf1b435dd5a1b582488132f9a51cb54eab03b28f824c4dd1adee0d"
+   },
+   {
+    "path": "data/real/prices/yahoo/MSFT.json",
+    "bytes": 87575,
+    "sha256": "6b3f6c7134801a7d0ef6f69a0fa892a817bb4d7b67dd6d509a74831b001bf2df"
+   },
+   {
+    "path": "data/real/prices/yahoo/MU.json",
+    "bytes": 86579,
+    "sha256": "32770539ba7a344662cb0176cb2fbdfd42e4a9be0b000828aede6a60195f5b85"
+   },
+   {
+    "path": "data/real/prices/yahoo/NVDA.json",
+    "bytes": 88172,
+    "sha256": "85ef835135dbf2083772b286d64cbbf8d1d21d70206899e114fc91a07d9c5e56"
+   },
+   {
+    "path": "data/real/prices/yahoo/PENN.json",
+    "bytes": 77982,
+    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04"
+   },
+   {
+    "path": "data/real/prices/yahoo/PG.json",
+    "bytes": 87596,
+    "sha256": "c13ce03f2a6c9d9880a0a205648fbff47f2b108a38acc6021d29393516bd2fa1"
+   },
+   {
+    "path": "data/real/prices/yahoo/QQQ.json",
+    "bytes": 87789,
+    "sha256": "c957d374ef5f4d34c5da56aee06496c7c2ea1a7d5b1b0f71aeb33b8cd193380d"
+   },
+   {
+    "path": "data/real/prices/yahoo/SPY.json",
+    "bytes": 87887,
+    "sha256": "595e3d9ecb47a2b5e846b4dde0ffa44a734d3f20aac0abba3fc8da6b4aabfe1b"
+   },
+   {
+    "path": "data/real/prices/yahoo/SRAD.json",
+    "bytes": 78113,
+    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6"
+   },
+   {
+    "path": "data/real/prices/yahoo/T.json",
+    "bytes": 81474,
+    "sha256": "4bb0add334694703bcb49e54e9c47f598318565ca926991c78f861373c50160a"
+   },
+   {
+    "path": "data/real/prices/yahoo/TLT.json",
+    "bytes": 85762,
+    "sha256": "6d72fa9607b0d363e5a6b16e4e110db0f9c0e9c6459fe283a55b6cf1598f8d40"
+   },
+   {
+    "path": "data/real/prices/yahoo/TSLA.json",
+    "bytes": 87040,
+    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7"
+   },
+   {
+    "path": "data/real/prices/yahoo/UNG.json",
+    "bytes": 76083,
+    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc"
+   },
+   {
+    "path": "data/real/prices/yahoo/XBI.json",
+    "bytes": 85896,
+    "sha256": "628dc12e0625cb104617e15f9e2bf802d1e70bb63db7b4e90cfa88a2fa91a689"
+   },
+   {
+    "path": "data/real/prices/yahoo/XLU.json",
+    "bytes": 83831,
+    "sha256": "5c3da81ffbb30d6d9678b34fd78ec264ace406f1975e21c8ad3c02f064dba8c5"
+   },
+   {
+    "path": "data/real/prices/yahoo/XOM.json",
+    "bytes": 87416,
+    "sha256": "e7bac2abc4b3bfc4b767c30fe7695ecd562eb92944098bafad2785ce8981b37f"
+   },
+   {
+    "path": "data/real/prices/yahoo/_GSPC.json",
+    "bytes": 90912,
+    "sha256": "45db44edad5e16c0bafb0b714474e71c25d2061f8d4a044f59b10dbbef1649e5"
+   },
+   {
+    "path": "data/real/prices/yahoo/_VIX.json",
+    "bytes": 75552,
+    "sha256": "f14bf00d6f2bf6371f00b8d38a6778f7d6270ec84a29dc236c28cfcb251ca708"
+   },
+   {
+    "path": "data/real/regulatory/finra-regulatory-notice-21-13.txt",
+    "bytes": 3656,
+    "sha256": "7a7ee25d4c12befa121f2854c60ccc61f7c0b0ab14d042061e20608ccdf7accc"
+   },
+   {
+    "path": "data/real/regulatory/finra-rule-4210-margin-requirements.txt",
+    "bytes": 933,
+    "sha256": "344c75afa1b6fba80aab5b7422ad9decb38752600fbd174b5dfa49dea6a4906b"
+   },
+   {
+    "path": "data/real/regulatory/finra-rule-4330-customer-securities-loans.txt",
+    "bytes": 1720,
+    "sha256": "d184f810f72a9a3466248b3d846255afb69c395877eeb54a6adbfd716858dad9"
+   },
+   {
+    "path": "data/real/regulatory/finra-trading-activity-fee.txt",
+    "bytes": 1302,
+    "sha256": "855e19de325b67c6ecf716e95b94f46da35fc39112c1009c30925646e6fa497a"
+   },
+   {
+    "path": "data/real/regulatory/irs-pub-550-payments-in-lieu.txt",
+    "bytes": 1310,
+    "sha256": "a17a3b2f9b48d7aec97f7d69a032982e3db3582b2e14d92bcbb6925681cef8b8"
+   },
+   {
+    "path": "data/real/sports/mlb_games_2026.jsonl",
+    "bytes": 716645,
+    "sha256": "7639ff580d3475fc523265ff3553eae2024ee34196001a5f4946efa7317138a9"
+   },
+   {
+    "path": "data/real/sports/mlb_schedule_2026.json",
+    "bytes": 926905,
+    "sha256": "244ae1627d04622e37da9386a43cffd1b15c5dfaa14dd071f8b8d51c6dbd8ccf"
+   },
+   {
+    "path": "data/real/sports/mlb_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/sports/nba_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/sports/ncaaf_scoreboard.jsonl",
+    "bytes": 103284,
+    "sha256": "cd8027ad7a75f82f80a6befc778fd0a95fe8a92dd78f7bf635cc5377082918cf"
+   },
+   {
+    "path": "data/real/sports/nfl_scoreboard.jsonl",
+    "bytes": 101143,
+    "sha256": "fa3ed17968686242c74a9d056040d1d38d27041c50fe92cc0a1aa441df8d9da4"
+   },
+   {
+    "path": "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+    "bytes": 72675,
+    "sha256": "f8043ffc4db64f1eeeacf16a17042e1a87c2ff3483af59e790567fcf5a51ddc7"
+   },
+   {
+    "path": "data/real/sports/official/nfl_injuries.raw",
+    "bytes": 381285,
+    "sha256": "fe697fff9215f7d04127ce31dd03709349679eff37bd4a6a96d326b79c143d3e"
+   },
+   {
+    "path": "data/real/weather/USW00023234_daily.json",
+    "bytes": 61883,
+    "sha256": "05db7b85964be7d435717e7321acd4e47c010987639f985f1dc8f814a389060c"
+   },
+   {
+    "path": "data/real/weather/USW00023272_daily.json",
+    "bytes": 61264,
+    "sha256": "508faf8ccfaccb4a5b8d8fb0ce1a5c3b90cd6179c2943826a4aac79c3d62108b"
+   },
+   {
+    "path": "data/real/yahoo/AAPL_snapshot_2026-09-17.json",
+    "bytes": 2059,
+    "sha256": "dd00408cfd09f52ca233477cc72d1434283324e4217201c3f438f0954d86b308"
+   },
+   {
+    "path": "data/real/yahoo/SPY_monthly_1y.json",
+    "bytes": 2413,
+    "sha256": "f506578db2d1d04ef7d1b8d7cbbae4ae39c378ee9f6b72c8476b6375aa9e0892"
+   }
+  ]
+ },
+ "crosschecks": {
+  "ok": true,
+  "symbol": "SPY",
+  "index": "FRED SP500",
+  "sessions": 502,
+  "return_correlation": 0.996513,
+  "max_abs_daily_return_diff": 0.009865,
+  "median_abs_daily_return_diff": 0.000271,
+  "fred_file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+  "level_ratio_mean": 0.099721,
+  "note": "SPY is an ETF and the index is not: a small tracking difference is expected. The test is for a broken series, not for equality."
+ },
+ "note": "Every bar traded in this run is byte-identical to a bar in one of the files inventoried here, and the independent audit re-checks each one against the collected file rather than against this copy."
+}

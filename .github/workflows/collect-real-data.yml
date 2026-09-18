@@ -1,0 +1,161 @@
+name: Collect real market data
+
+# WHY THIS RUNS ON A GITHUB RUNNER AND NOT IN DEVELOPMENT
+# -------------------------------------------------------
+# The project's development sandbox has no outbound HTTPS, and the simulation is
+# only allowed to trade on real, citable prices. This workflow does the fetching
+# on a runner that does have a network, writes everything verbatim under
+# data/real/ with a SHA-256 per file plus a per-request manifest, and commits the
+# result back to the branch it was dispatched from, so every row the site shows
+# can be re-derived from a file in this repository.
+#
+# It is manual-only on purpose: scheduled data collection would let the
+# repository change without a human reading the diff.
+
+on:
+  # A push to either file also triggers collection. ``workflow_dispatch`` on its
+  # own is not enough while this branch is unmerged: GitHub only offers manual
+  # dispatch for workflows that exist on the default branch, and the first
+  # collection has to happen before the pull request can publish real numbers.
+  push:
+    paths:
+      - ".github/workflows/collect-real-data.yml"
+      - "scripts/collect_real_data.py"
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma-separated sections (prices,sec,fda,sports,weather,kalshi)"
+        required: false
+        default: "prices,sec,fda,sports,weather,kalshi"
+      max_seconds:
+        description: "Soft budget for the whole collection run"
+        required: false
+        default: "1500"
+      commit:
+        description: "Commit the collected data back to this branch"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: collect-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Fetch official and secondary sources
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity (the collector must stay stdlib-only)
+        run: python scripts/check_purity.py
+
+      - name: Collect
+        env:
+          # On a push event there are no inputs, so every one of them needs a
+          # fallback; an empty --max-seconds is an argparse error (exit 2), which
+          # is exactly how the first run of this workflow failed.
+          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi' }}
+          MAX_SECONDS: ${{ github.event.inputs.max_seconds || '1500' }}
+        run: |
+          python scripts/collect_real_data.py --out data/real \
+            --only "$ONLY" --max-seconds "$MAX_SECONDS"
+
+      - name: Summarise the collection manifest
+        run: |
+          python - <<'PY'
+          import json, collections
+          m = json.load(open("data/real/collection_manifest.json"))
+          print(f"requests: {len(m['requests'])}  ok: {m['ok']}  failed: {m['failed']}  "
+                f"budget_exhausted: {m['budget_exhausted']}")
+          by_kind = collections.Counter(
+              (r["kind"], "ok" if r["ok"] else "FAIL") for r in m["requests"])
+          for key, count in sorted(by_kind.items()):
+              print(f"  {key[0]:8s} {key[1]:5s} {count}")
+          failures = [r for r in m["requests"] if not r["ok"]]
+          for r in failures[:25]:
+              print(f"  FAIL {r['kind']:8s} {r.get('error','')[:60]:62s} {r['url'][:110]}")
+          c = json.load(open("data/real/coverage_report.json"))
+          for s in c["sources"]:
+              print(f"  {s['label']:46s} {s['files']:4d} files {s['bytes']/1024:9.1f} KB")
+          PY
+
+      - name: Cross-check summary
+        run: |
+          python - <<'PY'
+          import json, os
+          p = "data/real/crosschecks/price_crosscheck.json"
+          if not os.path.exists(p):
+              print("no cross-check produced")
+              raise SystemExit(0)
+          for pair in json.load(open(p))["pairs"]:
+              keys = {k: v for k, v in pair.items()
+                      if k in ("kind", "symbol", "n", "return_correlation",
+                               "max_abs_level_diff", "max_abs_diff_bps",
+                               "median_abs_diff_bps", "max_abs_daily_return_diff")}
+              print(keys)
+          PY
+
+      - name: Show what changed
+        run: git status --short data/real | head -40; du -sh data/real
+
+      - name: Commit the collected data back to this branch
+        if: ${{ github.event.inputs.commit != 'false' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/real
+          if git diff --cached --quiet; then
+            echo "no changes to commit"
+          else
+            # The runner checked out the branch as it was when the run started;
+            # anything pushed in the meantime makes the commit land on a stale
+            # base and the push is rejected (observed: run 35299710970 collected
+            # successfully and then failed here, losing the whole collection).
+            # Rebase onto the branch tip before committing, then push with an
+            # explicit retry so a concurrent push cannot discard the data.
+            BRANCH="${{ github.ref_name }}"
+            git fetch --quiet origin "$BRANCH"
+            git rebase --quiet "origin/$BRANCH" || {
+              echo "::warning::could not rebase onto origin/$BRANCH; committing on the checked-out base"
+              git rebase --abort || true; }
+            git commit -m "data: collect real market and event data from official sources
+
+          Collected by scripts/collect_real_data.py on a GitHub runner because the
+          development sandbox has no outbound network. Every request, status, byte
+          count and SHA-256 is recorded in data/real/collection_manifest.json."
+            for attempt in 1 2 3; do
+              if git push origin "HEAD:${{ github.ref_name }}"; then
+                echo "pushed on attempt $attempt"
+                break
+              fi
+              echo "::warning::push attempt $attempt rejected; rebasing and retrying"
+              git fetch --quiet origin "$BRANCH"
+              git rebase --quiet "origin/$BRANCH" || git rebase --abort || true
+              [ "$attempt" = "3" ] && { echo "::error::could not push the collected data"; exit 1; }
+            done
+          fi
+
+      - name: Upload the collection manifest as an artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collection-manifest
+          path: |
+            data/real/collection_manifest.json
+            data/real/coverage_report.json
+            data/real/crosschecks/
+          if-no-files-found: warn
+          retention-days: 14

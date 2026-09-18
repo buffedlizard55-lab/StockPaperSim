@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 
 from fixtures import REPO_ROOT
 
-from sim import config, marketdata, strategies
+from sim import config, marketdata, masterfeed, realdata, strategies, strategies_mf
 
 RESEARCH = os.path.join(REPO_ROOT, "research")
 REAL = os.path.join(REPO_ROOT, "data", "real")
@@ -50,6 +50,19 @@ ALLOWED_HOSTS = {
     # Official CPython documentation - the primary source for the hash
     # randomisation behaviour that IR-30 turns on.
     "docs.python.org",
+    # Added 2026-09-18 for Season 2's collected data sources: the official
+    # endpoints the strategies read, plus the two aggregators that are classed
+    # SECONDARY and cross-checked against an independent publisher.
+    "api.fda.gov", "statsapi.mlb.com", "www.ncei.noaa.gov",
+    "api.elections.kalshi.com", "api.nasdaq.com", "www.nfl.com",
+    "official.nba.com", "site.api.espn.com", "buffedlizard55-lab.github.io",
+    # Added 2026-09-18 with the rest of the Season 2 register: the SEC's
+    # structured-data host and archive, the attempted second publishers (NBA's
+    # three hosts, Stooq), and the repository itself, which the provenance notes
+    # cite. Every one is either a source the collector calls or a page it cites
+    # for the access policy it follows.
+    "data.sec.gov", "cdn.nba.com", "stats.nba.com", "www.nba.com",
+    "github.com",
 }
 
 
@@ -410,13 +423,43 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         urls |= {p["docs_url"] for p in marketdata.provider_catalogue()}
         urls |= {e["url"] for s in strategies.build_roster()
                  for e in s.spec.academic_basis}
+        # Season 2's participants declare their own primary sources, and
+        # sim/realdata.py carries the register of every endpoint the collector
+        # calls. Both count as registers: a reader can follow either one.
+        urls |= {e["url"] for s in strategies_mf.build_roster_mf()
+                 for e in s.spec.academic_basis}
+        urls |= {row["url"] for row in realdata.collected_sources()}
+        # The MasterFeed register is itself published (Season 2's masterfeed
+        # page renders it row by row), so the official URL it names for each
+        # project counts as a register entry a reader can follow.
+        urls |= {row["official_url"] for row in masterfeed.signal_register()}
+        # ...and the MasterSite project page it links to for the project itself.
+        urls |= {row["site_url"] for row in masterfeed.signal_register()}
+        urls.add(masterfeed.MASTER_SITE_URL)
         for name in ("IRREGULARITIES", "LIMITATIONS", "REMAINING_WORK"):
             for row in load_json(f"{name}.json"):
                 urls |= set(row.get("links") or [])
         return urls
 
+    @staticmethod
+    def _normalise(url: str) -> str:
+        """Reduce a URL to the endpoint it names, for comparison purposes.
+
+        Code builds URLs (".../chart/" + symbol, "...?search=" + query), so a
+        literal match would demand that every concatenation be registered
+        separately. Stripping the query and any template fragment, and comparing
+        by prefix, means one register row for an endpoint covers the URLs the
+        collector derives from it - while an unregistered *host or path* still
+        fails the test, which is the property that matters.
+        """
+        url = url.split("#", 1)[0].split("?", 1)[0]
+        for cut in ("{", "("):
+            url = url.split(cut, 1)[0]
+        return url.rstrip("/.,;")
+
     def test_no_code_cites_an_unregistered_url(self):
-        registered = self.registered_urls()
+        registered = {self._normalise(u) for u in self.registered_urls()}
+        allowed = self.ALLOWED_UNREGISTERED
         offenders = {}
         for base in ("sim", "scripts"):
             d = os.path.join(REPO_ROOT, base)
@@ -426,7 +469,10 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
                 text = open(os.path.join(d, fn), encoding="utf-8").read()
                 for m in re.finditer(r"https?://[^\s'\"\)\],>]+", text):
                     url = m.group(0).rstrip(".,;")
-                    if url in registered or url in self.ALLOWED_UNREGISTERED:
+                    if url in allowed:
+                        continue
+                    norm = self._normalise(url)
+                    if any(norm == r or norm.startswith(r + "/") for r in registered):
                         continue
                     offenders.setdefault(url, set()).add(f"{base}/{fn}")
         self.assertEqual(
@@ -473,9 +519,13 @@ class TestResearchRegisters(unittest.TestCase):
 
     def test_limitations_register(self):
         rows = load_json("LIMITATIONS.json")
-        self.assertEqual(len(rows), 16)
+        # 16 limitations were registered for Season 1; Season 2 adds its own
+        # (one real history, asserted mappings, forward-only sources, borrow
+        # availability, ledger independence). The register grows, the ids stay
+        # sequential and every row keeps the same shape.
+        self.assertGreaterEqual(len(rows), 16)
         self.assertEqual([r["id"] for r in rows],
-                         [f"L-{i:02d}" for i in range(1, 17)])
+                         [f"L-{i:02d}" for i in range(1, len(rows) + 1)])
         for r in rows:
             self.assertEqual(set(r), {"id", "title", "severity", "detail", "fix"})
             self.assertIn(r["severity"], ("low", "medium", "high", "critical"))

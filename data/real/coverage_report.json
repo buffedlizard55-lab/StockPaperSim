@@ -1,0 +1,300 @@
+{
+ "generated_at": "2026-09-18T04:07:44Z",
+ "window": {
+  "warmup_start": "2024-09-16",
+  "season_start": "2025-09-17",
+  "season_end": "2026-09-16"
+ },
+ "collected": {
+  "yahoo": {
+   "ok": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "GLD",
+    "UNG",
+    "XLU",
+    "XBI",
+    "IBB",
+    "TLT",
+    "DKNG",
+    "FLUT",
+    "PENN",
+    "SRAD",
+    "GENI",
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T",
+    "^GSPC",
+    "^VIX"
+   ],
+   "failed": [],
+   "rows": {
+    "SPY": 502,
+    "QQQ": 502,
+    "IWM": 502,
+    "GLD": 502,
+    "UNG": 502,
+    "XLU": 502,
+    "XBI": 502,
+    "IBB": 502,
+    "TLT": 502,
+    "DKNG": 502,
+    "FLUT": 502,
+    "PENN": 502,
+    "SRAD": 502,
+    "GENI": 502,
+    "AAPL": 502,
+    "MSFT": 502,
+    "NVDA": 502,
+    "JPM": 502,
+    "XOM": 502,
+    "JNJ": 502,
+    "PG": 502,
+    "TSLA": 502,
+    "MU": 502,
+    "T": 502,
+    "^GSPC": 502,
+    "^VIX": 504
+   }
+  },
+  "stooq": {
+   "ok": [],
+   "failed": [
+    "SPY: host refused (Access denied)",
+    "QQQ: host refused (Access denied)",
+    "GLD: host refused (Access denied)",
+    "XBI: host refused (Access denied)",
+    "DKNG: host refused (Access denied)",
+    "AAPL: host refused (Access denied)",
+    "MSFT: host refused (Access denied)",
+    "NVDA: host refused (Access denied)"
+   ],
+   "rows": {}
+  },
+  "fred": {
+   "ok": [
+    "SP500",
+    "VIXCLS",
+    "DGS10",
+    "DGS3MO",
+    "DCOILWTICO",
+    "DTWEXBGS"
+   ],
+   "failed": [
+    "GOLDAMGBD228NLBM",
+    "GOLDPMGBD228NLBM"
+   ],
+   "rows": {
+    "SP500": 503,
+    "VIXCLS": 517,
+    "DGS10": 500,
+    "DGS3MO": 500,
+    "DCOILWTICO": 497,
+    "DTWEXBGS": 498
+   }
+  },
+  "nasdaq": {
+   "ok": [],
+   "failed": [
+    "SPY",
+    "QQQ",
+    "GLD",
+    "XBI",
+    "DKNG",
+    "AAPL",
+    "MSFT",
+    "NVDA"
+   ],
+   "rows": {}
+  },
+  "sec": {
+   "tickers_ok": [],
+   "tickers_failed": [],
+   "filings": 0,
+   "transactions": 0,
+   "skipped_tickers": [],
+   "errors": [
+    "company_tickers.json unavailable"
+   ]
+  },
+  "fda": {
+   "rows": 10760,
+   "failed": [],
+   "pages": 7
+  },
+  "mlb": {
+   "rows": 2322,
+   "ok": true
+  },
+  "espn": {
+   "nfl": {
+    "rows": 285,
+    "chunks_failed": 0
+   },
+   "ncaaf": {
+    "rows": 282,
+    "chunks_failed": 0
+   },
+   "nba": {
+    "rows": 0,
+    "chunks_failed": 0
+   },
+   "mlb": {
+    "rows": 0,
+    "chunks_failed": 0
+   }
+  },
+  "nba": {
+   "ok": false,
+   "rows": 0
+  },
+  "official_docs": {
+   "nba_injury_report_index": {
+    "ok": false
+   },
+   "nfl_injuries": {
+    "ok": true,
+    "bytes": 381285
+   },
+   "ncaa_scoreboard_fbs_2025_week10": {
+    "ok": true,
+    "bytes": 72675
+   },
+   "nba_stats_scoreboard_probe": {
+    "ok": false
+   }
+  },
+  "weather": {
+   "USW00023272": {
+    "ok": true,
+    "rows": 721,
+    "label": "San Francisco (downtown / SFO-area co-op station)"
+   },
+   "USW00023234": {
+    "ok": true,
+    "rows": 728,
+    "label": "San Francisco International Airport"
+   }
+  },
+  "kalshi": {
+   "KXNFLGAME": {
+    "ok": true,
+    "rows": 132
+   },
+   "KXNBA": {
+    "ok": true,
+    "rows": 0
+   },
+   "KXMLBGAME": {
+    "ok": true,
+    "rows": 200
+   },
+   "KXHIGHNY": {
+    "ok": true,
+    "rows": 200
+   },
+   "KXAAAGASM": {
+    "ok": true,
+    "rows": 80
+   }
+  },
+  "crosscheck": {
+   "generated_at": "2026-09-18T04:07:44Z",
+   "pairs": [
+    {
+     "kind": "yahoo-vs-yahoo",
+     "a": "SPY",
+     "b": "^GSPC",
+     "n": 501,
+     "return_correlation": 0.9965133458692754,
+     "note": "same provider, different instruments: a sanity check, not independence"
+    },
+    {
+     "kind": "fred-vs-yahoo",
+     "a": "FRED SP500",
+     "b": "Yahoo ^GSPC",
+     "n": 502,
+     "max_abs_level_diff": 4.425314312512818e-08,
+     "median_abs_level_diff": 1.958856012889914e-08,
+     "return_correlation": 0.9999999999945958,
+     "max_abs_daily_return_diff": 8.411807539410177e-08,
+     "note": "two independent publishers of the same index; level differences come from the fact that FRED's SP500 is a daily close index series"
+    }
+   ],
+   "notes": []
+  }
+ },
+ "sources": [
+  {
+   "label": "Yahoo Finance chart API",
+   "source_class": "SECONDARY",
+   "path": "real/prices/yahoo",
+   "files": 26,
+   "bytes": 2201242
+  },
+  {
+   "label": "Stooq daily CSV (blocked)",
+   "source_class": "SECONDARY",
+   "path": "real/prices/stooq",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "Nasdaq quote API",
+   "source_class": "SECONDARY",
+   "path": "real/prices/nasdaq",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "FRED (Federal Reserve Bank of St. Louis)",
+   "source_class": "OFFICIAL",
+   "path": "real/fred",
+   "files": 8,
+   "bytes": 63729
+  },
+  {
+   "label": "SEC EDGAR (Form 4 + ticker map)",
+   "source_class": "OFFICIAL",
+   "path": "real/sec",
+   "files": 0,
+   "bytes": 0
+  },
+  {
+   "label": "FDA openFDA /drug/drugsfda",
+   "source_class": "OFFICIAL",
+   "path": "real/fda",
+   "files": 1,
+   "bytes": 3854213
+  },
+  {
+   "label": "League scoreboards",
+   "source_class": "MIXED",
+   "path": "real/sports",
+   "files": 8,
+   "bytes": 2301937
+  },
+  {
+   "label": "NOAA/NCEI daily summaries",
+   "source_class": "OFFICIAL",
+   "path": "real/weather",
+   "files": 2,
+   "bytes": 123147
+  },
+  {
+   "label": "Kalshi trade API (settled markets)",
+   "source_class": "OFFICIAL-VENDOR",
+   "path": "real/kalshi",
+   "files": 5,
+   "bytes": 242148
+  }
+ ]
+}

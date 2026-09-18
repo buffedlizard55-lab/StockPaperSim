@@ -57,7 +57,16 @@ class TestPublishedSite(unittest.TestCase):
                         "without .nojekyll, Pages skips assets/data/*.json")
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
-        self.assertEqual(len(self.pages), 30)          # 10 top level + 20 + index
+        season1 = [p for p in self.pages if not p.startswith("season2/")]
+        self.assertEqual(len(season1), 30)      # 10 top level + 20 + index
+        # Season 2 publishes under docs/season2/: 7 index pages plus one per
+        # participant, and it must not leak into Season 1's participant tree.
+        season2 = [p for p in self.pages if p.startswith("season2/")]
+        self.assertGreaterEqual(len(season2), 7 + 1)
+        for name in ("index.html", "leaderboard.html", "masterfeed.html",
+                     "ledger.html", "stress.html", "data.html",
+                     "participants/index.html"):
+            self.assertIn(f"season2/{name}", self.pages)
 
     def test_every_participant_has_a_published_page(self):
         board = _strict_json("assets/data/leaderboard.json")
@@ -65,6 +74,14 @@ class TestPublishedSite(unittest.TestCase):
             slug = row["username"].lstrip("@")
             self.assertIn(f"participants/{slug}.html", self.pages,
                           f"{row['username']} has no page")
+        # Same rule for Season 2, whose pages live one directory deeper.
+        season2_board = _strict_json("assets/data/season2/leaderboard.json")
+        for row in season2_board:
+            slug = row["username"].lstrip("@")
+            self.assertIn(f"season2/participants/{slug}.html", self.pages,
+                          f"{row['username']} has no Season 2 page")
+            self.assertNotIn(f"participants/{slug}.html", self.pages,
+                             f"{row['username']} leaked into Season 1's pages")
 
     # ------------------------------------------- site agrees with run memory
 

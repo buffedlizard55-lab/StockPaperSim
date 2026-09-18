@@ -108,11 +108,24 @@ class TestReadmeCounts(unittest.TestCase):
                              f"'{claim} flags' disagrees with the "
                              f"{n_ir} registered irregularities")
 
+    @staticmethod
+    def _table_rows(text: str, heading: str) -> list:
+        """The markdown leaderboard table under ``heading``.
+
+        Scoped to one season's section: both seasons publish a table in the same
+        format, so an unscoped search would compare Season 1's twenty rows
+        against Season 2's memory (or vice versa) and pass a table with the wrong
+        season's numbers in it.
+        """
+        block = text.split(heading, 1)[1]
+        block = re.split(r"\n## ", block, 1)[0]
+        return [line for line in block.split("\n")
+                if re.match(r"\| \d+ \| `@", line)]
+
     def test_leaderboard_table_agrees_with_the_published_memory(self):
         with open(os.path.join(MEMORY, "leaderboard.json"), encoding="utf-8") as fh:
             board = json.load(fh)["leaderboard"]
-        rows = [line for line in self.text.split("\n")
-                if re.match(r"\| \d+ \| `@", line)]
+        rows = self._table_rows(self.text, "## Season 1 result")
         self.assertEqual(len(rows), len(board),
                          f"README table has {len(rows)} rows, the leaderboard "
                          f"has {len(board)}")
@@ -134,6 +147,66 @@ class TestReadmeCounts(unittest.TestCase):
                                            f"memory says {exp[key]}")
             self.assertEqual(c[9].strip(), exp["verdict"],
                               f"{line}: verdict text is stale")
+
+    def test_season2_table_agrees_with_its_own_memory(self):
+        """The Season 2 table is checked against the Season 2 run, not Season 1's.
+
+        Same rule as Season 1: every cell re-derived from the committed memory, so
+        a table can never quote a number the run did not produce.
+        """
+        run = os.path.join(REPO_ROOT, "memory", "runs", "season2-primary-seed20260918")
+        with open(os.path.join(run, "leaderboard.json"), encoding="utf-8") as fh:
+            board = json.load(fh)["leaderboard"]
+        rows = self._table_rows(self.text, "## Season 2 result")
+        self.assertEqual(len(rows), len(board),
+                         f"the Season 2 table has {len(rows)} rows, the memory has "
+                         f"{len(board)}")
+        for line, exp in zip(rows, board):
+            c = line.split("|")
+            self.assertEqual(int(c[1]), exp["rank"], f"rank column: {line}")
+            self.assertEqual(c[2].strip().strip("`").lstrip("@"),
+                             exp["username"].lstrip("@"), f"username: {line}")
+            for idx, key, tol in ((3, "total_return_pct", 0.051),
+                                  (4, "max_drawdown_pct", 0.051),
+                                  (5, "sharpe", 0.006),
+                                  (6, "beta", 0.006),
+                                  (7, "closed_trades", 0.001),
+                                  (8, "execution_cost_pct", 0.006)):
+                self.assertAlmostEqual(_num(c[idx]), exp[key], delta=tol,
+                                       msg=f"{line}: {key} is {c[idx].strip()}, "
+                                           f"memory says {exp[key]}")
+            self.assertTrue(c[9].strip().lower().startswith(exp["verdict"].lower()),
+                            f"{line}: the verdict cell must start with the "
+                            f"published verdict {exp['verdict']!r}")
+
+    def test_season2_counts_match_the_season2_memory(self):
+        """The Season 2 prose figures are re-derived from the run, not typed."""
+        run = os.path.join(REPO_ROOT, "memory", "runs", "season2-primary-seed20260918")
+        with open(os.path.join(run, "ledger_summary.json"), encoding="utf-8") as fh:
+            summary = json.load(fh)
+        with open(os.path.join(run, "manifest.json"), encoding="utf-8") as fh:
+            manifest = json.load(fh)
+        claims = {
+            "fills": (r"(\d+) fills and \d+ round trips", summary["fill_count"]),
+            "trips": (r"\d+ fills and (\d+) round trips", summary["round_trips_closed"]),
+            "net": (r"net round-trip P&L\n\*\*\$([\d,\.]+)\*\*",
+                    summary["net_pnl_usd"]),
+            "notional": (r"on \$([\d\.]+)m of traded notional",
+                         round(summary["total_notional_usd"] / 1e6, 1)),
+            "sessions": (r"[Ww]indow \*\*2025-09-17 → 2026-09-16\*\*\n\((\d+) sessions\)",
+                         manifest["market"]["window"]["sessions"]),
+        }
+        for key, (pattern, expected) in claims.items():
+            m = re.search(pattern, self.text)
+            self.assertIsNotNone(m, f"the README no longer states the {key} figure")
+            if key == "net":
+                got = float(m.group(1).replace(",", ""))
+            elif key == "notional":
+                got = float(m.group(1))
+            else:
+                got = int(m.group(1))
+            self.assertAlmostEqual(got, expected, delta=max(0.06, abs(expected) * 1e-4),
+                                   msg=f"README {key}: {got}, memory says {expected}")
 
     def test_benchmark_sentence_agrees_with_the_market_report(self):
         with open(os.path.join(MEMORY, "market_report.json"), encoding="utf-8") as fh:

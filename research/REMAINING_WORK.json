@@ -117,5 +117,61 @@
     "effort": "S",
     "detail": "IR-33 found two official URLs in the register returning 404, including one cited for a fee rate, and neither was caught because nothing opens the links after they are written. The register now requires a stored artefact behind a FETCHED-VERIFIED row, which fixes the rot-forward problem but not the rot-already-there problem: a link that was live when the excerpt was taken still goes stale silently a year later. The missing piece is a scheduled job that re-opens every URL in sim/config.py's register plus the links in the three research JSON files, classifies the response, and opens an issue listing the rows that moved. It must not be a merge gate: a red build because a regulator rate-limits a bot is worse than no build, and several of these hosts (sec.gov, finra.org, federalregister.gov) block unauthenticated automation intermittently. So it belongs in a weekly scheduled workflow with continue-on-error, reporting per-URL status, and the manual sweep recorded in VERIFICATION_LOG.md remains the backstop.",
     "where": "new .github/workflows/cite-hygiene.yml; scripts/check_links.py with a fetch classifier that separates 404/410 (broken) from 403/429/timeout (blocked, needs a human)"
+  },
+  {
+    "title": "Collect the SEC Form 4 history and switch the three insider participants from DATA-MISSING to backtested",
+    "detail": "The insider strategies (@InsiderCopycat_Max, @InsiderCluster_Alpha, @CEO_CFO_Conviction) are implemented and gated on a collected Form 4 file under data/real/sec/. The collector requests the filing index and up to a bounded number of filings; until that file exists the signal book reports the array as MISSING and the participants trade nothing. Once it lands, re-run Season 2 and the same ledger will price their trades against the same real bars.",
+    "priority": "P0",
+    "effort": "half a day plus one collection run",
+    "where": "scripts/collect_real_data.py, sim/masterfeed.py::_insider_signals, memory/runs/season2-*"
+  },
+  {
+    "title": "Give the collector a schedule so forward-only strategies accumulate their own archive",
+    "detail": "The injury and pre-game-probability strategies can only ever be forward-tested. A daily or weekly cron on the existing collection workflow would build the archive that makes a future backtest possible, with the same manifest, hashing and per-file provenance the price files already have.",
+    "priority": "P1",
+    "effort": "one workflow change plus a retention policy",
+    "where": ".github/workflows/collect-real-data.yml, scripts/collect_real_data.py"
+  },
+  {
+    "title": "Publish a second, non-overlapping real season",
+    "detail": "One real year is one observation (L-17). The collector can fetch an arbitrarily long window from the same endpoints, so the cheap next step is a second season over a different year, traded by the same roster, with the cross-season rank correlation published next to the current leaderboard.",
+    "priority": "P1",
+    "effort": "one collection window plus a config label",
+    "where": "sim/realdata.py (SEASON2_START/END), sim/season2.py, docs/season2/"
+  },
+  {
+    "title": "Calibrate the venue against a real intraday print history",
+    "detail": "The intraday path, spread and impact models are the only remaining source of simulated prices. Comparing a modelled fill against the actual traded price at that minute for a sample of days and names would turn that from an assumption into a measured error distribution (L-21).",
+    "priority": "P1",
+    "effort": "a day, plus a source for intraday prints",
+    "where": "sim/microstructure.py, sim/marketdata.py, docs/season2/data.html"
+  },
+  {
+    "title": "Estimate the MasterSite signal mappings instead of asserting them",
+    "detail": "Every strategy page states a mapping strength that is currently a judgement (L-18). Regressing the instrument's returns on the signal at several lags, and publishing the coefficients with the same per-file provenance as the prices, would let the site say 'measured, and here is the standard error' instead of 'asserted'.",
+    "priority": "P2",
+    "effort": "one or two days per signal family",
+    "where": "sim/masterfeed.py, sim/analytics.py, docs/season2/masterfeed.html"
+  },
+  {
+    "title": "Re-collect the SEC Form 4 stream and let the three insider strategies trade",
+    "detail": "The collector's EDGAR User-Agent now carries a contact address as SEC's own FAQ requires, but the collection run that would prove it has not landed: the first run returned HTTP 403 on company_tickers.json, so data/real/sec/ is absent and @InsiderCopycat_Max, @InsiderCluster_Alpha and @CEO_CFO_Conviction sit idle. Once the file exists, the same run, ledger and audit pick it up with no code change - only the signal availability state changes.",
+    "priority": "P1",
+    "effort": "one collection run plus a season re-run",
+    "where": "scripts/collect_real_data.py, data/real/sec/, sim/masterfeed.py"
+  },
+  {
+    "title": "Collect the Kalshi volume column, or retire the attention-timer participant",
+    "detail": "The venue's settled-markets payload returned contract metadata with every numeric field empty, so kalshi_volume_30d is MISSING by construction and @Kalshi_Attention_Timer reports DATA-MISSING. Either a payload with real volume/open-interest is found (the v2 markets endpoint with a status filter is the first thing to try) or the participant should be retired rather than kept as a permanent zero.",
+    "priority": "P2",
+    "effort": "half a day to probe, one line to retire",
+    "where": "sim/masterfeed.py, scripts/collect_real_data.py"
+  },
+  {
+    "title": "Give the forward-only participants a live path",
+    "detail": "The NFL and NBA injury probes, the NCAA scoreboard and SportsPred place no trades by design because no archive exists. A scheduled collector that captures the official documents while a season is running would turn them from placeholders into the forward test the brief asked for, and would be the first genuinely live element of this project.",
+    "priority": "P2",
+    "effort": "a scheduled workflow plus a season of patience",
+    "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
   }
 ]

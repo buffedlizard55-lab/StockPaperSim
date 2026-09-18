@@ -110,5 +110,47 @@
     "title": "Dividends are paid without a matching ex-date price drop",
     "detail": "Real price series gap down on the ex-date; the simulated series do not. For non-anchored names the generator compensates by removing the declared window dividend yield from the price drift, so total return is not double counted, but the day-to-day price path does not show the ex-date step that a real chart would. AAPL is exempt because its anchor is a real unadjusted close that already contains the real drops.",
     "fix": "Partly reversed: rather than force the price path to drop, the venue now charges the short side the dividend it owes (IR-31), so total return is consistent for long and short books whichever convention the price path follows. A real ex-date drop on simulated names is still not modelled, which is why the adjustment item stays in REMAINING_WORK: the two mechanisms must not both be applied without checking that the yield is not being charged twice."
+  },
+  {
+    "id": "L-17",
+    "title": "Season 2 has one price history and no second one to compare against",
+    "severity": "high",
+    "detail": "Season 1 could re-run the season under several idiosyncratic draws and report how ranks moved. Season 2 trades the real history, so its result is a single observation: a participant that finished first would not necessarily finish first again, and nothing in this repository can measure that. A real answer needs either a longer sample (several years of real prices, each run as its own season) or an explicit bootstrap of the real return path, and neither is in place.",
+    "fix": "Run the same roster over several non-overlapping real years (the collector can already fetch a multi-year window) and publish the cross-year rank correlation, alongside the existing venue-stress panel."
+  },
+  {
+    "id": "L-18",
+    "title": "Signal mapping from MasterSite projects to instruments is a judgement, not a measurement",
+    "severity": "medium",
+    "detail": "The MasterFeed register labels each mapping STRONG, WEAK or UNPROVEN, but the label is this project's reasoning, not an estimated relationship. Nothing here regresses sportsbook equity returns on MLB game counts, or biotech ETF returns on FDA approval counts. A strategy can therefore be well implemented and still be trading a link that does not exist.",
+    "fix": "Estimate each mapping openly: regress the candidate instrument's returns on the signal with lags, publish the coefficients and t-statistics with the same file-level provenance as the prices, and let a WEAK mapping be reported as a measured zero rather than an asserted one."
+  },
+  {
+    "id": "L-19",
+    "title": "Four of the twelve requested sources cannot be backtested from official records",
+    "severity": "high",
+    "detail": "The NFL injury report, the NBA injury report, SportsPred's pre-game probabilities and (as archived history) the NCAA scoreboard are published live. Four participants are therefore forward-only: they are registered, their adapters point at the official documents, and they placed no backdated trades. Their 0.00% is an absence of evidence, not evidence of no edge.",
+    "fix": "Let the collector run on a schedule so the live documents start accumulating a real, dated archive; after a season of daily collection those participants can be backtested on their own collected history with the same ledger."
+  },
+  {
+    "id": "L-20",
+    "title": "Injuries and suspensions are only visible through price, not through position limits that vary by name",
+    "severity": "low",
+    "detail": "The venue model applies one margin and borrow model to every name. Real desks face name-specific borrow availability, hard-to-borrow lists and recall risk, which is exactly the risk an injury-driven sportsbook strategy would face if it shorted a squeezed name. The Season 2 roster shorts DKNG, FLUT and PENN, so this is a live gap rather than a theoretical one.",
+    "fix": "Add a per-name borrow-availability series (FINRA's daily short-sale volume and the OTC transparency data are the public starting points) and let a short fail to open when the name is on the hard-to-borrow list."
+  },
+  {
+    "id": "L-21",
+    "title": "The published ledger is a summary of what the engine decided, not an independent execution path",
+    "severity": "medium",
+    "detail": "Every fill carries the real bar it filled against and is re-derived by an outside script, but both the fill and the reference come from the same run. If the venue model is wrong - the spread too tight, the impact exponent too small - the ledger will faithfully record a wrong price relationship, and no amount of hashing will catch it.",
+    "fix": "Replay a sample of days against a real intraday print history (a single name, a handful of days) and compare the modelled fill price with the actual traded price at that minute; publish the error distribution as a calibration table rather than an assumption."
+  },
+  {
+    "id": "L-22",
+    "title": "Season 2's signal coverage is what could be collected, not what the brief listed",
+    "severity": "high",
+    "detail": "Fourteen projects were reviewed and five participants are idle: three wait on the Form 4 stream, one on a venue payload whose numbers are empty, one is a declared forward-only probe. Two further families that circulate widely (opening-range breakout, social-sentiment trading) are not implemented at all because they need intraday bars and platform data this project cannot collect. The register states each of these one by one, but the aggregate effect on the season is real: a third of the roster contributes no return information.",
+    "fix": "Re-collect the missing sources (REMAINING_WORK P1/P2), and if the intraday feeds cannot be reached, say so on the site's front page rather than only in the register."
   }
 ]

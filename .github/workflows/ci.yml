@@ -48,6 +48,13 @@ jobs:
       - name: Leaderboard renders
         run: python -m sim.cli leaderboard
 
+      # The published numbers are re-derived from the raw event trail by code
+      # that never imports the engine, so a bug shared by the engine and its own
+      # test suite cannot hide. Run against the committed memory, because that is
+      # what the site shows.
+      - name: Independent audit of the published season
+        run: python scripts/independent_audit.py
+
   site-is-not-stale:
     name: Published site matches the code and the run memory
     runs-on: ubuntu-latest
@@ -86,3 +93,9 @@ jobs:
               raise SystemExit("leaderboard is not reproducible from the same seed and config")
           print("OK: leaderboard reproduced bit-for-bit from seed 20260917")
           PY
+
+      # And the freshly generated season must independently audit too: this is
+      # the check that catches code which reproduces itself but disagrees with
+      # its own accounting, which no unit test necessarily does.
+      - name: Independent audit of the re-run season
+        run: python scripts/independent_audit.py --memory-root /tmp/scratch-memory

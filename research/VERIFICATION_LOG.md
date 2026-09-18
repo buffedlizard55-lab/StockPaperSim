@@ -390,7 +390,28 @@ site.
 
 ---
 
+## 4f. The register's own measured figures were re-derived, and two were wrong
+
+This pass did not only audit the code and the citations: every dollar and
+percentage point quoted in `research/IRREGULARITIES.json` was recomputed from the
+event streams of the season it describes, which is the only way a measured claim
+stays checkable. Three did not survive.
+
+| Claim as written | What the data says | Disposition |
+|---|---|---|
+| IR-31: "4 dividend payments totalling **$635.91** went to positions opened on the ex-date" | **not reproducible** under any definition tried (first trade of the day: 1 event, $14.46; flat at the prior close: 3 events, $92.02). The number apparently came from an intermediate diagnostic whose filter was never recorded | Replaced by the derivation now in the entry - 18 of 202 events mispriced against the entitlement carried into the ex-date, 11 overpayments $1,198.01, 7 underpayments $962.48, $2,160.49 gross, **-$235.53 net**, 7 of 20 accounts - stated with its method so a reviewer can re-run it |
+| IR-31: dividends moved "$11,299.61 → **$11,662.74**", net **$1,489.18** | those are the figures for the run **before** IR-34 re-timed two books. The published season is $11,299.61 → **$11,600.83** received, **$1,852.31** charged in lieu, net **$1,551.09** | Both kept, with the attribution spelled out ($1,489.18 of it is this fix alone), because silently re-labelling a stale number as current is how a register becomes fiction |
+| IR-34: "no rank changed", and GapAndGo's dividends "$**6.95** → $0.00" | 6 of 20 ranks moved (4-7 and 11-12; three of them purely because *other* accounts changed), and GapAndGo's pre-fix figure on the originally released season is **$80.46**, not $6.95, which was the intermediate run | Corrected in place |
+
+The pattern is worth naming, because it is not a code problem. Every one of these
+was true of a run that existed at the moment it was written and stopped being true
+when a later fix re-ran the season. A measured claim in a register is a claim
+about a specific artefact, so the register entries now name the season they were
+measured on, and `tests/test_readme_claims.py` exists so that the human-readable
+restatement of those numbers in `README.md` cannot drift from the memory again.
+
 ## 6. Audits run on the simulation itself
+
 
 These are internal consistency checks, all reproduced by the test suite
 (`python3 -m unittest discover -s tests`) and by `python3 -m sim.cli verify`.
@@ -399,9 +420,9 @@ These are internal consistency checks, all reproduced by the test suite
 |---|---|
 | Fitted SPY/index ratio vs real SPY monthly closes | ratio **10.02785**, max absolute error **0.1451%** |
 | Simulated vs real SPY monthly high-low range | mean absolute difference **0.503 pp**, worst **0.993 pp**, over 11 months |
-| P&L ledger closure per participant | residual **≤ $0.10**, total **$0.42** across 20 participants |
+| P&L ledger closure per participant | `final_equity - starting_cash - net_pnl_usd` is **exactly $0.00** for all 20 published reports (`scripts/independent_audit.py`); the `tests/test_memory.py` fixture season closes to **$0.42** over 20 participants, worst **$0.10** |
 | Final positions | every account **flat** at the season end (forced liquidation costed through the venue) |
-| Executed prices vs the Rule 612 tick grid | **2,985 / 2,985** fills exactly on-grid, and **all 8,534 displayed bid/ask levels** in the quote stream on-grid (`tests/test_memory.py`) |
+| Executed prices vs the Rule 612 tick grid | on the **published season**: **3,078 / 3,078** fills and **8,534 / 8,534** displayed bid/ask levels are exactly on-grid. The smaller fixture season in `tests/test_memory.py` (2,985 fills) checks the same property on a run whose bytes the test regenerates, so both are quoted to avoid a reader mistaking one for the other |
 | Decision prices vs executed prices | the decision mark stays unrounded, so the tick cost is charged rather than handed back (`test_the_decision_price_is_deliberately_off_grid`) |
 | Memory checksums | every file in every run manifest verified; a deliberately corrupted stream is detected |
 | Determinism, in-process | the same seed reproduces the same leaderboard bit for bit; a different seed changes ranks |

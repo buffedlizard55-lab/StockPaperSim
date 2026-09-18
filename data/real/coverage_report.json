@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T04:57:54Z",
+ "generated_at": "2026-09-18T07:13:23Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -122,8 +122,10 @@
    "transactions": 0,
    "skipped_tickers": [],
    "errors": [
-    "company_tickers.json unavailable"
-   ]
+    "company_tickers.json refused; falling back to the per-company feed",
+    "no ticker->CIK mapping could be retrieved"
+   ],
+   "cik_map_source": ""
   },
   "fda": {
    "rows": 10760,
@@ -162,7 +164,7 @@
    },
    "nfl_injuries": {
     "ok": true,
-    "bytes": 381285
+    "bytes": 380783
    },
    "ncaa_scoreboard_fbs_2025_week10": {
     "ok": true,
@@ -207,7 +209,7 @@
    }
   },
   "crosscheck": {
-   "generated_at": "2026-09-18T04:57:54Z",
+   "generated_at": "2026-09-18T07:13:23Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -238,7 +240,7 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201282
+   "bytes": 2201278
   },
   {
    "label": "Stooq daily CSV (blocked)",
@@ -280,7 +282,7 @@
    "source_class": "MIXED",
    "path": "real/sports",
    "files": 8,
-   "bytes": 2301966
+   "bytes": 2301456
   },
   {
    "label": "NOAA/NCEI daily summaries",

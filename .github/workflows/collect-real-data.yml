@@ -13,14 +13,9 @@ name: Collect real market data
 # repository change without a human reading the diff.
 
 on:
-  # A push to either file also triggers collection. ``workflow_dispatch`` on its
-  # own is not enough while this branch is unmerged: GitHub only offers manual
-  # dispatch for workflows that exist on the default branch, and the first
-  # collection has to happen before the pull request can publish real numbers.
-  push:
-    paths:
-      - ".github/workflows/collect-real-data.yml"
-      - "scripts/collect_real_data.py"
+  # Collection is manual-only: it can rewrite the committed data directory and
+  # may require a human to review licensing, source status and the resulting
+  # diff. A code push must never silently create a data commit on a PR branch.
   workflow_dispatch:
     inputs:
       only:

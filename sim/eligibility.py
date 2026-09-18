@@ -203,11 +203,12 @@ def audit_official_prices(
         symbol_issues: List[dict] = []
         filename = symbol.replace("^", "_") + ".json"
         path = os.path.join(root, "prices", backend, filename)
-        row_report = {"symbol": symbol, "path": os.path.relpath(path, REPO_ROOT),
+        path_label = os.path.relpath(path, root)
+        row_report = {"symbol": symbol, "path": path_label,
                       "eligible": False, "issues": symbol_issues}
         payload = _read_json(path)
         if payload is None:
-            _issue(symbol_issues, symbol, "MISSING_FILE", path)
+            _issue(symbol_issues, symbol, "MISSING_FILE", path_label)
             per_symbol[symbol] = row_report
             issues.extend(symbol_issues)
             continue

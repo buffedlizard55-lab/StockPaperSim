@@ -202,6 +202,13 @@ def write_jsonl(path: str, rows: Iterable[dict]) -> int:
     return n
 
 
+def write_jsonl_if_nonempty(path: str, rows: Sequence[dict]) -> Tuple[int, bool]:
+    """Do not erase a verified archive when a bounded fetch returns no rows."""
+    if rows or not os.path.exists(path):
+        return write_jsonl(path, rows), False
+    return 0, True
+
+
 def _slug(text: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", text)
 
@@ -675,7 +682,7 @@ def parse_form4(body: bytes, row: dict, url: str, digest: str) -> List[dict]:
 # 3. FDA - openFDA drug approval/supplement decisions (OFFICIAL).
 # --------------------------------------------------------------------------
 def collect_fda(fetcher: Fetcher, out: str) -> dict:
-    summary = {"rows": 0, "failed": [], "pages": 0}
+    summary = {"rows": 0, "failed": [], "pages": 0, "preserved_existing": False}
     rows: List[dict] = []
     skip = 0
     start_compact = WARMUP_START.replace("-", "")
@@ -717,7 +724,8 @@ def collect_fda(fetcher: Fetcher, out: str) -> dict:
         skip += 1000
         if skip >= total or not results:
             break
-    summary["rows"] = write_jsonl(os.path.join(out, "fda", "openfda_decisions.jsonl"), rows)
+    summary["rows"], summary["preserved_existing"] = write_jsonl_if_nonempty(
+        os.path.join(out, "fda", "openfda_decisions.jsonl"), rows)
     return summary
 
 
@@ -755,8 +763,9 @@ def collect_mlb(fetcher: Fetcher, out: str) -> dict:
                 "source_class": "OFFICIAL",
             })
     write_bytes(os.path.join(out, "sports", "mlb_schedule_2026.json"), body)
-    n = write_jsonl(os.path.join(out, "sports", "mlb_games_2026.jsonl"), rows)
-    return {"rows": n, "ok": True}
+    n, preserved = write_jsonl_if_nonempty(
+        os.path.join(out, "sports", "mlb_games_2026.jsonl"), rows)
+    return {"rows": n, "ok": True, "preserved_existing": preserved}
 
 
 def _record(side: dict) -> Optional[str]:
@@ -821,8 +830,10 @@ def collect_espn(fetcher: Fetcher, out: str) -> dict:
                         "source": "https://site.api.espn.com/apis/site/v2/sports",
                         "source_class": "SECONDARY",
                     })
-        n = write_jsonl(os.path.join(out, "sports", f"{key}_scoreboard.jsonl"), rows)
-        summary[key] = {"rows": n, "chunks_failed": failed}
+        n, preserved = write_jsonl_if_nonempty(
+            os.path.join(out, "sports", f"{key}_scoreboard.jsonl"), rows)
+        summary[key] = {"rows": n, "chunks_failed": failed,
+                        "preserved_existing": preserved}
     return summary
 
 
@@ -868,8 +879,9 @@ def collect_nba_official(fetcher: Fetcher, out: str) -> dict:
                 "source": url, "source_class": "OFFICIAL",
             })
     write_bytes(os.path.join(out, "sports", "nba_schedule_official.json"), body)
-    n = write_jsonl(os.path.join(out, "sports", "nba_schedule_official.jsonl"), rows)
-    return {"ok": True, "rows": n}
+    n, preserved = write_jsonl_if_nonempty(
+        os.path.join(out, "sports", "nba_schedule_official.jsonl"), rows)
+    return {"ok": True, "rows": n, "preserved_existing": preserved}
 
 
 OFFICIAL_SPORTS_DOCS = {

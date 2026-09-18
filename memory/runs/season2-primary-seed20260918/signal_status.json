@@ -303,7 +303,7 @@
   "waiting_on": [
    "kalshi_volume_30d"
   ],
-  "idle_reason": "no trades: waiting on kalshi_volume_30d (MISSING) from https://api.elections.kalshi.com/trade-api/v2/markets - every volume/open_interest/last_price field in the collected payload is null, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING"
+  "idle_reason": "no trades: waiting on kalshi_volume_30d (MISSING) from https://api.elections.kalshi.com/trade-api/v2/markets - no traded-volume field in the collected payload could be read, so a volume signal cannot be computed from it - the participant that reads it reports DATA-MISSING"
  },
  {
   "username": "@GOLD_Trend_GLD",

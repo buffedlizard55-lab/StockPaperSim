@@ -3,28 +3,28 @@
  "strategy_id": "PairsStatArb",
  "archetype": "statistical arbitrage",
  "starting_cash": 100000.0,
- "final_equity": 99753.86,
- "net_pnl_usd": -246.14,
- "total_return_pct": -0.2461,
- "cagr_pct": -0.2471,
+ "final_equity": 99752.39,
+ "net_pnl_usd": -247.61,
+ "total_return_pct": -0.2476,
+ "cagr_pct": -0.2486,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -0.8632,
-  "max_drawdown_usd": -868.53,
+  "max_drawdown_pct": -0.8646,
+  "max_drawdown_usd": -869.99,
   "peak_date": "2026-02-05",
   "peak_equity": 100620.22,
   "trough_date": "2026-08-27",
-  "trough_equity": 99751.69,
+  "trough_equity": 99750.23,
   "recovery_date": null,
   "sessions_underwater": 13,
   "never_recovered": true,
-  "sharpe": -0.3543,
-  "sortino": -0.2875,
-  "calmar": 0.2863,
+  "sharpe": -0.3565,
+  "sortino": -0.2892,
+  "calmar": 0.2875,
   "daily_vol_pct": 0.0437,
   "annualised_vol_pct": 0.694,
-  "skew": -2.4016,
-  "excess_kurtosis": 33.8542,
+  "skew": -2.4012,
+  "excess_kurtosis": 33.8541,
   "best_session_pct": 0.2542,
   "worst_session_pct": -0.3377,
   "var_95_pct": -0.001,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": -0.011,
-  "alpha_annual_pct": -0.0872,
+  "alpha_annual_pct": -0.0889,
   "r_squared": 0.0419,
   "tracking_error_annual_pct": 0.68,
-  "information_ratio": -0.128,
+  "information_ratio": -0.131,
   "market_return_pct": 14.415,
   "beta_contribution_pct": -0.159,
-  "residual_return_pct": -0.087
+  "residual_return_pct": -0.089
  },
  "trades": {
   "closed_trades": 4,
@@ -127,11 +127,13 @@
  },
  "carry": {
   "dividends_received_usd": 3.79,
+  "dividends_in_lieu_paid_usd": 1.46,
   "borrow_fees_paid_usd": 40.98,
-  "net_carry_usd": -37.19,
+  "net_carry_usd": -38.65,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 16.47,
@@ -214,49 +216,49 @@
    "month": "2026-03",
    "sessions": 22,
    "start_equity": 99761.71,
-   "end_equity": 99765.03,
-   "return_pct": 0.0033
+   "end_equity": 99764.3,
+   "return_pct": 0.0026
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 99765.03,
-   "end_equity": 99759.38,
+   "start_equity": 99764.3,
+   "end_equity": 99758.65,
    "return_pct": -0.0057
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 99759.38,
-   "end_equity": 99756.64,
+   "start_equity": 99758.65,
+   "end_equity": 99755.91,
    "return_pct": -0.0027
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 99756.64,
-   "end_equity": 99758.87,
-   "return_pct": 0.0022
+   "start_equity": 99755.91,
+   "end_equity": 99757.41,
+   "return_pct": 0.0015
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 99758.87,
-   "end_equity": 99756.38,
+   "start_equity": 99757.41,
+   "end_equity": 99754.91,
    "return_pct": -0.0025
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 99756.38,
-   "end_equity": 99752.3,
+   "start_equity": 99754.91,
+   "end_equity": 99750.84,
    "return_pct": -0.0041
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 99752.3,
-   "end_equity": 99753.86,
+   "start_equity": 99750.84,
+   "end_equity": 99752.39,
    "return_pct": 0.0016
   }
  ],
@@ -264,10 +266,11 @@
   "realized_trading_pnl_usd": -208.96,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 3.79,
+  "dividends_in_lieu_usd": -1.46,
   "borrow_fees_usd": -40.98,
   "execution_costs_already_netted_usd": -7.09,
-  "total_net_pnl_usd": -246.14,
-  "unexplained_residual_usd": 0.01,
+  "total_net_pnl_usd": -247.61,
+  "unexplained_residual_usd": 0.0,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
@@ -276,7 +279,7 @@
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -0.25% - a 246 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -0.25% - a 248 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
@@ -292,7 +295,7 @@
    },
    {
     "kind": "concentration",
-    "text": "QQQ contributed +449 USD (-183% of net P&L) across 2 closed trades; SPY was the biggest drag at -658 USD."
+    "text": "QQQ contributed +449 USD (-181% of net P&L) across 2 closed trades; SPY was the biggest drag at -658 USD."
    },
    {
     "kind": "costs",
@@ -342,7 +345,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -0.25% over 251 sessions - -246 USD on 100,000 of paper capital, ending at 99,754. Verdict: lost money."
+    "text": "Outcome: -0.25% over 251 sessions - -248 USD on 100,000 of paper capital, ending at 99,752. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -350,7 +353,7 @@
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the -0.25% total, about -0.16pp is explained by carrying beta -0.01 against a +14.41% market (R^2 0.04); the residual -0.09pp is everything else - selection, timing, leverage and cost. QQQ contributed +449 USD (-183% of net P&L) across 2 closed trades; SPY was the biggest drag at -658 USD."
+    "text": "Of the -0.25% total, about -0.16pp is explained by carrying beta -0.01 against a +14.41% market (R^2 0.04); the residual -0.09pp is everything else - selection, timing, leverage and cost. QQQ contributed +449 USD (-181% of net P&L) across 2 closed trades; SPY was the biggest drag at -658 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -378,7 +381,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: -0.25% in a market that returned +14.41%, and a residual of -0.09pp after beta - the trading itself destroyed value, not just the market direction. Finished at -0.25% - a 246 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -0.25% in a market that returned +14.41%, and a residual of -0.09pp after beta - the trading itself destroyed value, not just the market direction. Finished at -0.25% - a 248 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],

@@ -3,44 +3,44 @@
  "strategy_id": "TrendSurfer",
  "archetype": "time-series trend",
  "starting_cash": 100000.0,
- "final_equity": 153151.66,
- "net_pnl_usd": 53151.66,
- "total_return_pct": 53.1517,
- "cagr_pct": 53.412,
+ "final_equity": 153145.58,
+ "net_pnl_usd": 53145.58,
+ "total_return_pct": 53.1456,
+ "cagr_pct": 53.4059,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -40.0994,
+  "max_drawdown_pct": -40.1014,
   "max_drawdown_usd": -49452.73,
   "peak_date": "2026-01-15",
-  "peak_equity": 123325.35,
+  "peak_equity": 123319.28,
   "trough_date": "2026-03-30",
-  "trough_equity": 73872.62,
+  "trough_equity": 73866.55,
   "recovery_date": "2026-05-06",
   "sessions_underwater": 26,
   "never_recovered": false,
-  "sharpe": 1.1543,
-  "sortino": 1.8236,
-  "calmar": 1.332,
-  "daily_vol_pct": 2.8935,
-  "annualised_vol_pct": 45.934,
+  "sharpe": 1.1542,
+  "sortino": 1.8233,
+  "calmar": 1.3318,
+  "daily_vol_pct": 2.8937,
+  "annualised_vol_pct": 45.935,
   "skew": 0.0455,
-  "excess_kurtosis": 1.0405,
-  "best_session_pct": 11.0545,
+  "excess_kurtosis": 1.0407,
+  "best_session_pct": 11.0553,
   "worst_session_pct": -7.6826,
-  "var_95_pct": -4.6732,
-  "cvar_95_pct": -6.2822,
-  "var_99_pct": -7.3361,
-  "cvar_99_pct": -7.5577
+  "var_95_pct": -4.6734,
+  "cvar_95_pct": -6.2826,
+  "var_99_pct": -7.3365,
+  "cvar_99_pct": -7.5581
  },
  "market_relation": {
-  "beta": 2.8209,
-  "alpha_annual_pct": 12.3795,
-  "r_squared": 0.6277,
+  "beta": 2.821,
+  "alpha_annual_pct": 12.3743,
+  "r_squared": 0.6278,
   "tracking_error_annual_pct": 28.026,
   "information_ratio": 0.442,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 40.663,
-  "residual_return_pct": 12.489
+  "beta_contribution_pct": 40.665,
+  "residual_return_pct": 12.481
  },
  "trades": {
   "closed_trades": 56,
@@ -134,12 +134,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 1520.19,
+  "dividends_received_usd": 1514.11,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 1520.19,
+  "net_carry_usd": 1514.11,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 235.56,
@@ -259,104 +261,105 @@
    "month": "2025-10",
    "sessions": 23,
    "start_equity": 101221.5,
-   "end_equity": 110125.15,
-   "return_pct": 8.7962
+   "end_equity": 110119.07,
+   "return_pct": 8.7902
   },
   {
    "month": "2025-11",
    "sessions": 19,
-   "start_equity": 110125.15,
-   "end_equity": 112412.6,
-   "return_pct": 2.0771
+   "start_equity": 110119.07,
+   "end_equity": 112406.53,
+   "return_pct": 2.0773
   },
   {
    "month": "2025-12",
    "sessions": 22,
-   "start_equity": 112412.6,
-   "end_equity": 113520.32,
-   "return_pct": 0.9854
+   "start_equity": 112406.53,
+   "end_equity": 113514.24,
+   "return_pct": 0.9855
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 113520.32,
-   "end_equity": 114009.91,
+   "start_equity": 113514.24,
+   "end_equity": 114003.84,
    "return_pct": 0.4313
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 114009.91,
-   "end_equity": 101261.08,
-   "return_pct": -11.1822
+   "start_equity": 114003.84,
+   "end_equity": 101255.01,
+   "return_pct": -11.1828
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 101261.08,
-   "end_equity": 80681.11,
-   "return_pct": -20.3237
+   "start_equity": 101255.01,
+   "end_equity": 80675.04,
+   "return_pct": -20.3249
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 80681.11,
-   "end_equity": 122713.46,
-   "return_pct": 52.0969
+   "start_equity": 80675.04,
+   "end_equity": 122707.39,
+   "return_pct": 52.1008
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 122713.46,
-   "end_equity": 146433.87,
-   "return_pct": 19.3299
+   "start_equity": 122707.39,
+   "end_equity": 146427.8,
+   "return_pct": 19.3309
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 146433.87,
-   "end_equity": 147671.22,
+   "start_equity": 146427.8,
+   "end_equity": 147665.15,
    "return_pct": 0.845
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 147671.22,
-   "end_equity": 146570.49,
+   "start_equity": 147665.15,
+   "end_equity": 146564.41,
    "return_pct": -0.7454
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 146570.49,
-   "end_equity": 166724.34,
-   "return_pct": 13.7503
+   "start_equity": 146564.41,
+   "end_equity": 166718.27,
+   "return_pct": 13.7509
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 166724.34,
-   "end_equity": 153151.66,
-   "return_pct": -8.1408
+   "start_equity": 166718.27,
+   "end_equity": 153145.58,
+   "return_pct": -8.1411
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 51631.43,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 1520.19,
+  "dividends_usd": 1514.11,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -49.86,
-  "total_net_pnl_usd": 53151.66,
+  "total_net_pnl_usd": 53145.58,
   "unexplained_residual_usd": 0.04,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +53.15% total return vs +14.41% for the index, +12.49pp residual after beta, -40.1% max drawdown, 0.05% of capital lost to execution costs.",
+  "headline": "Beat the market: +53.15% total return vs +14.41% for the index, +12.48pp residual after beta, -40.1% max drawdown, 0.05% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +53.15% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +38.74pp."
+    "text": "Finished at +53.15% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +38.73pp."
    },
    {
     "kind": "factor",
@@ -368,7 +371,7 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +53.15% total, about +40.66pp is explained by carrying beta 2.82 against a +14.41% market (R^2 0.63); the residual +12.49pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +53.15% total, about +40.66pp is explained by carrying beta 2.82 against a +14.41% market (R^2 0.63); the residual +12.48pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -396,7 +399,7 @@
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.05 skewed with excess kurtosis +1.04; historical 95% VaR -4.67%/day with CVaR -6.28%/day. Worst single session -7.68%, best +11.05%."
+    "text": "Daily returns were +0.05 skewed with excess kurtosis +1.04; historical 95% VaR -4.67%/day with CVaR -6.28%/day. Worst single session -7.68%, best +11.06%."
    },
    {
     "kind": "caveat",
@@ -422,7 +425,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +53.15% over 251 sessions - +53,152 USD on 100,000 of paper capital, ending at 153,152. Verdict: beat the market."
+    "text": "Outcome: +53.15% over 251 sessions - +53,146 USD on 100,000 of paper capital, ending at 153,146. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -430,7 +433,7 @@
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +53.15% total, about +40.66pp is explained by carrying beta 2.82 against a +14.41% market (R^2 0.63); the residual +12.49pp is everything else - selection, timing, leverage and cost. CVNA contributed +33,334 USD (63% of net P&L) across 14 closed trades; MSFT was the biggest drag at -4,404 USD."
+    "text": "Of the +53.15% total, about +40.66pp is explained by carrying beta 2.82 against a +14.41% market (R^2 0.63); the residual +12.48pp is everything else - selection, timing, leverage and cost. CVNA contributed +33,334 USD (63% of net P&L) across 14 closed trades; MSFT was the biggest drag at -4,404 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -442,7 +445,7 @@
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -40.10% (-9.10% for the index), trough on 2026-03-30, recovered 2026-05-06. Average gross exposure 236% of starting capital, peak leverage 2.28x. Daily returns were +0.05 skewed with excess kurtosis +1.04; historical 95% VaR -4.67%/day with CVaR -6.28%/day. Worst single session -7.68%, best +11.05%."
+    "text": "Worst peak-to-trough drawdown -40.10% (-9.10% for the index), trough on 2026-03-30, recovered 2026-05-06. Average gross exposure 236% of starting capital, peak leverage 2.28x. Daily returns were +0.05 skewed with excess kurtosis +1.04; historical 95% VaR -4.67%/day with CVaR -6.28%/day. Worst single session -7.68%, best +11.06%."
    },
    {
     "title": "Regime context (real market data)",
@@ -458,7 +461,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 38.74pp and the excess survives a beta adjustment (+12.49pp residual), so the outperformance is not simply leverage on a rising market. Finished at +53.15% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +38.74pp."
+    "text": "It worked: it beat the index by 38.73pp and the excess survives a beta adjustment (+12.48pp residual), so the outperformance is not simply leverage on a rising market. Finished at +53.15% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +38.73pp."
    }
   ],
   "failure_modes_fired": [

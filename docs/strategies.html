@@ -43,7 +43,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">cross-sectional momentum</span>
       <span class="badge badge-warn">aggression 4</span>
-      <span class="badge badge-ok">rank 5</span>
+      <span class="badge badge-ok">rank 4</span>
       <span class="pos">+51.21%</span>
     </div>
   </header>
@@ -73,7 +73,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">intraday momentum</span>
       <span class="badge badge-warn">aggression 5</span>
       <span class="badge badge-ok">rank 20</span>
-      <span class="neg">-86.57%</span>
+      <span class="neg">-91.75%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> A stock that gaps up on the open has absorbed news or imbalanced overnight order flow; continuation in the first hours is common because retail and institutional demand arrives through the session. Take the continuation and be flat before the close so nothing is held overnight.</p>
@@ -81,7 +81,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
      Turns the whole account over every day, so a small per-trade edge compounds ~250 times a year.</p>
   <div class="two-col">
     <div><h4>Entry rules</h4><ul><li>At the open, compute gap = open / prior close - 1</li><li>Buy any name gapping up more than +1.5%</li><li>Skip names whose quoted spread is wider than 30 bp (costs eat the edge)</li></ul></div>
-    <div><h4>Exit rules</h4><ul><li>Exit every position at the same session&#x27;s close (market-on-close order)</li><li>No stop loss intraday</li></ul></div>
+    <div><h4>Exit rules</h4><ul><li>Exit every position at the same session&#x27;s close, as a market-on-close order routed to the venue&#x27;s final interval</li><li>No stop loss intraday</li><li>Any exit that fails to fill at the close is flattened at the next open</li></ul></div>
   </div>
   <table class="data compact">
     <tr><th>Sizing</th><td>equal 40% of equity across qualifying names, capped at 4 names = up to 160% gross</td></tr>
@@ -131,7 +131,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">short-term reversal</span>
       <span class="badge badge-warn">aggression 4</span>
       <span class="badge badge-ok">rank 3</span>
-      <span class="pos">+74.85%</span>
+      <span class="pos">+74.27%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Liquidity provision is paid for. A large-cap that trades two standard deviations below its own 20-session mean in a single session has usually been hit by transient order flow, and it snaps back within days.</p>
@@ -159,8 +159,8 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">channel breakout</span>
       <span class="badge badge-warn">aggression 4</span>
-      <span class="badge badge-ok">rank 11</span>
-      <span class="pos">+19.01%</span>
+      <span class="badge badge-ok">rank 12</span>
+      <span class="pos">+18.23%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> A close above the 20-session high means the market has accepted a price nobody was willing to sell at for a month. Breakouts from consolidation continue often enough, and when they do they run far, to pay for the many false ones.</p>
@@ -189,7 +189,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">post-event drift</span>
       <span class="badge badge-warn">aggression 4</span>
       <span class="badge badge-ok">rank 10</span>
-      <span class="pos">+21.03%</span>
+      <span class="pos">+20.70%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Markets digest a large information shock over days, not seconds. When a name moves more than 8% in five sessions on at least twice its normal volume, the move continues in the same direction for weeks - the drift that earnings announcement research documents.</p>
@@ -334,7 +334,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">market making</span>
       <span class="badge badge-warn">aggression 2</span>
       <span class="badge badge-ok">rank 19</span>
-      <span class="neg">-39.07%</span>
+      <span class="neg">-34.45%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Provide liquidity instead of demanding it. Resting limit orders on both sides of the three most liquid names collect the quoted spread and the maker rebate, and pay for themselves as long as inventory does not run away.</p>
@@ -392,7 +392,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">volatility regime timing</span>
       <span class="badge badge-warn">aggression 3</span>
       <span class="badge badge-ok">rank 9</span>
-      <span class="pos">+28.04%</span>
+      <span class="pos">+28.36%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> This participant trades the one genuinely real exogenous series in Season 1: the daily CBOE VIX close from FRED. Equity returns cluster with volatility regimes, so hold the index ETF at maximum leverage when realised fear is high and the market is falling, and cut leverage when the regime is quiet and extended.</p>
@@ -420,8 +420,8 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">contrarian reversal</span>
       <span class="badge badge-warn">aggression 4</span>
-      <span class="badge badge-ok">rank 4</span>
-      <span class="pos">+73.46%</span>
+      <span class="badge badge-ok">rank 6</span>
+      <span class="pos">+42.14%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Investors over-react to bad news. A large-cap that falls more than 5% in one session without a trend behind it tends to recover part of the move within days.</p>
@@ -478,7 +478,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">buy and hold (control)</span>
       <span class="badge badge-warn">aggression 3</span>
-      <span class="badge badge-ok">rank 7</span>
+      <span class="badge badge-ok">rank 5</span>
       <span class="pos">+45.29%</span>
     </div>
   </header>
@@ -507,8 +507,8 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">concentration</span>
       <span class="badge badge-warn">aggression 5</span>
-      <span class="badge badge-ok">rank 6</span>
-      <span class="pos">+48.94%</span>
+      <span class="badge badge-ok">rank 7</span>
+      <span class="pos">+40.63%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Diversification dilutes return. Put the entire account, at maximum leverage, into the single name with the best risk-scaled 63-session momentum, and switch only when another name is materially better.</p>
@@ -537,14 +537,14 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">overnight premium</span>
       <span class="badge badge-warn">aggression 3</span>
       <span class="badge badge-ok">rank 14</span>
-      <span class="pos">+14.11%</span>
+      <span class="pos">+8.97%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> A large share of the market&#x27;s long-run return arrives overnight rather than during the session. This participant buys the index ETF at the close of every session and sells it at the open of the next, collecting the overnight leg only.</p>
   <p><strong>Why it is return-seeking rather than risk-managed.</strong>
      Applies 2x leverage to the leg of the return distribution that the literature says is the paid one.</p>
   <div class="two-col">
-    <div><h4>Entry rules</h4><ul><li>Buy SPY at the close of every session (simulated as a market order at the next open with the overnight gap already realised)</li><li>Hold only the index ETF; no single-name risk</li></ul></div>
+    <div><h4>Entry rules</h4><ul><li>Buy SPY at the close of every session, worked on the venue&#x27;s final interval (at_close), so the fill is the closing print and the overnight gap is captured rather than paid away</li><li>Hold only the index ETF; no single-name risk</li></ul></div>
     <div><h4>Exit rules</h4><ul><li>Sell at the next session&#x27;s open</li></ul></div>
   </div>
   <table class="data compact">
@@ -554,7 +554,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <tr><th>Declared factor loadings</th><td><code>beta +0.5</code></td></tr>
   </table>
   <details><summary>Known failure modes (declared before the season)</summary>
-    <ul><li>TIMING LIMITATION: in a daily-bar engine the overnight gap is already in the open price, so the entry is filled *after* the gap it is trying to capture. This structurally understates the strategy (flagged as IR-08).</li><li>Pays the spread twice per session, ~500 times per year</li><li>No intraday exposure means it forfeits the whole trend</li></ul></details>
+    <ul><li>TIMING / INTERVAL GRANULARITY: the entry is worked on the session&#x27;s final interval, so it captures the overnight leg rather than the intraday one, but the venue&#x27;s closing print is the last of K synthetic intervals rather than a real 16:00 tape print, and the exit pays the spread again at the next open. Both are cost drags a live implementation of this trade would also carry; neither is a reason to read the season&#x27;s number as an estimate of the real premium.</li><li>Pays the spread twice per session, ~500 times per year</li><li>No intraday exposure means it forfeits the whole trend</li></ul></details>
   <details><summary>Academic basis (1 references)</summary>
     <ul class="refs"><li><a href="https://doi.org/10.1016/j.jfineco.2019.03.011" rel="noopener noreferrer" target="_blank">Lou, Polk &amp; Skouras (2019), Journal of Financial Economics</a> <span class="badge badge-muted">KNOWN-NOT-FETCHED</span><br><span class="muted small">Overnight and intraday returns have different distributions and premia</span></li></ul></details>
 </article>
@@ -566,7 +566,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
       <span class="badge badge-info">signal stacking</span>
       <span class="badge badge-warn">aggression 4</span>
       <span class="badge badge-ok">rank 15</span>
-      <span class="pos">+5.19%</span>
+      <span class="pos">+8.96%</span>
     </div>
   </header>
   <p><strong>Thesis.</strong> Stack the signals instead of choosing between them. A name that is simultaneously above its 50-session EMA, inside 5% of its 63-session high, positive on 21-session momentum and in a rising-market regime gets the full 2x allocation. Names that fail any test get nothing.</p>
@@ -594,7 +594,7 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
     <div class="strategy-meta">
       <span class="badge badge-info">long-horizon reversal</span>
       <span class="badge badge-warn">aggression 4</span>
-      <span class="badge badge-ok">rank 12</span>
+      <span class="badge badge-ok">rank 11</span>
       <span class="pos">+18.88%</span>
     </div>
   </header>

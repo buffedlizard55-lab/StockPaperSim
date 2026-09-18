@@ -3,190 +3,192 @@
  "strategy_id": "SpreadHarvester",
  "archetype": "market making",
  "starting_cash": 100000.0,
- "final_equity": 60926.83,
- "net_pnl_usd": -39073.17,
- "total_return_pct": -39.0732,
- "cagr_pct": -39.1933,
+ "final_equity": 65551.08,
+ "net_pnl_usd": -34448.92,
+ "total_return_pct": -34.4489,
+ "cagr_pct": -34.5591,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -57.3929,
-  "max_drawdown_usd": -69024.55,
+  "max_drawdown_pct": -53.6416,
+  "max_drawdown_usd": -69233.9,
   "peak_date": "2026-03-27",
-  "peak_equity": 120266.77,
-  "trough_date": "2026-09-04",
-  "trough_equity": 51242.22,
+  "peak_equity": 129067.45,
+  "trough_date": "2026-06-22",
+  "trough_equity": 59833.54,
   "recovery_date": null,
-  "sessions_underwater": 7,
+  "sessions_underwater": 60,
   "never_recovered": true,
-  "sharpe": -0.4963,
-  "sortino": -0.7626,
-  "calmar": 0.6829,
-  "daily_vol_pct": 3.9035,
-  "annualised_vol_pct": 61.967,
-  "skew": 0.3216,
-  "excess_kurtosis": 2.5887,
-  "best_session_pct": 15.5704,
-  "worst_session_pct": -16.1073,
-  "var_95_pct": -5.9462,
-  "cvar_95_pct": -8.3985,
-  "var_99_pct": -9.1957,
-  "cvar_99_pct": -11.9787
+  "sharpe": -0.5161,
+  "sortino": -0.7435,
+  "calmar": 0.6443,
+  "daily_vol_pct": 3.4024,
+  "annualised_vol_pct": 54.012,
+  "skew": 0.0148,
+  "excess_kurtosis": 2.6505,
+  "best_session_pct": 13.2404,
+  "worst_session_pct": -13.4638,
+  "var_95_pct": -5.4001,
+  "cvar_95_pct": -7.9734,
+  "var_99_pct": -10.1458,
+  "cvar_99_pct": -12.1136
  },
  "market_relation": {
-  "beta": -3.0744,
-  "alpha_annual_pct": 13.5367,
-  "r_squared": 0.4097,
-  "tracking_error_annual_pct": 47.61,
-  "information_ratio": 0.284,
+  "beta": -1.9317,
+  "alpha_annual_pct": -0.0435,
+  "r_squared": 0.2129,
+  "tracking_error_annual_pct": 47.919,
+  "information_ratio": -0.001,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -44.317,
-  "residual_return_pct": 5.244
+  "beta_contribution_pct": -27.845,
+  "residual_return_pct": -6.604
  },
  "trades": {
-  "closed_trades": 528,
+  "closed_trades": 537,
   "open_trades": 0,
-  "wins": 373,
-  "losses": 155,
-  "win_rate_pct": 70.644,
-  "gross_win_usd": 92248.0,
-  "gross_loss_usd": 130106.04,
-  "profit_factor": 0.709,
-  "avg_win_usd": 247.31,
-  "avg_loss_usd": -839.39,
-  "expectancy_usd_per_trade": -71.7,
+  "wins": 369,
+  "losses": 168,
+  "win_rate_pct": 68.715,
+  "gross_win_usd": 107406.43,
+  "gross_loss_usd": 140144.36,
+  "profit_factor": 0.7664,
+  "avg_win_usd": 291.07,
+  "avg_loss_usd": -834.19,
+  "expectancy_usd_per_trade": -60.96,
   "best_trade": {
    "symbol": "TSLA",
-   "net_pnl": 12534.59,
+   "net_pnl": 12589.59,
    "entry_date": "2026-03-05",
    "exit_date": "2026-03-16",
    "direction": "short"
   },
   "worst_trade": {
    "symbol": "TSLA",
-   "net_pnl": -38604.66,
-   "entry_date": "2026-04-08",
-   "exit_date": "2026-08-04",
+   "net_pnl": -43587.58,
+   "entry_date": "2026-03-30",
+   "exit_date": "2026-05-14",
    "direction": "short"
   },
-  "longest_win_streak": 17,
-  "longest_loss_streak": 3,
-  "avg_sessions_held": 2.93,
+  "longest_win_streak": 11,
+  "longest_loss_streak": 4,
+  "avg_sessions_held": 3.51,
   "median_sessions_held": 1.0,
   "sessions_in_market": 251,
   "per_symbol_sessions_in_market": {
    "SPY": 251,
    "TSLA": 251,
-   "NVDA": 194,
-   "QQQ": 29
+   "NVDA": 222,
+   "QQQ": 62
   },
-  "sum_of_tranche_sessions": 822,
+  "sum_of_tranche_sessions": 1032,
   "tranche_intervals_overlap": true,
   "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 593,
-  "shares_traded": 82262,
-  "traded_notional_usd": 22555468.67,
-  "spread_cost_usd": 4.71,
+  "fills": 612,
+  "shares_traded": 94806,
+  "traded_notional_usd": 25056963.3,
+  "spread_cost_usd": 6.55,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 4.16,
+  "impact_cost_usd": 4.75,
   "commission_usd": 0.0,
-  "exchange_fee_usd": 1.98,
-  "regulatory_fee_usd": 76.42,
-  "rebate_usd": -163.21,
-  "total_cost_usd": -75.94,
-  "total_cost_bps_of_traded": -0.034,
-  "total_cost_pct_of_starting_cash": -0.0759,
+  "exchange_fee_usd": 2.59,
+  "regulatory_fee_usd": 105.61,
+  "rebate_usd": -187.88,
+  "total_cost_usd": -68.37,
+  "total_cost_bps_of_traded": -0.027,
+  "total_cost_pct_of_starting_cash": -0.0684,
   "net_liquidity_provider": true,
   "market_vs_liquidity_split": {
    "explicit_fees_pct": null,
    "spread_and_impact_pct": null
   },
   "avg_execution_cost_bps_per_fill": -0.022,
-  "median_execution_cost_bps_per_fill": -0.068,
-  "worst_execution_cost_bps": 0.633,
-  "intraday_drift_usd": -1420.3,
-  "avg_price_difference_bps_per_fill": -0.594,
+  "median_execution_cost_bps_per_fill": -0.071,
+  "worst_execution_cost_bps": 0.684,
+  "intraday_drift_usd": -1605.48,
+  "avg_price_difference_bps_per_fill": -0.624,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 595,
-  "fully_unfilled_orders": 2,
-  "partially_filled_orders": 92,
-  "paper_notional_usd": 23798115.64,
-  "spread_cost_usd": 4.71,
+  "orders": 615,
+  "fully_unfilled_orders": 3,
+  "partially_filled_orders": 94,
+  "paper_notional_usd": 26417599.76,
+  "spread_cost_usd": 6.55,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 4.16,
-  "intraday_drift_usd": -1420.3,
-  "fees_usd": -84.81,
-  "missed_trade_cost_usd": 30819.19,
-  "total_shortfall_usd": 29322.94,
-  "shortfall_bps_of_paper": 12.322,
-  "friction_only_bps_of_paper": -0.032,
-  "worst_single_order_drift_usd": 0.1,
-  "best_single_order_drift_usd": -7.88,
+  "impact_cost_usd": 4.75,
+  "intraday_drift_usd": -1605.48,
+  "fees_usd": -79.68,
+  "missed_trade_cost_usd": 38468.12,
+  "total_shortfall_usd": 36794.27,
+  "shortfall_bps_of_paper": 13.928,
+  "friction_only_bps_of_paper": -0.026,
+  "worst_single_order_drift_usd": 1.06,
+  "best_single_order_drift_usd": -8.46,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 0.0,
-  "borrow_fees_paid_usd": 1215.21,
-  "net_carry_usd": -1215.21,
+  "dividends_received_usd": 0.43,
+  "dividends_in_lieu_paid_usd": 665.7,
+  "borrow_fees_paid_usd": 1045.71,
+  "net_carry_usd": -1710.98,
   "margin_calls": [
-   "2026-08-03: equity 57,080.46 < maintenance requirement 59,975.38"
+   "2026-05-13: equity 68,178.20 < maintenance requirement 69,745.01"
   ],
   "margin_call_count": 1,
-  "day_trades": 183
+  "day_trades": 52,
+  "day_trade_count": 63
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 150.82,
-  "max_gross_pct_of_starting_cash": 210.4,
-  "avg_net_pct_of_starting_cash": -147.07,
-  "max_net_pct_of_starting_cash": 11.4,
-  "avg_leverage": 1.86,
-  "max_leverage": 3.502,
+  "avg_gross_pct_of_starting_cash": 147.22,
+  "max_gross_pct_of_starting_cash": 232.48,
+  "avg_net_pct_of_starting_cash": -119.06,
+  "max_net_pct_of_starting_cash": 40.12,
+  "avg_leverage": 1.861,
+  "max_leverage": 3.41,
   "sessions_flat": 1,
-  "avg_open_positions": 2.81
+  "avg_open_positions": 3.07
  },
  "turnover": {
-  "traded_notional_usd": 22555468.67,
-  "annualised_turnover_x": 277.182
+  "traded_notional_usd": 25056963.3,
+  "annualised_turnover_x": 315.693
  },
  "contribution_by_symbol": [
   {
    "symbol": "QQQ",
-   "realized_pnl": -28.99,
+   "realized_pnl": -648.75,
    "open_pnl": 0.0,
-   "total_pnl": -28.99,
-   "closed_trades": 4,
-   "fees": 0.13,
-   "all_in_cost_usd": 0.13
-  },
-  {
-   "symbol": "NVDA",
-   "realized_pnl": -7427.67,
-   "open_pnl": 0.0,
-   "total_pnl": -7427.67,
-   "closed_trades": 323,
-   "fees": -75.46,
-   "all_in_cost_usd": -73.89
-  },
-  {
-   "symbol": "SPY",
-   "realized_pnl": -14084.3,
-   "open_pnl": 0.0,
-   "total_pnl": -14084.3,
-   "closed_trades": 49,
-   "fees": 12.62,
-   "all_in_cost_usd": 13.67
+   "total_pnl": -648.75,
+   "closed_trades": 9,
+   "fees": 2.59,
+   "all_in_cost_usd": 2.7
   },
   {
    "symbol": "TSLA",
-   "realized_pnl": -16317.08,
+   "realized_pnl": -4444.5,
    "open_pnl": 0.0,
-   "total_pnl": -16317.08,
-   "closed_trades": 152,
-   "fees": -22.0,
-   "all_in_cost_usd": -15.75
+   "total_pnl": -4444.5,
+   "closed_trades": 112,
+   "fees": -23.38,
+   "all_in_cost_usd": -13.99
+  },
+  {
+   "symbol": "SPY",
+   "realized_pnl": -11520.52,
+   "open_pnl": 0.0,
+   "total_pnl": -11520.52,
+   "closed_trades": 22,
+   "fees": 4.19,
+   "all_in_cost_usd": 5.52
+  },
+  {
+   "symbol": "NVDA",
+   "realized_pnl": -16124.16,
+   "open_pnl": 0.0,
+   "total_pnl": -16124.16,
+   "closed_trades": 394,
+   "fees": -63.05,
+   "all_in_cost_usd": -62.58
   }
  ],
  "monthly_returns": [
@@ -194,151 +196,152 @@
    "month": "2025-09",
    "sessions": 10,
    "start_equity": 99920.99,
-   "end_equity": 98038.98,
-   "return_pct": -1.8835
+   "end_equity": 97980.12,
+   "return_pct": -1.9424
   },
   {
    "month": "2025-10",
    "sessions": 23,
-   "start_equity": 98038.98,
-   "end_equity": 83615.51,
-   "return_pct": -14.712
+   "start_equity": 97980.12,
+   "end_equity": 83631.01,
+   "return_pct": -14.6449
   },
   {
    "month": "2025-11",
    "sessions": 19,
-   "start_equity": 83615.51,
-   "end_equity": 76750.68,
-   "return_pct": -8.21
+   "start_equity": 83631.01,
+   "end_equity": 76763.19,
+   "return_pct": -8.212
   },
   {
    "month": "2025-12",
    "sessions": 22,
-   "start_equity": 76750.68,
-   "end_equity": 79204.92,
-   "return_pct": 3.1977
+   "start_equity": 76763.19,
+   "end_equity": 78972.04,
+   "return_pct": 2.8775
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 79204.92,
-   "end_equity": 79550.65,
-   "return_pct": 0.4365
+   "start_equity": 78972.04,
+   "end_equity": 79290.4,
+   "return_pct": 0.4031
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 79550.65,
-   "end_equity": 84749.28,
-   "return_pct": 6.535
+   "start_equity": 79290.4,
+   "end_equity": 84476.49,
+   "return_pct": 6.5406
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 84749.28,
-   "end_equity": 112255.93,
-   "return_pct": 32.4565
+   "start_equity": 84476.49,
+   "end_equity": 115828.34,
+   "return_pct": 37.1131
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 112255.93,
-   "end_equity": 85805.65,
-   "return_pct": -23.5625
+   "start_equity": 115828.34,
+   "end_equity": 82793.76,
+   "return_pct": -28.5203
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 85805.65,
-   "end_equity": 68592.07,
-   "return_pct": -20.0611
+   "start_equity": 82793.76,
+   "end_equity": 64412.98,
+   "return_pct": -22.2007
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 68592.07,
-   "end_equity": 80689.43,
-   "return_pct": 17.6367
+   "start_equity": 64412.98,
+   "end_equity": 63168.85,
+   "return_pct": -1.9315
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 80689.43,
-   "end_equity": 68039.87,
-   "return_pct": -15.6768
+   "start_equity": 63168.85,
+   "end_equity": 65371.85,
+   "return_pct": 3.4875
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 68039.87,
-   "end_equity": 53599.56,
-   "return_pct": -21.2233
+   "start_equity": 65371.85,
+   "end_equity": 63794.01,
+   "return_pct": -2.4136
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 53599.56,
-   "end_equity": 60926.83,
-   "return_pct": 13.6704
+   "start_equity": 63794.01,
+   "end_equity": 65551.08,
+   "return_pct": 2.7543
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": -37858.04,
+  "realized_trading_pnl_usd": -32737.93,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 0.0,
-  "borrow_fees_usd": -1215.21,
-  "execution_costs_already_netted_usd": 75.94,
-  "total_net_pnl_usd": -39073.17,
-  "unexplained_residual_usd": 0.08,
+  "dividends_usd": 0.43,
+  "dividends_in_lieu_usd": -665.7,
+  "borrow_fees_usd": -1045.71,
+  "execution_costs_already_netted_usd": 68.37,
+  "total_net_pnl_usd": -34448.92,
+  "unexplained_residual_usd": -0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "lost money",
-  "headline": "Lost money: -39.07% total return vs +14.41% for the index, +5.24pp residual after beta, -57.4% max drawdown, -0.08% of capital lost to execution costs.",
+  "headline": "Lost money: -34.45% total return vs +14.41% for the index, -6.60pp residual after beta, -53.6% max drawdown, -0.07% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -39.07% - a 39,073 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -34.45% - a 34,449 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The low_vol premium it is built to harvest went the wrong way (-21.86% over the season), so the signal was fighting the tape and the account lost 39.07%."
+    "text": "The low_vol premium it is built to harvest went the wrong way (-21.86% over the season), so the signal was fighting the tape and the account lost 34.45%."
    },
    {
     "kind": "attribution",
-    "text": "Of the -39.07% total, about -44.32pp is explained by carrying beta -3.07 against a +14.41% market (R^2 0.41); the residual +5.24pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -34.45% total, about -27.85pp is explained by carrying beta -1.93 against a +14.41% market (R^2 0.21); the residual -6.60pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "QQQ contributed -29 USD across 4 closed trades; TSLA was the biggest drag at -16,317 USD."
+    "text": "QQQ contributed -649 USD across 9 closed trades; NVDA was the biggest drag at -16,124 USD."
    },
    {
     "kind": "costs",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-163 USD) exceeded the fees it paid, so all-in execution cost was -76 USD (-0.08% of starting capital) on 22,555,469 USD traded. Gross friction was still real: 5 USD of spread, 4 USD of impact and 78 USD of fees - it simply earned 76 USD back for resting orders."
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-188 USD) exceeded the fees it paid, so all-in execution cost was -68 USD (-0.07% of starting capital) on 25,056,963 USD traded. Gross friction was still real: 7 USD of spread, 5 USD of impact and 108 USD of fees - it simply earned 68 USD back for resting orders."
    },
    {
     "kind": "trades",
-    "text": "528 closed round trips, 70.6% winners, profit factor 0.71, average winner +247 vs average loser -839 USD, median holding 1 sessions."
+    "text": "537 closed round trips, 68.7% winners, profit factor 0.77, average winner +291 vs average loser -834 USD, median holding 1 sessions."
    },
    {
     "kind": "trades",
-    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 822 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 1032 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
    },
    {
     "kind": "trades",
-    "text": "Single worst trade: TSLA short 2026-04-08 to 2026-08-04, -38,605 USD."
+    "text": "Single worst trade: TSLA short 2026-03-30 to 2026-05-14, -43,588 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown -57.39% (-9.10% for the index), trough on 2026-09-04, never recovered. Average gross exposure 151% of starting capital, peak leverage 3.50x."
+    "text": "Worst peak-to-trough drawdown -53.64% (-9.10% for the index), trough on 2026-06-22, never recovered. Average gross exposure 147% of starting capital, peak leverage 3.41x."
    },
    {
     "kind": "drawdown",
-    "text": "1 maintenance-margin breach(es) triggered forced liquidation: 2026-08-03: equity 57,080.46 < maintenance requirement 59,975.38"
+    "text": "1 maintenance-margin breach(es) triggered forced liquidation: 2026-05-13: equity 68,178.20 < maintenance requirement 69,745.01"
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.32 skewed with excess kurtosis +2.59; historical 95% VaR -5.95%/day with CVaR -8.40%/day. Worst single session -16.11%, best +15.57%."
+    "text": "Daily returns were +0.01 skewed with excess kurtosis +2.65; historical 95% VaR -5.40%/day with CVaR -7.97%/day. Worst single session -13.46%, best +13.24%."
    },
    {
     "kind": "caveat",
@@ -364,27 +367,27 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -39.07% over 251 sessions - -39,073 USD on 100,000 of paper capital, ending at 60,927. Verdict: lost money."
+    "text": "Outcome: -34.45% over 251 sessions - -34,449 USD on 100,000 of paper capital, ending at 65,551. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The low_vol premium it is built to harvest went the wrong way (-21.86% over the season), so the signal was fighting the tape and the account lost 39.07%."
+    "text": "The low_vol premium it is built to harvest went the wrong way (-21.86% over the season), so the signal was fighting the tape and the account lost 34.45%."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the -39.07% total, about -44.32pp is explained by carrying beta -3.07 against a +14.41% market (R^2 0.41); the residual +5.24pp is everything else - selection, timing, leverage and cost. QQQ contributed -29 USD across 4 closed trades; TSLA was the biggest drag at -16,317 USD."
+    "text": "Of the -34.45% total, about -27.85pp is explained by carrying beta -1.93 against a +14.41% market (R^2 0.21); the residual -6.60pp is everything else - selection, timing, leverage and cost. QQQ contributed -649 USD across 9 closed trades; NVDA was the biggest drag at -16,124 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-163 USD) exceeded the fees it paid, so all-in execution cost was -76 USD (-0.08% of starting capital) on 22,555,469 USD traded. Gross friction was still real: 5 USD of spread, 4 USD of impact and 78 USD of fees - it simply earned 76 USD back for resting orders."
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (-188 USD) exceeded the fees it paid, so all-in execution cost was -68 USD (-0.07% of starting capital) on 25,056,963 USD traded. Gross friction was still real: 7 USD of spread, 5 USD of impact and 108 USD of fees - it simply earned 68 USD back for resting orders."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": "528 closed round trips, 70.6% winners, profit factor 0.71, average winner +247 vs average loser -839 USD, median holding 1 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 822 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA short 2026-04-08 to 2026-08-04, -38,605 USD."
+    "text": "537 closed round trips, 68.7% winners, profit factor 0.77, average winner +291 vs average loser -834 USD, median holding 1 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 1032 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA short 2026-03-30 to 2026-05-14, -43,588 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -57.39% (-9.10% for the index), trough on 2026-09-04, never recovered. Average gross exposure 151% of starting capital, peak leverage 3.50x. 1 maintenance-margin breach(es) triggered forced liquidation: 2026-08-03: equity 57,080.46 < maintenance requirement 59,975.38 Daily returns were +0.32 skewed with excess kurtosis +2.59; historical 95% VaR -5.95%/day with CVaR -8.40%/day. Worst single session -16.11%, best +15.57%."
+    "text": "Worst peak-to-trough drawdown -53.64% (-9.10% for the index), trough on 2026-06-22, never recovered. Average gross exposure 147% of starting capital, peak leverage 3.41x. 1 maintenance-margin breach(es) triggered forced liquidation: 2026-05-13: equity 68,178.20 < maintenance requirement 69,745.01 Daily returns were +0.01 skewed with excess kurtosis +2.65; historical 95% VaR -5.40%/day with CVaR -7.97%/day. Worst single session -13.46%, best +13.24%."
    },
    {
     "title": "Regime context (real market data)",
@@ -400,7 +403,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It lost 39.07%, but the loss is a DIRECTIONAL one, not a trading one: after removing beta -3.07 against a +14.41% market the residual is +5.24pp, meaning the trades themselves added value while the position the account ended up carrying lost more. Finished at -39.07% - a 39,073 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -34.45% in a market that returned +14.41%, and a residual of -6.60pp after beta - the trading itself destroyed value, not just the market direction. Finished at -34.45% - a 34,449 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [

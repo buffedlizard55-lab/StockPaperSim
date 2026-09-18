@@ -3,10 +3,10 @@
  "strategy_id": "SectorRotator",
  "archetype": "sector rotation",
  "starting_cash": 100000.0,
- "final_equity": 124642.33,
- "net_pnl_usd": 24642.33,
- "total_return_pct": 24.6423,
- "cagr_pct": 24.7518,
+ "final_equity": 124751.48,
+ "net_pnl_usd": 24751.48,
+ "total_return_pct": 24.7515,
+ "cagr_pct": 24.8614,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -22.6469,
@@ -18,13 +18,13 @@
   "recovery_date": "2026-04-09",
   "sessions_underwater": 7,
   "never_recovered": false,
-  "sharpe": 0.7396,
-  "sortino": 1.2081,
-  "calmar": 1.0929,
+  "sharpe": 0.7415,
+  "sortino": 1.2108,
+  "calmar": 1.0978,
   "daily_vol_pct": 2.8673,
-  "annualised_vol_pct": 45.518,
-  "skew": 0.3214,
-  "excess_kurtosis": 1.49,
+  "annualised_vol_pct": 45.516,
+  "skew": 0.3211,
+  "excess_kurtosis": 1.4904,
   "best_session_pct": 12.1146,
   "worst_session_pct": -9.0358,
   "var_95_pct": -4.4144,
@@ -33,14 +33,14 @@
   "cvar_99_pct": -7.4577
  },
  "market_relation": {
-  "beta": 2.457,
-  "alpha_annual_pct": -1.735,
-  "r_squared": 0.485,
-  "tracking_error_annual_pct": 32.666,
-  "information_ratio": -0.053,
+  "beta": 2.4567,
+  "alpha_annual_pct": -1.6434,
+  "r_squared": 0.4849,
+  "tracking_error_annual_pct": 32.667,
+  "information_ratio": -0.05,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 35.418,
-  "residual_return_pct": -10.775
+  "beta_contribution_pct": 35.414,
+  "residual_return_pct": -10.662
  },
  "trades": {
   "closed_trades": 32,
@@ -133,12 +133,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 841.43,
+  "dividends_received_usd": 950.58,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 841.43,
+  "net_carry_usd": 950.58,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 211.24,
@@ -326,31 +328,32 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 125777.49,
-   "end_equity": 124642.33,
-   "return_pct": -0.9025
+   "end_equity": 124751.48,
+   "return_pct": -0.8157
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 23800.91,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 841.43,
+  "dividends_usd": 950.58,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -63.88,
-  "total_net_pnl_usd": 24642.33,
+  "total_net_pnl_usd": 24751.48,
   "unexplained_residual_usd": -0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +24.64% total return vs +14.41% for the index, -10.78pp residual after beta, -22.6% max drawdown, 0.06% of capital lost to execution costs.",
+  "headline": "Beat the market: +24.75% total return vs +14.41% for the index, -10.66pp residual after beta, -22.6% max drawdown, 0.06% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +24.64% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.23pp."
+    "text": "Finished at +24.75% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.34pp."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +0.5 loading) yet the account still returned +24.64% - the result was driven by something other than this factor."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +0.5 loading) yet the account still returned +24.75% - the result was driven by something other than this factor."
    },
    {
     "kind": "factor",
@@ -358,7 +361,7 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +24.64% total, about +35.42pp is explained by carrying beta 2.46 against a +14.41% market (R^2 0.48); the residual -10.78pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +24.75% total, about +35.41pp is explained by carrying beta 2.46 against a +14.41% market (R^2 0.48); the residual -10.66pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -412,15 +415,15 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +24.64% over 251 sessions - +24,642 USD on 100,000 of paper capital, ending at 124,642. Verdict: beat the market."
+    "text": "Outcome: +24.75% over 251 sessions - +24,751 USD on 100,000 of paper capital, ending at 124,751. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium went against the declared exposure (-5.87% for a +0.5 loading) yet the account still returned +24.64% - the result was driven by something other than this factor. The beta premium this participant is built to harvest was live (+24.72% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+    "text": "The momentum premium went against the declared exposure (-5.87% for a +0.5 loading) yet the account still returned +24.75% - the result was driven by something other than this factor. The beta premium this participant is built to harvest was live (+24.72% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +24.64% total, about +35.42pp is explained by carrying beta 2.46 against a +14.41% market (R^2 0.48); the residual -10.78pp is everything else - selection, timing, leverage and cost. RIVN contributed +12,818 USD (52% of net P&L) across 4 closed trades; GOOGL was the biggest drag at -7,359 USD."
+    "text": "Of the +24.75% total, about +35.41pp is explained by carrying beta 2.46 against a +14.41% market (R^2 0.48); the residual -10.66pp is everything else - selection, timing, leverage and cost. RIVN contributed +12,818 USD (52% of net P&L) across 4 closed trades; GOOGL was the biggest drag at -7,359 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -448,7 +451,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It beat the index by 10.23pp, but after beta the residual is -10.78pp: the win came from carrying more market risk (beta 2.46) in an up market, not from the signal itself. Finished at +24.64% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.23pp."
+    "text": "It beat the index by 10.34pp, but after beta the residual is -10.66pp: the win came from carrying more market risk (beta 2.46) in an up market, not from the signal itself. Finished at +24.75% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +10.34pp."
    }
   ],
   "failure_modes_fired": [],

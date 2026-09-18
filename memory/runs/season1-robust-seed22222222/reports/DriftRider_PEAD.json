@@ -3,28 +3,28 @@
  "strategy_id": "EventDriftRider",
  "archetype": "post-event drift",
  "starting_cash": 100000.0,
- "final_equity": 137857.96,
- "net_pnl_usd": 37857.96,
- "total_return_pct": 37.858,
- "cagr_pct": 38.0344,
+ "final_equity": 137856.98,
+ "net_pnl_usd": 37856.98,
+ "total_return_pct": 37.857,
+ "cagr_pct": 38.0334,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -11.4952,
   "max_drawdown_usd": -13988.01,
   "peak_date": "2026-03-13",
-  "peak_equity": 121686.1,
+  "peak_equity": 121686.09,
   "trough_date": "2026-04-06",
-  "trough_equity": 107698.09,
+  "trough_equity": 107698.08,
   "recovery_date": "2026-05-12",
   "sessions_underwater": 26,
   "never_recovered": false,
-  "sharpe": 1.5552,
+  "sharpe": 1.5551,
   "sortino": 2.3806,
-  "calmar": 3.3087,
+  "calmar": 3.3086,
   "daily_vol_pct": 1.4121,
   "annualised_vol_pct": 22.416,
   "skew": 0.9781,
-  "excess_kurtosis": 4.9572,
+  "excess_kurtosis": 4.9573,
   "best_session_pct": 7.1725,
   "worst_session_pct": -5.6364,
   "var_95_pct": -1.8166,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 0.1806,
-  "alpha_annual_pct": 32.2594,
+  "alpha_annual_pct": 32.2587,
   "r_squared": 0.0108,
   "tracking_error_annual_pct": 22.295,
   "information_ratio": 1.447,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 2.603,
-  "residual_return_pct": 35.255
+  "residual_return_pct": 35.254
  },
  "trades": {
   "closed_trades": 41,
@@ -134,11 +134,13 @@
  },
  "carry": {
   "dividends_received_usd": 2.9,
+  "dividends_in_lieu_paid_usd": 0.98,
   "borrow_fees_paid_usd": 301.74,
-  "net_carry_usd": -298.84,
+  "net_carry_usd": -299.82,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 2
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 44.67,
@@ -263,55 +265,55 @@
    "month": "2025-12",
    "sessions": 22,
    "start_equity": 112074.31,
-   "end_equity": 111091.73,
+   "end_equity": 111091.72,
    "return_pct": -0.8767
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 111091.73,
-   "end_equity": 116206.9,
+   "start_equity": 111091.72,
+   "end_equity": 116206.89,
    "return_pct": 4.6045
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 116206.9,
-   "end_equity": 117461.53,
+   "start_equity": 116206.89,
+   "end_equity": 117461.52,
    "return_pct": 1.0797
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 117461.53,
-   "end_equity": 108527.63,
+   "start_equity": 117461.52,
+   "end_equity": 108527.62,
    "return_pct": -7.6058
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 108527.63,
-   "end_equity": 114201.66,
+   "start_equity": 108527.62,
+   "end_equity": 114201.65,
    "return_pct": 5.2282
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 114201.66,
-   "end_equity": 125088.95,
+   "start_equity": 114201.65,
+   "end_equity": 125088.94,
    "return_pct": 9.5334
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 125088.95,
-   "end_equity": 122532.17,
+   "start_equity": 125088.94,
+   "end_equity": 122532.16,
    "return_pct": -2.044
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 122532.17,
+   "start_equity": 122532.16,
    "end_equity": 128433.6,
    "return_pct": 4.8162
   },
@@ -319,14 +321,14 @@
    "month": "2026-08",
    "sessions": 21,
    "start_equity": 128433.6,
-   "end_equity": 135172.51,
-   "return_pct": 5.247
+   "end_equity": 135171.53,
+   "return_pct": 5.2462
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 135172.51,
-   "end_equity": 137857.96,
+   "start_equity": 135171.53,
+   "end_equity": 137856.98,
    "return_pct": 1.9867
   }
  ],
@@ -334,9 +336,10 @@
   "realized_trading_pnl_usd": 38156.76,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 2.9,
+  "dividends_in_lieu_usd": -0.98,
   "borrow_fees_usd": -301.74,
   "execution_costs_already_netted_usd": -1804.77,
-  "total_net_pnl_usd": 37857.96,
+  "total_net_pnl_usd": 37856.98,
   "unexplained_residual_usd": 0.04,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
@@ -408,7 +411,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +37.86% over 251 sessions - +37,858 USD on 100,000 of paper capital, ending at 137,858. Verdict: beat the market."
+    "text": "Outcome: +37.86% over 251 sessions - +37,857 USD on 100,000 of paper capital, ending at 137,857. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -444,7 +447,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 23.44pp and the excess survives a beta adjustment (+35.26pp residual), so the outperformance is not simply leverage on a rising market. Finished at +37.86% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +23.44pp."
+    "text": "It worked: it beat the index by 23.44pp and the excess survives a beta adjustment (+35.25pp residual), so the outperformance is not simply leverage on a rising market. Finished at +37.86% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +23.44pp."
    }
   ],
   "failure_modes_fired": [],

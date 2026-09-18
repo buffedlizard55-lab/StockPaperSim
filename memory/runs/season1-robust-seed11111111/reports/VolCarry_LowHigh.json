@@ -3,44 +3,44 @@
  "strategy_id": "VolCarryLowVol",
  "archetype": "volatility risk premium",
  "starting_cash": 100000.0,
- "final_equity": 18325.56,
- "net_pnl_usd": -81674.44,
- "total_return_pct": -81.6744,
- "cagr_pct": -81.7979,
+ "final_equity": 18322.25,
+ "net_pnl_usd": -81677.75,
+ "total_return_pct": -81.6777,
+ "cagr_pct": -81.8012,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -82.9603,
-  "max_drawdown_usd": -88230.18,
+  "max_drawdown_pct": -82.9634,
+  "max_drawdown_usd": -88233.49,
   "peak_date": "2025-10-07",
   "peak_equity": 106352.25,
   "trough_date": "2026-09-15",
-  "trough_equity": 18122.07,
+  "trough_equity": 18118.76,
   "recovery_date": null,
   "sessions_underwater": 1,
   "never_recovered": true,
-  "sharpe": -2.8839,
-  "sortino": -4.1124,
+  "sharpe": -2.884,
+  "sortino": -4.1125,
   "calmar": 0.986,
-  "daily_vol_pct": 3.4126,
-  "annualised_vol_pct": 54.174,
-  "skew": -0.1449,
-  "excess_kurtosis": 2.2974,
-  "best_session_pct": 10.7859,
-  "worst_session_pct": -16.6497,
-  "var_95_pct": -5.9482,
-  "cvar_95_pct": -8.1377,
-  "var_99_pct": -8.6226,
-  "cvar_99_pct": -11.9961
+  "daily_vol_pct": 3.4129,
+  "annualised_vol_pct": 54.178,
+  "skew": -0.145,
+  "excess_kurtosis": 2.2975,
+  "best_session_pct": 10.7866,
+  "worst_session_pct": -16.6507,
+  "var_95_pct": -5.9484,
+  "cvar_95_pct": -8.1384,
+  "var_99_pct": -8.6231,
+  "cvar_99_pct": -11.997
  },
  "market_relation": {
-  "beta": -1.4098,
-  "alpha_annual_pct": -135.9213,
+  "beta": -1.4099,
+  "alpha_annual_pct": -135.9365,
   "r_squared": 0.1127,
-  "tracking_error_annual_pct": 51.029,
+  "tracking_error_annual_pct": 51.033,
   "information_ratio": -2.664,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -20.323,
-  "residual_return_pct": -61.352
+  "beta_contribution_pct": -20.324,
+  "residual_return_pct": -61.354
  },
  "trades": {
   "closed_trades": 48,
@@ -132,14 +132,16 @@
  },
  "carry": {
   "dividends_received_usd": 643.47,
+  "dividends_in_lieu_paid_usd": 3.31,
   "borrow_fees_paid_usd": 2250.71,
-  "net_carry_usd": -1607.24,
+  "net_carry_usd": -1610.55,
   "margin_calls": [
-   "2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10",
-   "2026-08-21: equity 18,937.21 < maintenance requirement 19,705.37"
+   "2026-03-25: equity 44,518.26 < maintenance requirement 48,913.10",
+   "2026-08-21: equity 18,933.90 < maintenance requirement 19,705.37"
   ],
   "margin_call_count": 2,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 121.84,
@@ -153,7 +155,7 @@
  },
  "turnover": {
   "traded_notional_usd": 740468.59,
-  "annualised_turnover_x": 13.264
+  "annualised_turnover_x": 13.265
  },
  "contribution_by_symbol": [
   {
@@ -246,102 +248,103 @@
    "month": "2025-12",
    "sessions": 22,
    "start_equity": 71141.09,
-   "end_equity": 68516.7,
-   "return_pct": -3.689
+   "end_equity": 68515.04,
+   "return_pct": -3.6913
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 68516.7,
-   "end_equity": 68050.04,
+   "start_equity": 68515.04,
+   "end_equity": 68048.38,
    "return_pct": -0.6811
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 68050.04,
-   "end_equity": 70554.38,
+   "start_equity": 68048.38,
+   "end_equity": 70552.73,
    "return_pct": 3.6802
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 70554.38,
-   "end_equity": 43000.47,
-   "return_pct": -39.0534
+   "start_equity": 70552.73,
+   "end_equity": 42997.16,
+   "return_pct": -39.0567
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 43000.47,
-   "end_equity": 41775.35,
-   "return_pct": -2.8491
+   "start_equity": 42997.16,
+   "end_equity": 41772.04,
+   "return_pct": -2.8493
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 41775.35,
-   "end_equity": 40649.53,
-   "return_pct": -2.6949
+   "start_equity": 41772.04,
+   "end_equity": 40646.22,
+   "return_pct": -2.6951
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 40649.53,
-   "end_equity": 29664.63,
-   "return_pct": -27.0234
+   "start_equity": 40646.22,
+   "end_equity": 29661.32,
+   "return_pct": -27.0256
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 29664.63,
-   "end_equity": 26000.91,
-   "return_pct": -12.3505
+   "start_equity": 29661.32,
+   "end_equity": 25997.6,
+   "return_pct": -12.3519
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 26000.91,
-   "end_equity": 18801.82,
-   "return_pct": -27.6878
+   "start_equity": 25997.6,
+   "end_equity": 18798.51,
+   "return_pct": -27.6914
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 18801.82,
-   "end_equity": 18325.56,
-   "return_pct": -2.533
+   "start_equity": 18798.51,
+   "end_equity": 18322.25,
+   "return_pct": -2.5335
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": -80067.19,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 643.47,
+  "dividends_in_lieu_usd": -3.31,
   "borrow_fees_usd": -2250.71,
   "execution_costs_already_netted_usd": -92.15,
-  "total_net_pnl_usd": -81674.44,
+  "total_net_pnl_usd": -81677.75,
   "unexplained_residual_usd": -0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "lost money",
-  "headline": "Lost money: -81.67% total return vs +14.41% for the index, -61.35pp residual after beta, -83.0% max drawdown, 0.09% of capital lost to execution costs.",
+  "headline": "Lost money: -81.68% total return vs +14.41% for the index, -61.35pp residual after beta, -83.0% max drawdown, 0.09% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -81.67% - a 81,674 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -81.68% - a 81,678 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.67%."
+    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.68%."
    },
    {
     "kind": "factor",
-    "text": "The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.67% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.68% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "kind": "attribution",
-    "text": "Of the -81.67% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -81.68% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
@@ -369,7 +372,7 @@
    },
    {
     "kind": "drawdown",
-    "text": "2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10"
+    "text": "2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,518.26 < maintenance requirement 48,913.10"
    },
    {
     "kind": "tail",
@@ -395,15 +398,15 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -81.67% over 251 sessions - -81,674 USD on 100,000 of paper capital, ending at 18,326. Verdict: lost money."
+    "text": "Outcome: -81.68% over 251 sessions - -81,678 USD on 100,000 of paper capital, ending at 18,322. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.67%. The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.67% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The low_vol premium it is built to harvest went the wrong way (-40.90% over the season), so the signal was fighting the tape and the account lost 81.68%. The beta premium it is built to harvest was live (+58.00%) and the account STILL lost 81.68% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the -81.67% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost. QQQ contributed +3,680 USD across 8 closed trades; CVNA was the biggest drag at -45,962 USD."
+    "text": "Of the -81.68% total, about -20.32pp is explained by carrying beta -1.41 against a +14.41% market (R^2 0.11); the residual -61.35pp is everything else - selection, timing, leverage and cost. QQQ contributed +3,680 USD across 8 closed trades; CVNA was the biggest drag at -45,962 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -415,7 +418,7 @@
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -82.96% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 122% of starting capital, peak leverage 3.66x. 2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,521.58 < maintenance requirement 48,913.10 Daily returns were -0.14 skewed with excess kurtosis +2.30; historical 95% VaR -5.95%/day with CVaR -8.14%/day. Worst single session -16.65%, best +10.79%."
+    "text": "Worst peak-to-trough drawdown -82.96% (-9.10% for the index), trough on 2026-09-15, never recovered. Average gross exposure 122% of starting capital, peak leverage 3.66x. 2 maintenance-margin breach(es) triggered forced liquidation: 2026-03-25: equity 44,518.26 < maintenance requirement 48,913.10 Daily returns were -0.14 skewed with excess kurtosis +2.30; historical 95% VaR -5.95%/day with CVaR -8.14%/day. Worst single session -16.65%, best +10.79%."
    },
    {
     "title": "Regime context (real market data)",
@@ -431,7 +434,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: -81.67% in a market that returned +14.41%, and a residual of -61.35pp after beta - the trading itself destroyed value, not just the market direction. Finished at -81.67% - a 81,674 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -81.68% in a market that returned +14.41%, and a residual of -61.35pp after beta - the trading itself destroyed value, not just the market direction. Finished at -81.68% - a 81,678 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [

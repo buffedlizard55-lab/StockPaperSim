@@ -1047,7 +1047,9 @@ def build_participant(d: SiteData, username: str) -> str:
 {card("P&amp;L decomposition", table(["Bucket", "USD"], [
     ["Realised trading P&amp;L", money(dec["realized_trading_pnl_usd"])],
     ["Open-position P&amp;L at the final mark", money(dec["open_position_pnl_usd"])],
-    ["Cash dividends received", money(dec["dividends_usd"])],
+    ["Cash dividends received on longs", money(dec["dividends_usd"])],
+    ["Manufactured dividends paid on shorts",
+     money(dec.get("dividends_in_lieu_usd", 0.0))],
     ["Borrow fees paid on shorts", money(dec["borrow_fees_usd"])],
     ["<strong>Total net P&amp;L</strong>", f'<strong>{money(dec["total_net_pnl_usd"])}</strong>'],
     ["Unexplained residual (fees/rounding)", money(dec["unexplained_residual_usd"])],
@@ -1079,7 +1081,12 @@ def build_participant(d: SiteData, username: str) -> str:
     ["Peak leverage", num(e["max_leverage"], F2) + "x"],
     ["Sessions flat", num(e["sessions_flat"], F0P)],
     ["Maintenance-margin breaches", num(rep["carry"]["margin_call_count"], F0P)],
-    ["Day trades (PDT count)", num(rep["carry"]["day_trades"], F0P)],
+    ["Intraday round trips (PDT definition)",
+     num(rep["carry"].get("day_trade_count", 0), F0P)
+     + f' &middot; {num(rep["carry"]["day_trades"], F0P)} session(s)'],
+    ["Manufactured dividends paid on shorts",
+     money(rep["carry"].get("dividends_in_lieu_paid_usd", 0.0))],
+    ["Cash dividends received on longs", money(rep["carry"]["dividends_received_usd"])],
 ]))}
 </div>
 

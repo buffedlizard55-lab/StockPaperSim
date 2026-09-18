@@ -1,129 +1,129 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season1-robust-seed33333333",
- "created_utc": "2026-09-17T23:05:47Z",
- "finalised_utc": "2026-09-17T23:05:48Z",
+ "created_utc": "2026-09-18T00:23:35Z",
+ "finalised_utc": "2026-09-18T00:23:37Z",
  "code": {
   "git": {
-   "commit": "8be8d60e49b34796a7980ddcede8bac07531982c",
-   "branch": "arena/01a0b0af-stockpapersim",
+   "commit": "71b3d9062d2c26eb711965cc77cfe5bc07b4ead5",
+   "branch": "arena/01a0b1bf-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
   "python_module_hashes": {
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
-   "sim/analytics.py": "a7d14255cc244a219cd3d89edcd3c0507f5cb95df0fe6a7d940f1b9c0b743e59",
+   "sim/analytics.py": "fe474d5e5f13e91d047b8d3f3791f861887389279f6fbf65cb8383c9b7dbb001",
    "sim/calendar.py": "aca4c539837ab6ef545bae63a8160d5824cb04fe89a5903a88900164e6f5df16",
    "sim/cli.py": "0142f6b4d4e870eaa70d8cd85fc896e4f53b20e89c3de26dbe6ae0d816992270",
-   "sim/config.py": "e55d0e946e4568e36729b3b4d8abe69d3b586853557db946cec6085c1da169b9",
-   "sim/engine.py": "9ff3b887efa253ddc5bee2b66664e99147a38c8034e685d9c281924970bf506f",
+   "sim/config.py": "e5ef91ff94e5bd24488233ebd5b43a740495f69eab9337daf06c1bdc05d87110",
+   "sim/engine.py": "e552a725f6417b8c2b6ca0dd4f5eff9e1eb7ede48205a7fb326f21c9c30860f3",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
    "sim/memory.py": "154d28a5f2103bcf12ddcf9b2f5e9d6e2492d9262a529a84adec883327897627",
-   "sim/microstructure.py": "0c402f6cd3814cda4dda60d4de6aacfe17939e2f35afd9c98cfb039c9f52b12f",
-   "sim/portfolio.py": "2c56dd5dc5329d7e1a546fe8273bb300a61c438310d6b62cd430f57244a7e3b9",
-   "sim/strategies.py": "25619b3433d754880d1d42b6c4be172ad71e7c97417ea40b321f8cee8133f27a",
+   "sim/microstructure.py": "cb4d849f3d4e91172d93ed8d83fb47ce504ef51a6d81bf8d8b78fcbd49569f44",
+   "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
+   "sim/strategies.py": "73780180e420381711e306573923e5daecbdf8f64d90f7d23568f9f3e2177a63",
    "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
   }
  },
  "files": {
   "reports/MomentumMax_12x1.json": {
-   "sha256": "1a13956604dcdf71018aa72d786dbd1c6f5c1ff4635b15cd844d3541c1e3535a",
-   "bytes": 16960,
+   "sha256": "5639471f188f03aa6121f88dda5586c9f5763c07da4a041b6ca9fc6fc967b887",
+   "bytes": 17054,
    "kind": "json"
   },
   "reports/GapAndGo_YOLO.json": {
-   "sha256": "a546b74870369568d4d3e43c19b33dd2c7fcaa629fbce7fef2661405e063c39b",
-   "bytes": 17872,
+   "sha256": "60b689c74e563e4100586f456f88d20ce3ef79ac58a9458265f64e166d1b183e",
+   "bytes": 17619,
    "kind": "json"
   },
   "reports/TrendSurfer_GoldenX.json": {
-   "sha256": "b7bf2ff8b6636dae9cdcd6dbffc853c513a751ce1665d6ec42ccbd53e76263e5",
-   "bytes": 16614,
+   "sha256": "516fe7d6bde3e9f5fcc5305cce2adcda4cd251c7677fbf02f0495d4f696cafa0",
+   "bytes": 16709,
    "kind": "json"
   },
   "reports/MeanRev_Z2Sigma.json": {
-   "sha256": "660bf93d0b91d7bbedd1bf44fa1a1c1c3e3a92fd508e4842c537f75e57ead036",
-   "bytes": 18212,
+   "sha256": "acf2fcf2c960e288094eee5c0d728fdbde6a2ea14cea31171e3f8160e27d2bfe",
+   "bytes": 18197,
    "kind": "json"
   },
   "reports/DonchianBreakout_20.json": {
-   "sha256": "35ab3d3c08d4d728bd384d4eed7dd044c40dd56f82c944755e2918fe46982fa7",
-   "bytes": 16393,
+   "sha256": "3ba12df5641a100855633a7bff4aafb88d37865bce532b64d05880ceb73eb87d",
+   "bytes": 16501,
    "kind": "json"
   },
   "reports/DriftRider_PEAD.json": {
-   "sha256": "774cf4b9a4dc7d8c769258a3b592c01918466eee6cf14c45bae84ba58d387a9b",
-   "bytes": 17049,
+   "sha256": "b90c5444049f9fc7b0a7e306033d05df1ace7800abedab60d13b6ce1a25351ee",
+   "bytes": 17148,
    "kind": "json"
   },
   "reports/SqueezeHunter_TF.json": {
-   "sha256": "ede25ba14262baa653745bcf9c7c9db13743acd3624f62f03481d7864be04da7",
-   "bytes": 16705,
+   "sha256": "d211a9c799ee2b1e7a2f026ba7fd3fee8066ac5f3a75e0c32de3576d3555b10c",
+   "bytes": 16799,
    "kind": "json"
   },
   "reports/BetaChaser_3xProxy.json": {
-   "sha256": "615c129294fdae1e8a1393cf702ff519b6e44fd3bb2ba7c0b5d19d8e8b73b6a0",
-   "bytes": 16128,
+   "sha256": "800e0c590e51f7e01a1ce0ea6dcbafb628b1326c10a03cf7520ced82cfea7163",
+   "bytes": 16222,
    "kind": "json"
   },
   "reports/SectorRotator_AlphaX.json": {
-   "sha256": "5a3c12fa62ae6dc9979be5ad68a2ea00ae832a3b70512f5b9aee25f51dfd064f",
-   "bytes": 16565,
+   "sha256": "e9a7b0d31d7d4906fa0f53a6e14e4c059c794eab5269a7a85ac824e97303330f",
+   "bytes": 16663,
    "kind": "json"
   },
   "reports/PairsArb_ZScore2.json": {
-   "sha256": "95cd2e94853556567405070aa038501ffcb494e0c808c14dfa604405d40c4fdc",
-   "bytes": 15031,
+   "sha256": "444f7f6e1f92f61ef1d36bbb32ade02b4e41a9549de217764f6798a78f4bed93",
+   "bytes": 15126,
    "kind": "json"
   },
   "reports/SpreadHarvester_MM.json": {
-   "sha256": "16bdb9394e14666ec38b11ff074cc7fb5106284c6d7fcb83fec97922bda70206",
-   "bytes": 16322,
+   "sha256": "60a6198ea465e18f8d27319762b9a81707d177adf07dd310b1ff6f2a98c1c28b",
+   "bytes": 17011,
    "kind": "json"
   },
   "reports/VolCarry_LowHigh.json": {
-   "sha256": "e4d3b7354f120b33c47185d1c3a95864300859c417599c73dcf2caab4277f7f0",
-   "bytes": 16278,
+   "sha256": "e6791143369774f0d43470e646c96b4413ef4fdb22076658e6428f7aa3cbd52b",
+   "bytes": 16372,
    "kind": "json"
   },
   "reports/VIXRegime_Timer.json": {
-   "sha256": "81c3b5c267c6b6e62715cb8c839a65a24b39db70231540213b4ff862526f50d3",
-   "bytes": 15370,
+   "sha256": "b3c145cb22bbbe7f8b0a3bbb42d91b906ee75a2bb857f519cb9d28d9fe0d4866",
+   "bytes": 15458,
    "kind": "json"
   },
   "reports/OverreactionFade_LT.json": {
-   "sha256": "2cb5baff39bea5bbfac2128663206fcc3c4556754bb10c888a127d3f30c7b694",
-   "bytes": 16108,
+   "sha256": "a113fcf44af7fc719a2dee306836596ce71064b91499de4ca63366900cf839ba",
+   "bytes": 16202,
    "kind": "json"
   },
   "reports/IlliquidRocket_Degen.json": {
-   "sha256": "a230283800a5cdcb4732e06f7bf297c527c89f4211758ef2ade52de2d123e141",
-   "bytes": 15594,
+   "sha256": "25a62223b17654b8ec2dedd95270d6fe569bfb6a595799425402b9a331c63efd",
+   "bytes": 15686,
    "kind": "json"
   },
   "reports/BuyHold_MaxBeta.json": {
-   "sha256": "207a840f71a2ee78500e74ae79986a6f351b634f4a0458a6c71536796ffd2409",
-   "bytes": 15245,
+   "sha256": "1bd0fb46655fea65b44c6bf9144c864962312adedb974a36a509bda51022965b",
+   "bytes": 15339,
    "kind": "json"
   },
   "reports/OneBigBet_Concentra.json": {
-   "sha256": "d30e6ac94543b9aa27621e6ea89bd0c8646944c851f9a4cb1ce80bffafea08a7",
-   "bytes": 16119,
+   "sha256": "90a49921e44ced664754f24a6b957ac9f5e3920678eb8267bdfe399439ea5c47",
+   "bytes": 16213,
    "kind": "json"
   },
   "reports/OvernightCarry_NO.json": {
-   "sha256": "9b2f1f5da50973e1f4fa2fb7880bd8f55eeec963160d2d1980c2d3da69d50f69",
-   "bytes": 15467,
+   "sha256": "70a2b3323196d8c2af752632cf1df52c903f454bcbffe19160262e6cf8533307",
+   "bytes": 16320,
    "kind": "json"
   },
   "reports/KitchenSink_AllIn.json": {
-   "sha256": "76ac2cdc9b149c8130eece92084f03c7a8f53654b8b1a711d89cd6fe57243342",
-   "bytes": 18700,
+   "sha256": "2913941dc757b757c1b1d68171aa465e954fb299e5aa184cd11bcd9f0b553c88",
+   "bytes": 18798,
    "kind": "json"
   },
   "reports/Contrarian_DeepValue.json": {
-   "sha256": "81b9d72ae32df5cc4b82af66d9de3486854f231ef105400fa8de87aa1436e60b",
-   "bytes": 15956,
+   "sha256": "df1f378968d9d34d25eb27c1e018b1865ab0a5d011a46583cf0772d3fb219290",
+   "bytes": 16055,
    "kind": "json"
   },
   "market_report.json": {
@@ -137,18 +137,18 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "1ac85b4a48111c0cb171d4f9e3db9c4ffb8820b1d285bab628f3185f40c697da",
-   "bytes": 10898,
+   "sha256": "e51b39181f430e6fa6ab16ce327d9dc2b4a2ab06883e7c12bb434486257afd8a",
+   "bytes": 10891,
    "kind": "json"
   },
   "irregularities.json": {
-   "sha256": "d9e6100bee47e5e2ba569807856147346a8f0c3e64aa3044f1b222c70f33d5f6",
-   "bytes": 3765,
+   "sha256": "9c3a4c36cc9b151dab714e4a19ac1e61da7754bb0eb995c04b95dbd00a49d073",
+   "bytes": 4023,
    "kind": "json"
   },
   "participants.json": {
-   "sha256": "94043897ccc2c6828200825f95a2faccfc41734f8da3302c296296d044d7ca64",
-   "bytes": 35515,
+   "sha256": "e8dc9f6fafde668d31bc73bcd246b98b0522c2e97b3cf03577d3f55cb058412f",
+   "bytes": 35931,
    "kind": "json"
   }
  },
@@ -176,7 +176,7 @@
   {
    "rank": 2,
    "username": "@Contrarian_DeepValue",
-   "total_return_pct": 153.6718
+   "total_return_pct": 153.9045
   },
   {
    "rank": 3,
@@ -390,9 +390,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-17T23:05:47Z",
-  "finished_utc": "2026-09-17T23:05:48Z",
-  "elapsed_seconds": 1.53
+  "started_utc": "2026-09-18T00:23:35Z",
+  "finished_utc": "2026-09-18T00:23:37Z",
+  "elapsed_seconds": 1.64
  },
- "irregularity_count": 15
+ "irregularity_count": 16
 }

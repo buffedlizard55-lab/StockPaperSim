@@ -3,10 +3,10 @@
  "strategy_id": "MeanRevZ",
  "archetype": "short-term reversal",
  "starting_cash": 100000.0,
- "final_equity": 95333.11,
- "net_pnl_usd": -4666.89,
- "total_return_pct": -4.6669,
- "cagr_pct": -4.685,
+ "final_equity": 95334.22,
+ "net_pnl_usd": -4665.78,
+ "total_return_pct": -4.6658,
+ "cagr_pct": -4.6839,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -19.184,
@@ -18,12 +18,12 @@
   "recovery_date": null,
   "sessions_underwater": 125,
   "never_recovered": true,
-  "sharpe": -0.2087,
-  "sortino": -0.2318,
+  "sharpe": -0.2086,
+  "sortino": -0.2317,
   "calmar": 0.2442,
   "daily_vol_pct": 1.0413,
   "annualised_vol_pct": 16.53,
-  "skew": -0.5643,
+  "skew": -0.5644,
   "excess_kurtosis": 9.7583,
   "best_session_pct": 5.31,
   "worst_session_pct": -6.4044,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 0.4128,
-  "alpha_annual_pct": -9.3978,
+  "alpha_annual_pct": -9.3966,
   "r_squared": 0.1038,
   "tracking_error_annual_pct": 15.648,
-  "information_ratio": -0.601,
+  "information_ratio": -0.6,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 5.951,
-  "residual_return_pct": -10.618
+  "residual_return_pct": -10.617
  },
  "trades": {
   "closed_trades": 54,
@@ -141,12 +141,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 159.91,
+  "dividends_received_usd": 161.02,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 159.91,
+  "net_carry_usd": 161.02,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 32.56,
@@ -406,18 +408,19 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 91905.29,
-   "end_equity": 95333.11,
-   "return_pct": 3.7297
+   "end_equity": 95334.22,
+   "return_pct": 3.7309
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": -4826.8,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 159.91,
+  "dividends_usd": 161.02,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -419.87,
-  "total_net_pnl_usd": -4666.89,
-  "unexplained_residual_usd": 0.0,
+  "total_net_pnl_usd": -4665.78,
+  "unexplained_residual_usd": -0.0,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
@@ -426,7 +429,7 @@
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -4.67% - a 4,667 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -4.67% - a 4,666 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
@@ -442,7 +445,7 @@
    },
    {
     "kind": "concentration",
-    "text": "CVNA contributed +6,744 USD (-144% of net P&L) across 4 closed trades; RIVN was the biggest drag at -14,422 USD."
+    "text": "CVNA contributed +6,744 USD (-145% of net P&L) across 4 closed trades; RIVN was the biggest drag at -14,422 USD."
    },
    {
     "kind": "costs",
@@ -492,7 +495,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -4.67% over 251 sessions - -4,667 USD on 100,000 of paper capital, ending at 95,333. Verdict: lost money."
+    "text": "Outcome: -4.67% over 251 sessions - -4,666 USD on 100,000 of paper capital, ending at 95,334. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
@@ -500,7 +503,7 @@
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the -4.67% total, about +5.95pp is explained by carrying beta 0.41 against a +14.41% market (R^2 0.10); the residual -10.62pp is everything else - selection, timing, leverage and cost. CVNA contributed +6,744 USD (-144% of net P&L) across 4 closed trades; RIVN was the biggest drag at -14,422 USD."
+    "text": "Of the -4.67% total, about +5.95pp is explained by carrying beta 0.41 against a +14.41% market (R^2 0.10); the residual -10.62pp is everything else - selection, timing, leverage and cost. CVNA contributed +6,744 USD (-145% of net P&L) across 4 closed trades; RIVN was the biggest drag at -14,422 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -528,7 +531,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: -4.67% in a market that returned +14.41%, and a residual of -10.62pp after beta - the trading itself destroyed value, not just the market direction. Finished at -4.67% - a 4,667 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -4.67% in a market that returned +14.41%, and a residual of -10.62pp after beta - the trading itself destroyed value, not just the market direction. Finished at -4.67% - a 4,666 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],

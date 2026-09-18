@@ -1,129 +1,129 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season1-primary-seed20260917",
- "created_utc": "2026-09-17T23:05:41Z",
- "finalised_utc": "2026-09-17T23:05:43Z",
+ "created_utc": "2026-09-18T00:23:29Z",
+ "finalised_utc": "2026-09-18T00:23:32Z",
  "code": {
   "git": {
-   "commit": "8be8d60e49b34796a7980ddcede8bac07531982c",
-   "branch": "arena/01a0b0af-stockpapersim",
+   "commit": "71b3d9062d2c26eb711965cc77cfe5bc07b4ead5",
+   "branch": "arena/01a0b1bf-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
   "python_module_hashes": {
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
-   "sim/analytics.py": "a7d14255cc244a219cd3d89edcd3c0507f5cb95df0fe6a7d940f1b9c0b743e59",
+   "sim/analytics.py": "fe474d5e5f13e91d047b8d3f3791f861887389279f6fbf65cb8383c9b7dbb001",
    "sim/calendar.py": "aca4c539837ab6ef545bae63a8160d5824cb04fe89a5903a88900164e6f5df16",
    "sim/cli.py": "0142f6b4d4e870eaa70d8cd85fc896e4f53b20e89c3de26dbe6ae0d816992270",
-   "sim/config.py": "e55d0e946e4568e36729b3b4d8abe69d3b586853557db946cec6085c1da169b9",
-   "sim/engine.py": "9ff3b887efa253ddc5bee2b66664e99147a38c8034e685d9c281924970bf506f",
+   "sim/config.py": "e5ef91ff94e5bd24488233ebd5b43a740495f69eab9337daf06c1bdc05d87110",
+   "sim/engine.py": "e552a725f6417b8c2b6ca0dd4f5eff9e1eb7ede48205a7fb326f21c9c30860f3",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
    "sim/memory.py": "154d28a5f2103bcf12ddcf9b2f5e9d6e2492d9262a529a84adec883327897627",
-   "sim/microstructure.py": "0c402f6cd3814cda4dda60d4de6aacfe17939e2f35afd9c98cfb039c9f52b12f",
-   "sim/portfolio.py": "2c56dd5dc5329d7e1a546fe8273bb300a61c438310d6b62cd430f57244a7e3b9",
-   "sim/strategies.py": "25619b3433d754880d1d42b6c4be172ad71e7c97417ea40b321f8cee8133f27a",
+   "sim/microstructure.py": "cb4d849f3d4e91172d93ed8d83fb47ce504ef51a6d81bf8d8b78fcbd49569f44",
+   "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
+   "sim/strategies.py": "73780180e420381711e306573923e5daecbdf8f64d90f7d23568f9f3e2177a63",
    "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
   }
  },
  "files": {
   "reports/MomentumMax_12x1.json": {
-   "sha256": "f17d31875de4f28bc3cad5713a480529119ba3fd82570870b34be018c32ced3c",
-   "bytes": 16102,
+   "sha256": "8382d11a8aa6044c4887888f0ef61de18c6d33ea7d7f7e780056bf98b6d272eb",
+   "bytes": 16196,
    "kind": "json"
   },
   "reports/GapAndGo_YOLO.json": {
-   "sha256": "a836eb06daecdd2105f8a77ef78e667e6732a5346e9b4d216568d82ca0872d51",
-   "bytes": 17957,
+   "sha256": "f844f9abc30184c9892b443d512594fd0c7de3bb319724dede5e9050a46d2946",
+   "bytes": 17712,
    "kind": "json"
   },
   "reports/TrendSurfer_GoldenX.json": {
-   "sha256": "874d4a0fd6e555be3b8ce8f9eedd3f3613ec11f97a733a65041f9e3c76de6048",
-   "bytes": 16258,
+   "sha256": "b5ff8f64bbf77052266c61184f179b842e3f9eced84c8e1691c10a69b76a4e04",
+   "bytes": 16351,
    "kind": "json"
   },
   "reports/MeanRev_Z2Sigma.json": {
-   "sha256": "491abe05cc1bd5bd6058f0bd6b55d7df3ec75c7ff3c118c6fd1fbc5c82d64001",
-   "bytes": 18206,
+   "sha256": "3445542273d7a7763a1f2e1fb7f964a3f01f092e51778bfaf01f58bd02605a1a",
+   "bytes": 18294,
    "kind": "json"
   },
   "reports/DonchianBreakout_20.json": {
-   "sha256": "d811302a42976855afaaba3d72cbb0d68cb92b7be33c58fec0009a37a96c8fa5",
-   "bytes": 16397,
+   "sha256": "4e1121ea4e35f322c812e05f9f060e1b148f500d69f254a2e0c5059a02de91c1",
+   "bytes": 16495,
    "kind": "json"
   },
   "reports/DriftRider_PEAD.json": {
-   "sha256": "bd28792114fbfb9ff8047098b65eb38b464aab36693c58ddf1702f88ce3083b9",
-   "bytes": 16863,
+   "sha256": "81fc71fb2f4ad2a509cf498b65453e645a0b619893e5a0367062d22cbacc778a",
+   "bytes": 16972,
    "kind": "json"
   },
   "reports/SqueezeHunter_TF.json": {
-   "sha256": "7b95770e55a730e9d5181e687de97d3bc993fa3dc6a270b7ab819b8b7feff27c",
-   "bytes": 16936,
+   "sha256": "7ba9480158988818ac7cee9ee9bf3f48dace0ba3d72d2b25e3e448fbeac17071",
+   "bytes": 17030,
    "kind": "json"
   },
   "reports/BetaChaser_3xProxy.json": {
-   "sha256": "6394da1a5baf1ccfec89101ba99b40e9fadcd8acbf08ba4f78915197602f7d54",
-   "bytes": 16183,
+   "sha256": "321e5eb78e1fc4f29e60ef3bf6803293acbefff654152596313449a91fa0e731",
+   "bytes": 16277,
    "kind": "json"
   },
   "reports/SectorRotator_AlphaX.json": {
-   "sha256": "f194ea30aa474900a40229508ddb3845ca327a4b3cbea878c44b42477fadd245",
-   "bytes": 15853,
+   "sha256": "3ff2a915ccfc31a154d6fca18b13edaa740958e3a7f78460ce6931148e70472c",
+   "bytes": 15947,
    "kind": "json"
   },
   "reports/PairsArb_ZScore2.json": {
-   "sha256": "0b8a1393082f4cfbcc18fbc4815cae0f44670a258813d07b097739ed0170c462",
-   "bytes": 15183,
+   "sha256": "8f5c465d190c99b756f5da17e5cd5659c6b1d85c6bbd671308feb5875b638059",
+   "bytes": 15277,
    "kind": "json"
   },
   "reports/SpreadHarvester_MM.json": {
-   "sha256": "623b12eef03d2173083b1ffd64a409c254237b4f252e1fef6c8a0fbda4ff2985",
-   "bytes": 16933,
+   "sha256": "5ad8a59346fa172e09d37a493b7d1caab956c8f1e19f3a7d68d37815e46fe0fa",
+   "bytes": 16968,
    "kind": "json"
   },
   "reports/VolCarry_LowHigh.json": {
-   "sha256": "12960a4534309e96a4ccd9c730f289bb50078e7d493d76271cebc245216b5e61",
-   "bytes": 15712,
+   "sha256": "31d44c06957c36efb9f95228cd4561be2da69611f70f94ad77e8347877d1c126",
+   "bytes": 15809,
    "kind": "json"
   },
   "reports/VIXRegime_Timer.json": {
-   "sha256": "16b8021df0c0a7dc996b3407493d1afc1cadd84f21e7a86ebda9e378f45c6899",
-   "bytes": 15366,
+   "sha256": "f1980f11e0d79af3065ced1e6516e082882a2e3ebd658e2d9846ea60e945b7c1",
+   "bytes": 15456,
    "kind": "json"
   },
   "reports/OverreactionFade_LT.json": {
-   "sha256": "5daf7ba905f2787a9e76fdfb9c7674b3465abedba4a9681f71e80992041d1eb2",
-   "bytes": 16118,
+   "sha256": "5af11c28bdb4683f4506c08d2207f4a7005fac7c137908be54e2d14701ca8299",
+   "bytes": 16191,
    "kind": "json"
   },
   "reports/IlliquidRocket_Degen.json": {
-   "sha256": "8acc0768107dacb82e7688f666ec29155877f556e9b5f3b470285574e4e4e8e6",
-   "bytes": 15687,
+   "sha256": "e2c8d5b3c7c5feb7d691a87ea0d027dccd28b401854d0d93ae0855a5fb5be1c5",
+   "bytes": 15781,
    "kind": "json"
   },
   "reports/BuyHold_MaxBeta.json": {
-   "sha256": "4ab532b0aab587e8c6cd07f52f6a1bbf4ace0dac7d9f72f230e524d0c2b374d4",
-   "bytes": 15178,
+   "sha256": "021cb32d439f59f7d212441890d47f6de69d3f0b4f94680f92d85ec2af678c56",
+   "bytes": 15272,
    "kind": "json"
   },
   "reports/OneBigBet_Concentra.json": {
-   "sha256": "fc8f466a81b537fa32fe2c70a7835be3284335b2b732f92c9253d22662cb5149",
-   "bytes": 15890,
+   "sha256": "45215b74d56f412321a4ebfed4c98777ec46e3f29ff1591993669dc251f93a6a",
+   "bytes": 15599,
    "kind": "json"
   },
   "reports/OvernightCarry_NO.json": {
-   "sha256": "40d05528df2f1c2378b783951fd4c0c09cad93c4e9a5c7852f26ab7a8b73ece5",
-   "bytes": 15482,
+   "sha256": "726a46802f622e2632f125da7b802ccb499befd6819443e8f09c1fa71eb56ce7",
+   "bytes": 16303,
    "kind": "json"
   },
   "reports/KitchenSink_AllIn.json": {
-   "sha256": "e9f9359ab801b84bee0372069c655acf655189d518a78286394b3845cc90c9ef",
-   "bytes": 18698,
+   "sha256": "ca6e80436854937d2326e4c61c2adb0e83bef3f226419ebe6534ed4cbbc5e991",
+   "bytes": 18785,
    "kind": "json"
   },
   "reports/Contrarian_DeepValue.json": {
-   "sha256": "97e8f1ade178976ccb75416a83572da0b4951cc18c9c48a7b5046b9a0c436d46",
-   "bytes": 15896,
+   "sha256": "2a38f7a12fc4f92b5db1e0e16ceeff0c713358ec6d84404d9e3d661e79ce37d8",
+   "bytes": 15990,
    "kind": "json"
   },
   "market_report.json": {
@@ -137,18 +137,18 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "badad21eff31cf545a00e17817ce93114bd24016eb7f176c6c6663571d32432f",
-   "bytes": 10952,
+   "sha256": "6cce7f0d9b3f679f0c3e76efc0fa8a97d3199f7c2a9b6d8d35badc1739e2ee63",
+   "bytes": 10938,
    "kind": "json"
   },
   "irregularities.json": {
-   "sha256": "5d49fea5b1255500c9faa33944ea69858548755d0d42e7adf9542347b8070d70",
-   "bytes": 2991,
+   "sha256": "e705ce27dd91c6ba40dc3b10fc3c60da17aced694dc6c77bd459874da57c5124",
+   "bytes": 2990,
    "kind": "json"
   },
   "participants.json": {
-   "sha256": "94043897ccc2c6828200825f95a2faccfc41734f8da3302c296296d044d7ca64",
-   "bytes": 35515,
+   "sha256": "e8dc9f6fafde668d31bc73bcd246b98b0522c2e97b3cf03577d3f55cb058412f",
+   "bytes": 35931,
    "kind": "json"
   },
   "market_data.json": {
@@ -157,52 +157,52 @@
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "0d8d62538d51a22bab48378f6a7db3bd9bb2ee4a4f77f7cdb042535ecebfb56d",
-   "bytes": 7970,
+   "sha256": "9302b8e6cd62800a4e007c8e0a9b178042bb21600204bc4eabd86666ed121f6d",
+   "bytes": 9537,
    "kind": "jsonl.gz",
-   "rows": 1178
+   "rows": 1299
   },
   "events/equity.jsonl.gz": {
-   "sha256": "8e8f846eaabe2a1a0885fefcfb77748a5ae3979ae3e5eddf8ed2906781458e54",
-   "bytes": 191356,
+   "sha256": "6f4b5be95032d52b5ccbb5af590a4ee186ae406e5588924ad9e7ebe391d18225",
+   "bytes": 185350,
    "kind": "jsonl.gz",
    "rows": 5020
   },
   "events/fills.jsonl.gz": {
-   "sha256": "bed5f60692c5c2c463c7139ffacb48bb447dbe63f8234d7d27bf37a3f89e4c8a",
-   "bytes": 238724,
+   "sha256": "ed46cd0700aa6b81d017cc501a299851f36a763109651f3d4684e6366bbece50",
+   "bytes": 251108,
    "kind": "jsonl.gz",
-   "rows": 2985
+   "rows": 3078
   },
   "events/margin.jsonl.gz": {
-   "sha256": "5ecffe75ff1561169c2f6c1f5cb3e756a1e9a6fc302875246e399b993c5d013a",
-   "bytes": 773,
+   "sha256": "e03526e9f34a10d6127803be3ce2d1df006b61348e029fcfdd6ffb0c56e52117",
+   "bytes": 746,
    "kind": "jsonl.gz",
-   "rows": 22
+   "rows": 21
   },
   "events/orders.jsonl.gz": {
-   "sha256": "062b41f389456367fae01d1e964f6ef74b26ff0c7a48ebc74932119313b8658a",
-   "bytes": 35290,
+   "sha256": "02d5d7d0a5adc1d7a0b6f934b6559d65bf98b30a458ec702e4c78f6d9ad15f82",
+   "bytes": 35996,
    "kind": "jsonl.gz",
-   "rows": 2987
+   "rows": 3081
   },
   "events/positions.jsonl.gz": {
-   "sha256": "04a6aa212f87dafcb2576b090567ac739793bdec805540ca7d9905775ad06e37",
-   "bytes": 480823,
+   "sha256": "8df89abae74507062c6953f2885d9fad2ce2a0a38f2f565cb01419d56c28f579",
+   "bytes": 464197,
    "kind": "jsonl.gz",
-   "rows": 20492
+   "rows": 19828
   },
   "events/quotes.jsonl.gz": {
-   "sha256": "b322f4af390ef3743e1a1f16ec622ade7b8142b6d89b876dd20c3525e4b06e77",
+   "sha256": "076634dbe01f785d5746b400ba3d1cbbbf9a968147393c18d3eb30d2f2041ce4",
    "bytes": 85936,
    "kind": "jsonl.gz",
    "rows": 4267
   },
   "events/rejections.jsonl.gz": {
-   "sha256": "810e97bbe429702ae5dc0ad7761abe662034a4ec2737737051dd5d3a8a946ad6",
-   "bytes": 538,
+   "sha256": "6beef2280a6807a4b0bcae86388d7e09b47fabf22b8ff73b11f8c633802f5a88",
+   "bytes": 593,
    "kind": "jsonl.gz",
-   "rows": 2
+   "rows": 3
   }
  },
  "seed": 20260917,
@@ -234,7 +234,7 @@
   {
    "rank": 3,
    "username": "@MeanRev_Z2Sigma",
-   "total_return_pct": 74.8471
+   "total_return_pct": 74.2662
   }
  ],
  "market": {
@@ -443,9 +443,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-17T23:05:41Z",
-  "finished_utc": "2026-09-17T23:05:43Z",
-  "elapsed_seconds": 2.42
+  "started_utc": "2026-09-18T00:23:29Z",
+  "finished_utc": "2026-09-18T00:23:32Z",
+  "elapsed_seconds": 2.61
  },
  "irregularity_count": 12
 }

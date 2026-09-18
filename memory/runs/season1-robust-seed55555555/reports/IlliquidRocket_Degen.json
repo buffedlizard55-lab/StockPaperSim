@@ -3,10 +3,10 @@
  "strategy_id": "IlliquidRocket",
  "archetype": "liquidity-constrained aggression",
  "starting_cash": 100000.0,
- "final_equity": 181348.37,
- "net_pnl_usd": 81348.37,
- "total_return_pct": 81.3484,
- "cagr_pct": 81.7789,
+ "final_equity": 181349.47,
+ "net_pnl_usd": 81349.47,
+ "total_return_pct": 81.3495,
+ "cagr_pct": 81.7801,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -32.0408,
@@ -18,9 +18,9 @@
   "recovery_date": null,
   "sessions_underwater": 70,
   "never_recovered": true,
-  "sharpe": 1.3238,
+  "sharpe": 1.3239,
   "sortino": 1.6767,
-  "calmar": 2.5523,
+  "calmar": 2.5524,
   "daily_vol_pct": 4.0502,
   "annualised_vol_pct": 64.295,
   "skew": 0.5056,
@@ -34,13 +34,13 @@
  },
  "market_relation": {
   "beta": 1.2561,
-  "alpha_annual_pct": 67.0194,
+  "alpha_annual_pct": 67.0201,
   "r_squared": 0.0635,
   "tracking_error_annual_pct": 62.219,
   "information_ratio": 1.077,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 18.107,
-  "residual_return_pct": 63.242
+  "residual_return_pct": 63.243
  },
  "trades": {
   "closed_trades": 18,
@@ -127,12 +127,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 790.85,
+  "dividends_received_usd": 791.95,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 790.85,
+  "net_carry_usd": 791.95,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 141.66,
@@ -266,17 +268,18 @@
    "month": "2026-09",
    "sessions": 11,
    "start_equity": 181965.43,
-   "end_equity": 181348.37,
-   "return_pct": -0.3391
+   "end_equity": 181349.47,
+   "return_pct": -0.3385
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 80557.52,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 790.85,
+  "dividends_usd": 791.95,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -3813.94,
-  "total_net_pnl_usd": 81348.37,
+  "total_net_pnl_usd": 81349.47,
   "unexplained_residual_usd": -0.0,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
@@ -352,7 +355,7 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +81.35% over 251 sessions - +81,348 USD on 100,000 of paper capital, ending at 181,348. Verdict: beat the market."
+    "text": "Outcome: +81.35% over 251 sessions - +81,349 USD on 100,000 of paper capital, ending at 181,349. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",

@@ -3,44 +3,44 @@
  "strategy_id": "PairsStatArb",
  "archetype": "statistical arbitrage",
  "starting_cash": 100000.0,
- "final_equity": 100070.99,
- "net_pnl_usd": 70.99,
- "total_return_pct": 0.071,
- "cagr_pct": 0.0713,
+ "final_equity": 99949.59,
+ "net_pnl_usd": -50.41,
+ "total_return_pct": -0.0504,
+ "cagr_pct": -0.0506,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -0.5367,
-  "max_drawdown_usd": -539.86,
+  "max_drawdown_pct": -0.5388,
+  "max_drawdown_usd": -541.32,
   "peak_date": "2026-02-05",
-  "peak_equity": 100586.32,
+  "peak_equity": 100466.38,
   "trough_date": "2026-08-13",
-  "trough_equity": 100046.45,
+  "trough_equity": 99925.06,
   "recovery_date": null,
   "sessions_underwater": 23,
   "never_recovered": true,
-  "sharpe": 0.1058,
-  "sortino": 0.1087,
-  "calmar": 0.1328,
-  "daily_vol_pct": 0.044,
-  "annualised_vol_pct": 0.699,
-  "skew": 0.4842,
-  "excess_kurtosis": 13.8671,
-  "best_session_pct": 0.2464,
-  "worst_session_pct": -0.2714,
-  "var_95_pct": -0.0581,
-  "cvar_95_pct": -0.1116,
-  "var_99_pct": -0.1345,
-  "cvar_99_pct": -0.1822
+  "sharpe": -0.0665,
+  "sortino": -0.0652,
+  "calmar": 0.0939,
+  "daily_vol_pct": 0.0457,
+  "annualised_vol_pct": 0.725,
+  "skew": 0.1118,
+  "excess_kurtosis": 13.3339,
+  "best_session_pct": 0.2467,
+  "worst_session_pct": -0.2717,
+  "var_95_pct": -0.0582,
+  "cvar_95_pct": -0.1209,
+  "var_99_pct": -0.1377,
+  "cvar_99_pct": -0.2059
  },
  "market_relation": {
-  "beta": -0.0186,
-  "alpha_annual_pct": 0.3417,
-  "r_squared": 0.1177,
-  "tracking_error_annual_pct": 0.657,
-  "information_ratio": 0.52,
+  "beta": -0.019,
+  "alpha_annual_pct": 0.2258,
+  "r_squared": 0.1147,
+  "tracking_error_annual_pct": 0.682,
+  "information_ratio": 0.331,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -0.268,
-  "residual_return_pct": 0.339
+  "beta_contribution_pct": -0.274,
+  "residual_return_pct": 0.224
  },
  "trades": {
   "closed_trades": 5,
@@ -127,25 +127,27 @@
  },
  "carry": {
   "dividends_received_usd": 276.68,
+  "dividends_in_lieu_paid_usd": 121.4,
   "borrow_fees_paid_usd": 76.69,
-  "net_carry_usd": 199.99,
+  "net_carry_usd": 78.59,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 0
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 30.43,
   "max_gross_pct_of_starting_cash": 203.49,
   "avg_net_pct_of_starting_cash": -0.37,
   "max_net_pct_of_starting_cash": 0.25,
-  "avg_leverage": 0.303,
-  "max_leverage": 2.034,
+  "avg_leverage": 0.304,
+  "max_leverage": 2.036,
   "sessions_flat": 75,
   "avg_open_positions": 0.85
  },
  "turnover": {
   "traded_notional_usd": 799909.21,
-  "annualised_turnover_x": 8.023
+  "annualised_turnover_x": 8.03
  },
  "contribution_by_symbol": [
   {
@@ -193,70 +195,70 @@
    "month": "2025-12",
    "sessions": 22,
    "start_equity": 100000.0,
-   "end_equity": 100315.0,
-   "return_pct": 0.315
+   "end_equity": 100195.07,
+   "return_pct": 0.1951
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 100315.0,
-   "end_equity": 100371.56,
+   "start_equity": 100195.07,
+   "end_equity": 100251.63,
    "return_pct": 0.0564
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 100371.56,
-   "end_equity": 100150.81,
-   "return_pct": -0.2199
+   "start_equity": 100251.63,
+   "end_equity": 100030.87,
+   "return_pct": -0.2202
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 100150.81,
-   "end_equity": 100183.86,
-   "return_pct": 0.033
+   "start_equity": 100030.87,
+   "end_equity": 100063.2,
+   "return_pct": 0.0323
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 100183.86,
-   "end_equity": 100112.44,
-   "return_pct": -0.0713
+   "start_equity": 100063.2,
+   "end_equity": 99991.78,
+   "return_pct": -0.0714
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 100112.44,
-   "end_equity": 100072.37,
-   "return_pct": -0.04
+   "start_equity": 99991.78,
+   "end_equity": 99951.71,
+   "return_pct": -0.0401
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 100072.37,
-   "end_equity": 100078.65,
-   "return_pct": 0.0063
+   "start_equity": 99951.71,
+   "end_equity": 99957.25,
+   "return_pct": 0.0055
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 100078.65,
-   "end_equity": 100078.58,
+   "start_equity": 99957.25,
+   "end_equity": 99957.18,
    "return_pct": -0.0001
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 100078.58,
-   "end_equity": 100058.19,
+   "start_equity": 99957.18,
+   "end_equity": 99936.79,
    "return_pct": -0.0204
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 100058.19,
-   "end_equity": 100070.99,
+   "start_equity": 99936.79,
+   "end_equity": 99949.59,
    "return_pct": 0.0128
   }
  ],
@@ -264,35 +266,36 @@
   "realized_trading_pnl_usd": -129.01,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 276.68,
+  "dividends_in_lieu_usd": -121.4,
   "borrow_fees_usd": -76.69,
   "execution_costs_already_netted_usd": -14.21,
-  "total_net_pnl_usd": 70.99,
+  "total_net_pnl_usd": -50.41,
   "unexplained_residual_usd": 0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
-  "verdict": "made money but lagged the index",
-  "headline": "Made money but lagged the index: +0.07% total return vs +14.41% for the index, +0.34pp residual after beta, -0.5% max drawdown, 0.01% of capital lost to execution costs.",
+  "verdict": "lost money",
+  "headline": "Lost money: -0.05% total return vs +14.41% for the index, +0.22pp residual after beta, -0.5% max drawdown, 0.01% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +0.07%, profitable but 14.34pp behind the S&P 500's +14.41%."
+    "text": "Finished at -0.05% - a 50 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The reversal premium went against the declared exposure (-17.24% for a +0.5 loading) yet the account still returned +0.07% - the result was driven by something other than this factor."
+    "text": "The reversal premium it is built to harvest went the wrong way (-17.24% over the season), so the signal was fighting the tape and the account lost 0.05%."
    },
    {
     "kind": "factor",
-    "text": "The low_vol premium went against the declared exposure (-29.73% for a +0.5 loading) yet the account still returned +0.07% - the result was driven by something other than this factor."
+    "text": "The low_vol premium it is built to harvest went the wrong way (-29.73% over the season), so the signal was fighting the tape and the account lost 0.05%."
    },
    {
     "kind": "attribution",
-    "text": "Of the +0.07% total, about -0.27pp is explained by carrying beta -0.02 against a +14.41% market (R^2 0.12); the residual +0.34pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -0.05% total, about -0.27pp is explained by carrying beta -0.02 against a +14.41% market (R^2 0.11); the residual +0.22pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "SPY contributed +1,307 USD (1841% of net P&L) across 2 closed trades; QQQ was the biggest drag at -1,436 USD."
+    "text": "SPY contributed +1,307 USD (-2593% of net P&L) across 2 closed trades; QQQ was the biggest drag at -1,436 USD."
    },
    {
     "kind": "costs",
@@ -312,11 +315,11 @@
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown -0.54% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 30% of starting capital, peak leverage 2.03x."
+    "text": "Worst peak-to-trough drawdown -0.54% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 30% of starting capital, peak leverage 2.04x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.48 skewed with excess kurtosis +13.87; historical 95% VaR -0.06%/day with CVaR -0.11%/day. Worst single session -0.27%, best +0.25%."
+    "text": "Daily returns were +0.11 skewed with excess kurtosis +13.33; historical 95% VaR -0.06%/day with CVaR -0.12%/day. Worst single session -0.27%, best +0.25%."
    },
    {
     "kind": "caveat",
@@ -342,15 +345,15 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +0.07% over 251 sessions - +71 USD on 100,000 of paper capital, ending at 100,071. Verdict: made money but lagged the index."
+    "text": "Outcome: -0.05% over 251 sessions - -50 USD on 100,000 of paper capital, ending at 99,950. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The reversal premium went against the declared exposure (-17.24% for a +0.5 loading) yet the account still returned +0.07% - the result was driven by something other than this factor. The low_vol premium went against the declared exposure (-29.73% for a +0.5 loading) yet the account still returned +0.07% - the result was driven by something other than this factor."
+    "text": "The reversal premium it is built to harvest went the wrong way (-17.24% over the season), so the signal was fighting the tape and the account lost 0.05%. The low_vol premium it is built to harvest went the wrong way (-29.73% over the season), so the signal was fighting the tape and the account lost 0.05%."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +0.07% total, about -0.27pp is explained by carrying beta -0.02 against a +14.41% market (R^2 0.12); the residual +0.34pp is everything else - selection, timing, leverage and cost. SPY contributed +1,307 USD (1841% of net P&L) across 2 closed trades; QQQ was the biggest drag at -1,436 USD."
+    "text": "Of the -0.05% total, about -0.27pp is explained by carrying beta -0.02 against a +14.41% market (R^2 0.11); the residual +0.22pp is everything else - selection, timing, leverage and cost. SPY contributed +1,307 USD (-2593% of net P&L) across 2 closed trades; QQQ was the biggest drag at -1,436 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -362,7 +365,7 @@
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -0.54% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 30% of starting capital, peak leverage 2.03x. Daily returns were +0.48 skewed with excess kurtosis +13.87; historical 95% VaR -0.06%/day with CVaR -0.11%/day. Worst single session -0.27%, best +0.25%."
+    "text": "Worst peak-to-trough drawdown -0.54% (-9.10% for the index), trough on 2026-08-13, never recovered. Average gross exposure 30% of starting capital, peak leverage 2.04x. Daily returns were +0.11 skewed with excess kurtosis +13.33; historical 95% VaR -0.06%/day with CVaR -0.12%/day. Worst single session -0.27%, best +0.25%."
    },
    {
     "title": "Regime context (real market data)",
@@ -378,7 +381,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It made money (+0.07%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +0.07%, profitable but 14.34pp behind the S&P 500's +14.41%."
+    "text": "It lost 0.05%, but the loss is a DIRECTIONAL one, not a trading one: after removing beta -0.02 against a +14.41% market the residual is +0.22pp, meaning the trades themselves added value while the position the account ended up carrying lost more. Finished at -0.05% - a 50 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],

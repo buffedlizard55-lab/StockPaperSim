@@ -3,10 +3,10 @@
  "strategy_id": "OverreactionFade",
  "archetype": "contrarian reversal",
  "starting_cash": 100000.0,
- "final_equity": 135676.33,
- "net_pnl_usd": 35676.33,
- "total_return_pct": 35.6763,
- "cagr_pct": 35.8414,
+ "final_equity": 135672.21,
+ "net_pnl_usd": 35672.21,
+ "total_return_pct": 35.6722,
+ "cagr_pct": 35.8372,
  "sessions": 251,
  "risk": {
   "max_drawdown_pct": -22.4328,
@@ -18,29 +18,29 @@
   "recovery_date": "2026-04-22",
   "sessions_underwater": 52,
   "never_recovered": false,
-  "sharpe": 1.3009,
-  "sortino": 1.775,
-  "calmar": 1.5977,
-  "daily_vol_pct": 1.6547,
+  "sharpe": 1.3008,
+  "sortino": 1.7748,
+  "calmar": 1.5975,
+  "daily_vol_pct": 1.6546,
   "annualised_vol_pct": 26.267,
   "skew": 1.0214,
-  "excess_kurtosis": 5.5981,
+  "excess_kurtosis": 5.5983,
   "best_session_pct": 7.8868,
   "worst_session_pct": -5.5057,
   "var_95_pct": -2.3299,
   "cvar_95_pct": -3.5578,
-  "var_99_pct": -4.2899,
+  "var_99_pct": -4.29,
   "cvar_99_pct": -5.0412
  },
  "market_relation": {
   "beta": 0.6702,
-  "alpha_annual_pct": 24.5142,
+  "alpha_annual_pct": 24.5115,
   "r_squared": 0.1084,
   "tracking_error_annual_pct": 24.803,
   "information_ratio": 0.988,
   "market_return_pct": 14.415,
   "beta_contribution_pct": 9.661,
-  "residual_return_pct": 26.015
+  "residual_return_pct": 26.012
  },
  "trades": {
   "closed_trades": 66,
@@ -130,12 +130,14 @@
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 6.32,
+  "dividends_received_usd": 2.21,
+  "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 6.32,
+  "net_carry_usd": 2.21,
   "margin_calls": [],
   "margin_call_count": 0,
-  "day_trades": 5
+  "day_trades": 0,
+  "day_trade_count": 0
  },
  "exposure": {
   "avg_gross_pct_of_starting_cash": 21.32,
@@ -149,7 +151,7 @@
  },
  "turnover": {
   "traded_notional_usd": 5277860.03,
-  "annualised_turnover_x": 48.764
+  "annualised_turnover_x": 48.765
  },
  "contribution_by_symbol": [
   {
@@ -275,52 +277,53 @@
    "month": "2026-06",
    "sessions": 21,
    "start_equity": 128343.29,
-   "end_equity": 136818.65,
-   "return_pct": 6.6037
+   "end_equity": 136814.53,
+   "return_pct": 6.6005
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 136818.65,
-   "end_equity": 136025.74,
-   "return_pct": -0.5795
+   "start_equity": 136814.53,
+   "end_equity": 136021.62,
+   "return_pct": -0.5796
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 136025.74,
-   "end_equity": 139705.73,
+   "start_equity": 136021.62,
+   "end_equity": 139701.61,
    "return_pct": 2.7054
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 139705.73,
-   "end_equity": 135676.33,
-   "return_pct": -2.8842
+   "start_equity": 139701.61,
+   "end_equity": 135672.21,
+   "return_pct": -2.8843
   }
  ],
  "pnl_decomposition": {
   "realized_trading_pnl_usd": 35670.01,
   "open_position_pnl_usd": 0.0,
-  "dividends_usd": 6.32,
+  "dividends_usd": 2.21,
+  "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
   "execution_costs_already_netted_usd": -1088.25,
-  "total_net_pnl_usd": 35676.33,
-  "unexplained_residual_usd": -0.0,
+  "total_net_pnl_usd": 35672.21,
+  "unexplained_residual_usd": -0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "beat the market",
-  "headline": "Beat the market: +35.68% total return vs +14.41% for the index, +26.02pp residual after beta, -22.4% max drawdown, 1.09% of capital lost to execution costs.",
+  "headline": "Beat the market: +35.67% total return vs +14.41% for the index, +26.01pp residual after beta, -22.4% max drawdown, 1.09% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at +35.68% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +21.26pp."
+    "text": "Finished at +35.67% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +21.26pp."
    },
    {
     "kind": "factor",
-    "text": "The reversal premium went against the declared exposure (-11.49% for a +1.0 loading) yet the account still returned +35.68% - the result was driven by something other than this factor."
+    "text": "The reversal premium went against the declared exposure (-11.49% for a +1.0 loading) yet the account still returned +35.67% - the result was driven by something other than this factor."
    },
    {
     "kind": "factor",
@@ -328,11 +331,11 @@
    },
    {
     "kind": "attribution",
-    "text": "Of the +35.68% total, about +9.66pp is explained by carrying beta 0.67 against a +14.41% market (R^2 0.11); the residual +26.02pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +35.67% total, about +9.66pp is explained by carrying beta 0.67 against a +14.41% market (R^2 0.11); the residual +26.01pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "CVNA contributed +30,859 USD (86% of net P&L) across 34 closed trades; TSLA was the biggest drag at -8,710 USD."
+    "text": "CVNA contributed +30,859 USD (87% of net P&L) across 34 closed trades; TSLA was the biggest drag at -8,710 USD."
    },
    {
     "kind": "costs",
@@ -382,15 +385,15 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +35.68% over 251 sessions - +35,676 USD on 100,000 of paper capital, ending at 135,676. Verdict: beat the market."
+    "text": "Outcome: +35.67% over 251 sessions - +35,672 USD on 100,000 of paper capital, ending at 135,672. Verdict: beat the market."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The reversal premium went against the declared exposure (-11.49% for a +1.0 loading) yet the account still returned +35.68% - the result was driven by something other than this factor. The momentum premium this participant is built to harvest was live (-5.87% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
+    "text": "The reversal premium went against the declared exposure (-11.49% for a +1.0 loading) yet the account still returned +35.67% - the result was driven by something other than this factor. The momentum premium this participant is built to harvest was live (-5.87% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +35.68% total, about +9.66pp is explained by carrying beta 0.67 against a +14.41% market (R^2 0.11); the residual +26.02pp is everything else - selection, timing, leverage and cost. CVNA contributed +30,859 USD (86% of net P&L) across 34 closed trades; TSLA was the biggest drag at -8,710 USD."
+    "text": "Of the +35.67% total, about +9.66pp is explained by carrying beta 0.67 against a +14.41% market (R^2 0.11); the residual +26.01pp is everything else - selection, timing, leverage and cost. CVNA contributed +30,859 USD (87% of net P&L) across 34 closed trades; TSLA was the biggest drag at -8,710 USD."
    },
    {
     "title": "Why: what execution cost",
@@ -418,7 +421,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It worked: it beat the index by 21.26pp and the excess survives a beta adjustment (+26.02pp residual), so the outperformance is not simply leverage on a rising market. Finished at +35.68% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +21.26pp."
+    "text": "It worked: it beat the index by 21.26pp and the excess survives a beta adjustment (+26.01pp residual), so the outperformance is not simply leverage on a rising market. Finished at +35.67% against the S&P 500's +14.41% over the same 251 sessions - an excess return of +21.26pp."
    }
   ],
   "failure_modes_fired": [],

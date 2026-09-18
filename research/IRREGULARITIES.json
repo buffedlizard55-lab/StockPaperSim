@@ -1,443 +1,474 @@
 [
- {
-  "id": "IR-01",
-  "severity": "low",
-  "topic": "VIXCLS has observations on dates when SP500 does not",
-  "detail": "The two real FRED series used as market factors do not cover exactly the same dates. Over the Season 1 window, VIXCLS carries values on 7 dates where SP500 is blank. SP500 blanks are market closures (all ten cross-check against the published Nasdaq holiday schedule); VIX closes are nevertheless published on some of those dates because the VIX is computed from SPX option prices, and CBOE option settlement/holiday conventions do not line up one-for-one with the cash-index publication calendar. Taking the two series at face value would have produced a calendar with sessions the cash market never opened.",
-  "resolution": "The trading calendar is built from the SP500 series only. VIX observations on non-sessions are dropped and counted; the count is reported in the run manifest as vix_observations_dropped_on_closed_dates. Every session carries a real VIX value.",
-  "links": [
-   "https://fred.stlouisfed.org/series/SP500",
-   "https://fred.stlouisfed.org/series/VIXCLS",
-   "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule"
-  ]
- },
- {
-  "id": "IR-02",
-  "severity": "medium",
-  "topic": "The commonly documented Yahoo quote endpoint refuses unauthenticated requests",
-  "detail": "Most tutorials point at https://query1.finance.yahoo.com/v7/finance/quote for 'real-time' prices. Called from this environment it returns HTTP 401 Unauthorized; the endpoint requires a crumb paired with a cookie. The v8 chart endpoint (https://query1.finance.yahoo.com/v8/finance/chart/{symbol}) does work unauthenticated and was used instead, but it serves interval bars rather than a consolidated real-time quote.",
-  "resolution": "The shipped YahooChartProvider uses v8 chart. The provider catalogue records honestly that v7 quote was attempted and refused. Any claim of 'real-time' prices from a free unauthenticated Yahoo endpoint should be treated as unverified.",
-  "links": [
-   "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y"
-  ]
- },
- {
-  "id": "IR-03",
-  "severity": "medium",
-  "topic": "Bulk real daily OHLCV for the full universe could not be retrieved here",
-  "detail": "A one-year daily request per symbol paginates into four response chunks through the fetch tool, so 17 symbols cost ~68 fetches of dense JSON; stooq.com refused the client outright with 'Access denied'. Retrieving the full universe was not feasible inside the environment's budget, and inventing the missing bars was not acceptable.",
-  "resolution": "Hybrid architecture: real FRED index and VIX factors drive everything; real Yahoo monthly SPY bars calibrate the intraday range model; real Yahoo AAPL closes and dividends anchor one single name end to end; all other single-name daily bars are explicitly labelled SIMULATED from declared scenario parameters. Working adapters for six providers are shipped so a season with real bars needs only credentials and network access.",
-  "links": [
-   "https://stooq.com/db/h/",
-   "https://query1.finance.yahoo.com/v8/finance/chart/AAPL"
-  ]
- },
- {
-  "id": "IR-04",
-  "severity": "low",
-  "topic": "The 2024 Reg NMS half-penny tick tier is codified but exempt - verified, not assumed",
-  "detail": "The SEC's September 2024 Reg NMS amendments (Release 34-101070, published at 89 FR 81774) add a $0.005 minimum pricing increment for NMS stocks whose time-weighted average quoted spread is at or below $0.015, and cut the Rule 610(c) access-fee cap from $0.003 to $0.001 per share. That amended text IS in the current Code of Federal Regulations: 17 CFR 242.612(b)(2), retrieved from the eCFR on 2026-09-17 (title 17 up to date as of 2026-09-15), reads $0.01 where the TWAQS exceeded $0.015 and $0.005 where it did not. It is nevertheless NOT in force. The Commission granted a partial stay on 12-Dec-2024 (Release 34-101899) pending judicial review; the D.C. Circuit denied the petitions for review in October 2025; the Commission then granted temporary exemptive relief to the first business day of November 2026 on 31-Oct-2025; and Release 34-105656 (11-Jun-2026, published 15-Jun-2026 as document 2026-11997) extended that relief for Rules 600(b)(89)(i)(F), 610(c) and 612 until the first business day of November 2027. The entire Season 1 window (2025-09-17 to 2026-09-16) falls inside the exemption period. This entry was originally written as 'genuinely uncertain'; it is now resolved from primary sources and downgraded from medium to low.",
-  "resolution": "The model quotes on the operative Rule 612 grid ($0.01 at or above $1.00, $0.0001 below) and keeps the operative Rule 610(c) access-fee cap of $0.003 per share, which is correct for every session of Season 1. If a future season runs on or after the first business day of November 2027, config.minimum_tick must become TWAQS-aware (a per-instrument $0.005 tier for names whose average quoted spread is at or below $0.015) and ACCESS_FEE_CAP_PER_SHARE must drop to $0.001 - both are single points of change in sim/config.py. Note that the round-lot redefinition was NOT part of the relief and did go live on 3-Nov-2025, so the tiered round lot in config.round_lot is correct as implemented.",
-  "links": [
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
-   "https://www.sec.gov/files/rules/exorders/2026/34-105656.pdf",
-   "https://www.federalregister.gov/documents/2026-06-15/2026-11997/order-granting-temporary-exemptive-relief-pursuant-to-section-36a1-of-the-securities-exchange-act-of",
-   "https://www.sec.gov/newsroom/speeches-statements/atkins-statement-minimum-pricing-increments-access-fee-caps-061126",
-   "https://www.federalregister.gov/documents/2024-10-08/2024-21867/regulation-nms-minimum-pricing-increments-access-fees-and-transparency-of-better-priced-orders",
-   "https://www.sec.gov/newsroom/press-releases/2024-137"
-  ]
- },
- {
-  "id": "IR-05",
-  "severity": "medium",
-  "topic": "The FINRA Trade Activity Fee rate rests on secondary sources only",
-  "detail": "The TAF applied to equity sells ($0.000195 per share, minimum $0.01, maximum $9.79 per trade, effective 2026-01-01, replacing $0.000166 with an $8.30 maximum) was corroborated from a broker help page and a broker pricing page. FINRA's own Rule 7541 / Schedule A text was not retrievable from this environment, so the rate is SECONDARY-sourced.",
-  "resolution": "The rate is implemented because it is small and directionally certain, and it is labelled SECONDARY everywhere it appears - in config.py, in the source register and here. Verify against FINRA Schedule A before using these numbers for anything that matters.",
-  "links": [
-   "https://www.finra.org/rules-guidance/rulebooks/finra-rules/7541"
-  ]
- },
- {
-  "id": "IR-06",
-  "severity": "medium",
-  "topic": "The intraday-range calibration that best fits real SPY data contradicts the documented overnight/intraday variance split",
-  "detail": "A grid search over the wick coefficient and the share of daily variance placed in the overnight gap, scored against 13 real Yahoo SPY monthly bars, preferred wick=0.25 with overnight share=0.05 (mean absolute difference 0.401 percentage points). That overnight share is well below what the published literature on overnight versus intraday return variance supports, so the best-fitting point buys range accuracy by misrepresenting where variance occurs - and the overnight leg matters directly to one participant (@OvernightCarry_NO) and to every opening-gap decision.",
-  "resolution": "Compromise committed: overnight share 0.15, wick coefficient 0.20, mean absolute difference 0.522pp against the real monthly ranges. Both constants carry this note in marketdata.py, and the audit table is published on the data-provenance page so the cost of the compromise is visible.",
-  "links": [
-   "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y"
-  ]
- },
- {
-  "id": "IR-07",
-  "severity": "high",
-  "topic": "Event-driven strategies run on price/volume proxies, not on real event data",
-  "detail": "Two participants are built around information events: @DriftRider_PEAD (post-earnings-announcement drift) and @SqueezeHunter_TF (short-squeeze / low-float momentum). Neither real earnings dates and EPS surprises nor short interest, days-to-cover or float data was obtainable offline, so both use a proxy: a large multi-session price move on elevated volume. A proxy of that kind conflates genuine information events with ordinary volatility, and the two have opposite continuation behaviour.",
-  "resolution": "Both strategy specs declare this as a known failure mode in the first line, the narrative surfaces it as a standing caveat on every run, and the site repeats it on the participant pages. Their results should be read as 'what a price/volume event filter did', never as 'what post-earnings drift earns'.",
-  "links": [
-   "https://doi.org/10.2307/2490899"
-  ]
- },
- {
-  "id": "IR-08",
-  "severity": "high",
-  "topic": "The overnight-premium participant is filled after the gap it is trying to capture",
-  "detail": "@OvernightCarry_NO's edge is the overnight return: buy at the close, sell at the next open. A daily-bar engine decides at the open and executes from the open, so the participant systematically transacts after the very move it is trading. Its measured performance is therefore structurally biased against the strategy - or, on days when the gap reverses, in favour of it - and neither direction reflects the real overnight premium.",
-  "resolution": "Flagged in the strategy spec, in the narrative caveats and on the participant page. Fixing it properly needs a close-auction execution path (an order type that fills at the session close print), which is listed as remaining work. | UPDATED 2026-09-17: superseded by IR-34. The venue grew an end-of-session execution ticket (Order.at_close), so the overnight strategy's entry is now worked on the final interval and the structural understatement is closed rather than merely disclosed. The season was re-run; @OvernightCarry_NO's published number changed because it is now a different trade from the one Season 1 measured before this pass, and the residual limitation (the closing print is a synthetic interval, not a tape print) stays in its spec.",
-  "links": []
- },
- {
-  "id": "IR-09",
-  "severity": "low",
-  "topic": "Eleven dividend schedules are declared approximations; only AAPL's are real",
-  "detail": "AAPL carries four real ex-dates and amounts captured from the Yahoo chart API. The other dividend payers in the universe (SPY, QQQ, IWM, MSFT, GOOGL, META, NVDA, JPM, XOM, UNH, CAT, WMT) needed schedules too - without them the buy-and-hold control would be understated by roughly one dividend yield per year and that bias would leak into every relative comparison.",
-  "resolution": "Declared yields with quarterly ex-month patterns approximating each issuer's real cycle are attached and labelled 'scenario-declared' in the instrument provenance. To avoid double counting, the replay generator subtracts the declared window dividend yield from the price drift for non-anchored names, so declared total return equals price path plus cash dividends. Ex-dates falling on a non-session are paid on the next session and raise IR-10.",
-  "links": []
- },
- {
-  "id": "IR-10",
-  "severity": "low",
-  "topic": "Runtime: a declared dividend ex-date fell on a non-session",
-  "detail": "Raised per occurrence by the engine when a declared ex-date is not a trading session. The dividend is paid on the next session rather than dropped, which slightly shifts its timing.",
-  "resolution": "Counted and listed in the run's irregularities.json. Two occurrences in the primary scenario (SPY and IWM, declared 2026-06-19, paid 2026-06-22).",
-  "links": []
- },
- {
-  "id": "IR-11",
-  "severity": "high",
-  "topic": "Runtime: the execution engine raised on an order",
-  "detail": "Should never happen. Any occurrence means a venue or cost-model defect rather than a market event.",
-  "resolution": "Zero occurrences in all six scenarios. The engine catches, records and continues rather than aborting a 251-session run.",
-  "links": []
- },
- {
-  "id": "IR-12",
-  "severity": "high",
-  "topic": "Runtime: a strategy raised inside its decision function",
-  "detail": "A participant's on_day threw an exception. The participant skips that session and the traceback is stored in memory and in its report.",
-  "resolution": "Zero occurrences in all six scenarios across 20 participants and 251 sessions.",
-  "links": []
- },
- {
-  "id": "IR-13",
-  "severity": "high",
-  "topic": "Runtime: a participant's equity reached zero",
-  "detail": "The account is closed and the participant stops trading. In a real competition this is a total loss and usually an end-of-contest event.",
-  "resolution": "Zero occurrences in the primary scenario. @GapAndGo_YOLO finished at -91.75%, the closest any participant came.",
-  "links": []
- },
- {
-  "id": "IR-14",
-  "severity": "medium",
-  "topic": "Runtime: orders rejected by the broker-side pre-trade margin check",
-  "detail": "An order that would breach the gross leverage cap and could not be resized (not even one share fits) is rejected, with the measured leverage in the reason. In the published primary scenario @SpreadHarvester_MM had 67 such rejections and 115 across all participants that hit the cap: its inventory drifted the book above 2.0x gross through price movement, after which the broker only accepted risk-reducing orders.",
-  "resolution": "Aggregated per participant and per normalised reason so a single stuck book does not produce hundreds of near-identical flags. Risk-reducing orders are never blocked, so a participant can always trade its way back inside the cap.",
-  "links": []
- },
- {
-  "id": "IR-15",
-  "severity": "medium",
-  "topic": "Runtime: orders resized by the broker-side pre-trade margin check",
-  "detail": "An order larger than the account can support is clipped to the largest permissible quantity and the clip is written into the order's reason, so the tape shows what was asked for and what was allowed.",
-  "resolution": "193 clips for @SpreadHarvester_MM and 44 for @KitchenSink_AllIn in the published primary scenario, 259 clips in total; both are reported on the participant pages.",
-  "links": []
- },
- {
-  "id": "IR-16",
-  "severity": "high",
-  "topic": "Factor premia measured on this replay are artefacts of declared parameters",
-  "detail": "The narrative engine attributes performance partly by comparing each strategy against realised long/short factor premia (momentum, reversal, beta, low-vol, liquidity) computed from the same replay. Those premia are real numbers about this competition, but the cross-sectional drifts that generate them are declared scenario inputs in sim/universe.py, not observed market data. Quoting them without that context would imply evidence about real markets that this project does not have.",
-  "resolution": "Every participant narrative carries the caveat automatically, and the market page repeats it in a callout above the factor panel. The real long-horizon evidence for each premium is cited separately, with its verification status, on the strategy pages.",
-  "links": []
- },
- {
-  "id": "IR-17",
-  "severity": "low",
-  "topic": "The SEC Section 31 fee rate was zero for the first two-thirds of the competition window",
-  "detail": "The FY2026 annual adjustment order sets the Section 31 transaction fee rate at $0.00 per $1,000,000 from 2025-09-01 and $20.60 per $1,000,000 from 2026-04-04. A zero rate is unusual and is a consequence of the timing of appropriations and the Commission's fee-setting process, not of a policy decision to abolish the fee. A model that used a single constant rate across the window would misprice sells by the full amount for seven months.",
-  "resolution": "The cost model is date-dependent: rate_for() picks the rate in force on the trade date. Sell-side regulatory cost is therefore exactly zero before 2026-04-04 and $20.60 per million after it, matching the order.",
-  "links": [
-   "https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates",
-   "https://www.nasdaqtrader.com/MicroNews.aspx?id=OTA2026-14"
-  ]
- },
- {
-  "id": "IR-18",
-  "severity": "low",
-  "topic": "The reference competitions are not real-time either",
-  "detail": "The requirement was real-time prices, but the contests this project reverse-engineered do not offer them: the Trade Ideas PM Challenge page states 'Data delayed by 15 minutes', and the CandleCharts Showdown is hosted on TradingView community competitions, which use TradingView's own delayed or broker-fed data depending on the instrument. Real-time consolidated equity data is a licensed product.",
-  "resolution": "Season 1 runs on an end-of-day replay, which is strictly better than a 15-minute-delayed feed for a daily-decision competition and is documented as limitation L-01/L-03. The provider catalogue marks which shipped adapters are real-time capable (Alpaca, Polygon, Finnhub) so the upgrade path is explicit.",
-  "links": [
-   "https://www.trade-ideas.com/stock-trading-competition/",
-   "https://specials.candlecharts.com/contest/"
-  ]
- },
- {
-  "id": "IR-19",
-  "severity": "medium",
-  "topic": "Single-path cross-sectional dispersion is driven by idiosyncratic draws, not by a volatility-model error",
-  "detail": "In the primary scenario the standard deviation of one-year returns across the 17 instruments is 47.3 percentage points, with NVDA +147%, JPM +60%, XOM -43% and UNH -52%. That is wide. Diagnosing it showed realised total volatility matching the predicted volatility closely for every name (NVDA 50.3% predicted vs 49.7% realised; JPM 22.5% vs 21.9%), so the vol model is correct and the spread is the expected consequence of cumulative idiosyncratic draws over one year (XOM z = -2.68, JPM z = +2.17, NVDA z = +1.63).",
-  "resolution": "The declared idiosyncratic volatilities were deliberately NOT shrunk to make one path look tidier - that would bias every result toward the mean. Instead the competition is run over six scenarios and the robustness panel reports mean, median, best and worst per participant, which is the honest way to show how much of a single-season rank is the draw.",
-  "links": []
- },
- {
-  "id": "IR-20",
-  "severity": "high",
-  "topic": "Found in review: a market-making participant could size quotes in the billions",
-  "detail": "@SpreadHarvester_MM sized each resting quote at 10% of 21-day ADV without applying the inventory cap its own spec declares. On SPY that is roughly 6 million shares, about $3.9bn of notional, on a $100,000 account - and because the strategy constructed Order objects directly it bypassed the margin screen that Context.orders_to_targets applies. The account reached $140,652,977 of equity in six sessions.",
-  "resolution": "Two fixes, both committed. (1) The strategy now sizes min(10% of ADV, 60% of equity / price), matching its spec. (2) Defence in depth: the engine runs a broker-side pre-trade risk check on EVERY order regardless of how it was built, resizing to the largest permissible quantity or rejecting, and the event is raised as IR-14/IR-15. A single mis-sized strategy can no longer corrupt the leaderboard.",
-  "links": []
- },
- {
-  "id": "IR-21",
-  "severity": "medium",
-  "topic": "Found in review: VWAP-slicing every market order handed participants free intraday drift",
-  "detail": "Market orders were spread across the whole session by volume weight, which is what a VWAP algorithm does, not what a market order does. Because the decision price is the opening mid, the difference between the session average price and the open was booked as favourable 'drift'. For @MomentumMax_12x1 that was -$1,857 on $614k of paper notional (about -30bp of phantom benefit) in the run where the bug was found, the memory at commit 71b3d90, and it varied by strategy with how much each one traded - a systematic bias in the ranking, not a cost.",
-  "resolution": "Slicing is now capacity-driven: an order trades at the touch and only spans further intervals when its size exceeds what one interval can absorb inside the participation limit. Measured drift for the same participant after the change: +$2.04. The implementation-shortfall decomposition now separates friction (spread, depth, impact, fees) from timing (drift) so neither can hide inside the other.",
-  "links": [
-   "https://doi.org/10.2469/faj.v44.5.28"
-  ]
- },
- {
-  "id": "IR-22",
-  "severity": "medium",
-  "topic": "Found in review: round-trip reconstruction dropped the flipped leg of a position reversal",
-  "detail": "When a fill took a position through zero (long 100 becomes short 200 on a 300-share sell), the trade ledger closed the original lot and discarded the residual 200 shares, so the entire P&L of the new position vanished from the attribution. For @DriftRider_PEAD the unexplained residual in its P&L decomposition was +$20,169 in the run where that was found, the memory at commit 71b3d90.",
-  "resolution": "The reconstruction now opens a new lot in the opposite direction for the residual at the same fill price. The unexplained residual for that participant fell to +$154, and every participant's residual is now under $600 (the remaining gap is fees charged to cash outside the round-trip ledger, which the decomposition reports explicitly rather than hiding).",
-  "links": []
- },
- {
-  "id": "IR-23",
-  "severity": "medium",
-  "topic": "Found in review: beta was regressed one session out of alignment",
-  "detail": "The equity curve holds one mark per session, so its daily-return series starts one session later than the market-return series it was paired with. The regression therefore compared each participant's return against the previous day's index move, which produced near-zero betas for obviously levered books (@BetaChaser_3xProxy measured beta 0.07 while carrying 2x gross in high-beta names) and inflated alphas to nonsense (+104.7% per year).",
-  "resolution": "Both series are now built over identical session ranges and length-checked before the regression. The same participant measures beta 3.92 with alpha +44.08%/yr on the published season, and the market-neutral participant (@PairsArb_ZScore2) measures beta -0.01, which is the sanity check that the alignment is right.",
-  "links": []
- },
- {
-  "id": "IR-24",
-  "severity": "low",
-  "topic": "Quoted spreads from a pure volatility-scaled model were two orders of magnitude too wide",
-  "detail": "An early version derived the quoted spread from volatility (spread = 0.20 x daily sigma x price), which produced $0.51 on NVDA - 27 basis points. NVDA's real quoted spread is one cent, about 0.5bp. The error came from ignoring that liquid US equities are tick-constrained: competition compresses the touch to the minimum increment whenever the tick is small relative to the price, which is exactly why the SEC's 2024 amendments introduced a finer tick for the tightest names.",
-  "resolution": "The spread model is now tick-based: a whole number of Rule 612 increments, scaled by sqrt(sigma x sqrt(VIX factor) / (tick/price)) and clamped by per-liquidity-tier tick bounds plus an absolute basis-point cap. At the season open this gives 1 tick on SPY, NVDA, AAPL, JPM and RIVN and 2 ticks on TSLA and CVNA; all-in execution cost lands at 0.5bp for a $100k order in NVDA and about 10bp for 50,000 shares of RIVN, consistent with published execution-quality statistics.",
-  "links": [
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.605"
-  ]
- },
- {
-  "id": "IR-25",
-  "severity": "medium",
-  "topic": "The Commission has proposed rescinding the Rule 611 order protection rule, which this simulation assumes",
-  "detail": "The simulated order book never crosses and never trades through a better displayed price, because Rule 611 of Regulation NMS (17 CFR 242.611) makes the best protected quotation a trade-through protection point. On 11-Jun-2026, alongside the exemptive order that pushed the tick-size and access-fee amendments to November 2027, the Commission proposed rescinding the Order Protection Rule; Chairman Atkins' statement of the same date records that proposal and directs staff to review Rules 610(c) and 612 by the end of 2026. If Rule 611 is rescinded, displayed quotations would no longer be protected, off-exchange and manual execution would no longer have to route to the NBBO, and the price-improvement and trade-through assumptions baked into sim/microstructure.py would describe a market that no longer exists. Nothing in Season 1 is affected - the rule was in force for every session of the window - but any future season started after a rescission would need the venue model re-derived.",
-  "resolution": "Flagged rather than modelled: Season 1 ran entirely under Rule 611 as it stands, so no result changes. The proposal is tracked here so a maintainer re-running a later season checks the status of Rule 611 first. If it is rescinded, the affected code is the no-cross / trade-through invariant in microstructure.OrderBook.match and the protected-quote assumption in the liquidity model's price-improvement statistics; both are documented inline with their Rule 611 citation.",
-  "links": [
-   "https://www.sec.gov/newsroom/speeches-statements/atkins-statement-minimum-pricing-increments-access-fee-caps-061126",
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.611"
-  ]
- },
- {
-  "id": "IR-26",
-  "severity": "medium",
-  "topic": "The impact model uses a square-root exponent; the empirical paper it cites measured 3/5",
-  "detail": "sim/microstructure.py prices temporary market impact as coefficient x sigma_daily x sqrt(shares / ADV), the square-root law. That functional form comes from the optimal-execution framework of Almgren & Chriss (2001), Journal of Risk 3(2):21-40. The empirical paper most often cited alongside it - Almgren, Thum, Hauptmann & Li (2005), 'Direct estimation of equity market impact', Risk 18(7):58-62, fitted to roughly 700,000 Citigroup US equity orders - explicitly REJECTS the square-root model for temporary impact as a function of trade rate and reports a 3/5 power law instead. Using 0.5 therefore understates the concavity of impact: at 10% of ADV the square-root form gives 0.316 sigma-units where a 0.6 exponent gives 0.251, i.e. this model charges about 26% MORE impact than the measured law at that size, and the gap widens for smaller orders and narrows for larger ones. Neither the publisher page for the 2005 article (checked 2026-09-17: risk.net returns 'we can't seem to find the page you're looking for') nor the author-hosted working paper (courant.nyu.edu, redirects to cims.nyu.edu and returns HTTP 403) was retrievable from this environment, so the exponent finding is cited from the literature rather than read from the paper here.",
-  "resolution": "The square-root form is retained deliberately: it is the convention every execution desk and vendor model uses, it keeps ImpactConfig.coefficient comparable across instruments, and switching exponents would change every cost number in Season 1 without a verified calibration to replace it. The deviation is documented here and in the ImpactConfig docstring. Making the exponent a config field (default 0.5, with a 0.6 scenario for sensitivity) is listed in research/REMAINING_WORK.json.",
-  "links": [
-   "https://doi.org/10.21314/JOR.2001.041",
-   "https://www.risk.net/cut-through/2455921/direct-estimation-of-equity-market-impact"
-  ]
- },
- {
-  "id": "IR-27",
-  "severity": "medium",
-  "topic": "A citation audit found six wrong or dead references in the code; all are corrected and now tested",
-  "detail": "The brief requires verification from official sources and no hallucinated content, so every DOI and URL in sim/ and scripts/ was audited against the paper it was attached to. Six defects were found. (1) sim/microstructure.py cited https://doi.org/10.2307/2328616 as Perold (1988); that DOI is Roll (1984), 'A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market', Journal of Finance 39(4):1127-1139 - Perold is 10.2469/faj.v44.5.28. (2) sim/config.py ImpactConfig cited https://doi.org/10.1093/rfs/1.1.3, which is Admati & Pfleiderer (1988) on intraday volume patterns, as a source for market impact. (3) sim/analytics.py cited https://doi.org/10.1007/s007800050008 as Artzner et al. (1999) on coherent risk measures; that DOI is Follmer & Leukert (2000), 'Efficient hedging: cost versus shortfall risk', Finance and Stochastics 4:117-146. (4) The Almgren et al. (2005) citation carried the wrong fourth author ('Pacold'; it is Li), two different page ranges (57-62 and 105-111; Risk 18(7) pages are 58-62) and a DOI, 10.1088/1469-7688/5/8/005, that belongs to a Quantitative Finance article rather than to a Risk magazine piece. (5) The risk.net URL used in four places returns a 404 page. (6) Two Elsevier/JAE DOIs in sim/strategies.py could not be matched to the papers claimed: 10.1016/0165-4101(89)90015-X is not Bernard & Thomas (the nearest real DOI, ...90015-3, is Bonnier & Bruner on management change in distressed firms) and 10.1016/S1386-4181(02)00011-7 could not be confirmed as Amihud (2002).",
-  "resolution": "All six are fixed: Perold now carries 10.2469/faj.v44.5.28; the Admati DOI stays only where the U-shaped volume profile is defined; Artzner et al. now carries 10.1111/1467-9965.00068; the Almgren citation reads 'Almgren, Thum, Hauptmann & Li (2005), Risk 18(7):58-62' with the impact framework attributed to Almgren & Chriss (2001), 10.21314/JOR.2001.041; the dead risk.net link is gone from the source register; PEAD is cited as Bernard & Thomas (1989) 10.2307/2490899 plus Ball & Brown (1968) 10.2307/2490232, and Amihud (2002) is cited with a working copy of the paper at cis.upenn.edu. tests/test_sources_register.py now enforces the invariant: every http(s) URL in sim/ and scripts/ must appear in the source register, the provider catalogue, an academic_basis entry or a research register, and every DOI must sit next to the author it belongs to. See research/VERIFICATION_LOG.md for the full log of what was checked, when, and what came back.",
-  "links": [
-   "https://doi.org/10.2307/2328616",
-   "https://doi.org/10.2469/faj.v44.5.28",
-   "https://doi.org/10.1007/s007800050008",
-   "https://doi.org/10.1111/1467-9965.00068",
-   "https://doi.org/10.1093/rfs/1.1.3",
-   "https://doi.org/10.21314/JOR.2001.041",
-   "https://doi.org/10.2307/2490232"
-  ]
- },
- {
-  "id": "IR-28",
-  "severity": "medium",
-  "topic": "Displayed quotes were being re-centred off the Rule 612 tick grid, so the venue published prices no exchange could display",
-  "detail": "ExecutionEngine.quote_at() builds the dealer ladder on the minimum-increment grid, then re-centres it on the permanently-impacted mid so that quotes track the intraday path. That re-centring added an arbitrary fraction (mid minus the raw ladder mid) to every level, which pushed the displayed bid and ask off the grid - the recorded opening quote for SPY on 2025-09-17 was bid 655.4003 / ask 655.4103, a perfectly legal one-tick spread at two prices that 17 CFR 242.612(b) does not permit anyone to display. Across the primary run this affected 8,462 of the recorded quote levels and 5,902 of the bid/ask fields carried on fill rows. Executed fill prices were NOT affected: the fill engine rounds to the grid separately, and all 2,973 fills in the primary run are exact multiples of the operative increment. The existing unit test did not catch it because it called MarketMakerPool.quotes() directly, which has always been grid-clean; the defect lived one level up, in the re-centring, and no test crossed that boundary. Found while writing the audit-trail test that checks the prices actually WRITTEN to memory rather than the prices the venue code computes in isolation.",
-  "resolution": "Fixed in sim/microstructure.py: the re-centring shift is now snapped to a whole number of minimum increments (round((mid - raw_mid) / tick) * tick), so the ladder still tracks the impacted mid to within half a tick, the quoted spread stays at exactly n_ticks, and the book cannot cross because every level moves by the same amount. Two tests now hold the line: tests/test_microstructure.py::test_every_displayed_level_is_a_legal_rule_612_increment walks every symbol and three intraday intervals and asserts each displayed level, the quoted spread and the mid-tracking bound; tests/test_memory.py::test_every_recorded_price_is_a_legal_rule_612_increment asserts it on the published audit trail itself, over every fill row and every quote row in memory. A companion test, test_the_decision_price_is_deliberately_off_grid, pins the other half of the distinction: the price a strategy decided at stays the unrounded intraday mark, so the tick cost is charged rather than handed back. Season 1 was re-run and the site rebuilt after the fix, so the numbers published here are the post-fix numbers.",
-  "links": [
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
-   "https://www.federalregister.gov/documents/2024-10-08/2024-21867/regulation-nms-minimum-pricing-increments-access-fees-and-transparency-of-better-priced-orders"
-  ]
- },
- {
-  "id": "IR-29",
-  "severity": "medium",
-  "topic": "Limit-order marketability is a knife edge: a sub-tick venue change moved one participant by 28.3pp and reshuffled 9 of 20 ranks",
-  "detail": "Measured, not estimated - and measured twice, because the first measurement was wrong. The IR-28 fix snapped displayed quotes back onto the Rule 612 grid: a change of at most half a tick, half a cent on every name in this universe. Re-running the identical seed and config afterwards moved @OneBigBet_Concentra by +28.3pp (20.6% to 48.9%) with closed trades rising from 36 to 55 - measured on the memory as it stood at commit 71b3d90, before IR-31 and IR-34, so only the size of the swing is comparable with the published season, not the levels. The first version of this entry also reported the surrounding shifts as though they were all caused by the tick fix. They were not: that comparison was confounded by IR-30, the set-iteration bug, which meant neither side of the comparison was reproducible in the first place. The numbers below are the corrected measurement, taken with PYTHONHASHSEED pinned to 0 on both sides so that the tick snapping is the only difference between the two runs: @OverreactionFade_LT +32.88pp (40.58 to 73.46, trades 67 to 70); @OneBigBet_Concentra +28.30pp (20.63 to 48.94, trades 36 to 55); @MeanRev_Z2Sigma +9.37pp; @IlliquidRocket_Degen -7.35pp; @SqueezeHunter_TF -5.65pp (3.80 to -1.85, which flips its published verdict from 'made money but lagged the index' to 'lost money'); @DriftRider_PEAD +5.12pp; @KitchenSink_AllIn -4.33pp; @BetaChaser_3xProxy +0.08pp (the winner, 108.31 to 108.39). Ten of the twenty participants were unchanged to within 0.05pp; ten of twenty changed rank; mean absolute shift 4.67pp. The mechanism is discrete, not continuous: whether a resting limit order is marketable depends on which side of the touch it sits, so moving the touch by a fraction of a tick flips fills on and off, and because every strategy is path dependent - position, inventory, cash and margin available for the next order, subsequent signals - one flipped fill compounds through the rest of the year. Rising trade counts (36 to 55) are the visible symptom: these are not the same trades at slightly different prices, they are different trades.",
-  "resolution": "Recorded rather than smoothed over, because it is a property of the design and not a bug to patch - and because the first, confounded measurement is itself evidence of how easily a plausible number gets published. Four consequences are now carried explicitly. (1) The season's ranking is sensitive to sub-tick venue detail, so no single-path ranking should be read as a skill ordering; that is what the six-scenario robustness panel is for, and it is why the site publishes mean, median, best, worst and standard deviation per participant rather than one number. (2) Every measurement quoted in this register is now taken with PYTHONHASHSEED pinned, so it can be reproduced by anyone re-running the two commands. (3) tests/fixtures.py pins the published headline in one place with a change history, so an engine change shows up as one explicit diff instead of a scattering of failing assertions. (4) A sensitivity harness is registered as remaining work (P1): re-run under a small perturbation of each venue parameter - tick snapping, hidden liquidity, spread ticks, the impact exponent at 0.5 vs 0.6, maker rebate on and off - and publish the distribution of rank changes, so a reader can see which results are robust and which are knife-edge.",
-  "links": [
-   "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612"
-  ]
- },
- {
-  "id": "IR-30",
-  "severity": "high",
-  "topic": "The published season was not reproducible: three strategies iterated a set, so PYTHONHASHSEED changed the leaderboard",
-  "detail": "The most serious defect found in this project, and the one the CI gate caught rather than a human. Three strategies - @DriftRider_PEAD, @SqueezeHunter_TF and @OverreactionFade_LT - built their held-position collection as a set comprehension (`held = {s for s in ctx.symbols if ctx.position(s)}`) and then looped over it to build the list of exits. CPython salts string hashing per process, so set iteration order changes from one interpreter to the next. Exit order determines the order sell orders are submitted, which determines the cash and margin available to the buy orders that follow in the same session, which changes which entries fill - and because every strategy is path dependent, that difference compounds for the rest of the year. Measured with the pre-fix code, same seed, same config, same machine: PYTHONHASHSEED=2 gave @OverreactionFade_LT +39.8994% on 71 closed trades; PYTHONHASHSEED=0, 1 and 3 gave +73.46% to +73.59% on 70 trades. The committed Season 1 memory had been written under whichever hash seed that process happened to get, so `python3 -m sim.cli run` could not reproduce the leaderboard the site was publishing. The in-process determinism test that had been passing all along could not catch this by construction: every object inside one interpreter shares one hash seed. The bug was invisible locally and only appeared when CI re-ran the season in a fresh process on a fresh runner.",
-  "resolution": "Fixed in sim/strategies.py: all three loops now iterate `ctx.symbols`, the canonical universe order, using the set only for membership. Verified across PYTHONHASHSEED 0, 1, 2, 3 and 7 - the leaderboard hash is now identical in all five processes. Two tests hold the line: tests/test_engine_smoke.py::test_the_season_is_reproducible_across_processes runs the short season in two subprocesses with different hash seeds and requires identical leaderboards (this is the test that would have caught it), and ::test_no_strategy_iterates_a_set is an AST sweep that fails on any `for` loop over a name bound to a set comprehension or set literal - both were checked against a deliberately reintroduced copy of the bug. The whole season was re-run and the site rebuilt after the fix, so the numbers published here are the deterministic ones. The remaining exposure is worth stating plainly: the fix removes hash-order sensitivity, not the underlying knife-edge behaviour measured in IR-29, which is a property of limit-order marketability and path dependence rather than of Python.",
-  "links": [
-   "https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED",
-   "https://docs.python.org/3/reference/datamodel.html#object.__hash__"
-  ]
- },
- {
-  "id": "IR-31",
-  "severity": "high",
-  "topic": "Dividends were paid on the position left AFTER the ex-date's trades, and short positions were never charged a manufactured dividend",
-  "detail": "Two accounting errors in one place, both found by reading sim/engine.py and sim/portfolio.py line by line in the second review pass rather than by running anything. (a) ENTITLEMENT. The engine settled an ex-date after the participant had already traded that day, paying the dividend on whatever the book looked like at the close. A dividend belongs to whoever held the shares going INTO the ex-date, so a participant who bought on the ex-date was paid a dividend they were never owed, and one who sold on the ex-date lost a dividend they were owed. Measured on the originally published Season 1 - recoverable with git show 71b3d90:memory/runs/season1-primary-seed20260917/events/carry.jsonl.gz - by re-deriving all 202 of its dividend events from the event streams: 18 of them were priced against a quantity that was not the entitlement carried into the ex-date - 11 overpayments totalling $1,198.01 and 7 underpayments totalling $962.48, $2,160.49 gross and -$235.53 net, across 7 of the 20 accounts. The largest single one paid @OvernightCarry_NO $547.68 of SPY dividend on 306 shares when it had carried 17 shares into the date; the smallest that mattered was $2.12, and it moved one participant 31.3 percentage points. (b) PAYMENT IN LIEU. A stock loan requires the borrower to pay the lender any dividend that goes ex while the shares are borrowed; the position does not receive the dividend, it owes one. pay_dividend() returned 0.0 for any non-positive quantity, so shorts paid nothing. The venue's own drift calibration makes this worse than a missing line item: for a simulated (non-endpoint-anchored) name the declared dividend yield is SUBTRACTED from the price drift, so the price path falls by roughly the dividend. A short therefore collected that fall as profit and was never charged for it - a free +yield tailwind on every short leg. That flattered exactly the short-heavy archetypes: the low-volatility pair trade, the market maker and the reversal book.",
-  "resolution": "sim/portfolio.py: pay_dividend() is replaced by settle_dividend(symbol, per_share, entitled_qty), which pays max(0, entitled_qty) * per_share to the long side and charges max(0, -entitled_qty) * per_share to the short side as a manufactured dividend, posting each as its own carry event so the audit trail shows the entitlement it used. sim/engine.py snapshots quantities_at_open() before ANY of the session's fills, including before a forced liquidation, and settles on that snapshot. The P&L identity and the decomposition gained a dividends_in_lieu_usd bucket, and the ledger-closure test now sums every *_usd bucket the decomposition publishes, so a future bucket cannot be added without being tested. Direct cash effect in the published season: the carry ledger went from $11,299.61 received and nothing charged to $11,600.83 received and $1,852.31 charged in lieu, a net correction of $1,551.09 across 20 accounts, about $78 each. Of that, $1,489.18 is attributable to this fix measured before IR-34 re-timed two books; the rest is those two books holding different quantities on ex-dates. An earlier draft of this entry quoted $635.91 over 4 payments, which could not be reproduced from any event stream in the repository; it was replaced by the derivation above rather than left standing, because an unverifiable figure in a document about verifiability is the same failure mode as IR-33's dead links, only on our own side. The effect on INDIVIDUAL RETURNS is much larger than that, and the reason is path dependence, not the size of the correction: @OverreactionFade_LT moves from +73.46% to +42.14% because a $2.12 cash difference on 2026-06-11 changed the size of a CVNA order one month later - the pre-fix book sold 94 shares where the corrected book sold 95 - and every later trade compounds from there. This is the same knife-edge that IR-29 measures, now demonstrated on an accounting input worth two dollars, which is a stronger argument than any of the synthetic perturbations: a single-season ranking in this venue is not a stable measurement of anything. Both fixes are guarded by new tests (test_dividend_entitlement_is_the_position_carried_into_the_ex_date, test_short_position_owes_a_manufactured_dividend, test_dividend_events_match_the_entitlement_recorded_at_the_open), each verified to fail against the pre-fix code. scripts/independent_audit.py was then added so the published numbers are re-derived from the event trail by code that never imports the engine.",
-  "links": [
-   "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330",
-   "https://www.irs.gov/publications/p550",
-   "https://www.nasdaq.com/market-activity/stocks/xom/dividend-history"
-  ]
- },
- {
-  "id": "IR-32",
-  "severity": "medium",
-  "topic": "The pattern-day-trader counter was a stub that returned True, so it counted any second fill of a session as a day trade",
-  "detail": "Account._day_trade_closes(pos, side) had an unused signature and a body of 'return True'. Any symbol traded twice in one session was therefore recorded as a day trade, whatever the direction: three consecutive buys scale into a position and were counted as round-trip day trading. The published season had @OvernightCarry_NO at 235 'day trades' out of 251 sessions, for a strategy whose every round trip deliberately spans two sessions and which never round-trips intraday at all - the number was not merely imprecise, it described the strategy backwards. No P&L was affected, which is exactly why it survived: the rule is reported and not enforced at a $100,000 account, and the two tests that existed only pinned down 'one entry per session' and 'an overnight round trip is not a day trade', both of which the stub satisfied by accident.",
-  "resolution": "Replaced with real intraday tracking: the account keeps a per-symbol signed intraday quantity, reset at start_day(), and a day trade is counted only when a fill closes quantity opened the same session. Two counters are now reported - day_trade_count (round trips closed intraday) and day_trades (sessions containing at least one) - and the participant pages label the metric 'Intraday round trips (PDT definition)'. Adding to a position is verified not to count, a partial close is verified to count once, the short-side mirror (sell short then cover) is verified, and the counter is verified to reset across a session boundary. Confirmed to be purely informational: with the day-trade fix applied and the dividend fix reverted, the leaderboard reproduces the pre-fix committed bytes exactly.",
-  "links": [
-   "https://www.finra.org/rules-guidance/notices/21-13",
-   "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210",
-   "https://www.finra.org/investors/insights/frequent-intraday-trading"
-  ]
- },
- {
-  "id": "IR-33",
-  "severity": "medium",
-  "topic": "Two official URLs in the project's own source register had gone dead, including one cited for a fee rate",
-  "detail": "The register is what a reviewer clicks, so a stale URL in it is not a cosmetic problem. Reading every cited page on 2026-09-17, two FINRA paths in sim/config.py returned HTTP 404 while the substance of the claims they carried was correct: (a) rulebooks/finra-rules/7541, cited as the source of the Trade Activity Fee rate - there is no Rule 7541, the TAF lives in Section 1 of Schedule A to the By-Laws, and FINRA's own guidance page says so; and (b) investors/learn-to-invest/types-investments/margin-investing/pattern-day-trader, cited for the $25,000 pattern-day-trader minimum, whose material now sits under investors/insights/. A third link, finra-rules/4337, used in a first draft of IR-31, does not exist either: the securities-lending customer-protection rule is 4330. Each of those URLs looks like a plausible canonical form, which is how they survived: they were inherited from secondary write-ups rather than opened. None of the RATES changed, so no published number moved, and the errors stayed invisible to anyone who did not click. Two further findings from the same sweep are recorded because they will bite the next person who verifies fees: the Federal Register API's structured fields carry no effective date for the FY2026 fee order (document 2026-04233 reports an empty effective_on) even though the order text states one, so the date has to be read out of the prose and cannot be machine-checked from the API; and a broker fee page dates the same Section 31 change to 04/02/2026 against the order's April 4, 2026 - the order wins, and 2026-04-04 is exactly 60 calendar days after the 2026-02-03 appropriation the FY2025 advisory said the old rate would run until, which is the check that settles it.",
-  "resolution": "Both dead citations now point at pages fetched and read on 2026-09-17, and the substance behind each is stored as an excerpt under data/real/regulatory/, so a future site redesign cannot invalidate the evidence (finra-trading-activity-fee.txt, finra-rule-4330-customer-securities-loans.txt, irs-pub-550-payments-in-lieu.txt, finra-rule-4210-margin-requirements.txt, finra-regulatory-notice-21-13.txt). The register gained an optional 'note' field for caveats that do not fit a one-line claim, and two tests hold the new bar: a FETCHED-VERIFIED row must have stored evidence behind it (a data/real download or a regulatory excerpt naming the URL), and every excerpt must carry its SOURCE url, a retrieval date and the decision it supports. The TAF row was deliberately LEFT at SECONDARY - FINRA's page confirms the fee's structure but not its numbers, so promoting it would overstate the evidence, which is the opposite of what the register is for. No automated link checker is added to CI: a build that goes red because regulator.gov is rate-limiting is worse than no build, so the sweep stays a manual pass and REMAINING_WORK carries an optional networked link-health job.",
-  "links": [
-   "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
-   "https://www.finra.org/rules-guidance/notices/21-13",
-   "https://www.federalregister.gov/api/v1/documents/2026-04233.json",
-   "https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/",
-   "https://www.irs.gov/publications/p550"
-  ]
- },
- {
-  "id": "IR-34",
-  "severity": "high",
-  "topic": "Two strategies published exit rules the venue could not express, so they silently traded a different trade than they described",
-  "detail": "Reading all twenty strategy implementations against their own specifications - the part of the brief that says the strategies must be faithful to the sources they were reverse-engineered from - @GapAndGo_YOLO documented 'Exit every position at the same session's close (market-on-close order)' and a thesis of being 'flat before the close so nothing is held overnight', while its code called ctx.flatten() once per session and every order the venue accepts was worked from interval 0, the opening bell. The fills prove what actually happened: on 2025-11-17 it sold 107 CVNA at interval 0 with the reason string 'close out yesterday's position at the open' and bought 5 shares in the same interval. So the strategy held every position overnight, earned the intraday leg it claimed to avoid, and paid the overnight gap risk it claimed to have closed out. @OvernightCarry_NO was the same defect in the opposite direction and, to its credit, had documented itself as understated (IR-08): a strategy whose whole edge is the overnight return was entering at the open, i.e. after the gap it exists to capture. Neither was a numerical bug; both were fidelity bugs, and they matter more than a rounding error would, because the site's central claim is that each username is a real strategy implemented honestly.",
-  "resolution": "Added an end-of-session execution ticket rather than editing the prose to match the code, because the code was the thing that was wrong: microstructure.Order.at_close, threaded through Context.orders_to_targets / Context.flatten and routed in Competition._submit, which splits a decision into opening-bell work and final-interval work and reuses the interval-K mechanism the venue already used for end-of-season forced liquidation. Sizing and the pre-trade margin check use the closing mark for such orders, because sizing an at-the-close order against the open price would silently produce a different position. Fill rows now carry at_close so the choice is visible in the audit trail. GapAndGo buys at the open and sells the same quantity at the close of that session, so it is flat by the bell for the first time in the project's history; OvernightCarry's entry moved to the close, which closes IR-08's understatement. In the published season: 443 of 3,078 fills (14.4%) are at-close, every one on interval 13, the last of 13, none at interval 0, and they come only from the two strategies that document such a rule. Confirmed to be a real guard by reverting the routing, which fails both behavioural tests. One gap in the audit trail is named rather than left to be discovered: the flag is recorded on the fill rows, but the order stream has no at_close field, so anyone reconstructing intent must read fills and not orders. The side effect on the leaderboard is deliberate and is the honest consequence of fixing fidelity: these two strategies now have different published returns, and everything downstream (memory, site, README) was regenerated rather than patched. Measured effect on the published season against the season as it was originally released - reported rather than smoothed over because the point of the fix was fidelity, not scorekeeping: @OvernightCarry_NO falls from +14.11% to +8.97% (-$5,137.57) because it no longer collects a full day of SPY drift it was never entitled to, and @GapAndGo_YOLO falls from -86.57% to -91.75% (-$5,181.56) because it now pays the spread at the close as well as the open and gives up the overnight continuation it had been silently earning. The two are unrelated mechanisms that happen to cost about the same; the fix changed 6 of 20 ranks - 4 through 7 and 11 through 12 shuffled, while ranks 1 to 3 held - and three of those six moved without any change in their own return at all, displaced by somebody else's correction. One check is worth calling out because it could only come out right if the fix is right: GapAndGo's dividends received went from $80.46 to exactly $0.00. A book that is genuinely flat by the close is never a holder of record on an ex-date, so it must earn nothing - the same property IR-31 was about, now confirmed from the opposite direction.",
-  "links": [
-   "https://doi.org/10.1016/j.jfineco.2019.03.011",
-   "https://www.finra.org/rules-guidance/notices/21-13",
-   "https://www.nyse.com/publicdocs/nyse/markets/nyse/rule-interpretations/2025/Regulatory_Memo_-_Market_Maker_Displayed_Quotation.pdf"
-  ]
- },
- {
-  "id": "IR-35",
-  "severity": "medium",
-  "topic": "The published site credited a commit that did not contain the code which produced the season",
-  "detail": "The site footer printed 'git commit 71b3d9062d2c' beside a season that commit could not have generated. The run memory in the repository was produced from a working tree carrying the then-uncommitted IR-31, IR-32 and IR-34 engine fixes, so the manifest recorded the parent commit as the run's code. The manifest itself was honest about this - it stores code.git.dirty=true and a SHA-256 of every sim/ module - but nothing a human reads showed it. A reader who took the footer at their word would check out 71b3d90, re-run seed 20260917, get @GapAndGo_YOLO at -86.57% instead of the published -91.75%, and reasonably conclude the site was inventing numbers. Found by reading the live Pages deployment after PR #3 merged, that is, by looking at the artefact the project ships rather than at its own test suite, which stayed green throughout.",
-  "resolution": "Four changes, and the second and third were only visible by re-running the season rather than by reading the code that wrote it. (a0) scripts/build_site.py gains provenance_sentence(), which renders the dirty state into the footer and points at the per-module hashes as the reproducible fingerprint, so a bare commit id can no longer overstate what it proves; guarded in tests/test_site_builder.py, including a check that the published index.html footer agrees with the manifest it was built from. (b) All six scenarios were re-run from a clean committed tree, so the memory now on main names a commit that contains the code which ran - the leaderboard and the market report came out byte-identical to the run they replaced (leaderboard sha 6cce7f0d9b3f679f for the file, top return 108.39), and the manifest now records commit edbeaa71e674 with dirty=false and 12 module hashes - the reproducibility claim exercised on the published artefact rather than on a scratch copy. Residual limit stated, not fixed: after a squash merge main does not contain the PR-head commit a manifest names, so durable provenance remains the module hashes, not the commit string.",
-  "links": []
- },
- {
-  "id": "IR-36",
-  "severity": "high",
-  "topic": "The intraday path inside every Season 2 bar is modelled, not real",
-  "detail": "Season 2 trades real daily open, high, low, close and volume, but the sequence of prices between the open and the close is not observable from daily data. Orders are filled inside the real bar's range by a declared intraday path that opens at the real open, respects the real high and low, and closes at the real close. Two participants filling on the same day therefore see different prices than the tape did, even though every one of them is inside the real day's range.",
-  "resolution": "Declared on every Season 2 page, in sim/marketdata.py's fill rule, and in the run manifest; the fill price is never outside the real [low, high] range, and the ledger records the real bar next to each fill so a reader can see the modelled slippage directly. Making this real requires a consolidated-tape (SIP) history, which is not freely redistributable.",
-  "links": [
-   "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule",
-   "https://fred.stlouisfed.org/series/SP500"
-  ]
- },
- {
-  "id": "IR-37",
-  "severity": "medium",
-  "topic": "Yahoo Finance is an aggregator, not the consolidated tape",
-  "detail": "Every Season 2 price is read from the Yahoo Finance chart API, whose class is recorded as SECONDARY. Yahoo's closes agree with the exchange's official closing prices to within a tick in the overwhelming majority of sessions, but they are not the primary record, and a vendor revision would silently change a published fill price.",
-  "resolution": "Each price file is committed with its SHA-256, the run records the hash, and scripts/independent_audit_season2.py re-hashes the files and re-checks every traded bar against them. The SPY series is additionally cross-checked against FRED's S&P 500 index (return correlation 0.9965 over the whole two-year window) and against an independent publisher via the Nasdaq quote API, with both comparisons published.",
-  "links": [
-   "https://query1.finance.yahoo.com/v8/finance/chart/SPY",
-   "https://fred.stlouisfed.org/series/SP500",
-   "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf"
-  ]
- },
- {
-  "id": "IR-38",
-  "severity": "medium",
-  "topic": "Dividends come from a vendor event feed, not the issuer",
-  "detail": "Cash dividends, the manufactured dividends charged on short positions, and the share adjustments on splits are taken from the vendored event payload attached to each price file. The issuer's own announcement and the exchange's ex-date notice are the primary records; the vendor's ex-date and amount can differ from them by a session or a rounding cent.",
-  "resolution": "Every participant page lists the dividends used, the ledger separates dividend carry from trading P&L, and the data page states the source class. Companies with no dividend in the window are marked as such rather than assumed to pay one.",
-  "links": [
-   "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany",
-   "https://fred.stlouisfed.org/series/SP500"
-  ]
- },
- {
-  "id": "IR-39",
-  "severity": "high",
-  "topic": "Real prices are one realisation, so there is no seed panel in Season 2",
-  "detail": "Season 1 published a robustness panel across synthetic idiosyncratic draws. Season 2 cannot: there is exactly one history of prices, and running the same season again produces the same numbers. Rankings that would move across draws in Season 1 can look stable here for the wrong reason, and the sample size is one.",
-  "resolution": "Instead of a fake seed panel, Season 2 publishes a venue-stress panel: the identical real bars re-traded with doubled spreads and impact plus a $1-per-order commission, and with halved displayed depth and a 5% participation cap. Every participant's return is published under all three assumptions, and the stress page names the largest movers.",
-  "links": [
-   "https://www.tradingview.com/the-leap/december-2025/rules/",
-   "https://www.trade-ideas.com/stock-trading-competition/"
-  ]
- },
- {
-  "id": "IR-40",
-  "severity": "high",
-  "topic": "A strategy whose official source has no retrievable history places no trades at all",
-  "detail": "The NFL and NBA injury reports and the pre-game model predictions that four of the brief's items refer to are published as live documents: the leagues do not expose a queryable archive of past seasons, and the projects do not archive their own outputs. A backtest for those strategies would have to be built from data this project cannot verify.",
-  "resolution": "Those participants are registered with their official endpoint, marked FORWARD-ONLY in the MasterFeed register, report DATA-MISSING in the signal book, and place no backdated trades; the site shows them at 0.00% with the reason on the page, and the next collection cycle is what turns them into backtestable participants.",
-  "links": [
-   "https://www.nfl.com/injuries/",
-   "https://official.nba.com/nba-injury-report-2025-26-season/"
-  ]
- },
- {
-  "id": "IR-41",
-  "severity": "medium",
-  "topic": "The Kalshi settled-market payload carries no prices or volumes",
-  "detail": "The venue's own settled-markets endpoint returns contract metadata for the requested window - ticker, title, close time - with every numeric field (volume, open interest, last price, settlement value, bid and ask) null. A strategy that reads volume from it would read a column of zeros and mistake it for a real observation of no activity.",
-  "resolution": "The signal book registers the settled-count array as available (that part of the payload is real) and the volume array as MISSING with the reason recorded; the participant that needs volume reports DATA-MISSING and trades nothing. The collection manifest keeps the failed and empty responses side by side.",
-  "links": [
-   "https://api.elections.kalshi.com/trade-api/v2/markets"
-  ]
- },
- {
-  "id": "IR-42",
-  "severity": "low",
-  "topic": "Vendor volume is consolidated across venues and cannot be attributed to one display",
-  "detail": "Share volume comes from the vendor's consolidated daily print. The participation model uses it as the denominator, so a fill's participation rate is measured against the whole market's volume for that session, not against the shares displayed at the touch on the venue the order was routed to.",
-  "resolution": "The participation rate is published per fill next to the real volume it was computed from, the venue's displayed depth is a separate declared model, and the stress panel halves that depth so the effect of the assumption is visible rather than argued about.",
-  "links": [
-   "https://www.nasdaqtrader.com/Trader.aspx?id=TradeActivityRpt",
-   "https://www.sec.gov/rules/final/34-51808.pdf"
-  ]
- },
- {
-  "id": "IR-43",
-  "severity": "medium",
-  "topic": "Event dates are reliable, but event knowledge is not the same as event availability",
-  "detail": "An FDA decision dated 2026-03-14 reaches a participant at the next session's open in this simulation, which assumes the decision was public before the market opened on the following trading day. For weekend and holiday decisions that is conservative; for a decision published after the close it is not, and a real desk would sometimes see it intraday.",
-  "resolution": "Signals are windowed strictly before the session they are read on, so no participant can read a same-session event; the assumption being made is availability at the next open, and it is stated here rather than left implicit. Nothing is backdated: every count uses the source's own date field.",
-  "links": [
-   "https://api.fda.gov/drug/drugsfda.json",
-   "https://statsapi.mlb.com/api/v1/schedule"
-  ]
- }
+  {
+    "id": "IR-01",
+    "severity": "low",
+    "topic": "VIXCLS has observations on dates when SP500 does not",
+    "detail": "The two real FRED series used as market factors do not cover exactly the same dates. Over the Season 1 window, VIXCLS carries values on 7 dates where SP500 is blank. SP500 blanks are market closures (all ten cross-check against the published Nasdaq holiday schedule); VIX closes are nevertheless published on some of those dates because the VIX is computed from SPX option prices, and CBOE option settlement/holiday conventions do not line up one-for-one with the cash-index publication calendar. Taking the two series at face value would have produced a calendar with sessions the cash market never opened.",
+    "resolution": "The trading calendar is built from the SP500 series only. VIX observations on non-sessions are dropped and counted; the count is reported in the run manifest as vix_observations_dropped_on_closed_dates. Every session carries a real VIX value.",
+    "links": [
+      "https://fred.stlouisfed.org/series/SP500",
+      "https://fred.stlouisfed.org/series/VIXCLS",
+      "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule"
+    ]
+  },
+  {
+    "id": "IR-02",
+    "severity": "medium",
+    "topic": "The commonly documented Yahoo quote endpoint refuses unauthenticated requests",
+    "detail": "Most tutorials point at https://query1.finance.yahoo.com/v7/finance/quote for 'real-time' prices. Called from this environment it returns HTTP 401 Unauthorized; the endpoint requires a crumb paired with a cookie. The v8 chart endpoint (https://query1.finance.yahoo.com/v8/finance/chart/{symbol}) does work unauthenticated and was used instead, but it serves interval bars rather than a consolidated real-time quote.",
+    "resolution": "The shipped YahooChartProvider uses v8 chart. The provider catalogue records honestly that v7 quote was attempted and refused. Any claim of 'real-time' prices from a free unauthenticated Yahoo endpoint should be treated as unverified.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y"
+    ]
+  },
+  {
+    "id": "IR-03",
+    "severity": "medium",
+    "topic": "Bulk real daily OHLCV for the full universe could not be retrieved here",
+    "detail": "A one-year daily request per symbol paginates into four response chunks through the fetch tool, so 17 symbols cost ~68 fetches of dense JSON; stooq.com refused the client outright with 'Access denied'. Retrieving the full universe was not feasible inside the environment's budget, and inventing the missing bars was not acceptable.",
+    "resolution": "Hybrid architecture: real FRED index and VIX factors drive everything; real Yahoo monthly SPY bars calibrate the intraday range model; real Yahoo AAPL closes and dividends anchor one single name end to end; all other single-name daily bars are explicitly labelled SIMULATED from declared scenario parameters. Working adapters for six providers are shipped so a season with real bars needs only credentials and network access.",
+    "links": [
+      "https://stooq.com/db/h/",
+      "https://query1.finance.yahoo.com/v8/finance/chart/AAPL"
+    ]
+  },
+  {
+    "id": "IR-04",
+    "severity": "low",
+    "topic": "The 2024 Reg NMS half-penny tick tier is codified but exempt - verified, not assumed",
+    "detail": "The SEC's September 2024 Reg NMS amendments (Release 34-101070, published at 89 FR 81774) add a $0.005 minimum pricing increment for NMS stocks whose time-weighted average quoted spread is at or below $0.015, and cut the Rule 610(c) access-fee cap from $0.003 to $0.001 per share. That amended text IS in the current Code of Federal Regulations: 17 CFR 242.612(b)(2), retrieved from the eCFR on 2026-09-17 (title 17 up to date as of 2026-09-15), reads $0.01 where the TWAQS exceeded $0.015 and $0.005 where it did not. It is nevertheless NOT in force. The Commission granted a partial stay on 12-Dec-2024 (Release 34-101899) pending judicial review; the D.C. Circuit denied the petitions for review in October 2025; the Commission then granted temporary exemptive relief to the first business day of November 2026 on 31-Oct-2025; and Release 34-105656 (11-Jun-2026, published 15-Jun-2026 as document 2026-11997) extended that relief for Rules 600(b)(89)(i)(F), 610(c) and 612 until the first business day of November 2027. The entire Season 1 window (2025-09-17 to 2026-09-16) falls inside the exemption period. This entry was originally written as 'genuinely uncertain'; it is now resolved from primary sources and downgraded from medium to low.",
+    "resolution": "The model quotes on the operative Rule 612 grid ($0.01 at or above $1.00, $0.0001 below) and keeps the operative Rule 610(c) access-fee cap of $0.003 per share, which is correct for every session of Season 1. If a future season runs on or after the first business day of November 2027, config.minimum_tick must become TWAQS-aware (a per-instrument $0.005 tier for names whose average quoted spread is at or below $0.015) and ACCESS_FEE_CAP_PER_SHARE must drop to $0.001 - both are single points of change in sim/config.py. Note that the round-lot redefinition was NOT part of the relief and did go live on 3-Nov-2025, so the tiered round lot in config.round_lot is correct as implemented.",
+    "links": [
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
+      "https://www.sec.gov/files/rules/exorders/2026/34-105656.pdf",
+      "https://www.federalregister.gov/documents/2026-06-15/2026-11997/order-granting-temporary-exemptive-relief-pursuant-to-section-36a1-of-the-securities-exchange-act-of",
+      "https://www.sec.gov/newsroom/speeches-statements/atkins-statement-minimum-pricing-increments-access-fee-caps-061126",
+      "https://www.federalregister.gov/documents/2024-10-08/2024-21867/regulation-nms-minimum-pricing-increments-access-fees-and-transparency-of-better-priced-orders",
+      "https://www.sec.gov/newsroom/press-releases/2024-137"
+    ]
+  },
+  {
+    "id": "IR-05",
+    "severity": "medium",
+    "topic": "The FINRA Trade Activity Fee rate rests on secondary sources only",
+    "detail": "The TAF applied to equity sells ($0.000195 per share, minimum $0.01, maximum $9.79 per trade, effective 2026-01-01, replacing $0.000166 with an $8.30 maximum) was corroborated from a broker help page and a broker pricing page. FINRA's own Rule 7541 / Schedule A text was not retrievable from this environment, so the rate is SECONDARY-sourced.",
+    "resolution": "The rate is implemented because it is small and directionally certain, and it is labelled SECONDARY everywhere it appears - in config.py, in the source register and here. Verify against FINRA Schedule A before using these numbers for anything that matters.",
+    "links": [
+      "https://www.finra.org/rules-guidance/rulebooks/finra-rules/7541"
+    ]
+  },
+  {
+    "id": "IR-06",
+    "severity": "medium",
+    "topic": "The intraday-range calibration that best fits real SPY data contradicts the documented overnight/intraday variance split",
+    "detail": "A grid search over the wick coefficient and the share of daily variance placed in the overnight gap, scored against 13 real Yahoo SPY monthly bars, preferred wick=0.25 with overnight share=0.05 (mean absolute difference 0.401 percentage points). That overnight share is well below what the published literature on overnight versus intraday return variance supports, so the best-fitting point buys range accuracy by misrepresenting where variance occurs - and the overnight leg matters directly to one participant (@OvernightCarry_NO) and to every opening-gap decision.",
+    "resolution": "Compromise committed: overnight share 0.15, wick coefficient 0.20, mean absolute difference 0.522pp against the real monthly ranges. Both constants carry this note in marketdata.py, and the audit table is published on the data-provenance page so the cost of the compromise is visible.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y"
+    ]
+  },
+  {
+    "id": "IR-07",
+    "severity": "high",
+    "topic": "Event-driven strategies run on price/volume proxies, not on real event data",
+    "detail": "Two participants are built around information events: @DriftRider_PEAD (post-earnings-announcement drift) and @SqueezeHunter_TF (short-squeeze / low-float momentum). Neither real earnings dates and EPS surprises nor short interest, days-to-cover or float data was obtainable offline, so both use a proxy: a large multi-session price move on elevated volume. A proxy of that kind conflates genuine information events with ordinary volatility, and the two have opposite continuation behaviour.",
+    "resolution": "Both strategy specs declare this as a known failure mode in the first line, the narrative surfaces it as a standing caveat on every run, and the site repeats it on the participant pages. Their results should be read as 'what a price/volume event filter did', never as 'what post-earnings drift earns'.",
+    "links": [
+      "https://doi.org/10.2307/2490899"
+    ]
+  },
+  {
+    "id": "IR-08",
+    "severity": "high",
+    "topic": "The overnight-premium participant is filled after the gap it is trying to capture",
+    "detail": "@OvernightCarry_NO's edge is the overnight return: buy at the close, sell at the next open. A daily-bar engine decides at the open and executes from the open, so the participant systematically transacts after the very move it is trading. Its measured performance is therefore structurally biased against the strategy - or, on days when the gap reverses, in favour of it - and neither direction reflects the real overnight premium.",
+    "resolution": "Flagged in the strategy spec, in the narrative caveats and on the participant page. Fixing it properly needs a close-auction execution path (an order type that fills at the session close print), which is listed as remaining work. | UPDATED 2026-09-17: superseded by IR-34. The venue grew an end-of-session execution ticket (Order.at_close), so the overnight strategy's entry is now worked on the final interval and the structural understatement is closed rather than merely disclosed. The season was re-run; @OvernightCarry_NO's published number changed because it is now a different trade from the one Season 1 measured before this pass, and the residual limitation (the closing print is a synthetic interval, not a tape print) stays in its spec.",
+    "links": []
+  },
+  {
+    "id": "IR-09",
+    "severity": "low",
+    "topic": "Eleven dividend schedules are declared approximations; only AAPL's are real",
+    "detail": "AAPL carries four real ex-dates and amounts captured from the Yahoo chart API. The other dividend payers in the universe (SPY, QQQ, IWM, MSFT, GOOGL, META, NVDA, JPM, XOM, UNH, CAT, WMT) needed schedules too - without them the buy-and-hold control would be understated by roughly one dividend yield per year and that bias would leak into every relative comparison.",
+    "resolution": "Declared yields with quarterly ex-month patterns approximating each issuer's real cycle are attached and labelled 'scenario-declared' in the instrument provenance. To avoid double counting, the replay generator subtracts the declared window dividend yield from the price drift for non-anchored names, so declared total return equals price path plus cash dividends. Ex-dates falling on a non-session are paid on the next session and raise IR-10.",
+    "links": []
+  },
+  {
+    "id": "IR-10",
+    "severity": "low",
+    "topic": "Runtime: a declared dividend ex-date fell on a non-session",
+    "detail": "Raised per occurrence by the engine when a declared ex-date is not a trading session. The dividend is paid on the next session rather than dropped, which slightly shifts its timing.",
+    "resolution": "Counted and listed in the run's irregularities.json. Two occurrences in the primary scenario (SPY and IWM, declared 2026-06-19, paid 2026-06-22).",
+    "links": []
+  },
+  {
+    "id": "IR-11",
+    "severity": "high",
+    "topic": "Runtime: the execution engine raised on an order",
+    "detail": "Should never happen. Any occurrence means a venue or cost-model defect rather than a market event.",
+    "resolution": "Zero occurrences in all six scenarios. The engine catches, records and continues rather than aborting a 251-session run.",
+    "links": []
+  },
+  {
+    "id": "IR-12",
+    "severity": "high",
+    "topic": "Runtime: a strategy raised inside its decision function",
+    "detail": "A participant's on_day threw an exception. The participant skips that session and the traceback is stored in memory and in its report.",
+    "resolution": "Zero occurrences in all six scenarios across 20 participants and 251 sessions.",
+    "links": []
+  },
+  {
+    "id": "IR-13",
+    "severity": "high",
+    "topic": "Runtime: a participant's equity reached zero",
+    "detail": "The account is closed and the participant stops trading. In a real competition this is a total loss and usually an end-of-contest event.",
+    "resolution": "Zero occurrences in the primary scenario. @GapAndGo_YOLO finished at -91.75%, the closest any participant came.",
+    "links": []
+  },
+  {
+    "id": "IR-14",
+    "severity": "medium",
+    "topic": "Runtime: orders rejected by the broker-side pre-trade margin check",
+    "detail": "An order that would breach the gross leverage cap and could not be resized (not even one share fits) is rejected, with the measured leverage in the reason. In the published primary scenario @SpreadHarvester_MM had 67 such rejections and 115 across all participants that hit the cap: its inventory drifted the book above 2.0x gross through price movement, after which the broker only accepted risk-reducing orders.",
+    "resolution": "Aggregated per participant and per normalised reason so a single stuck book does not produce hundreds of near-identical flags. Risk-reducing orders are never blocked, so a participant can always trade its way back inside the cap.",
+    "links": []
+  },
+  {
+    "id": "IR-15",
+    "severity": "medium",
+    "topic": "Runtime: orders resized by the broker-side pre-trade margin check",
+    "detail": "An order larger than the account can support is clipped to the largest permissible quantity and the clip is written into the order's reason, so the tape shows what was asked for and what was allowed.",
+    "resolution": "193 clips for @SpreadHarvester_MM and 44 for @KitchenSink_AllIn in the published primary scenario, 259 clips in total; both are reported on the participant pages.",
+    "links": []
+  },
+  {
+    "id": "IR-16",
+    "severity": "high",
+    "topic": "Factor premia measured on this replay are artefacts of declared parameters",
+    "detail": "The narrative engine attributes performance partly by comparing each strategy against realised long/short factor premia (momentum, reversal, beta, low-vol, liquidity) computed from the same replay. Those premia are real numbers about this competition, but the cross-sectional drifts that generate them are declared scenario inputs in sim/universe.py, not observed market data. Quoting them without that context would imply evidence about real markets that this project does not have.",
+    "resolution": "Every participant narrative carries the caveat automatically, and the market page repeats it in a callout above the factor panel. The real long-horizon evidence for each premium is cited separately, with its verification status, on the strategy pages.",
+    "links": []
+  },
+  {
+    "id": "IR-17",
+    "severity": "low",
+    "topic": "The SEC Section 31 fee rate was zero for the first two-thirds of the competition window",
+    "detail": "The FY2026 annual adjustment order sets the Section 31 transaction fee rate at $0.00 per $1,000,000 from 2025-09-01 and $20.60 per $1,000,000 from 2026-04-04. A zero rate is unusual and is a consequence of the timing of appropriations and the Commission's fee-setting process, not of a policy decision to abolish the fee. A model that used a single constant rate across the window would misprice sells by the full amount for seven months.",
+    "resolution": "The cost model is date-dependent: rate_for() picks the rate in force on the trade date. Sell-side regulatory cost is therefore exactly zero before 2026-04-04 and $20.60 per million after it, matching the order.",
+    "links": [
+      "https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates",
+      "https://www.nasdaqtrader.com/MicroNews.aspx?id=OTA2026-14"
+    ]
+  },
+  {
+    "id": "IR-18",
+    "severity": "low",
+    "topic": "The reference competitions are not real-time either",
+    "detail": "The requirement was real-time prices, but the contests this project reverse-engineered do not offer them: the Trade Ideas PM Challenge page states 'Data delayed by 15 minutes', and the CandleCharts Showdown is hosted on TradingView community competitions, which use TradingView's own delayed or broker-fed data depending on the instrument. Real-time consolidated equity data is a licensed product.",
+    "resolution": "Season 1 runs on an end-of-day replay, which is strictly better than a 15-minute-delayed feed for a daily-decision competition and is documented as limitation L-01/L-03. The provider catalogue marks which shipped adapters are real-time capable (Alpaca, Polygon, Finnhub) so the upgrade path is explicit.",
+    "links": [
+      "https://www.trade-ideas.com/stock-trading-competition/",
+      "https://specials.candlecharts.com/contest/"
+    ]
+  },
+  {
+    "id": "IR-19",
+    "severity": "medium",
+    "topic": "Single-path cross-sectional dispersion is driven by idiosyncratic draws, not by a volatility-model error",
+    "detail": "In the primary scenario the standard deviation of one-year returns across the 17 instruments is 47.3 percentage points, with NVDA +147%, JPM +60%, XOM -43% and UNH -52%. That is wide. Diagnosing it showed realised total volatility matching the predicted volatility closely for every name (NVDA 50.3% predicted vs 49.7% realised; JPM 22.5% vs 21.9%), so the vol model is correct and the spread is the expected consequence of cumulative idiosyncratic draws over one year (XOM z = -2.68, JPM z = +2.17, NVDA z = +1.63).",
+    "resolution": "The declared idiosyncratic volatilities were deliberately NOT shrunk to make one path look tidier - that would bias every result toward the mean. Instead the competition is run over six scenarios and the robustness panel reports mean, median, best and worst per participant, which is the honest way to show how much of a single-season rank is the draw.",
+    "links": []
+  },
+  {
+    "id": "IR-20",
+    "severity": "high",
+    "topic": "Found in review: a market-making participant could size quotes in the billions",
+    "detail": "@SpreadHarvester_MM sized each resting quote at 10% of 21-day ADV without applying the inventory cap its own spec declares. On SPY that is roughly 6 million shares, about $3.9bn of notional, on a $100,000 account - and because the strategy constructed Order objects directly it bypassed the margin screen that Context.orders_to_targets applies. The account reached $140,652,977 of equity in six sessions.",
+    "resolution": "Two fixes, both committed. (1) The strategy now sizes min(10% of ADV, 60% of equity / price), matching its spec. (2) Defence in depth: the engine runs a broker-side pre-trade risk check on EVERY order regardless of how it was built, resizing to the largest permissible quantity or rejecting, and the event is raised as IR-14/IR-15. A single mis-sized strategy can no longer corrupt the leaderboard.",
+    "links": []
+  },
+  {
+    "id": "IR-21",
+    "severity": "medium",
+    "topic": "Found in review: VWAP-slicing every market order handed participants free intraday drift",
+    "detail": "Market orders were spread across the whole session by volume weight, which is what a VWAP algorithm does, not what a market order does. Because the decision price is the opening mid, the difference between the session average price and the open was booked as favourable 'drift'. For @MomentumMax_12x1 that was -$1,857 on $614k of paper notional (about -30bp of phantom benefit) in the run where the bug was found, the memory at commit 71b3d90, and it varied by strategy with how much each one traded - a systematic bias in the ranking, not a cost.",
+    "resolution": "Slicing is now capacity-driven: an order trades at the touch and only spans further intervals when its size exceeds what one interval can absorb inside the participation limit. Measured drift for the same participant after the change: +$2.04. The implementation-shortfall decomposition now separates friction (spread, depth, impact, fees) from timing (drift) so neither can hide inside the other.",
+    "links": [
+      "https://doi.org/10.2469/faj.v44.5.28"
+    ]
+  },
+  {
+    "id": "IR-22",
+    "severity": "medium",
+    "topic": "Found in review: round-trip reconstruction dropped the flipped leg of a position reversal",
+    "detail": "When a fill took a position through zero (long 100 becomes short 200 on a 300-share sell), the trade ledger closed the original lot and discarded the residual 200 shares, so the entire P&L of the new position vanished from the attribution. For @DriftRider_PEAD the unexplained residual in its P&L decomposition was +$20,169 in the run where that was found, the memory at commit 71b3d90.",
+    "resolution": "The reconstruction now opens a new lot in the opposite direction for the residual at the same fill price. The unexplained residual for that participant fell to +$154, and every participant's residual is now under $600 (the remaining gap is fees charged to cash outside the round-trip ledger, which the decomposition reports explicitly rather than hiding).",
+    "links": []
+  },
+  {
+    "id": "IR-23",
+    "severity": "medium",
+    "topic": "Found in review: beta was regressed one session out of alignment",
+    "detail": "The equity curve holds one mark per session, so its daily-return series starts one session later than the market-return series it was paired with. The regression therefore compared each participant's return against the previous day's index move, which produced near-zero betas for obviously levered books (@BetaChaser_3xProxy measured beta 0.07 while carrying 2x gross in high-beta names) and inflated alphas to nonsense (+104.7% per year).",
+    "resolution": "Both series are now built over identical session ranges and length-checked before the regression. The same participant measures beta 3.92 with alpha +44.08%/yr on the published season, and the market-neutral participant (@PairsArb_ZScore2) measures beta -0.01, which is the sanity check that the alignment is right.",
+    "links": []
+  },
+  {
+    "id": "IR-24",
+    "severity": "low",
+    "topic": "Quoted spreads from a pure volatility-scaled model were two orders of magnitude too wide",
+    "detail": "An early version derived the quoted spread from volatility (spread = 0.20 x daily sigma x price), which produced $0.51 on NVDA - 27 basis points. NVDA's real quoted spread is one cent, about 0.5bp. The error came from ignoring that liquid US equities are tick-constrained: competition compresses the touch to the minimum increment whenever the tick is small relative to the price, which is exactly why the SEC's 2024 amendments introduced a finer tick for the tightest names.",
+    "resolution": "The spread model is now tick-based: a whole number of Rule 612 increments, scaled by sqrt(sigma x sqrt(VIX factor) / (tick/price)) and clamped by per-liquidity-tier tick bounds plus an absolute basis-point cap. At the season open this gives 1 tick on SPY, NVDA, AAPL, JPM and RIVN and 2 ticks on TSLA and CVNA; all-in execution cost lands at 0.5bp for a $100k order in NVDA and about 10bp for 50,000 shares of RIVN, consistent with published execution-quality statistics.",
+    "links": [
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.605"
+    ]
+  },
+  {
+    "id": "IR-25",
+    "severity": "medium",
+    "topic": "The Commission has proposed rescinding the Rule 611 order protection rule, which this simulation assumes",
+    "detail": "The simulated order book never crosses and never trades through a better displayed price, because Rule 611 of Regulation NMS (17 CFR 242.611) makes the best protected quotation a trade-through protection point. On 11-Jun-2026, alongside the exemptive order that pushed the tick-size and access-fee amendments to November 2027, the Commission proposed rescinding the Order Protection Rule; Chairman Atkins' statement of the same date records that proposal and directs staff to review Rules 610(c) and 612 by the end of 2026. If Rule 611 is rescinded, displayed quotations would no longer be protected, off-exchange and manual execution would no longer have to route to the NBBO, and the price-improvement and trade-through assumptions baked into sim/microstructure.py would describe a market that no longer exists. Nothing in Season 1 is affected - the rule was in force for every session of the window - but any future season started after a rescission would need the venue model re-derived.",
+    "resolution": "Flagged rather than modelled: Season 1 ran entirely under Rule 611 as it stands, so no result changes. The proposal is tracked here so a maintainer re-running a later season checks the status of Rule 611 first. If it is rescinded, the affected code is the no-cross / trade-through invariant in microstructure.OrderBook.match and the protected-quote assumption in the liquidity model's price-improvement statistics; both are documented inline with their Rule 611 citation.",
+    "links": [
+      "https://www.sec.gov/newsroom/speeches-statements/atkins-statement-minimum-pricing-increments-access-fee-caps-061126",
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.611"
+    ]
+  },
+  {
+    "id": "IR-26",
+    "severity": "medium",
+    "topic": "The impact model uses a square-root exponent; the empirical paper it cites measured 3/5",
+    "detail": "sim/microstructure.py prices temporary market impact as coefficient x sigma_daily x sqrt(shares / ADV), the square-root law. That functional form comes from the optimal-execution framework of Almgren & Chriss (2001), Journal of Risk 3(2):21-40. The empirical paper most often cited alongside it - Almgren, Thum, Hauptmann & Li (2005), 'Direct estimation of equity market impact', Risk 18(7):58-62, fitted to roughly 700,000 Citigroup US equity orders - explicitly REJECTS the square-root model for temporary impact as a function of trade rate and reports a 3/5 power law instead. Using 0.5 therefore understates the concavity of impact: at 10% of ADV the square-root form gives 0.316 sigma-units where a 0.6 exponent gives 0.251, i.e. this model charges about 26% MORE impact than the measured law at that size, and the gap widens for smaller orders and narrows for larger ones. Neither the publisher page for the 2005 article (checked 2026-09-17: risk.net returns 'we can't seem to find the page you're looking for') nor the author-hosted working paper (courant.nyu.edu, redirects to cims.nyu.edu and returns HTTP 403) was retrievable from this environment, so the exponent finding is cited from the literature rather than read from the paper here.",
+    "resolution": "The square-root form is retained deliberately: it is the convention every execution desk and vendor model uses, it keeps ImpactConfig.coefficient comparable across instruments, and switching exponents would change every cost number in Season 1 without a verified calibration to replace it. The deviation is documented here and in the ImpactConfig docstring. Making the exponent a config field (default 0.5, with a 0.6 scenario for sensitivity) is listed in research/REMAINING_WORK.json.",
+    "links": [
+      "https://doi.org/10.21314/JOR.2001.041",
+      "https://www.risk.net/cut-through/2455921/direct-estimation-of-equity-market-impact"
+    ]
+  },
+  {
+    "id": "IR-27",
+    "severity": "medium",
+    "topic": "A citation audit found six wrong or dead references in the code; all are corrected and now tested",
+    "detail": "The brief requires verification from official sources and no hallucinated content, so every DOI and URL in sim/ and scripts/ was audited against the paper it was attached to. Six defects were found. (1) sim/microstructure.py cited https://doi.org/10.2307/2328616 as Perold (1988); that DOI is Roll (1984), 'A Simple Implicit Measure of the Effective Bid-Ask Spread in an Efficient Market', Journal of Finance 39(4):1127-1139 - Perold is 10.2469/faj.v44.5.28. (2) sim/config.py ImpactConfig cited https://doi.org/10.1093/rfs/1.1.3, which is Admati & Pfleiderer (1988) on intraday volume patterns, as a source for market impact. (3) sim/analytics.py cited https://doi.org/10.1007/s007800050008 as Artzner et al. (1999) on coherent risk measures; that DOI is Follmer & Leukert (2000), 'Efficient hedging: cost versus shortfall risk', Finance and Stochastics 4:117-146. (4) The Almgren et al. (2005) citation carried the wrong fourth author ('Pacold'; it is Li), two different page ranges (57-62 and 105-111; Risk 18(7) pages are 58-62) and a DOI, 10.1088/1469-7688/5/8/005, that belongs to a Quantitative Finance article rather than to a Risk magazine piece. (5) The risk.net URL used in four places returns a 404 page. (6) Two Elsevier/JAE DOIs in sim/strategies.py could not be matched to the papers claimed: 10.1016/0165-4101(89)90015-X is not Bernard & Thomas (the nearest real DOI, ...90015-3, is Bonnier & Bruner on management change in distressed firms) and 10.1016/S1386-4181(02)00011-7 could not be confirmed as Amihud (2002).",
+    "resolution": "All six are fixed: Perold now carries 10.2469/faj.v44.5.28; the Admati DOI stays only where the U-shaped volume profile is defined; Artzner et al. now carries 10.1111/1467-9965.00068; the Almgren citation reads 'Almgren, Thum, Hauptmann & Li (2005), Risk 18(7):58-62' with the impact framework attributed to Almgren & Chriss (2001), 10.21314/JOR.2001.041; the dead risk.net link is gone from the source register; PEAD is cited as Bernard & Thomas (1989) 10.2307/2490899 plus Ball & Brown (1968) 10.2307/2490232, and Amihud (2002) is cited with a working copy of the paper at cis.upenn.edu. tests/test_sources_register.py now enforces the invariant: every http(s) URL in sim/ and scripts/ must appear in the source register, the provider catalogue, an academic_basis entry or a research register, and every DOI must sit next to the author it belongs to. See research/VERIFICATION_LOG.md for the full log of what was checked, when, and what came back.",
+    "links": [
+      "https://doi.org/10.2307/2328616",
+      "https://doi.org/10.2469/faj.v44.5.28",
+      "https://doi.org/10.1007/s007800050008",
+      "https://doi.org/10.1111/1467-9965.00068",
+      "https://doi.org/10.1093/rfs/1.1.3",
+      "https://doi.org/10.21314/JOR.2001.041",
+      "https://doi.org/10.2307/2490232"
+    ]
+  },
+  {
+    "id": "IR-28",
+    "severity": "medium",
+    "topic": "Displayed quotes were being re-centred off the Rule 612 tick grid, so the venue published prices no exchange could display",
+    "detail": "ExecutionEngine.quote_at() builds the dealer ladder on the minimum-increment grid, then re-centres it on the permanently-impacted mid so that quotes track the intraday path. That re-centring added an arbitrary fraction (mid minus the raw ladder mid) to every level, which pushed the displayed bid and ask off the grid - the recorded opening quote for SPY on 2025-09-17 was bid 655.4003 / ask 655.4103, a perfectly legal one-tick spread at two prices that 17 CFR 242.612(b) does not permit anyone to display. Across the primary run this affected 8,462 of the recorded quote levels and 5,902 of the bid/ask fields carried on fill rows. Executed fill prices were NOT affected: the fill engine rounds to the grid separately, and all 2,973 fills in the primary run are exact multiples of the operative increment. The existing unit test did not catch it because it called MarketMakerPool.quotes() directly, which has always been grid-clean; the defect lived one level up, in the re-centring, and no test crossed that boundary. Found while writing the audit-trail test that checks the prices actually WRITTEN to memory rather than the prices the venue code computes in isolation.",
+    "resolution": "Fixed in sim/microstructure.py: the re-centring shift is now snapped to a whole number of minimum increments (round((mid - raw_mid) / tick) * tick), so the ladder still tracks the impacted mid to within half a tick, the quoted spread stays at exactly n_ticks, and the book cannot cross because every level moves by the same amount. Two tests now hold the line: tests/test_microstructure.py::test_every_displayed_level_is_a_legal_rule_612_increment walks every symbol and three intraday intervals and asserts each displayed level, the quoted spread and the mid-tracking bound; tests/test_memory.py::test_every_recorded_price_is_a_legal_rule_612_increment asserts it on the published audit trail itself, over every fill row and every quote row in memory. A companion test, test_the_decision_price_is_deliberately_off_grid, pins the other half of the distinction: the price a strategy decided at stays the unrounded intraday mark, so the tick cost is charged rather than handed back. Season 1 was re-run and the site rebuilt after the fix, so the numbers published here are the post-fix numbers.",
+    "links": [
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
+      "https://www.federalregister.gov/documents/2024-10-08/2024-21867/regulation-nms-minimum-pricing-increments-access-fees-and-transparency-of-better-priced-orders"
+    ]
+  },
+  {
+    "id": "IR-29",
+    "severity": "medium",
+    "topic": "Limit-order marketability is a knife edge: a sub-tick venue change moved one participant by 28.3pp and reshuffled 9 of 20 ranks",
+    "detail": "Measured, not estimated - and measured twice, because the first measurement was wrong. The IR-28 fix snapped displayed quotes back onto the Rule 612 grid: a change of at most half a tick, half a cent on every name in this universe. Re-running the identical seed and config afterwards moved @OneBigBet_Concentra by +28.3pp (20.6% to 48.9%) with closed trades rising from 36 to 55 - measured on the memory as it stood at commit 71b3d90, before IR-31 and IR-34, so only the size of the swing is comparable with the published season, not the levels. The first version of this entry also reported the surrounding shifts as though they were all caused by the tick fix. They were not: that comparison was confounded by IR-30, the set-iteration bug, which meant neither side of the comparison was reproducible in the first place. The numbers below are the corrected measurement, taken with PYTHONHASHSEED pinned to 0 on both sides so that the tick snapping is the only difference between the two runs: @OverreactionFade_LT +32.88pp (40.58 to 73.46, trades 67 to 70); @OneBigBet_Concentra +28.30pp (20.63 to 48.94, trades 36 to 55); @MeanRev_Z2Sigma +9.37pp; @IlliquidRocket_Degen -7.35pp; @SqueezeHunter_TF -5.65pp (3.80 to -1.85, which flips its published verdict from 'made money but lagged the index' to 'lost money'); @DriftRider_PEAD +5.12pp; @KitchenSink_AllIn -4.33pp; @BetaChaser_3xProxy +0.08pp (the winner, 108.31 to 108.39). Ten of the twenty participants were unchanged to within 0.05pp; ten of twenty changed rank; mean absolute shift 4.67pp. The mechanism is discrete, not continuous: whether a resting limit order is marketable depends on which side of the touch it sits, so moving the touch by a fraction of a tick flips fills on and off, and because every strategy is path dependent - position, inventory, cash and margin available for the next order, subsequent signals - one flipped fill compounds through the rest of the year. Rising trade counts (36 to 55) are the visible symptom: these are not the same trades at slightly different prices, they are different trades.",
+    "resolution": "Recorded rather than smoothed over, because it is a property of the design and not a bug to patch - and because the first, confounded measurement is itself evidence of how easily a plausible number gets published. Four consequences are now carried explicitly. (1) The season's ranking is sensitive to sub-tick venue detail, so no single-path ranking should be read as a skill ordering; that is what the six-scenario robustness panel is for, and it is why the site publishes mean, median, best, worst and standard deviation per participant rather than one number. (2) Every measurement quoted in this register is now taken with PYTHONHASHSEED pinned, so it can be reproduced by anyone re-running the two commands. (3) tests/fixtures.py pins the published headline in one place with a change history, so an engine change shows up as one explicit diff instead of a scattering of failing assertions. (4) A sensitivity harness is registered as remaining work (P1): re-run under a small perturbation of each venue parameter - tick snapping, hidden liquidity, spread ticks, the impact exponent at 0.5 vs 0.6, maker rebate on and off - and publish the distribution of rank changes, so a reader can see which results are robust and which are knife-edge.",
+    "links": [
+      "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612"
+    ]
+  },
+  {
+    "id": "IR-30",
+    "severity": "high",
+    "topic": "The published season was not reproducible: three strategies iterated a set, so PYTHONHASHSEED changed the leaderboard",
+    "detail": "The most serious defect found in this project, and the one the CI gate caught rather than a human. Three strategies - @DriftRider_PEAD, @SqueezeHunter_TF and @OverreactionFade_LT - built their held-position collection as a set comprehension (`held = {s for s in ctx.symbols if ctx.position(s)}`) and then looped over it to build the list of exits. CPython salts string hashing per process, so set iteration order changes from one interpreter to the next. Exit order determines the order sell orders are submitted, which determines the cash and margin available to the buy orders that follow in the same session, which changes which entries fill - and because every strategy is path dependent, that difference compounds for the rest of the year. Measured with the pre-fix code, same seed, same config, same machine: PYTHONHASHSEED=2 gave @OverreactionFade_LT +39.8994% on 71 closed trades; PYTHONHASHSEED=0, 1 and 3 gave +73.46% to +73.59% on 70 trades. The committed Season 1 memory had been written under whichever hash seed that process happened to get, so `python3 -m sim.cli run` could not reproduce the leaderboard the site was publishing. The in-process determinism test that had been passing all along could not catch this by construction: every object inside one interpreter shares one hash seed. The bug was invisible locally and only appeared when CI re-ran the season in a fresh process on a fresh runner.",
+    "resolution": "Fixed in sim/strategies.py: all three loops now iterate `ctx.symbols`, the canonical universe order, using the set only for membership. Verified across PYTHONHASHSEED 0, 1, 2, 3 and 7 - the leaderboard hash is now identical in all five processes. Two tests hold the line: tests/test_engine_smoke.py::test_the_season_is_reproducible_across_processes runs the short season in two subprocesses with different hash seeds and requires identical leaderboards (this is the test that would have caught it), and ::test_no_strategy_iterates_a_set is an AST sweep that fails on any `for` loop over a name bound to a set comprehension or set literal - both were checked against a deliberately reintroduced copy of the bug. The whole season was re-run and the site rebuilt after the fix, so the numbers published here are the deterministic ones. The remaining exposure is worth stating plainly: the fix removes hash-order sensitivity, not the underlying knife-edge behaviour measured in IR-29, which is a property of limit-order marketability and path dependence rather than of Python.",
+    "links": [
+      "https://docs.python.org/3/using/cmdline.html#envvar-PYTHONHASHSEED",
+      "https://docs.python.org/3/reference/datamodel.html#object.__hash__"
+    ]
+  },
+  {
+    "id": "IR-31",
+    "severity": "high",
+    "topic": "Dividends were paid on the position left AFTER the ex-date's trades, and short positions were never charged a manufactured dividend",
+    "detail": "Two accounting errors in one place, both found by reading sim/engine.py and sim/portfolio.py line by line in the second review pass rather than by running anything. (a) ENTITLEMENT. The engine settled an ex-date after the participant had already traded that day, paying the dividend on whatever the book looked like at the close. A dividend belongs to whoever held the shares going INTO the ex-date, so a participant who bought on the ex-date was paid a dividend they were never owed, and one who sold on the ex-date lost a dividend they were owed. Measured on the originally published Season 1 - recoverable with git show 71b3d90:memory/runs/season1-primary-seed20260917/events/carry.jsonl.gz - by re-deriving all 202 of its dividend events from the event streams: 18 of them were priced against a quantity that was not the entitlement carried into the ex-date - 11 overpayments totalling $1,198.01 and 7 underpayments totalling $962.48, $2,160.49 gross and -$235.53 net, across 7 of the 20 accounts. The largest single one paid @OvernightCarry_NO $547.68 of SPY dividend on 306 shares when it had carried 17 shares into the date; the smallest that mattered was $2.12, and it moved one participant 31.3 percentage points. (b) PAYMENT IN LIEU. A stock loan requires the borrower to pay the lender any dividend that goes ex while the shares are borrowed; the position does not receive the dividend, it owes one. pay_dividend() returned 0.0 for any non-positive quantity, so shorts paid nothing. The venue's own drift calibration makes this worse than a missing line item: for a simulated (non-endpoint-anchored) name the declared dividend yield is SUBTRACTED from the price drift, so the price path falls by roughly the dividend. A short therefore collected that fall as profit and was never charged for it - a free +yield tailwind on every short leg. That flattered exactly the short-heavy archetypes: the low-volatility pair trade, the market maker and the reversal book.",
+    "resolution": "sim/portfolio.py: pay_dividend() is replaced by settle_dividend(symbol, per_share, entitled_qty), which pays max(0, entitled_qty) * per_share to the long side and charges max(0, -entitled_qty) * per_share to the short side as a manufactured dividend, posting each as its own carry event so the audit trail shows the entitlement it used. sim/engine.py snapshots quantities_at_open() before ANY of the session's fills, including before a forced liquidation, and settles on that snapshot. The P&L identity and the decomposition gained a dividends_in_lieu_usd bucket, and the ledger-closure test now sums every *_usd bucket the decomposition publishes, so a future bucket cannot be added without being tested. Direct cash effect in the published season: the carry ledger went from $11,299.61 received and nothing charged to $11,600.83 received and $1,852.31 charged in lieu, a net correction of $1,551.09 across 20 accounts, about $78 each. Of that, $1,489.18 is attributable to this fix measured before IR-34 re-timed two books; the rest is those two books holding different quantities on ex-dates. An earlier draft of this entry quoted $635.91 over 4 payments, which could not be reproduced from any event stream in the repository; it was replaced by the derivation above rather than left standing, because an unverifiable figure in a document about verifiability is the same failure mode as IR-33's dead links, only on our own side. The effect on INDIVIDUAL RETURNS is much larger than that, and the reason is path dependence, not the size of the correction: @OverreactionFade_LT moves from +73.46% to +42.14% because a $2.12 cash difference on 2026-06-11 changed the size of a CVNA order one month later - the pre-fix book sold 94 shares where the corrected book sold 95 - and every later trade compounds from there. This is the same knife-edge that IR-29 measures, now demonstrated on an accounting input worth two dollars, which is a stronger argument than any of the synthetic perturbations: a single-season ranking in this venue is not a stable measurement of anything. Both fixes are guarded by new tests (test_dividend_entitlement_is_the_position_carried_into_the_ex_date, test_short_position_owes_a_manufactured_dividend, test_dividend_events_match_the_entitlement_recorded_at_the_open), each verified to fail against the pre-fix code. scripts/independent_audit.py was then added so the published numbers are re-derived from the event trail by code that never imports the engine.",
+    "links": [
+      "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4330",
+      "https://www.irs.gov/publications/p550",
+      "https://www.nasdaq.com/market-activity/stocks/xom/dividend-history"
+    ]
+  },
+  {
+    "id": "IR-32",
+    "severity": "medium",
+    "topic": "The pattern-day-trader counter was a stub that returned True, so it counted any second fill of a session as a day trade",
+    "detail": "Account._day_trade_closes(pos, side) had an unused signature and a body of 'return True'. Any symbol traded twice in one session was therefore recorded as a day trade, whatever the direction: three consecutive buys scale into a position and were counted as round-trip day trading. The published season had @OvernightCarry_NO at 235 'day trades' out of 251 sessions, for a strategy whose every round trip deliberately spans two sessions and which never round-trips intraday at all - the number was not merely imprecise, it described the strategy backwards. No P&L was affected, which is exactly why it survived: the rule is reported and not enforced at a $100,000 account, and the two tests that existed only pinned down 'one entry per session' and 'an overnight round trip is not a day trade', both of which the stub satisfied by accident.",
+    "resolution": "Replaced with real intraday tracking: the account keeps a per-symbol signed intraday quantity, reset at start_day(), and a day trade is counted only when a fill closes quantity opened the same session. Two counters are now reported - day_trade_count (round trips closed intraday) and day_trades (sessions containing at least one) - and the participant pages label the metric 'Intraday round trips (PDT definition)'. Adding to a position is verified not to count, a partial close is verified to count once, the short-side mirror (sell short then cover) is verified, and the counter is verified to reset across a session boundary. Confirmed to be purely informational: with the day-trade fix applied and the dividend fix reverted, the leaderboard reproduces the pre-fix committed bytes exactly.",
+    "links": [
+      "https://www.finra.org/rules-guidance/notices/21-13",
+      "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210",
+      "https://www.finra.org/investors/insights/frequent-intraday-trading"
+    ]
+  },
+  {
+    "id": "IR-33",
+    "severity": "medium",
+    "topic": "Two official URLs in the project's own source register had gone dead, including one cited for a fee rate",
+    "detail": "The register is what a reviewer clicks, so a stale URL in it is not a cosmetic problem. Reading every cited page on 2026-09-17, two FINRA paths in sim/config.py returned HTTP 404 while the substance of the claims they carried was correct: (a) rulebooks/finra-rules/7541, cited as the source of the Trade Activity Fee rate - there is no Rule 7541, the TAF lives in Section 1 of Schedule A to the By-Laws, and FINRA's own guidance page says so; and (b) investors/learn-to-invest/types-investments/margin-investing/pattern-day-trader, cited for the $25,000 pattern-day-trader minimum, whose material now sits under investors/insights/. A third link, finra-rules/4337, used in a first draft of IR-31, does not exist either: the securities-lending customer-protection rule is 4330. Each of those URLs looks like a plausible canonical form, which is how they survived: they were inherited from secondary write-ups rather than opened. None of the RATES changed, so no published number moved, and the errors stayed invisible to anyone who did not click. Two further findings from the same sweep are recorded because they will bite the next person who verifies fees: the Federal Register API's structured fields carry no effective date for the FY2026 fee order (document 2026-04233 reports an empty effective_on) even though the order text states one, so the date has to be read out of the prose and cannot be machine-checked from the API; and a broker fee page dates the same Section 31 change to 04/02/2026 against the order's April 4, 2026 - the order wins, and 2026-04-04 is exactly 60 calendar days after the 2026-02-03 appropriation the FY2025 advisory said the old rate would run until, which is the check that settles it.",
+    "resolution": "Both dead citations now point at pages fetched and read on 2026-09-17, and the substance behind each is stored as an excerpt under data/real/regulatory/, so a future site redesign cannot invalidate the evidence (finra-trading-activity-fee.txt, finra-rule-4330-customer-securities-loans.txt, irs-pub-550-payments-in-lieu.txt, finra-rule-4210-margin-requirements.txt, finra-regulatory-notice-21-13.txt). The register gained an optional 'note' field for caveats that do not fit a one-line claim, and two tests hold the new bar: a FETCHED-VERIFIED row must have stored evidence behind it (a data/real download or a regulatory excerpt naming the URL), and every excerpt must carry its SOURCE url, a retrieval date and the decision it supports. The TAF row was deliberately LEFT at SECONDARY - FINRA's page confirms the fee's structure but not its numbers, so promoting it would overstate the evidence, which is the opposite of what the register is for. No automated link checker is added to CI: a build that goes red because regulator.gov is rate-limiting is worse than no build, so the sweep stays a manual pass and REMAINING_WORK carries an optional networked link-health job.",
+    "links": [
+      "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
+      "https://www.finra.org/rules-guidance/notices/21-13",
+      "https://www.federalregister.gov/api/v1/documents/2026-04233.json",
+      "https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/",
+      "https://www.irs.gov/publications/p550"
+    ]
+  },
+  {
+    "id": "IR-34",
+    "severity": "high",
+    "topic": "Two strategies published exit rules the venue could not express, so they silently traded a different trade than they described",
+    "detail": "Reading all twenty strategy implementations against their own specifications - the part of the brief that says the strategies must be faithful to the sources they were reverse-engineered from - @GapAndGo_YOLO documented 'Exit every position at the same session's close (market-on-close order)' and a thesis of being 'flat before the close so nothing is held overnight', while its code called ctx.flatten() once per session and every order the venue accepts was worked from interval 0, the opening bell. The fills prove what actually happened: on 2025-11-17 it sold 107 CVNA at interval 0 with the reason string 'close out yesterday's position at the open' and bought 5 shares in the same interval. So the strategy held every position overnight, earned the intraday leg it claimed to avoid, and paid the overnight gap risk it claimed to have closed out. @OvernightCarry_NO was the same defect in the opposite direction and, to its credit, had documented itself as understated (IR-08): a strategy whose whole edge is the overnight return was entering at the open, i.e. after the gap it exists to capture. Neither was a numerical bug; both were fidelity bugs, and they matter more than a rounding error would, because the site's central claim is that each username is a real strategy implemented honestly.",
+    "resolution": "Added an end-of-session execution ticket rather than editing the prose to match the code, because the code was the thing that was wrong: microstructure.Order.at_close, threaded through Context.orders_to_targets / Context.flatten and routed in Competition._submit, which splits a decision into opening-bell work and final-interval work and reuses the interval-K mechanism the venue already used for end-of-season forced liquidation. Sizing and the pre-trade margin check use the closing mark for such orders, because sizing an at-the-close order against the open price would silently produce a different position. Fill rows now carry at_close so the choice is visible in the audit trail. GapAndGo buys at the open and sells the same quantity at the close of that session, so it is flat by the bell for the first time in the project's history; OvernightCarry's entry moved to the close, which closes IR-08's understatement. In the published season: 443 of 3,078 fills (14.4%) are at-close, every one on interval 13, the last of 13, none at interval 0, and they come only from the two strategies that document such a rule. Confirmed to be a real guard by reverting the routing, which fails both behavioural tests. One gap in the audit trail is named rather than left to be discovered: the flag is recorded on the fill rows, but the order stream has no at_close field, so anyone reconstructing intent must read fills and not orders. The side effect on the leaderboard is deliberate and is the honest consequence of fixing fidelity: these two strategies now have different published returns, and everything downstream (memory, site, README) was regenerated rather than patched. Measured effect on the published season against the season as it was originally released - reported rather than smoothed over because the point of the fix was fidelity, not scorekeeping: @OvernightCarry_NO falls from +14.11% to +8.97% (-$5,137.57) because it no longer collects a full day of SPY drift it was never entitled to, and @GapAndGo_YOLO falls from -86.57% to -91.75% (-$5,181.56) because it now pays the spread at the close as well as the open and gives up the overnight continuation it had been silently earning. The two are unrelated mechanisms that happen to cost about the same; the fix changed 6 of 20 ranks - 4 through 7 and 11 through 12 shuffled, while ranks 1 to 3 held - and three of those six moved without any change in their own return at all, displaced by somebody else's correction. One check is worth calling out because it could only come out right if the fix is right: GapAndGo's dividends received went from $80.46 to exactly $0.00. A book that is genuinely flat by the close is never a holder of record on an ex-date, so it must earn nothing - the same property IR-31 was about, now confirmed from the opposite direction.",
+    "links": [
+      "https://doi.org/10.1016/j.jfineco.2019.03.011",
+      "https://www.finra.org/rules-guidance/notices/21-13",
+      "https://www.nyse.com/publicdocs/nyse/markets/nyse/rule-interpretations/2025/Regulatory_Memo_-_Market_Maker_Displayed_Quotation.pdf"
+    ]
+  },
+  {
+    "id": "IR-35",
+    "severity": "medium",
+    "topic": "The published site credited a commit that did not contain the code which produced the season",
+    "detail": "The site footer printed 'git commit 71b3d9062d2c' beside a season that commit could not have generated. The run memory in the repository was produced from a working tree carrying the then-uncommitted IR-31, IR-32 and IR-34 engine fixes, so the manifest recorded the parent commit as the run's code. The manifest itself was honest about this - it stores code.git.dirty=true and a SHA-256 of every sim/ module - but nothing a human reads showed it. A reader who took the footer at their word would check out 71b3d90, re-run seed 20260917, get @GapAndGo_YOLO at -86.57% instead of the published -91.75%, and reasonably conclude the site was inventing numbers. Found by reading the live Pages deployment after PR #3 merged, that is, by looking at the artefact the project ships rather than at its own test suite, which stayed green throughout.",
+    "resolution": "Four changes, and the second and third were only visible by re-running the season rather than by reading the code that wrote it. (a0) scripts/build_site.py gains provenance_sentence(), which renders the dirty state into the footer and points at the per-module hashes as the reproducible fingerprint, so a bare commit id can no longer overstate what it proves; guarded in tests/test_site_builder.py, including a check that the published index.html footer agrees with the manifest it was built from. (b) All six scenarios were re-run from a clean committed tree, so the memory now on main names a commit that contains the code which ran - the leaderboard and the market report came out byte-identical to the run they replaced (leaderboard sha 6cce7f0d9b3f679f for the file, top return 108.39), and the manifest now records commit edbeaa71e674 with dirty=false and 12 module hashes - the reproducibility claim exercised on the published artefact rather than on a scratch copy. Residual limit stated, not fixed: after a squash merge main does not contain the PR-head commit a manifest names, so durable provenance remains the module hashes, not the commit string.",
+    "links": []
+  },
+  {
+    "id": "IR-36",
+    "severity": "high",
+    "topic": "The intraday path inside every Season 2 bar is modelled, not real",
+    "detail": "Season 2 trades real daily open, high, low, close and volume, but the sequence of prices between the open and the close is not observable from daily data. Orders are filled inside the real bar's range by a declared intraday path that opens at the real open, respects the real high and low, and closes at the real close. Two participants filling on the same day therefore see different prices than the tape did, even though every one of them is inside the real day's range.",
+    "resolution": "Declared on every Season 2 page, in sim/marketdata.py's fill rule, and in the run manifest; the fill price is never outside the real [low, high] range, and the ledger records the real bar next to each fill so a reader can see the modelled slippage directly. Making this real requires a consolidated-tape (SIP) history, which is not freely redistributable.",
+    "links": [
+      "https://www.nasdaq.com/market-activity/stock-market-holiday-schedule",
+      "https://fred.stlouisfed.org/series/SP500"
+    ]
+  },
+  {
+    "id": "IR-37",
+    "severity": "medium",
+    "topic": "Yahoo Finance is an aggregator, not the consolidated tape",
+    "detail": "Every Season 2 price is read from the Yahoo Finance chart API, whose class is recorded as SECONDARY. Yahoo's closes agree with the exchange's official closing prices to within a tick in the overwhelming majority of sessions, but they are not the primary record, and a vendor revision would silently change a published fill price.",
+    "resolution": "Each price file is committed with its SHA-256, the run records the hash, and scripts/independent_audit_season2.py re-hashes the files and re-checks every traded bar against them. The SPY series is additionally cross-checked against FRED's S&P 500 index (return correlation 0.9965 over the whole two-year window) and against an independent publisher via the Nasdaq quote API, with both comparisons published.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY",
+      "https://fred.stlouisfed.org/series/SP500",
+      "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf"
+    ]
+  },
+  {
+    "id": "IR-38",
+    "severity": "medium",
+    "topic": "Dividends come from a vendor event feed, not the issuer",
+    "detail": "Cash dividends, the manufactured dividends charged on short positions, and the share adjustments on splits are taken from the vendored event payload attached to each price file. The issuer's own announcement and the exchange's ex-date notice are the primary records; the vendor's ex-date and amount can differ from them by a session or a rounding cent.",
+    "resolution": "Every participant page lists the dividends used, the ledger separates dividend carry from trading P&L, and the data page states the source class. Companies with no dividend in the window are marked as such rather than assumed to pay one.",
+    "links": [
+      "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany",
+      "https://fred.stlouisfed.org/series/SP500"
+    ]
+  },
+  {
+    "id": "IR-39",
+    "severity": "high",
+    "topic": "Real prices are one realisation, so there is no seed panel in Season 2",
+    "detail": "Season 1 published a robustness panel across synthetic idiosyncratic draws. Season 2 cannot: there is exactly one history of prices, and running the same season again produces the same numbers. Rankings that would move across draws in Season 1 can look stable here for the wrong reason, and the sample size is one.",
+    "resolution": "Instead of a fake seed panel, Season 2 publishes a venue-stress panel: the identical real bars re-traded with doubled spreads and impact plus a $1-per-order commission, and with halved displayed depth and a 5% participation cap. Every participant's return is published under all three assumptions, and the stress page names the largest movers.",
+    "links": [
+      "https://www.tradingview.com/the-leap/december-2025/rules/",
+      "https://www.trade-ideas.com/stock-trading-competition/"
+    ]
+  },
+  {
+    "id": "IR-40",
+    "severity": "high",
+    "topic": "A strategy whose official source has no retrievable history places no trades at all",
+    "detail": "The NFL and NBA injury reports and the pre-game model predictions that four of the brief's items refer to are published as live documents: the leagues do not expose a queryable archive of past seasons, and the projects do not archive their own outputs. A backtest for those strategies would have to be built from data this project cannot verify.",
+    "resolution": "Those participants are registered with their official endpoint, marked FORWARD-ONLY in the MasterFeed register, report DATA-MISSING in the signal book, and place no backdated trades; the site shows them at 0.00% with the reason on the page, and the next collection cycle is what turns them into backtestable participants.",
+    "links": [
+      "https://www.nfl.com/injuries/",
+      "https://official.nba.com/nba-injury-report-2025-26-season/"
+    ]
+  },
+  {
+    "id": "IR-41",
+    "severity": "medium",
+    "topic": "The Kalshi settled-market payload carries no prices or volumes",
+    "detail": "The venue's own settled-markets endpoint returns contract metadata for the requested window - ticker, title, close time - with every numeric field (volume, open interest, last price, settlement value, bid and ask) left empty by the venue. A strategy that reads volume from it would read a column of zeros and mistake it for a real observation of no activity.",
+    "resolution": "The signal book registers the settled-count array as available (that part of the payload is real) and the volume array as MISSING with the reason recorded; the participant that needs volume reports DATA-MISSING and trades nothing. The collection manifest keeps the failed and empty responses side by side.",
+    "links": [
+      "https://api.elections.kalshi.com/trade-api/v2/markets"
+    ]
+  },
+  {
+    "id": "IR-42",
+    "severity": "low",
+    "topic": "Vendor volume is consolidated across venues and cannot be attributed to one display",
+    "detail": "Share volume comes from the vendor's consolidated daily print. The participation model uses it as the denominator, so a fill's participation rate is measured against the whole market's volume for that session, not against the shares displayed at the touch on the venue the order was routed to.",
+    "resolution": "The participation rate is published per fill next to the real volume it was computed from, the venue's displayed depth is a separate declared model, and the stress panel halves that depth so the effect of the assumption is visible rather than argued about.",
+    "links": [
+      "https://www.nasdaqtrader.com/Trader.aspx?id=TradeActivityRpt",
+      "https://www.sec.gov/rules/final/34-51808.pdf"
+    ]
+  },
+  {
+    "id": "IR-43",
+    "severity": "medium",
+    "topic": "Event dates are reliable, but event knowledge is not the same as event availability",
+    "detail": "An FDA decision dated 2026-03-14 reaches a participant at the next session's open in this simulation, which assumes the decision was public before the market opened on the following trading day. For weekend and holiday decisions that is conservative; for a decision published after the close it is not, and a real desk would sometimes see it intraday.",
+    "resolution": "Signals are windowed strictly before the session they are read on, so no participant can read a same-session event; the assumption being made is availability at the next open, and it is stated here rather than left implicit. Nothing is backdated: every count uses the source's own date field.",
+    "links": [
+      "https://api.fda.gov/drug/drugsfda.json",
+      "https://statsapi.mlb.com/api/v1/schedule"
+    ]
+  },
+  {
+    "id": "IR-44",
+    "severity": "high",
+    "topic": "Two signal builders called the loaders with the arguments swapped, so the site reported real files as MISSING",
+    "detail": "sim/realdata.load_fred and load_series take (series, root). sim/masterfeed.py called load_fred(root, 'DGS10') and load_series(root, 'GLD'), and both builders caught the resulting exception as 'no collected data'. The first Season 2 run therefore published fred_slope_bps, fred_slope_change_21d and gold_close as MISSING even though the FRED yield CSVs and the GLD price file were sitting in data/real/, and @YieldCurve_Rotator placed no trades for a reason that was not true.",
+    "resolution": "Argument order corrected, the broad except narrowed to RealDataUnavailable so a programming error can no longer masquerade as a data state, and realdata now raises TypeError when the first argument looks like a directory. Verified by re-running the season: both signals are AVAILABLE with 500 observations and @YieldCurve_Rotator trades.",
+    "links": [
+      "https://fred.stlouisfed.org/series/DGS10",
+      "https://fred.stlouisfed.org/series/DGS3MO"
+    ]
+  },
+  {
+    "id": "IR-45",
+    "severity": "high",
+    "topic": "The collected dividend events were loaded under the vendor's field name, which stopped every Season 2 run",
+    "detail": "sim/realdata.load_series returns the vendor payload's rows keyed 'date', but the engine and the Season 1 market both read 'ex_date'. The Season 2 loader passed the vendor rows straight through, so each run died with KeyError: 'ex_date' while building the dividend map - a crash, not a silent error, which is why it was caught within a minute of the first re-run attempt.",
+    "resolution": "The loader renames the field to 'ex_date' at the point it builds the instrument, keeping one spelling across both seasons; the dividend is still the vendor's own event with the vendor's own date, and IR-11 continues to record that the event feed is secondary.",
+    "links": [
+      "https://query1.finance.yahoo.com/v8/finance/chart/SPY"
+    ]
+  },
+  {
+    "id": "IR-46",
+    "severity": "medium",
+    "topic": "A participant that never traded was published with the verdict for a loss",
+    "detail": "The narrative library's headline branch was reached by total return alone, so a participant that placed no orders (0.00% because its data was missing) received the 'lost money' verdict and a clause describing a dollar loss on starting capital. Five of Season 2's fourteen participants are in that state, so the published leaderboard would have attached a performance judgement to strategies that never entered the market.",
+    "resolution": "A first branch now fires on measured order activity: 0 fills, 0 round trips and 0 sessions with orders produce the verdict 'no trades placed' and a clause that states the return carries no information about the strategy. The leaderboard, the participant pages and the README's Season 2 table all carry that verdict, and a test re-derives the table cell by cell against the run.",
+    "links": [
+      "https://buffedlizard55-lab.github.io/MasterSite/"
+    ]
+  }
 ]

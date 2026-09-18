@@ -1,38 +1,31 @@
-"""Season 2 market data: real, collected daily bars.
+"""Season 2 market data: collected daily bars with explicit source eligibility.
 
-Season 1 traded a *calibrated replay* anchored on real FRED index closes. Season 2
-trades the real thing: every open, high, low, close and volume in this module is
-read from a file that was fetched from a publisher and committed to the
-repository, and every bar carries the file name and SHA-256 it came from so a
-reader can re-derive the run without trusting this code.
+Season 1 traded a *calibrated replay* anchored on real FRED index closes. The
+committed Season 2 run is a reproducible **research** run because its price files
+come from Yahoo Finance and are ``SECONDARY``. A future official run must use the
+Nasdaq adapter, preserve the raw response and pass ``sim.eligibility`` before the
+engine is allowed to trade. There is no fallback from the official backend to
+Yahoo.
 
 What is real here
 -----------------
-* **Prices.** Yahoo Finance chart API (`query1.finance.yahoo.com/v8/finance/chart/
-  <symbol>`) daily bars, 26 symbols, 24 used in the competition, for a one-year
-  warm-up plus the one-year competition window. ``source_class`` is SECONDARY:
-  Yahoo is an aggregator, not the exchange. The primary record is the exchange's
-  own consolidated tape, which is not freely redistributable; the aggregator's
-  numbers are therefore cross-checked against an independent publisher (Nasdaq)
-  and against the FRED index series where a proxy exists, and the comparison is
-  published (``data/real/crosschecks/price_crosscheck.json``).
-* **Volumes.** The vendor's share volume for the same sessions. These drive the
-  participation model: a fill's participation rate is its quantity divided by
-  the real session volume.
+* **Prices and volumes.** A selected backend supplies daily OHLCV files. Yahoo is
+  secondary research data; the Nasdaq adapter is an official-source candidate
+  that remains ineligible until redistribution permission is explicitly recorded.
 * **Index and volatility path.** FRED ``SP500`` and ``VIXCLS`` daily closes.
-* **Dividends and splits.** Vendor event feeds, used for cash dividends, dividend
-  compensation on shorts, and share adjustment. Flagged as vendor data because
-  the issuer's own announcement is the primary record.
-* **Corporate actions and calends.** Sessions come from the real trading
+* **Dividends and splits.** The selected backend's event fields are used only when
+  present and are never invented. The official adapter records the dividend
+  endpoint and status separately and fails the strict gate when it is unavailable.
+* **Corporate actions and calendars.** Sessions come from the real trading
   calendar built off FRED's observation dates.
 
 What is modelled
 ----------------
 The intraday path *inside* each real daily bar, the venue's quoted spread and
-displayed depth, the impact model, borrow fees and the participation cap. Those
-are the same models Season 1 used, they are declared in the irregularity
-register, and nothing in this module invents a price: the modelled part only
-decides *where inside a real day's range* an order filled.
+ displayed depth, the impact model, borrow fees and the participation cap. Those
+ are the same models Season 1 used, they are declared in the irregularity
+ register, and nothing in this module invents a price: the modelled part only
+ decides *where inside a real day's range* an order filled.
 """
 
 from __future__ import annotations
@@ -47,10 +40,12 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import config
 from .calendar import REPO_ROOT, TradingCalendar
+from .eligibility import require_official_prices
 from .marketdata import Bar, MarketData
 from .universe import Instrument
 
 REAL_ROOT = os.path.join(REPO_ROOT, "data", "real")
+PRICE_BACKENDS = {"yahoo": "yahoo", "nasdaq": "nasdaq"}
 PRICES_DIR = os.path.join(REAL_ROOT, "prices", "yahoo")
 FRED_DIR = os.path.join(REAL_ROOT, "fred")
 
@@ -106,13 +101,21 @@ _NAME = {
 #: is also what keeps a URL quoted anywhere in the code followable from the site
 #: (tests/test_sources_register.py enforces that).
 COLLECTED_SOURCES: Tuple[dict, ...] = (
-    {"id": "yahoo", "label": "Yahoo Finance chart API (daily bars, dividends, splits)",
+    {"id": "yahoo", "label": "Yahoo Finance chart API (research-only daily bars)",
      "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY",
      "source_class": "SECONDARY", "path": "data/real/prices/yahoo/",
      "provides": "daily OHLCV, dividend and split events for 26 symbols, "
                  "2024-09-16 to 2026-09-16",
-     "note": "An aggregator, not the consolidated tape: classed SECONDARY and "
-             "cross-checked against FRED's index series and the Nasdaq quote API."},
+     "note": "An aggregator, not the consolidated tape. These committed files are "
+             "reproducible research inputs and can never satisfy the official-price gate."},
+    {"id": "nasdaq", "label": "Nasdaq historical quote and dividend APIs (official candidate)",
+     "url": "https://api.nasdaq.com/api/quote/AAPL/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+     "source_class": "OFFICIAL", "path": "data/real/prices/nasdaq/",
+     "provides": "official-source candidate daily OHLCV and dividend responses for the "
+                 "24 tradable symbols, with raw responses and checksums",
+     "note": "The endpoint was retrieved through a supported GitHub Actions collector, "
+             "but Nasdaq's legal terms do not currently authorize repository reproduction. "
+             "The strict gate remains fail-closed until a licensed/approved status is recorded."},
     {"id": "fred", "label": "Federal Reserve Bank of St. Louis (FRED) CSV downloads",
      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500",
      "source_class": "OFFICIAL", "path": "data/real/fred/",
@@ -165,13 +168,12 @@ COLLECTED_SOURCES: Tuple[dict, ...] = (
      "provides": "settled-contract listings with close times",
      "note": "The venue's own API. The payload's price and volume fields came "
              "back null, which is recorded rather than smoothed over."},
-    {"id": "nasdaq", "label": "Nasdaq quote API (independent price cross-check)",
-     "url": "https://api.nasdaq.com/api/quote",
-     "source_class": "SECONDARY", "path": "data/real/crosschecks/",
-     "provides": "an independent publisher's daily closes for cross-checking the "
-                 "price files used as reference",
-     "note": "Two independent publishers disagreeing by more than a tick would be "
-             "a red flag on the price file; the comparison is published."},
+    {"id": "price_crosscheck", "label": "Price cross-check report (Yahoo versus Nasdaq/FRED)",
+     "url": "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+     "source_class": "OFFICIAL", "path": "data/real/crosschecks/",
+     "provides": "comparison statistics only; it never authorizes a secondary price file",
+     "note": "Agreement is a necessary sanity check, not proof of redistribution rights or "
+             "proof that Yahoo is an official primary source."},
     {"id": "masterfeed", "label": "MasterFeed register (this project's signal catalogue)",
      "url": "https://buffedlizard55-lab.github.io/MasterSite/",
      "source_class": "ASSERTED", "path": "sim/masterfeed.py",
@@ -276,6 +278,12 @@ class Series:
     dividends: List[dict] = field(default_factory=list)
     splits: List[dict] = field(default_factory=list)
     url: str = ""
+    raw_file: str = ""
+    raw_sha256: str = ""
+    retrieved_at: str = ""
+    access_status: str = ""
+    redistribution_status: str = ""
+    dividend_status: str = ""
 
     def by_date(self) -> Dict[str, Bar]:
         return {b.date: b for b in self.bars}
@@ -298,15 +306,26 @@ def _reject_swapped_arguments(series: str, root: str) -> None:
             f"passed (root, series) instead of (series, root)")
 
 
-def load_series(symbol: str, root: str = REAL_ROOT) -> Series:
-    """Read one collected vendor file. Raises if it is absent or empty."""
+def load_series(symbol: str, root: str = REAL_ROOT, backend: str = "yahoo") -> Series:
+    """Read one collected price file without changing source silently.
+
+    ``backend='yahoo'`` is retained as the explicit compatibility default for
+    the historical research run. Strict competition code passes
+    ``backend='nasdaq'`` after calling the official eligibility gate.
+    """
     _reject_swapped_arguments(symbol, root)
+    if backend not in PRICE_BACKENDS:
+        raise ValueError(f"unknown price backend {backend!r}; choose {sorted(PRICE_BACKENDS)}")
     slug = symbol.replace("^", "_")
-    path = os.path.join(root, "prices", "yahoo", f"{slug}.json")
+    path = os.path.join(root, "prices", PRICE_BACKENDS[backend], f"{slug}.json")
     if not os.path.exists(path):
-        raise RealDataUnavailable(f"no collected price file for {symbol} at {path}")
-    with open(path, "r", encoding="utf-8") as handle:
-        payload = json.load(handle)
+        raise RealDataUnavailable(
+            f"no collected {backend} price file for {symbol} at {path}")
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, ValueError) as exc:
+        raise RealDataUnavailable(f"{path} is not readable JSON: {exc}") from exc
     bars = [Bar(b["date"], float(b["open"]), float(b["high"]), float(b["low"]),
                 float(b["close"]), int(b.get("volume") or 0))
             for b in payload.get("bars", [])]
@@ -318,7 +337,13 @@ def load_series(symbol: str, root: str = REAL_ROOT) -> Series:
                   source_class=payload.get("source_class", "UNKNOWN"),
                   bars=bars, dividends=payload.get("dividends", []),
                   splits=payload.get("splits", []),
-                  url=payload.get("source", "") or payload.get("url", ""))
+                  url=payload.get("source", "") or payload.get("url", ""),
+                  raw_file=payload.get("raw_file", ""),
+                  raw_sha256=payload.get("raw_sha256", ""),
+                  retrieved_at=payload.get("retrieved_at", ""),
+                  access_status=payload.get("access_status", ""),
+                  redistribution_status=payload.get("redistribution_status", ""),
+                  dividend_status=payload.get("dividend_status", ""))
 
 
 def load_fred(series: str, root: str = REAL_ROOT) -> Tuple[Dict[str, float], str, str]:
@@ -380,8 +405,15 @@ def _annualised_sigma(returns: Sequence[float]) -> float:
 
 def build_real_market_data(root: str = REAL_ROOT,
                            symbols: Optional[Sequence[str]] = None,
-                           verbose: bool = False) -> RealMarketData:
-    """Assemble the Season 2 market from the collected files.
+                           verbose: bool = False,
+                           price_source: str = "yahoo",
+                           require_official: bool = False) -> RealMarketData:
+    """Assemble a market from one named collected backend.
+
+    The compatibility default is the already-published Yahoo research run.
+    ``require_official=True`` is fail-closed: it audits the Nasdaq files before
+    reading even one bar, and it never falls back to Yahoo when they are absent,
+    malformed or not redistributable.
 
     The trading sessions are FRED's S&P 500 observation dates (the real US
     equity calendar). A symbol with no bar on a session is forward-filled at its
@@ -389,6 +421,15 @@ def build_real_market_data(root: str = REAL_ROOT,
     ``gaps`` and published in the run diagnostics, because a forward-filled bar
     is a missing observation, not a real print.
     """
+    if price_source not in PRICE_BACKENDS:
+        raise ValueError(f"unknown price source {price_source!r}; choose {sorted(PRICE_BACKENDS)}")
+    eligibility = None
+    if require_official:
+        eligibility = require_official_prices(
+            root=root, symbols=tuple(symbols or UNIVERSE),
+            start=SEASON2_WARMUP_START, end=SEASON2_END,
+            backend=price_source)
+
     calendar = TradingCalendar(SEASON2_WARMUP_START, SEASON2_END,
                                fred_dir=os.path.join(root, "fred"))
     dates = [d for d in sorted(calendar.spx) if SEASON2_WARMUP_START <= d <= SEASON2_END]
@@ -421,7 +462,7 @@ def build_real_market_data(root: str = REAL_ROOT,
 
     for symbol in wanted:
         try:
-            series = load_series(symbol, root)
+            series = load_series(symbol, root, backend=price_source)
         except RealDataUnavailable as exc:
             dropped.append({"symbol": symbol, "reason": str(exc)})
             continue
@@ -478,8 +519,13 @@ def build_real_market_data(root: str = REAL_ROOT,
         # earlier revision of this loader wrote "date" and every subsequent
         # Season 2 run died with KeyError: 'ex_date' - the trades that survived
         # it are the reason the register now carries a "why" for each rename.
+        dividend_provenance = (
+            "Nasdaq official-source candidate dividend endpoint; redistribution status "
+            f"{series.redistribution_status or 'unrecorded'}"
+            if price_source == "nasdaq" else
+            "Yahoo vendor event feed (secondary research data)")
         dividends = [{"ex_date": d.get("date"), "amount": d.get("amount"),
-                      "provenance": "vendor event feed (secondary)"}
+                      "provenance": dividend_provenance}
                      for d in series.dividends if d.get("date") in set(dates)]
         instruments[symbol] = Instrument(
             symbol=symbol, name=name, sector=sector_name, asset_type=asset_type,
@@ -497,11 +543,19 @@ def build_real_market_data(root: str = REAL_ROOT,
                 "sigma_idio_annual": "residual volatility of the real warm-up returns",
                 "adv_shares": "median real share volume over the warm-up window",
                 "fifty_two_week_high_low": "real collected bars",
-                "dividends": "vendor event feed, not the issuer's own announcement"
-                             if dividends else "no dividend paid in the window",
+                "dividends": dividend_provenance if dividends else
+                             ("no dividend paid in the window" if series.dividend_status
+                              in ("AVAILABLE", "NO_DECLARED_DIVIDENDS") else
+                              f"dividend status {series.dividend_status or 'unrecorded'}"),
                 "source_class": series.source_class,
                 "file": series.path,
                 "sha256": series.sha256,
+                "raw_file": series.raw_file,
+                "raw_sha256": series.raw_sha256,
+                "retrieved_at": series.retrieved_at,
+                "access_status": series.access_status,
+                "redistribution_status": series.redistribution_status,
+                "dividend_status": series.dividend_status,
                 "splits_in_window": str(len(series.splits)),
             })
         bars[symbol] = rows
@@ -510,6 +564,11 @@ def build_real_market_data(root: str = REAL_ROOT,
         price_series_diag[symbol] = {
             "file": series.path, "sha256": series.sha256, "provider": series.provider,
             "source_class": series.source_class, "url": series.url,
+            "raw_file": series.raw_file, "raw_sha256": series.raw_sha256,
+            "retrieved_at": series.retrieved_at,
+            "access_status": series.access_status,
+            "redistribution_status": series.redistribution_status,
+            "dividend_status": series.dividend_status,
             "first_bar": series.bars[0].date, "last_bar": series.bars[-1].date,
             "bars_in_window": len(rows),
             "sessions_forward_filled": len(filled),
@@ -528,7 +587,7 @@ def build_real_market_data(root: str = REAL_ROOT,
     # Season 2 never needs a synthetic index: the real FRED S&P 500 series *is*
     # the market factor, and the real VIX series is the volatility factor.
     diagnostics = {
-            "season": "Season 2 (real collected prices)",
+            "season": "Season 2 (collected prices; official eligibility required)",
             "window": {"warmup_start": dates[0], "start": SEASON2_START,
                        "end": dates[-1]},
             "sessions": {"warmup": warmup_days,
@@ -540,6 +599,8 @@ def build_real_market_data(root: str = REAL_ROOT,
             "volatility_source": {
                 "series": "FRED VIXCLS", "file": vix_path, "sha256": vix_sha,
                 "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS"},
+            "price_backend": price_source,
+            "official_eligibility": eligibility,
             "price_series": price_series_diag,
             "dropped_series": dropped,
             "sessions_forward_filled_total": sum(len(v) for v in gaps.values()),
@@ -558,8 +619,8 @@ def build_real_market_data(root: str = REAL_ROOT,
         }
     market = MarketData(calendar=calendar, instruments=[instruments[s] for s in bars],
                         bars=bars, spx=spx, vix=vix, diagnostics=diagnostics,
-                        source="real-collected: Yahoo Finance v8 chart daily bars, "
-                               "FRED SP500/VIXCLS, vendor dividend events",
+                        source=(f"real-collected: {price_source} daily bars, "
+                                "FRED SP500/VIXCLS, selected dividend endpoint"),
                         warmup_days=warmup_days, warmup_dates=[])
     # Extra, Season-2-only attributes. They are plain attributes because
     # MarketData is the interface the engine and every strategy already program
@@ -603,7 +664,8 @@ def data_inventory(root: str = REAL_ROOT, digest: bool = True) -> dict:
             "bytes": total, "files": files}
 
 
-def crosscheck_against_fred(symbol: str = "SPY", root: str = REAL_ROOT) -> dict:
+def crosscheck_against_fred(symbol: str = "SPY", root: str = REAL_ROOT,
+                            price_source: str = "yahoo") -> dict:
     """Compare a collected ETF series with the real FRED index on the same days.
 
     SPY tracks the S&P 500 with a small tracking difference, so this is not an
@@ -612,7 +674,7 @@ def crosscheck_against_fred(symbol: str = "SPY", root: str = REAL_ROOT) -> dict:
     worst daily difference are published.
     """
     spx_values, spx_path, _ = load_fred("SP500", root)
-    series = load_series(symbol, root)
+    series = load_series(symbol, root, backend=price_source)
     common = [(b.date, b.close, spx_values[b.date]) for b in series.bars
               if b.date in spx_values]
     if len(common) < 30:

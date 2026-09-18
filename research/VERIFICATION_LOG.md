@@ -105,7 +105,7 @@ re-derived. Recorded as **IR-25**.
 | Fee | Value used | Source | Status |
 |---|---|---|---|
 | SEC Section 31 (sells) | **$0.00 per $1,000,000** from 2025-09-01; **$20.60 per $1,000,000** from 2026-04-04 | FY2026 annual adjustment order, `https://www.federalregister.gov/documents/2026-03-04/2026-04233/order-making-fiscal-year-2026-annual-adjustments-to-transaction-fee-rates`; corroborated by Nasdaq `https://www.nasdaqtrader.com/MicroNews.aspx?id=OTA2026-14` | `FETCHED` |
-| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | Broker fee schedules only (`https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/`). FINRA's own Schedule A to the By-Laws was **not retrievable** from this environment | `SECONDARY` - flagged as **IR-05** |
+| FINRA Trading Activity Fee (sells) | **$0.000166/share** to 2025-12-31, **$0.000195/share** from 2026-01-01; per-trade cap **$8.30** then **$9.79** | FINRA primary fee-adjustment schedule (`https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule`), fetched 2026-09-18; general TAF guidance confirms the fee is assessed on sales | `FETCHED` - **IR-05 resolved** |
 
 Both are **dated schedules**, not constants (`config.SEC31_PER_MILLION`,
 `config.FINRA_TAF_PER_SHARE`, `config.FINRA_TAF_MAX_PER_TRADE`), because a
@@ -370,8 +370,11 @@ These are not omissions to paper over; each is flagged in
 `research/IRREGULARITIES.json` and `research/LIMITATIONS.json` and shown on the
 site.
 
-1. **FINRA Schedule A** (the primary source for the TAF rate and cap) - not
-   retrievable; the rate is `SECONDARY` (**IR-05**).
+1. **An eligible official individual-security price set** - the Nasdaq endpoint
+   was retrieved through page-fetch and an Actions adapter is implemented, but no
+   official files are committed here and Nasdaq's public-site terms do not establish
+   redistribution permission. The strict gate reports `NOT ELIGIBLE` rather than
+   treating Yahoo agreement as proof.
 2. **Real intraday quotes, trades and depth** for the 17-name universe - no
    consolidated tape access; the venue is a calibrated simulation (**IR-03**,
    **L-01**).
@@ -492,3 +495,29 @@ These are internal consistency checks, all reproduced by the test suite
 | Look-ahead | strategies see only `t-1` and earlier data when deciding (`tests/test_strategies.py`) |
 | **Independent audit** | `scripts/independent_audit.py` re-derives every published number from the raw event streams with code that never imports `sim`: 763 checks on the primary season (cash roll-forward, equity identity, fee components per fill, dividend and borrow ledger, tick grid, round-trip counts, win/loss and profit factor, Sharpe, Sortino, max drawdown, beta, leaderboard ranks). **763 / 763 pass.** Proven to bite: inflating one report's return by 5.0 pp and inventing three trades produced 2 failures; deleting one dividend carry row produced a cash drift of $72.02 on 2025-11-20 plus a ledger mismatch; nudging a fill price by 37 hundredths of a cent produced a Rule 612 grid violation |
 | README self-description | `tests/test_readme_claims.py` recomputes the suite's test count, the register size and the three research-file counts, and re-reads all 20 leaderboard rows against `memory/runs/season1-primary-seed20260917/leaderboard.json` |
+
+## 7. Official price eligibility pass (2026-09-18)
+
+The official Nasdaq historical endpoint was fetched through the supported page-fetch
+path with ISO dates. A representative two-year AAPL request returned `totalRecords:
+503` rows with date, open, high, low, close and volume; the same endpoint pattern was
+previously observed for SPY, XOM, JPM, GLD and FLUT. The direct local `urllib` path
+still failed with a TLS EOF, so the adapter is run by the GitHub Actions collector,
+not by pretending the development network succeeded.
+
+The implementation is in `scripts/collect_real_data.py`. For each tradable symbol it
+writes the normalized Nasdaq file, the exact raw historical response, a raw SHA-256,
+request URL, HTTP status, retrieval timestamp, symbol/date range, and an official
+Nasdaq dividend response/status. `sim/eligibility.py` independently checks those
+fields, matches the raw checksum to `collection_manifest.json`, validates OHLCV
+relationships and volume, requires every FRED session in the requested window, and
+requires an explicit accepted redistribution status.
+
+The audit was run against the committed checkout on 2026-09-18:
+`python3 -m sim.cli price-audit --symbols AAPL,SPY --start 2024-09-16 --end 2026-09-16`.
+It returned non-zero with `MISSING_FILE` for both symbols because no official Nasdaq
+files have been downloaded into this checkout. This is intentional fail-closed
+behavior. Even after collection, the adapter records `NOT_AUTHORIZED_BY_TERMS` until
+Nasdaq redistribution permission is verified; that status cannot authorize a
+competition. The existing Yahoo files remain reproducible `SECONDARY` research data
+and are not silently replaced.

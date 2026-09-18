@@ -135,28 +135,21 @@ SEC31_PER_MILLION: Tuple[Tuple[str, float], ...] = (
 )
 
 # FINRA Trading Activity Fee (TAF), levied on *sales*, per share, with a
-# per-trade cap.  UNVERIFIED against a FINRA primary document from this
-# sandbox (finra.org was unreachable); the figures below are the rates
-# reported by two independent broker fee schedules for 2026 and are marked
-# UNVERIFIED so a maintainer can confirm them.
-#   SOURCE (secondary): https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/
-#   PRIMARY TO CHECK:  https://www.finra.org/rules-guidance/guidance/trading-activity-fee
-#                      (FINRA's own TAF page; it defers the rates themselves to
-#                      Section 1 of Schedule A to the By-Laws).  Fetched live
-#                      2026-09-17.  The URL previously cited here,
-#                      rulebooks/finra-rules/7541 cited here before, returns 404:
-#                      FINRA has no rule number for the TAF, it lives in the
-#                      By-Laws schedule.  See IR-33.
-#   FLAGGED IN: research/IRREGULARITIES.json (IR-05)
+# per-trade cap.  The primary FINRA fee-adjustment schedule was fetched on
+# 2026-09-18 and states the 2025 and 2026 rates/caps used below.  The general
+# TAF page points to Section 1 of Schedule A to the By-Laws for the rule text.
+#   SOURCE: https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule
+#   SOURCE: https://www.finra.org/rules-guidance/guidance/trading-activity-fee
+#   FLAGGED IN: research/IRREGULARITIES.json (IR-33 only for the dead old URL)
 FINRA_TAF_PER_SHARE: Tuple[Tuple[str, float], ...] = (
-    ("2025-01-01", 0.000166),   # UNVERIFIED (secondary sources)
-    ("2026-01-01", 0.000195),   # UNVERIFIED (secondary sources)
+    ("2025-01-01", 0.000166),   # FINRA primary fee-adjustment schedule
+    ("2026-01-01", 0.000195),   # FINRA primary fee-adjustment schedule
 )
 # The per-trade cap changed with the rate, so it is a schedule too.  Applying
 # the 2026 cap to a 2025 sale would overstate the fee on very large orders.
 FINRA_TAF_MAX_PER_TRADE: Tuple[Tuple[str, float], ...] = (
-    ("2025-01-01", 8.30),       # UNVERIFIED (secondary sources)
-    ("2026-01-01", 9.79),       # UNVERIFIED (secondary sources)
+    ("2025-01-01", 8.30),       # FINRA primary fee-adjustment schedule
+    ("2026-01-01", 9.79),       # FINRA primary fee-adjustment schedule
 )
 
 # Exchange access-fee cap under Reg NMS Rule 610 is $0.003 per share for NMS
@@ -531,6 +524,20 @@ def all_verified_sources() -> List[dict]:
          "url": "https://doi.org/10.1093/rfs/1.1.3",
          "publisher": "Admati & Pfleiderer (1988), Review of Financial Studies",
          "status": "KNOWN-NOT-FETCHED"},
+        {"claim": "Nasdaq historical API returns dated OHLCV rows for official-source price collection",
+         "url": "https://api.nasdaq.com/api/quote/AAPL/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+         "publisher": "Nasdaq",
+         "status": "FETCHED",
+         "note": "The ISO-date endpoint returned 503 rows through the page-fetch path on 2026-09-18. "
+                 "The local urllib path failed with TLS EOF, so the supported retrieval path is "
+                 "the GitHub Actions collector. Nasdaq's legal terms were separately fetched on "
+                 "2026-09-18 and do not establish repository redistribution permission; the "
+                 "official-price gate therefore remains closed until licensing is confirmed."},
+        {"claim": "Nasdaq public-site legal terms governing automated capture and redistribution review for the official-source candidate",
+         "url": "https://www.nasdaq.com/legal",
+         "publisher": "Nasdaq",
+         "status": "FETCHED",
+         "note": "Fetched 2026-09-18. The terms prohibit unauthorized capture or reproduction, so the collector records NOT_AUTHORIZED_BY_TERMS and the official-price gate remains closed pending licensing review."},
         {"claim": "Real SPY monthly OHLCV (13 bars, 2025-09 to 2026-09) used to calibrate the simulated intraday range, plus real AAPL daily bars and four AAPL dividend ex-dates",
          "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?interval=1mo&range=1y",
          "publisher": "Yahoo Finance chart API v8",
@@ -540,17 +547,14 @@ def all_verified_sources() -> List[dict]:
          "publisher": "FINRA OTC Transparency",
          "status": "KNOWN-NOT-FETCHED"},
         {"claim": "FINRA Trade Activity Fee of $0.000195 per share on equity sells (minimum $0.01, maximum $9.79) from 2026-01-01",
-         "url": "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
-         "publisher": "FINRA; rates are in Section 1 of Schedule A to the By-Laws",
-         "status": "SECONDARY",
-         "note": "the page was fetched and excerpted on 2026-09-17, and it "
-                 "confirms the fee is levied on sales and that the rate "
-                 "table lives in Schedule A; the RATE NUMBERS in the claim "
-                 "are still corroborated only by two broker fee schedules, "
-                 "because Schedule A is a PDF this environment cannot read, "
-                 "so the row is NOT promoted to FETCHED-VERIFIED (IR-05 "
-                 "stays open). The rulebooks/finra-rules/7541 path cited "
-                 "here before 2026-09-17 returns 404 (IR-33)."},
+         "url": "https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule",
+         "publisher": "FINRA; fee-adjustment schedule and Section 1 of Schedule A to the By-Laws",
+         "status": "FETCHED",
+         "note": "FINRA's fee-adjustment schedule was fetched on 2026-09-18 and states "
+                 "$0.000195 per covered-equity share up to $9.79 per trade for 2026; "
+                 "the same primary table states the 2025 rate and cap used in config.py. "
+                 "The general TAF page confirms the fee is assessed on sales. This resolves "
+                 "IR-05; the previously cited rulebooks/7541 path remains a 404 (IR-33)."},
         {"claim": "Tiered round-lot definition: 100 shares up to $250, 40 to $1,000, 10 to $10,000, 1 share above",
          "url": "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.600",
          "publisher": "eCFR / SEC Rule 600(b)(93)",
@@ -688,8 +692,9 @@ def all_verified_sources() -> List[dict]:
          "publisher": "Internal Revenue Service",
          "status": FETCHED_VERIFIED,
          "note": "fetched live 2026-09-17 (Publication 550 (2025))"},
-        {"claim": "FINRA rulebooks index, where Schedule A to the By-Laws (the PRIMARY source for the Trade Activity Fee rate) is published; not retrievable from this environment, hence IR-05",
-         "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules",
+        {"claim": "FINRA Trading Activity Fee guidance: the fee is assessed on sales and the governing rates are in Section 1 of Schedule A to the By-Laws",
+         "url": "https://www.finra.org/rules-guidance/guidance/trading-activity-fee",
          "publisher": "FINRA",
-         "status": "KNOWN-NOT-FETCHED"},
+         "status": "FETCHED",
+         "note": "Fetched 2026-09-18; the linked primary fee-adjustment schedule supplies the dated rates and caps."},
     ]

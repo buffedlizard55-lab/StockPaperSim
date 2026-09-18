@@ -1,7 +1,7 @@
 {
- "source": "real-collected: Yahoo Finance v8 chart daily bars, FRED SP500/VIXCLS, vendor dividend events",
+ "source": "real-collected: yahoo daily bars, FRED SP500/VIXCLS, selected dividend endpoint",
  "provenance": {
-  "season": "Season 2 (real collected prices)",
+  "season": "Season 2 (collected prices; official eligibility required)",
   "window": {
    "warmup_start": "2024-09-16",
    "start": "2025-09-17",
@@ -23,13 +23,21 @@
    "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553",
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS"
   },
+  "price_backend": "yahoo",
+  "official_eligibility": null,
   "price_series": {
    "SPY": {
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "595e3d9ecb47a2b5e846b4dde0ffa44a734d3f20aac0abba3fc8da6b4aabfe1b",
+    "sha256": "76a2a5c8fa79e66cd60ad35e113e9e15b258d9f9b7202514a0a8d582bb3a5376",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -45,10 +53,16 @@
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "c957d374ef5f4d34c5da56aee06496c7c2ea1a7d5b1b0f71aeb33b8cd193380d",
+    "sha256": "8df09a16c564db57834cbf5e3284b7c80dc46ccd7b4cf2568a1a36aefe771d33",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -64,10 +78,16 @@
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "b5b36797bea2775b28f2e4cca11616516354c1524dba22fad505c24ffa3efadb",
+    "sha256": "9aec469da0eb3af584a166a8692c8f74a2e31cad9020265d861aa50c2c099f3c",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -87,6 +107,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -106,6 +132,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -121,10 +153,16 @@
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "5c3da81ffbb30d6d9678b34fd78ec264ace406f1975e21c8ad3c02f064dba8c5",
+    "sha256": "6dee7f427904f8ec1318774d90b1a606ed698236f21ecd4ffd6b52e3927d3d7b",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -140,10 +178,16 @@
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "628dc12e0625cb104617e15f9e2bf802d1e70bb63db7b4e90cfa88a2fa91a689",
+    "sha256": "00b523d8ee74d16b4c83f91f686b76465600232d4beb2f68be31911a3d88bac9",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -159,10 +203,16 @@
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "65143858120b6de0600ac78612bf950a0db00c76012948e0790fccf1411dd3b7",
+    "sha256": "62bc42f432f59198803f94d6f4612388205de8a6bc2146f0ddd825b7d19321af",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -178,10 +228,16 @@
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "6d72fa9607b0d363e5a6b16e4e110db0f9c0e9c6459fe283a55b6cf1598f8d40",
+    "sha256": "5555d6f434148f839233f16cfd0717f328a2ae82146a8eee8a3db6f9599373fb",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -201,6 +257,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -220,6 +282,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -239,6 +307,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -258,6 +332,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -277,6 +357,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -292,10 +378,16 @@
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "05a9b8ae5417049fe32f02e03c50a3c614389075dda61bf18aca1d1d89d10ad1",
+    "sha256": "ff10e6538b0e488f4d558dc69d862ae2c0ccf8a69dbe600582399699f1a8e3ff",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -311,10 +403,16 @@
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "6b3f6c7134801a7d0ef6f69a0fa892a817bb4d7b67dd6d509a74831b001bf2df",
+    "sha256": "fda2273bfcd2c5880562c06568c0cdee8c1051168260c6136f07e1108375921e",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -330,10 +428,16 @@
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "85ef835135dbf2083772b286d64cbbf8d1d21d70206899e114fc91a07d9c5e56",
+    "sha256": "3cf9dea86fd2ed598c37095c66e63ec3f1e66a1552e3b17cf00407310f034a69",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -349,10 +453,16 @@
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "436410f2fbaf1b435dd5a1b582488132f9a51cb54eab03b28f824c4dd1adee0d",
+    "sha256": "94ecd3381ed881c6073dc4af6a10237d0c495e679b7d5161e9fc6975f94895aa",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -368,10 +478,16 @@
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "e7bac2abc4b3bfc4b767c30fe7695ecd562eb92944098bafad2785ce8981b37f",
+    "sha256": "ac4c3a9fed4fb014bd7b684994ec3a0dd60dac87961e347dd528b1b1a2a6a7ef",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -387,10 +503,16 @@
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "9402a9666023c89047c8855fe1b599bbf440cb95ef2c14429a3e0c529889dcf8",
+    "sha256": "96b748cccc6bd31664dd3677f72572c0c87ebb66228115e06697a1e14a9c8fe9",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -406,10 +528,16 @@
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "c13ce03f2a6c9d9880a0a205648fbff47f2b108a38acc6021d29393516bd2fa1",
+    "sha256": "87c99a8bc647428ff95727221baa7854c89d3dd37104c59d42445d8304aa1f70",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -429,6 +557,12 @@
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -444,10 +578,16 @@
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "32770539ba7a344662cb0176cb2fbdfd42e4a9be0b000828aede6a60195f5b85",
+    "sha256": "140dc39b32cc2104cfc89d292cedd448671c0f6cc8611dbf56728c670c637d62",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -463,10 +603,16 @@
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "4bb0add334694703bcb49e54e9c47f598318565ca926991c78f861373c50160a",
+    "sha256": "c8cf1cd7e6a4d35d6f2b4bf4a94d3199c08586a8f76e6dd1cdf5a00fa6732718",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "first_bar": "2024-09-16",
     "last_bar": "2026-09-16",
     "bars_in_window": 502,
@@ -98479,42 +98625,42 @@
     {
      "ex_date": "2024-09-20",
      "amount": 1.746,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-20",
      "amount": 1.966,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-21",
      "amount": 1.696,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-20",
      "amount": 1.761,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-19",
      "amount": 1.831,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-19",
      "amount": 1.993,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-20",
      "amount": 1.797,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-18",
      "amount": 1.904,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98524,10 +98670,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "595e3d9ecb47a2b5e846b4dde0ffa44a734d3f20aac0abba3fc8da6b4aabfe1b",
+    "sha256": "76a2a5c8fa79e66cd60ad35e113e9e15b258d9f9b7202514a0a8d582bb3a5376",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98544,42 +98696,42 @@
     {
      "ex_date": "2024-09-23",
      "amount": 0.677,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-23",
      "amount": 0.835,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-24",
      "amount": 0.716,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-23",
      "amount": 0.591,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-22",
      "amount": 0.694,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-22",
      "amount": 0.794,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-23",
      "amount": 0.733,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-22",
      "amount": 0.813,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98589,10 +98741,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "c957d374ef5f4d34c5da56aee06496c7c2ea1a7d5b1b0f71aeb33b8cd193380d",
+    "sha256": "8df09a16c564db57834cbf5e3284b7c80dc46ccd7b4cf2568a1a36aefe771d33",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98609,47 +98767,47 @@
     {
      "ex_date": "2024-09-25",
      "amount": 0.752,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-17",
      "amount": 0.694,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-18",
      "amount": 0.46,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-16",
      "amount": 0.576,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-16",
      "amount": 0.677,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-16",
      "amount": 0.842,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-17",
      "amount": 0.442,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-15",
      "amount": 0.695,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-09-15",
      "amount": 0.75,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98659,10 +98817,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "b5b36797bea2775b28f2e4cca11616516354c1524dba22fad505c24ffa3efadb",
+    "sha256": "9aec469da0eb3af584a166a8692c8f74a2e31cad9020265d861aa50c2c099f3c",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98683,10 +98847,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/GLD.json",
     "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98707,10 +98877,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/UNG.json",
     "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98727,42 +98903,42 @@
     {
      "ex_date": "2024-09-23",
      "amount": 0.2695,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-23",
      "amount": 0.314,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-24",
      "amount": 0.2775,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-23",
      "amount": 0.2785,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-22",
      "amount": 0.284,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-22",
      "amount": 0.317,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-23",
      "amount": 0.31,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-22",
      "amount": 0.284,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98772,10 +98948,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "5c3da81ffbb30d6d9678b34fd78ec264ace406f1975e21c8ad3c02f064dba8c5",
+    "sha256": "6dee7f427904f8ec1318774d90b1a606ed698236f21ecd4ffd6b52e3927d3d7b",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "1"
    }
   },
@@ -98792,37 +98974,37 @@
     {
      "ex_date": "2024-09-23",
      "amount": 0.015,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-23",
      "amount": 0.003,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-24",
      "amount": 0.005,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-23",
      "amount": 0.007,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-22",
      "amount": 0.027,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-22",
      "amount": 0.407,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-22",
      "amount": 0.138,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98832,10 +99014,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "628dc12e0625cb104617e15f9e2bf802d1e70bb63db7b4e90cfa88a2fa91a689",
+    "sha256": "00b523d8ee74d16b4c83f91f686b76465600232d4beb2f68be31911a3d88bac9",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98852,42 +99040,42 @@
     {
      "ex_date": "2024-09-25",
      "amount": 0.2,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-17",
      "amount": 0.062,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-18",
      "amount": 0.121,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-16",
      "amount": 0.083,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-16",
      "amount": 0.183,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-17",
      "amount": 0.122,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-15",
      "amount": 0.024,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-09-15",
      "amount": 0.011,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -98897,10 +99085,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "65143858120b6de0600ac78612bf950a0db00c76012948e0790fccf1411dd3b7",
+    "sha256": "62bc42f432f59198803f94d6f4612388205de8a6bc2146f0ddd825b7d19321af",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -98917,122 +99111,122 @@
     {
      "ex_date": "2024-10-01",
      "amount": 0.316,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-11-01",
      "amount": 0.311,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-02",
      "amount": 0.325,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-18",
      "amount": 0.351,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-02-03",
      "amount": 0.312,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-03",
      "amount": 0.29,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-04-01",
      "amount": 0.326,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-05-01",
      "amount": 0.328,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-02",
      "amount": 0.32,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-07-01",
      "amount": 0.328,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-08-01",
      "amount": 0.331,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-02",
      "amount": 0.328,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-10-01",
      "amount": 0.31,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-11-03",
      "amount": 0.325,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-01",
      "amount": 0.321,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-19",
      "amount": 0.342,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-02-02",
      "amount": 0.332,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-02",
      "amount": 0.301,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-04-01",
      "amount": 0.345,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-05-01",
      "amount": 0.315,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-01",
      "amount": 0.336,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-07-01",
      "amount": 0.318,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-08-03",
      "amount": 0.33,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-09-01",
      "amount": 0.315,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99042,10 +99236,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "6d72fa9607b0d363e5a6b16e4e110db0f9c0e9c6459fe283a55b6cf1598f8d40",
+    "sha256": "5555d6f434148f839233f16cfd0717f328a2ae82146a8eee8a3db6f9599373fb",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99066,10 +99266,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/DKNG.json",
     "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99090,10 +99296,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/FLUT.json",
     "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99114,10 +99326,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/PENN.json",
     "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99138,10 +99356,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/SRAD.json",
     "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99162,10 +99386,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/GENI.json",
     "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99182,42 +99412,42 @@
     {
      "ex_date": "2024-11-08",
      "amount": 0.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-02-10",
      "amount": 0.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-05-12",
      "amount": 0.26,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-08-11",
      "amount": 0.26,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-11-10",
      "amount": 0.26,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-02-09",
      "amount": 0.26,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-05-11",
      "amount": 0.27,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-08-10",
      "amount": 0.27,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99227,10 +99457,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "05a9b8ae5417049fe32f02e03c50a3c614389075dda61bf18aca1d1d89d10ad1",
+    "sha256": "ff10e6538b0e488f4d558dc69d862ae2c0ccf8a69dbe600582399699f1a8e3ff",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99247,42 +99483,42 @@
     {
      "ex_date": "2024-11-21",
      "amount": 0.83,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-02-20",
      "amount": 0.83,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-05-15",
      "amount": 0.83,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-08-21",
      "amount": 0.83,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-11-20",
      "amount": 0.91,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-02-19",
      "amount": 0.91,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-05-21",
      "amount": 0.91,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-08-20",
      "amount": 0.91,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99292,10 +99528,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "6b3f6c7134801a7d0ef6f69a0fa892a817bb4d7b67dd6d509a74831b001bf2df",
+    "sha256": "fda2273bfcd2c5880562c06568c0cdee8c1051168260c6136f07e1108375921e",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99312,42 +99554,42 @@
     {
      "ex_date": "2024-12-05",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-12",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-06-11",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-09-11",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-04",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-11",
      "amount": 0.01,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-06-04",
      "amount": 0.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-09-10",
      "amount": 0.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99357,10 +99599,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "85ef835135dbf2083772b286d64cbbf8d1d21d70206899e114fc91a07d9c5e56",
+    "sha256": "3cf9dea86fd2ed598c37095c66e63ec3f1e66a1552e3b17cf00407310f034a69",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99377,42 +99625,42 @@
     {
      "ex_date": "2024-10-04",
      "amount": 1.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-01-06",
      "amount": 1.25,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-04-04",
      "amount": 1.4,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-07-03",
      "amount": 1.4,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-10-06",
      "amount": 1.5,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-01-06",
      "amount": 1.5,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-04-06",
      "amount": 1.5,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-07-06",
      "amount": 1.5,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99422,10 +99670,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "436410f2fbaf1b435dd5a1b582488132f9a51cb54eab03b28f824c4dd1adee0d",
+    "sha256": "94ecd3381ed881c6073dc4af6a10237d0c495e679b7d5161e9fc6975f94895aa",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99442,42 +99696,42 @@
     {
      "ex_date": "2024-11-14",
      "amount": 0.99,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-02-12",
      "amount": 0.99,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-05-15",
      "amount": 0.99,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-08-15",
      "amount": 0.99,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-11-14",
      "amount": 1.03,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-02-12",
      "amount": 1.03,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-05-15",
      "amount": 1.03,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-08-17",
      "amount": 1.03,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99487,10 +99741,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "e7bac2abc4b3bfc4b767c30fe7695ecd562eb92944098bafad2785ce8981b37f",
+    "sha256": "ac4c3a9fed4fb014bd7b684994ec3a0dd60dac87961e347dd528b1b1a2a6a7ef",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99507,42 +99767,42 @@
     {
      "ex_date": "2024-11-26",
      "amount": 1.24,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-02-18",
      "amount": 1.24,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-05-27",
      "amount": 1.3,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-08-26",
      "amount": 1.3,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-11-25",
      "amount": 1.3,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-02-24",
      "amount": 1.3,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-05-26",
      "amount": 1.34,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-08-25",
      "amount": 1.34,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99552,10 +99812,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "9402a9666023c89047c8855fe1b599bbf440cb95ef2c14429a3e0c529889dcf8",
+    "sha256": "96b748cccc6bd31664dd3677f72572c0c87ebb66228115e06697a1e14a9c8fe9",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99572,42 +99838,42 @@
     {
      "ex_date": "2024-10-18",
      "amount": 1.007,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-01-24",
      "amount": 1.007,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-04-21",
      "amount": 1.057,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-07-18",
      "amount": 1.057,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-10-24",
      "amount": 1.057,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-01-23",
      "amount": 1.057,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-04-24",
      "amount": 1.089,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-07-24",
      "amount": 1.089,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99617,10 +99883,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "c13ce03f2a6c9d9880a0a205648fbff47f2b108a38acc6021d29393516bd2fa1",
+    "sha256": "87c99a8bc647428ff95727221baa7854c89d3dd37104c59d42445d8304aa1f70",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99641,10 +99913,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "no dividend paid in the window",
+    "dividends": "dividend status unrecorded",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/TSLA.json",
     "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99661,42 +99939,42 @@
     {
      "ex_date": "2024-10-07",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2024-12-30",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-03-31",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-07-07",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-10-03",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-12-29",
      "amount": 0.115,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-03-30",
      "amount": 0.15,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-07-06",
      "amount": 0.15,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99706,10 +99984,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "32770539ba7a344662cb0176cb2fbdfd42e4a9be0b000828aede6a60195f5b85",
+    "sha256": "140dc39b32cc2104cfc89d292cedd448671c0f6cc8611dbf56728c670c637d62",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   },
@@ -99726,42 +100010,42 @@
     {
      "ex_date": "2024-10-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-01-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-04-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-07-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2025-10-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-01-12",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-04-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     },
     {
      "ex_date": "2026-07-10",
      "amount": 0.278,
-     "provenance": "vendor event feed (secondary)"
+     "provenance": "Yahoo vendor event feed (secondary research data)"
     }
    ],
    "provenance": {
@@ -99771,10 +100055,16 @@
     "sigma_idio_annual": "residual volatility of the real warm-up returns",
     "adv_shares": "median real share volume over the warm-up window",
     "fifty_two_week_high_low": "real collected bars",
-    "dividends": "vendor event feed, not the issuer's own announcement",
+    "dividends": "Yahoo vendor event feed (secondary research data)",
     "source_class": "SECONDARY",
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "4bb0add334694703bcb49e54e9c47f598318565ca926991c78f861373c50160a",
+    "sha256": "c8cf1cd7e6a4d35d6f2b4bf4a94d3199c08586a8f76e6dd1cdf5a00fa6732718",
+    "raw_file": "",
+    "raw_sha256": "",
+    "retrieved_at": "",
+    "access_status": "",
+    "redistribution_status": "",
+    "dividend_status": "",
     "splits_in_window": "0"
    }
   }

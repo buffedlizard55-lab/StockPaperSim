@@ -49,12 +49,13 @@
   },
   {
     "id": "IR-05",
-    "severity": "medium",
-    "topic": "The FINRA Trade Activity Fee rate rests on secondary sources only",
-    "detail": "The TAF applied to equity sells ($0.000195 per share, minimum $0.01, maximum $9.79 per trade, effective 2026-01-01, replacing $0.000166 with an $8.30 maximum) was corroborated from a broker help page and a broker pricing page. FINRA's own Rule 7541 / Schedule A text was not retrievable from this environment, so the rate is SECONDARY-sourced.",
-    "resolution": "The rate is implemented because it is small and directionally certain, and it is labelled SECONDARY everywhere it appears - in config.py, in the source register and here. Verify against FINRA Schedule A before using these numbers for anything that matters.",
+    "severity": "low",
+    "topic": "FINRA Trade Activity Fee rates were initially supported only by secondary sources",
+    "detail": "The original pass could not retrieve FINRA's primary schedule and used broker documentation for the 2025 and 2026 equity-sell rates. On 2026-09-18, FINRA's own fee-adjustment schedule was fetched and it states $0.000166 per covered-equity share up to $8.30 per trade for 2025 and $0.000195 up to $9.79 for 2026.",
+    "resolution": "Resolved from FINRA's primary fee-adjustment schedule. config.py now cites the official schedule and the general TAF page; the rates are no longer labelled SECONDARY. The dead rulebooks/7541 URL remains separately recorded under IR-33.",
     "links": [
-      "https://www.finra.org/rules-guidance/rulebooks/finra-rules/7541"
+      "https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule",
+      "https://www.finra.org/rules-guidance/guidance/trading-activity-fee"
     ]
   },
   {

@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@Kalshi_Attention_Timer · StockPaperSim Season 2</title>
 <meta name="description" content="StockPaperSim Season 2: fourteen strategies derived
-from the MasterSite project directory, traded on real collected daily prices and real
-dated events, with a trade ledger that can be re-derived from the raw files.">
+from the MasterSite project directory, with eligibility-gated collected prices, dated
+events, and a trade ledger that can be re-derived from the raw files.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body>
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="../../index.html">StockPaperSim</a>
-    <span class="brand-sub">Season 2 · MasterFeed Invitational · real collected prices</span>
+    <span class="brand-sub">Season 2 · MasterFeed Invitational · eligibility-gated prices</span>
   </div>
   <nav class="wrap nav"><a class="" href="../../season2/index.html">Overview</a><a class="" href="../../season2/leaderboard.html">Leaderboard</a><a class="" href="../../season2/masterfeed.html">MasterFeed</a><a class="" href="../../season2/ledger.html">Trade ledger</a><a class="" href="../../season2/stress.html">Stress panel</a><a class="" href="../../season2/data.html">Data custody</a><a class="active" href="../../season2/participants/index.html">Participants</a><a class="" href="../../index.html">Season 1</a></nav>
 </header>
 <main class="wrap">
+<section class="card notice" style="border-color:#c0392b"><h2>Official-price eligibility: NOT ELIGIBLE</h2><p>This committed run uses <strong>yahoo</strong> price files classed <strong>SECONDARY</strong>. It is reproducible research, not an official-price competition result. The strict runner uses the Nasdaq adapter and refuses to trade when official files, raw checksums, complete dates, OHLCV validation or redistribution permission are missing.</p><p><strong>Audit flags:</strong> MISSING_FILE. Run <code>python3 -m sim.cli price-audit</code> for the complete report; no Yahoo/Nasdaq agreement can override this gate.</p></section>
 
 <h1>@Kalshi_Attention_Timer <span class="muted">Kalshi Attention Timer</span></h1>
 <p class="lede">The Kalshi venue file records settled temperature and gasoline contracts with their volumes. Trading volume in those contracts is real-money attention on weather and fuel, and the participant holds the two linked ETFs while that attention is elevated.</p>
@@ -37,7 +38,7 @@ dated events, with a trade ledger that can be re-derived from the raw files.">
 <ul><li>Volume is an attention measure, not a forecast of the underlying</li><li>UNPROVEN-MAPPING: the register records that the equity link is asserted</li><li>Settled markets carry only close time and settlement value, not a full tick history</li></ul></section>
 <section class="card "><h2>Signals this participant reads</h2><table class="data"><thead><tr><th>signal</th><th>collected state</th><th>sessions actionable</th><th>sessions in window</th><th>value on the last session</th></tr></thead><tbody><tr><td><code>kalshi_settled_30d</code></td><td><span class="badge badge-ok">AVAILABLE</span></td><td>32</td><td>251</td><td>444.0000</td></tr><tr><td><code>kalshi_volume_30d</code></td><td><span class="badge badge-bad">MISSING</span></td><td>0</td><td>251</td><td>0.0000</td></tr></tbody></table></section>
 <section class="card "><h2>Round trips (largest 40)</h2><p class='muted'>No closed round trips: the signal had no collected history this season, so the strategy correctly placed no backdated trades.</p></section>
-<section class="card "><h2>First 40 fills against the real bar</h2><p class='muted'>No fills.</p></section>
+<section class="card "><h2>First 40 fills against the collected bar</h2><p class='muted'>No fills.</p></section>
 <section class="card "><h2>Verification</h2>
 <ul>
 <li>Equity re-derived from the raw fills: <span class="pos">+100,000</span>
@@ -59,13 +60,14 @@ be empty.</li>
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p>Season 2 trades <strong>real daily bars</strong> collected from the Yahoo
-    Finance chart API and cross-checked against FRED's S&amp;P 500 series, with
-    real share volume for the participation and liquidity model, and
-    <strong>real dated events</strong> from the official sources of each
-    MasterSite project (SEC EDGAR, openFDA, MLB StatsAPI, NOAA/NCEI, FRED, Kalshi).
-    What remains modelled is named on every page and registered in the
-    irregularity register. Nothing here is investment advice.</p>
+    <p>Season 2 displays <strong>collected daily bars</strong> and dated events, but
+    a public response is not automatically an eligible official price source. The
+    current historical research run uses Yahoo Finance files marked
+    <strong>SECONDARY</strong>; the official Nasdaq adapter preserves raw responses,
+    checksums and licensing status and fails closed when those checks are not met.
+    Real share volume is used for participation and liquidity modelling. What remains
+    modelled is named on every page and registered in the irregularity register.
+    Nothing here is investment advice.</p>
     <p>Generated by <code>scripts/build_site_season2.py</code> from
     <code>memory/runs/season2-*</code> and <code>data/real/</code>; CI diffs a fresh
     rebuild against this directory.</p>

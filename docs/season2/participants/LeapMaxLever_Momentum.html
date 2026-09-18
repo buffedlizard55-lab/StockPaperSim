@@ -5,19 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>@LeapMaxLever_Momentum · StockPaperSim Season 2</title>
 <meta name="description" content="StockPaperSim Season 2: fourteen strategies derived
-from the MasterSite project directory, traded on real collected daily prices and real
-dated events, with a trade ledger that can be re-derived from the raw files.">
+from the MasterSite project directory, with eligibility-gated collected prices, dated
+events, and a trade ledger that can be re-derived from the raw files.">
 <link rel="stylesheet" href="../../assets/site.css">
 </head>
 <body>
 <header class="site-header">
   <div class="wrap">
     <a class="brand" href="../../index.html">StockPaperSim</a>
-    <span class="brand-sub">Season 2 · MasterFeed Invitational · real collected prices</span>
+    <span class="brand-sub">Season 2 · MasterFeed Invitational · eligibility-gated prices</span>
   </div>
   <nav class="wrap nav"><a class="" href="../../season2/index.html">Overview</a><a class="" href="../../season2/leaderboard.html">Leaderboard</a><a class="" href="../../season2/masterfeed.html">MasterFeed</a><a class="" href="../../season2/ledger.html">Trade ledger</a><a class="" href="../../season2/stress.html">Stress panel</a><a class="" href="../../season2/data.html">Data custody</a><a class="active" href="../../season2/participants/index.html">Participants</a><a class="" href="../../index.html">Season 1</a></nav>
 </header>
 <main class="wrap">
+<section class="card notice" style="border-color:#c0392b"><h2>Official-price eligibility: NOT ELIGIBLE</h2><p>This committed run uses <strong>yahoo</strong> price files classed <strong>SECONDARY</strong>. It is reproducible research, not an official-price competition result. The strict runner uses the Nasdaq adapter and refuses to trade when official files, raw checksums, complete dates, OHLCV validation or redistribution permission are missing.</p><p><strong>Audit flags:</strong> MISSING_FILE. Run <code>python3 -m sim.cli price-audit</code> for the complete report; no Yahoo/Nasdaq agreement can override this gate.</p></section>
 
 <h1>@LeapMaxLever_Momentum <span class="muted">Leap Max-Leverage Momentum</span></h1>
 <p class="lede">The Leap ranks on total return with all positions liquidated at the end of the contest. Under that payoff the best rank-seeking response is to lever the asset with the strongest trailing return and hold it to the bell - the same rule is tested here on SPY, QQQ and TLT.</p>
@@ -35,9 +36,9 @@ dated events, with a trade ledger that can be re-derived from the raw files.">
 <strong>Horizon:</strong> 1-3 months</p>
 <p><strong>Declared failure modes</strong></p>
 <ul><li>Contest-maximising leverage maximises ruin probability</li><li>The instrument is a declared proxy: The Leap trades futures, not ETFs</li><li>A single bad month at 1.9x is unrecoverable</li></ul></section>
-<section class="card "><h2>Signals this participant reads</h2><p class='muted'>This participant reads real prices directly (technical rules); it does not depend on a collected event signal.</p></section>
+<section class="card "><h2>Signals this participant reads</h2><p class='muted'>This participant reads collected prices directly (technical rules); it does not depend on a collected event signal.</p></section>
 <section class="card "><h2>Round trips (largest 40)</h2><p class='muted'>No closed round trips: the signal had no collected history this season, so the strategy correctly placed no backdated trades.</p></section>
-<section class="card "><h2>First 40 fills against the real bar</h2><table class="data"><thead><tr><th>date</th><th>symbol</th><th>side</th><th>qty</th><th>fill px</th><th>real close</th><th>participation %</th><th>slip vs open (bps)</th><th>slip vs close (bps)</th><th>modelled cost $</th><th>price file</th></tr></thead><tbody><tr><td>2025-09-17</td><td>QQQ</td><td>buy</td><td>321</td><td>591.1000</td><td>590.00</td><td>0.00046</td><td>0.00</td><td>18.64</td><td>3.8568</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2025-10-01</td><td>QQQ</td><td>buy</td><td>4</td><td>597.1700</td><td>603.25</td><td>0.00001</td><td>0.00</td><td>-100.79</td><td>0.0333</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2025-11-03</td><td>QQQ</td><td>buy</td><td>17</td><td>635.1100</td><td>632.08</td><td>0.00005</td><td>0.00</td><td>47.94</td><td>0.1632</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-01-02</td><td>QQQ</td><td>sell</td><td>6</td><td>620.0500</td><td>613.12</td><td>0.00001</td><td>-0.16</td><td>113.03</td><td>0.0528</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-05-01</td><td>QQQ</td><td>buy</td><td>22</td><td>669.1600</td><td>674.15</td><td>0.00006</td><td>0.00</td><td>-74.02</td><td>0.2061</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-06-01</td><td>QQQ</td><td>buy</td><td>30</td><td>737.0400</td><td>742.74</td><td>0.00009</td><td>0.00</td><td>-76.74</td><td>0.2991</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-07-01</td><td>QQQ</td><td>sell</td><td>2</td><td>729.1800</td><td>725.17</td><td>0.00000</td><td>-0.14</td><td>55.30</td><td>0.0587</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-08-03</td><td>QQQ</td><td>sell</td><td>21</td><td>688.2900</td><td>700.07</td><td>0.00005</td><td>-0.14</td><td>-168.27</td><td>0.6284</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-09-16</td><td>QQQ</td><td>sell</td><td>365</td><td>704.7000</td><td>704.72</td><td>0.00102</td><td>-46.61</td><td>-0.28</td><td>10.5822</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr></tbody></table></section>
+<section class="card "><h2>First 40 fills against the collected bar</h2><table class="data"><thead><tr><th>date</th><th>symbol</th><th>side</th><th>qty</th><th>fill px</th><th>collected close</th><th>participation %</th><th>slip vs open (bps)</th><th>slip vs close (bps)</th><th>modelled cost $</th><th>price file</th></tr></thead><tbody><tr><td>2025-09-17</td><td>QQQ</td><td>buy</td><td>321</td><td>591.1000</td><td>590.00</td><td>0.00046</td><td>0.00</td><td>18.64</td><td>3.8568</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2025-10-01</td><td>QQQ</td><td>buy</td><td>4</td><td>597.1700</td><td>603.25</td><td>0.00001</td><td>0.00</td><td>-100.79</td><td>0.0333</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2025-11-03</td><td>QQQ</td><td>buy</td><td>17</td><td>635.1100</td><td>632.08</td><td>0.00005</td><td>0.00</td><td>47.94</td><td>0.1632</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-01-02</td><td>QQQ</td><td>sell</td><td>6</td><td>620.0500</td><td>613.12</td><td>0.00001</td><td>-0.16</td><td>113.03</td><td>0.0528</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-05-01</td><td>QQQ</td><td>buy</td><td>22</td><td>669.1600</td><td>674.15</td><td>0.00006</td><td>0.00</td><td>-74.02</td><td>0.2061</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-06-01</td><td>QQQ</td><td>buy</td><td>30</td><td>737.0400</td><td>742.74</td><td>0.00009</td><td>0.00</td><td>-76.74</td><td>0.2991</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-07-01</td><td>QQQ</td><td>sell</td><td>2</td><td>729.1800</td><td>725.17</td><td>0.00000</td><td>-0.14</td><td>55.30</td><td>0.0587</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-08-03</td><td>QQQ</td><td>sell</td><td>21</td><td>688.2900</td><td>700.07</td><td>0.00005</td><td>-0.14</td><td>-168.27</td><td>0.6284</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr><tr><td>2026-09-16</td><td>QQQ</td><td>sell</td><td>365</td><td>704.7000</td><td>704.72</td><td>0.00102</td><td>-46.61</td><td>-0.28</td><td>10.5822</td><td><code>data/real/prices/yahoo/QQQ.json</code></td></tr></tbody></table></section>
 <section class="card "><h2>Verification</h2>
 <ul>
 <li>Equity re-derived from the raw fills: <span class="pos">+138,135</span>
@@ -59,13 +60,14 @@ be empty.</li>
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p>Season 2 trades <strong>real daily bars</strong> collected from the Yahoo
-    Finance chart API and cross-checked against FRED's S&amp;P 500 series, with
-    real share volume for the participation and liquidity model, and
-    <strong>real dated events</strong> from the official sources of each
-    MasterSite project (SEC EDGAR, openFDA, MLB StatsAPI, NOAA/NCEI, FRED, Kalshi).
-    What remains modelled is named on every page and registered in the
-    irregularity register. Nothing here is investment advice.</p>
+    <p>Season 2 displays <strong>collected daily bars</strong> and dated events, but
+    a public response is not automatically an eligible official price source. The
+    current historical research run uses Yahoo Finance files marked
+    <strong>SECONDARY</strong>; the official Nasdaq adapter preserves raw responses,
+    checksums and licensing status and fails closed when those checks are not met.
+    Real share volume is used for participation and liquidity modelling. What remains
+    modelled is named on every page and registered in the irregularity register.
+    Nothing here is investment advice.</p>
     <p>Generated by <code>scripts/build_site_season2.py</code> from
     <code>memory/runs/season2-*</code> and <code>data/real/</code>; CI diffs a fresh
     rebuild against this directory.</p>

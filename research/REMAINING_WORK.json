@@ -8,15 +8,15 @@
   },
   {
     "priority": "P0",
-    "title": "Connect a real market-data provider and run Season 2 on observed bars",
-    "detail": "The adapters exist and build_from_provider() is written; what is missing is a key and outbound access. Alpaca or Polygon would give real daily bars for all 17 instruments and, on paid tiers, real quotes for spread calibration. That single change removes L-01 and L-02 and lets every simulated number on the data-provenance page be replaced by an observed one.",
-    "where": "sim/marketdata.py (provider classes) · .github/workflows/data-refresh.yml",
-    "effort": "a day, mostly waiting on credentials"
+    "title": "Collect and license an eligible official price set, then run strict Season 2",
+    "detail": "The Nasdaq historical and dividend adapters now retrieve the required symbols on a GitHub Actions runner, preserve raw responses and checksums, and normalize OHLCV with a complete-date audit. What remains is external: Nasdaq's public-site legal terms do not establish permission to redistribute the responses in this repository. Until a licensed/redistributable status is verified and recorded, `python3 -m sim.cli season2` fails closed and the Yahoo-backed run remains research-only.",
+    "where": "scripts/collect_real_data.py · sim/eligibility.py · .github/workflows/collect-real-data.yml · data/real/official_price_eligibility.json",
+    "effort": "licensing review plus one Actions collection run"
   },
   {
     "priority": "P0",
     "title": "Verify the two regulatory inputs that are still secondary or uncertain",
-    "detail": "Fetch FINRA Schedule A for the Trade Activity Fee (IR-05) and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04), then pin both constants to the primary text and re-run.",
+    "detail": "Keep the FINRA fee schedule and the current compliance-date status of the 2024 Reg NMS tick-size and access-fee amendments (IR-04) under periodic primary-source review; IR-05 is resolved for the current rates, but future rate changes require a new fetched schedule and re-run.",
     "where": "sim/config.py (FINRA_TAF_*, ACCESS_FEE_CAP_PER_SHARE, minimum_tick)",
     "effort": "an hour of reading"
   },

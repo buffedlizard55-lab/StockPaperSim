@@ -610,7 +610,7 @@ class GoldMeltTrend(Strategy):
 
 
 class PinePilotEmaCross(Strategy):
-    """The community Pine Script rule, reproduced exactly on real prices."""
+    """The community Pine Script rule, reproduced exactly on collected prices."""
     #: Collected signal arrays this strategy reads. Declared here so the run, the
     #: site and the audit can all state which source a participant depends on, and
     #: so a strategy whose source is missing can be reported as DATA-MISSING rather
@@ -624,7 +624,7 @@ class PinePilotEmaCross(Strategy):
         archetype="time-series trend",
         thesis=("PinePilot generates Pine Script, and the EMA-cross-with-ATR-stop rule "
                 "is the canonical community strategy. It is reproduced here verbatim on "
-                "real daily bars, so the result is the rule's, not a tuned variant's."),
+                "collected daily bars, so the result is the rule's, not a tuned variant's."),
         entry_rules=["EMA(20) above EMA(50) on the real closes -> long that ETF at 60% "
                      "of equity (SPY, QQQ, IWM)",
                      "Full position only; no pyramiding"],

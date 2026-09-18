@@ -428,7 +428,7 @@
   "username": "@PinePilot_EMA_Cross",
   "display_name": "PinePilot EMA Cross",
   "archetype": "time-series trend",
-  "thesis": "PinePilot generates Pine Script, and the EMA-cross-with-ATR-stop rule is the canonical community strategy. It is reproduced here verbatim on real daily bars, so the result is the rule's, not a tuned variant's.",
+  "thesis": "PinePilot generates Pine Script, and the EMA-cross-with-ATR-stop rule is the canonical community strategy. It is reproduced here verbatim on collected daily bars, so the result is the rule's, not a tuned variant's.",
   "entry_rules": [
    "EMA(20) above EMA(50) on the real closes -> long that ETF at 60% of equity (SPY, QQQ, IWM)",
    "Full position only; no pyramiding"

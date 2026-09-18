@@ -367,11 +367,36 @@ def main(argv: Optional[List[str]] = None) -> int:
     report["failure_count"] = len(report["failures"])
     report["verdict"] = "PASS" if not report["failures"] else "FAIL"
 
+    # Idempotence matters here because the report is a committed artefact: a file
+    # that changes bytes on every run leaves a dirty working tree for every
+    # contributor and makes a "did anything move?" diff useless. So the timestamp
+    # is written only when the *checks* changed - the report is compared with
+    # ``generated_utc`` removed, and an otherwise identical report leaves the
+    # stored file exactly as it was.
     if report_path:
         os.makedirs(os.path.dirname(report_path), exist_ok=True)
-        with open(report_path, "w", encoding="utf-8") as handle:
-            json.dump(report, handle, indent=1, sort_keys=False)
-            handle.write("\n")
+        body = json.dumps(report, indent=1, sort_keys=False) + "\n"
+        previous = None
+        if os.path.exists(report_path):
+            try:
+                with open(report_path, "r", encoding="utf-8") as handle:
+                    previous = json.load(handle)
+            except ValueError:
+                previous = None
+        unchanged = False
+        if isinstance(previous, dict):
+            stripped = {k: v for k, v in previous.items() if k != "generated_utc"}
+            unchanged = stripped == {k: v for k, v in report.items()
+                                     if k != "generated_utc"}
+        report["report_unchanged_since"] = (
+            previous.get("generated_utc") if unchanged and isinstance(previous, dict)
+            else None)
+        if unchanged:
+            if not args.quiet:
+                print("  report already current; left byte-identical")
+        else:
+            with open(report_path, "w", encoding="utf-8") as handle:
+                handle.write(json.dumps(report, indent=1, sort_keys=False) + "\n")
 
     if not args.quiet:
         print(f"official extract verification: {report['verdict']} "

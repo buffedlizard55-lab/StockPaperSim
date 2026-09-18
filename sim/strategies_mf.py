@@ -124,8 +124,8 @@ class FDAClusterFade(Strategy):
         academic_basis=[
             {"claim": "Short-horizon reversal after attention-driven buying is a "
                       "documented cross-sectional effect",
-             "url": "https://doi.org/10.1111/j.1540-6261.1990.tb05083.x",
-             "ref": "Lehmann (1990), 'Fads, martingales, and market efficiency' lineage",
+             "url": "https://doi.org/10.2307/2937816",
+             "ref": "Lehmann (1990), 'Fads, Martingales, and Market Efficiency', Quarterly Journal of Economics 105(1):1-28",
              "status": "KNOWN-NOT-FETCHED"}],
         known_failure_modes=[
             "Fading a sector in a genuine bull regime loses money quickly",
@@ -179,8 +179,8 @@ class InsiderCopycatMax(Strategy):
              "ref": "SEC Form 4 (the primary filing this reads)",
              "status": "FETCHED-VERIFIED"},
             {"claim": "Insider purchase portfolios outperform sale portfolios",
-             "url": "https://doi.org/10.1111/j.1540-6261.1992.tb04643.x",
-             "ref": "Seyhun (1992), Journal of Finance - known-not-fetched",
+             "url": "https://doi.org/10.2307/2118390",
+             "ref": "Seyhun (1992), 'Why Does Aggregate Insider Trading Predict Future Stock Returns?', Quarterly Journal of Economics 107(4):1303-1331",
              "status": "KNOWN-NOT-FETCHED"}],
         known_failure_modes=[
             "Form 4 is filed up to two business days after the trade, so the copy pays "

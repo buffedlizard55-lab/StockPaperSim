@@ -537,7 +537,7 @@ class MeanRevZ(Strategy):
         leverage="up to 1.8x gross", cadence="daily", horizon="1-10 sessions",
         academic_basis=[
             {"claim": "Stocks with extreme poor performance over short horizons earn abnormal returns in the following days/weeks",
-             "url": "https://doi.org/10.1111/j.1540-6261.1990.tb05088.x",
+             "url": "https://doi.org/10.1111/j.1540-6261.1990.tb05110.x",
              "ref": "Jegadeesh (1990), 'Evidence of Predictable Behavior of Security Returns', Journal of Finance", "status": "KNOWN-NOT-FETCHED"},
             {"claim": "Short-term reversal is compensation for providing liquidity",
              "url": "https://doi.org/10.1093/rfs/hhs106",
@@ -653,8 +653,8 @@ class EventDriftRider(Strategy):
         leverage="up to 1.75x gross", cadence="daily scan", horizon="15 sessions",
         academic_basis=[
             {"claim": "Stock prices drift after earnings announcements in the direction of the surprise",
-             "url": "https://doi.org/10.2307/2490899",
-             "ref": "Bernard & Thomas (1989), Journal of Accounting Research", "status": "KNOWN-NOT-FETCHED"},
+             "url": "https://doi.org/10.2307/2491062",
+             "ref": "Bernard & Thomas (1989), Journal of Accounting Research 27(Suppl):1-36", "status": "KNOWN-NOT-FETCHED"},
             {"claim": "The first documentation of the drift: after the earnings announcement month, cumulative abnormal returns continued to move in the direction of the earnings surprise",
              "url": "https://doi.org/10.2307/2490232",
              "ref": "Ball & Brown (1968), 'An Empirical Evaluation of Accounting Income Numbers', Journal of Accounting Research 6(2):159-178",

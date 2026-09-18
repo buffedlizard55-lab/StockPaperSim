@@ -471,5 +471,20 @@
     "links": [
       "https://buffedlizard55-lab.github.io/MasterSite/"
     ]
+  },
+  {
+    "id": "IR-47",
+    "severity": "high",
+    "topic": "Four academic DOIs in the strategy register resolved to the wrong papers",
+    "detail": "A line-by-line re-resolution of every DOI embedded in sim/ found four misattributions. (1) Jegadeesh (1990) short-term reversal was cited as 10.1111/j.1540-6261.1990.tb05088.x, which resolves to Lamoureux & Lastrapes, 'Heteroskedasticity in Stock Return Data: Volume versus GARCH Effects', J. Finance 45(1):221-229. (2) Bernard & Thomas (1989) PEAD was cited as 10.2307/2490899, which resolves to Hamilton & Wright, 'Internal Control Judgments and Effects of Experience', J. Accounting Research 20(2 Pt II):756-765. (3) Lehmann (1990) was cited as 10.1111/j.1540-6261.1990.tb05083.x, which resolves to Kane & Unal, 'Modeling Structural and Temporal Variation in the Market's Valuation of Banking Firms'. (4) Seyhun (1992) was cited as 10.1111/j.1540-6261.1992.tb04643.x, which is not a registered DOI at all, and the reference named the wrong journal (Journal of Finance rather than the Quarterly Journal of Economics). research/SOCIAL_STRATEGY_SOURCES.md carried two of the same bad identifiers plus a third, 10.2307/2937820, which resolves to Bernanke & Gertler, 'Financial Fragility and Economic Performance'.",
+    "resolution": "Each DOI was re-resolved through doi.org and replaced with the identifier that actually returns the cited paper: Jegadeesh (1990) -> 10.1111/j.1540-6261.1990.tb05110.x ('Evidence of Predictable Behavior of Security Returns', J. Finance 45(3):881-898); Bernard & Thomas (1989) -> 10.2307/2491062 ('Post-Earnings-Announcement Drift: Delayed Price Response or Risk Premium?', J. Accounting Research 27 Suppl:1-36); Lehmann (1990) -> 10.2307/2937816 ('Fads, Martingales, and Market Efficiency', QJE 105(1):1-28); Seyhun (1992) -> 10.2307/2118390 ('Why Does Aggregate Insider Trading Predict Future Stock Returns?', QJE 107(4):1303-1331). The page-range typo in the Jegadeesh citation (883-898) was corrected to 881-898 and the Bernard & Thomas and Seyhun references now carry volume and page numbers. The misattribution guard in tests/test_sources_register.py was updated to pin the corrected identifiers, and the published site was rebuilt so the source register on the site shows the corrected links.",
+    "links": [
+      "https://doi.org/10.1111/j.1540-6261.1990.tb05110.x",
+      "https://doi.org/10.2307/2491062",
+      "https://doi.org/10.2307/2937816",
+      "https://doi.org/10.2307/2118390",
+      "https://doi.org/10.1111/j.1540-6261.1990.tb05088.x",
+      "https://doi.org/10.2307/2490899"
+    ]
   }
 ]

@@ -52,6 +52,7 @@ NAV = [
     ("season2/stress.html", "Stress panel"),
     ("season2/data.html", "Data custody"),
     ("season2/participants/index.html", "Participants"),
+    ("simulator.html", "Live Simulator"),
     ("index.html", "Season 1"),
 ]
 
@@ -341,6 +342,14 @@ path is re-traded with doubled costs and with thinner displayed liquidity, and e
 participant's return is published under all three assumptions; the eligibility status
 above applies to all of them.</li>
 </ol>''', cls="notice")}
+{card("Simulating real trades &amp; upcoming order placement", '''
+<p class="lede">Can strategies place upcoming trades and simulate a real trading experience?
+<strong>Yes.</strong> Strategies and manual operators can stage upcoming orders for the next
+trading session open (09:30 ET) or close (16:00 ET) across Nasdaq, NYSE, and S&amp;P 500 equities.
+The simulator calculates live Level 2 depth queues, Almgren-Chriss market impact, Reg NMS Rule 612 tick increments,
+statutory SEC &sect;31 and FINRA TAF fees, and tracks positions on a verified SHA-256 trade ledger.</p>
+<p class="more"><a href="../simulator.html">Launch Interactive US Equities Trade Simulator &amp; Order Engine &rarr;</a></p>
+''')}
 {card("What the signals were, and whether the data existed", f'''
 <p>{len(available)} collected signal families are available and {len(missing)} are
 not. Available: {', '.join(f'<code>{ESC(s)}</code>' for s in available)}.</p>

@@ -610,23 +610,24 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
     sales = 0
     purchases = 0
     rows = 0
-    for line in open(path, "r", encoding="utf-8"):
-        row = json.loads(line)
-        rows += 1
-        symbol = row.get("ticker")
-        code = (row.get("code") or "").upper()
-        date = str(row.get("transaction_date") or "")
-        if len(date) != 10:
-            continue
-        if symbol in buys and code == "P":
-            buys[symbol].append(date)
-            purchases += 1
-            title = (row.get("title") or "").lower()
-            roles = row.get("roles") or []
-            if any(term in title for term in CEO_TITLES) or "ceo" in title:
-                ceo_buys[symbol].append(date)
-        elif code == "S":
-            sales += 1
+    with open(path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            row = json.loads(line)
+            rows += 1
+            symbol = row.get("ticker")
+            code = (row.get("code") or "").upper()
+            date = str(row.get("transaction_date") or "")
+            if len(date) != 10:
+                continue
+            if symbol in buys and code == "P":
+                buys[symbol].append(date)
+                purchases += 1
+                title = (row.get("title") or "").lower()
+                roles = row.get("roles") or []
+                if any(term in title for term in CEO_TITLES) or "ceo" in title:
+                    ceo_buys[symbol].append(date)
+            elif code == "S":
+                sales += 1
     for t in range(len(md.dates)):
         for symbol in tickers:
             book.arrays[f"insider_buys_30d::{symbol}"][t] = float(
@@ -658,11 +659,12 @@ def _mlb_signals(book: SignalBook, md, root: str) -> None:
                        "https://statsapi.mlb.com/api/v1/schedule")
         return
     games: List[dict] = []
-    for line in open(path, "r", encoding="utf-8"):
-        row = json.loads(line)
-        if row.get("status") == "Final" and row.get("home_score") is not None \
-                and row.get("away_score") is not None:
-            games.append(row)
+    with open(path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            row = json.loads(line)
+            if row.get("status") == "Final" and row.get("home_score") is not None \
+                    and row.get("away_score") is not None:
+                games.append(row)
     games.sort(key=lambda g: g["date"])
     dates = [g["date"] for g in games]
     for t in range(len(md.dates)):
@@ -713,7 +715,8 @@ def _weather_signals(book: SignalBook, md, root: str) -> None:
                        "no collected NCEI file",
                        "https://www.ncei.noaa.gov/access/services/data/v1")
         return
-    rows = json.loads(open(path, "r", encoding="utf-8").read())
+    with open(path, "r", encoding="utf-8") as fh:
+        rows = json.loads(fh.read())
     tmin: Dict[str, float] = {}
     precip: Dict[str, float] = {}
     for row in rows:
@@ -766,13 +769,14 @@ def _kalshi_signals(book: SignalBook, md, root: str) -> None:
     rows_total = 0
     values_present = 0
     for name in sorted(os.listdir(directory)):
-        for line in open(os.path.join(directory, name), "r", encoding="utf-8"):
-            row = json.loads(line)
-            rows_total += 1
-            close = str(row.get("close_time") or "")[:10]
-            if len(close) != 10:
-                continue
-            volume = row.get("volume")
+        with open(os.path.join(directory, name), "r", encoding="utf-8") as fh:
+            for line in fh:
+                row = json.loads(line)
+                rows_total += 1
+                close = str(row.get("close_time") or "")[:10]
+                if len(close) != 10:
+                    continue
+                volume = row.get("volume")
             if volume is None:
                 volume = row.get("open_interest")
             if volume is not None:

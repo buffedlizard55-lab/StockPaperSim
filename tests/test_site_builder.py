@@ -225,8 +225,11 @@ class TestFullBuild(unittest.TestCase):
             for n in names:
                 full = os.path.join(base, n)
                 cls.files.append(os.path.relpath(full, cls.out))
-        cls.html = {f: open(os.path.join(cls.out, f), encoding="utf-8").read()
-                    for f in cls.files if f.endswith(".html")}
+        cls.html = {}
+        for f in cls.files:
+            if f.endswith(".html"):
+                with open(os.path.join(cls.out, f), "r", encoding="utf-8") as fh:
+                    cls.html[f] = fh.read()
 
     @classmethod
     def tearDownClass(cls):
@@ -235,8 +238,8 @@ class TestFullBuild(unittest.TestCase):
     def test_the_build_succeeds_and_writes_the_expected_inventory(self):
         self.assertEqual(self.rc, 0)
         for page_name in ("index.html", "leaderboard.html", "strategies.html",
-                          "market.html", "methodology.html", "data.html",
-                          "sources.html", "irregularities.html",
+                          "simulator.html", "market.html", "methodology.html",
+                          "data.html", "sources.html", "irregularities.html",
                           "limitations.html", "participants/index.html",
                           "assets/site.css", "assets/site.js", ".nojekyll"):
             self.assertIn(page_name, self.files, f"missing {page_name}")
@@ -309,16 +312,16 @@ class TestFullBuild(unittest.TestCase):
         self.assertFalse(missing, f"broken links: {missing[:10]}")
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
-        # 11 since the venue-sensitivity page landed (IR-29).
-        self.assertEqual(len(site.NAV), 11)
+        # 12 since simulator.html landed.
+        self.assertEqual(len(site.NAV), 12)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
             self.assertRegex(html, r'<nav[^>]*class="[^"]*\bnav\b[^"]*"', rel)
             for _href, label in site.NAV:
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
-            for label in ("Leaderboard", "Strategies", "Market", "Venue sensitivity",
-                          "Methodology", "Data", "Sources", "Irregularities",
-                          "Limitations", "Participants"):
+            for label in ("Leaderboard", "Strategies", "Trade Simulator", "Market",
+                          "Venue sensitivity", "Methodology", "Data", "Sources",
+                          "Irregularities", "Limitations", "Participants"):
                 self.assertIn(label, html, f"{rel} nav is missing {label}")
             self.assertIn('class="site-footer"', html, rel)
             self.assertIn("assets/site.js" if rel.count("/") == 0
@@ -335,9 +338,8 @@ class TestFullBuild(unittest.TestCase):
         self.assertNotIn('href="assets/', page)
 
     def test_the_leaderboard_page_matches_memory(self):
-        store_board = json.load(open(os.path.join(
-            MEMORY_ROOT, "runs", "season1-primary-seed20260917",
-            "leaderboard.json"), encoding="utf-8"))["leaderboard"]
+        with open(os.path.join(MEMORY_ROOT, "runs", "season1-primary-seed20260917", "leaderboard.json"), "r", encoding="utf-8") as fh:
+            store_board = json.load(fh)["leaderboard"]
         html = self.html["leaderboard.html"]
         for row in store_board:
             self.assertIn(row["username"], html, f"{row['username']} not on the page")
@@ -356,9 +358,8 @@ class TestFullBuild(unittest.TestCase):
             data = json.loads(raw, parse_constant=lambda c: (_ for _ in ()).throw(
                 ValueError(f"{name}.json contains {c}")))
             self.assertTrue(data, f"{name}.json is empty")
-        manifest = json.loads(open(os.path.join(self.out, "assets", "data",
-                                                "manifest.json"),
-                                   encoding="utf-8").read())
+        with open(os.path.join(self.out, "assets", "data", "manifest.json"), "r", encoding="utf-8") as fh:
+            manifest = json.loads(fh.read())
         self.assertNotIn("files", manifest)      # checksums stay in memory only
         self.assertEqual(manifest["run_id"], "season1-primary-seed20260917")
 
@@ -412,14 +413,12 @@ class TestFullBuild(unittest.TestCase):
             self.assertIn(status, html)
 
     def test_irregularities_and_limitations_pages_render_the_registers(self):
-        ir = json.load(open(os.path.join(REPO_ROOT, "research",
-                                         "IRREGULARITIES.json"),
-                            encoding="utf-8"))
-        lim = json.load(open(os.path.join(REPO_ROOT, "research",
-                                          "LIMITATIONS.json"), encoding="utf-8"))
-        work = json.load(open(os.path.join(REPO_ROOT, "research",
-                                           "REMAINING_WORK.json"),
-                              encoding="utf-8"))
+        with open(os.path.join(REPO_ROOT, "research", "IRREGULARITIES.json"), "r", encoding="utf-8") as fh:
+            ir = json.load(fh)
+        with open(os.path.join(REPO_ROOT, "research", "LIMITATIONS.json"), "r", encoding="utf-8") as fh:
+            lim = json.load(fh)
+        with open(os.path.join(REPO_ROOT, "research", "REMAINING_WORK.json"), "r", encoding="utf-8") as fh:
+            work = json.load(fh)
         ir_html = self.html["irregularities.html"]
         for row in (ir["irregularities"] if isinstance(ir, dict) else ir):
             self.assertIn(row["id"], ir_html)
@@ -438,8 +437,10 @@ class TestFullBuild(unittest.TestCase):
             site.main(["--memory-root", MEMORY_ROOT, "--out", out2])
             for rel in sorted(self.files):
                 if rel.endswith((".html", ".json", ".css", ".js")):
-                    a = open(os.path.join(self.out, rel), encoding="utf-8").read()
-                    b = open(os.path.join(out2, rel), encoding="utf-8").read()
+                    with open(os.path.join(self.out, rel), "r", encoding="utf-8") as fh_a:
+                        a = fh_a.read()
+                    with open(os.path.join(out2, rel), "r", encoding="utf-8") as fh_b:
+                        b = fh_b.read()
                     self.assertEqual(a, b, f"{rel} is not reproducible")
         finally:
             shutil.rmtree(out2, ignore_errors=True)

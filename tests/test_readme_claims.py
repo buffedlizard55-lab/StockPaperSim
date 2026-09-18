@@ -48,7 +48,8 @@ def _num(cell: str) -> float:
 class TestReadmeCounts(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.text = open(README, encoding="utf-8").read()
+        with open(README, "r", encoding="utf-8") as fh:
+            cls.text = fh.read()
 
     def test_claimed_test_count_matches_the_suite(self):
         claimed = {int(m) for m in
@@ -214,9 +215,9 @@ class TestReadmeCounts(unittest.TestCase):
         m = re.search(r"the real S&P 500 returned \*\*(.{1,10}?)\*\*", self.text)
         self.assertIsNotNone(m, "README no longer states the benchmark return")
         self.assertAlmostEqual(_num(m.group(1)), spx, delta=0.006)
-        n_beat = sum(1 for r in json.load(open(os.path.join(
-            MEMORY, "leaderboard.json"), encoding="utf-8"))["leaderboard"]
-            if r["total_return_pct"] > spx)
+        with open(os.path.join(MEMORY, "leaderboard.json"), encoding="utf-8") as fh:
+            leaderboard_data = json.load(fh)["leaderboard"]
+        n_beat = sum(1 for r in leaderboard_data if r["total_return_pct"] > spx)
         m2 = re.search(r"\*\*(\d+) of (\d+) participants beat it\*\*", self.text)
         self.assertIsNotNone(m2)
         self.assertEqual((int(m2.group(1)), int(m2.group(2))), (n_beat, 20),

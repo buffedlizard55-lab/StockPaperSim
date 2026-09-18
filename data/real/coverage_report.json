@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T21:44:44Z",
+ "generated_at": "2026-09-18T21:48:04Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -271,26 +271,26 @@
    },
    "yield_curve": {
     "2024": {
-     "rows": 0,
-     "bytes": 0,
-     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2024?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv"
+     "rows": 250,
+     "bytes": 19098,
+     "sha256": "6775840b76cd7fd41121f61d6f6c60184eca6b2ba49954ec7372c463cbeef34d",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2024/all?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv"
     },
     "2025": {
-     "rows": 0,
-     "bytes": 0,
-     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2025?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv"
+     "rows": 249,
+     "bytes": 20155,
+     "sha256": "cf2fa3da7f160384b63d2ead698532b1d76cd9f789ce4911e2304db85b14e6d5",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2025/all?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv"
     },
     "2026": {
-     "rows": 0,
-     "bytes": 0,
-     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2026?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
+     "rows": 180,
+     "bytes": 14690,
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
     }
    },
    "crosscheck": {
-    "generated_at": "2026-09-18T21:44:39Z",
+    "generated_at": "2026-09-18T21:47:58Z",
     "treasurydirect_auctions": 471,
     "fiscaldata_auctions": 2000,
     "shared_auctions": 471,
@@ -310,7 +310,11 @@
     ],
     "shared_auctions_with_a_difference": 0
    },
-   "failed": [],
+   "failed": [
+    "yield_curve:2024:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2024?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv",
+    "yield_curve:2025:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2025?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv",
+    "yield_curve:2026:empty-or-blocked:https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2026?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv"
+   ],
    "tape": {
     "rows": 471,
     "file": "data/real/treasury/auction_tape.jsonl"
@@ -454,7 +458,7 @@
    "source_class": "OFFICIAL",
    "path": "real/treasury",
    "files": 15,
-   "bytes": 5685009
+   "bytes": 5738952
   },
   {
    "label": "SEC quarterly insider transaction data sets",

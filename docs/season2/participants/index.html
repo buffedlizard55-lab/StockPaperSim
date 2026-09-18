@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Season 2 participants · StockPaperSim Season 2</title>
+<meta name="description" content="Season 2 of StockPaperSim: a one-year paper-trading
+competition between strategies built from the MasterSite project directory, run on
+real collected prices and real dated events, with a verified trade ledger.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">MasterFeed Invitational · Season 2 · real collected prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Season 2</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="masterfeed.html">MasterFeed signals</a><a class="" href="ledger.html">Trade ledger</a><a class="active" href="participants/index.html">Participants</a><a class="" href="data.html">Data custody</a><a class="" href="../index.html">Season 1 →</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Season 2 participants</h1>
+<p class="lede">Each page carries the strategy as it was declared before the run,
+the result, and a post-mortem that separates what the signal did from what the
+market did.</p>
+<table class="data"><thead><tr><th>username</th><th>strategy</th><th>archetype</th><th>return %</th><th>max DD %</th><th>sessions with orders</th><th>verdict</th><th>thesis</th></tr></thead><tbody><tr><td><a href="FDACatalyst_Rider.html">@FDACatalyst_Rider</a></td><td>FDA Catalyst Rider</td><td>post-event drift</td><td><span class="pos">+172.92%</span></td><td><span class="neg">-15.41%</span></td><td>168</td><td>beat the market</td><td>openFDA&#x27;s own decision dates show when the FDA&#x27;s approval flow accelerates. A hot approval regime raises the sector&#x27;s expected cash-flow news and biotech re-rates with a lag; the r</td></tr><tr><td><a href="LeapMaxLever_Momentum.html">@LeapMaxLever_Momentum</a></td><td>Leap Max-Leverage Momentum</td><td>levered beta</td><td><span class="pos">+38.13%</span></td><td><span class="neg">-22.32%</span></td><td>8</td><td>beat the market</td><td>The Leap ranks on total return with all positions liquidated at the end of the contest. Under that payoff the best rank-seeking response is to lever the asset with the strongest tr</td></tr><tr><td><a href="GOLD_Trend_GLD.html">@GOLD_Trend_GLD</a></td><td>Gold Trend (GLD)</td><td>time-series trend</td><td><span class="pos">+32.83%</span></td><td><span class="neg">-36.27%</span></td><td>107</td><td>beat the market</td><td>The GOLD project is a buyer&#x27;s directory, not a market feed - its own README forbids price APIs. Rather than pretend otherwise, the gold participant trades GLD on the real ETF close</td></tr><tr><td><a href="PinePilot_EMA_Cross.html">@PinePilot_EMA_Cross</a></td><td>PinePilot EMA Cross</td><td>time-series trend</td><td><span class="pos">+18.77%</span></td><td><span class="neg">-12.10%</span></td><td>89</td><td>roughly matched the market</td><td>PinePilot generates Pine Script, and the EMA-cross-with-ATR-stop rule is the canonical community strategy. It is reproduced here verbatim on real daily bars, so the result is the r</td></tr><tr><td><a href="InsiderCopycat_Max.html">@InsiderCopycat_Max</a></td><td>Insider Copycat</td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>Form 4 open-market purchases (transaction code P) are the one insider signal that cannot be explained by compensation: an officer or director chose to buy with personal money at a </td></tr><tr><td><a href="InsiderCluster_Alpha.html">@InsiderCluster_Alpha</a></td><td>Insider Cluster Alpha</td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>A single insider purchase can be noise; several insiders buying the same name inside a month is a coordination signal, and the highest conviction case is the CEO or CFO buying. Clu</td></tr><tr><td><a href="CEO_CFO_Conviction.html">@CEO_CFO_Conviction</a></td><td>CEO / CFO Conviction</td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>The brief named a &#x27;CEO&#x27; project; no such project exists in the directory (verified against the GitHub API), so the CEO idea is taken from the filing that actually records CEO behav</td></tr><tr><td><a href="MLB_Attention_Momo.html">@MLB_Attention_Momo</a></td><td>MLB Attention Momentum</td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>Betting handle follows attention, and attention follows a dense slate of games. The participant holds sportsbook and sports-data equities while the trailing week&#x27;s MLB calendar is </td></tr><tr><td><a href="MLB_Upset_Short.html">@MLB_Upset_Short</a></td><td>MLB Upset Short</td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>A run of upsets is the scenario in which a sportsbook&#x27;s hold compresses. The participant shorts the sportsbook complex after an upset-heavy week and covers when the rate normalises</td></tr><tr><td><a href="Kalshi_Attention_Timer.html">@Kalshi_Attention_Timer</a></td><td>Kalshi Attention Timer</td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>The Kalshi venue file records settled temperature and gasoline contracts with their volumes. Trading volume in those contracts is real-money attention on weather and fuel, and the </td></tr><tr><td><a href="InjuryFeed_Forward.html">@InjuryFeed_Forward</a></td><td>Injury Feed (forward probe)</td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="zero">+0.00%</span></td><td>0</td><td>lost money</td><td>The NFL and NBA injury projects are live monitors. Neither league publishes a retrievable machine-readable archive of past injury designations, so this participant is a forward tes</td></tr><tr><td><a href="YieldCurve_Rotator.html">@YieldCurve_Rotator</a></td><td>Yield Curve Rotator</td><td>regime rotation</td><td><span class="neg">-10.07%</span></td><td><span class="neg">-12.86%</span></td><td>8</td><td>lost money</td><td>The 10-year minus 3-month Treasury spread is the canonical recession indicator and is published by FRED. The rotator holds equities while the curve is steepening and long bonds whi</td></tr><tr><td><a href="Weather_ColdSnap_Max.html">@Weather_ColdSnap_Max</a></td><td>Weather Cold Snap Max</td><td>event attention proxy</td><td><span class="neg">-11.21%</span></td><td><span class="neg">-40.37%</span></td><td>74</td><td>lost money</td><td>SFWeather&#x27;s brief is a rain outlook, but the tradable temperature path is the same NOAA record: cold anomalies at the SF station are a heating-demand proxy, traded through natural </td></tr><tr><td><a href="FDA_ClusterFade.html">@FDA_ClusterFade</a></td><td>FDA Cluster Fade</td><td>contrarian reversal</td><td><span class="neg">-37.41%</span></td><td><span class="neg">-37.67%</span></td><td>68</td><td>lost money</td><td>A burst of FDA approvals is a sentiment event for the whole biotech complex, most of which has nothing to do with the approvals. The fade participant shorts the sector into the bur</td></tr></tbody></table>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Season 2 trades <strong>real, collected daily prices</strong> (Yahoo Finance
+    chart API files under <code>data/real/prices/</code>, cross-checked against the
+    Nasdaq quote API and the Federal Reserve Bank of St. Louis' SP500 series) and
+    <strong>real dated events</strong> (SEC EDGAR Form 4, FDA openFDA, MLB StatsAPI,
+    NOAA/NCEI, FRED, Kalshi). The intraday path inside each real daily bar is still
+    modelled, the venue is still modelled, and dividends come from a vendor event
+    feed rather than the issuer - all three are declared in the irregularity
+    register and on the <a href="season2/data.html">data custody</a> page.
+    Nothing here is investment advice.</p>
+    <p>Built from run memory and collected data by
+    <code>scripts/build_site_season2.py</code>. Every file is SHA-256 checksummed in
+    its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

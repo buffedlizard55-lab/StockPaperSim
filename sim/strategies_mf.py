@@ -33,6 +33,12 @@ from .strategies import Context, Strategy, StrategySpec, ema
 
 class FDACatalystRider(Strategy):
     """Long the biotech sector while the FDA approval flow is running hot."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('fda_orig_30d', 'fda_orig_z')
+
 
     spec = StrategySpec(
         username="@FDACatalyst_Rider",
@@ -93,6 +99,12 @@ class FDACatalystRider(Strategy):
 
 class FDAClusterFade(Strategy):
     """Fades approval clusters: the sector overshoots after a busy FDA week."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('fda_orig_30d', 'fda_all_30d', 'fda_orig_z')
+
 
     spec = StrategySpec(
         username="@FDA_ClusterFade",
@@ -138,6 +150,12 @@ class FDAClusterFade(Strategy):
 
 class InsiderCopycatMax(Strategy):
     """Buys the issuer whenever an insider buys in the open market."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('insider_buys_30d',)
+
 
     spec = StrategySpec(
         username="@InsiderCopycat_Max",
@@ -193,6 +211,12 @@ class InsiderCopycatMax(Strategy):
 
 class InsiderClusterAlpha(Strategy):
     """Requires a cluster: two or more open-market purchases, or a CEO/CFO buy."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('insider_buys_30d', 'insider_buy_ratio_30d')
+
 
     spec = StrategySpec(
         username="@InsiderCluster_Alpha",
@@ -248,6 +272,12 @@ class InsiderClusterAlpha(Strategy):
 
 class CEOCFOConviction(Strategy):
     """The 'CEO' participant: only the two roles with the widest view."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('insider_ceo_buys_30d', 'insider_buys_30d')
+
 
     spec = StrategySpec(
         username="@CEO_CFO_Conviction",
@@ -307,6 +337,12 @@ class CEOCFOConviction(Strategy):
 
 class MLBAttentionMomo(Strategy):
     """Sportsbook equities after dense baseball calendars."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('mlb_games_7d', 'mlb_upsets_7d')
+
 
     spec = StrategySpec(
         username="@MLB_Attention_Momo",
@@ -355,6 +391,12 @@ class MLBAttentionMomo(Strategy):
 
 class MLBUpsetShort(Strategy):
     """Upset-heavy weeks are bad for book margins - short the complex."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('mlb_upsets_7d', 'mlb_home_win_rate_30d')
+
 
     spec = StrategySpec(
         username="@MLB_Upset_Short",
@@ -404,6 +446,12 @@ class MLBUpsetShort(Strategy):
 
 class WeatherColdSnapMax(Strategy):
     """SF cold anomalies as a heating-demand proxy for gas and utilities."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('weather_cold_anomaly_10d', 'weather_precip_30d_in')
+
 
     spec = StrategySpec(
         username="@Weather_ColdSnap_Max",
@@ -450,6 +498,12 @@ class WeatherColdSnapMax(Strategy):
 
 class KalshiAttentionTimer(Strategy):
     """Prediction-market activity as a nowcast of weather/fuel attention."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('kalshi_settled_30d', 'kalshi_volume_30d')
+
 
     spec = StrategySpec(
         username="@Kalshi_Attention_Timer",
@@ -504,6 +558,12 @@ class KalshiAttentionTimer(Strategy):
 
 class GoldMeltTrend(Strategy):
     """GLD trend, honouring the GOLD project's price-verification discipline."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('gold_close',)
+
 
     spec = StrategySpec(
         username="@GOLD_Trend_GLD",
@@ -551,6 +611,12 @@ class GoldMeltTrend(Strategy):
 
 class PinePilotEmaCross(Strategy):
     """The community Pine Script rule, reproduced exactly on real prices."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ()
+
 
     spec = StrategySpec(
         username="@PinePilot_EMA_Cross",
@@ -601,6 +667,12 @@ class PinePilotEmaCross(Strategy):
 
 class LeapMaxLeverMomentum(Strategy):
     """The Leap's scoring rule, applied to equity proxies."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ()
+
 
     spec = StrategySpec(
         username="@LeapMaxLever_Momentum",
@@ -652,6 +724,12 @@ class LeapMaxLeverMomentum(Strategy):
 
 class YieldCurveRotator(Strategy):
     """FRED's own yield curve as a regime switch."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('fred_slope_bps', 'fred_slope_change_21d')
+
 
     spec = StrategySpec(
         username="@YieldCurve_Rotator",
@@ -708,6 +786,12 @@ class InjuryFeedForward(Strategy):
     trade during the historical replay, and its absence of return is reported as
     a data limitation rather than as a result.
     """
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ()
+
 
     spec = StrategySpec(
         username="@InjuryFeed_Forward",

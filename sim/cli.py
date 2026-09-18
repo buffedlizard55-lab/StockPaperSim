@@ -422,11 +422,33 @@ def cmd_sources(args: argparse.Namespace) -> int:
 
 
 def cmd_build_site(args: argparse.Namespace) -> int:
+    """Build both seasons into docs/: Season 1 pages, then Season 2 pages."""
     sys.path.insert(0, os.path.join(REPO_ROOT, "scripts"))
     import build_site  # type: ignore
-    return build_site.main(argv=[
+    import build_site_season2  # type: ignore
+
+    rc = build_site.main(argv=[
         "--memory-root", args.memory_root, "--out", args.out] +
         (["--run", args.run] if args.run else []))
+    if rc != 0:
+        return rc
+
+    index_path = os.path.join(args.out, "index.html")
+    try:
+        if os.path.exists(index_path):
+            with open(index_path, "r", encoding="utf-8") as handle:
+                html = handle.read()
+            with open(index_path, "w", encoding="utf-8") as handle:
+                handle.write(build_site_season2.inject_banner(html))
+        written = build_site_season2.build(args.memory_root, args.out, args.run)
+        print(f"  season 2: {len(written)} pages under docs/season2/ "
+              f"(from run {build_site_season2.Season2Data(args.memory_root, args.run).run_id})")
+    except SystemExit as exc:
+        # No Season 2 run in this memory root (for example a scratch root built
+        # only to check Season 1 determinism). Say so loudly rather than
+        # publishing a Season 2 section that would silently be empty.
+        print(f"  season 2: SKIPPED - {exc}")
+    return rc
 
 
 # ==========================================================================

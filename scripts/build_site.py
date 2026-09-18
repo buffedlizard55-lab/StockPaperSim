@@ -497,6 +497,12 @@ class SiteData:
             raise SystemExit(f"no runs in {root}; run `python3 -m sim.cli run` first")
         self.all_runs = runs
         self.run_id = run_id or self._pick_primary([r["run_id"] for r in runs])
+        # Season 2 runs live in the same memory store as Season 1's. Season 1's
+        # pages must not silently publish Season 2's numbers (or drag Season 2
+        # runs into Season 1's scenario panel), so every page set is scoped to
+        # the season prefix of the run it is built from.
+        season_prefix = self.run_id.split("-", 1)[0] + "-"
+        runs = [r for r in runs if r["run_id"].startswith(season_prefix)] or runs
         self.manifest = self.store.load(self.run_id, "manifest.json") or {}
         self.board_doc = self.store.load(self.run_id, "leaderboard.json") or {}
         self.leaderboard: List[dict] = self.board_doc.get("leaderboard", [])
@@ -522,7 +528,16 @@ class SiteData:
 
     @staticmethod
     def _pick_primary(run_ids: Sequence[str]) -> str:
+        """The run Season 1's pages are built from.
+
+        Prefers a ``season1-*primary*`` run when the store holds more than one
+        season, because ``season2-...`` sorts after ``season1-...`` and would
+        otherwise be picked by a plain sort.
+        """
         prim = [r for r in run_ids if "primary" in r]
+        season1 = [r for r in prim if r.startswith("season1")]
+        if season1:
+            return sorted(season1)[-1]
         return sorted(prim)[-1] if prim else run_ids[-1]
 
     def _robustness(self) -> Dict[str, dict]:
@@ -2041,11 +2056,28 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     write("irregularities.html", build_irregularities(d))
     write("limitations.html", build_limitations(d))
     write("participants/index.html", build_participants_index(d))
-    for username in d.reports:
+    # Only usernames on *this* season's leaderboard get a page. The memory store
+    # holds every season's reports, and writing one page per report would publish
+    # Season 2's participants inside Season 1's site (observed and fixed).
+    board = {row["username"] for row in d.leaderboard}
+    for username in [u for u in d.reports if u in board]:
         write(f"participants/{_slug(username)}.html", build_participant(d, username))
     write("assets/site.css", CSS)
     write("assets/site.js", JS)
     write(".nojekyll", "")
+
+    # Prune stale participant pages. A page set is only trustworthy if it
+    # *contains* exactly the pages of the run it was built from: a renamed or
+    # re-scoped participant would otherwise leave its old page published under a
+    # URL that no longer appears in any index (observed once, with Season 2
+    # pages left behind in Season 1's directory).
+    keep = {"index.html"} | {f"{_slug(u)}.html" for u in board}
+    people_dir = os.path.join(out, "participants")
+    if os.path.isdir(people_dir):
+        for name in sorted(os.listdir(people_dir)):
+            if name.endswith(".html") and name not in keep:
+                os.remove(os.path.join(people_dir, name))
+                print(f"  pruned stale participant page {name}")
 
     # Machine-readable copies of the headline data, for anyone who wants to
     # re-analyse without parsing HTML.

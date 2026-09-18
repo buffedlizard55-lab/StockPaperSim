@@ -18,7 +18,7 @@ from urllib.parse import urlparse
 
 from fixtures import REPO_ROOT
 
-from sim import config, marketdata, strategies
+from sim import config, marketdata, realdata, strategies, strategies_mf
 
 RESEARCH = os.path.join(REPO_ROOT, "research")
 REAL = os.path.join(REPO_ROOT, "data", "real")
@@ -50,6 +50,12 @@ ALLOWED_HOSTS = {
     # Official CPython documentation - the primary source for the hash
     # randomisation behaviour that IR-30 turns on.
     "docs.python.org",
+    # Added 2026-09-18 for Season 2's collected data sources: the official
+    # endpoints the strategies read, plus the two aggregators that are classed
+    # SECONDARY and cross-checked against an independent publisher.
+    "api.fda.gov", "statsapi.mlb.com", "www.ncei.noaa.gov",
+    "api.elections.kalshi.com", "api.nasdaq.com", "www.nfl.com",
+    "official.nba.com", "site.api.espn.com", "buffedlizard55-lab.github.io",
 }
 
 
@@ -410,6 +416,12 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         urls |= {p["docs_url"] for p in marketdata.provider_catalogue()}
         urls |= {e["url"] for s in strategies.build_roster()
                  for e in s.spec.academic_basis}
+        # Season 2's participants declare their own primary sources, and
+        # sim/realdata.py carries the register of every endpoint the collector
+        # calls. Both count as registers: a reader can follow either one.
+        urls |= {e["url"] for s in strategies_mf.build_roster_mf()
+                 for e in s.spec.academic_basis}
+        urls |= {row["url"] for row in realdata.collected_sources()}
         for name in ("IRREGULARITIES", "LIMITATIONS", "REMAINING_WORK"):
             for row in load_json(f"{name}.json"):
                 urls |= set(row.get("links") or [])
@@ -473,9 +485,13 @@ class TestResearchRegisters(unittest.TestCase):
 
     def test_limitations_register(self):
         rows = load_json("LIMITATIONS.json")
-        self.assertEqual(len(rows), 16)
+        # 16 limitations were registered for Season 1; Season 2 adds its own
+        # (one real history, asserted mappings, forward-only sources, borrow
+        # availability, ledger independence). The register grows, the ids stay
+        # sequential and every row keeps the same shape.
+        self.assertGreaterEqual(len(rows), 16)
         self.assertEqual([r["id"] for r in rows],
-                         [f"L-{i:02d}" for i in range(1, 17)])
+                         [f"L-{i:02d}" for i in range(1, len(rows) + 1)])
         for r in rows:
             self.assertEqual(set(r), {"id", "title", "severity", "detail", "fix"})
             self.assertIn(r["severity"], ("low", "medium", "high", "critical"))

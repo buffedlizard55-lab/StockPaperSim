@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Season 2 leaderboard · StockPaperSim Season 2</title>
+<meta name="description" content="Season 2 of StockPaperSim: a one-year paper-trading
+competition between strategies built from the MasterSite project directory, run on
+real collected prices and real dated events, with a verified trade ledger.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">MasterFeed Invitational · Season 2 · real collected prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Season 2</a><a class="active" href="leaderboard.html">Leaderboard</a><a class="" href="masterfeed.html">MasterFeed signals</a><a class="" href="ledger.html">Trade ledger</a><a class="" href="participants/index.html">Participants</a><a class="" href="data.html">Data custody</a><a class="" href="../index.html">Season 1 →</a></nav>
+</header>
+<main class="wrap">
+
+<h1>Season 2 leaderboard</h1>
+<p class="lede">Ranked on total return, the metric the referenced competitions use.
+The "realised P&amp;L (from fills)" column is re-derived from the raw fill stream by
+<code>sim/ledger.py</code>, independently of the engine's own accounting; the
+"equity residual" column is the difference between the engine's final equity and the
+equity re-derived from those same fills plus reported carry. It should be zero to
+within the price-rounding bound (a few hundredths of a cent), and
+<code>scripts/independent_audit_season2.py</code> re-checks it without importing the
+engine at all.</p>
+<table class="data"><thead><tr><th>#</th><th>username</th><th>archetype</th><th>return %</th><th>final equity</th><th>max DD %</th><th>Sharpe</th><th>beta</th><th>trades</th><th>sessions with orders</th><th>realised P&L (from fills)</th><th>equity residual $</th><th>verdict</th></tr></thead><tbody><tr><td>1</td><td><a href="participants/FDACatalyst_Rider.html">@FDACatalyst_Rider</a></td><td>post-event drift</td><td><span class="pos">+172.92%</span></td><td><span class="pos">+272,925</span></td><td><span class="neg">-15.41%</span></td><td>2.57</td><td>1.69</td><td>72</td><td>168</td><td><span class="pos">+171,962</span></td><td>-0.0010</td><td>beat the market</td></tr><tr><td>2</td><td><a href="participants/LeapMaxLever_Momentum.html">@LeapMaxLever_Momentum</a></td><td>levered beta</td><td><span class="pos">+38.13%</span></td><td><span class="pos">+138,135</span></td><td><span class="neg">-22.32%</span></td><td>1.06</td><td>2.73</td><td>4</td><td>8</td><td><span class="pos">+37,087</span></td><td>-0.0072</td><td>beat the market</td></tr><tr><td>3</td><td><a href="participants/GOLD_Trend_GLD.html">@GOLD_Trend_GLD</a></td><td>time-series trend</td><td><span class="pos">+32.83%</span></td><td><span class="pos">+132,829</span></td><td><span class="neg">-36.27%</span></td><td>0.88</td><td>0.53</td><td>43</td><td>107</td><td><span class="pos">+32,873</span></td><td>0.0048</td><td>beat the market</td></tr><tr><td>4</td><td><a href="participants/PinePilot_EMA_Cross.html">@PinePilot_EMA_Cross</a></td><td>time-series trend</td><td><span class="pos">+18.77%</span></td><td><span class="pos">+118,766</span></td><td><span class="neg">-12.10%</span></td><td>0.79</td><td>1.77</td><td>49</td><td>89</td><td><span class="pos">+17,417</span></td><td>0.0029</td><td>roughly matched the market</td></tr><tr><td>5</td><td><a href="participants/InsiderCopycat_Max.html">@InsiderCopycat_Max</a></td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>6</td><td><a href="participants/InsiderCluster_Alpha.html">@InsiderCluster_Alpha</a></td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>7</td><td><a href="participants/CEO_CFO_Conviction.html">@CEO_CFO_Conviction</a></td><td>informed-flow following</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>8</td><td><a href="participants/MLB_Attention_Momo.html">@MLB_Attention_Momo</a></td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>9</td><td><a href="participants/MLB_Upset_Short.html">@MLB_Upset_Short</a></td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>10</td><td><a href="participants/Kalshi_Attention_Timer.html">@Kalshi_Attention_Timer</a></td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>11</td><td><a href="participants/InjuryFeed_Forward.html">@InjuryFeed_Forward</a></td><td>event attention proxy</td><td><span class="zero">+0.00%</span></td><td><span class="pos">+100,000</span></td><td><span class="zero">+0.00%</span></td><td>0.00</td><td>0.00</td><td>0</td><td>0</td><td><span class="zero">+0</span></td><td>0.0000</td><td>lost money</td></tr><tr><td>12</td><td><a href="participants/YieldCurve_Rotator.html">@YieldCurve_Rotator</a></td><td>regime rotation</td><td><span class="neg">-10.07%</span></td><td><span class="pos">+89,931</span></td><td><span class="neg">-12.86%</span></td><td>-0.64</td><td>0.26</td><td>4</td><td>8</td><td><span class="neg">-16,568</span></td><td>0.0015</td><td>lost money</td></tr><tr><td>13</td><td><a href="participants/Weather_ColdSnap_Max.html">@Weather_ColdSnap_Max</a></td><td>event attention proxy</td><td><span class="neg">-11.21%</span></td><td><span class="pos">+88,790</span></td><td><span class="neg">-40.37%</span></td><td>-0.07</td><td>-0.19</td><td>49</td><td>74</td><td><span class="neg">-11,335</span></td><td>-0.0031</td><td>lost money</td></tr><tr><td>14</td><td><a href="participants/FDA_ClusterFade.html">@FDA_ClusterFade</a></td><td>contrarian reversal</td><td><span class="neg">-37.41%</span></td><td><span class="pos">+62,591</span></td><td><span class="neg">-37.67%</span></td><td>-2.01</td><td>-0.77</td><td>42</td><td>68</td><td><span class="neg">-36,858</span></td><td>0.0062</td><td>lost money</td></tr></tbody></table>
+<p class="muted small">Benchmark: the real S&amp;P 500 returned
++14.41% over the same 251 sessions (FRED series SP500,
+file recorded in the run manifest).</p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Season 2 trades <strong>real, collected daily prices</strong> (Yahoo Finance
+    chart API files under <code>data/real/prices/</code>, cross-checked against the
+    Nasdaq quote API and the Federal Reserve Bank of St. Louis' SP500 series) and
+    <strong>real dated events</strong> (SEC EDGAR Form 4, FDA openFDA, MLB StatsAPI,
+    NOAA/NCEI, FRED, Kalshi). The intraday path inside each real daily bar is still
+    modelled, the venue is still modelled, and dividends come from a vendor event
+    feed rather than the issuer - all three are declared in the irregularity
+    register and on the <a href="season2/data.html">data custody</a> page.
+    Nothing here is investment advice.</p>
+    <p>Built from run memory and collected data by
+    <code>scripts/build_site_season2.py</code>. Every file is SHA-256 checksummed in
+    its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

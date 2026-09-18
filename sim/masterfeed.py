@@ -39,7 +39,13 @@ import math
 import os
 from typing import Dict, List, Optional, Sequence, Tuple
 
+from .calendar import REPO_ROOT
 from .realdata import REAL_ROOT, Series, load_fred, load_series
+
+
+def _rel(path: str) -> str:
+    """Path relative to the repository root, so every register row is clickable."""
+    return os.path.relpath(path, REPO_ROOT)
 
 MASTER_SITE_URL = "https://buffedlizard55-lab.github.io/MasterSite/"
 
@@ -59,6 +65,7 @@ FORWARD_ONLY = "FORWARD-ONLY"
 MASTER_SITE_SIGNALS: List[dict] = [
     {
         "id": "CEO",
+        "signals": ['insider_ceo_buys_30d', 'insider_buys_30d'],
         "requested_as": "CEO",
         "repo": None,
         "title": "No project named 'CEO' exists in the directory",
@@ -81,6 +88,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "SFWeather",
+        "signals": ['weather_cold_anomaly_10d', 'weather_precip_30d_in'],
         "requested_as": "weather",
         "repo": "SFWeather",
         "title": "SFWeather - 94122 rainy-season outlook",
@@ -103,6 +111,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "Insider-trades",
+        "signals": ['insider_buys_30d', 'insider_buy_ratio_30d'],
         "requested_as": "insider trades",
         "repo": "Insider-trades",
         "title": "Insider-trades - SEC EDGAR Form 4 toolkit",
@@ -124,6 +133,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "TradingViewTheLeap",
+        "signals": [],
         "requested_as": "TheLeap",
         "repo": "TradingViewTheLeap",
         "title": "The Leap - verified competition research",
@@ -147,6 +157,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "NFLInjuryReport",
+        "signals": [],
         "requested_as": "NFL Injury",
         "repo": "NFLInjuryReport",
         "title": "NFL Injury Report - 32 team tracker",
@@ -168,6 +179,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "NBAInjuryReport",
+        "signals": [],
         "requested_as": "NBA Injury",
         "repo": "NBAInjuryReport",
         "title": "NBA Injury Watch - 30 team monitor",
@@ -189,6 +201,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "DrugAnalysis",
+        "signals": ['fda_orig_30d', 'fda_orig_z', 'fda_all_30d'],
         "requested_as": "FDA Decisions Drug Analysis",
         "repo": "DrugAnalysis",
         "title": "DrugAnalysis - FDA decisions and biotech reactions",
@@ -210,6 +223,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "Ncaa-football-alerts",
+        "signals": [],
         "requested_as": "NCAA Scoreboard",
         "repo": "Ncaa-football-alerts",
         "title": "Ncaa-football-alerts",
@@ -229,6 +243,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "NFL-scoreboard",
+        "signals": ['mlb_games_7d', 'mlb_upsets_7d'],
         "requested_as": "NFL scoreboard",
         "repo": "NFL-scoreboard",
         "title": "NFL-scoreboard",
@@ -249,6 +264,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "MLB-Live-PBP",
+        "signals": ['mlb_games_7d', 'mlb_upsets_7d', 'mlb_home_win_rate_30d'],
         "requested_as": "MLB Scoreboard",
         "repo": "MLB-Live-PBP",
         "title": "MLB pitch-by-pitch / scoreboard feeds",
@@ -268,6 +284,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "SportsPred",
+        "signals": [],
         "requested_as": "Sports Pred",
         "repo": "SportsPred",
         "title": "SportsPred - game prediction models",
@@ -289,6 +306,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "GOLD",
+        "signals": ['gold_close'],
         "requested_as": "Gold",
         "repo": "GOLD",
         "title": "GOLD - solid-gold engagement ring buyer's guide",
@@ -311,6 +329,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "Tradingview-pinescript-editor",
+        "signals": [],
         "requested_as": "PinePilot",
         "repo": "Tradingview-pinescript-editor",
         "title": "PinePilot - Pine Script editor and strategy lab",
@@ -331,6 +350,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "KalshiPaperSim",
+        "signals": ['kalshi_settled_30d', 'kalshi_volume_30d'],
         "requested_as": "Kalshi (competition design reference)",
         "repo": "KalshiPaperSim",
         "title": "KalshiPaperSim - paper-trading competition lab",
@@ -485,8 +505,10 @@ def _fda_signals(book: SignalBook, md, root: str) -> None:
     orig.sort()
     every.sort()
     for t, date in enumerate(md.dates):
-        if t < md.first_competition_index:
-            continue
+        # Filled over the warm-up as well. The first version skipped the warm-up,
+        # which left zeros in the trailing-year window the z-score is measured
+        # against and made the z-score of the first competition sessions an
+        # artefact of the array's construction rather than of the data.
         book.arrays[name][t] = float(_count_in_window(orig, md.dates, t, 30))
         book.arrays["fda_all_30d"][t] = float(_count_in_window(every, md.dates, t, 30))
     # z-score of the 30-day approval count against the trailing year of the same
@@ -499,10 +521,10 @@ def _fda_signals(book: SignalBook, md, root: str) -> None:
         mu = sum(window) / len(window)
         sd = math.sqrt(sum((v - mu) ** 2 for v in window) / (len(window) - 1)) or 1.0
         book.arrays["fda_orig_z"][t] = (values[t] - mu) / sd
-    book.provenance["fda"] = {"file": os.path.relpath(path, os.path.dirname(root)),
+    book.provenance["fda"] = {"file": _rel(path),
                               "url": "https://api.fda.gov/drug/drugsfda.json"}
     book._register_all((name, "fda_orig_z", "fda_all_30d"), "AVAILABLE", len(orig), orig,
-                       [os.path.relpath(path, os.path.dirname(root))],
+                       [_rel(path)],
                        "approvals of original applications with status AP, by decision date",
                        "https://api.fda.gov/drug/drugsfda.json")
 
@@ -707,12 +729,26 @@ def _kalshi_signals(book: SignalBook, md, root: str) -> None:
         book.provenance["kalshi"] = {
             "file": "data/real/kalshi/*_settled.jsonl",
             "url": "https://api.elections.kalshi.com/trade-api/v2/markets"}
-        book._register_all(("kalshi_settled_30d", "kalshi_volume_30d"), "MISSING",
-                           rows_total, events, ["data/real/kalshi/"],
-                           "collected files contain market metadata only: every "
-                           "volume/open_interest/last_price field returned null, so the "
-                           "attention signal cannot be computed from it",
-                           "https://api.elections.kalshi.com/trade-api/v2/markets")
+        # The settled-market *counts* are real (the venue lists the contracts and
+        # their settlement dates), but the volume and price fields are null, so
+        # exactly one of the two arrays is computable. Registering them
+        # separately is the point: a strategy that only needs the calendar can
+        # trade, and a strategy that needs liquidity must report DATA-MISSING
+        # instead of receiving a row of zeros that looks like a real observation.
+        for t in range(len(md.dates)):
+            book.arrays["kalshi_settled_30d"][t] = float(
+                _count_in_window(events, md.dates, t, 30))
+        book._register("kalshi_settled_30d", "AVAILABLE", rows_total, events,
+                       ["data/real/kalshi/"],
+                       "settled-contract counts from the venue's own API; the price and "
+                       "volume fields in the same payload are null",
+                       "https://api.elections.kalshi.com/trade-api/v2/markets")
+        book._register("kalshi_volume_30d", "MISSING", rows_total, events,
+                       ["data/real/kalshi/"],
+                       "every volume/open_interest/last_price field in the collected "
+                       "payload is null, so a volume signal cannot be computed from it "
+                       "- the participant that reads it reports DATA-MISSING",
+                       "https://api.elections.kalshi.com/trade-api/v2/markets")
         return
     for t in range(len(md.dates)):
         book.arrays["kalshi_settled_30d"][t] = float(_count_in_window(events, md.dates, t, 30))

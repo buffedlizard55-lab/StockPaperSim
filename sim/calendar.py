@@ -116,12 +116,31 @@ class TradingCalendar:
 
     @staticmethod
     def _find(fred_dir: str, series: str) -> str:
+        """The collected file with the widest coverage for ``series``.
+
+        More than one collection window can be on disk for the same series (the
+        first run fetched the competition window; Season 2's run fetched a year
+        of warm-up as well), and the file names sort in an order that has
+        nothing to do with coverage. Picking on the name silently truncated
+        Season 2 to zero warm-up sessions, so the choice is made on the number
+        of observations instead and the same file is used by both seasons.
+        """
         if not os.path.isdir(fred_dir):
             raise FileNotFoundError(f"missing real data directory: {fred_dir}")
         hits = sorted(f for f in os.listdir(fred_dir) if f.startswith(series + "_"))
         if not hits:
             raise FileNotFoundError(f"no bundled FRED file for series {series} in {fred_dir}")
-        return os.path.join(fred_dir, hits[-1])
+        best = None
+        for name in hits:
+            path = os.path.join(fred_dir, name)
+            try:
+                with open(path, "r", encoding="utf-8") as handle:
+                    rows = sum(1 for line in handle if line.strip()) - 1
+            except OSError:
+                continue
+            if best is None or rows > best[0]:
+                best = (rows, path)
+        return best[1] if best else os.path.join(fred_dir, hits[-1])
 
     @staticmethod
     def _forward_fill(series: Dict[str, float], dates: List[str]) -> List[float]:

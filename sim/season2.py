@@ -108,14 +108,30 @@ def _signal_fire_counts(md, book) -> dict:
 
 
 def _signal_status(md, roster) -> List[dict]:
+    """Per participant: which collected signals it reads, and whether they exist.
+
+    A participant that reads only real prices has an empty list here and is not
+    signal-dependent; a participant whose source could not be collected is
+    flagged, so the site can say "data missing" instead of publishing a zero
+    return as if it were a result.
+    """
     book = getattr(md, "signals", None)
+    availability = getattr(book, "availability", {}) if book else {}
     rows: List[dict] = []
     for strategy in roster:
-        username = strategy.spec.username
+        names = []
+        for name in getattr(strategy, "signal_names", ()):
+            meta = availability.get(name, {})
+            names.append({"signal": name, "state": meta.get("state", "MISSING"),
+                          "files": meta.get("files", []), "url": meta.get("url", ""),
+                          "sessions_actionable": None})
         rows.append({
-            "username": username,
+            "username": strategy.spec.username,
             "display_name": strategy.spec.display_name,
-            "signal_availability": getattr(book, "availability", {}) if book else {},
+            "signals": names,
+            "signal_dependent": bool(names),
+            "gate_armed": bool(names) and all(
+                n["state"] == "AVAILABLE" for n in names),
         })
     return rows
 
@@ -145,7 +161,8 @@ def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_
             "leaderboard": record["leaderboard"], "rank_metric": cfg.rank_metric})
         writer.write_json("irregularities.json", record["irregularities"])
         writer.write_json("participants.json",
-                          [{**asdict(st.spec), "factor_exposure": st.spec.factor_exposure}
+                          [{**asdict(st.spec), "factor_exposure": st.spec.factor_exposure,
+                            "signal_names": list(getattr(st, "signal_names", ()))}
                            for st in comp.roster])
         writer.write_json("masterfeed.json", {
             "site": masterfeed.MASTER_SITE_URL,
@@ -157,7 +174,12 @@ def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_
         writer.write_json("data_provenance.json", {
             "diagnostics": md.diagnostics,
             "inventory": realdata.data_inventory(real_root),
+            "crosschecks": realdata.crosscheck_against_fred("SPY", real_root),
+            "note": ("Every bar traded in this run is byte-identical to a bar in one of "
+                     "the files inventoried here, and the independent audit re-checks "
+                     "each one against the collected file rather than against this copy."),
         })
+        writer.write_json("signal_status.json", _signal_status(md, roster))
         if label == "primary":
             writer.write_json("signal_book.json", book.as_dict())
             writer.write_json("market_data.json", engine._market_data_dump(md))
@@ -195,17 +217,22 @@ def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_
                 carry_net_usd=carry or 0.0, starting_cash=cfg.starting_cash)
             verification["username"] = user
             verification["sessions_with_orders"] = rep.get("sessions_with_orders")
-            verification["signal_dependent"] = user in (
-                "@FDACatalyst_Rider", "@FDA_ClusterFade", "@InsiderCopycat_Max",
-                "@InsiderCluster_Alpha", "@CEO_CFO_Conviction", "@MLB_Attention_Momo",
-                "@MLB_Upset_Short", "@Weather_ColdSnap_Max", "@Kalshi_Attention_Timer",
-                "@YieldCurve_Rotator")
+            # Signal dependence is read off the roster rather than from a list of
+            # usernames typed out here: a strategy that gains a signal must not
+            # need this file edited to be classified correctly.
+            verification["signal_dependent"] = bool(
+                getattr(participant.strategy, "signal_names", ()))
             per_participant.append(verification)
         writer.write_json("verification.json", {
-            "note": ("equity_residual_usd is the difference between the final equity "
-                     "the engine reported and the equity re-derived from the raw fill "
-                     "stream by sim.ledger (average-cost accounting) plus the reported "
-                     "net carry. It should be exactly zero; anything else is a bug."),
+            "note": ("equity_residual_usd is the final equity the engine reported minus "
+                     "the equity re-derived from the raw fill stream by sim.ledger "
+                     "(average-cost accounting) plus the reported net carry. The stored "
+                     "fill tape rounds prices to six decimals, so the residual does not "
+                     "have to be exactly zero, but it must stay inside "
+                     "rounding_bound_usd, which is the worst case that rounding can "
+                     "produce for this account. realized_residual_usd compares like with "
+                     "like: the engine's realised P&L is net of explicit cash costs, so "
+                     "the re-derived figure has those fees taken off first."),
             "ledger_files": written,
             "ledger_digest_sha256": ledger.ledger_digest(ledger_doc),
             "summary": ledger_doc["summary"],
@@ -241,6 +268,16 @@ def run_season2(root: str = memory.DEFAULT_ROOT, real_root: str = realdata.REAL_
                 "collected_from": "data/real (see data/real/collection_manifest.json)",
             },
             "ledger_summary": ledger_doc["summary"],
+            "ledger": {
+                "fills": len(ledger_doc["fills"]),
+                "round_trips": len(ledger_doc["round_trips"]),
+                "net_pnl_usd": ledger_doc["summary"]["net_pnl_usd"],
+                "digest_sha256": ledger.ledger_digest(ledger_doc),
+                "files": ledger_files,
+            },
+            "signal_availability": {
+                name: meta.get("state")
+                for name, meta in (getattr(book, "availability", {}) or {}).items()},
         })
         record["manifest"] = {k: v for k, v in manifest.items() if k != "files"}
         records.append(record)

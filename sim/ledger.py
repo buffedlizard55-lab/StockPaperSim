@@ -304,6 +304,7 @@ def verify_ledger(fills: Sequence[dict], md,
     """
     cash = starting_cash
     realized = 0.0
+    explicit_fees = 0.0
     positions: Dict[str, dict] = {}
     for fill in sorted(fills, key=lambda f: (f["date"], f["symbol"], f.get("interval") or 0)):
         qty = fill.get("filled_qty", 0)
@@ -334,6 +335,9 @@ def verify_ledger(fills: Sequence[dict], md,
         cash -= (fill.get("commission", 0.0) + fill.get("exchange_fee", 0.0)
                  + fill.get("regulatory_fee", 0.0))
         cash += fill.get("rebate", 0.0)
+        explicit_fees += (fill.get("commission", 0.0) + fill.get("exchange_fee", 0.0)
+                          + fill.get("regulatory_fee", 0.0)
+                          - fill.get("rebate", 0.0))
     carry_total = float(carry_net_usd)
     dividends = 0.0
     for row in carry or []:
@@ -368,7 +372,16 @@ def verify_ledger(fills: Sequence[dict], md,
         "engine_final_equity_usd": engine_final_equity,
         "equity_residual_usd": residual,
         "engine_realized_pnl_usd": engine_realized_pnl,
-        "realized_residual_usd": (round(realized - engine_realized_pnl, 4)
+        # Like-for-like comparison.  The engine's realised figure
+        # (analytics.DECOMPOSITION_REALIZED) is *net* of the explicit cash costs
+        # it charges to the account, so the re-derived gross figure has to have
+        # the same fees taken off before the two are compared.  Comparing gross
+        # against net produced a spurious 118.75 USD "residual" in the first
+        # Season 2 run, which is exactly the kind of number that gets mistaken
+        # for a bug in the engine.
+        "derived_realized_pnl_net_usd": round(realized - explicit_fees, 4),
+        "explicit_fees_usd": round(explicit_fees, 4),
+        "realized_residual_usd": (round(realized - explicit_fees - engine_realized_pnl, 4)
                                   if engine_realized_pnl is not None else None),
         "open_positions": {s: p["qty"] for s, p in positions.items() if p["qty"]},
         "rounding_bound_usd": round(rounding_bound, 4),

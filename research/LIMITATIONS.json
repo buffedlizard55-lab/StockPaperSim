@@ -1,114 +1,149 @@
 [
-  {
-    "id": "L-01",
-    "severity": "high",
-    "title": "There is no live market-data feed, so Season 1 is a replay",
-    "detail": "The build environment could reach pypi.org, files.pythonhosted.org and github.com directly. Every market-data host failed at the transport layer except FRED and the Yahoo v8 chart endpoint, which were reachable only through the page-fetch tool. A competition that advertises real-time prices cannot be run honestly under those conditions, so Season 1 replays a fixed, documented market path instead. This is the single largest limitation and the reason the site says 'simulated' as often as it says 'real'.",
-    "fix": "A vendor key plus outbound network access. Six adapters are already implemented and documented (Yahoo chart, Stooq, Alpaca, Polygon, Finnhub, Tiingo) and build_from_provider() will drive a season from any of them; the three marked real-time capable can support intraday polling."
-  },
-  {
-    "id": "L-02",
-    "severity": "high",
-    "title": "Single-name daily OHLCV is simulated, not observed",
-    "detail": "Only the S&P 500 and VIX daily series are real observations across the whole window, plus 13 real SPY monthly bars and 5 real AAPL daily bars with 4 real AAPL dividends. Every other daily bar for every other instrument is generated from those real factors plus declared beta, idiosyncratic volatility and drift. Individual results are therefore conditional on design inputs that no vendor supplied.",
-    "fix": "Fetch real daily bars per symbol through a provider adapter (L-01). The generator is written so the replay can be swapped for observed bars without touching the engine, portfolio or analytics code."
-  },
-  {
-    "id": "L-03",
-    "severity": "high",
-    "title": "Decisions happen once per session; a decision can be *worked* at the open or the close, never mid-session",
-    "detail": "A participant writes one order list per session. Since IR-34 each order can carry at_close, which works it against the venue's final interval instead of the first, so a market-on-close exit and an overnight-only entry are now expressible and are what GapAndGo and OvernightCarry use. What is still not expressible is any mid-session reaction: no strategy can see a print at interval 5 and act on it, so a stop that in real life would trigger at noon is modelled as triggering at the next scheduled decision. Intraday scalping, vwap-following and reaction-to-news strategies remain out of reach, and any result quoted for a strategy whose edge is claimed to be intra-hour should be read as a coarse approximation of it.",
-    "fix": "Closed for the part that was a venue limitation rather than a data one: Order.at_close plus engine routing (IR-34). The mid-session reaction limitation is a daily-bar replay limitation and needs the minute-bar engine in REMAINING_WORK."
-  },
-  {
-    "id": "L-04",
-    "severity": "medium",
-    "title": "Each participant trades an independent replica of the venue",
-    "detail": "Impact and dealer inventory are per-participant, so one competitor's flow never changes another's fills. That makes the leaderboard independent of processing order and every run exactly reproducible, but it means the participants' combined flow does not clear a single shared book - in a real market, twenty aggressive participants trading the same names would move the price for each other.",
-    "fix": "A shared venue with a deterministic clearing step per interval, or an aggregate-flow impact term added to the replica mid. Either changes reproducibility guarantees and needs its own test suite."
-  },
-  {
-    "id": "L-05",
-    "severity": "high",
-    "title": "No corporate-event data of any kind",
-    "detail": "There is no earnings calendar, no EPS surprise series, no short interest, no days-to-cover, no float, no news, no analyst revisions, no index reconstitution, no stock splits and no corporate actions beyond the declared cash dividends. Two strategies are forced onto price/volume proxies as a result (IR-07), and no participant can react to an event that is not in the price already.",
-    "fix": "Vendor event data. The cheapest high-value additions are an earnings-date calendar and FINRA short-interest files; both are published and machine-readable."
-  },
-  {
-    "id": "L-06",
-    "severity": "medium",
-    "title": "Cash earns nothing and debit balances are financed only through declared borrow fees",
-    "detail": "Risk-free rate is zero throughout: Sharpe and Sortino are computed against zero, cash balances earn no interest, and margin debit balances are not charged a broker financing rate. Over a year at realistic 2025-2026 rates that is a material omission for levered participants, and it flatters every strategy that runs a cash deficit. It is also why the ratios are internally consistent - mixing a real T-bill rate into the numerator while paying no carry on cash would make them meaningless.",
-    "fix": "Add a financing curve (SOFR or T-bill plus a declared spread) to CostConfig, accrue it daily in Account.accrue_carry, and subtract it in the Sharpe numerator. Roughly a day of work once the rate source is chosen."
-  },
-  {
-    "id": "L-07",
-    "severity": "medium",
-    "title": "Participants are strategies, not people",
-    "detail": "The competitions this project reverse-engineered track human traders who register, log in and click. StockPaperSim tracks Python classes with usernames. There is no authentication, no account creation, no order-entry UI and no self-registration, so the site is a results archive rather than a contest platform.",
-    "fix": "A web front end with auth, an order ticket that posts to a broker API backed by this engine, and per-user account state. The engine's per-participant venue replica design already supports adding participants at runtime."
-  },
-  {
-    "id": "L-08",
-    "severity": "high",
-    "title": "One competition year is one observation",
-    "detail": "No ranking produced from a single 251-session path is statistically significant. A participant that finishes first may simply have held the name that drew well; the diagnostics showed exactly this mechanism at work (IR-19). The six-scenario robustness panel is a partial mitigation, not a substitute for many independent years, because all six share the same real index path.",
-    "fix": "More scenarios with independently drawn market factors, longer archives of real data, and formal significance testing (bootstrap confidence intervals on Sharpe and alpha; Deflated Sharpe Ratio after Bailey and Lopez de Prado) before any result is described as skill."
-  },
-  {
-    "id": "L-09",
-    "severity": "medium",
-    "title": "The declared priors decide a large part of the outcome",
-    "detail": "Beta, idiosyncratic volatility, declared alpha, ADV, borrow availability and borrow fees per instrument are design inputs chosen to span a realistic cross-section. They are not vendor statistics and not forecasts. A strategy's rank is conditional on them: with different alphas, a different participant wins.",
-    "fix": "Publish the priors next to the results (the data-provenance page does exactly this, field by field), and re-run the season against priors estimated from real historical data once L-01 is resolved."
-  },
-  {
-    "id": "L-10",
-    "severity": "medium",
-    "title": "Market microstructure is a stylised single-venue model",
-    "detail": "There is no venue fragmentation, no dark pools, no order routing, no market-on-close auction, no real queue-position tracking (resting limit fills use an approximate fill-ratio from how far the path traded through the limit), no iceberg detection, and one blended maker/taker rate instead of per-venue fee schedules. Displayed depth is a stylised ladder rather than observed Level II data.",
-    "fix": "Observed quote and depth data plus per-venue fee schedules; a queue-position model calibrated against real fill rates for resting orders; an explicit closing-auction mechanism."
-  },
-  {
-    "id": "L-11",
-    "severity": "low",
-    "title": "Margin is a simplified Reg T plus a house maintenance rule",
-    "detail": "Initial margin 50% per Reg T, a 2.0x gross cap and a 30% maintenance requirement are SIM CHOICES - The Leap allows only 1:1 on stocks. There is no special memorandum account, no house-call sequencing, no portfolio margin, and the pattern-day-trader rule is counted and reported but not enforced (these are paper accounts with no real broker behind them).",
-    "fix": "An SMA-based equity computation with house-call sequencing, and PDT enforcement that restricts a participant to closing transactions for five sessions after the fourth day trade in a rolling five-day window below $25,000."
-  },
-  {
-    "id": "L-12",
-    "severity": "low",
-    "title": "Two fee inputs rest on secondary sources or uncertain effective dates",
-    "detail": "The FINRA Trade Activity Fee rate is corroborated only from broker documentation (IR-05), and whether the SEC's 2024 half-penny tick tier and $0.001 access-fee cap are operative during the window could not be settled from primary sources (IR-04). Both are small in dollar terms but both are regulatory facts that should be cited to the regulator, not to a broker.",
-    "fix": "Retrieve FINRA Schedule A and the current compliance-date order for the 2024 Reg NMS amendments, then pin both constants to the primary text."
-  },
-  {
-    "id": "L-13",
-    "severity": "low",
-    "title": "The site is static and does not update itself",
-    "detail": "docs/ is generated by scripts/build_site.py from run memory and published as-is. Nothing refreshes on a schedule, there is no live leaderboard feed and no intraday snapshot - unlike the referenced competitions, whose leaderboards update as often as hourly.",
-    "fix": "A scheduled GitHub Actions job that re-runs the season and republishes, or a small API service serving the memory store with the site fetching it client-side."
-  },
-  {
-    "id": "L-14",
-    "severity": "low",
-    "title": "Memory is compressed JSON Lines, not a database",
-    "detail": "Queries are streaming scans over gzip files. At the published scale (36,597 event rows across 8 streams, 4.08 MB for the six scenarios) that is instant and has the advantage of being human-readable, dependency-free and trivially checksummable. It would not survive 10 million rows or concurrent writers.",
-    "fix": "A SQLite or DuckDB backend behind the same MemoryStore interface; the JSONL files stay as the export format. The query API is already written against an iterator abstraction, so the swap is local."
-  },
-  {
-    "id": "L-15",
-    "severity": "medium",
-    "title": "No strategy can be added without editing Python",
-    "detail": "The roster is a list of classes in sim/strategies.py. Adding a participant means writing code, which rules out the thing a competition platform exists for: letting people bring their own ideas.",
-    "fix": "A declarative strategy format (JSON or a small DSL) interpreted by the engine, with the existing classes as reference implementations, plus validation that a submitted strategy cannot see future data."
-  },
-  {
-    "id": "L-16",
-    "severity": "low",
-    "title": "Dividends are paid without a matching ex-date price drop",
-    "detail": "Real price series gap down on the ex-date; the simulated series do not. For non-anchored names the generator compensates by removing the declared window dividend yield from the price drift, so total return is not double counted, but the day-to-day price path does not show the ex-date step that a real chart would. AAPL is exempt because its anchor is a real unadjusted close that already contains the real drops.",
-    "fix": "Partly reversed: rather than force the price path to drop, the venue now charges the short side the dividend it owes (IR-31), so total return is consistent for long and short books whichever convention the price path follows. A real ex-date drop on simulated names is still not modelled, which is why the adjustment item stays in REMAINING_WORK: the two mechanisms must not both be applied without checking that the yield is not being charged twice."
-  }
+ {
+  "id": "L-01",
+  "severity": "high",
+  "title": "There is no live market-data feed, so Season 1 is a replay",
+  "detail": "The build environment could reach pypi.org, files.pythonhosted.org and github.com directly. Every market-data host failed at the transport layer except FRED and the Yahoo v8 chart endpoint, which were reachable only through the page-fetch tool. A competition that advertises real-time prices cannot be run honestly under those conditions, so Season 1 replays a fixed, documented market path instead. This is the single largest limitation and the reason the site says 'simulated' as often as it says 'real'.",
+  "fix": "A vendor key plus outbound network access. Six adapters are already implemented and documented (Yahoo chart, Stooq, Alpaca, Polygon, Finnhub, Tiingo) and build_from_provider() will drive a season from any of them; the three marked real-time capable can support intraday polling."
+ },
+ {
+  "id": "L-02",
+  "severity": "high",
+  "title": "Single-name daily OHLCV is simulated, not observed",
+  "detail": "Only the S&P 500 and VIX daily series are real observations across the whole window, plus 13 real SPY monthly bars and 5 real AAPL daily bars with 4 real AAPL dividends. Every other daily bar for every other instrument is generated from those real factors plus declared beta, idiosyncratic volatility and drift. Individual results are therefore conditional on design inputs that no vendor supplied.",
+  "fix": "Fetch real daily bars per symbol through a provider adapter (L-01). The generator is written so the replay can be swapped for observed bars without touching the engine, portfolio or analytics code."
+ },
+ {
+  "id": "L-03",
+  "severity": "high",
+  "title": "Decisions happen once per session; a decision can be *worked* at the open or the close, never mid-session",
+  "detail": "A participant writes one order list per session. Since IR-34 each order can carry at_close, which works it against the venue's final interval instead of the first, so a market-on-close exit and an overnight-only entry are now expressible and are what GapAndGo and OvernightCarry use. What is still not expressible is any mid-session reaction: no strategy can see a print at interval 5 and act on it, so a stop that in real life would trigger at noon is modelled as triggering at the next scheduled decision. Intraday scalping, vwap-following and reaction-to-news strategies remain out of reach, and any result quoted for a strategy whose edge is claimed to be intra-hour should be read as a coarse approximation of it.",
+  "fix": "Closed for the part that was a venue limitation rather than a data one: Order.at_close plus engine routing (IR-34). The mid-session reaction limitation is a daily-bar replay limitation and needs the minute-bar engine in REMAINING_WORK."
+ },
+ {
+  "id": "L-04",
+  "severity": "medium",
+  "title": "Each participant trades an independent replica of the venue",
+  "detail": "Impact and dealer inventory are per-participant, so one competitor's flow never changes another's fills. That makes the leaderboard independent of processing order and every run exactly reproducible, but it means the participants' combined flow does not clear a single shared book - in a real market, twenty aggressive participants trading the same names would move the price for each other.",
+  "fix": "A shared venue with a deterministic clearing step per interval, or an aggregate-flow impact term added to the replica mid. Either changes reproducibility guarantees and needs its own test suite."
+ },
+ {
+  "id": "L-05",
+  "severity": "high",
+  "title": "No corporate-event data of any kind",
+  "detail": "There is no earnings calendar, no EPS surprise series, no short interest, no days-to-cover, no float, no news, no analyst revisions, no index reconstitution, no stock splits and no corporate actions beyond the declared cash dividends. Two strategies are forced onto price/volume proxies as a result (IR-07), and no participant can react to an event that is not in the price already.",
+  "fix": "Vendor event data. The cheapest high-value additions are an earnings-date calendar and FINRA short-interest files; both are published and machine-readable."
+ },
+ {
+  "id": "L-06",
+  "severity": "medium",
+  "title": "Cash earns nothing and debit balances are financed only through declared borrow fees",
+  "detail": "Risk-free rate is zero throughout: Sharpe and Sortino are computed against zero, cash balances earn no interest, and margin debit balances are not charged a broker financing rate. Over a year at realistic 2025-2026 rates that is a material omission for levered participants, and it flatters every strategy that runs a cash deficit. It is also why the ratios are internally consistent - mixing a real T-bill rate into the numerator while paying no carry on cash would make them meaningless.",
+  "fix": "Add a financing curve (SOFR or T-bill plus a declared spread) to CostConfig, accrue it daily in Account.accrue_carry, and subtract it in the Sharpe numerator. Roughly a day of work once the rate source is chosen."
+ },
+ {
+  "id": "L-07",
+  "severity": "medium",
+  "title": "Participants are strategies, not people",
+  "detail": "The competitions this project reverse-engineered track human traders who register, log in and click. StockPaperSim tracks Python classes with usernames. There is no authentication, no account creation, no order-entry UI and no self-registration, so the site is a results archive rather than a contest platform.",
+  "fix": "A web front end with auth, an order ticket that posts to a broker API backed by this engine, and per-user account state. The engine's per-participant venue replica design already supports adding participants at runtime."
+ },
+ {
+  "id": "L-08",
+  "severity": "high",
+  "title": "One competition year is one observation",
+  "detail": "No ranking produced from a single 251-session path is statistically significant. A participant that finishes first may simply have held the name that drew well; the diagnostics showed exactly this mechanism at work (IR-19). The six-scenario robustness panel is a partial mitigation, not a substitute for many independent years, because all six share the same real index path.",
+  "fix": "More scenarios with independently drawn market factors, longer archives of real data, and formal significance testing (bootstrap confidence intervals on Sharpe and alpha; Deflated Sharpe Ratio after Bailey and Lopez de Prado) before any result is described as skill."
+ },
+ {
+  "id": "L-09",
+  "severity": "medium",
+  "title": "The declared priors decide a large part of the outcome",
+  "detail": "Beta, idiosyncratic volatility, declared alpha, ADV, borrow availability and borrow fees per instrument are design inputs chosen to span a realistic cross-section. They are not vendor statistics and not forecasts. A strategy's rank is conditional on them: with different alphas, a different participant wins.",
+  "fix": "Publish the priors next to the results (the data-provenance page does exactly this, field by field), and re-run the season against priors estimated from real historical data once L-01 is resolved."
+ },
+ {
+  "id": "L-10",
+  "severity": "medium",
+  "title": "Market microstructure is a stylised single-venue model",
+  "detail": "There is no venue fragmentation, no dark pools, no order routing, no market-on-close auction, no real queue-position tracking (resting limit fills use an approximate fill-ratio from how far the path traded through the limit), no iceberg detection, and one blended maker/taker rate instead of per-venue fee schedules. Displayed depth is a stylised ladder rather than observed Level II data.",
+  "fix": "Observed quote and depth data plus per-venue fee schedules; a queue-position model calibrated against real fill rates for resting orders; an explicit closing-auction mechanism."
+ },
+ {
+  "id": "L-11",
+  "severity": "low",
+  "title": "Margin is a simplified Reg T plus a house maintenance rule",
+  "detail": "Initial margin 50% per Reg T, a 2.0x gross cap and a 30% maintenance requirement are SIM CHOICES - The Leap allows only 1:1 on stocks. There is no special memorandum account, no house-call sequencing, no portfolio margin, and the pattern-day-trader rule is counted and reported but not enforced (these are paper accounts with no real broker behind them).",
+  "fix": "An SMA-based equity computation with house-call sequencing, and PDT enforcement that restricts a participant to closing transactions for five sessions after the fourth day trade in a rolling five-day window below $25,000."
+ },
+ {
+  "id": "L-12",
+  "severity": "low",
+  "title": "Two fee inputs rest on secondary sources or uncertain effective dates",
+  "detail": "The FINRA Trade Activity Fee rate is corroborated only from broker documentation (IR-05), and whether the SEC's 2024 half-penny tick tier and $0.001 access-fee cap are operative during the window could not be settled from primary sources (IR-04). Both are small in dollar terms but both are regulatory facts that should be cited to the regulator, not to a broker.",
+  "fix": "Retrieve FINRA Schedule A and the current compliance-date order for the 2024 Reg NMS amendments, then pin both constants to the primary text."
+ },
+ {
+  "id": "L-13",
+  "severity": "low",
+  "title": "The site is static and does not update itself",
+  "detail": "docs/ is generated by scripts/build_site.py from run memory and published as-is. Nothing refreshes on a schedule, there is no live leaderboard feed and no intraday snapshot - unlike the referenced competitions, whose leaderboards update as often as hourly.",
+  "fix": "A scheduled GitHub Actions job that re-runs the season and republishes, or a small API service serving the memory store with the site fetching it client-side."
+ },
+ {
+  "id": "L-14",
+  "severity": "low",
+  "title": "Memory is compressed JSON Lines, not a database",
+  "detail": "Queries are streaming scans over gzip files. At the published scale (36,597 event rows across 8 streams, 4.08 MB for the six scenarios) that is instant and has the advantage of being human-readable, dependency-free and trivially checksummable. It would not survive 10 million rows or concurrent writers.",
+  "fix": "A SQLite or DuckDB backend behind the same MemoryStore interface; the JSONL files stay as the export format. The query API is already written against an iterator abstraction, so the swap is local."
+ },
+ {
+  "id": "L-15",
+  "severity": "medium",
+  "title": "No strategy can be added without editing Python",
+  "detail": "The roster is a list of classes in sim/strategies.py. Adding a participant means writing code, which rules out the thing a competition platform exists for: letting people bring their own ideas.",
+  "fix": "A declarative strategy format (JSON or a small DSL) interpreted by the engine, with the existing classes as reference implementations, plus validation that a submitted strategy cannot see future data."
+ },
+ {
+  "id": "L-16",
+  "severity": "low",
+  "title": "Dividends are paid without a matching ex-date price drop",
+  "detail": "Real price series gap down on the ex-date; the simulated series do not. For non-anchored names the generator compensates by removing the declared window dividend yield from the price drift, so total return is not double counted, but the day-to-day price path does not show the ex-date step that a real chart would. AAPL is exempt because its anchor is a real unadjusted close that already contains the real drops.",
+  "fix": "Partly reversed: rather than force the price path to drop, the venue now charges the short side the dividend it owes (IR-31), so total return is consistent for long and short books whichever convention the price path follows. A real ex-date drop on simulated names is still not modelled, which is why the adjustment item stays in REMAINING_WORK: the two mechanisms must not both be applied without checking that the yield is not being charged twice."
+ },
+ {
+  "id": "L-17",
+  "title": "Season 2 has one price history and no second one to compare against",
+  "severity": "high",
+  "detail": "Season 1 could re-run the season under several idiosyncratic draws and report how ranks moved. Season 2 trades the real history, so its result is a single observation: a participant that finished first would not necessarily finish first again, and nothing in this repository can measure that. A real answer needs either a longer sample (several years of real prices, each run as its own season) or an explicit bootstrap of the real return path, and neither is in place.",
+  "fix": "Run the same roster over several non-overlapping real years (the collector can already fetch a multi-year window) and publish the cross-year rank correlation, alongside the existing venue-stress panel."
+ },
+ {
+  "id": "L-18",
+  "title": "Signal mapping from MasterSite projects to instruments is a judgement, not a measurement",
+  "severity": "medium",
+  "detail": "The MasterFeed register labels each mapping STRONG, WEAK or UNPROVEN, but the label is this project's reasoning, not an estimated relationship. Nothing here regresses sportsbook equity returns on MLB game counts, or biotech ETF returns on FDA approval counts. A strategy can therefore be well implemented and still be trading a link that does not exist.",
+  "fix": "Estimate each mapping openly: regress the candidate instrument's returns on the signal with lags, publish the coefficients and t-statistics with the same file-level provenance as the prices, and let a WEAK mapping be reported as a measured null rather than an asserted one."
+ },
+ {
+  "id": "L-19",
+  "title": "Four of the twelve requested sources cannot be backtested from official records",
+  "severity": "high",
+  "detail": "The NFL injury report, the NBA injury report, SportsPred's pre-game probabilities and (as archived history) the NCAA scoreboard are published live. Four participants are therefore forward-only: they are registered, their adapters point at the official documents, and they placed no backdated trades. Their 0.00% is an absence of evidence, not evidence of no edge.",
+  "fix": "Let the collector run on a schedule so the live documents start accumulating a real, dated archive; after a season of daily collection those participants can be backtested on their own collected history with the same ledger."
+ },
+ {
+  "id": "L-20",
+  "title": "Injuries and suspensions are only visible through price, not through position limits that vary by name",
+  "severity": "low",
+  "detail": "The venue model applies one margin and borrow model to every name. Real desks face name-specific borrow availability, hard-to-borrow lists and recall risk, which is exactly the risk an injury-driven sportsbook strategy would face if it shorted a squeezed name. The Season 2 roster shorts DKNG, FLUT and PENN, so this is a live gap rather than a theoretical one.",
+  "fix": "Add a per-name borrow-availability series (FINRA's daily short-sale volume and the OTC transparency data are the public starting points) and let a short fail to open when the name is on the hard-to-borrow list."
+ },
+ {
+  "id": "L-21",
+  "title": "The published ledger is a summary of what the engine decided, not an independent execution path",
+  "severity": "medium",
+  "detail": "Every fill carries the real bar it filled against and is re-derived by an outside script, but both the fill and the reference come from the same run. If the venue model is wrong - the spread too tight, the impact exponent too small - the ledger will faithfully record a wrong price relationship, and no amount of hashing will catch it.",
+  "fix": "Replay a sample of days against a real intraday print history (a single name, a handful of days) and compare the modelled fill price with the actual traded price at that minute; publish the error distribution as a calibration table rather than an assumption."
+ }
 ]

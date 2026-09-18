@@ -1,11 +1,11 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-primary-seed20260918",
- "created_utc": "2026-09-18T12:26:24Z",
- "finalised_utc": "2026-09-18T12:26:25Z",
+ "created_utc": "2026-09-18T12:26:53Z",
+ "finalised_utc": "2026-09-18T12:26:55Z",
  "code": {
   "git": {
-   "commit": "c95df270238f2414a0bbaaeedfc7981d09966c0d",
+   "commit": "d8140bd3e2762afc3920972b71fa3ffa1d0817c8",
    "branch": "arena/01a0b35e-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
@@ -21,7 +21,7 @@
    "sim/ledger.py": "fe07879d26c2b34a97e5c7029133a67e204b994be71bf0f0711da1e661ab5580",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
    "sim/masterfeed.py": "2a1747a9dba58eadd0d6dfe6a620331d01cef808717edf5b9dbbc149125fb3e9",
-   "sim/memory.py": "c7b2390f379b220dac8ffd4737b07edd2ed69d940f270fa43c18755988c5452e",
+   "sim/memory.py": "e8cd939987420bea652fe31565b90c97e319bb0ecb92153950079308bf9ac405",
    "sim/microstructure.py": "cb4d849f3d4e91172d93ed8d83fb47ce504ef51a6d81bf8d8b78fcbd49569f44",
    "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
    "sim/realdata.py": "af83f440ced7d0f0bff2ddd291497760fec67ca92d9e4290700bef9d5d256344",
@@ -163,43 +163,43 @@
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "84f455cd44ef7bd9cdc798fdd366f44909f8d58bcb9560177f946b8722682c26",
+   "sha256": "a36c813f4586abbb611ae2109bfaee149edece46f16da6e531b90d23e0be46d6",
    "bytes": 1510,
    "kind": "jsonl.gz",
    "rows": 168
   },
   "events/equity.jsonl.gz": {
-   "sha256": "745c908cab9370cd81f3be0b0a6985d2c7371396075d19e51cdcfdd9cf94466a",
+   "sha256": "1e6ba218b7e405b09915548e242b6c3a392d56151397d33e19e4d636b538c0c2",
    "bytes": 75419,
    "kind": "jsonl.gz",
    "rows": 3514
   },
   "events/fills.jsonl.gz": {
-   "sha256": "6f14dc5d27f7566c0727d082626f0d9cf794c1c04f355f83ef15e14347fb8cc2",
+   "sha256": "aea5ee1d652ff856357a67fa81fcd2cae50e4117beec68b7e63a0203e69a84d6",
    "bytes": 59976,
    "kind": "jsonl.gz",
    "rows": 771
   },
   "events/margin.jsonl.gz": {
-   "sha256": "1666ef19a0be418ffb2bf72d98388b8364b4c50d6542a683d8866c9361bd83fd",
+   "sha256": "996053da49ebc4457701e7e4f17647dd65c47c8154acb2e8ddf27529022d4081",
    "bytes": 336,
    "kind": "jsonl.gz",
    "rows": 8
   },
   "events/orders.jsonl.gz": {
-   "sha256": "cd0cd6d58c031dae886addb6680e31b233e3f7d6b9a7b823b2f89ee5f8e52631",
+   "sha256": "d68937c21953b96eda00a29cc5a23e8b9ba18b3c4055cc56125ee8e4dc3719b4",
    "bytes": 8004,
    "kind": "jsonl.gz",
    "rows": 771
   },
   "events/positions.jsonl.gz": {
-   "sha256": "10fbf3bb21d9b5a74a83bc9ef095014c89b89a43b692935af3591948b9e55a6a",
+   "sha256": "e3f8856fa5fb177942abaa1829977f4fe28e302d1224a90997037e03bc1746cb",
    "bytes": 70036,
    "kind": "jsonl.gz",
    "rows": 2729
   },
   "events/quotes.jsonl.gz": {
-   "sha256": "34f120100882ef670464a98abc9f93b39a0dc2da4ebd309a52b73498c9763dd5",
+   "sha256": "5431a47708ec75a790ab1bc6227ff13e333d2eded67b397920f7756b4fd41084",
    "bytes": 116692,
    "kind": "jsonl.gz",
    "rows": 6024
@@ -448,9 +448,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-18T12:26:24Z",
-  "finished_utc": "2026-09-18T12:26:25Z",
-  "elapsed_seconds": 1.4
+  "started_utc": "2026-09-18T12:26:53Z",
+  "finished_utc": "2026-09-18T12:26:55Z",
+  "elapsed_seconds": 1.41
  },
  "irregularity_count": 0,
  "data_sources": {

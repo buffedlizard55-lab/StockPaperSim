@@ -1,0 +1,352 @@
+{
+ "username": "@MLB_Attention_Momo",
+ "strategy_id": "MLBAttentionMomo",
+ "archetype": "event attention proxy",
+ "starting_cash": 100000.0,
+ "final_equity": 100000.0,
+ "net_pnl_usd": 0.0,
+ "total_return_pct": 0.0,
+ "cagr_pct": 0.0,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": 0.0,
+  "max_drawdown_usd": 0.0,
+  "peak_date": "2025-09-17",
+  "peak_equity": 100000.0,
+  "trough_date": "2025-09-17",
+  "trough_equity": 100000.0,
+  "recovery_date": "2025-09-17",
+  "sessions_underwater": 0,
+  "never_recovered": false,
+  "sharpe": 0.0,
+  "sortino": 0.0,
+  "calmar": null,
+  "daily_vol_pct": 0.0,
+  "annualised_vol_pct": 0.0,
+  "skew": 0.0,
+  "excess_kurtosis": 0.0,
+  "best_session_pct": 0.0,
+  "worst_session_pct": 0.0,
+  "var_95_pct": 0.0,
+  "cvar_95_pct": 0.0,
+  "var_99_pct": 0.0,
+  "cvar_99_pct": 0.0
+ },
+ "market_relation": {
+  "beta": 0.0,
+  "alpha_annual_pct": 0.0,
+  "r_squared": 0.0,
+  "tracking_error_annual_pct": 0.0,
+  "information_ratio": null,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 0.0,
+  "residual_return_pct": 0.0
+ },
+ "trades": {
+  "closed_trades": 0,
+  "open_trades": 0,
+  "wins": 0,
+  "losses": 0,
+  "win_rate_pct": 0.0,
+  "gross_win_usd": 0,
+  "gross_loss_usd": 0,
+  "profit_factor": null,
+  "avg_win_usd": 0.0,
+  "avg_loss_usd": 0.0,
+  "expectancy_usd_per_trade": 0.0,
+  "best_trade": null,
+  "worst_trade": null,
+  "longest_win_streak": 0,
+  "longest_loss_streak": 0,
+  "avg_sessions_held": 0.0,
+  "median_sessions_held": 0.0,
+  "sessions_in_market": 0,
+  "per_symbol_sessions_in_market": {},
+  "sum_of_tranche_sessions": 0,
+  "tranche_intervals_overlap": false,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot; sessions_in_market is the union of those intervals."
+ },
+ "costs": {
+  "fills": 0,
+  "shares_traded": 0,
+  "traded_notional_usd": 0.0,
+  "spread_cost_usd": 0.0,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 0.0,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 0.0,
+  "regulatory_fee_usd": 0.0,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 0,
+  "total_cost_bps_of_traded": 0.0,
+  "total_cost_pct_of_starting_cash": 0.0,
+  "net_liquidity_provider": true,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": null,
+   "spread_and_impact_pct": null
+  },
+  "avg_execution_cost_bps_per_fill": 0.0,
+  "median_execution_cost_bps_per_fill": 0.0,
+  "worst_execution_cost_bps": 0.0,
+  "intraday_drift_usd": 0.0,
+  "avg_price_difference_bps_per_fill": 0.0,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 0,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 0.0,
+  "spread_cost_usd": 0.0,
+  "depth_cost_usd": 0.0,
+  "impact_cost_usd": 0.0,
+  "intraday_drift_usd": 0.0,
+  "fees_usd": 0.0,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 0.0,
+  "shortfall_bps_of_paper": 0.0,
+  "friction_only_bps_of_paper": 0.0,
+  "worst_single_order_drift_usd": 0.0,
+  "best_single_order_drift_usd": 0.0,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 0.0,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 0.0,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 0.0,
+  "max_gross_pct_of_starting_cash": 0.0,
+  "avg_net_pct_of_starting_cash": 0.0,
+  "max_net_pct_of_starting_cash": 0.0,
+  "avg_leverage": 0.0,
+  "max_leverage": 0.0,
+  "sessions_flat": 251,
+  "avg_open_positions": 0.0
+ },
+ "turnover": {
+  "traded_notional_usd": 0.0,
+  "annualised_turnover_x": 0.0
+ },
+ "contribution_by_symbol": [],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": 0,
+  "open_position_pnl_usd": 0,
+  "dividends_usd": 0.0,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": 0,
+  "total_net_pnl_usd": 0.0,
+  "unexplained_residual_usd": 0.0,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: +0.00% total return vs +14.41% for the index, +0.00pp residual after beta, 0.0% max drawdown, 0.00% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at +0.00% - a 0 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+12.69%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "costs",
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): Baseball attention is a weaker handle driver than football; The mapping from games played to betting revenue is asserted, not estimated - the site labels it WEAK-MAPPING; Sportsbook equities are driven mainly by regulation and taxes."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@MLB_Attention_Momo (MLB Attention Momentum) ran the \"event attention proxy\" archetype. Declared thesis: Betting handle follows attention, and attention follows a dense slate of games. The participant holds sportsbook and sports-data equities while the trailing week's MLB calendar is busier than its trailing median. Entry: Count MLB finals in the trailing 7 calendar days from the official StatsAPI schedule file; When the count is above the trailing-60-session median, hold DKNG, FLUT and PENN at 60% of equity each. Exit: Flatten when the count falls below the median; No stop loss. Sizing: 60% per name, three names = 1.8x gross. Leverage: 1.8x gross. Cadence: weekly check, horizon weeks. Aggression 4/5. This participant was built to maximise return, not to manage risk: Concentrated basket with no hedge and no stop."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: +0.00% over 251 sessions - +0 USD on 100,000 of paper capital, ending at 100,000. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+12.69%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": ""
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x. Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: +0.00% in a market that returned +14.41%, and a residual of +0.00pp after beta - the trading itself destroyed value, not just the market direction. Finished at +0.00% - a 0 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "Baseball attention is a weaker handle driver than football",
+   "The mapping from games played to betting revenue is asserted, not estimated - the site labels it WEAK-MAPPING",
+   "Sportsbook equities are driven mainly by regulation and taxes"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 0
+}

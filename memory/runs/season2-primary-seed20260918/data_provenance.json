@@ -1,0 +1,569 @@
+{
+ "diagnostics": {
+  "season": "Season 2 (real collected prices)",
+  "window": {
+   "warmup_start": "2024-09-16",
+   "start": "2025-09-17",
+   "end": "2026-09-16"
+  },
+  "sessions": {
+   "warmup": 251,
+   "competition": 251
+  },
+  "market_series": {
+   "spx": {
+    "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+    "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+    "source": "FRED SP500"
+   },
+   "vix": {
+    "file": "data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv",
+    "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553",
+    "source": "FRED VIXCLS"
+   }
+  },
+  "price_series": {
+   "SPY": {
+    "file": "data/real/prices/yahoo/SPY.json",
+    "sha256": "7353863ce2b1a9438c1be2922e0aef571e3813bf0ff57dbbf11b33c28a864fbc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "QQQ": {
+    "file": "data/real/prices/yahoo/QQQ.json",
+    "sha256": "e8cfe01a120c538da1320474ba43d37432e8ebb3387eb489dc22eba738ffd85a",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "IWM": {
+    "file": "data/real/prices/yahoo/IWM.json",
+    "sha256": "e64243e5cb1f476108f0b2a326759daaf5c078330e63d0a97197784a4b2f2ba7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "GLD": {
+    "file": "data/real/prices/yahoo/GLD.json",
+    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "UNG": {
+    "file": "data/real/prices/yahoo/UNG.json",
+    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "XLU": {
+    "file": "data/real/prices/yahoo/XLU.json",
+    "sha256": "14b54e4f6f4c8f304dd74a921163ea2ceb3b09c2fca6a585e9368497d2b68e9b",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "XBI": {
+    "file": "data/real/prices/yahoo/XBI.json",
+    "sha256": "51e3a7268333197c1fd3996d0ccf7e0247fc9f5d8ab22ca19c8137c6dfa5e654",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 3
+   },
+   "IBB": {
+    "file": "data/real/prices/yahoo/IBB.json",
+    "sha256": "1e1d0b457ea2d7ac5c34635d502fd444d1bf308bb3865c58eaf0286f33e0a86c",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "TLT": {
+    "file": "data/real/prices/yahoo/TLT.json",
+    "sha256": "d823b49f9ceafa130626634af73ca48f96ee2ec142fa7c454cd3e9b95d78a7cd",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 12
+   },
+   "DKNG": {
+    "file": "data/real/prices/yahoo/DKNG.json",
+    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "FLUT": {
+    "file": "data/real/prices/yahoo/FLUT.json",
+    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "PENN": {
+    "file": "data/real/prices/yahoo/PENN.json",
+    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "SRAD": {
+    "file": "data/real/prices/yahoo/SRAD.json",
+    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "GENI": {
+    "file": "data/real/prices/yahoo/GENI.json",
+    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "AAPL": {
+    "file": "data/real/prices/yahoo/AAPL.json",
+    "sha256": "38776602bb60f2b6440d84489175111e0ceac108b03b0ec225b6a602283f9b5c",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "MSFT": {
+    "file": "data/real/prices/yahoo/MSFT.json",
+    "sha256": "2ac6726c2bd212f8485645dbbe15ecd7a83c4e279933c1a6e19e76d258d56ee9",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "NVDA": {
+    "file": "data/real/prices/yahoo/NVDA.json",
+    "sha256": "c5dc7ffae557c3b0844cf8a4cbe25ef661149e1d64b23e77c6185f489eeb8613",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "JPM": {
+    "file": "data/real/prices/yahoo/JPM.json",
+    "sha256": "34ff4cdaeda7881ecaa0d0154c76959dc3ae237d6556f6aa3b550a02398ff8d9",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "XOM": {
+    "file": "data/real/prices/yahoo/XOM.json",
+    "sha256": "08094b394bf9ba83cc1b8e8276807f3820e9beadd50bac06010d12d7a495cd62",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "JNJ": {
+    "file": "data/real/prices/yahoo/JNJ.json",
+    "sha256": "79799cbff6bb5714899a40b68d6df4ab4d16a51d016a9de2521c655886f64a19",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "PG": {
+    "file": "data/real/prices/yahoo/PG.json",
+    "sha256": "5fc450dce9e23040193beae0a7a77647d6aee6bfbac0d6ad7fdb8cf75828e8cc",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "TSLA": {
+    "file": "data/real/prices/yahoo/TSLA.json",
+    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 0
+   },
+   "MU": {
+    "file": "data/real/prices/yahoo/MU.json",
+    "sha256": "fe227afcb5ad8160b214b8775c154b0e976be03cdd8d9a3e34350b0547b791b8",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   },
+   "T": {
+    "file": "data/real/prices/yahoo/T.json",
+    "sha256": "70a453ae44c18817aad52121eee5095de00893d1d20262aa65e1444ab361db39",
+    "provider": "yahoo-v8-chart",
+    "source_class": "SECONDARY",
+    "first_bar": "2024-09-16",
+    "last_bar": "2026-09-16",
+    "filled_sessions": 0,
+    "dividends_in_window": 4
+   }
+  },
+  "spx_start": 5633.09,
+  "spx_end": 7551.81,
+  "spx_total_return_pct_real": 14.304288334978121,
+  "vix_mean_real": 18.5202,
+  "vix_max_real": 52.33
+ },
+ "inventory": {
+  "files": [
+   {
+    "path": "data/real/collection_manifest.json",
+    "bytes": 32979,
+    "sha256": "81f86bed012c8820d3afc45acddf7602379cbcb73456d5dff191cea4d944ff9c"
+   },
+   {
+    "path": "data/real/coverage_report.json",
+    "bytes": 4733,
+    "sha256": "684d38cf8eeb78f91de552324bb79e09e91cc7888bbb6ac9177ce9e44e0f8bfb"
+   },
+   {
+    "path": "data/real/crosschecks/price_crosscheck.json",
+    "bytes": 723,
+    "sha256": "851540ecb59ac2be63143e51251483f2ad4756ee8527fe046efd5028edc330ac"
+   },
+   {
+    "path": "data/real/fda/openfda_decisions.jsonl",
+    "bytes": 3854213,
+    "sha256": "57f63923e6a78bcc41640ff48881b5578f7e1dbc4bd6353d6ccb72bb53a65097"
+   },
+   {
+    "path": "data/real/fred/DCOILWTICO_2024-09-16_2026-09-17.csv",
+    "bytes": 8805,
+    "sha256": "0ff80c6678f789029c923054d592acd6b8646bdc9e0303fa72c973f636b38ed9"
+   },
+   {
+    "path": "data/real/fred/DGS10_2024-09-16_2026-09-17.csv",
+    "bytes": 8299,
+    "sha256": "ae61db7627abc63a2aa8874ea0136b6bc8e5c6e9273dc81193585fd257e810f9"
+   },
+   {
+    "path": "data/real/fred/DGS3MO_2024-09-16_2026-09-17.csv",
+    "bytes": 8300,
+    "sha256": "9c7d4e98ba21865bd69ce5769a2085d6e4e34ac8a40a39a5b54e16312a0238d8"
+   },
+   {
+    "path": "data/real/fred/DTWEXBGS_2024-09-16_2026-09-17.csv",
+    "bytes": 10250,
+    "sha256": "9c76945d4cd89cdb02bf2b478e104f1393e299812777b09a483bec6295ed45fd"
+   },
+   {
+    "path": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+    "bytes": 9832,
+    "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce"
+   },
+   {
+    "path": "data/real/fred/SP500_2025-09-17_2026-09-16.csv",
+    "bytes": 4912,
+    "sha256": "189cc6ee0862bb94fc32cf6bb37d443b37e61286a2cfd5aa87b72983caef70ab"
+   },
+   {
+    "path": "data/real/fred/VIXCLS_2024-09-16_2026-09-17.csv",
+    "bytes": 8885,
+    "sha256": "b167cbaa28d2924bcf46e4e3b35d3959171a4995405cf87c11e52e70de7ae553"
+   },
+   {
+    "path": "data/real/fred/VIXCLS_2025-09-17_2026-09-16.csv",
+    "bytes": 4446,
+    "sha256": "0a4933afdfff1e0b864d5bcf078d18e16a4fb16c682ed8e485f2dcf02d07fba2"
+   },
+   {
+    "path": "data/real/kalshi/KXAAAGASM_settled.jsonl",
+    "bytes": 31120,
+    "sha256": "8d986ca91b948334a9a5e38c092d781f1cc552ea3386cf8df5238baea1dac82f"
+   },
+   {
+    "path": "data/real/kalshi/KXHIGHNY_settled.jsonl",
+    "bytes": 80674,
+    "sha256": "edca0b2d203de32ed2c4bb8a12a14ff562a292782c6526cb42c49075e91b4f5e"
+   },
+   {
+    "path": "data/real/kalshi/KXMLBGAME_settled.jsonl",
+    "bytes": 75600,
+    "sha256": "f3dba9da7b9ebedeb534d30f22b3f9834f1cea9c5b5c0f0dc9ef9523ee2495c7"
+   },
+   {
+    "path": "data/real/kalshi/KXNBA_settled.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/kalshi/KXNFLGAME_settled.jsonl",
+    "bytes": 54013,
+    "sha256": "ec2ad0867b168e11da4951ace9f921cfd9b6826149d3d52c93302890ca6bca0c"
+   },
+   {
+    "path": "data/real/prices/yahoo/AAPL.json",
+    "bytes": 87775,
+    "sha256": "38776602bb60f2b6440d84489175111e0ceac108b03b0ec225b6a602283f9b5c"
+   },
+   {
+    "path": "data/real/prices/yahoo/DKNG.json",
+    "bytes": 81490,
+    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef"
+   },
+   {
+    "path": "data/real/prices/yahoo/FLUT.json",
+    "bytes": 86182,
+    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0"
+   },
+   {
+    "path": "data/real/prices/yahoo/GENI.json",
+    "bytes": 73382,
+    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1"
+   },
+   {
+    "path": "data/real/prices/yahoo/GLD.json",
+    "bytes": 87077,
+    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40"
+   },
+   {
+    "path": "data/real/prices/yahoo/IBB.json",
+    "bytes": 87343,
+    "sha256": "1e1d0b457ea2d7ac5c34635d502fd444d1bf308bb3865c58eaf0286f33e0a86c"
+   },
+   {
+    "path": "data/real/prices/yahoo/IWM.json",
+    "bytes": 88147,
+    "sha256": "e64243e5cb1f476108f0b2a326759daaf5c078330e63d0a97197784a4b2f2ba7"
+   },
+   {
+    "path": "data/real/prices/yahoo/JNJ.json",
+    "bytes": 87138,
+    "sha256": "79799cbff6bb5714899a40b68d6df4ab4d16a51d016a9de2521c655886f64a19"
+   },
+   {
+    "path": "data/real/prices/yahoo/JPM.json",
+    "bytes": 87062,
+    "sha256": "34ff4cdaeda7881ecaa0d0154c76959dc3ae237d6556f6aa3b550a02398ff8d9"
+   },
+   {
+    "path": "data/real/prices/yahoo/MSFT.json",
+    "bytes": 87571,
+    "sha256": "2ac6726c2bd212f8485645dbbe15ecd7a83c4e279933c1a6e19e76d258d56ee9"
+   },
+   {
+    "path": "data/real/prices/yahoo/MU.json",
+    "bytes": 86575,
+    "sha256": "fe227afcb5ad8160b214b8775c154b0e976be03cdd8d9a3e34350b0547b791b8"
+   },
+   {
+    "path": "data/real/prices/yahoo/NVDA.json",
+    "bytes": 88167,
+    "sha256": "c5dc7ffae557c3b0844cf8a4cbe25ef661149e1d64b23e77c6185f489eeb8613"
+   },
+   {
+    "path": "data/real/prices/yahoo/PENN.json",
+    "bytes": 77982,
+    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04"
+   },
+   {
+    "path": "data/real/prices/yahoo/PG.json",
+    "bytes": 87596,
+    "sha256": "5fc450dce9e23040193beae0a7a77647d6aee6bfbac0d6ad7fdb8cf75828e8cc"
+   },
+   {
+    "path": "data/real/prices/yahoo/QQQ.json",
+    "bytes": 87795,
+    "sha256": "e8cfe01a120c538da1320474ba43d37432e8ebb3387eb489dc22eba738ffd85a"
+   },
+   {
+    "path": "data/real/prices/yahoo/SPY.json",
+    "bytes": 87879,
+    "sha256": "7353863ce2b1a9438c1be2922e0aef571e3813bf0ff57dbbf11b33c28a864fbc"
+   },
+   {
+    "path": "data/real/prices/yahoo/SRAD.json",
+    "bytes": 78113,
+    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6"
+   },
+   {
+    "path": "data/real/prices/yahoo/T.json",
+    "bytes": 81476,
+    "sha256": "70a453ae44c18817aad52121eee5095de00893d1d20262aa65e1444ab361db39"
+   },
+   {
+    "path": "data/real/prices/yahoo/TLT.json",
+    "bytes": 85762,
+    "sha256": "d823b49f9ceafa130626634af73ca48f96ee2ec142fa7c454cd3e9b95d78a7cd"
+   },
+   {
+    "path": "data/real/prices/yahoo/TSLA.json",
+    "bytes": 87040,
+    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7"
+   },
+   {
+    "path": "data/real/prices/yahoo/UNG.json",
+    "bytes": 76083,
+    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc"
+   },
+   {
+    "path": "data/real/prices/yahoo/XBI.json",
+    "bytes": 85900,
+    "sha256": "51e3a7268333197c1fd3996d0ccf7e0247fc9f5d8ab22ca19c8137c6dfa5e654"
+   },
+   {
+    "path": "data/real/prices/yahoo/XLU.json",
+    "bytes": 83831,
+    "sha256": "14b54e4f6f4c8f304dd74a921163ea2ceb3b09c2fca6a585e9368497d2b68e9b"
+   },
+   {
+    "path": "data/real/prices/yahoo/XOM.json",
+    "bytes": 87417,
+    "sha256": "08094b394bf9ba83cc1b8e8276807f3820e9beadd50bac06010d12d7a495cd62"
+   },
+   {
+    "path": "data/real/prices/yahoo/_GSPC.json",
+    "bytes": 90912,
+    "sha256": "45db44edad5e16c0bafb0b714474e71c25d2061f8d4a044f59b10dbbef1649e5"
+   },
+   {
+    "path": "data/real/prices/yahoo/_VIX.json",
+    "bytes": 75552,
+    "sha256": "f14bf00d6f2bf6371f00b8d38a6778f7d6270ec84a29dc236c28cfcb251ca708"
+   },
+   {
+    "path": "data/real/regulatory/finra-regulatory-notice-21-13.txt",
+    "bytes": 3656,
+    "sha256": "7a7ee25d4c12befa121f2854c60ccc61f7c0b0ab14d042061e20608ccdf7accc"
+   },
+   {
+    "path": "data/real/regulatory/finra-rule-4210-margin-requirements.txt",
+    "bytes": 933,
+    "sha256": "344c75afa1b6fba80aab5b7422ad9decb38752600fbd174b5dfa49dea6a4906b"
+   },
+   {
+    "path": "data/real/regulatory/finra-rule-4330-customer-securities-loans.txt",
+    "bytes": 1720,
+    "sha256": "d184f810f72a9a3466248b3d846255afb69c395877eeb54a6adbfd716858dad9"
+   },
+   {
+    "path": "data/real/regulatory/finra-trading-activity-fee.txt",
+    "bytes": 1302,
+    "sha256": "855e19de325b67c6ecf716e95b94f46da35fc39112c1009c30925646e6fa497a"
+   },
+   {
+    "path": "data/real/regulatory/irs-pub-550-payments-in-lieu.txt",
+    "bytes": 1310,
+    "sha256": "a17a3b2f9b48d7aec97f7d69a032982e3db3582b2e14d92bcbb6925681cef8b8"
+   },
+   {
+    "path": "data/real/sports/mlb_games_2026.jsonl",
+    "bytes": 716651,
+    "sha256": "41a3c46dad01d8f7ba07336d445e1fc054f46354309fdd8233a6fda111f18e4d"
+   },
+   {
+    "path": "data/real/sports/mlb_schedule_2026.json",
+    "bytes": 926878,
+    "sha256": "6864e537a84483e8eee51149cb8b1a6b1f71ff6f78df2906b2f7a93df97232de"
+   },
+   {
+    "path": "data/real/sports/mlb_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/sports/nba_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/sports/ncaaf_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/sports/nfl_scoreboard.jsonl",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+   },
+   {
+    "path": "data/real/weather/USW00023234_daily.json",
+    "bytes": 61883,
+    "sha256": "05db7b85964be7d435717e7321acd4e47c010987639f985f1dc8f814a389060c"
+   },
+   {
+    "path": "data/real/weather/USW00023272_daily.json",
+    "bytes": 61264,
+    "sha256": "508faf8ccfaccb4a5b8d8fb0ce1a5c3b90cd6179c2943826a4aac79c3d62108b"
+   },
+   {
+    "path": "data/real/yahoo/AAPL_snapshot_2026-09-17.json",
+    "bytes": 2059,
+    "sha256": "dd00408cfd09f52ca233477cc72d1434283324e4217201c3f438f0954d86b308"
+   },
+   {
+    "path": "data/real/yahoo/SPY_monthly_1y.json",
+    "bytes": 2413,
+    "sha256": "f506578db2d1d04ef7d1b8d7cbbae4ae39c378ee9f6b72c8476b6375aa9e0892"
+   }
+  ],
+  "count": 58,
+  "total_bytes": 8179100
+ }
+}

@@ -198,13 +198,7 @@ def load_series(root: str = REAL_ROOT, symbol: str = "SPY") -> Series:
                   exchange=payload.get("exchange") or "")
 
 
-def load_fred(root: str = REAL_ROOT, series: str = "SP500") -> Tuple[Dict[str, float], str, str]:
-    """Return (date->value, relative path, sha256) for a collected FRED series."""
-    directory = os.path.join(root, "fred")
-    hits = sorted(f for f in os.listdir(directory) if f.startswith(series + "_"))
-    if not hits:
-        raise RealDataUnavailable(f"no collected FRED file for {series} in {directory}")
-    path = os.path.join(directory, hits[-1])
+def _read_fred_file(path: str) -> Dict[str, float]:
     values: Dict[str, float] = {}
     with open(path, "r", encoding="utf-8") as handle:
         for line in handle.read().splitlines()[1:]:
@@ -214,7 +208,35 @@ def load_fred(root: str = REAL_ROOT, series: str = "SP500") -> Tuple[Dict[str, f
                     values[parts[0].strip()] = float(parts[1])
                 except ValueError:
                     continue
-    return values, os.path.relpath(path, REPO_ROOT), _sha256_file(path)
+    return values
+
+
+def load_fred(root: str = REAL_ROOT, series: str = "SP500") -> Tuple[Dict[str, float], str, str]:
+    """Return (date->value, relative path, sha256) for a collected FRED series.
+
+    Several collection windows can coexist for one series (Season 1 collected the
+    competition window; Season 2 collects a year of warm-up as well), so the file
+    that is read is the one with the **widest observed date range**, not simply
+    the last file name in sorted order. Reading the wrong one silently truncated
+    Season 2's warm-up to zero sessions, which is exactly the kind of defect the
+    run manifest now reports.
+    """
+    directory = os.path.join(root, "fred")
+    hits = sorted(f for f in os.listdir(directory) if f.startswith(series + "_"))
+    if not hits:
+        raise RealDataUnavailable(f"no collected FRED file for {series} in {directory}")
+    best_path, best_values, best_span = None, {}, (-1, "")
+    for name in hits:
+        path = os.path.join(directory, name)
+        values = _read_fred_file(path)
+        if not values:
+            continue
+        span = (len(values), sorted(values)[0])
+        if best_path is None or span[0] > best_span[0]:
+            best_path, best_values, best_span = path, values, span
+    if best_path is None:
+        raise RealDataUnavailable(f"collected FRED files for {series} are empty")
+    return best_values, os.path.relpath(best_path, REPO_ROOT), _sha256_file(best_path)
 
 
 def _stdev(xs: Sequence[float]) -> float:
@@ -458,7 +480,7 @@ def build_real_market_data(root: str = REAL_ROOT, symbols: Sequence[str] = TRADE
                                             if start <= d["date"] <= end])}
             for s in symbols},
         "spx_start": spx[0], "spx_end": spx[-1],
-        "spx_total_return_pct_real": 100.0 * (spx[-1] / spx[len(warmup_dates)] - 1.0),
+        "spx_total_return_pct_real": 100.0 * (spx[-1] / spx[len(warmup_dates) - 1] - 1.0),
         "vix_mean_real": round(sum(vix) / len(vix), 4),
         "vix_max_real": round(max(vix), 4),
     }

@@ -1,0 +1,426 @@
+{
+ "site": "https://buffedlizard55-lab.github.io/MasterSite/",
+ "register": [
+  {
+   "id": "CEO",
+   "requested_as": "CEO",
+   "repo": null,
+   "title": "No project named 'CEO' exists in the directory",
+   "site_url": "https://buffedlizard55-lab.github.io/MasterSite/",
+   "official_url": "https://www.sec.gov/edgar/search/",
+   "source_class": "OFFICIAL",
+   "status": "FORWARD-ONLY",
+   "mapping": "STRONG-MAPPING",
+   "mapping_note": "The directory was enumerated from the official GitHub API (39 public repositories) and from the site's own data file: there is no CEO-named project. The closest real feed for CEO behaviour is SEC Form 4, which is tagged with the officer's title, so a CEO/CFO-only filter is implemented on the real Form 4 stream instead of inventing a source.",
+   "evidence": [
+    "data/real/sec/form4_transactions.jsonl"
+   ],
+   "hypothesis": "Open-market purchases by a CEO or CFO - the two roles with the best view of the firm - predict positive abnormal returns over the following one to three months.",
+   "tradable": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T"
+   ]
+  },
+  {
+   "id": "SFWeather",
+   "requested_as": "weather",
+   "repo": "SFWeather",
+   "title": "SFWeather - 94122 rainy-season outlook",
+   "site_url": "https://buffedlizard55-lab.github.io/SFWeather/",
+   "official_url": "https://www.ncei.noaa.gov/access/services/data/v1",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "SFWeather publishes a rainfall outlook for one ZIP code. There is no instrument that prices San Francisco rain directly, so the mapped trade is a heating/cooling-demand proxy: cold anomalies at the SF station -> long UNG (natural gas) and XLU (utilities). The mapping is weak and the result must be read as a test of the proxy, not of the forecast.",
+   "evidence": [
+    "data/real/weather/USW00023272_daily.json"
+   ],
+   "hypothesis": "Below-normal minimum temperatures at the SF station raise heating demand, which lifts natural-gas and utility equities with a lag of days.",
+   "tradable": [
+    "UNG",
+    "XLU"
+   ]
+  },
+  {
+   "id": "Insider-trades",
+   "requested_as": "insider trades",
+   "repo": "Insider-trades",
+   "title": "Insider-trades - SEC EDGAR Form 4 toolkit",
+   "site_url": "https://buffedlizard55-lab.github.io/Insider-trades/",
+   "official_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "STRONG-MAPPING",
+   "mapping_note": "Form 4 is the primary filing for insider transactions and carries the execution price and date of each trade, so both the signal and the fill are verifiable against the issuer's own filing.",
+   "evidence": [
+    "data/real/sec/form4_transactions.jsonl",
+    "data/real/sec/form4/*.xml"
+   ],
+   "hypothesis": "Cluster purchases - two or more distinct insiders buying in the open market inside ten days - outperform, because insiders trade only when their private valuation gap is large.",
+   "tradable": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T"
+   ]
+  },
+  {
+   "id": "TradingViewTheLeap",
+   "requested_as": "TheLeap",
+   "repo": "TradingViewTheLeap",
+   "title": "The Leap - verified competition research",
+   "site_url": "https://buffedlizard55-lab.github.io/TradingViewTheLeap/",
+   "official_url": "https://www.tradingview.com/the-leap/december-2025/rules/",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "The Leap trades 94 futures symbols on AMP; this simulation cannot hold futures, so the leap-style rule (maximum leverage into the strongest trailing momentum, auto-liquidated at the close of the season) is tested on the equity/ETF proxies SPY, QQQ and TLT. The contest rule is copied; the instrument is declared as a proxy.",
+   "evidence": [
+    "data/real/prices/yahoo/SPY.json",
+    "data/real/prices/yahoo/QQQ.json",
+    "data/real/prices/yahoo/TLT.json"
+   ],
+   "hypothesis": "In a contest that ranks on total return with auto-liquidation at the end, the highest expected rank is bought by levering the asset with the strongest trailing return.",
+   "tradable": [
+    "SPY",
+    "QQQ",
+    "TLT"
+   ]
+  },
+  {
+   "id": "NFLInjuryReport",
+   "requested_as": "NFL Injury",
+   "repo": "NFLInjuryReport",
+   "title": "NFL Injury Report - 32 team tracker",
+   "site_url": "https://buffedlizard55-lab.github.io/NFLInjuryReport/",
+   "official_url": "https://www.nfl.com/injuries/",
+   "source_class": "OFFICIAL",
+   "status": "FORWARD-ONLY",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "nfl.com publishes the current week's injury designations; there is no official archive endpoint for a past season that this project could retrieve, so the injury rule runs forward from the next collection instead of being backdated. ESPN's archive is a secondary feed and is used only for scores, never as the official injury designation.",
+   "evidence": [
+    "data/real/sports/official/nfl_injuries.raw"
+   ],
+   "hypothesis": "Heavy injury weeks at contending teams move sportsbook equities through expected-handle revisions.",
+   "tradable": [
+    "FLUT",
+    "DKNG",
+    "PENN"
+   ]
+  },
+  {
+   "id": "NBAInjuryReport",
+   "requested_as": "NBA Injury",
+   "repo": "NBAInjuryReport",
+   "title": "NBA Injury Watch - 30 team monitor",
+   "site_url": "https://buffedlizard55-lab.github.io/NBAInjuryReport/",
+   "official_url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+   "source_class": "OFFICIAL",
+   "status": "FORWARD-ONLY",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "The NBA publishes its injury report as a dated PDF; the 2025-26 archive is not retrievable as a machine-readable series, so the rule is forward-tested against the live document (whose existence is verified and hashed in data/real/sports/official/).",
+   "evidence": [
+    "data/real/sports/official/nba_injury_report_index.raw"
+   ],
+   "hypothesis": "Games lost by star players to injury raise expected in-game variance, which is positive for sportsbook and sports-data equities.",
+   "tradable": [
+    "DKNG",
+    "PENN",
+    "SRAD",
+    "GENI"
+   ]
+  },
+  {
+   "id": "DrugAnalysis",
+   "requested_as": "FDA Decisions Drug Analysis",
+   "repo": "DrugAnalysis",
+   "title": "DrugAnalysis - FDA decisions and biotech reactions",
+   "site_url": "https://buffedlizard55-lab.github.io/DrugAnalysis/",
+   "official_url": "https://api.fda.gov/drug/drugsfda.json",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "STRONG-MAPPING",
+   "mapping_note": "openFDA returns the FDA's own approval and supplement decisions with the decision date, so the event clock is official. The instrument is the biotech sector (XBI/IBB) because most openFDA sponsors are private or unlisted, and mapping a public ticker by hand would be a guess.",
+   "evidence": [
+    "data/real/fda/openfda_decisions.jsonl"
+   ],
+   "hypothesis": "Weeks with an unusual number of FDA approvals mark a positive regulatory regime and predict biotech sector strength; the opposite holds for approval droughts.",
+   "tradable": [
+    "XBI",
+    "IBB"
+   ]
+  },
+  {
+   "id": "Ncaa-football-alerts",
+   "requested_as": "NCAA Scoreboard",
+   "repo": "Ncaa-football-alerts",
+   "title": "Ncaa-football-alerts",
+   "site_url": "https://buffedlizard55-lab.github.io/Ncaa-football-alerts/",
+   "official_url": "https://data.ncaa.com/casablanca/scoreboard/football/fbs/2025/10/scoreboard.json",
+   "source_class": "OFFICIAL",
+   "status": "FORWARD-ONLY",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "The NCAA scoreboard endpoint is official but the archived 2025-26 season had to be probed rather than enumerated; the same attention rule that is backtested on MLB scores runs forward on NCAA weeks.",
+   "evidence": [
+    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw"
+   ],
+   "hypothesis": "High-profile college-football weekends drive betting handle, which lifts sportsbook and sports-data equities.",
+   "tradable": [
+    "GENI",
+    "SRAD",
+    "DKNG"
+   ]
+  },
+  {
+   "id": "NFL-scoreboard",
+   "requested_as": "NFL scoreboard",
+   "repo": "NFL-scoreboard",
+   "title": "NFL-scoreboard",
+   "site_url": "https://buffedlizard55-lab.github.io/NFL-scoreboard/",
+   "official_url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+   "source_class": "SECONDARY",
+   "status": "BACKTESTED",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "The retrieved NFL/NBA/NCAAF scores come from ESPN's public scoreboard endpoint, which is a secondary publisher; the official league endpoints were probed and are recorded with their HTTP status. The sports-derived signals are therefore labelled as resting on secondary data.",
+   "evidence": [
+    "data/real/sports/nfl_scoreboard.jsonl"
+   ],
+   "hypothesis": "A weekend with many upsets raises gambling attention and handle, which lifts sportsbook equities in the following week.",
+   "tradable": [
+    "DKNG",
+    "FLUT",
+    "PENN"
+   ]
+  },
+  {
+   "id": "MLB-Live-PBP",
+   "requested_as": "MLB Scoreboard",
+   "repo": "MLB-Live-PBP",
+   "title": "MLB pitch-by-pitch / scoreboard feeds",
+   "site_url": "https://buffedlizard55-lab.github.io/MLB-Live-PBP/",
+   "official_url": "https://statsapi.mlb.com/api/v1/schedule",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "MLB StatsAPI is the league's own feed, so every final score used here is official. The economic link from baseball results to listed equities is indirect (attention and handle), so the mapping is declared weak.",
+   "evidence": [
+    "data/real/sports/mlb_games_2026.jsonl"
+   ],
+   "hypothesis": "Dense winning runs by popular teams raise baseball attention, and sportsbook/sports-data equities follow attention.",
+   "tradable": [
+    "DKNG",
+    "FLUT",
+    "PENN"
+   ]
+  },
+  {
+   "id": "SportsPred",
+   "requested_as": "Sports Pred",
+   "repo": "SportsPred",
+   "title": "SportsPred - game prediction models",
+   "site_url": "https://buffedlizard55-lab.github.io/SportsPred/",
+   "official_url": "https://statsapi.mlb.com/api/v1/schedule",
+   "source_class": "OFFICIAL",
+   "status": "FORWARD-ONLY",
+   "mapping": "UNPROVEN-MAPPING",
+   "mapping_note": "SportsPred emits pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would be this project's model, not the site's. The participant therefore trades only on snapshots collected from now on.",
+   "evidence": [],
+   "hypothesis": "Where a model's probability disagrees materially with the market's implied probability, the sports-data complex is mispriced in the same direction.",
+   "tradable": [
+    "SRAD",
+    "GENI"
+   ]
+  },
+  {
+   "id": "GOLD",
+   "requested_as": "Gold",
+   "repo": "GOLD",
+   "title": "GOLD - solid-gold engagement ring buyer's guide",
+   "site_url": "https://buffedlizard55-lab.github.io/GOLD/",
+   "official_url": "https://fred.stlouisfed.org/series/GOLDAMGBD228NLBM",
+   "source_class": "OFFICIAL",
+   "status": "BACKTESTED",
+   "mapping": "WEAK-MAPPING",
+   "mapping_note": "GOLD is a retail buyer's directory: it publishes per-item prices, not a gold market feed, and its own README states the site performs arithmetic only and never calls a price API. The tradable mapping used here is GLD against the LBMA fix from FRED, which is a different (and official) price source; the distinction is stated on the site.",
+   "evidence": [
+    "data/real/prices/yahoo/GLD.json",
+    "data/real/fred/"
+   ],
+   "hypothesis": "Retail jewellery demand data cannot be traded directly; the proxy test is whether gold's own trend, confirmed by the official LBMA fix, persists.",
+   "tradable": [
+    "GLD"
+   ]
+  },
+  {
+   "id": "Tradingview-pinescript-editor",
+   "requested_as": "PinePilot",
+   "repo": "Tradingview-pinescript-editor",
+   "title": "PinePilot - Pine Script editor and strategy lab",
+   "site_url": "https://buffedlizard55-lab.github.io/Tradingview-pinescript-editor/",
+   "official_url": "https://www.tradingview.com/pine-script-docs/",
+   "source_class": "SECONDARY",
+   "status": "BACKTESTED",
+   "mapping": "STRONG-MAPPING",
+   "mapping_note": "PinePilot generates Pine Script, and the canonical community rules (EMA cross, Donchian break, RSI-2 mean reversion) are fully specified in public documentation, so they can be reproduced exactly on real prices.",
+   "evidence": [
+    "data/real/prices/yahoo/QQQ.json",
+    "data/real/prices/yahoo/IWM.json",
+    "data/real/prices/yahoo/SPY.json"
+   ],
+   "hypothesis": "Trend confirmation with a volatility stop earns positive expectancy on liquid index ETFs after costs.",
+   "tradable": [
+    "SPY",
+    "QQQ",
+    "IWM"
+   ]
+  },
+  {
+   "id": "KalshiPaperSim",
+   "requested_as": "Kalshi (competition design reference)",
+   "repo": "KalshiPaperSim",
+   "title": "KalshiPaperSim - paper-trading competition lab",
+   "site_url": "https://buffedlizard55-lab.github.io/KalshiPaperSim/",
+   "official_url": "https://api.elections.kalshi.com/trade-api/v2/markets",
+   "source_class": "OFFICIAL-VENDOR",
+   "status": "BACKTESTED",
+   "mapping": "UNPROVEN-MAPPING",
+   "mapping_note": "Kalshi's own settled-market data is collected, and the number of settled contracts is used as an attention proxy for weather/energy. The link from prediction-market attention to an equity is unproven and is labelled so.",
+   "evidence": [
+    "data/real/kalshi/KXHIGHNY_settled.jsonl",
+    "data/real/kalshi/KXAAAGASM_settled.jsonl"
+   ],
+   "hypothesis": "Settled-contract volume in temperature and gasoline markets is a real-time nowcast of attention on weather and fuel, which leads utility and gas ETFs.",
+   "tradable": [
+    "UNG",
+    "XLU"
+   ]
+  }
+ ],
+ "availability": {
+  "fda_orig_30d": {
+   "state": "AVAILABLE",
+   "rows": 1680,
+   "window": [
+    "2024-09-16",
+    "2026-09-14"
+   ],
+   "files": [
+    "real/fda/openfda_decisions.jsonl"
+   ],
+   "note": "approvals of original applications with status AP, by decision date",
+   "url": "https://api.fda.gov/drug/drugsfda.json"
+  },
+  "insider_buys_30d": {
+   "state": "MISSING",
+   "rows": 0,
+   "window": [
+    null,
+    null
+   ],
+   "files": [],
+   "note": "no collected Form 4 file",
+   "url": "https://www.sec.gov/"
+  },
+  "mlb_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 2291,
+   "window": [
+    "2026-03-25",
+    "2026-09-17"
+   ],
+   "files": [
+    "data/real/sports/mlb_games_2026.jsonl"
+   ],
+   "note": "MLB regular-season finals, official league feed",
+   "url": "https://statsapi.mlb.com/api/v1/schedule"
+  },
+  "weather_cold_anomaly_10d": {
+   "state": "AVAILABLE",
+   "rows": 721,
+   "window": [
+    "2024-09-16",
+    "2026-09-13"
+   ],
+   "files": [
+    "data/real/weather/USW00023272_daily.json"
+   ],
+   "note": "NCEI daily summaries, San Francisco station USW00023272",
+   "url": "https://www.ncei.noaa.gov/access/services/data/v1"
+  },
+  "kalshi_settled_30d": {
+   "state": "AVAILABLE",
+   "rows": 610,
+   "window": [
+    "2026-07-31",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/kalshi/"
+   ],
+   "note": "settled-contract counts and volumes from the venue's own API",
+   "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
+  },
+  "fred_slope_bps": {
+   "state": "AVAILABLE",
+   "rows": 500,
+   "window": [
+    "2024-09-16",
+    "2026-09-16"
+   ],
+   "files": [
+    "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
+   ],
+   "note": "10-year minus 3-month Treasury constant-maturity yields",
+   "url": "https://fred.stlouisfed.org/series/DGS10"
+  },
+  "gold_close": {
+   "state": "AVAILABLE",
+   "rows": 502,
+   "window": [
+    "2024-09-16",
+    "2026-09-16"
+   ],
+   "files": [
+    "data/real/prices/yahoo/GLD.json"
+   ],
+   "note": "GLD closes from the collected vendor file",
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD"
+  }
+ },
+ "provenance": {
+  "fda": {
+   "file": "real/fda/openfda_decisions.jsonl",
+   "url": "https://api.fda.gov/drug/drugsfda.json"
+  },
+  "mlb": {
+   "file": "data/real/sports/mlb_games_2026.jsonl",
+   "url": "https://statsapi.mlb.com/api/v1/schedule"
+  },
+  "weather": {
+   "file": "data/real/weather/USW00023272_daily.json",
+   "url": "https://www.ncei.noaa.gov/access/services/data/v1"
+  },
+  "kalshi": {
+   "file": "data/real/kalshi/*_settled.jsonl",
+   "url": "https://api.elections.kalshi.com/trade-api/v2/markets"
+  },
+  "fred": {
+   "file": "data/real/fred/DGS10_2024-09-16_2026-09-17.csv",
+   "url": "https://fred.stlouisfed.org/series/DGS10"
+  }
+ }
+}

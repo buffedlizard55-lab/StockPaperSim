@@ -101,6 +101,11 @@ ARCHETYPE_FACTORS: Dict[str, Dict[str, float]] = {
     "overnight premium": {"beta": 0.5},
     "signal stacking": {"momentum": 0.5, "beta": 0.5, "reversal": -0.5},
     "long-horizon reversal": {"reversal": 1.0, "momentum": -1.0, "low_vol": 0.5},
+    # Season 2 archetypes.  Declared here rather than in the Season 2 module so
+    # that the factor attribution in sim/analytics.py reads one table.
+    "informed-flow following": {"momentum": 0.5, "beta": 0.3},
+    "event attention proxy": {"momentum": 0.5, "beta": 0.8},
+    "regime rotation": {"momentum": 0.3, "beta": 0.6},
 }
 
 

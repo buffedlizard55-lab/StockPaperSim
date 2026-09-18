@@ -120,6 +120,155 @@ SOURCES: Tuple[dict, ...] = (
         "verified": "fetched 2026-09-18 for Bills, Notes, Bonds and TIPS",
     },
     {
+        "id": "fiscaldata_api_root",
+        "title": "Fiscal Data API: the published API root",
+        "publisher": "U.S. Department of the Treasury, Bureau of the Fiscal Service",
+        "url": "https://api.fiscaldata.treasury.gov/services/api/",
+        "docs": "https://fiscaldata.treasury.gov/datasets/treasury-securities-auctions-data/",
+        "what_it_gives": ("the endpoint family the auctions table is read from; the "
+                          "collector names the same host and path when it builds the "
+                          "request, so the register covers the request a reviewer "
+                          "would re-issue"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work published for public use; the API "
+                          "documents its own paging and format parameters and needs "
+                          "no key."),
+        "verified": "fetched 2026-09-18; v2 of the same path answers 404 and v1 is used",
+    },
+    {
+        "id": "fred_series_portal",
+        "title": "FRED: series pages for the official series the lane reads",
+        "publisher": "Federal Reserve Bank of St. Louis (FRED)",
+        "url": "https://fred.stlouisfed.org/series/",
+        "docs": "https://fred.stlouisfed.org/legal/",
+        "what_it_gives": ("one page per series (SOFR, DTB4WK/DTB3/DTB6, the DGS* "
+                          "constant-maturity yields, DFII5/DFII10/DFII30 real yields, "
+                          "CPIAUCSL) that a reviewer can open to check a value without "
+                          "reading a CSV"),
+        "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+        "license_basis": ("FRED's terms permit personal, non-commercial use with "
+                          "attribution and forbid redistribution of third-party "
+                          "proprietary content without permission; every series this "
+                          "lane reads is a U.S. Government observation (Treasury "
+                          "H.15, the New York Fed, BLS) republished by FRED, and the "
+                          "register records both publishers."),
+        "verified": "series pages named for every collected series; FRED terms read 2026-09-18",
+    },
+    {
+        "id": "treasurydirect_api_root",
+        "title": "TreasuryDirect: the published Web API (security endpoints)",
+        "publisher": "U.S. Department of the Treasury, Bureau of the Fiscal Service",
+        "url": "https://www.treasurydirect.gov/TA_WS/securities/",
+        "docs": "https://www.treasurydirect.gov/TA_WS/securities/swagger-ui.html",
+        "what_it_gives": ("the endpoint family the collector calls: auctioned results, "
+                          "announced auctions and results by auction-date range"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work.  The API is published for public use "
+                          "and requires no key; the swagger page documents every "
+                          "parameter used here."),
+        "verified": "fetched 2026-09-18 with the parameters the collector sends",
+    },
+    {
+        "id": "treasurydirect_auctions_pages",
+        "title": "TreasuryDirect: announcements, data and auction results (portal)",
+        "publisher": "U.S. Department of the Treasury, Bureau of the Fiscal Service",
+        "url": "https://www.treasurydirect.gov/auctions/",
+        "docs": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+        "what_it_gives": ("the human-readable pages a reviewer can open to check an "
+                          "auction without reading JSON: upcoming auctions, "
+                          "announcements and results, and the auction-results search"),
+        "source_class": "OFFICIAL",
+        "license_basis": "U.S. Government work published for public use.",
+        "verified": "linked from every auction record the book trades",
+    },
+    {
+        "id": "treasury_par_curve_portal",
+        "title": "U.S. Treasury: daily treasury par yield curve rates (portal)",
+        "publisher": "U.S. Department of the Treasury",
+        "url": "https://home.treasury.gov/resource-center/data-chart-center/",
+        "docs": ("https://home.treasury.gov/resource-center/data-chart-center/"
+                 "interest-rates/TextView?type=daily_treasury_yield_curve"),
+        "what_it_gives": ("the official constant-maturity par yields the secondary leg "
+                          "is priced from, and the page a reviewer can open to see "
+                          "them without any code"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work.  The rate table is published for "
+                          "public use with no access restriction."),
+        "verified": "fetched 2026-09-18 as CSV for 2024, 2025 and 2026",
+    },
+    {
+        "id": "fed_h15_release",
+        "title": "Federal Reserve H.15: selected interest rates (release page)",
+        "publisher": "Board of Governors of the Federal Reserve System",
+        "url": "https://www.federalreserve.gov/releases/h15/",
+        "docs": "https://www.federalreserve.gov/releases/h15/",
+        "what_it_gives": ("the release the bill secondary-market rates and the TIPS real "
+                          "yields come from; FRED republishes the same observations, "
+                          "and the register keeps both so a reviewer can compare"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work published by the Federal Reserve Board "
+                          "for public use.  FRED's terms are recorded separately in "
+                          "the register row for the FRED copies."),
+        "verified": "series names DTB4WK/DTB3/DTB6 and DFII5/DFII10/DFII30 checked against the release",
+    },
+    {
+        "id": "ecfr_part_356",
+        "title": "31 CFR Part 356: sale and issue of marketable book-entry Treasury bills, notes and bonds",
+        "publisher": "U.S. Government Publishing Office (eCFR)",
+        "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/",
+        "docs": ("https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/"
+                 "subchapter-A/part-356"),
+        "what_it_gives": ("the auction rules the venue's primary leg follows: "
+                          "non-competitive bidding, the maximum award, award at the "
+                          "single price, and the price/yield formulas in the appendix"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work, published in the Code of Federal "
+                          "Regulations; public domain."),
+        "verified": "cited for the non-competitive award rule and the bill formulas",
+    },
+    {
+        "id": "sec_insider_sets",
+        "title": "SEC: insider transactions data sets (quarterly Form 3/4/5 extracts)",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/data-research/sec-markets-data/",
+        "docs": ("https://www.sec.gov/data-research/sec-markets-data/"
+                 "insider-transactions-data-sets"),
+        "what_it_gives": ("the quarterly ZIPs of every Form 3/4/5 as filed, flattened, "
+                          "which is the official record of insider purchases and sales "
+                          "the project's insider strategies need"),
+        "source_class": "OFFICIAL",
+        "license_basis": ("U.S. Government work; the SEC publishes the extracts for "
+                          "public download.  The collector records the HTTP status of "
+                          "every attempt in data/real/collection_manifest.json."),
+        "verified": ("2026-09-18: HTTP 403 from the runner at both documented path "
+                     "layouts, recorded as limitation L-27 rather than hidden"),
+    },
+    {
+        "id": "sec_insider_zip_paths",
+        "title": "SEC: insider data-set ZIP paths (both documented layouts)",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/files/structureddata/data/",
+        "docs": "https://www.sec.gov/files/insider_transactions_readme.pdf",
+        "what_it_gives": ("the two path layouts the quarterly ZIPs live under - "
+                          "/files/structureddata/data/ for older quarters and "
+                          "/files/datastandardsinnovation/data/ for the newest - and "
+                          "the README that defines every column the reader parses"),
+        "source_class": "OFFICIAL",
+        "license_basis": "U.S. Government work published for public download.",
+        "verified": "both layouts requested and their statuses recorded in the manifest",
+    },
+    {
+        "id": "sec_insider_alt_path",
+        "title": "SEC: insider data-set ZIP path, datastandardsinnovation layout",
+        "publisher": "U.S. Securities and Exchange Commission",
+        "url": "https://www.sec.gov/files/datastandardsinnovation/data/",
+        "docs": "https://www.sec.gov/files/insider_transactions_readme.pdf",
+        "what_it_gives": "the current path layout for the newest quarterly ZIP",
+        "source_class": "OFFICIAL",
+        "license_basis": "U.S. Government work published for public download.",
+        "verified": "requested by the collector; the response is in the manifest",
+    },
+    {
         "id": "treasurydirect_announced",
         "title": "TreasuryDirect: announced securities, not yet auctioned",
         "publisher": "U.S. Department of the Treasury, Bureau of the Fiscal Service",

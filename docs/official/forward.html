@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forward book · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../official/index.html">Overview</a><a class="" href="../official/leaderboard.html">Leaderboard</a><a class="" href="../official/blotter.html">Trade tape</a><a class="active" href="../official/forward.html">Forward book</a><a class="" href="../official/participants/index.html">Participants</a><a class="" href="../official/ledger.html">Trade store</a><a class="" href="../official/method.html">Venue &amp; formulas</a><a class="" href="../official/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../live/index.html">Live Book</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede">A strategy writes its orders after the close of the last settled
+session and they target sessions that have not happened. Today the book is holding
+<strong>12 pending intents</strong> as of
+2026-09-16. This is the honest state of a forward test on the
+day it opens: nothing is filled, nothing is marked up, and each order says which
+official record will settle it.</p>
+
+<section class="card "><h2>Settlement rule (venue policy, not an assumption)</h2>
+<p>A bid settles only when the official auction result for its CUSIP and auction date is collected; a secondary order settles only on a session the official par curve covers. Anything else stays PENDING with the reason recorded, and nothing fills at a modelled price.</p>
+<p>Because the venue has no fallback price, the pending list is also the list of open
+risk: an order that cannot settle simply sits there, and the run records why. The
+<a href="method.html">venue page</a> prints the maintenance, financing and leverage
+rules the orders will be settled under.</p>
+</section>
+<table class="data"><thead><tr><th>Target session</th><th>Username</th><th>Order</th><th>Side</th><th>Security</th><th>Face</th><th>Auction size</th><th>Issue date</th><th>Status</th><th>Rule</th><th>Written</th></tr></thead><tbody><tr><td>2026-09-17</td><td><a href="participants/BellyMeanReversion_FiveY.html">@BellyMeanReversion_FiveY</a></td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CRK9 <span class="muted small">91282CRK9</span></td><td>$466,900</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>buy the 5-year when it is more than 25 bp cheap to its 120-session mean</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/BillCarry_TenX.html">@BillCarry_TenX</a></td><td>AUCTION-BID</td><td>buy</td><td>4-Week <span class="muted small">912797VM6</span></td><td>$786,100</td><td>$90,000,000,000</td><td>2026-09-22</td><td><span class="badge badge-warn">PENDING</span></td><td>highest available bill yield at the 10x gross cap</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/ConcessionFade_Notes.html">@ConcessionFade_Notes</a></td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CNS6 <span class="muted small">91282CNS6</span></td><td>$706,800</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>exit five sessions after the auction</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/ConcessionFade_Notes.html">@ConcessionFade_Notes</a></td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CPH8 <span class="muted small">91282CPH8</span></td><td>$50,400</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>exit five sessions after the auction</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/ConcessionFade_Notes.html">@ConcessionFade_Notes</a></td><td>AUCTION-BID</td><td>buy</td><td>9-Year 10-Month <span class="muted small">91282CRE3</span></td><td>$522,800</td><td>$19,000,000,000</td><td>2026-09-30</td><td><span class="badge badge-warn">PENDING</span></td><td>bid the next announced note auction and exit five sessions after issue</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/CurveFlattener_2s10s.html">@CurveFlattener_2s10s</a></td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CRH6 <span class="muted small">91282CRH6</span></td><td>$368,800</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>short leg of the 2s10s flattener</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/CurveFlattener_2s10s.html">@CurveFlattener_2s10s</a></td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CRF0 <span class="muted small">91282CRF0</span></td><td>$375,800</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>long leg of the 2s10s flattener</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/CurveSteepener_2s10s.html">@CurveSteepener_2s10s</a></td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CRH6 <span class="muted small">91282CRH6</span></td><td>$321,200</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>long leg of the 2s10s steepener</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/CurveSteepener_2s10s.html">@CurveSteepener_2s10s</a></td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CRF0 <span class="muted small">91282CRF0</span></td><td>$327,300</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>short leg of the 2s10s steepener</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/DurationTrend_TenX.html">@DurationTrend_TenX</a></td><td>SECONDARY-ORDER</td><td>sell</td><td>91282CRF0 <span class="muted small">91282CRF0</span></td><td>$38,200</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>long the 10-year below its 60-session mean yield, short above</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/LiquidityWeighted_Participant.html">@LiquidityWeighted_Participant</a></td><td>AUCTION-BID</td><td>buy</td><td>4-Week <span class="muted small">912797VM6</span></td><td>$250,400</td><td>$90,000,000,000</td><td>2026-09-22</td><td><span class="badge badge-warn">PENDING</span></td><td>size the bill bid by official issue liquidity</td><td><span class="muted small">written 2026-09-16</span></td></tr><tr><td>2026-09-17</td><td><a href="participants/SOFRPivot_Switch.html">@SOFRPivot_Switch</a></td><td>SECONDARY-ORDER</td><td>buy</td><td>91282CRF0 <span class="muted small">91282CRF0</span></td><td>$1,600</td><td>—</td><td>—</td><td><span class="badge badge-warn">PENDING</span></td><td>own duration while SOFR&#x27;s 20-session change is negative</td><td><span class="muted small">written 2026-09-16</span></td></tr></tbody></table>
+<section class="card "><h2>The announced auction calendar the book is trading against</h2><table class="data"><thead><tr><th>Auction date</th><th>Type</th><th>Term</th><th>CUSIP</th><th>Offering</th><th>Issue date</th><th>Maturity</th><th>Announced</th></tr></thead><tbody><tr><td>2026-09-17</td><td>Bill</td><td>4-Week</td><td>912797VM6</td><td>$90,000,000,000</td><td>2026-09-22</td><td>2026-10-20</td><td>2026-09-15</td></tr><tr><td>2026-09-17</td><td>Bill</td><td>8-Week</td><td>912797VX2</td><td>$85,000,000,000</td><td>2026-09-22</td><td>2026-11-17</td><td>2026-09-15</td></tr><tr><td>2026-09-17</td><td>Note</td><td>9-Year 10-Month</td><td>91282CRE3</td><td>$19,000,000,000</td><td>2026-09-30</td><td>2036-07-15</td><td>2026-09-10</td></tr></tbody></table></section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

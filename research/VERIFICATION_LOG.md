@@ -648,3 +648,75 @@ liquidity model instead of a secondary file's volume column. The whole file cove
 roughly 13,000 symbols in about 69 page-sized chunks, so it is a job for the
 runner's collector, filtered to the traded universe before storage — recorded as a
 P1 item rather than half-collected here.
+
+## Official Auction Book session (2026-09-18 → 2026-09-19)
+
+This session added the lane the brief's first requirement names: **simulated settled
+trades built from real verified official pricing, dates and liquidity**. It is the
+first book on this site that may only execute on a number a publisher printed, so
+the log records the sources one by one and then the defects that reading its tape
+found.
+
+### The two official publishers, and what each one gave
+
+| Source | URL | What was verified |
+| --- | --- | --- |
+| TreasuryDirect auction results | <https://www.treasurydirect.gov/TA_WS/securities/auctioned> | Returned JSON rows for completed auctions with `pricePer100`, `highDiscountRate`, `highYield`, `highInvestmentRate`, `offeringAmount`, `totalAccepted`, `totalTendered`, `competitiveAccepted`, `nonCompetitiveAccepted`, `primaryDealerAccepted`, `indirectBidderAccepted`, `directBidderAccepted`, `somaAccepted`, `bidToCoverRatio`, `allocationPercentage`, `minimumToIssue`, `multiplesToIssue`, `maximumNonCompetitiveAward`, `reopening`, `tips`, `auctionDate`, `issueDate`, `maturityDate` |
+| TreasuryDirect results by date range | <https://www.treasurydirect.gov/TA_WS/securities/search> | The same fields for every auction in a window; this is what backs the season (471 auctions in the last-45-day window, 2,000 in the Fiscal Data table) |
+| Fiscal Data API | <https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query> | A second official publication of the same events with its own schema and field names. The collector compares **471 shared auctions on 11 fields — 4,251 comparisons, 0 differences**, written to `data/real/crosschecks/treasury_crosscheck.json` |
+| Treasury par yield curve | <https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/> | Official constant-maturity par yields, fetched per year (2024, 2025, 2026) and used to price the secondary leg by the formula printed on `docs/official/method.html` |
+| Federal Reserve H.15 | <https://www.federalreserve.gov/releases/h15/> | The release the bill secondary-market rates (`DTB4WK`, `DTB3`, `DTB6`) and the TIPS real yields (`DFII5`, `DFII10`, `DFII30`) come from; the FRED copies are the collected form, and `DTB*` was added in this session so a bill's secondary mark has an official quote instead of a curve-derived one |
+| 31 CFR Part 356 | <https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-356> | The auction rules the primary leg follows: non-competitive bidding, the maximum award, award at the single published price, and the price/yield formulas |
+| SEC insider data sets | <https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets> | **Attempted and refused**: HTTP 403 at both documented path layouts for all eight quarters requested. Recorded in `data/real/collection_manifest.json` and registered as L-27 |
+
+### Arithmetic checked against the published numbers
+
+* **1,485 published bill prices** reproduce from their own published discount rate
+  by `100 (1 − d t/360)` with **0 mismatches**, to 1e-4 of a cent.
+* The **investment-rate** check is partial and stays partial: 1,106 of 1,415
+  published rates match the 365-day convention (78.163%) and the mismatches imply a
+  1.0026–1.0028 day-count factor. The code reports the agreement rate and the
+  implied factors rather than switching conventions to force a match.
+* A 4-week bill auctioned 2026-09-17 (`912797VM6`) was re-priced by hand from its
+  published 3.820% discount rate and 28 days: formula price 99.702889, published
+  price 99.702889.
+
+### The publication the verification produced
+
+| Item | Value |
+| --- | --- |
+| Window | 2025-09-17 → 2026-09-16, 250 official sessions |
+| Participants | 14 strategies, one username each, $100,000 each |
+| Settled round trips | 160 from 243 fills and 2,814 intents |
+| Verification | **PASS** — 7,947 checks, 0 failures, largest equity residual $0.036 |
+| Official executed notional | 100% of this book's closed-trade notional (primary = published price; the secondary leg is labelled OFFICIAL-DERIVED) |
+| Irregularities in the run | **none** (look-ahead, target-not-forward, plan errors and ruin events all empty) |
+
+### Defects this session found, and how
+
+All three were found by re-reading one account's tape line by line, not by a
+failing test, and all three are registered:
+
+1. **IR-55 — the netting test was inverted.** `apply_fill()` closed lots of its own
+   direction, so a buy made the net long fall *and* the cash fall. A 2s10s
+   flattener went from +$134,817 to −$103,429 in one session and was wound up at
+   zero. The run's own verification passed while the engine was wrong, which is why
+   the fix added an account-level assertion (equity re-derived from fills and carry
+   rows) rather than only a regression test.
+2. **IR-56 — opposing lots accumulated in one CUSIP.** Exposure, financing and the
+   leverage cap were summed over lots rather than over the net position, so a rule
+   that traded both directions in one security was charged twice and allowed to add
+   size its real position did not justify.
+3. **IR-57 — a secondary trade was booked in a security that had not been issued.**
+   The price came from the par curve and the security was days from issuance, so the
+   tape carried a plausible, entirely invented number. The venue now refuses
+   when-issued trades with the issue date in the settlement note.
+
+### What the lane cannot do yet, stated on the site rather than in a footnote
+
+US equities and ETFs have no official, redistributable price in this repository
+(IR-58), so the equity books keep their SECONDARY label and the coverage number.
+The official lane answers that part of the brief with the instrument family where a
+publisher *does* print the price of every trade: US Treasury auctions. The
+limitations that remain are registered as L-27 to L-35, and the next session's
+queue is in `REMAINING_WORK.json`, headed by the SEC 403.

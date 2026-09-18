@@ -229,5 +229,61 @@
   "priority": "P2",
   "effort": "one line plus a test that evaluates the annotation",
   "where": "sim/realdata.py, sim/season2.py, tests/"
+ },
+ {
+  "title": "Get the SEC insider extracts past the 403 and turn the insider rules on",
+  "detail": "Eight quarters x two documented path layouts were answered HTTP 403 from the GitHub runner (L-27), so the insider lane, and the MasterSite insider signal with it, has no official data and plans no orders. Probe the request from a second egress, check SEC's current bot-header guidance against what the collector sends, and register whichever of the two layouts is live this quarter before requesting the archive.",
+  "priority": "P0",
+  "effort": "half a day of probing, then one collection run",
+  "where": "scripts/collect_real_data.py (collect_insider_bulk), sim/treasury.py, data/real/insider_bulk/"
+ },
+ {
+  "title": "Price the secondary leg from a licensed tape, or cap it at the auction's own size",
+  "detail": "The official lane's secondary fills are derived from the official curve and labelled OFFICIAL-DERIVED (L-28, L-32). Either licence a secondary Treasury tape so the executed price is a published transaction, or cap a secondary fill at a multiple of the auction's own non-competitive accepted amount and re-run, so the tape shows the size limit rather than assuming unlimited depth at the derived price.",
+  "priority": "P1",
+  "effort": "licensing review plus one season re-run",
+  "where": "sim/officialbook.py, data/real/treasury/, research/LIMITATIONS.json"
+ },
+ {
+  "title": "Split trade date from settlement date on auction awards",
+  "detail": "The venue books an award and its cash on the auction date (L-30). Introduce the published issue date as the settlement date, charge the declared repo between the two dates, and publish the difference against the current numbers so a reader can see how much the simplification was worth.",
+  "priority": "P1",
+  "effort": "one day plus one season re-run",
+  "where": "sim/officialbook.py (settle), memory/official/, docs/official/method.html"
+ },
+ {
+  "title": "Collect the Treasury reference CPI and index ratios so TIPS accrue inflation",
+  "detail": "TIPS are marked as clean real prices with no indexation (L-29). The Treasury publishes the daily reference CPI and the index ratios for each TIPS CUSIP; collecting them makes the inflation accrual a published number rather than an omission, which then flows through coupons, cash and the P&L of the inflation rules.",
+  "priority": "P1",
+  "effort": "half a day in the collector plus one re-run",
+  "where": "scripts/collect_real_data.py, sim/treasury.py, sim/officialbook.py"
+ },
+ {
+  "title": "Publish the venue's margin schedule as a table with a source per row",
+  "detail": "The 5% maintenance rule is this venue's declaration (L-31). Replace the single number with a per-security-tenor schedule, cite a published source for each row (Reg T, NYSE Rule 431, or cleared-repo haircuts), and re-run so the survivorship difference between the two regimes is visible rather than asserted.",
+  "priority": "P2",
+  "effort": "a day of reading rules plus one re-run",
+  "where": "sim/officialbook.py, docs/official/method.html, research/LIMITATIONS.json"
+ },
+ {
+  "title": "Repoint the gold signal's register row at a live publisher",
+  "detail": "sim/masterfeed.py still cites the FRED AM-fix series as the gold signal's official URL; FRED removed the LBMA series on 2022-01-31 and every request is a 404 (IR-59). Choose a publisher whose terms permit redistribution, or mark the row as discontinued at the source and keep the GLD instrument price as the tradable leg, then re-render the MasterFeed page.",
+  "priority": "P1",
+  "effort": "an hour of reading series pages, then one site rebuild",
+  "where": "sim/masterfeed.py, sim/realdata.py, research/MASTER_SITE_SIGNALS.md"
+ },
+ {
+  "title": "Re-probe the Fiscal Data API for a v2 auctions path",
+  "detail": "v1 answers and v2 404s today (IR-60). A short probe each collection run, recorded in the manifest, keeps the lane on the current version and turns the discrepancy into a dated observation rather than a note.",
+  "priority": "P2",
+  "effort": "one probe in the collector, no re-run needed",
+  "where": "scripts/collect_real_data.py, data/real/collection_manifest.json"
+ },
+ {
+  "title": "Give the forwarded book a published settlement schedule",
+  "detail": "The pending orders settle when the official record for their target session exists. Add a scheduled workflow that re-runs the official season at each auction settlement, commits the new tape and regenerates the site, so the forward book advances without a human dispatch - the same property the live book's reviewer asked for and this lane can actually deliver, because its settlement inputs are official files rather than a market feed.",
+  "priority": "P1",
+  "effort": "one workflow plus a season of patience",
+  "where": ".github/workflows/, sim/official_season.py, docs/official/forward.html"
  }
 ]

@@ -39,6 +39,13 @@ jobs:
       - name: Memory checksums and data audits
         run: python -m sim.cli verify
 
+      # The audit imports nothing from sim/: it re-derives the official book from
+      # the Treasury's tape files and the run's streams with its own arithmetic,
+      # which is the only way a mistake shared by the engine and its own
+      # verification becomes visible.
+      - name: Independent audit of the official auction book
+        run: python scripts/independent_audit_official.py
+
       # The three official FRED series retrieved with the page-fetch tool were
       # transcribed by hand, which is the one place a wrong digit could have
       # entered the repository. This checks them structurally, against the

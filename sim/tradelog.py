@@ -151,9 +151,16 @@ def from_official_run(run_dir: str) -> List[dict]:
                  "source_class": ("OFFICIAL" if trip.get("exit_kind") ==
                                   "MATURITY-REDEMPTION" else "OFFICIAL-DERIVED"),
                  "evidence": exit_evidence}
+        # The ledger records the economics the account actually earned: the
+        # price component plus coupons, less financing and fees.  The price
+        # component is kept beside it, because a duration call is judged on it.
+        value = trip.get("total_pnl")
+        if value is None:
+            value = (trip.get("pnl") or 0.0) + (trip.get("coupon_income") or 0.0) \
+                - (trip.get("financing") or 0.0) - (trip.get("fees") or 0.0)
         row = _trade("Official Auction Book", trip.get("participant", ""),
                      trip.get("cusip", ""), trip.get("direction", "long"),
-                     trip.get("face"), entry, exit_, trip.get("pnl"),
+                     trip.get("face"), entry, exit_, value,
                      extra={"instrument_name": trip.get("security_term"),
                             "instrument_type": trip.get("security_type"),
                             "strategy_trip_id": trip.get("trip_id")})
@@ -176,11 +183,22 @@ def from_official_run(run_dir: str) -> List[dict]:
                 "sha256": evidence.get("sha256"),
                 "derivation": evidence.get("derivation"),
                 "cross_checked_by": evidence.get("cross_checked_by")})
+        # Two levels, both published: was the ENTRY price a published print, and
+        # were BOTH legs.  A primary award sold in the secondary market has an
+        # official entry and a derived exit, and saying so is the difference
+        # between a coverage claim and a coverage measurement.
+        row["entry_price_class"] = ("OFFICIAL"
+                                    if trip.get("entry_kind") == "PRIMARY-AUCTION"
+                                    else "OFFICIAL-DERIVED")
+        row["exit_price_class"] = ("OFFICIAL"
+                                   if trip.get("exit_kind") == "MATURITY-REDEMPTION"
+                                   else "OFFICIAL-DERIVED")
         row["official_execution_price"] = (
-            trip.get("exit_kind") == "MATURITY-REDEMPTION"
-            and trip.get("entry_kind") in ("PRIMARY-AUCTION",))
+            row["entry_price_class"] == "OFFICIAL"
+            and row["exit_price_class"] == "OFFICIAL")
         row["price_class"] = ("OFFICIAL" if row["official_execution_price"]
                               else "OFFICIAL-DERIVED")
+        row["price_pnl_usd"] = trip.get("pnl")
         out.append(row)
     return out
 
@@ -369,6 +387,16 @@ def coverage(trades: Sequence[dict]) -> dict:
     official = totals["by_price_class"].get("OFFICIAL", {})
     totals["official_executed_notional_pct"] = official.get("notional_share_pct")
     totals["official_trades"] = official.get("trades", 0)
+    # A second, weaker measure: notional whose ENTRY price was a published print,
+    # whatever happened on the way out.  The two numbers are printed side by side
+    # so neither can be quoted as the other.
+    entry_notional = sum(float(t.get("notional_usd") or 0.0) for t in trades
+                         if t.get("entry_price_class") == "OFFICIAL")
+    totals["official_entry_notional_pct"] = (
+        round(100.0 * entry_notional / totals["notional_usd"], 4)
+        if totals["notional_usd"] else None)
+    totals["official_entry_trades"] = sum(
+        1 for t in trades if t.get("entry_price_class") == "OFFICIAL")
     return totals
 
 

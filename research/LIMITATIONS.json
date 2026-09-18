@@ -180,5 +180,68 @@
   "severity": "high",
   "detail": "The real forward state of the live book is 16 pending intents planned on 2026-09-16 and aimed at 2026-09-17. Nothing has settled, no cash has moved, and the book correctly reports no return. The only measurable result today is the walk-forward rehearsal over already-collected sessions, which is a different (and weaker) claim than a live track record.",
   "fix": "Settle the pending book as soon as a verified bar for a target session exists, which needs either a licensed feed or the collection workflow running on a schedule."
+ },
+ {
+  "id": "L-27",
+  "title": "The SEC insider extracts are not yet collected (HTTP 403 from the runner)",
+  "severity": "high",
+  "detail": "The official lane's insider strategies and the MasterSite insider signal both need the SEC's quarterly Form 3/4/5 structured extracts. On the collection run of 2026-09-18 the runner was answered HTTP 403 at both documented path layouts for every quarter requested (eight quarters x two layouts), and data/real/insider_bulk/ is empty. Every attempt is recorded with its status in data/real/collection_manifest.json, so this is evidence rather than silence, but it means no insider rule can trade on official insider data yet.",
+  "fix": "Correct the request (SEC's published bot headers, a longer back-off, or a different egress), or fetch the same extracts by hand from a network SEC accepts and commit them with the same SHA-256 ledger the other files carry."
+ },
+ {
+  "id": "L-28",
+  "title": "The official book's secondary leg is derived, not published",
+  "severity": "high",
+  "detail": "No free, redistribution-permitted publisher prints a secondary market trade tape for US Treasuries. The venue prices a secondary order from the Treasury's official par yield curve or from the H.15 bill discount rates by a formula printed on the venue page, and labels those fills OFFICIAL-DERIVED rather than OFFICIAL. The price is a function of a published observation, not a published transaction, and on the published run about 61% of closed-trade notional is in that class.",
+  "fix": "Acquire a licence for a secondary trade tape (BrokerTec, Tradeweb, or the FRBNY's Treasury market data products) or replace the derived leg with a published benchmark whose terms permit redistribution."
+ },
+ {
+  "id": "L-29",
+  "title": "TIPS are marked as clean real prices: no indexation is modelled",
+  "severity": "medium",
+  "detail": "An inflation-protected security's cash flows depend on the daily reference CPI index ratio applied to principal and coupon. The official lane discounts a TIPS at the official H.15 real yield for its tenor, which gives a clean real price, and does not collect the reference index series, so it understates the inflation accrual of a TIPS position held over the season. Every TIPS mark carries an 'indexation' note saying exactly this.",
+  "fix": "Collect the Treasury's daily reference CPI and index ratios for the traded CUSIPs and carry the accrued inflation into the coupon and cash flows, or restrict the lane to nominal securities and label the TIPS rule as a research-only variant."
+ },
+ {
+  "id": "L-30",
+  "title": "Auction awards are booked on the auction date with same-day cash",
+  "severity": "medium",
+  "detail": "A non-competitive award is priced at the auction, and the security is delivered and paid for on the published issue date, typically two to five business days later. The venue books the fill and the cash on the auction date so that every trade has one date, which is a declared simplification: it flatters a strategy that would have to fund the purchase between the two dates, and the declared financing terms are applied to whatever cash balance results.",
+  "fix": "Split the fill into a trade date and a settlement date, charge the repo between them, and re-run the season to publish the difference."
+ },
+ {
+  "id": "L-31",
+  "title": "The venue's maintenance rule is a house rule, not a regulation",
+  "severity": "medium",
+  "detail": "The book closes a position when equity falls below 5% of gross exposure and winds an account up at zero equity. Real margin on Treasury positions is set by the counterparty and varies with tenor, collateral and clearing arrangements (Reg T initial margin, NYSE Rule 431 maintenance, and cleared-repo haircuts all differ), so the 5% rule is this venue's declaration rather than a citation. It is stated in the manifest, printed on the venue page, and applied identically to every participant.",
+  "fix": "Adopt a per-security haircut schedule with a published source for each row, then re-run and report how much of the difference in survivorship it explains."
+ },
+ {
+  "id": "L-32",
+  "title": "Secondary liquidity is assumed, not measured",
+  "severity": "medium",
+  "detail": "Primary fills carry the auction's own liquidity statistics (offering amount, total accepted, competitive tendered, bid-to-cover) and the book records the request as a percentage of each. Secondary fills in an issued security execute at the derived price for any size the leverage cap allows, because no free publisher reports Treasury secondary depth. A very large secondary order therefore pays no spread and leaves no footprint, which is the same weakness the equity books record as L-23.",
+  "fix": "Record a secondary-size limit per CUSIP from a licensed depth source, or cap secondary fills at a multiple of the auction's own non-competitive accepted amount and re-run."
+ },
+ {
+  "id": "L-33",
+  "title": "The unified trade ledger mixes price classes; its totals are not additive",
+  "severity": "medium",
+  "detail": "The ledger normalises every closed trade from every book into one store so the same record can be re-used for analysis. The four books do not trade on the same kind of price: OFFICIAL and OFFICIAL-DERIVED rows rest on a government publisher's number, MODELLED rows are simulated paths, and SECONDARY rows are an aggregator's bars. Adding P&L across classes would produce a number with no meaning, so every published view of the ledger is split by class and the site prints the split beside the total.",
+  "fix": "Keep the classes but add a per-class benchmark line, so a reader can see whether a class's aggregate P&L is explained by its own market rather than by the mix."
+ },
+ {
+  "id": "L-34",
+  "title": "The official lane's sessions are the yield curve's business days",
+  "severity": "low",
+  "detail": "The book's session calendar is the set of dates the official par yield curve covers. The Treasury publishes that curve on business days, including days when the securities market is closed (for example a federal holiday that is not a market holiday, or the reverse). A session on which a secondary order could not really have traded therefore appears in the tape, and no such session is filtered out.",
+  "fix": "Intersect the curve's dates with the published market calendar the equity books already carry, and re-run the season on the intersection."
+ },
+ {
+  "id": "L-35",
+  "title": "Insider strategies and the MasterSite insider signal remain unbacked",
+  "severity": "medium",
+  "detail": "The brief asks for insider-trade signals from the MasterSite review. The signal is defined and the strategy is on the roster, but with the SEC extracts refused (L-27) there is no official insider transaction data in the repository, so any participant trading that signal would be trading on nothing. The rule therefore plans no orders and the participant page says why, rather than substituting a secondary aggregator for an official filing.",
+  "fix": "Resolve L-27, then run the insider rules over the collected quarters and publish their trade tapes alongside the others."
  }
 ]

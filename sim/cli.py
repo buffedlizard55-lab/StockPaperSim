@@ -441,6 +441,17 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         return rc
 
     try:
+        # The official auction book is written before the live book so the
+        # published-site tests see its pages when they walk docs/; like every
+        # other builder it owns its own directory.
+        import build_site_official  # type: ignore
+        official_written = build_site_official.build(args.memory_root, args.out)
+        print(f"  official auction book: {len(official_written)} pages under "
+              f"docs/official/")
+    except SystemExit as exc:
+        print(f"  official auction book: SKIPPED - {exc}")
+
+    try:
         # The live book is a third section and its own builder, called between
         # the two for the same reason Season 2 is called after Season 1: each
         # builder owns its directory and CI diffs the whole tree afterwards.
@@ -483,6 +494,16 @@ def cmd_build_site(args: argparse.Namespace) -> int:
                     "</nav>",
                     f'<a href="{"../" * depth}live/index.html">Live Book</a></nav>', 1) \
                     if "live/index.html" not in injected else injected
+                # The Official Auction Book is the fourth section, and this is
+                # the section the brief's first requirement is answered by: it
+                # is the only book on the site that may execute on a price a
+                # publisher printed.  Its nav entry is injected here with the
+                # others so a Season-1-only build stays link-clean.
+                injected = injected.replace(
+                    "</nav>",
+                    f'<a href="{"../" * depth}official/index.html">Official Book'
+                    f'</a></nav>', 1) \
+                    if "official/index.html" not in injected else injected
                 if injected != html:
                     with open(page_path, "w", encoding="utf-8") as handle:
                         handle.write(injected)
@@ -1032,8 +1053,8 @@ def cmd_trades(args: argparse.Namespace) -> int:
                              key=lambda kv: -kv[1]["notional_usd"]):
         print(f"{klass:40s}{row['trades']:8d}{row['notional_usd']:16,.2f}"
               f"{row['notional_share_pct']:10.4f}{row['pnl_usd']:14,.2f}")
-    print(f"{'':40s}{'':8s}{'':16s}{'official %':>10s}"
-          f"{coverage['official_executed_notional_pct']!s:>14s}")
+    print(f"  both legs official: {coverage['official_executed_notional_pct']}% of "
+          f"notional · official entry: {coverage['official_entry_notional_pct']}%")
     print("\nby book:")
     for book, row in sorted(coverage["by_book"].items(),
                             key=lambda kv: -kv[1]["notional_usd"]):

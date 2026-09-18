@@ -368,6 +368,16 @@ class Trip:
     liquidity: dict
     direction: str
 
+    def total_pnl(self) -> float:
+        """Price P&L plus coupons, less financing and fees.
+
+        ``pnl`` on its own is the price component, which is what a duration call
+        is judged on; the total is what the account actually kept, and both are
+        published because a coupon-paying position held to maturity has a
+        meaningful total and a near-zero price P&L.
+        """
+        return self.pnl + self.coupons - self.financing - self.fees
+
     def to_row(self) -> dict:
         cost = abs(self.face * self.entry_price / 100.0) or 1.0
         return {
@@ -383,7 +393,8 @@ class Trip:
             "financing": round(self.financing, 2),
             "fees": round(self.fees, 2),
             "pnl": round(self.pnl, 2),
-            "return_on_cost_pct": round(100.0 * self.pnl / cost, 6),
+            "total_pnl": round(self.total_pnl(), 2),
+            "return_on_cost_pct": round(100.0 * self.total_pnl() / cost, 6),
             "holding_days": _days_between(self.entry_date, self.exit_date),
             "liquidity": self.liquidity,
             "source_class": "OFFICIAL",
@@ -804,7 +815,14 @@ class OfficialBook:
     def submit(self, strategy: OfficialStrategy, kind: str, session: str,
                cusip: str, side: str, face: float, rule: str, rationale: str,
                evidence: Optional[dict] = None) -> Optional[Intent]:
-        account = self.accounts[strategy.username]
+        return self._write_intent(strategy.username, kind, session, cusip, side,
+                                  face, rule, rationale, evidence)
+
+    def _write_intent(self, participant: str, kind: str, session: str,
+                      cusip: str, side: str, face: float, rule: str,
+                      rationale: str,
+                      evidence: Optional[dict] = None) -> Optional[Intent]:
+        account = self.account_for(participant)
         if face is None or abs(face) < 1.0:
             return None
         if not session:
@@ -813,18 +831,40 @@ class OfficialBook:
             return None
         if session <= self._planning_session:
             self.flag("TARGET-NOT-FORWARD", "critical",
-                      f"{strategy.username} tried to trade {session} from "
+                      f"{participant} tried to trade {session} from "
                       f"{self._planning_session}",
-                      participant=strategy.username, session=self._planning_session)
+                      participant=participant, session=self._planning_session)
             return None
-        intent = Intent(intent_id=self.next_intent_id(strategy.username),
-                        participant=strategy.username, kind=kind, session=session,
+        intent = Intent(intent_id=self.next_intent_id(participant),
+                        participant=participant, kind=kind, session=session,
                         cusip=cusip, side=side, face=abs(face), rule=rule,
                         rationale=rationale, created_on=self._planning_session,
                         evidence=dict(evidence or {}))
         account.intents.append(intent)
         self.intents.append(intent)
         return intent
+
+    # -- accounts and orders ----------------------------------------------
+    def account_for(self, participant: str) -> OfficialAccount:
+        """The account for a participant, created on first use.
+
+        The season roster creates one account per strategy; this exists so the
+        venue's rules can be exercised on a single account (the tests do exactly
+        that, one rule at a time), and so a reader can drive the book by hand.
+        """
+        if participant not in self.accounts:
+            self.accounts[participant] = OfficialAccount(participant,
+                                                         self.starting_cash)
+            self.leverage_caps.setdefault(participant, MAX_GROSS_LEVERAGE)
+        return self.accounts[participant]
+
+    def submit_book_intent(self, participant: str, kind: str, session: str,
+                           cusip: str, side: str, face: float, rule: str,
+                           rationale: str,
+                           evidence: Optional[dict] = None) -> Optional[Intent]:
+        """Write an order for a participant without a strategy object."""
+        return self._write_intent(participant, kind, session, cusip, side, face,
+                                  rule, rationale, evidence)
 
     # -- settlement --------------------------------------------------------
     def settle(self, session: str) -> dict:

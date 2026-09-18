@@ -1,0 +1,485 @@
+{
+ "participant": "@ConcessionFade_Notes",
+ "family": "auction cycle",
+ "thesis": "Buy the new note at auction - where dealers are paid to absorb supply - and sell it on the fifth session after issue, when the concession has typically been given back. The entry price is the Treasury's printed auction price and the exit is the par curve's own mark, so the trade's two ends are both official numbers.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 3-Year 91282CPC9 (long, primary-auction to secondary-curve) 2025-10-07 to 2025-10-16 for $278.05.",
+  "2 of 2 closed trades made money; coupons paid $0.00 and financing cost $-39,388.72.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@ConcessionFade_Notes",
+  "family": "auction cycle",
+  "final_equity": 70874.44,
+  "return_pct": -29.1256,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -29.1379,
+  "sharpe": -2.6143,
+  "trades": 2,
+  "open_positions": 2,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -39388.72,
+  "cash_credit": 17.38,
+  "realised_pnl": 308.22,
+  "margin_events": 0,
+  "intents": 603,
+  "filled_intents": 6,
+  "waiting_intents": 380,
+  "rejected_intents": 82,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 8
+ },
+ "intents": [
+  {
+   "intent_id": "ConcessionFade_Notes-00001",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-09-17",
+   "target_session": "2025-09-18",
+   "cusip": "91282CNS6",
+   "side": "buy",
+   "face": 706800.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "9-Year 10-Month 91282CNS6 announced 2025-09-11 for auction 2025-09-18",
+   "status": "FILLED",
+   "settled_on": "2025-09-18",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-09-11",
+     "auction_date": "2025-09-18",
+     "security_term": "9-Year 10-Month",
+     "offering_amount": 19000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00001",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-09-18",
+    "cusip": "91282CNS6",
+    "side": "buy",
+    "face": 706800.0,
+    "price_per100": 101.872346,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -720033.74,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 19000000000.0,
+     "total_accepted": 20049149800.0,
+     "noncompetitive_accepted": 43188100.0,
+     "competitive_accepted": 18956812500.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.2,
+     "soma_accepted": 1049149200.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 1.63656192,
+     "request_as_pct_of_total_accepted": 0.00352534,
+     "request_as_pct_of_offering": 0.00372
+    },
+    "closed_face": 0.0,
+    "opened_face": 706800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00004",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-09-22",
+   "target_session": "2025-09-23",
+   "cusip": "91282CPB1",
+   "side": "buy",
+   "face": 717200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "2-Year 91282CPB1 announced 2025-09-18 for auction 2025-09-23",
+   "status": "PARTIAL",
+   "settled_on": "2025-09-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-09-18",
+     "auction_date": "2025-09-23",
+     "security_term": "2-Year",
+     "offering_amount": 69000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00004",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-09-23",
+    "cusip": "91282CPB1",
+    "side": "buy",
+    "face": 75800.0,
+    "price_per100": 99.864119,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -75697.0,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "noncompetitive_accepted": 313227000.0,
+     "competitive_accepted": 68681817300.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.51,
+     "soma_accepted": 3810068500.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.0241997,
+     "request_as_pct_of_total_accepted": 0.00010411,
+     "request_as_pct_of_offering": 0.00010986
+    },
+    "closed_face": 0.0,
+    "opened_face": 75800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00011",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-30",
+   "target_session": "2025-10-01",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 75800.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-10-01",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-30"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00011",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-01",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 75800.0,
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 75727.17,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 75800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00018",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-06",
+   "target_session": "2025-10-07",
+   "cusip": "91282CPC9",
+   "side": "buy",
+   "face": 706200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "3-Year 91282CPC9 announced 2025-10-02 for auction 2025-10-07",
+   "status": "PARTIAL",
+   "settled_on": "2025-10-07",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-02",
+     "auction_date": "2025-10-07",
+     "security_term": "3-Year",
+     "offering_amount": 58000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00018",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-07",
+    "cusip": "91282CPC9",
+    "side": "buy",
+    "face": 63100.0,
+    "price_per100": 99.785614,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -62964.72,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 59076806400.0,
+     "noncompetitive_accepted": 153610300.0,
+     "competitive_accepted": 57841524400.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.66,
+     "soma_accepted": 1076671700.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.04107797,
+     "request_as_pct_of_total_accepted": 0.00010681,
+     "request_as_pct_of_offering": 0.00010879
+    },
+    "closed_face": 0.0,
+    "opened_face": 63100.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00026",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-15",
+   "target_session": "2025-10-16",
+   "cusip": "91282CPC9",
+   "side": "sell",
+   "face": 63100.0,
+   "rule": "exit five sessions after the auction",
+   "rationale": "concession fade",
+   "status": "FILLED",
+   "settled_on": "2025-10-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-15"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00026",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-16",
+    "cusip": "91282CPC9",
+    "side": "sell",
+    "face": 63100.0,
+    "price_per100": 100.226267,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 63242.77,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 58000000000.0,
+     "total_accepted": 59076806400.0,
+     "bid_to_cover": 2.66,
+     "competitive_tendered": null,
+     "security_term": "3-Year",
+     "auction_date": "2025-10-07"
+    },
+    "closed_face": 63100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "ConcessionFade_Notes-00036",
+   "participant": "@ConcessionFade_Notes",
+   "kind": "AUCTION-BID",
+   "created_on": "2025-10-22",
+   "target_session": "2025-10-23",
+   "cusip": "91282CPH8",
+   "side": "buy",
+   "face": 694200.0,
+   "rule": "bid the next announced note auction and exit five sessions after issue",
+   "rationale": "5-Year 91282CPH8 announced 2025-10-16 for auction 2025-10-23",
+   "status": "PARTIAL",
+   "settled_on": "2025-10-23",
+   "settle_note": "filled at the official auction price",
+   "evidence": {
+    "auction_notice": {
+     "observation_date": "2025-10-16",
+     "auction_date": "2025-10-23",
+     "security_term": "5-Year",
+     "offering_amount": 26000000000.0,
+     "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+     "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+     "publisher": "U.S. Department of the Treasury (Fiscal Data API)"
+    }
+   },
+   "fill": {
+    "intent_id": "ConcessionFade_Notes-00036",
+    "participant": "@ConcessionFade_Notes",
+    "session": "2025-10-23",
+    "cusip": "91282CPH8",
+    "side": "buy",
+    "face": 50400.0,
+    "price_per100": 99.873728,
+    "kind": "PRIMARY-AUCTION",
+    "cash_delta": -50336.36,
+    "note": "non-competitive award at the official price",
+    "liquidity": {
+     "offering_amount": 26000000000.0,
+     "total_accepted": 27492981400.0,
+     "noncompetitive_accepted": 142992700.0,
+     "competitive_accepted": 25857015600.0,
+     "competitive_tendered": null,
+     "bid_to_cover": 2.51,
+     "soma_accepted": 1492973100.0,
+     "maximum_noncompetitive_award": 10000000.0,
+     "minimum_to_issue": 100.0,
+     "multiples_to_issue": 100.0,
+     "request_as_pct_of_noncompetitive_accepted": 0.03524655,
+     "request_as_pct_of_total_accepted": 0.00018332,
+     "request_as_pct_of_offering": 0.00019385
+    },
+    "closed_face": 0.0,
+    "opened_face": 50400.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 75800.0,
+   "entry_date": "2025-09-23",
+   "entry_price_per100": 99.864119,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-09-23",
+    "issue_date": "2025-09-30",
+    "maturity_date": "2027-09-30",
+    "field": "pricePer100",
+    "value": 99.864119,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-10-01",
+   "exit_price_per100": 99.903918,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 30.17,
+   "total_pnl": 30.17,
+   "return_on_cost_pct": 0.039853,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@ConcessionFade_Notes",
+   "cusip": "91282CPC9",
+   "security_type": "Note",
+   "security_term": "3-Year",
+   "direction": "long",
+   "face": 63100.0,
+   "entry_date": "2025-10-07",
+   "entry_price_per100": 99.785614,
+   "entry_kind": "PRIMARY-AUCTION",
+   "entry_evidence": {
+    "source": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
+    "sha256": "a75fcacb278f7104b692de22cb5d667a1b7bf34aebadf85c45200e63848375a2",
+    "publisher": "U.S. Department of the Treasury (Fiscal Data API)",
+    "auction_date": "2025-10-07",
+    "issue_date": "2025-10-15",
+    "maturity_date": "2028-10-15",
+    "field": "pricePer100",
+    "value": 99.785614,
+    "cross_checked_by": "Fiscal Data API"
+   },
+   "exit_date": "2025-10-16",
+   "exit_price_per100": 100.226267,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.226267,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.42,
+     "remaining_years": 3.0,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 278.05,
+   "total_pnl": 278.05,
+   "return_on_cost_pct": 0.4416,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 58000000000.0,
+    "total_accepted": 59076806400.0,
+    "bid_to_cover": 2.66,
+    "competitive_tendered": null,
+    "security_term": "3-Year",
+    "auction_date": "2025-10-07"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

@@ -40,7 +40,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 54 flags this project raised against itself.
+> carries the 60 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -226,6 +226,64 @@ from the venue assumptions rather than from a fabricated seed panel.
 
 ---
 
+## The Official Auction Book: trades that executed at a published price
+
+Seasons 1 and 2 trade equities on a *simulated* price path; the Live Book trades
+collected bars that are real but **SECONDARY**, so neither can claim an official
+executed price. The brief's first requirement was the opposite: *simulated
+settled trades built from real verified official pricing, dates and liquidity*.
+
+The **Official Auction Book** (`sim/treasury.py`, `sim/officialbook.py`,
+`sim/strategies_official.py`, `sim/official_season.py`) is that book. It trades
+instruments whose price the **U.S. Treasury publishes**, and it cannot reach any
+other price: there is no code path from a Yahoo or Stooq file into this engine,
+and the verification block fails the run if one is introduced.
+
+| Where a price comes from | Class | Example |
+|---|---|---|
+| The Treasury's published auction result for that CUSIP | **OFFICIAL** | `pricePer100` / `highPrice` on a 4-week bill or a 10-year note |
+| The Treasury's official par yield curve, or the H.15 bill discount rates | **OFFICIAL-DERIVED** | a secondary mark, by the formula printed on the venue page |
+| Nothing at all | — | the order waits, and says so, rather than filling at a modelled price |
+
+**The competition, as declared before the first session.** 14 strategies, one
+username each, $100,000 each, 2025-09-17 → 2026-09-16 (250 official sessions),
+ranked on ending equity and nothing else. No risk-management rule: a participant
+may run at its own declared leverage cap and may be wiped out — the venue closes
+positions at the official mark when equity falls below 5% of gross exposure, and
+an account that reaches zero is wound up at exactly −100% and stops trading.
+
+**Result.** 160 settled round trips from 243 fills and 2,814 intents; the winner
+is `@DurationTrend_TenX` at **+18.25%**, and the median is negative. Financing is
+SOFR + 25 bp on debits and shorts and idle cash earns SOFR, which is why a
+participant that never traded can still show a small positive return. Every trade
+row carries its entry and exit price, both dates, the auction's own offering
+amount and bid-to-cover, the field name the price came from and that file's
+SHA-256.
+
+**Verification, twice.** `sim/official_season.py` re-reads the tape and checks
+eight families of property (published price on every primary fill, bill price
+formula on every published bill price, two-publisher agreement, no look-ahead, no
+equity residual, maturity dates, price classes, and no reachable secondary path):
+**7,947 checks, 0 failures**. Then
+`scripts/independent_audit_official.py` — which imports **nothing** from `sim/`
+and re-derives everything from the raw Treasury tapes and the run's own streams —
+adds **1,624 checks**, including the two-publisher comparison on every primary
+price the book actually executed.
+
+**What it cannot do, and says so.** An equity or ETF price that is official *and*
+redistributable does not exist for this project (Nasdaq's normalised archive
+needs an entitlement; the free publisher pages forbid redistribution), so the
+equity books stay SECONDARY and the coverage number stays visible. The official
+lane answers that part of the brief with the instrument family where a publisher
+prints the price of every trade. The remaining gaps are registered as **L-27** to
+**L-35** — the withheld SEC insider extracts (HTTP 403 from the collection
+runner), the derived secondary leg, TIPS marked without inflation indexation,
+same-day settlement of auction awards, a house maintenance rule rather than a
+cited one, assumed secondary depth, and the mixed-class totals in the unified
+trade store.
+
+---
+
 ## The Live Book: trades placed for sessions that have not happened yet
 
 Seasons 1 and 2 both decide *and* execute inside the same session: a strategy
@@ -380,6 +438,14 @@ sim/            the engine - pure standard library, no third-party imports
   engine.py         the competition loop, accounts, margin, liquidation
   strategies.py     the 20 participants, each with academic_basis and thesis
   analytics.py      risk, attribution, robustness, post-mortem narratives
+  treasury.py       the official lane's sources: auction tape, par curve, awards,
+                    31 CFR 356 helpers, the official-source register
+  officialbook.py   the Official Auction Book: intents, netted fills, coupons,
+                    repo financing, the declared maintenance and ruin rules
+  strategies_official.py the 14 official participants, each with thesis and sources
+  official_season.py run + verify + post-mortem narratives + forward snapshot
+  tradelog.py       the unified trade store: every closed trade, every book,
+                    price class per leg, CSV + JSONL + coverage
   live.py           the forward book: official series, intents, settlement, margin
   live_season.py    the rehearsal and the real forward book, published side by side
   strategies_live.py the 19 live participants, each with plan(ctx) and a data status
@@ -387,9 +453,10 @@ sim/            the engine - pure standard library, no third-party imports
   cli.py            run / leaderboard / report / verify / query / export /
                     irregularities / sources / build-site
 scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
-                independent_audit.py (re-derives every published number from
-                the raw event streams; imports no project code)
-tests/          473 tests - engine, venue, memory, site, live book, registers, docs, README,
+                independent_audit.py and independent_audit_official.py
+                (re-derive every published number from the raw streams and the
+                Treasury's own tapes; import no project code)
+tests/          491 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -397,10 +464,11 @@ memory/         the audit trail: one directory per run, gzipped event streams,
                 per-file SHA-256 manifest, per-participant reports; memory/live/
                 holds the forward book and its walk-forward rehearsal
 docs/           the published site (GitHub Pages serves this directory);
-                docs/live/ is the Live Book section
+                docs/live/ is the Live Book section and docs/official/ the
+                Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (54), LIMITATIONS.json (26),
-                REMAINING_WORK.json (33), MASTER_SITE_SIGNALS.md,
+                IRREGULARITIES.json (60), LIMITATIONS.json (35),
+                REMAINING_WORK.json (41), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -422,7 +490,11 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 473 tests
+python3 -m unittest discover -s tests   # 491 tests
+python3 -m sim.cli official             # run the official auction book
+python3 -m sim.cli official-blotter     # every settled official trade + evidence
+python3 -m sim.cli trades               # the unified store across every book
+python3 scripts/independent_audit_official.py   # imports no project code
 ```
 
 Reproducibility is enforced, not claimed: the same seed and config reproduce the
@@ -468,10 +540,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 54 flags, including the ones raised against this project's own modelling
+  — all 60 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 26 limitations, 33 items of remaining work in priority order, and what
+  — 35 limitations, 41 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)
@@ -499,7 +571,17 @@ manual review, and flag irregularities rather than paper over them.
    Composite, Dow Jones, S&P 500, VIX) executes through an ETF proxy, so tracking
    difference and fund fees sit between the signal and the P&L, and no index
    series can ever satisfy the official-price gate for *fills* by itself (L-25).
-7. **Circadian granularity.** The live book has one decision point per session
+7. **The official lane's secondary leg is derived.** No free publisher prints a
+   secondary Treasury trade tape, so a sale before maturity is priced from the
+   official curve by a published formula and labelled OFFICIAL-DERIVED rather
+   than OFFICIAL (L-28), and secondary size is assumed rather than measured
+   (L-32). Primary awards, which are where most of the notional executes, are
+   the published price exactly.
+8. **The SEC insider extracts are not in the repository.** Every quarter and both
+   path layouts answered HTTP 403 from the collection runner on 2026-09-18
+   (L-27), so the insider rules hold no positions and say why instead of
+   substituting an aggregator for a filing.
+9. **Circadian granularity.** The live book has one decision point per session
    and executes at the open or the close. A rule that needs the first thirty
    minutes (an opening-range breakout) cannot be expressed here at all and is
    published as a forward-only probe rather than approximated (L-24).

@@ -1,0 +1,9 @@
+{
+ "book": "StockPaperSim Official Auction Book",
+ "as_of": "2026-09-16",
+ "pending_intents": 12,
+ "last_official_auction_date": "2026-09-24",
+ "last_curve_session": "2026-09-18",
+ "settlement_rule": "A bid settles only when the official auction result for its CUSIP and auction date is collected; a secondary order settles only on a session the official par curve covers. Anything else stays PENDING with the reason recorded, and nothing fills at a modelled price.",
+ "rehearsal_run": "official-rehearsal-seed20260918"
+}

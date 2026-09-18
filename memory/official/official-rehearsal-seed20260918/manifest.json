@@ -1,0 +1,667 @@
+{
+ "run_id": "official-rehearsal-seed20260918",
+ "book": "StockPaperSim Official Auction Book",
+ "season": "Official Season (opened 2026-09-18) - every execution price is the U.S. Treasury's own published number",
+ "seed": 20260918,
+ "created_utc": "2026-09-18T22:14:53Z",
+ "window": {
+  "start": "2025-09-17",
+  "end": "2026-09-16",
+  "sessions": 250
+ },
+ "starting_cash": 100000.0,
+ "participants": [
+  "@TBillLadder_MaxRoll",
+  "@BillCarry_TenX",
+  "@FrontEndRollDown_13W",
+  "@AuctionStrength_Follow",
+  "@CurveSteepener_2s10s",
+  "@CurveFlattener_2s10s",
+  "@DurationTrend_TenX",
+  "@BellyMeanReversion_FiveY",
+  "@TIPSBreakeven_Rider",
+  "@SOFRPivot_Switch",
+  "@LiquidityWeighted_Participant",
+  "@LongBond_MaxDur",
+  "@ConcessionFade_Notes",
+  "@CalendarBarbell_Max"
+ ],
+ "counts": {
+  "intents": 2814,
+  "fills": 243,
+  "trips": 160,
+  "marks": 3500,
+  "carry_rows": 4534,
+  "margin_events": 5
+ },
+ "storage": {
+  "streams": {
+   "intents": {
+    "file": "memory/official/official-rehearsal-seed20260918/intents.jsonl.gz",
+    "rows": 2814,
+    "bytes_on_disk": 116091,
+    "bytes_uncompressed": 3043068,
+    "bytes_per_row_on_disk": 41.25,
+    "compression_ratio": 26.213,
+    "sha256": "a21a4a9897ad9600cb784aed8db780fb0b9097e0348abee88d1c9ca2c309ad80",
+    "compressed": true
+   },
+   "fills": {
+    "file": "memory/official/official-rehearsal-seed20260918/fills.jsonl.gz",
+    "rows": 243,
+    "bytes_on_disk": 12805,
+    "bytes_uncompressed": 162594,
+    "bytes_per_row_on_disk": 52.7,
+    "compression_ratio": 12.698,
+    "sha256": "482cacc877aa62fcf244db2af4c7e7dd5075bae0dbe7021326374329012bfacd",
+    "compressed": true
+   },
+   "trips": {
+    "file": "memory/official/official-rehearsal-seed20260918/trips.jsonl.gz",
+    "rows": 160,
+    "bytes_on_disk": 14666,
+    "bytes_uncompressed": 261192,
+    "bytes_per_row_on_disk": 91.66,
+    "compression_ratio": 17.809,
+    "sha256": "ff2d21f832e0047f2f52234b1b358b7ab36f9970401ff514502bb8e305665237",
+    "compressed": true
+   },
+   "marks": {
+    "file": "memory/official/official-rehearsal-seed20260918/marks.jsonl.gz",
+    "rows": 3500,
+    "bytes_on_disk": 95838,
+    "bytes_uncompressed": 690748,
+    "bytes_per_row_on_disk": 27.38,
+    "compression_ratio": 7.207,
+    "sha256": "7033a15edc18aff9ceda35da15bbea91ca6534b2d8c383d9134c62056fc2c397",
+    "compressed": true
+   },
+   "carry": {
+    "file": "memory/official/official-rehearsal-seed20260918/carry.jsonl.gz",
+    "rows": 4534,
+    "bytes_on_disk": 69927,
+    "bytes_uncompressed": 754674,
+    "bytes_per_row_on_disk": 15.42,
+    "compression_ratio": 10.792,
+    "sha256": "b6cd7ffd9eccf228dbd7ecadad2eb22805975c6583731fa1f289e9ec976d8d93",
+    "compressed": true
+   },
+   "margin": {
+    "file": "memory/official/official-rehearsal-seed20260918/margin.jsonl.gz",
+    "rows": 5,
+    "bytes_on_disk": 375,
+    "bytes_uncompressed": 1053,
+    "bytes_per_row_on_disk": 75.0,
+    "compression_ratio": 2.808,
+    "sha256": "0fda609efcfcacdafbac3f0ab22953442e2532e246c0e82dd7bbc4faf5f0801b",
+    "compressed": true
+   }
+  },
+  "total_bytes_on_disk": 309702,
+  "total_rows": 11256,
+  "bytes_per_row_average": 27.51,
+  "format": "gzip JSON Lines, keys sorted, separators ',' and ':' - byte-identical for two runs of the same inputs",
+  "csv_export": "blotter.csv"
+ },
+ "venue": {
+  "primary_execution": "non-competitive award at the Treasury's published price per $100 (single-price auction)",
+  "secondary_execution": "price derived from the Treasury's official par yield curve, or from the H.15 secondary-market bill discount rates for bills",
+  "fees": "none on the primary leg; the secondary leg is a derived price",
+  "financing": "SOFR + 25 bp on debits and shorts",
+  "cash_credit": "SOFR on idle cash",
+  "maintenance": "5% of gross exposure",
+  "max_gross_leverage": 10.0,
+  "settlement": "primary leg on the official issue date; secondary leg on the session it trades (the real convention is next-business-day and this is a declared simplification)"
+ },
+ "official_coverage": {
+  "primary_leg_price_field": "pricePer100 / highPrice (official)",
+  "secondary_leg_source": "official curve, labelled OFFICIAL-DERIVED",
+  "executed_notional_official_pct": 100.0,
+  "note": "this book cannot execute on a non-official price: there is no code path from a secondary price file into it"
+ },
+ "price_validation": {
+  "bill_prices_checked": 1485,
+  "bill_price_mismatches": 0,
+  "worst_mismatch": null,
+  "investment_rates_checked": 1415,
+  "investment_rates_matching_published": 1106,
+  "investment_rate_match_pct": 78.163,
+  "investment_rate_mismatch_implied_day_count_factor": {
+   "1.0027": 185,
+   "1.0028": 112,
+   "1.0026": 12
+  },
+  "tolerance": {
+   "price": 0.0001,
+   "investment_rate_percentage_points": 0.0006
+  },
+  "note": "the price check is exact - 100 (1 - d t/360) reproduces the published price per $100 for every bill whose discount rate and issue/maturity dates are both published, to 1e-4 of a cent. The investment-rate check is partial and the implied day-count factor of every mismatch is reported rather than explained away."
+ },
+ "crosscheck": {
+  "generated_at": "2026-09-18T21:53:40Z",
+  "treasurydirect_auctions": 471,
+  "fiscaldata_auctions": 2000,
+  "shared_auctions": 471,
+  "field_comparisons": 4251,
+  "fields_compared": [
+   "price_per100",
+   "high_discount_rate",
+   "high_yield",
+   "interest_rate",
+   "offering_amount",
+   "competitive_accepted",
+   "total_accepted",
+   "bid_to_cover",
+   "maturity_date",
+   "issue_date",
+   "security_term"
+  ],
+  "shared_auctions_with_a_difference": 0
+ },
+ "auction_coverage": {
+  "auctions": 2000,
+  "by_type": {
+   "Bill": 1488,
+   "Bond": 124,
+   "Note": 388
+  },
+  "by_year": {
+   "2024": 440,
+   "2025": 444,
+   "2026": 316,
+   "2023": 428,
+   "2022": 372
+  },
+  "first_auction_date": "2022-01-13",
+  "last_auction_date": "2026-09-24",
+  "auction_dates": 916,
+  "with_price_per100": 1993,
+  "with_offering_amount": 2000,
+  "with_bid_to_cover": 1993,
+  "tape_sha256": "acbee4355b4839b2d8c1cc1036d930f01ab58d51dbef4ef6d9da8cc012ea547b",
+  "files": [
+   {
+    "file": "data/real/treasury/announced_tape.jsonl",
+    "bytes": 510316,
+    "sha256": "b4b9a484a46134a2a4214b2035afd81ff19cbad22e057690b6f2f6d183e17bdf"
+   },
+   {
+    "file": "data/real/treasury/auction_tape.jsonl",
+    "bytes": 999172,
+    "sha256": "acbee4355b4839b2d8c1cc1036d930f01ab58d51dbef4ef6d9da8cc012ea547b"
+   },
+   {
+    "file": "data/real/treasury/daily_treasury_yield_curve_2024.csv",
+    "bytes": 19098,
+    "sha256": "6775840b76cd7fd41121f61d6f6c60184eca6b2ba49954ec7372c463cbeef34d"
+   },
+   {
+    "file": "data/real/treasury/daily_treasury_yield_curve_2025.csv",
+    "bytes": 20155,
+    "sha256": "cf2fa3da7f160384b63d2ead698532b1d76cd9f789ce4911e2304db85b14e6d5"
+   },
+   {
+    "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+    "bytes": 14690,
+    "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+   },
+   {
+    "file": "data/real/treasury/fiscaldata_auction_tape.jsonl",
+    "bytes": 2578727,
+    "sha256": "dde9ea1af2c8c54e8d1cec08a9f3ddab23127775a9e4995a9c20970059e770a5"
+   },
+   {
+    "file": "data/real/treasury/fiscaldata_auctions_p1.json.gz",
+    "bytes": 221903,
+    "sha256": "712ac6f3547709d7c0f833dc016c2f22303bf94d525bc98cc3653311ae0dd430"
+   },
+   {
+    "file": "data/real/treasury/fiscaldata_auctions_p2.json.gz",
+    "bytes": 218940,
+    "sha256": "e9a267f9b541046b8ec3eb6801cf5d4ecc2f222926a11a21f464f090b0d16e92"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_announced.json",
+    "bytes": 883752,
+    "sha256": "e9ec93354e29be97673ab40648772e50330464acabe6d66992cf94e57688c8e7"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_auctioned.json",
+    "bytes": 187897,
+    "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_search_bill_p1.json.gz",
+    "bytes": 50401,
+    "sha256": "d51180804c03c4904e944f463e312b83ee046abf30ca38d5567bd106582c8a73"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_search_bill_p2.json.gz",
+    "bytes": 33835,
+    "sha256": "9a68e3469d28b5eb20eae66f8f21bcd68aa35c38e01864c501260825f5c0b2c2"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_search_bond_p1.json.gz",
+    "bytes": 22,
+    "sha256": "395039e2a994dccaa4efcab028603760b588a1b9acfe6de1e0241f3aaaf913f0"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_search_note_p1.json.gz",
+    "bytes": 22,
+    "sha256": "7704095f8853a91c490bab2d76c551200356ad93941d658c80f3fb28dad59228"
+   },
+   {
+    "file": "data/real/treasury/treasury_direct_search_tips_p1.json.gz",
+    "bytes": 22,
+    "sha256": "395039e2a994dccaa4efcab028603760b588a1b9acfe6de1e0241f3aaaf913f0"
+   }
+  ],
+  "price_validation": {
+   "bill_prices_checked": 1485,
+   "bill_price_mismatches": 0,
+   "worst_mismatch": null,
+   "investment_rates_checked": 1415,
+   "investment_rates_matching_published": 1106,
+   "investment_rate_match_pct": 78.163,
+   "investment_rate_mismatch_implied_day_count_factor": {
+    "1.0027": 185,
+    "1.0028": 112,
+    "1.0026": 12
+   },
+   "tolerance": {
+    "price": 0.0001,
+    "investment_rate_percentage_points": 0.0006
+   },
+   "note": "the price check is exact - 100 (1 - d t/360) reproduces the published price per $100 for every bill whose discount rate and issue/maturity dates are both published, to 1e-4 of a cent. The investment-rate check is partial and the implied day-count factor of every mismatch is reported rather than explained away."
+  },
+  "crosscheck": {
+   "generated_at": "2026-09-18T21:53:40Z",
+   "treasurydirect_auctions": 471,
+   "fiscaldata_auctions": 2000,
+   "shared_auctions": 471,
+   "field_comparisons": 4251,
+   "fields_compared": [
+    "price_per100",
+    "high_discount_rate",
+    "high_yield",
+    "interest_rate",
+    "offering_amount",
+    "competitive_accepted",
+    "total_accepted",
+    "bid_to_cover",
+    "maturity_date",
+    "issue_date",
+    "security_term"
+   ],
+   "shared_auctions_with_a_difference": 0
+  }
+ },
+ "curve_channels": [
+  {
+   "channel": "treasury_daily_par_yield_curve",
+   "file": "data/real/treasury/daily_treasury_yield_curve_2024.csv",
+   "rows": 250,
+   "sha256": "6775840b76cd7fd41121f61d6f6c60184eca6b2ba49954ec7372c463cbeef34d",
+   "source_class": "OFFICIAL"
+  },
+  {
+   "channel": "treasury_daily_par_yield_curve",
+   "file": "data/real/treasury/daily_treasury_yield_curve_2025.csv",
+   "rows": 249,
+   "sha256": "cf2fa3da7f160384b63d2ead698532b1d76cd9f789ce4911e2304db85b14e6d5",
+   "source_class": "OFFICIAL"
+  },
+  {
+   "channel": "treasury_daily_par_yield_curve",
+   "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+   "rows": 180,
+   "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+   "source_class": "OFFICIAL"
+  }
+ ],
+ "rates_provenance": [
+  {
+   "sid": "CPIAUCSL",
+   "file": "data/real/fred/CPIAUCSL_2024-09-16_2026-09-17.csv",
+   "sha256": "1a3fd904da7de3b8817859dce87494714ffc39dd5943d17e290f3de071141cb3",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL",
+   "observations": 23,
+   "first": "2024-09-01",
+   "last": "2026-08-01",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "publisher": "U.S. Treasury H.15, republished by FRED"
+  },
+  {
+   "sid": "DTB3",
+   "file": "data/real/fred/DTB3_2024-09-16_2026-09-17.csv",
+   "sha256": "217921676c9ea00a7ffe49f89aa4d56acb8a1f873f3927f488ea38c1a8a66d10",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB3",
+   "observations": 501,
+   "first": "2024-09-16",
+   "last": "2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "publisher": "U.S. Treasury H.15, republished by FRED"
+  },
+  {
+   "sid": "DTB4WK",
+   "file": "data/real/fred/DTB4WK_2024-09-16_2026-09-17.csv",
+   "sha256": "1b8fc0254e3dbd6ed095f87bb7a7f51a411c1c0668f903143f356171c745c2cd",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB4WK",
+   "observations": 501,
+   "first": "2024-09-16",
+   "last": "2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "publisher": "U.S. Treasury H.15, republished by FRED"
+  },
+  {
+   "sid": "DTB6",
+   "file": "data/real/fred/DTB6_2024-09-16_2026-09-17.csv",
+   "sha256": "083e75fc0bf669f9132e6fe1e6d5e1ea787003b955c6504f4b432700f908f229",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB6",
+   "observations": 501,
+   "first": "2024-09-16",
+   "last": "2026-09-17",
+   "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+   "publisher": "U.S. Treasury H.15, republished by FRED"
+  },
+  {
+   "sid": "SOFR",
+   "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+   "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+   "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR",
+   "observations": 500,
+   "first": "2024-09-16",
+   "last": "2026-09-17",
+   "source_class": "OFFICIAL",
+   "publisher": "Federal Reserve Bank of New York (SOFR)"
+  }
+ ],
+ "rates_missing": [
+  {
+   "sid": "DFII10",
+   "reason": "no committed FRED file starting 'DFII10_'",
+   "url": "https://fred.stlouisfed.org/series/DFII10"
+  },
+  {
+   "sid": "DFII30",
+   "reason": "no committed FRED file starting 'DFII30_'",
+   "url": "https://fred.stlouisfed.org/series/DFII30"
+  },
+  {
+   "sid": "DFII5",
+   "reason": "no committed FRED file starting 'DFII5_'",
+   "url": "https://fred.stlouisfed.org/series/DFII5"
+  }
+ ],
+ "irregularities": [],
+ "verification": {
+  "checks": 7947,
+  "failures": [],
+  "failure_count": 0,
+  "verdict": "PASS",
+  "max_equity_residual_usd": 0.035155,
+  "generated_utc": "2026-09-18T22:14:53Z"
+ },
+ "forward_book": {
+  "as_of": "2026-09-16",
+  "pending_intents": 12
+ },
+ "roster": [
+  {
+   "username": "@TBillLadder_MaxRoll",
+   "family": "cash management / roll",
+   "thesis": "Buy the shortest announced bill at auction, non-competitively, at the official price, hold it to the official maturity date and roll the proceeds into the next auction. Every price is the Treasury's own printed price; every date is the Treasury's own date; the account is never levered because a bill yields less than the repo rate that would finance it, which this book measures rather than assumes.",
+   "research_basis": [
+    {
+     "label": "TreasuryDirect: auctions, non-competitive bidding and single-price format",
+     "url": "https://www.treasurydirect.gov/auctions/auction-results/"
+    },
+    {
+     "label": "31 CFR 356: sale and issue of marketable book-entry Treasury bills, notes and bonds",
+     "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-356"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 1.0
+  },
+  {
+   "username": "@BillCarry_TenX",
+   "family": "levered carry",
+   "thesis": "Own the highest-yielding announced bill at 10x gross exposure, financed at SOFR plus a declared 25 bp spread. This is the trade that looks free and is not: a bill yields approximately SOFR minus a small concession, so levering it borrows above the asset yield. The book publishes the sign of that carry instead of hoping the reader does not compute it.",
+   "research_basis": [
+    {
+     "label": "NY Fed: SOFR, the secured overnight financing rate",
+     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json"
+    },
+    {
+     "label": "FINRA Rule 4210: margin requirements (the venue's leverage policy is declared, not regulatory)",
+     "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@FrontEndRollDown_13W",
+   "family": "roll-down",
+   "thesis": "Buy the 13-week bill at auction and sell it in the secondary market five sessions before maturity, when the bill has aged into a lower point on the curve. The gain is roll-down, and it only exists while the front end is upward-sloping; the rule reads the official H.15 secondary-market bill rates to check that it is.",
+   "research_basis": [
+    {
+     "label": "H.15 selected interest rates: Treasury bill secondary-market rates (discount basis)",
+     "url": "https://www.federalreserve.gov/releases/h15/"
+    },
+    {
+     "label": "Treasury: daily par yield curve rates",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 4.0
+  },
+  {
+   "username": "@AuctionStrength_Follow",
+   "family": "auction microstructure",
+   "thesis": "Follow the demand print: when an auction stops through and the bid-to-cover is at the high end of its recent range, buy that CUSIP in the secondary market the next session and hold until the next auction of the same term. Bid-to-cover and the high rate are the Treasury's own published numbers, so the signal is not an estimate.",
+   "research_basis": [
+    {
+     "label": "TreasuryDirect: auction results, including bid-to-cover and high rate",
+     "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+    },
+    {
+     "label": "Treasury: single-price auctions since 1998 (auction format on the result record)",
+     "url": "https://www.treasurydirect.gov/auctions/"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 6.0
+  },
+  {
+   "username": "@CurveSteepener_2s10s",
+   "family": "curve",
+   "thesis": "Express a steepening view through cash: long the 2-year, short the 10-year, sized so the two legs have equal price value for a parallel shift. Both legs are priced from the Treasury's own par curve, so the mark is an official observation run through a published formula rather than a dealer quote.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates (the official secondary-market observation)",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    {
+     "label": "CFR 31 Part 356 Appendix B: price, discount and yield formulas for Treasury securities",
+     "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-II/subchapter-A/part-356"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@CurveFlattener_2s10s",
+   "family": "curve",
+   "thesis": "The same pair, the other way: short the 2-year and long the 10-year. It exists in this book because publishing only the winner of a pair of opposite rules is how a competition hides luck.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@DurationTrend_TenX",
+   "family": "trend / duration",
+   "thesis": "Hold the 10-year long at the 10x gross cap while the official 10-year par yield is below its own 60-session mean, and short it when above. A trend rule on a single official series, with the position taken in the cash market and financed at SOFR plus a spread.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    {
+     "label": "NY Fed: SOFR (the financing rate this book charges)",
+     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@BellyMeanReversion_FiveY",
+   "family": "mean reversion",
+   "thesis": "Buy the 5-year when its official par yield is more than 25 bp above its own 120-session mean and stand aside otherwise, at the 10x gross cap while the position is on. The mirror of the trend rule: one of the two has to be wrong about this window, and the book says which.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@TIPSBreakeven_Rider",
+   "family": "inflation",
+   "thesis": "Buy inflation-protected paper at auction and fund it by shorting the matching nominal when the breakeven implied by the two auctions is below the realised CPI change the official series shows. Both legs are auction results: the nominal price and the TIPS price are printed, and the breakeven is arithmetic on them rather than a model.",
+   "research_basis": [
+    {
+     "label": "TreasuryDirect: TIPS auction results (adjusted price, index ratio, accrued interest)",
+     "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+    },
+    {
+     "label": "Treasury: TIPS index ratios and reference CPI",
+     "url": "https://www.treasurydirect.gov/auctions/announcements-data-results/"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 4.0
+  },
+  {
+   "username": "@SOFRPivot_Switch",
+   "family": "regime",
+   "thesis": "Read the Federal Reserve Bank of New York's own SOFR series: while its 20-session change is negative, own duration at the 10x gross cap; while it is positive, sit in the shortest bill available. The switch is one official observation, so a reader can reproduce every decision.",
+   "research_basis": [
+    {
+     "label": "NY Fed reference rates API (SOFR)",
+     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json"
+    },
+    {
+     "label": "Treasury: daily par yield curve rates",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@LiquidityWeighted_Participant",
+   "family": "liquidity",
+   "thesis": "Size every auction bid by the official liquidity of the issue it is buying - bidding less into auctions whose acceptance was thin or whose bid-to-cover was low - and hold the highest-scoring bill each week. The brief asked for bid sizing and liquidity to be part of the record; this participant makes it part of the rule, and the book prints the participation percentage of every award.",
+   "research_basis": [
+    {
+     "label": "TreasuryDirect: accepted and tendered amounts by bidder class",
+     "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+    },
+    {
+     "label": "Fiscal Data: Treasury securities auctions (second publisher of the same results)",
+     "url": "https://fiscaldata.treasury.gov/datasets/treasury-securities-auctions-data/"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 3.0
+  },
+  {
+   "username": "@LongBond_MaxDur",
+   "family": "control / duration",
+   "thesis": "Own the longest-dated coupon security the official auction calendar offers, at the 10x gross cap, and roll it only when it matures. This is the control the brief needs: maximum duration, minimum thinking. In a window where the Treasury's own 30-year yield rose, it should lose - and the book reports what it did rather than what it should have done.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates (30-year point)",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    {
+     "label": "TreasuryDirect: bond auction results",
+     "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  },
+  {
+   "username": "@ConcessionFade_Notes",
+   "family": "auction cycle",
+   "thesis": "Buy the new note at auction - where dealers are paid to absorb supply - and sell it on the fifth session after issue, when the concession has typically been given back. The entry price is the Treasury's printed auction price and the exit is the par curve's own mark, so the trade's two ends are both official numbers.",
+   "research_basis": [
+    {
+     "label": "TreasuryDirect: high price and high yield of every auction",
+     "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45"
+    },
+    {
+     "label": "Fiscal Data: Treasury securities auctions",
+     "url": "https://fiscaldata.treasury.gov/datasets/treasury-securities-auctions-data/"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 8.0
+  },
+  {
+   "username": "@CalendarBarbell_Max",
+   "family": "barbell",
+   "thesis": "Hold the two ends of the official curve at once - the shortest bill and the longest bond - and rebalance monthly. It is the barbell that needs no view, and in a steepening window the long end is what breaks, which is the point of publishing it.",
+   "research_basis": [
+    {
+     "label": "Treasury: daily par yield curve rates (1-month to 30-year)",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    }
+   ],
+   "data_status": "READY",
+   "data_note": "",
+   "max_gross_leverage": 10.0
+  }
+ ],
+ "reports": [
+  "@AuctionStrength_Follow",
+  "@BellyMeanReversion_FiveY",
+  "@BillCarry_TenX",
+  "@CalendarBarbell_Max",
+  "@ConcessionFade_Notes",
+  "@CurveFlattener_2s10s",
+  "@CurveSteepener_2s10s",
+  "@DurationTrend_TenX",
+  "@FrontEndRollDown_13W",
+  "@LiquidityWeighted_Participant",
+  "@LongBond_MaxDur",
+  "@SOFRPivot_Switch",
+  "@TBillLadder_MaxRoll",
+  "@TIPSBreakeven_Rider"
+ ]
+}

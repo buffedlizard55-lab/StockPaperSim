@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overview · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="active" href="../official/index.html">Overview</a><a class="" href="../official/leaderboard.html">Leaderboard</a><a class="" href="../official/blotter.html">Trade tape</a><a class="" href="../official/forward.html">Forward book</a><a class="" href="../official/participants/index.html">Participants</a><a class="" href="../official/ledger.html">Trade store</a><a class="" href="../official/method.html">Venue &amp; formulas</a><a class="" href="../official/sources.html">Official sources</a><a class="" href="../index.html">Season 1</a><a class="" href="../season2/index.html">Season 2</a><a class="" href="../live/index.html">Live Book</a><a class="" href="../simulator.html">Trade Simulator</a><a href="../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+<section id="season2-banner" class="card"><h2>Season 2 is published with an explicit price-eligibility status</h2><p>Season 1 above is a calibrated replay of the real S&amp;P 500 and VIX path. <strong>Season 2</strong> preserves every collected price file, raw response, checksum and trade-ledger fact, but a public endpoint is not automatically an eligible official source. The current Yahoo-backed history is marked <strong>SECONDARY research</strong>; the official Nasdaq path fails closed until source, coverage, checksum and redistribution checks pass.</p><p><a href="../season2/index.html">Season 2 overview</a> · <a href="../season2/leaderboard.html">Leaderboard</a> · <a href="../season2/ledger.html">Verified trade ledger</a> · <a href="../season2/masterfeed.html">MasterFeed register</a> · <a href="../season2/data.html">Data custody</a></p></section>
+
+<p class="lede">Fourteen strategies, one username each, one year: <strong>
+2025-09-17 → 2026-09-16</strong>
+(250 official sessions). Every fill on this tape is either the price
+the U.S. Treasury published for that auction or a price derived from the Treasury's
+official yield curve by a formula printed on the <a href="method.html">venue page</a>.
+No equity price, no broker quote, no modelled bar can reach this book: the code path
+does not exist, and the verification block asserts it.</p>
+
+<div class="kpis"><div class="kpi"><span class="kpi-label">Starting cash</span><span class="kpi-value ">$100,000</span><span class="kpi-sub">per participant</span></div><div class="kpi"><span class="kpi-label">Top return</span><span class="kpi-value pos">+5.58%</span><span class="kpi-sub">@TIPSBreakeven_Rider</span></div><div class="kpi"><span class="kpi-label">Participants ahead</span><span class="kpi-value ">4 of 14</span><span class="kpi-sub">return better than zero</span></div><div class="kpi"><span class="kpi-label">Prices that can reach the book</span><span class="kpi-value ">100% official</span><span class="kpi-sub">primary = the published price; secondary = derived from an official observation and labelled as such</span></div><div class="kpi"><span class="kpi-label">Round trips with both legs official</span><span class="kpi-value ">36.62%</span><span class="kpi-sub">the rest is primary in, derived out (see the trade store)</span></div><div class="kpi"><span class="kpi-label">Settled trades</span><span class="kpi-value ">160</span><span class="kpi-sub">243 fills</span></div><div class="kpi"><span class="kpi-label">Verification</span><span class="kpi-value ">PASS</span><span class="kpi-sub">7947 checks · 0 failures</span></div></div>
+<section class="card "><h2>What makes a trade on this tape verifiable</h2>
+<p>Three things have to be true at once, and each one is checkable from the committed
+files rather than from this page:</p>
+<ol>
+<li><strong>The price was published.</strong> Primary fills carry the CUSIP's own
+auction record: the source URL, the file, its SHA-256, the field
+(<code>pricePer100</code> or <code>highPrice</code>) and the value.</li>
+<li><strong>The date was published.</strong> Issue dates, auction dates and maturity
+dates come from the same record; a redemption at par only ever happens on the
+published maturity date, and the verification block checks that for every maturity
+exit.</li>
+<li><strong>The liquidity was published.</strong> Offering amount, total accepted,
+competitive tendered and bid-to-cover ride on the auction row, and every trade
+records them.</li>
+</ol>
+<p>Secondary legs are the weaker half and are labelled <strong>OFFICIAL-DERIVED</strong>
+on every page: the price is computed from an official observation (the Treasury's
+daily par yield curve, or the H.15 bill discount rates) by the formula shown on the
+<a href="method.html">venue page</a>. Calling that official would be a small lie with a
+large effect on P&amp;L, so the two classes are counted separately everywhere.</p>
+</section>
+<section class="card "><h2>What the book cannot trade, and why that is the honest answer</h2>
+<table class="data">
+<thead><tr><th>Market</th><th>Official price available?</th><th>Consequence here</th></tr></thead>
+<tbody>
+<tr><td>US Treasury auctions (bills, notes, bonds, TIPS, FRN)</td>
+<td><span class="badge badge-ok">OFFICIAL</span> published price per $100, date and auction size</td>
+<td>traded, with settled trades and a forward book</td></tr>
+<tr><td>Secondary US Treasuries</td>
+<td><span class="badge badge-warn">OFFICIAL-DERIVED</span> no free published trade tape; the official yield
+curve gives a price by formula</td>
+<td>traded, labelled as derived, formula printed</td></tr>
+<tr><td>US equities and ETFs (Nasdaq / NYSE / S&amp;P 500)</td>
+<td><span class="badge badge-bad">NO-DATA</span> Nasdaq's normalised price archive needs an entitlement and
+redistribution authorisation that this project does not hold; the free publisher
+pages forbid redistribution</td>
+<td><strong>not</strong> traded at an official price; the equity books on this site
+carry their own SECONDARY label and are never counted here</td></tr>
+</tbody></table>
+<p>The register row for the gate itself is in
+<a href="../limitations.html">Limitations</a> (L-01, L-23) and the eligibility file
+is committed at <code>data/real/official_price_eligibility.json</code>. The rule the
+project follows is the one in the brief: it fails closed. A security with no official
+observation stays untraded, and the intent says so.</p>
+</section>
+<section class="card "><h2>Competition rules, as declared before the first session</h2>
+<table class="data">
+<thead><tr><th>Rule</th><th>Statement</th></tr></thead>
+<tbody>
+<tr><td>Objective</td><td>Highest ending equity. The book declares no risk-management
+rule: a participant may run at its own leverage cap and is free to be wiped out, and
+three of them verify the difference between a hypothetical and an outcome.</td></tr>
+<tr><td>One username per strategy</td><td>Each rule has exactly one participant name and
+one account; the username is the strategy.</td></tr>
+<tr><td>Length</td><td>One year: 2025-09-17 to
+2026-09-16.</td></tr>
+<tr><td>Leverage</td><td>Gross exposure capped at the strategy's own declared
+<code>max_gross_leverage</code>, never above the venue's
+10.0×.</td></tr>
+<tr><td>Maintenance</td><td>5% of gross exposure of
+gross exposure. Breaking it closes positions at the official mark; an account that
+reaches zero equity is wound up at zero and stops trading.</td></tr>
+<tr><td>Financing</td><td>SOFR + 25 bp on debits and shorts; idle cash
+is credited at SOFR.</td></tr>
+<tr><td>Fees</td><td>none on the primary leg; the secondary leg is a derived price.</td></tr>
+</tbody></table>
+</section>
+<section class="card "><h2>Irregularities recorded in this run</h2>
+<p>None. The run's own irregularity stream - look-ahead evidence, targets that are not
+in the future, plan errors, ruin events - is empty for this window, which is a claim
+the verification block checks rather than one the prose makes: intent evidence is
+compared against the session that cited it, every target session is compared against
+the session that wrote it, and a ruined account has to show exactly −100%.</p>
+</section>
+<section class="card "><h2>The tape in nine numbers</h2>
+<p>2,814 intents were written and 243 of them
+filled, closing into <strong>160</strong> settled round trips with
+5 margin events. Official-price coverage of executed notional is
+<strong>100.00%</strong>: primary
+awards are exactly the published price, and the remaining notional is the derived
+secondary leg. 2,000.00 auction
+records back the book, from
+2022-01-13 to
+2026-09-24, and the two
+official publishers agree on every shared auction
+(471 compared,
+0
+differences).</p>
+<p><a href="leaderboard.html">Leaderboard</a> ·
+<a href="blotter.html">Trade tape</a> ·
+<a href="forward.html">Forward book</a> ·
+<a href="ledger.html">Trade store</a> ·
+<a href="sources.html">Official sources</a></p>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>

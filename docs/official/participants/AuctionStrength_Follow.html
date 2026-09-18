@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@AuctionStrength_Follow · StockPaperSim Official Auction Book</title>
+<meta name="description" content="A one-year paper-trading book that may only execute on
+prices the U.S. Treasury published: auction awards at the published price per $100,
+secondary legs derived from the official par yield curve, with the auction's own
+offering amount and bid-to-cover recorded on every trade.">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../../index.html">StockPaperSim</a>
+    <span class="brand-sub">Official Auction Book · settled trades at the Treasury's own
+    published prices</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="../../official/index.html">Overview</a><a class="" href="../../official/leaderboard.html">Leaderboard</a><a class="" href="../../official/blotter.html">Trade tape</a><a class="" href="../../official/forward.html">Forward book</a><a class="active" href="../../official/participants/index.html">Participants</a><a class="" href="../../official/ledger.html">Trade store</a><a class="" href="../../official/method.html">Venue &amp; formulas</a><a class="" href="../../official/sources.html">Official sources</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../live/index.html">Live Book</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a></nav>
+</header>
+<main class="wrap">
+
+<p class="lede"><strong>@AuctionStrength_Follow</strong> - Follow the demand print: when an auction stops through and the bid-to-cover is at the high end of its recent range, buy that CUSIP in the secondary market the next session and hold until the next auction of the same term. Bid-to-cover and the high rate are the Treasury&#x27;s own published numbers, so the signal is not an estimate.</p>
+
+<div class="kpis"><div class="kpi"><span class="kpi-label">Return</span><span class="kpi-value ">+4.40%</span><span class="kpi-sub">$104,400.11 ending equity</span></div><div class="kpi"><span class="kpi-label">Status</span><span class="kpi-value ">ACTIVE</span><span class="kpi-sub">4 settled trades</span></div><div class="kpi"><span class="kpi-label">Max drawdown</span><span class="kpi-value ">-0.33%</span><span class="kpi-sub">Sharpe 6.94</span></div><div class="kpi"><span class="kpi-label">Coupons</span><span class="kpi-value ">$0.00</span><span class="kpi-sub">financing $-1,172.84</span></div><div class="kpi"><span class="kpi-label">Orders</span><span class="kpi-value ">122</span><span class="kpi-sub">8 filled · 0 waited · 114 refused</span></div><div class="kpi"><span class="kpi-label">Official price coverage</span><span class="kpi-value ">100.00%</span><span class="kpi-sub">primary at the published price, secondary derived</span></div></div>
+<section class="card "><h2>Why it worked, or why it did not</h2><ul><li>Best trade: 17-Week 912797RN9 (long, secondary-curve to secondary-curve) 2025-10-14 to 2025-10-16 for $116.25.</li><li>4 of 4 closed trades made money; coupons paid $0.00 and financing cost $-1,172.84.</li><li>Official par curve over the window: 3-month 4.02% -&gt; 4.14% (+12 bp), 2-year 3.52% -&gt; 4.74% (+122 bp), 10-year 4.06% -&gt; 5.01% (+95 bp), 30-year 4.66% -&gt; 5.35% (+69 bp). Duration exposures are paid off against this path.</li></ul></section>
+<section class="card "><h2>Settled trades</h2><table class="data"><thead><tr><th>Entry</th><th>Exit</th><th>Security</th><th>Side</th><th>Face</th><th>Entry price</th><th>Exit price</th><th>Exit kind</th><th>Price P&amp;L</th><th>Total P&amp;L</th><th>Return on cost</th></tr></thead><tbody><tr><td>2025-10-14</td><td>2025-10-16</td><td>17-Week <span class="muted small">912797RN9</span></td><td>long</td><td>$544,100</td><td>99.676384</td><td>99.697750</td><td>SECONDARY-CURVE</td><td><span class="pos">$116.25</span></td><td><span class="pos">$116.25</span></td><td>0.02%</td></tr><tr><td>2025-12-08</td><td>2025-12-09</td><td>2-Day <span class="muted small">912797A72</span></td><td>long</td><td>$545,400</td><td>99.979611</td><td>99.989833</td><td>SECONDARY-CURVE</td><td><span class="pos">$55.75</span></td><td><span class="pos">$55.75</span></td><td>0.01%</td></tr><tr><td>2026-01-20</td><td>2026-01-21</td><td>17-Week <span class="muted small">912797SR9</span></td><td>long</td><td>$549,100</td><td>99.719222</td><td>99.728500</td><td>SECONDARY-CURVE</td><td><span class="pos">$50.95</span></td><td><span class="pos">$50.95</span></td><td>0.01%</td></tr><tr><td>2026-09-08</td><td>2026-09-09</td><td>17-Week <span class="muted small">912797VK0</span></td><td>long</td><td>$566,100</td><td>99.715333</td><td>99.725500</td><td>SECONDARY-CURVE</td><td><span class="pos">$57.56</span></td><td><span class="pos">$57.56</span></td><td>0.01%</td></tr></tbody></table></section>
+<section class="card "><h2>Every order this rule wrote</h2>
+<p>122 orders, by their final state:</p>
+<ul><li>REJECTED: <strong>114</strong></li><li>FILLED: <strong>8</strong></li></ul>
+<p><strong>WAITING-DATA</strong> means the venue found no official observation for the
+target session and left the order open rather than filling it at a modelled price;
+<strong>REJECTED</strong> means a declared rule refused it (a when-issued trade, a
+non-competitive award beyond the maximum, a maintenance breach);
+<strong>CANCELLED</strong> means the order was superseded or the leverage cap left
+nothing to size.</p>
+</section>
+<section class="card "><h2>The orders that filled</h2><table class="data"><thead><tr><th>Written</th><th>Target</th><th>Order</th><th>Side</th><th>CUSIP</th><th>Face</th><th>Rule</th><th>Settlement note</th></tr></thead><tbody><tr><td>2026-09-08</td><td>2026-09-09</td><td>SECONDARY-ORDER</td><td>sell</td><td>912797VK0</td><td>$566,100</td><td>rotate to the strongest auction print</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2026-09-04</td><td>2026-09-08</td><td>SECONDARY-ORDER</td><td>buy</td><td>912797VK0</td><td>$566,100</td><td>buy the CUSIP whose auction printed bid-to-cover above its running mean</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2026-01-20</td><td>2026-01-21</td><td>SECONDARY-ORDER</td><td>sell</td><td>912797SR9</td><td>$549,100</td><td>rotate to the strongest auction print</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2026-01-16</td><td>2026-01-20</td><td>SECONDARY-ORDER</td><td>buy</td><td>912797SR9</td><td>$549,100</td><td>buy the CUSIP whose auction printed bid-to-cover above its running mean</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2025-12-08</td><td>2025-12-09</td><td>SECONDARY-ORDER</td><td>sell</td><td>912797A72</td><td>$545,400</td><td>rotate to the strongest auction print</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2025-12-05</td><td>2025-12-08</td><td>SECONDARY-ORDER</td><td>buy</td><td>912797A72</td><td>$545,400</td><td>buy the CUSIP whose auction printed bid-to-cover above its running mean</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2025-10-15</td><td>2025-10-16</td><td>SECONDARY-ORDER</td><td>sell</td><td>912797RN9</td><td>$544,100</td><td>rotate to the strongest auction print</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr><tr><td>2025-10-10</td><td>2025-10-14</td><td>SECONDARY-ORDER</td><td>buy</td><td>912797RN9</td><td>$544,100</td><td>buy the CUSIP whose auction printed bid-to-cover above its running mean</td><td>filled on the official curve: 100 (1 - d t/360) with d the H.15 secondary-market bill discount rate, interpolated in days</td></tr></tbody></table></section>
+<section class="card "><h2>Rule and data status</h2>
+<p><strong>Rule:</strong> Follow the demand print: when an auction stops through and the bid-to-cover is at the high end of its recent range, buy that CUSIP in the secondary market the next session and hold until the next auction of the same term. Bid-to-cover and the high rate are the Treasury&#x27;s own published numbers, so the signal is not an estimate.</p>
+<p><strong>Where the rule's premises come from:</strong></p>
+<ul><li>none declared</li></ul>
+<p><strong>Data status:</strong> <span class="badge badge-ok">READY</span>
+</p>
+<p><a href="index.html">All participants</a> ·
+<a href="../blotter.html">Trade tape</a> ·
+<a href="../method.html">Venue rules</a></p>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p><strong>What is official here, and what is derived.</strong> A primary fill is the
+    price the Treasury published for that auction (<code>pricePer100</code> /
+    <code>highPrice</code>), so the executed price is a published number rather than a
+    model output. A secondary fill is labelled <strong>OFFICIAL-DERIVED</strong>: the
+    price is computed from the Treasury's official par yield curve or from the H.15
+    secondary-market bill discount rates by a formula printed on the
+    <a href="../method.html">venue page</a>. Liquidity is the auction's own offering
+    amount, total accepted and bid-to-cover. Nothing on this site is investment
+    advice.</p>
+    <p>Generated by <code>scripts/build_site_official.py</code> from
+    <code>memory/official/</code>; CI diffs a fresh rebuild against this directory.</p>
+  </div>
+</footer>
+<script src="../../assets/site.js"></script>
+</body>
+</html>

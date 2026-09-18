@@ -1,0 +1,2476 @@
+{
+ "participant": "@CurveSteepener_2s10s",
+ "family": "curve",
+ "thesis": "Express a steepening view through cash: long the 2-year, short the 10-year, sized so the two legs have equal price value for a parallel shift. Both legs are priced from the Treasury's own par curve, so the mark is an official observation run through a published formula rather than a dealer quote.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 2-Year 91282CPB1 (long, secondary-curve to secondary-curve) 2025-10-01 to 2025-10-16 for $4.90.",
+  "Worst trade: 2-Year 91282CPB1 (secondary-curve to secondary-curve) 2025-10-01 to 2025-10-30 for $-6.81.",
+  "8 of 18 closed trades made money; coupons paid $0.00 and financing cost $-39,270.47.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@CurveSteepener_2s10s",
+  "family": "curve",
+  "final_equity": 70570.43,
+  "return_pct": -29.4296,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -34.9072,
+  "sharpe": -2.013,
+  "trades": 18,
+  "open_positions": 8,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -39270.47,
+  "cash_credit": 17.38,
+  "realised_pnl": 0.25,
+  "margin_events": 0,
+  "intents": 494,
+  "filled_intents": 26,
+  "waiting_intents": 0,
+  "rejected_intents": 235,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 9
+ },
+ "intents": [
+  {
+   "intent_id": "CurveSteepener_2s10s-00001",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-17",
+   "target_session": "2025-09-18",
+   "cusip": "91282CNV9",
+   "side": "buy",
+   "face": 449200.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +54.0 bp; moving 91282CNV9 to $450,078 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-09-18",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-17",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-17",
+     "price_per100": 100.193931
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00001",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-18",
+    "cusip": "91282CNV9",
+    "side": "buy",
+    "face": 449200.0,
+    "price_per100": 100.101483,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -449655.86,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 0.0,
+    "opened_face": 449200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00005",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-22",
+   "target_session": "2025-09-23",
+   "cusip": "91282CNV9",
+   "side": "sell",
+   "face": 2000.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +54.0 bp; moving 91282CNV9 to $447,236 of market value from $449,329",
+   "status": "FILLED",
+   "settled_on": "2025-09-23",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-22",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-22",
+     "price_per100": 100.028694
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00005",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-23",
+    "cusip": "91282CNV9",
+    "side": "sell",
+    "face": 2000.0,
+    "price_per100": 100.17224,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2003.44,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 2000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00007",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-23",
+   "target_session": "2025-09-24",
+   "cusip": "91282CNV9",
+   "side": "buy",
+   "face": 1800.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +59.0 bp; moving 91282CNV9 to $449,866 of market value from $447,970",
+   "status": "FILLED",
+   "settled_on": "2025-09-24",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-23",
+     "price_per100": 100.17224
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00007",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-24",
+    "cusip": "91282CNV9",
+    "side": "buy",
+    "face": 1800.0,
+    "price_per100": 100.097706,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -1801.76,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 0.0,
+    "opened_face": 1800.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00009",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-24",
+   "target_session": "2025-09-25",
+   "cusip": "91282CNV9",
+   "side": "sell",
+   "face": 1300.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +59.0 bp; moving 91282CNV9 to $448,093 of market value from $449,439",
+   "status": "FILLED",
+   "settled_on": "2025-09-25",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-24",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-24",
+     "price_per100": 100.097706
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00009",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-25",
+    "cusip": "91282CNV9",
+    "side": "sell",
+    "face": 1300.0,
+    "price_per100": 99.966079,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1299.56,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 1300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00011",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-25",
+   "target_session": "2025-09-26",
+   "cusip": "91282CNV9",
+   "side": "sell",
+   "face": 2300.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +54.0 bp; moving 91282CNV9 to $445,157 of market value from $447,548",
+   "status": "FILLED",
+   "settled_on": "2025-09-26",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-25",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-25",
+     "price_per100": 99.966079
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00011",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-26",
+    "cusip": "91282CNV9",
+    "side": "sell",
+    "face": 2300.0,
+    "price_per100": 99.984989,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2299.65,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 2300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00014",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-29",
+   "target_session": "2025-09-30",
+   "cusip": "91282CNV9",
+   "side": "sell",
+   "face": 800.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +52.0 bp; moving 91282CNV9 to $444,501 of market value from $445,344",
+   "status": "FILLED",
+   "settled_on": "2025-09-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-29",
+     "price_per100": 99.987399
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00014",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-09-30",
+    "cusip": "91282CNV9",
+    "side": "sell",
+    "face": 800.0,
+    "price_per100": 100.035246,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 800.28,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 77327624900.0,
+     "bid_to_cover": 2.69,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-08-26"
+    },
+    "closed_face": 800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00016",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-09-30",
+   "target_session": "2025-10-01",
+   "cusip": "91282CPB1",
+   "side": "buy",
+   "face": 446000.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +56.0 bp; moving 91282CPB1 to $445,183 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-01",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-09-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-09-30",
+     "price_per100": 99.808686
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00016",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-01",
+    "cusip": "91282CPB1",
+    "side": "buy",
+    "face": 446000.0,
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -445571.47,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 0.0,
+    "opened_face": 446000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00018",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-01",
+   "target_session": "2025-10-02",
+   "cusip": "91282CPB1",
+   "side": "buy",
+   "face": 900.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +57.0 bp; moving 91282CPB1 to $446,493 of market value from $445,571",
+   "status": "FILLED",
+   "settled_on": "2025-10-02",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-01",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-01",
+     "price_per100": 99.903918
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00018",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-02",
+    "cusip": "91282CPB1",
+    "side": "buy",
+    "face": 900.0,
+    "price_per100": 99.903551,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -899.13,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 0.0,
+    "opened_face": 900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00020",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-02",
+   "target_session": "2025-10-03",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 600.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CPB1 to $445,849 of market value from $446,469",
+   "status": "FILLED",
+   "settled_on": "2025-10-03",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-02",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-02",
+     "price_per100": 99.903551
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00020",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-03",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 600.0,
+    "price_per100": 99.845969,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 599.08,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00022",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-03",
+   "target_session": "2025-10-06",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 2600.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CPB1 to $442,942 of market value from $445,613",
+   "status": "FILLED",
+   "settled_on": "2025-10-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-03",
+     "price_per100": 99.845969
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00022",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-06",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 2600.0,
+    "price_per100": 99.806801,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2594.98,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 2600.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00024",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-06",
+   "target_session": "2025-10-07",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 3300.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +58.0 bp; moving 91282CPB1 to $439,510 of market value from $442,843",
+   "status": "FILLED",
+   "settled_on": "2025-10-07",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-06",
+     "price_per100": 99.806801
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00024",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-07",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 3300.0,
+    "price_per100": 99.863097,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 3295.48,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 3300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00026",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-07",
+   "target_session": "2025-10-08",
+   "cusip": "91282CPB1",
+   "side": "buy",
+   "face": 1200.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +57.0 bp; moving 91282CPB1 to $441,082 of market value from $439,797",
+   "status": "FILLED",
+   "settled_on": "2025-10-08",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-07",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-07",
+     "price_per100": 99.863097
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00026",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-08",
+    "cusip": "91282CPB1",
+    "side": "buy",
+    "face": 1200.0,
+    "price_per100": 99.843559,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -1198.12,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 0.0,
+    "opened_face": 1200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00028",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-08",
+   "target_session": "2025-10-09",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 1200.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CPB1 to $439,689 of market value from $440,909",
+   "status": "FILLED",
+   "settled_on": "2025-10-09",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-08",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-08",
+     "price_per100": 99.843559
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00028",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-09",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 1200.0,
+    "price_per100": 99.805859,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1197.67,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 1200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00008"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00030",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-09",
+   "target_session": "2025-10-10",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 1900.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +54.0 bp; moving 91282CPB1 to $437,632 of market value from $439,545",
+   "status": "FILLED",
+   "settled_on": "2025-10-10",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-09",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-09",
+     "price_per100": 99.805859
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00030",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-10",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 1900.0,
+    "price_per100": 99.957504,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1899.19,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 1900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00009"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00032",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-10",
+   "target_session": "2025-10-14",
+   "cusip": "91282CPB1",
+   "side": "buy",
+   "face": 4600.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +53.0 bp; moving 91282CPB1 to $442,995 of market value from $438,314",
+   "status": "FILLED",
+   "settled_on": "2025-10-14",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-10",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-10",
+     "price_per100": 99.957504
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00032",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-14",
+    "cusip": "91282CPB1",
+    "side": "buy",
+    "face": 4600.0,
+    "price_per100": 100.030969,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -4601.42,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 0.0,
+    "opened_face": 4600.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00034",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-14",
+   "target_session": "2025-10-15",
+   "cusip": "91282CNT4",
+   "side": "short",
+   "face": 435000.0,
+   "rule": "short leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CNT4 to $-443,349 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2025-10-15",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-14",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-14",
+     "price_per100": 101.901004
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00034",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-15",
+    "cusip": "91282CNT4",
+    "side": "short",
+    "face": 91400.0,
+    "price_per100": 101.733316,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 92984.25,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 91400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00035",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-15",
+   "target_session": "2025-10-16",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 1900.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CPB1 to $441,092 of market value from $443,062",
+   "status": "FILLED",
+   "settled_on": "2025-10-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-15",
+     "price_per100": 99.991341
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00035",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-16",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 1900.0,
+    "price_per100": 100.161643,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1903.07,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 1900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00010"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00036",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-15",
+   "target_session": "2025-10-16",
+   "cusip": "91282CNT4",
+   "side": "short",
+   "face": 342100.0,
+   "rule": "short leg of the 2s10s steepener",
+   "rationale": "2s10s slope +55.0 bp; moving 91282CNT4 to $-441,092 of market value from $-92,984",
+   "status": "FILLED",
+   "settled_on": "2025-10-16",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-15",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-15",
+     "price_per100": 101.733316
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00036",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-16",
+    "cusip": "91282CNT4",
+    "side": "short",
+    "face": 8700.0,
+    "price_per100": 102.240243,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 8894.9,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 39000000000.0,
+     "total_accepted": 39723990300.0,
+     "bid_to_cover": 2.48,
+     "competitive_tendered": null,
+     "security_term": "9-Year 10-Month",
+     "auction_date": "2025-10-08"
+    },
+    "closed_face": 0.0,
+    "opened_face": 8700.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00040",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-20",
+   "target_session": "2025-10-21",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 2100.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +54.0 bp; moving 91282CPB1 to $439,363 of market value from $441,496",
+   "status": "FILLED",
+   "settled_on": "2025-10-21",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-20",
+     "price_per100": 100.067201
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00040",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-21",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 2100.0,
+    "price_per100": 100.083696,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2101.76,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 2100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00011"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00042",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-21",
+   "target_session": "2025-10-22",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 900.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +53.0 bp; moving 91282CPB1 to $438,551 of market value from $439,468",
+   "status": "FILLED",
+   "settled_on": "2025-10-22",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-21",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-21",
+     "price_per100": 100.083696
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00042",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-22",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 900.0,
+    "price_per100": 100.084273,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 900.76,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00012"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00044",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-22",
+   "target_session": "2025-10-23",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 900.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +52.0 bp; moving 91282CPB1 to $437,619 of market value from $438,569",
+   "status": "FILLED",
+   "settled_on": "2025-10-23",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-22",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-22",
+     "price_per100": 100.084273
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00044",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-23",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 900.0,
+    "price_per100": 100.025036,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 900.23,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 900.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00013"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00046",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-23",
+   "target_session": "2025-10-24",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 1200.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +53.0 bp; moving 91282CPB1 to $436,111 of market value from $437,409",
+   "status": "FILLED",
+   "settled_on": "2025-10-24",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-23",
+     "price_per100": 100.025036
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00046",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-24",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 1200.0,
+    "price_per100": 100.025719,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1200.31,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 1200.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00014"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00049",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-27",
+   "target_session": "2025-10-28",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 2700.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +53.0 bp; moving 91282CPB1 to $433,459 of market value from $436,199",
+   "status": "FILLED",
+   "settled_on": "2025-10-28",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-27",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-27",
+     "price_per100": 100.022727
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00049",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-28",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 2700.0,
+    "price_per100": 100.039841,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 2701.08,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 2700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00015"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00051",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-28",
+   "target_session": "2025-10-29",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 800.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +52.0 bp; moving 91282CPB1 to $432,715 of market value from $433,573",
+   "status": "FILLED",
+   "settled_on": "2025-10-29",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-28",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-28",
+     "price_per100": 100.039841
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00051",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-29",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 800.0,
+    "price_per100": 99.811094,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 798.49,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00016"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00053",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-29",
+   "target_session": "2025-10-30",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 5300.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +49.0 bp; moving 91282CPB1 to $426,437 of market value from $431,783",
+   "status": "FILLED",
+   "settled_on": "2025-10-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-29",
+     "price_per100": 99.811094
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00053",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-30",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 5300.0,
+    "price_per100": 99.77545,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 5288.1,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 5300.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00017"
+    ]
+   }
+  },
+  {
+   "intent_id": "CurveSteepener_2s10s-00055",
+   "participant": "@CurveSteepener_2s10s",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2025-10-30",
+   "target_session": "2025-10-31",
+   "cusip": "91282CPB1",
+   "side": "sell",
+   "face": 700.0,
+   "rule": "long leg of the 2s10s steepener",
+   "rationale": "2s10s slope +50.0 bp; moving 91282CPB1 to $425,600 of market value from $426,340",
+   "status": "FILLED",
+   "settled_on": "2025-10-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2025-10-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2025-10-30",
+     "price_per100": 99.77545
+    }
+   },
+   "fill": {
+    "intent_id": "CurveSteepener_2s10s-00055",
+    "participant": "@CurveSteepener_2s10s",
+    "session": "2025-10-31",
+    "cusip": "91282CPB1",
+    "side": "sell",
+    "face": 700.0,
+    "price_per100": 99.792459,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 698.55,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 69000000000.0,
+     "total_accepted": 72810112800.0,
+     "bid_to_cover": 2.51,
+     "competitive_tendered": null,
+     "security_term": "2-Year",
+     "auction_date": "2025-09-23"
+    },
+    "closed_face": 700.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00018"
+    ]
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CNV9",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 2000.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 100.101483,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 100.101483,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-18",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.571973,
+     "remaining_years": 1.9507,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-09-23",
+   "exit_price_per100": 100.17224,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.17224,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-23",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.535041,
+     "remaining_years": 1.937,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.42,
+   "total_pnl": 1.42,
+   "return_on_cost_pct": 0.070685,
+   "holding_days": 5,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77327624900.0,
+    "bid_to_cover": 2.69,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-08-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CNV9",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 1300.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 100.101483,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 100.101483,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-18",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.571973,
+     "remaining_years": 1.9507,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-09-25",
+   "exit_price_per100": 99.966079,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.966079,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-25",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.64274,
+     "remaining_years": 1.9315,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1.76,
+   "total_pnl": -1.76,
+   "return_on_cost_pct": -0.135267,
+   "holding_days": 7,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77327624900.0,
+    "bid_to_cover": 2.69,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-08-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CNV9",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 2300.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 100.101483,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 100.101483,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-18",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.571973,
+     "remaining_years": 1.9507,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-09-26",
+   "exit_price_per100": 99.984989,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.984989,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-26",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.632849,
+     "remaining_years": 1.9288,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -2.68,
+   "total_pnl": -2.68,
+   "return_on_cost_pct": -0.116376,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77327624900.0,
+    "bid_to_cover": 2.69,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-08-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CNV9",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 800.0,
+   "entry_date": "2025-09-18",
+   "entry_price_per100": 100.101483,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 100.101483,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-18",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.571973,
+     "remaining_years": 1.9507,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-09-30",
+   "exit_price_per100": 100.035246,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.035246,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-09-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.606575,
+     "remaining_years": 1.9178,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.53,
+   "total_pnl": -0.53,
+   "return_on_cost_pct": -0.06617,
+   "holding_days": 12,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 77327624900.0,
+    "bid_to_cover": 2.69,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-08-26"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 600.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-03",
+   "exit_price_per100": 99.845969,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.845969,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-03",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.580493,
+     "remaining_years": 1.9918,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.35,
+   "total_pnl": -0.35,
+   "return_on_cost_pct": -0.058005,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 2600.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-06",
+   "exit_price_per100": 99.806801,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.806801,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.600986,
+     "remaining_years": 1.9836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -2.53,
+   "total_pnl": -2.53,
+   "return_on_cost_pct": -0.09721,
+   "holding_days": 5,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 3300.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-07",
+   "exit_price_per100": 99.863097,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.863097,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.571534,
+     "remaining_years": 1.9808,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1.35,
+   "total_pnl": -1.35,
+   "return_on_cost_pct": -0.04086,
+   "holding_days": 6,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00008",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 1200.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-09",
+   "exit_price_per100": 99.805859,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.805859,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-09",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.601479,
+     "remaining_years": 1.9753,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -1.18,
+   "total_pnl": -1.18,
+   "return_on_cost_pct": -0.098153,
+   "holding_days": 8,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00009",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 1900.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-10",
+   "exit_price_per100": 99.957504,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.957504,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-10",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.522192,
+     "remaining_years": 1.9726,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.02,
+   "total_pnl": 1.02,
+   "return_on_cost_pct": 0.053638,
+   "holding_days": 9,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00010",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 1900.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-16",
+   "exit_price_per100": 100.161643,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.161643,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-16",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.415699,
+     "remaining_years": 1.9562,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 4.9,
+   "total_pnl": 4.9,
+   "return_on_cost_pct": 0.257973,
+   "holding_days": 15,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00011",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 2100.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-21",
+   "exit_price_per100": 100.083696,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.083696,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-21",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.456329,
+     "remaining_years": 1.9425,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 3.78,
+   "total_pnl": 3.78,
+   "return_on_cost_pct": 0.179951,
+   "holding_days": 20,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00012",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 900.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-22",
+   "exit_price_per100": 100.084273,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.084273,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-22",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.456027,
+     "remaining_years": 1.9397,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.62,
+   "total_pnl": 1.62,
+   "return_on_cost_pct": 0.180528,
+   "holding_days": 21,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00013",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 900.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-23",
+   "exit_price_per100": 100.025036,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.025036,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-23",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.486932,
+     "remaining_years": 1.937,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.09,
+   "total_pnl": 1.09,
+   "return_on_cost_pct": 0.121234,
+   "holding_days": 22,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00014",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 1200.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-24",
+   "exit_price_per100": 100.025719,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.025719,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-24",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.486575,
+     "remaining_years": 1.9342,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1.46,
+   "total_pnl": 1.46,
+   "return_on_cost_pct": 0.121918,
+   "holding_days": 23,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00015",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 2700.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-28",
+   "exit_price_per100": 100.039841,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 100.039841,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-28",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.479205,
+     "remaining_years": 1.9233,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 3.67,
+   "total_pnl": 3.67,
+   "return_on_cost_pct": 0.136054,
+   "holding_days": 27,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00016",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 800.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-29",
+   "exit_price_per100": 99.811094,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.811094,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-29",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.59874,
+     "remaining_years": 1.9205,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.74,
+   "total_pnl": -0.74,
+   "return_on_cost_pct": -0.092913,
+   "holding_days": 28,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00017",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 5300.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-30",
+   "exit_price_per100": 99.77545,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.77545,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.617397,
+     "remaining_years": 1.9178,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -6.81,
+   "total_pnl": -6.81,
+   "return_on_cost_pct": -0.128592,
+   "holding_days": 29,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00018",
+   "participant": "@CurveSteepener_2s10s",
+   "cusip": "91282CPB1",
+   "security_type": "Note",
+   "security_term": "2-Year",
+   "direction": "long",
+   "face": 700.0,
+   "entry_date": "2025-10-01",
+   "entry_price_per100": 99.903918,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.903918,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-01",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.550192,
+     "remaining_years": 1.9973,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2025-10-31",
+   "exit_price_per100": 99.792459,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.792459,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2025-10-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.608493,
+     "remaining_years": 1.9151,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -0.78,
+   "total_pnl": -0.78,
+   "return_on_cost_pct": -0.111566,
+   "holding_days": 30,
+   "liquidity": {
+    "offering_amount": 69000000000.0,
+    "total_accepted": 72810112800.0,
+    "bid_to_cover": 2.51,
+    "competitive_tendered": null,
+    "security_term": "2-Year",
+    "auction_date": "2025-09-23"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

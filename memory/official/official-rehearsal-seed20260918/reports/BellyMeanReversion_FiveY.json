@@ -1,0 +1,1191 @@
+{
+ "participant": "@BellyMeanReversion_FiveY",
+ "family": "mean reversion",
+ "thesis": "Buy the 5-year when its official par yield is more than 25 bp above its own 120-session mean and stand aside otherwise, at the 10x gross cap while the position is on. The mirror of the trend rule: one of the two has to be wrong about this window, and the book says which.",
+ "data_status": "READY",
+ "data_note": "",
+ "drivers": [
+  "Best trade: 5-Year 91282CQD6 (long, secondary-curve to secondary-curve) 2026-03-27 to 2026-03-31 for $5,402.50.",
+  "Worst trade: 5-Year 91282CQD6 (secondary-curve to secondary-curve) 2026-03-25 to 2026-03-26 for $-4,852.76.",
+  "4 of 7 closed trades made money; coupons paid $0.00 and financing cost $-19,822.02.",
+  "Official par curve over the window: 3-month 4.02% -> 4.14% (+12 bp), 2-year 3.52% -> 4.74% (+122 bp), 10-year 4.06% -> 5.01% (+95 bp), 30-year 4.66% -> 5.35% (+69 bp). Duration exposures are paid off against this path."
+ ],
+ "verdict": "lost money",
+ "metrics": {
+  "participant": "@BellyMeanReversion_FiveY",
+  "family": "mean reversion",
+  "final_equity": 50783.05,
+  "return_pct": -49.217,
+  "return_at_ruin_pct": null,
+  "max_drawdown_pct": -50.6386,
+  "sharpe": -2.5065,
+  "trades": 7,
+  "open_positions": 3,
+  "coupon_income": 0.0,
+  "financing": 0.0,
+  "debit_interest": -19822.02,
+  "cash_credit": 3298.55,
+  "realised_pnl": -1523.46,
+  "margin_events": 0,
+  "intents": 92,
+  "filled_intents": 14,
+  "waiting_intents": 0,
+  "rejected_intents": 0,
+  "data_status": "READY",
+  "official_price_coverage": 1.0,
+  "ruined_on": null,
+  "status": "ACTIVE",
+  "rank": 10
+ },
+ "intents": [
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00001",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-20",
+   "target_session": "2026-03-23",
+   "cusip": "91282CQD6",
+   "side": "buy",
+   "face": 947400.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.010% vs mean 3.709% (+30.1 bp); moving 91282CQD6 to $925,921 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-03-23",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-20",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-20",
+     "price_per100": 97.722725
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00001",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-23",
+    "cusip": "91282CQD6",
+    "side": "buy",
+    "face": 947400.0,
+    "price_per100": 97.989667,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -928354.11,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 0.0,
+    "opened_face": 947400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00002",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-23",
+   "target_session": "2026-03-24",
+   "cusip": "91282CQD6",
+   "side": "sell",
+   "face": 947400.0,
+   "rule": "stand aside unless the 5-year is 25 bp cheap to its mean",
+   "rationale": "5-year 3.950% vs mean 3.711% (+23.9 bp); moving 91282CQD6 to $0 of market value from $928,354",
+   "status": "FILLED",
+   "settled_on": "2026-03-24",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-23",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-23",
+     "price_per100": 97.989667
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00002",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-24",
+    "cusip": "91282CQD6",
+    "side": "sell",
+    "face": 947400.0,
+    "price_per100": 97.635427,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 924998.04,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 947400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00001"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00003",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-24",
+   "target_session": "2026-03-25",
+   "cusip": "91282CQD6",
+   "side": "buy",
+   "face": 914000.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.030% vs mean 3.713% (+31.7 bp); moving 91282CQD6 to $892,422 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-03-25",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-24",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-24",
+     "price_per100": 97.635427
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00003",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-25",
+    "cusip": "91282CQD6",
+    "side": "buy",
+    "face": 914000.0,
+    "price_per100": 97.943525,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -895203.82,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 0.0,
+    "opened_face": 914000.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00004",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-25",
+   "target_session": "2026-03-26",
+   "cusip": "91282CQD6",
+   "side": "sell",
+   "face": 914000.0,
+   "rule": "stand aside unless the 5-year is 25 bp cheap to its mean",
+   "rationale": "5-year 3.960% vs mean 3.715% (+24.5 bp); moving 91282CQD6 to $0 of market value from $895,204",
+   "status": "FILLED",
+   "settled_on": "2026-03-26",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-25",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-25",
+     "price_per100": 97.943525
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00004",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-26",
+    "cusip": "91282CQD6",
+    "side": "sell",
+    "face": 914000.0,
+    "price_per100": 97.412588,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 890351.05,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 914000.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00002"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00005",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-26",
+   "target_session": "2026-03-27",
+   "cusip": "91282CQD6",
+   "side": "buy",
+   "face": 870200.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.080% vs mean 3.718% (+36.2 bp); moving 91282CQD6 to $847,764 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-03-27",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-26",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-26",
+     "price_per100": 97.412588
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00005",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-27",
+    "cusip": "91282CQD6",
+    "side": "buy",
+    "face": 870200.0,
+    "price_per100": 97.507707,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -848512.07,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 0.0,
+    "opened_face": 870200.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00006",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-27",
+   "target_session": "2026-03-30",
+   "cusip": "91282CQD6",
+   "side": "sell",
+   "face": 1800.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.060% vs mean 3.721% (+33.9 bp); moving 91282CQD6 to $846,719 of market value from $848,512",
+   "status": "FILLED",
+   "settled_on": "2026-03-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-27",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-27",
+     "price_per100": 97.507707
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00006",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-30",
+    "cusip": "91282CQD6",
+    "side": "sell",
+    "face": 1800.0,
+    "price_per100": 97.908601,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 1762.35,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 1800.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00003"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00007",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-03-30",
+   "target_session": "2026-03-31",
+   "cusip": "91282CQD6",
+   "side": "sell",
+   "face": 868400.0,
+   "rule": "stand aside unless the 5-year is 25 bp cheap to its mean",
+   "rationale": "5-year 3.970% vs mean 3.723% (+24.7 bp); moving 91282CQD6 to $0 of market value from $850,238",
+   "status": "FILLED",
+   "settled_on": "2026-03-31",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-03-30",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-03-30",
+     "price_per100": 97.908601
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00007",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-03-31",
+    "cusip": "91282CQD6",
+    "side": "sell",
+    "face": 868400.0,
+    "price_per100": 98.129828,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 852159.43,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78385634900.0,
+     "bid_to_cover": 2.32,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-02-25"
+    },
+    "closed_face": 868400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00004"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00008",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-03",
+   "target_session": "2026-04-06",
+   "cusip": "91282CQG9",
+   "side": "buy",
+   "face": 897400.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 3.990% vs mean 3.731% (+25.9 bp); moving 91282CQG9 to $892,796 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-04-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-03",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-04-03",
+     "price_per100": 99.484716
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00008",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-04-06",
+    "cusip": "91282CQG9",
+    "side": "buy",
+    "face": 897400.0,
+    "price_per100": 99.531237,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -893193.32,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 77233097500.0,
+     "bid_to_cover": 2.29,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-03-25"
+    },
+    "closed_face": 0.0,
+    "opened_face": 897400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00009",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-06",
+   "target_session": "2026-04-07",
+   "cusip": "91282CQG9",
+   "side": "sell",
+   "face": 897400.0,
+   "rule": "stand aside unless the 5-year is 25 bp cheap to its mean",
+   "rationale": "5-year 3.980% vs mean 3.733% (+24.7 bp); moving 91282CQG9 to $0 of market value from $893,193",
+   "status": "FILLED",
+   "settled_on": "2026-04-07",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-04-06",
+     "price_per100": 99.531237
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00009",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-04-07",
+    "cusip": "91282CQG9",
+    "side": "sell",
+    "face": 897400.0,
+    "price_per100": 99.667508,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 894416.22,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 77233097500.0,
+     "bid_to_cover": 2.29,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-03-25"
+    },
+    "closed_face": 897400.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00005"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00010",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-04-29",
+   "target_session": "2026-04-30",
+   "cusip": "91282CQG9",
+   "side": "buy",
+   "face": 910400.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.050% vs mean 3.775% (+27.5 bp); moving 91282CQG9 to $903,480 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-04-30",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-04-29",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-04-29",
+     "price_per100": 99.233891
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00010",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-04-30",
+    "cusip": "91282CQG9",
+    "side": "buy",
+    "face": 910400.0,
+    "price_per100": 99.368647,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -904652.16,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 77233097500.0,
+     "bid_to_cover": 2.29,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-03-25"
+    },
+    "closed_face": 0.0,
+    "opened_face": 910400.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00011",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-04",
+   "target_session": "2026-05-05",
+   "cusip": "91282CQK0",
+   "side": "buy",
+   "face": 884100.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.080% vs mean 3.783% (+29.7 bp); moving 91282CQK0 to $875,995 of market value from $0",
+   "status": "FILLED",
+   "settled_on": "2026-05-05",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-04",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-05-04",
+     "price_per100": 99.083041
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00011",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-05-05",
+    "cusip": "91282CQK0",
+    "side": "buy",
+    "face": 71900.0,
+    "price_per100": 99.083896,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -71241.32,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "bid_to_cover": 2.33,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-04-27"
+    },
+    "closed_face": 0.0,
+    "opened_face": 71900.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00012",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-05",
+   "target_session": "2026-05-06",
+   "cusip": "91282CQK0",
+   "side": "buy",
+   "face": 811100.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.080% vs mean 3.786% (+29.4 bp); moving 91282CQK0 to $875,004 of market value from $71,241",
+   "status": "FILLED",
+   "settled_on": "2026-05-06",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-05",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-05-05",
+     "price_per100": 99.083896
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00012",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-05-06",
+    "cusip": "91282CQK0",
+    "side": "buy",
+    "face": 34300.0,
+    "price_per100": 99.486434,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -34123.85,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "bid_to_cover": 2.33,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-04-27"
+    },
+    "closed_face": 0.0,
+    "opened_face": 34300.0,
+    "trips_closed": []
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00013",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-06",
+   "target_session": "2026-05-07",
+   "cusip": "91282CQK0",
+   "side": "sell",
+   "face": 106100.0,
+   "rule": "stand aside unless the 5-year is 25 bp cheap to its mean",
+   "rationale": "5-year 3.990% vs mean 3.788% (+20.2 bp); moving 91282CQK0 to $0 of market value from $105,655",
+   "status": "FILLED",
+   "settled_on": "2026-05-07",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-06",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-05-06",
+     "price_per100": 99.486434
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00013",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-05-07",
+    "cusip": "91282CQK0",
+    "side": "sell",
+    "face": 106100.0,
+    "price_per100": 99.263383,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": 105318.45,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "bid_to_cover": 2.33,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-04-27"
+    },
+    "closed_face": 106100.0,
+    "opened_face": 0.0,
+    "trips_closed": [
+     "T00006",
+     "T00007"
+    ]
+   }
+  },
+  {
+   "intent_id": "BellyMeanReversion_FiveY-00014",
+   "participant": "@BellyMeanReversion_FiveY",
+   "kind": "SECONDARY-ORDER",
+   "created_on": "2026-05-11",
+   "target_session": "2026-05-12",
+   "cusip": "91282CQK0",
+   "side": "buy",
+   "face": 880200.0,
+   "rule": "buy the 5-year when it is more than 25 bp cheap to its 120-session mean",
+   "rationale": "5-year 4.070% vs mean 3.796% (+27.4 bp); moving 91282CQK0 to $872,669 of market value from $99",
+   "status": "FILLED",
+   "settled_on": "2026-05-12",
+   "settle_note": "filled on the official curve: present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+   "evidence": {
+    "par_curve": {
+     "observation_date": "2026-05-11",
+     "file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963",
+     "source": "U.S. Treasury daily par yield curve",
+     "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve"
+    },
+    "mark": {
+     "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+     "observation_date": "2026-05-11",
+     "price_per100": 99.132521
+    }
+   },
+   "fill": {
+    "intent_id": "BellyMeanReversion_FiveY-00014",
+    "participant": "@BellyMeanReversion_FiveY",
+    "session": "2026-05-12",
+    "cusip": "91282CQK0",
+    "side": "buy",
+    "face": 49100.0,
+    "price_per100": 98.910454,
+    "kind": "SECONDARY-CURVE",
+    "cash_delta": -48565.03,
+    "note": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "liquidity": {
+     "offering_amount": 70000000000.0,
+     "total_accepted": 78810010600.0,
+     "bid_to_cover": 2.33,
+     "competitive_tendered": null,
+     "security_term": "5-Year",
+     "auction_date": "2026-04-27"
+    },
+    "closed_face": 0.0,
+    "opened_face": 49100.0,
+    "trips_closed": []
+   }
+  }
+ ],
+ "closed_trades": [
+  {
+   "trip_id": "T00001",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQD6",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 947400.0,
+   "entry_date": "2026-03-23",
+   "entry_price_per100": 97.989667,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.989667,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-23",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.946986,
+     "remaining_years": 4.9397,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-03-24",
+   "exit_price_per100": 97.635427,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.635427,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-24",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.026849,
+     "remaining_years": 4.937,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -3356.07,
+   "total_pnl": -3356.07,
+   "return_on_cost_pct": -0.361508,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78385634900.0,
+    "bid_to_cover": 2.32,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-02-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00002",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQD6",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 914000.0,
+   "entry_date": "2026-03-25",
+   "entry_price_per100": 97.943525,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.943525,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-25",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.95737,
+     "remaining_years": 4.9342,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-03-26",
+   "exit_price_per100": 97.412588,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.412588,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-26",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.07726,
+     "remaining_years": 4.9315,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -4852.76,
+   "total_pnl": -4852.76,
+   "return_on_cost_pct": -0.542085,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78385634900.0,
+    "bid_to_cover": 2.32,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-02-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00003",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQD6",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 1800.0,
+   "entry_date": "2026-03-27",
+   "entry_price_per100": 97.507707,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.507707,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.055726,
+     "remaining_years": 4.9288,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-03-30",
+   "exit_price_per100": 97.908601,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 97.908601,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-30",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.965233,
+     "remaining_years": 4.9205,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 7.22,
+   "total_pnl": 7.22,
+   "return_on_cost_pct": 0.411141,
+   "holding_days": 3,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78385634900.0,
+    "bid_to_cover": 2.32,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-02-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00004",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQD6",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 868400.0,
+   "entry_date": "2026-03-27",
+   "entry_price_per100": 97.507707,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 97.507707,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-27",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.055726,
+     "remaining_years": 4.9288,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-03-31",
+   "exit_price_per100": 98.129828,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 98.129828,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-03-31",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.915479,
+     "remaining_years": 4.9178,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 5402.5,
+   "total_pnl": 5402.5,
+   "return_on_cost_pct": 0.638022,
+   "holding_days": 4,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78385634900.0,
+    "bid_to_cover": 2.32,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-02-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00005",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQG9",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 897400.0,
+   "entry_date": "2026-04-06",
+   "entry_price_per100": 99.531237,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.531237,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-04-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.979315,
+     "remaining_years": 4.9863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-04-07",
+   "exit_price_per100": 99.667508,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.667508,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-04-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.948932,
+     "remaining_years": 4.9836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 1222.9,
+   "total_pnl": 1222.9,
+   "return_on_cost_pct": 0.136913,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 77233097500.0,
+    "bid_to_cover": 2.29,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-03-25"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00006",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQK0",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 71900.0,
+   "entry_date": "2026-05-05",
+   "entry_price_per100": 99.083896,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.083896,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-05",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.079397,
+     "remaining_years": 4.989,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-05-07",
+   "exit_price_per100": 99.263383,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.263383,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.039178,
+     "remaining_years": 4.9836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": 129.05,
+   "total_pnl": 129.05,
+   "return_on_cost_pct": 0.181146,
+   "holding_days": 2,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78810010600.0,
+    "bid_to_cover": 2.33,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-04-27"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  },
+  {
+   "trip_id": "T00007",
+   "participant": "@BellyMeanReversion_FiveY",
+   "cusip": "91282CQK0",
+   "security_type": "Note",
+   "security_term": "5-Year",
+   "direction": "long",
+   "face": 34200.0,
+   "entry_date": "2026-05-06",
+   "entry_price_per100": 99.486434,
+   "entry_kind": "SECONDARY-CURVE",
+   "entry_evidence": {
+    "price_per100": 99.486434,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-06",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 3.989315,
+     "remaining_years": 4.9863,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "exit_date": "2026-05-07",
+   "exit_price_per100": 99.263383,
+   "exit_kind": "SECONDARY-CURVE",
+   "exit_evidence": {
+    "price_per100": 99.263383,
+    "kind": "SECONDARY-CURVE",
+    "derivation": "present value of the security's own coupon and par at the official par yield for its remaining maturity, interpolated in tenor",
+    "session": "2026-05-07",
+    "evidence": {
+     "field": "daily treasury par yield curve",
+     "par_yield_pct": 4.039178,
+     "remaining_years": 4.9836,
+     "curve_file": "data/real/treasury/daily_treasury_yield_curve_2026.csv",
+     "sha256": "07ccf87eb2d42aca27aa37862b683239e444f290ae4d8f2374be29b0cc39e963"
+    }
+   },
+   "coupon_income": 0.0,
+   "financing": 0.0,
+   "fees": 0.0,
+   "pnl": -76.28,
+   "total_pnl": -76.28,
+   "return_on_cost_pct": -0.224202,
+   "holding_days": 1,
+   "liquidity": {
+    "offering_amount": 70000000000.0,
+    "total_accepted": 78810010600.0,
+    "bid_to_cover": 2.33,
+    "competitive_tendered": null,
+    "security_term": "5-Year",
+    "auction_date": "2026-04-27"
+   },
+   "source_class": "OFFICIAL",
+   "official_price_coverage": 1.0
+  }
+ ]
+}

@@ -63,8 +63,11 @@ SEASON_START = "2025-09-17"
 SEASON_END = "2026-09-16"
 COLLECT_END = "2026-09-17"
 
+# SEC's webmaster FAQ requires an automated client to identify itself with a
+# contact address; the first collection run was answered HTTP 403 with a UA that
+# had only a URL.  https://www.sec.gov/about/webmaster-frequently-asked-questions
 SEC_UA = ("StockPaperSim/2.0 (academic paper-trading simulation; "
-          "https://github.com/buffedlizard55-lab/StockPaperSim)")
+          "contact buffedlizard55-lab@users.noreply.github.com)")
 BROWSER_UA = ("Mozilla/5.0 (compatible; StockPaperSim/2.0; "
               "+https://github.com/buffedlizard55-lab/StockPaperSim)")
 
@@ -85,6 +88,10 @@ FRED_SERIES: Dict[str, str] = {
     "DGS3MO": "3-month Treasury constant-maturity yield",
     "DCOILWTICO": "Cushing WTI crude oil spot price",
     "DTWEXBGS": "Nominal broad US dollar index",
+    # FRED discontinued GOLDPMGBD228NLBM; both the AM and PM fix ids are
+    # requested and whichever resolves is what the site cites. A 404 is
+    # recorded in the manifest rather than hidden.
+    "GOLDAMGBD228NLBM": "LBMA gold price, AM fix (USD/troy oz)",
     "GOLDPMGBD228NLBM": "LBMA gold price, PM fix (USD/troy oz)",
 }
 
@@ -99,7 +106,8 @@ SEC_MIN_INTERVAL = 0.13          # SEC asks for <= 10 requests/second
 GENERIC_MIN_INTERVAL = 0.35
 
 SOURCE_CLASS = {
-    "yahoo": "SECONDARY", "stooq": "SECONDARY", "fred": "OFFICIAL",
+    "yahoo": "SECONDARY", "stooq": "SECONDARY", "nasdaq": "SECONDARY",
+    "fred": "OFFICIAL",
     "sec": "OFFICIAL", "fda": "OFFICIAL", "mlb": "OFFICIAL",
     "nocode": "OFFICIAL", "espn": "SECONDARY", "nba": "OFFICIAL",
     "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
@@ -309,6 +317,58 @@ def collect_stooq(fetcher: Fetcher, out: str) -> dict:
         summary["ok"].append(symbol)
         summary["rows"][symbol] = len(rows)
     return summary
+
+
+NASDAQ_ASSETCLASS = {"SPY": "etf", "QQQ": "etf", "GLD": "etf", "XBI": "etf",
+                     "DKNG": "stocks", "AAPL": "stocks", "MSFT": "stocks", "NVDA": "stocks"}
+
+
+def collect_nasdaq(fetcher: Fetcher, out: str) -> dict:
+    """Nasdaq's own historical quote API - a second publisher for the same bars.
+
+    NASDAQ is the exchange operator, so this is a venue-published series rather
+    than a re-aggregator, but it is still not the consolidated tape (it prints
+    the Nasdaq-listed session, no after-hours).  Files are labelled SECONDARY.
+    """
+    summary = {"ok": [], "failed": [], "rows": {}}
+    for symbol, asset in NASDAQ_ASSETCLASS.items():
+        url = ("https://api.nasdaq.com/api/quote/" + symbol +
+               f"/historical?assetclass={asset}&fromdate={WARMUP_START}"
+               f"&limit=1000&todate={COLLECT_END}")
+        body = fetcher.get(url, "nasdaq",
+                           headers={"User-Agent": BROWSER_UA, "Accept": "application/json"},
+                           note=f"{symbol} daily history (cross-check)")
+        if body is None:
+            summary["failed"].append(symbol)
+            continue
+        try:
+            payload = json.loads(body.decode("utf-8"))
+        except Exception as exc:  # noqa: BLE001
+            summary["failed"].append(f"{symbol}: {exc}")
+            continue
+        rows = []
+        for row in ((payload.get("data") or {}).get("tradesTable") or {}).get("rows") or []:
+            try:
+                rows.append({"date": _us_date_to_iso(row["date"]),
+                             "close": float(row["close"].replace("$", "").replace(",", "")),
+                             "volume": int(row["volume"].replace(",", "") or 0),
+                             "open": float(row["open"].replace("$", "").replace(",", "")),
+                             "high": float(row["high"].replace("$", "").replace(",", "")),
+                             "low": float(row["low"].replace("$", "").replace(",", ""))})
+            except (KeyError, ValueError, AttributeError):
+                continue
+        rows.sort(key=lambda r: r["date"])
+        write_json(os.path.join(out, "prices", "nasdaq", f"{_slug(symbol)}.json"),
+                   {"symbol": symbol, "provider": "api.nasdaq.com", "source_class": "SECONDARY",
+                    "bars": rows})
+        summary["ok"].append(symbol)
+        summary["rows"][symbol] = len(rows)
+    return summary
+
+
+def _us_date_to_iso(text: str) -> str:
+    import datetime as _dt
+    return _dt.datetime.strptime(text.strip(), "%m/%d/%Y").date().isoformat()
 
 
 def collect_fred(fetcher: Fetcher, out: str) -> dict:
@@ -578,11 +638,14 @@ ESPN_SPORTS = {
     "nba": "basketball/nba", "mlb": "baseball/mlb",
 }
 
-ESPN_WINDOWS = {
-    "nfl": [("2025-09-01", "2026-02-28")],
-    "ncaaf": [("2025-08-15", "2026-01-31")],
-    "nba": [("2025-10-01", "2026-06-30")],
-    "mlb": [("2026-03-01", "2026-09-17")],
+#: (season, seasontype, first week, last week).  ESPN's scoreboard endpoint
+#: answers HTTP 400 for a date *range*; it accepts a season + seasontype + week,
+#: which is what the first collection run got wrong.
+ESPN_WEEKS = {
+    "nfl": [(2025, 2, 1, 18), (2025, 3, 1, 4)],
+    "ncaaf": [(2025, 2, 1, 15), (2025, 3, 1, 1)],
+    "nba": [(2025, 2, 1, 25), (2026, 3, 1, 4)],
+    "mlb": [(2026, 2, 1, 27)],
 }
 
 
@@ -591,13 +654,12 @@ def collect_espn(fetcher: Fetcher, out: str) -> dict:
     for key, path in ESPN_SPORTS.items():
         rows: List[dict] = []
         failed = 0
-        for start, end in ESPN_WINDOWS.get(key, []):
-            for chunk_start, chunk_end in _chunks(start, end, 35):
+        for season, seasontype, first_week, last_week in ESPN_WEEKS.get(key, []):
+            for week in range(first_week, last_week + 1):
                 url = (f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
-                       f"?dates={chunk_start.replace('-', '')}-{chunk_end.replace('-', '')}"
-                       f"&limit=1000")
+                       f"?dates={season}&seasontype={seasontype}&week={week}&limit=1000")
                 body = fetcher.get(url, "espn",
-                                   note=f"{key} scoreboard {chunk_start}..{chunk_end} (secondary)")
+                                   note=f"{key} {season} type {seasontype} week {week} (secondary)")
                 if body is None:
                     failed += 1
                     continue
@@ -675,6 +737,38 @@ def collect_nba_official(fetcher: Fetcher, out: str) -> dict:
     write_bytes(os.path.join(out, "sports", "nba_schedule_official.json"), body)
     n = write_jsonl(os.path.join(out, "sports", "nba_schedule_official.jsonl"), rows)
     return {"ok": True, "rows": n}
+
+
+OFFICIAL_SPORTS_DOCS = {
+    "nba_injury_report_index": "https://official.nba.com/nba-injury-report-2025-26-season/",
+    "nfl_injuries": "https://www.nfl.com/injuries/",
+    "ncaa_scoreboard_fbs_2025_week10":
+        "https://data.ncaa.com/casablanca/scoreboard/football/fbs/2025/10/scoreboard.json",
+    "nba_stats_scoreboard_probe":
+        "https://stats.nba.com/stats/scoreboardv3?GameDate=2026-03-15&LeagueID=00",
+}
+
+
+def collect_official_sports_docs(fetcher: Fetcher, out: str) -> dict:
+    """Probe the league-published documents the injury/score adapters cite.
+
+    These are the documents a *forward* test would read.  They are fetched here
+    so the site can show, with a hash and a date, that the adapter target exists
+    and is official - even where no historical archive of the same feed exists.
+    """
+    summary: Dict[str, dict] = {}
+    for key, url in OFFICIAL_SPORTS_DOCS.items():
+        headers = {"Accept": "application/json,text/html,*/*"}
+        if "stats.nba.com" in url:
+            headers.update({"User-Agent": BROWSER_UA, "Referer": "https://www.nba.com/"})
+        body = fetcher.get(url, "nocode", headers=headers, note=f"official sports document {key}")
+        if body is None:
+            summary[key] = {"ok": False}
+            continue
+        path = os.path.join(out, "sports", "official", f"{key}.raw")
+        write_bytes(path, body)
+        summary[key] = {"ok": True, "bytes": len(body)}
+    return summary
 
 
 # --------------------------------------------------------------------------
@@ -787,7 +881,32 @@ def crosscheck(out: str) -> dict:
                 "note": ("two independent publishers of the same index; level differences "
                          "come from the fact that FRED's SP500 is a daily close index series"),
             })
-    # (c) Yahoo vs Stooq closes on common dates.
+    # (c) Yahoo vs an independent publisher (Nasdaq's own API, else Stooq).
+    for symbol in ("SPY", "QQQ", "GLD", "XBI", "DKNG", "AAPL", "MSFT", "NVDA"):
+        for provider in ("nasdaq", "stooq"):
+            other_path = os.path.join(out, "prices", provider, f"{_slug(symbol)}.json")
+            yahoo_path = os.path.join(out, "prices", "yahoo", f"{_slug(symbol)}.json")
+            if not (os.path.exists(other_path) and os.path.exists(yahoo_path)):
+                continue
+            with open(other_path, "r", encoding="utf-8") as handle:
+                other = {b["date"]: b["close"] for b in json.load(handle)["bars"]}
+            with open(yahoo_path, "r", encoding="utf-8") as handle:
+                yahoo = {b["date"]: b["close"] for b in json.load(handle)["bars"]}
+            common = sorted(set(other) & set(yahoo))
+            if len(common) < 30:
+                continue
+            diffs_bps = [abs(other[d] - yahoo[d]) / yahoo[d] * 10000.0 for d in common]
+            report["pairs"].append({
+                "kind": f"yahoo-vs-{provider}", "a": "Yahoo", "b": provider,
+                "symbol": symbol, "n": len(common),
+                "max_abs_diff_bps": max(diffs_bps),
+                "median_abs_diff_bps": _median(diffs_bps),
+                "note": ("both are publishers rather than the consolidated tape; "
+                         "agreement is a necessary check, not a sufficient one"),
+            })
+            break
+
+    # (c2) Yahoo vs Stooq closes on common dates.
     for symbol in ("SPY", "QQQ", "GLD", "XBI", "DKNG", "AAPL", "MSFT", "NVDA"):
         stooq_path = os.path.join(out, "prices", "stooq", f"{_slug(symbol)}.json")
         if not os.path.exists(stooq_path):
@@ -846,7 +965,8 @@ def coverage_report(out: str, results: dict) -> dict:
     }
     for path, label, klass in (
         (os.path.join(out, "prices", "yahoo"), "Yahoo Finance chart API", "SECONDARY"),
-        (os.path.join(out, "prices", "stooq"), "Stooq daily CSV", "SECONDARY"),
+        (os.path.join(out, "prices", "stooq"), "Stooq daily CSV (blocked)", "SECONDARY"),
+        (os.path.join(out, "prices", "nasdaq"), "Nasdaq quote API", "SECONDARY"),
         (os.path.join(out, "fred"), "FRED (Federal Reserve Bank of St. Louis)", "OFFICIAL"),
         (os.path.join(out, "sec"), "SEC EDGAR (Form 4 + ticker map)", "OFFICIAL"),
         (os.path.join(out, "fda"), "FDA openFDA /drug/drugsfda", "OFFICIAL"),
@@ -887,6 +1007,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"stooq: {len(results['stooq']['ok'])} ok, {len(results['stooq']['failed'])} failed")
         results["fred"] = collect_fred(fetcher, out)
         print(f"fred: {results['fred']['ok']}")
+        results["nasdaq"] = collect_nasdaq(fetcher, out)
+        print(f"nasdaq: {len(results['nasdaq']['ok'])} ok")
     if "sec" in only:
         results["sec"] = collect_sec(fetcher, out)
         print(f"sec: {results['sec']['transactions']} transactions from "
@@ -898,6 +1020,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         results["mlb"] = collect_mlb(fetcher, out)
         results["espn"] = collect_espn(fetcher, out)
         results["nba"] = collect_nba_official(fetcher, out)
+        results["official_docs"] = collect_official_sports_docs(fetcher, out)
         print(f"sports: mlb={results['mlb']} espn={results['espn']} nba={results['nba']}")
     if "weather" in only:
         results["weather"] = collect_weather(fetcher, out)

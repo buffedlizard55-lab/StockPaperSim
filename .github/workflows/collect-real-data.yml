@@ -63,11 +63,15 @@ jobs:
         run: python scripts/check_purity.py
 
       - name: Collect
+        env:
+          # On a push event there are no inputs, so every one of them needs a
+          # fallback; an empty --max-seconds is an argparse error (exit 2), which
+          # is exactly how the first run of this workflow failed.
+          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi' }}
+          MAX_SECONDS: ${{ github.event.inputs.max_seconds || '1500' }}
         run: |
-          python scripts/collect_real_data.py \
-            --out data/real \
-            --only "${{ github.event.inputs.only }}" \
-            --max-seconds "${{ github.event.inputs.max_seconds }}"
+          python scripts/collect_real_data.py --out data/real \
+            --only "$ONLY" --max-seconds "$MAX_SECONDS"
 
       - name: Summarise the collection manifest
         run: |
@@ -108,7 +112,7 @@ jobs:
         run: git status --short data/real | head -40; du -sh data/real
 
       - name: Commit the collected data back to this branch
-        if: ${{ github.event.inputs.commit == 'true' }}
+        if: ${{ github.event.inputs.commit != 'false' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

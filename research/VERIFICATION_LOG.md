@@ -410,7 +410,36 @@ about a specific artefact, so the register entries now name the season they were
 measured on, and `tests/test_readme_claims.py` exists so that the human-readable
 restatement of those numbers in `README.md` cannot drift from the memory again.
 
+## 4g. The published site's own provenance line, checked after it went live (**IR-35**)
+
+PR #3 merged, CI was green, and the live Pages deployment was read as a human
+would read it. Its footer said `git commit 71b3d9062d2c` next to a season that
+commit could not have produced: the memory in the repository had been generated
+from a working tree holding the then-uncommitted IR-31/IR-32/IR-34 fixes. The
+manifest recorded `code.git.dirty = true` and a SHA-256 for every `sim/` module,
+so the data was honest; nothing a reader sees said so. Checked out literally,
+that commit reproduces the *pre-fix* season, and GapAndGo's published **−91.75%**
+would have looked fabricated next to its **−86.57%**.
+
+Three fixes followed, then one verification:
+
+| Change | File |
+|---|---|
+| The footer renders all three states of `dirty` and names the module hashes as the fingerprint when a commit cannot be trusted | `scripts/build_site.py` (`provenance_sentence`) |
+| Provenance is read from the module's own tree, not the parent of the memory root - a scratch `--memory-root` used to resolve to `/tmp` and find nothing | `sim/memory.py` (`source_root`) |
+| `dirty` is `True`/`False`/`None`; a failed git call no longer reads as a clean tree | `sim/memory.py` (`_git_state`) |
+| Four tests, one of which compares `docs/index.html`'s footer against the committed manifest. It was red before the season was regenerated, which is what makes it a test and not a description | `tests/test_site_builder.py`, `tests/test_memory.py` |
+
+Verification: all six scenarios were re-run from the clean committed tree into a
+scratch root. `leaderboard.json` and `market_report.json` came out **byte-identical**
+to the published files, so the memory now committed names a commit that contains
+the code which ran, and the reproducibility claim was exercised on the published
+artefact rather than on a copy. One residual limit is stated instead of fixed: a
+squash merge means `main` never contains the PR-head commit a manifest names, so
+the durable provenance of a run is its per-module hashes, not the commit string.
+
 ## 6. Audits run on the simulation itself
+
 
 
 These are internal consistency checks, all reproduced by the test suite

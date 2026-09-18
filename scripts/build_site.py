@@ -693,29 +693,37 @@ def provenance_sentence(manifest: dict) -> str:
     A commit id on its own is not provenance. A season can be - and in this
     repository's history was - generated from a working tree carrying uncommitted
     changes, in which case the recorded commit is the one the run was *based on*
-    and not the code that actually ran. The run manifest already distinguishes the
-    two (`code.git.dirty`), and the durable fingerprint is the per-module SHA-256
-    list in the same manifest, so the footer states which of them a reader is
-    looking at instead of implying a reproducibility guarantee the commit string
-    cannot give after a squash merge.
+    and not the code that actually ran. The run manifest distinguishes three cases
+    (`code.git.dirty` is True, False, or None when git could not be consulted at
+    all) and carries a SHA-256 of every engine module, so the footer states which
+    of the two a reader is holding instead of implying a guarantee the commit
+    string cannot give - least of all after a squash merge, when main never
+    contains the PR-head commit a manifest names.
     """
     code = manifest.get("code") or {}
     git = code.get("git") or {}
-    commit = str(git.get("commit") or "unknown")[:12]
     n_hashes = len(code.get("python_module_hashes") or {})
-    parts = [f"git commit <code>{ESC(commit)}</code>"]
-    if git.get("dirty"):
+    hash_note = (f"{n_hashes} per-module SHA-256 source hashes recorded in the "
+                 f"manifest" if n_hashes else "no per-module source hashes in the "
+                 f"manifest")
+    commit = str(git.get("commit") or "")
+    lead = (f"git commit <code>{ESC(commit[:12])}</code>" if commit
+            else "no git provenance recorded for this run")
+    dirty = git.get("dirty")
+    if dirty is None:
+        note = (f"its tree state could <strong>not be checked</strong>, so nothing "
+                f"here claims a match with any commit; all that pins the code is "
+                f"{hash_note}")
+    elif dirty:
         branch = ESC(str(git.get("branch") or "an unnamed branch"))
-        parts.append(
-            f"<strong>generated from a modified working tree</strong> on "
-            f"{branch}: that commit is what the run was based on, not the whole of "
-            f"the code that ran, so reproduce from the {n_hashes} per-module "
-            f"SHA-256 hashes in the manifest, or re-run it")
-    elif n_hashes:
-        parts.append(f"with {n_hashes} per-module source hashes in the manifest")
+        note = (f"<strong>generated from a modified working tree</strong> on "
+                f"{branch}: that commit is what the run was based on, not the whole "
+                f"of the code that ran, so reproduce from {hash_note}, or re-run it")
     else:
-        parts.append("with no per-module source hashes recorded in the manifest")
-    return " &middot; ".join(parts)
+        note = f"generated from a clean tree, with {hash_note}"
+    return f"{lead} &middot; {note}"
+
+
 def _market_summary_html(d: SiteData) -> str:
     m = d.market
     if not m:

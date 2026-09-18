@@ -76,8 +76,28 @@ def _sha256(path: str) -> str:
     return h.hexdigest()
 
 
+def source_root() -> str:
+    """The tree the *code* came from, which is not where memory is written.
+
+    Provenance is a property of the source that executed, so it is derived from
+    this module's own location instead of from the memory root. An operator who
+    points --memory-root at /tmp (which CI does, to re-run the season and diff it)
+    must still get a manifest that says which commit ran - and previously the
+    parent of that scratch directory became the "repository", which reported no
+    commit at all.
+    """
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 def _git_state(repo_root: str) -> dict:
-    """Best-effort git provenance. Never raises: memory must always be writable."""
+    """Best-effort git provenance. Never raises: memory must always be writable.
+
+    `dirty` is deliberately three-valued. When git cannot be consulted - no git
+    binary, a detached source tree, a timeout - the answer is None, not False:
+    absence of evidence recorded as evidence of cleanliness would let the published
+    footer claim the numbers came from a named commit when nothing could check it.
+    That was IR-35's second half, and it is why the field is `Optional[bool]`.
+    """
     def run(*args: str) -> Optional[str]:
         try:
             out = subprocess.run(["git", *args], cwd=repo_root, capture_output=True,
@@ -85,10 +105,11 @@ def _git_state(repo_root: str) -> dict:
             return out.stdout.strip() if out.returncode == 0 else None
         except Exception:
             return None
+    status = run("status", "--porcelain")
     return {
         "commit": run("rev-parse", "HEAD"),
         "branch": run("rev-parse", "--abbrev-ref", "HEAD"),
-        "dirty": (run("status", "--porcelain") or "") != "",
+        "dirty": None if status is None else status != "",
         "remote": run("config", "--get", "remote.origin.url"),
     }
 
@@ -236,7 +257,7 @@ class RunWriter:
     def finalise(self, manifest_payload: dict) -> dict:
         """Close streams, checksum everything, write the run + store manifests."""
         self.close()
-        repo_root = os.path.dirname(self.root)
+        repo_root = source_root()
         manifest = {
             "schema_version": SCHEMA_VERSION,
             "run_id": self.run_id,

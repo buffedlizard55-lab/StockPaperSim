@@ -455,7 +455,7 @@ class TestRunProvenanceFooter(unittest.TestCase):
                                             "dirty": True},
                                     "python_module_hashes": {"sim/engine.py": "h"}}})
         self.assertIn("modified working tree", html)
-        self.assertIn("1 per-module", html)
+        self.assertIn("1 per-module SHA-256 source hashes", html)
         self.assertIn("arena/x", html)
 
     def test_a_clean_run_points_at_the_module_hashes(self):
@@ -464,11 +464,14 @@ class TestRunProvenanceFooter(unittest.TestCase):
                                     "python_module_hashes": {"sim/engine.py": "h",
                                                               "sim/cli.py": "h2"}}})
         self.assertNotIn("modified working tree", html)
-        self.assertIn("2 per-module source hashes", html)
+        self.assertIn("2 per-module SHA-256 source hashes", html)
 
     def test_a_manifest_without_git_metadata_degrades_explicitly(self):
+        # A run whose memory root sat outside the repository used to record
+        # commit=None *and* dirty=False, i.e. it reported "clean" for a tree it
+        # had never looked at. Unknown must never render as clean.
         html = self._foot({})
-        self.assertIn("unknown", html)
+        self.assertIn("no git provenance recorded", html)
         self.assertIn("no per-module source hashes", html)
         for banned in ("None", "{", "}"):
             self.assertNotIn(banned, html, f"raw python value leaked into the footer: {banned}")

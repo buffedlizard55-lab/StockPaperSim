@@ -389,5 +389,44 @@ class TestWriterRoundTrip(unittest.TestCase):
         self.assertIsNone(store.load(self.run_id, "nope.json"))
 
 
+
+class TestRunProvenance(unittest.TestCase):
+    """The manifest's claim about which code ran has to be worth reading.
+
+    IR-35 found the published site crediting a commit that did not contain the
+    engine which produced the season. Two contracts keep that honest: provenance
+    is taken from the source tree rather than from wherever --memory-root happens
+    to point (CI re-runs seasons into /tmp), and a tree git could not be asked
+    about is reported as unknown, never as clean.
+    """
+
+    def test_provenance_reads_the_source_tree_not_the_memory_root(self):
+        root = memory.source_root()
+        self.assertTrue(os.path.isdir(os.path.join(root, "sim")),
+                        "source_root() must resolve to the repository that holds "
+                        "the engine, not to a scratch memory root")
+        self.assertTrue(os.path.isfile(os.path.join(root, "sim", "engine.py")))
+
+    def test_a_directory_that_is_not_a_repository_reports_unknown_not_clean(self):
+        tmp = tempfile.mkdtemp(prefix="sps-nogit-")
+        try:
+            state = memory._git_state(tmp)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+        self.assertIsNone(state["commit"], "a non-repository cannot yield a commit")
+        self.assertIsNone(
+            state["dirty"],
+            "dirty=False would be absence of evidence recorded as evidence of "
+            "cleanliness, which is what let a footer overstate its own provenance",
+        )
+
+    def test_the_source_tree_itself_yields_a_decidable_tree_state(self):
+        state = memory._git_state(memory.source_root())
+        commit = state["commit"]
+        self.assertIsNotNone(commit, "this checkout should answer git rev-parse")
+        self.assertRegex(commit, r"^[0-9a-f]{40}$")
+        self.assertIn(state["dirty"], (True, False),
+                      "for a real repository the tree state must be decided, not None")
+
 if __name__ == "__main__":
     unittest.main()

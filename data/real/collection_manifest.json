@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-18T22:37:19Z",
+ "generated_at": "2026-09-19T22:50:00Z",
  "collector": "scripts/collect_real_data.py",
  "window": {
   "warmup_start": "2024-09-16",
@@ -7,6 +7,422 @@
   "season_end": "2026-09-16"
  },
  "requests": [
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/SPY?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55083,
+   "sha256": "23aa1dc2a479b82313baeac7793940b5397615942715a59cf36a3c976c49d027",
+   "ok": true,
+   "attempts": 1,
+   "note": "SPY daily bars",
+   "fetched_at": "2026-09-19T22:24:59Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55237,
+   "sha256": "1fcf0b54873d68b6f720825240c267d737dc1487ea150078ce573c511a340415",
+   "ok": true,
+   "attempts": 1,
+   "note": "QQQ daily bars",
+   "fetched_at": "2026-09-19T22:24:59Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/IWM?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 57211,
+   "sha256": "8082789f224d32b108353431a1be81bcd1070f2c07e6ac9edd2c920eb5c09d0e",
+   "ok": true,
+   "attempts": 1,
+   "note": "IWM daily bars",
+   "fetched_at": "2026-09-19T22:25:00Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/GLD?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55196,
+   "sha256": "af09cf3f2b76d1805c98e4d05c0d62158d843450feb50bb214651dd0081ae7b6",
+   "ok": true,
+   "attempts": 1,
+   "note": "GLD daily bars",
+   "fetched_at": "2026-09-19T22:25:00Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/UNG?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56643,
+   "sha256": "a28c5387d320209441dc7425d2ce4134ba4f46acfde72438abfc07f4ad5a80d0",
+   "ok": true,
+   "attempts": 1,
+   "note": "UNG daily bars",
+   "fetched_at": "2026-09-19T22:25:00Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/XLU?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56519,
+   "sha256": "140e0eb90b417b681031d3f325872b04c6db6d396dda07be14230333fc606fc2",
+   "ok": true,
+   "attempts": 1,
+   "note": "XLU daily bars",
+   "fetched_at": "2026-09-19T22:25:01Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/XBI?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55795,
+   "sha256": "6219e3ed82ee9ade289c3d96785af4a232ab68f65ac8a489055dd29c79ca142b",
+   "ok": true,
+   "attempts": 1,
+   "note": "XBI daily bars",
+   "fetched_at": "2026-09-19T22:25:01Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/IBB?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56693,
+   "sha256": "a72ad775d04ee293ec3c5afa1936f86d8b278e36753038e9376f835727d5c4dd",
+   "ok": true,
+   "attempts": 1,
+   "note": "IBB daily bars",
+   "fetched_at": "2026-09-19T22:25:01Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/TLT?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56130,
+   "sha256": "2c1c0a4c82683ed6940b28d4a250342924f5d5885927e1a44e99e7bf73e1ac6d",
+   "ok": true,
+   "attempts": 1,
+   "note": "TLT daily bars",
+   "fetched_at": "2026-09-19T22:25:02Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/DKNG?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55272,
+   "sha256": "b894a4b6646b3ae8fb187c0637780beec256872f43d5932a6b3511d857a822fa",
+   "ok": true,
+   "attempts": 1,
+   "note": "DKNG daily bars",
+   "fetched_at": "2026-09-19T22:25:02Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/FLUT?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54775,
+   "sha256": "6ca26505a4391189ad299b7f6dfa30f1239471dbb29fb32f290b84146d440f89",
+   "ok": true,
+   "attempts": 1,
+   "note": "FLUT daily bars",
+   "fetched_at": "2026-09-19T22:25:02Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/PENN?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56211,
+   "sha256": "dce0be86d8ff40891ed65e218e921fcb8e85dab3fe5fbef10be1171f944d16bd",
+   "ok": true,
+   "attempts": 1,
+   "note": "PENN daily bars",
+   "fetched_at": "2026-09-19T22:25:03Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/SRAD?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55374,
+   "sha256": "d0d84acdb71f4382eb38884bb74c21a82f7a2e2b760872797e34bc320028a9cd",
+   "ok": true,
+   "attempts": 1,
+   "note": "SRAD daily bars",
+   "fetched_at": "2026-09-19T22:25:03Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/GENI?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54652,
+   "sha256": "2333391b78b3a997160195a929f3427f22db50bc985ad2b4edaee8ca01e1d338",
+   "ok": true,
+   "attempts": 1,
+   "note": "GENI daily bars",
+   "fetched_at": "2026-09-19T22:25:03Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/AAPL?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56196,
+   "sha256": "e7763c91da64992dc9921064f88bccae12bf26549f5143f543c774d4a0b1447e",
+   "ok": true,
+   "attempts": 1,
+   "note": "AAPL daily bars",
+   "fetched_at": "2026-09-19T22:25:04Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/MSFT?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55208,
+   "sha256": "c3bd6618e953177a369a4e3c33f458a0087aa757d11113ad43c23bc748c2ebc0",
+   "ok": true,
+   "attempts": 1,
+   "note": "MSFT daily bars",
+   "fetched_at": "2026-09-19T22:25:04Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/NVDA?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 57061,
+   "sha256": "5fba6d66ef666752dcb92fd8200c61d4ddf47324b8e003347101145d43622076",
+   "ok": true,
+   "attempts": 1,
+   "note": "NVDA daily bars",
+   "fetched_at": "2026-09-19T22:25:04Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/JPM?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54790,
+   "sha256": "4706237b882bde4665401d7583da4b8b40b6bb0468ff09e70967043e8b28c322",
+   "ok": true,
+   "attempts": 1,
+   "note": "JPM daily bars",
+   "fetched_at": "2026-09-19T22:25:05Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/XOM?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 57379,
+   "sha256": "0828571ffde05bc700766dcbc382f1af6f2362d1c09561424cb63ba1443e207e",
+   "ok": true,
+   "attempts": 1,
+   "note": "XOM daily bars",
+   "fetched_at": "2026-09-19T22:25:05Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/JNJ?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 55486,
+   "sha256": "123d459325f9865556fc32aef410c87e0d068f1bd53135dc424b70378a67fcc2",
+   "ok": true,
+   "attempts": 1,
+   "note": "JNJ daily bars",
+   "fetched_at": "2026-09-19T22:25:05Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/PG?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56717,
+   "sha256": "37fd73be541ace463b0c668aa53b68a629eff3cebfddd967fbdf22dd4c33b6f3",
+   "ok": true,
+   "attempts": 1,
+   "note": "PG daily bars",
+   "fetched_at": "2026-09-19T22:25:06Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/TSLA?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54572,
+   "sha256": "647b07b400a63383b2b05e7ae621909529a92ccf567ca454d4fd194b910f9b8a",
+   "ok": true,
+   "attempts": 1,
+   "note": "TSLA daily bars",
+   "fetched_at": "2026-09-19T22:25:06Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/MU?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54774,
+   "sha256": "281f273cc67babe96eb860a0effc22a2e8d9ed3029234b81c01c97343cf81f55",
+   "ok": true,
+   "attempts": 1,
+   "note": "MU daily bars",
+   "fetched_at": "2026-09-19T22:25:07Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/T?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 56837,
+   "sha256": "e0eacce9fbb4f644ddf0da3660860227721a5b6ca51aa6ae89e67ec281566560",
+   "ok": true,
+   "attempts": 1,
+   "note": "T daily bars",
+   "fetched_at": "2026-09-19T22:25:07Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 51752,
+   "sha256": "475946c9a90109b572c6eaadffcbf3737392a93b4f0694c2c185f160b2e0fde2",
+   "ok": true,
+   "attempts": 1,
+   "note": "^GSPC daily bars",
+   "fetched_at": "2026-09-19T22:25:07Z"
+  },
+  {
+   "url": "https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?period1=1726444800&period2=1789603200&interval=1d&events=div%2Csplit",
+   "kind": "yahoo",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 54413,
+   "sha256": "cd4855de97d874c057a246f5a0bf01189a1c9cb7b07265355acc5ed65f71bf6d",
+   "ok": true,
+   "attempts": 1,
+   "note": "^VIX daily bars",
+   "fetched_at": "2026-09-19T22:25:07Z"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=spy.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "0105b6a87ecf73af577eb198720eede0ae359f0e22b622edbfc00b0246059df1",
+   "ok": false,
+   "attempts": 1,
+   "note": "SPY daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:08Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=qqq.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "78278c5e38e26094d812f411dafab85fe2f93568747089257164a4eb27fb08f2",
+   "ok": false,
+   "attempts": 1,
+   "note": "QQQ daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:09Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=gld.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "8cf4d1bcba6570e0fcafdddbebb577e856db92f0bfc60166ffa48fa11b09b778",
+   "ok": false,
+   "attempts": 1,
+   "note": "GLD daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:10Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=xbi.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "c1ba0fe52afe8cd596b1dad38cd9cc7e228c94d3e7394dab9f14fe49ac577dc8",
+   "ok": false,
+   "attempts": 1,
+   "note": "XBI daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:10Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=dkng.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "a478c1e6d61171673ada4683ee68de87877dde2bf92309c6869dfa69c4f0ff94",
+   "ok": false,
+   "attempts": 1,
+   "note": "DKNG daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:11Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=aapl.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "bcd5a6ff303abbb01ef123b20fc8b4d78b3456bdbd27e9c344d31ab790353567",
+   "ok": false,
+   "attempts": 1,
+   "note": "AAPL daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:11Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=msft.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "b82cc6712276c0b3785a62c04562f4c0df787e53c0655d1b9888e910c462534e",
+   "ok": false,
+   "attempts": 1,
+   "note": "MSFT daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:12Z",
+   "error": "host refused (Access denied)"
+  },
+  {
+   "url": "https://stooq.com/q/d/l/?s=nvda.us&i=d&d1=20240916&d2=20260917",
+   "kind": "stooq",
+   "source_class": "SECONDARY",
+   "status": 200,
+   "bytes": 796,
+   "sha256": "3360b97035fb68049adbd878d19df7ae07b96765fc7ffde25abd55f10fc3b4bf",
+   "ok": false,
+   "attempts": 1,
+   "note": "NVDA daily CSV (cross-check)",
+   "fetched_at": "2026-09-19T22:25:12Z",
+   "error": "host refused (Access denied)"
+  },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SP500&cosd=2024-09-16&coed=2026-09-17",
    "kind": "fred",
@@ -17,7 +433,7 @@
    "ok": true,
    "attempts": 1,
    "note": "SP500: S&P 500 index level (daily close)",
-   "fetched_at": "2026-09-18T22:34:58Z"
+   "fetched_at": "2026-09-19T22:25:13Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=VIXCLS&cosd=2024-09-16&coed=2026-09-17",
@@ -29,7 +445,7 @@
    "ok": true,
    "attempts": 1,
    "note": "VIXCLS: CBOE Volatility Index (VIX) close",
-   "fetched_at": "2026-09-18T22:34:58Z"
+   "fetched_at": "2026-09-19T22:25:13Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=2024-09-16&coed=2026-09-17",
@@ -41,7 +457,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS10: 10-year Treasury constant-maturity yield",
-   "fetched_at": "2026-09-18T22:34:59Z"
+   "fetched_at": "2026-09-19T22:25:14Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS3MO&cosd=2024-09-16&coed=2026-09-17",
@@ -53,7 +469,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS3MO: 3-month Treasury constant-maturity yield",
-   "fetched_at": "2026-09-18T22:35:01Z"
+   "fetched_at": "2026-09-19T22:25:14Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DCOILWTICO&cosd=2024-09-16&coed=2026-09-17",
@@ -65,7 +481,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DCOILWTICO: Cushing WTI crude oil spot price",
-   "fetched_at": "2026-09-18T22:35:02Z"
+   "fetched_at": "2026-09-19T22:25:14Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTWEXBGS&cosd=2024-09-16&coed=2026-09-17",
@@ -77,7 +493,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DTWEXBGS: Nominal broad US dollar index",
-   "fetched_at": "2026-09-18T22:35:02Z"
+   "fetched_at": "2026-09-19T22:25:15Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=GOLDAMGBD228NLBM&cosd=2024-09-16&coed=2026-09-17",
@@ -91,7 +507,7 @@
    "error": "HTTP 404",
    "error_body": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <title>Error - St. Louis Fed</title> <meta name=\"description\" content=\"\"> <meta name=\"keywords\" content=\"\"> <link ",
    "note": "GOLDAMGBD228NLBM: LBMA gold price, AM fix (USD/troy oz)",
-   "fetched_at": "2026-09-18T22:35:02Z"
+   "fetched_at": "2026-09-19T22:25:15Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=NASDAQCOM&cosd=2024-09-16&coed=2026-09-17",
@@ -103,7 +519,7 @@
    "ok": true,
    "attempts": 1,
    "note": "NASDAQCOM: NASDAQ Composite index (daily close), source Nasdaq, Inc.",
-   "fetched_at": "2026-09-18T22:35:03Z"
+   "fetched_at": "2026-09-19T22:25:16Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DJIA&cosd=2024-09-16&coed=2026-09-17",
@@ -115,7 +531,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DJIA: Dow Jones Industrial Average (daily close), source S&P Dow Jones Indices",
-   "fetched_at": "2026-09-18T22:35:04Z"
+   "fetched_at": "2026-09-19T22:25:16Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=SOFR&cosd=2024-09-16&coed=2026-09-17",
@@ -127,7 +543,7 @@
    "ok": true,
    "attempts": 1,
    "note": "SOFR: Secured Overnight Financing Rate, source Federal Reserve Bank of New York",
-   "fetched_at": "2026-09-18T22:35:04Z"
+   "fetched_at": "2026-09-19T22:25:16Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=GOLDPMGBD228NLBM&cosd=2024-09-16&coed=2026-09-17",
@@ -141,7 +557,7 @@
    "error": "HTTP 404",
    "error_body": "<!DOCTYPE html> <html lang=\"en\"> <head> <meta charset=\"utf-8\"> <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> <title>Error - St. Louis Fed</title> <meta name=\"description\" content=\"\"> <meta name=\"keywords\" content=\"\"> <link ",
    "note": "GOLDPMGBD228NLBM: LBMA gold price, PM fix (USD/troy oz)",
-   "fetched_at": "2026-09-18T22:35:05Z"
+   "fetched_at": "2026-09-19T22:25:16Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1MO&cosd=2024-09-16&coed=2026-09-17",
@@ -153,7 +569,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS1MO: 1-month Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:05Z"
+   "fetched_at": "2026-09-19T22:25:17Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS6MO&cosd=2024-09-16&coed=2026-09-17",
@@ -165,7 +581,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS6MO: 6-month Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:07Z"
+   "fetched_at": "2026-09-19T22:25:17Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS1&cosd=2024-09-16&coed=2026-09-17",
@@ -177,7 +593,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS1: 1-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:07Z"
+   "fetched_at": "2026-09-19T22:25:18Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS2&cosd=2024-09-16&coed=2026-09-17",
@@ -189,7 +605,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS2: 2-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:08Z"
+   "fetched_at": "2026-09-19T22:25:18Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS5&cosd=2024-09-16&coed=2026-09-17",
@@ -201,7 +617,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS5: 5-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:08Z"
+   "fetched_at": "2026-09-19T22:25:18Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS7&cosd=2024-09-16&coed=2026-09-17",
@@ -213,7 +629,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS7: 7-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:08Z"
+   "fetched_at": "2026-09-19T22:25:19Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS20&cosd=2024-09-16&coed=2026-09-17",
@@ -225,7 +641,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS20: 20-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:09Z"
+   "fetched_at": "2026-09-19T22:25:19Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS30&cosd=2024-09-16&coed=2026-09-17",
@@ -237,7 +653,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DGS30: 30-year Treasury constant-maturity yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:09Z"
+   "fetched_at": "2026-09-19T22:25:19Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB4WK&cosd=2024-09-16&coed=2026-09-17",
@@ -249,7 +665,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DTB4WK: 4-week Treasury bill secondary market rate, discount basis (H.15)",
-   "fetched_at": "2026-09-18T22:35:10Z"
+   "fetched_at": "2026-09-19T22:25:20Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB3&cosd=2024-09-16&coed=2026-09-17",
@@ -261,7 +677,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DTB3: 3-month Treasury bill secondary market rate, discount basis (H.15)",
-   "fetched_at": "2026-09-18T22:35:11Z"
+   "fetched_at": "2026-09-19T22:25:20Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DTB6&cosd=2024-09-16&coed=2026-09-17",
@@ -273,7 +689,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DTB6: 6-month Treasury bill secondary market rate, discount basis (H.15)",
-   "fetched_at": "2026-09-18T22:35:13Z"
+   "fetched_at": "2026-09-19T22:25:20Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=CPIAUCSL&cosd=1990-01-01&coed=2026-09-17",
@@ -285,7 +701,7 @@
    "ok": true,
    "attempts": 1,
    "note": "CPIAUCSL: Consumer Price Index for All Urban Consumers, all items (BLS)",
-   "fetched_at": "2026-09-18T22:35:13Z"
+   "fetched_at": "2026-09-19T22:25:21Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII5&cosd=2024-09-16&coed=2026-09-17",
@@ -297,7 +713,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DFII5: 5-year TIPS real yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:14Z"
+   "fetched_at": "2026-09-19T22:25:21Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII10&cosd=2024-09-16&coed=2026-09-17",
@@ -309,7 +725,7 @@
    "ok": true,
    "attempts": 1,
    "note": "DFII10: 10-year TIPS real yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:15Z"
+   "fetched_at": "2026-09-19T22:25:21Z"
   },
   {
    "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DFII30&cosd=2024-09-16&coed=2026-09-17",
@@ -321,19 +737,729 @@
    "ok": true,
    "attempts": 1,
    "note": "DFII30: 30-year TIPS real yield, source U.S. Treasury (H.15)",
-   "fetched_at": "2026-09-18T22:35:16Z"
+   "fetched_at": "2026-09-19T22:25:22Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/SPY/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "SPY daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:26:05Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "QQQ daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:26:47Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/IWM/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "IWM daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:27:30Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/GLD/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "GLD daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:28:12Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/UNG/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "UNG daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:28:55Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/XLU/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "XLU daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:29:38Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/XBI/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "XBI daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:30:20Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/IBB/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "IBB daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:31:03Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/TLT/historical?assetclass=etf&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "TLT daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:31:45Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/DKNG/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "DKNG daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:32:28Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/FLUT/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "FLUT daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:33:10Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/PENN/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "PENN daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:33:53Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/SRAD/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "SRAD daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:34:36Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/GENI/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "GENI daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:35:18Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/AAPL/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "AAPL daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:36:01Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/MSFT/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "MSFT daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:36:44Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/NVDA/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "NVDA daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:37:26Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/JPM/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "JPM daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:38:09Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/XOM/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "XOM daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:38:51Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/JNJ/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "JNJ daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:39:34Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/PG/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "PG daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:40:17Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/TSLA/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "TSLA daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:40:59Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/MU/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "MU daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:41:42Z"
+  },
+  {
+   "url": "https://api.nasdaq.com/api/quote/T/historical?assetclass=stocks&fromdate=2024-09-16&todate=2026-09-17&limit=5000",
+   "kind": "nasdaq",
+   "source_class": "OFFICIAL",
+   "status": 0,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 2,
+   "error": "TimeoutError: The read operation timed out",
+   "error_body": "",
+   "note": "T daily history (official-source candidate)",
+   "fetched_at": "2026-09-19T22:42:24Z"
+  },
+  {
+   "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/search.json?startDate=2024-09-16&endDate=2026-09-17",
+   "kind": "nyfed",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 119018,
+   "sha256": "c5bb10f094885ab1f980cfdb30690ac6efa0ea8bbe816843da19909dfa8b287b",
+   "ok": true,
+   "attempts": 1,
+   "note": "NY Fed reference rates: SOFR over the collection window",
+   "fetched_at": "2026-09-19T22:42:25Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260917.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 544751,
+   "sha256": "67d03037bf38d24a23718462d2de9257ecf905dd7f6526bff62c37e379949e23",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260917",
+   "fetched_at": "2026-09-19T22:42:26Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260916.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 543878,
+   "sha256": "9d4c8ad624a0d677f4d04a34c03fa6772dfdf0aa0167dd9d51f5edbec7b814b5",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260916",
+   "fetched_at": "2026-09-19T22:42:26Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260915.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 545935,
+   "sha256": "49241a10fd48a29dce57a71db7f7881b36137dc7aa87d33a4cc35dea0aabc70a",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260915",
+   "fetched_at": "2026-09-19T22:42:27Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260914.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 545572,
+   "sha256": "ca902a4440df5f9c370a1778ae0c5bee57fb31c9f6eab9276bebdb8e07f7a96e",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260914",
+   "fetched_at": "2026-09-19T22:42:27Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260911.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 540716,
+   "sha256": "a8dc4e9444f7cf3da97fefb516af7969c9ef622d9f634ee2c1887638b61eea7c",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260911",
+   "fetched_at": "2026-09-19T22:42:28Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260910.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 545273,
+   "sha256": "85d0bfdb7e563c5c26a145e2dcec6c314173b6e361d26feb871068a2b276e77f",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260910",
+   "fetched_at": "2026-09-19T22:42:28Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260909.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 542638,
+   "sha256": "5ab73e17a03eee828c15af067bf8827237b69fbd8e2f174f180acbddb39cc3f3",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260909",
+   "fetched_at": "2026-09-19T22:42:29Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260908.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 547470,
+   "sha256": "1745aade369de4835ddaebb540b0433f4bb36d5706ee7b718d139c5876dd56d6",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260908",
+   "fetched_at": "2026-09-19T22:42:29Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260907.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 403,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 1,
+   "error": "HTTP 403",
+   "error_body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <Error><Code>AccessDenied</Code><Message>Access Denied</Message></Error>",
+   "note": "REG SHO daily short volume 20260907",
+   "fetched_at": "2026-09-19T22:42:29Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260904.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 538293,
+   "sha256": "18f00bd6feeefa09b0b49d8da04fe540f46aee12e53679d24fac27414895581c",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260904",
+   "fetched_at": "2026-09-19T22:42:30Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260903.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 540921,
+   "sha256": "c5f3f7f9449968de7bc4e1ec74fdb924da2f471db3b894a3a14a22d11d5178cf",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260903",
+   "fetched_at": "2026-09-19T22:42:30Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260902.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 541255,
+   "sha256": "5d06a2c66ad3405eeacd065cc5f16e417c58b7c1f2a6dd167a1cd2c8a128baa7",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260902",
+   "fetched_at": "2026-09-19T22:42:30Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260901.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 544940,
+   "sha256": "5e72ce85e33aba1de9565fbf3e2287f7b625865582df186541434c8bb1f26acf",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260901",
+   "fetched_at": "2026-09-19T22:42:31Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260831.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 543955,
+   "sha256": "4b2e823b911320a41fd1075b8c2c71db6fcc4d70c12e0a763b05ba6a6ee85639",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260831",
+   "fetched_at": "2026-09-19T22:42:31Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260828.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 537836,
+   "sha256": "d851a0ee521920e89adaa3b8ec3c10cd6e561ba9a1d2088db91be16cdffeb039",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260828",
+   "fetched_at": "2026-09-19T22:42:31Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260827.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 538015,
+   "sha256": "5173efca8a5853b5c4ca5997763cd8dab1d602ae12f7064a63b861be0ec40475",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260827",
+   "fetched_at": "2026-09-19T22:42:32Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260826.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 535566,
+   "sha256": "0704767503054752342ff878c97077e695e462e5fce4a357f269bbb091f2e3d1",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260826",
+   "fetched_at": "2026-09-19T22:42:32Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260825.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 540759,
+   "sha256": "e35d7318dbc001de9f15867c6f9947a8cf63d337ab4e5221faa442b72d7854d9",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260825",
+   "fetched_at": "2026-09-19T22:42:33Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260824.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 544698,
+   "sha256": "ccce94afcb7bb6226340f221268ee7882d7c13b23f53377998db8ea5b63a1e01",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260824",
+   "fetched_at": "2026-09-19T22:42:33Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260821.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 541311,
+   "sha256": "83bea68f8862ccf7e36d1a467e34201d3121edbea4d6cdbfc5fd0e02d6183c7d",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260821",
+   "fetched_at": "2026-09-19T22:42:34Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260820.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 540187,
+   "sha256": "dcc7066ffaa463edca58d8428df3e57ceac879672bc26e6b765ac34157695dd5",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260820",
+   "fetched_at": "2026-09-19T22:42:34Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260819.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 543207,
+   "sha256": "7f6cd80adbdc1f510090f030f56db51aaa612ab0b5333ca0b8b14613178e5610",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260819",
+   "fetched_at": "2026-09-19T22:42:35Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260818.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 541491,
+   "sha256": "bb772e71fcbe744288efd80be346b8acd11bb3adbf64227cb18881e8677acbf6",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260818",
+   "fetched_at": "2026-09-19T22:42:35Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260817.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 545398,
+   "sha256": "4b5cdca2e987d65f8c04a2b0d652a2e92c8aa9dd53521e815a7ada650525e159",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260817",
+   "fetched_at": "2026-09-19T22:42:35Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260814.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 537781,
+   "sha256": "b954f58064a87a5109c72b8566fd8752d1b751809c78b4e31ce4e3cf4dbc6ea2",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260814",
+   "fetched_at": "2026-09-19T22:42:36Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260813.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 539778,
+   "sha256": "37d1d456aedcf3943f483972fd323f594306e7d1854d6d454134b028bb6de73c",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260813",
+   "fetched_at": "2026-09-19T22:42:36Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260812.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 536691,
+   "sha256": "3637a308efc2b2187a6f08128119ea9a1b9d2cb8920fbfea1d0c6ba14dacb396",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260812",
+   "fetched_at": "2026-09-19T22:42:37Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260811.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 536672,
+   "sha256": "a095212f3b519e12972d7026e9620b4044cb91f88712ab0bb7c09af89af3f87c",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260811",
+   "fetched_at": "2026-09-19T22:42:37Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260810.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 541670,
+   "sha256": "380eef925d62871aa2eba007407349f45c32ceb64db52cfe47d3a6d52b090796",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260810",
+   "fetched_at": "2026-09-19T22:42:37Z"
+  },
+  {
+   "url": "https://cdn.finra.org/equity/regsho/daily/CNMSshvol20260807.txt",
+   "kind": "finra",
+   "source_class": "OFFICIAL",
+   "status": 200,
+   "bytes": 538607,
+   "sha256": "834c8908ab4b49113866ee94a5cbea28c70a231fc0582b09a663ab2b7733e691",
+   "ok": true,
+   "attempts": 1,
+   "note": "REG SHO daily short volume 20260807",
+   "fetched_at": "2026-09-19T22:42:38Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json&days=45",
    "kind": "treasury",
    "source_class": "OFFICIAL",
    "status": 200,
-   "bytes": 187897,
-   "sha256": "d16a922b3f4ee169098c811a9808b3af109e223e2424a69f24b8d1d0686bc732",
+   "bytes": 184424,
+   "sha256": "9c9bcad5bebecd65379a21665174320a90d23282e6eabef292ed8e1d777a4d26",
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect: auctions with a completed result",
-   "fetched_at": "2026-09-18T22:35:16Z"
+   "fetched_at": "2026-09-19T22:42:38Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=1",
@@ -345,7 +1471,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect search: Bill page 1",
-   "fetched_at": "2026-09-18T22:35:17Z"
+   "fetched_at": "2026-09-19T22:42:39Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bill&format=json&pagesize=250&pagenum=2",
@@ -357,7 +1483,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect search: Bill page 2",
-   "fetched_at": "2026-09-18T22:35:17Z"
+   "fetched_at": "2026-09-19T22:42:39Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Note&format=json&pagesize=250&pagenum=1",
@@ -369,7 +1495,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect search: Note page 1",
-   "fetched_at": "2026-09-18T22:35:18Z"
+   "fetched_at": "2026-09-19T22:42:40Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=Bond&format=json&pagesize=250&pagenum=1",
@@ -381,7 +1507,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect search: Bond page 1",
-   "fetched_at": "2026-09-18T22:35:18Z"
+   "fetched_at": "2026-09-19T22:42:40Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/search?startDate=2024-09-16&endDate=2026-09-17&dateFieldName=auctionDate&type=TIPS&format=json&pagesize=250&pagenum=1",
@@ -393,7 +1519,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect search: TIPS page 1",
-   "fetched_at": "2026-09-18T22:35:18Z"
+   "fetched_at": "2026-09-19T22:42:40Z"
   },
   {
    "url": "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json",
@@ -405,7 +1531,7 @@
    "ok": true,
    "attempts": 1,
    "note": "TreasuryDirect: announced, not-yet-auctioned securities",
-   "fetched_at": "2026-09-18T22:35:19Z"
+   "fetched_at": "2026-09-19T22:42:41Z"
   },
   {
    "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=1",
@@ -417,7 +1543,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Fiscal Data: auctions, page 1",
-   "fetched_at": "2026-09-18T22:35:21Z"
+   "fetched_at": "2026-09-19T22:42:42Z"
   },
   {
    "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=1000&page[number]=2",
@@ -429,7 +1555,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Fiscal Data: auctions, page 2",
-   "fetched_at": "2026-09-18T22:35:23Z"
+   "fetched_at": "2026-09-19T22:42:44Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2024?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv",
@@ -441,7 +1567,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2024",
-   "fetched_at": "2026-09-18T22:35:41Z"
+   "fetched_at": "2026-09-19T22:43:00Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2024/all?type=daily_treasury_yield_curve&field_tdr_date_value=2024&page&_format=csv",
@@ -453,7 +1579,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2024",
-   "fetched_at": "2026-09-18T22:36:00Z"
+   "fetched_at": "2026-09-19T22:43:18Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2025?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv",
@@ -465,7 +1591,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2025",
-   "fetched_at": "2026-09-18T22:36:18Z"
+   "fetched_at": "2026-09-19T22:43:37Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2025/all?type=daily_treasury_yield_curve&field_tdr_date_value=2025&page&_format=csv",
@@ -477,7 +1603,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2025",
-   "fetched_at": "2026-09-18T22:36:37Z"
+   "fetched_at": "2026-09-19T22:43:53Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/all/2026?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv",
@@ -489,7 +1615,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2026",
-   "fetched_at": "2026-09-18T22:36:55Z"
+   "fetched_at": "2026-09-19T22:44:11Z"
   },
   {
    "url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rates.csv/2026/all?type=daily_treasury_yield_curve&field_tdr_date_value=2026&page&_format=csv",
@@ -501,21 +1627,7 @@
    "ok": true,
    "attempts": 1,
    "note": "Treasury: daily par yield curve 2026",
-   "fetched_at": "2026-09-18T22:37:14Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q2_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2026q2",
-   "fetched_at": "2026-09-18T22:37:14Z"
+   "fetched_at": "2026-09-19T22:44:30Z"
   },
   {
    "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q2_form345.zip",
@@ -525,11 +1637,25 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2026q2",
-   "fetched_at": "2026-09-18T22:37:14Z"
+   "fetched_at": "2026-09-19T22:45:10Z"
+  },
+  {
+   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q2_form345.zip",
+   "kind": "sec",
+   "source_class": "OFFICIAL",
+   "status": 403,
+   "bytes": 0,
+   "sha256": "",
+   "ok": false,
+   "attempts": 3,
+   "error": "HTTP 403",
+   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
+   "note": "SEC insider data set 2026q2",
+   "fetched_at": "2026-09-19T22:45:52Z"
   },
   {
    "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q1_form345.zip",
@@ -539,11 +1665,11 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2026q1",
-   "fetched_at": "2026-09-18T22:37:14Z"
+   "fetched_at": "2026-09-19T22:46:33Z"
   },
   {
    "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q1_form345.zip",
@@ -553,11 +1679,11 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2026q1",
-   "fetched_at": "2026-09-18T22:37:15Z"
+   "fetched_at": "2026-09-19T22:47:15Z"
   },
   {
    "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q4_form345.zip",
@@ -567,11 +1693,11 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2025q4",
-   "fetched_at": "2026-09-18T22:37:15Z"
+   "fetched_at": "2026-09-19T22:47:56Z"
   },
   {
    "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q4_form345.zip",
@@ -581,11 +1707,11 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2025q4",
-   "fetched_at": "2026-09-18T22:37:15Z"
+   "fetched_at": "2026-09-19T22:48:37Z"
   },
   {
    "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q3_form345.zip",
@@ -595,11 +1721,11 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2025q3",
-   "fetched_at": "2026-09-18T22:37:16Z"
+   "fetched_at": "2026-09-19T22:49:19Z"
   },
   {
    "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q3_form345.zip",
@@ -609,126 +1735,27 @@
    "bytes": 0,
    "sha256": "",
    "ok": false,
-   "attempts": 1,
+   "attempts": 3,
    "error": "HTTP 403",
    "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
    "note": "SEC insider data set 2025q3",
-   "fetched_at": "2026-09-18T22:37:16Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q2_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2025q2",
-   "fetched_at": "2026-09-18T22:37:17Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q2_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2025q2",
-   "fetched_at": "2026-09-18T22:37:17Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q1_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2025q1",
-   "fetched_at": "2026-09-18T22:37:17Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q1_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2025q1",
-   "fetched_at": "2026-09-18T22:37:18Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q4_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2024q4",
-   "fetched_at": "2026-09-18T22:37:18Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q4_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2024q4",
-   "fetched_at": "2026-09-18T22:37:18Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q3_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2024q3",
-   "fetched_at": "2026-09-18T22:37:19Z"
-  },
-  {
-   "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q3_form345.zip",
-   "kind": "sec",
-   "source_class": "OFFICIAL",
-   "status": 403,
-   "bytes": 0,
-   "sha256": "",
-   "ok": false,
-   "attempts": 1,
-   "error": "HTTP 403",
-   "error_body": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <html xmlns=\"http://www.w3.org/1999/xhtml\"> <head> <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /> <title>SEC.gov | Request Rate Threshold Exceeded</title> ",
-   "note": "SEC insider data set 2024q3",
-   "fetched_at": "2026-09-18T22:37:19Z"
+   "fetched_at": "2026-09-19T22:50:00Z"
   }
  ],
- "ok": 39,
- "failed": 18,
- "budget_exhausted": false
+ "sec_access": {
+  "headers": {
+   "User-Agent": "StockPaperSim buffedlizard55-lab@users.noreply.github.com",
+   "Accept-Encoding": "gzip, deflate",
+   "Host": "www.sec.gov",
+   "Accept": "*/*"
+  },
+  "policy": {
+   "source": "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+   "max_requests_per_second": 10.0,
+   "contact_source": "repository default"
+  }
+ },
+ "ok": 95,
+ "failed": 43,
+ "budget_exhausted": true
 }

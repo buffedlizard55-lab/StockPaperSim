@@ -267,6 +267,7 @@ def sparkline(points: Sequence[float], width: int = 120, height: int = 28,
 
 NAV = [
     ("index.html", "Overview"),
+    ("desk/index.html", "Official Equities Desk"),
     ("summary.html", "Executive summary"),
     ("leaderboard.html", "Leaderboard"),
     ("strategies.html", "Strategies"),
@@ -312,6 +313,8 @@ audit trail.">
   <nav class="wrap nav">{nav}</nav>
 </header>
 <main class="wrap">
+<aside class="callout"><strong>Legacy research archive — not the strict official-price stock competition.</strong>
+<a href="{pre}desk/index.html">Open the Official Equities Desk</a> for current evidence gates, strategy research and the forward-fill exclusion audit.</aside>
 {body}
 </main>
 <footer class="site-footer">
@@ -988,17 +991,16 @@ a signal-stacking &ldquo;kitchen sink&rdquo;, and a deep-value contrarian.</p>
 def build_simulator(d: SiteData) -> str:
     body = f"""
 <h1>Live US Equities Paper-Trading Simulation &amp; Order Staging Engine</h1>
-<p class="lede">Simulate placing real trades on the US stock market across <strong>Nasdaq, NYSE, and S&amp;P 500</strong>
-with full venue microstructure modelling: Level 2 order book depth, quoted spread crossing under Reg NMS Rule 612,
-Almgren-Chriss (2001, 2005) square-root market impact, dated SEC &sect;31 ($20.60/M) and FINRA TAF ($0.000195/sh) fees,
-Reg T 50% initial margin requirements, ADV participation checks, and verified SHA-256 trade logging.</p>
+<p class="lede"><strong>Legacy interactive scenario calculator — not a live or official-price trading service.</strong>
+The “Live US Equities” name is retained for archive continuity only. Prices, spreads, depth and volume in the ticket below are hard-coded demonstration assumptions, not collected market observations.
+The S&amp;P 500 is an index, not a trading venue. These browser-local trades are never eligible for the official stock competition.</p>
 
 <div class="card notice">
   <h2>Can strategies place upcoming trades and simulate a real trading experience?</h2>
-  <p><strong>Yes.</strong> The venue models the complete order lifecycle: strategies evaluate signals, stage upcoming
-  orders for the next session's opening bell (09:30 ET) or closing bell (16:00 ET), undergo pre-trade regulatory
-  and margin checks, walk the Level 2 depth ladder, incur temporary and permanent price impact, pay statutory exchange/regulatory fees,
-  and log every fill to an immutable event memory stream.</p>
+  <p><strong>Not from this legacy calculator into the strict competition.</strong> It illustrates model arithmetic and accepts manual scenario input;
+  it does not verify a quote, capture real-time liquidity, establish order submission time, or perform verified cash settlement.
+  Browser-local storage is not an immutable audit trail. No claim is made that the displayed scenario fee settings are current broker charges.</p>
+  <p><a href="desk/index.html#orders">Open the evidence-gated US Equities Desk</a> for the strict ledger, upcoming candidates and explicit blockers.</p>
 </div>
 
 <div class="card">
@@ -3105,6 +3107,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     except Exception as exc:  # noqa: BLE001 - a site build must say why, not vanish
         print(f"  executive summary: FAILED - {type(exc).__name__}: {exc}")
         raise
+
+    _desk_spec = importlib.util.spec_from_file_location(
+        "build_site_desk", os.path.join(REPO_ROOT, "scripts", "build_site_desk.py"))
+    _desk = importlib.util.module_from_spec(_desk_spec)
+    _desk_spec.loader.exec_module(_desk)
+    written.extend(_desk.build(args.memory_root, out))
 
     # Prune stale participant pages. A page set is only trustworthy if it
     # *contains* exactly the pages of the run it was built from: a renamed or

@@ -472,7 +472,7 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         # injection is idempotent, which matters because docs/ is diffed against
         # a fresh build in CI.
         for dirpath, dirnames, filenames in os.walk(args.out):
-            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets")]
+            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets", "desk")]
             for name in sorted(filenames):
                 if not name.endswith(".html"):
                     continue

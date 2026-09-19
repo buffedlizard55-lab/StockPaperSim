@@ -312,10 +312,15 @@ class TestFullBuild(unittest.TestCase):
         self.assertFalse(missing, f"broken links: {missing[:10]}")
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
-        # 13 since the executive summary landed (12 when simulator.html did).
-        self.assertEqual(len(site.NAV), 13)
+        # The evidence-first desk is a separate section with its own accessible navigation.
+        self.assertEqual(len(site.NAV), 14)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
+            if rel.startswith("desk/"):
+                self.assertIn('<nav aria-label="Desk">', html)
+                self.assertIn('href="../index.html"', html)
+                self.assertIn('src="desk.js"', html)
+                continue
             self.assertRegex(html, r'<nav[^>]*class="[^"]*\bnav\b[^"]*"', rel)
             for _href, label in site.NAV:
                 self.assertIn(label, html, f"{rel} nav is missing {label}")

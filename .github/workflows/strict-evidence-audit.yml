@@ -1,0 +1,44 @@
+name: Strict equities evidence audit
+
+# Read-only automation: never manufacture trades or silently approve a feed.
+# This refreshes the audit of committed memory, not live market data. Artifacts
+# expire after 90 days; long-lived competition storage still requires a service.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "45 23 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify ledger invariants and research rules
+        run: python -m unittest discover -s tests -p 'test_strict_equities.py' -v
+      - name: Build independent evidence snapshot
+        run: python scripts/build_site_desk.py --out /tmp/strict-desk
+      - name: Reject unexplained custody failures
+        run: |
+          python - <<'PY'
+          import json
+          p = json.load(open('/tmp/strict-desk/desk/snapshot.json'))
+          if p['audit']['issues']:
+              raise SystemExit(p['audit']['issues'])
+          print('Strict execution remains blocked until feed and scheduler integration.')
+          print('Audited legacy fills:', len(p['audit']['fills']))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: strict-evidence-${{ github.run_id }}
+          path: /tmp/strict-desk/desk/
+          retention-days: 90

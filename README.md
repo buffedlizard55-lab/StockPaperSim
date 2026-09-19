@@ -1,13 +1,33 @@
 # StockPaperSim
 
+> **Current release — strict official US-equities desk (2026-09-19).**
+> [Open the new desk](https://buffedlizard55-lab.github.io/StockPaperSim/docs/desk/)
+> for **51 strategy hypotheses**, **18 implemented signal prototypes**, source
+> links, upcoming research candidates, and the row-level legacy-fill audit.
+> **No official-price stock performance is claimed:** the 27 legacy forward
+> fills use a model that lacks observed quote-size and submission-time evidence,
+> and some recorded price sources are SECONDARY. They are excluded from the
+> strict competition. There are **zero strict fills**, not an invented return.
+>
+> The new `sim/strict_equities.py` is a tested execution/storage library, **not a
+> connected real-time service**. It provides evidence gates, timestamped orders,
+> partial fills, shared displayed-capacity accounting, FIFO P&L, explicit fee
+> assumptions, simulated settlement, fresh-mark requirements and JSONL exports.
+> No official feed is approved. The desk never accepts manually invented prices.
+> Read the [three-pass review and requirements matrix](research/strict/REVIEW.md)
+> for what is implemented, what remains blocked, and the next-session plan.
+> The legacy results below are retained as research, not certified stock trades.
+
+
 A one-year paper-trading stock competition between **return-seeking strategy
 personas**, with a real venue model (depth, spreads, market making, dated tick
 size, dated fees), a full audit trail, and a published GitHub Pages site.
 
 * **Season 1** - 20 personas on a replay of the **real S&P 500 and VIX path**.
-* **The Live Book** - 19 personas trading **forward**: an intent is written after
-  the close for a *future* session and settled only when that session has a
-  verified bar. Official, free series (Nasdaq Composite, Dow Jones, S&P 500, VIX,
+* **The legacy Live Book** - 19 personas in a **forward-style research model**:
+  intent dates precede model execution dates, but date-only records do not prove
+  real-time submission. “Settled” here means processed by the legacy model,
+  not verified T+1 cash settlement. Official, free series (Nasdaq Composite, Dow Jones, S&P 500, VIX,
   SOFR, four macro series) drive the signals, the benchmark, the calendar and the
   financing; the executable bars are still the collected Yahoo files marked
   `SECONDARY`, and the book publishes that share as a number.
@@ -475,7 +495,7 @@ scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py and independent_audit_official.py
                 (re-derive every published number from the raw streams and the
                 Treasury's own tapes; import no project code)
-tests/          540 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
+tests/          578 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -509,7 +529,7 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 540 tests
+python3 -m unittest discover -s tests   # 578 tests
 python3 -m sim.cli official             # run the official auction book
 python3 -m sim.cli official-blotter     # every settled official trade + evidence
 python3 -m sim.cli trades               # the unified store across every book

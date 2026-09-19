@@ -58,11 +58,12 @@ class TestPublishedSite(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
         season1 = [p for p in self.pages
-                   if not p.startswith(("season2/", "live/", "official/"))]
+                   if not p.startswith(("season2/", "live/", "official/", "desk/"))]
         self.assertEqual(len(season1), 33)      # 13 top level + 20 + index
         # (the executive summary landed as the thirteenth top-level page)
         # The Official Auction Book is its own section: seven index pages, one
         # page per participant, and its own payload under assets/data/.
+        self.assertIn("desk/index.html", self.pages)
         official = [p for p in self.pages if p.startswith("official/")]
         self.assertGreaterEqual(len(official), 7 + 1)
         for name in ("index.html", "leaderboard.html", "blotter.html",

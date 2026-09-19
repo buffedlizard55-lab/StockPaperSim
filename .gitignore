@@ -19,3 +19,8 @@ venv/
 /tmp/
 scratch/
 *.local.json
+
+# Strict runtime journals belong on durable service storage, not in Pages.
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm

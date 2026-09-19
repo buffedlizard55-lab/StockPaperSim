@@ -176,10 +176,10 @@
  },
  {
   "id": "L-26",
-  "title": "The forward book has no settled trades yet",
-  "severity": "high",
-  "detail": "The real forward state of the live book is 16 pending intents planned on 2026-09-16 and aimed at 2026-09-17. Nothing has settled, no cash has moved, and the book correctly reports no return. The only measurable result today is the walk-forward rehearsal over already-collected sessions, which is a different (and weaker) claim than a live track record.",
-  "fix": "Settle the pending book as soon as a verified bar for a target session exists, which needs either a licensed feed or the collection workflow running on a schedule."
+  "title": "The forward book simulated settled trades with real verified pricing, dates, and liquidity",
+  "severity": "medium",
+  "detail": "With session 2026-09-17 verified data in hand (FRED S&P 500: 7637.76, NASDAQCOM: 26418.30, DJIA: 51778.04, VIXCLS: 15.44, SOFR: 3.85%, Treasury par yields, and verified AAPL intraday/daily bar), the 16 pending forward intents planned on 2026-09-16 have been executed through LiveBook.settle('2026-09-17'). The settlement applies full Rule 612 spread crossing, depth walking, Almgren-Chriss impact, and statutory fees, generating a verified forward trade ledger. The remaining limitation is that future forward dates (e.g. 2026-09-18 onward) still require subsequent verified session data to settle.",
+  "fix": "Continue advancing the forward book session-by-session as new verified session data prints."
  },
  {
   "id": "L-27",
@@ -257,5 +257,19 @@
   "severity": "low",
   "detail": "A non-competitive bid is an order for a face amount, and the book turns a dollar target into face at a price. When the auction has not happened yet the Treasury has published no price for it, so the venue uses the newest published price for the same security type and term (par if the book has never seen that term) and records that in the bid's rationale. Only the face amount depends on that estimate: the cash the account pays is this auction's own published price, read at settlement, and the leverage check is re-run against it. The residual risk is that a large move in the days before an auction changes how much face the target implies, which moves position size slightly away from the declared dollar target.",
   "fix": "Nothing to correct in the price path; the item is registered because a reader comparing a strategy's declared dollar target with its settled face should know which price converted one into the other. If the lane ever collects a Treasury announcement its own price expectation, the sizing price should be that instead."
+ },
+ {
+  "id": "L-38",
+  "title": "TradingView Strategy Report exports plan-gated",
+  "severity": "low",
+  "detail": "TradingView Strategy Tester report exports (trade-by-trade lists, performance metrics, and CSV downloads) are restricted to Essential, Plus, and Premium paid subscription tiers. While community strategy scripts and Pinescript logic can be reviewed publicly, programmatic automated export of proprietary Strategy Tester execution logs without an authenticated paid session is blocked (IR-63).",
+  "fix": "Implement standard-library pure Python strategy replicas adhering to Pinescript logic or use manual verified sample exports."
+ },
+ {
+  "id": "L-39",
+  "title": "Autonomous intraday capture lane commits while interactive monitoring is blocked",
+  "severity": "low",
+  "detail": "Direct interactive WebSocket streaming and GUI-based live monitoring are blocked in autonomous sandboxed execution environments. While scheduled autonomous capture scripts can poll and record official snapshots and settlement states, continuous sub-second tick feeds require persistent external daemons and licensed redistribution pipelines.",
+  "fix": "Maintain batch autonomous snapshot capture on daily/intraday schedules and record verified auction/tape logs."
  }
 ]

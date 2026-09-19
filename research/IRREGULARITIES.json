@@ -631,5 +631,26 @@
    "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve",
    "https://fred.stlouisfed.org/series/CPIAUCSL"
   ]
+ },
+ {
+  "id": "IR-62",
+  "topic": "Autonomous real intraday capture lane commits while interactive stream monitoring is blocked",
+  "severity": "low",
+  "detail": "Live trading simulation requires market data updates. In an autonomous non-interactive sandbox environment, persistent interactive WebSocket listeners and GUI stream watchers cannot remain open across arbitrary pauses. However, the system's scheduled batch capture scripts collect verified official end-of-day and intraday snapshots (FRED SP500, NASDAQCOM, DJIA, VIXCLS, SOFR, Treasury Par Curve, and Yahoo AAPL/SPY intraday bars) allowing verified forward settlements to run deterministically.",
+  "resolution": "Reconcile forward settlement using verified official EOD and snapshot files; keep autonomous capture commits clean and deterministic.",
+  "links": [
+   "https://www.nasdaqtrader.com/Trader.aspx?id=Totalview",
+   "https://www.nyse.com/market-data/real-time"
+  ]
+ },
+ {
+  "id": "IR-63",
+  "topic": "TradingView Strategy Report plan-gated and blocked from automated export",
+  "severity": "low",
+  "detail": "Verification of TradingView's community strategy leaderboards (The Leap competition and public Pinescript strategy scripts) revealed that direct export of Strategy Tester performance reports and trade ledgers is gated behind paid user tiers (Essential, Plus, Premium). Unauthenticated HTTP calls to Strategy Tester export endpoints return 401/403 or redirect to plan subscription pages.",
+  "resolution": "Re-implement equivalent strategy rule logic (momentum crossovers, RSI mean reversion, candle breakout patterns) natively within sim/strategies/ using pure Python standard library, calibrated against published competition metrics.",
+  "links": [
+   "https://www.tradingview.com/pricing/"
+  ]
  }
 ]

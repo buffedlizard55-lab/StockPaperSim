@@ -1,0 +1,11 @@
+SOURCE: https://www.nasdaqtrader.com/trader.aspx?id=calendar
+Publisher: Nasdaq Trader
+Retrieved: 2026-09-18 (fetched official equity and options trading calendar)
+
+WHY THIS FILE EXISTS
+  Official Nasdaq Trader calendar defining holiday closures and 13:00 ET early-close sessions.
+  Cited in sim/live.py as PROJECTION_SOURCE for future forward session projections.
+
+USED FOR
+  * Projecting future forward session status (COLLECTED vs PROJECTED);
+  * Expiring forward intents that target published market closures.

@@ -777,5 +777,28 @@
    "https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule",
    "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees"
   ]
+ },
+ {
+  "id": "IR-75",
+  "topic": "The collector's new marker gate fired on its own documentation: the trigger string appeared in the commit body that explained the gate",
+  "severity": "low",
+  "detail": "collect-real-data.yml gates push-triggered runs on contains(head_commit.message, '[collect-data]'). github.event.head_commit.message is the FULL commit message, and the very commit that introduced the gate explained the marker in its body - so the gate correctly matched and started a collection from a push that was only a workflow edit. Two runs queued in the same concurrency group (cancel-in-progress is false) and both collected; the collection is idempotent per date, so the cost was time, not correctness.",
+  "resolution": "No code change needed - the gate did what it says. Recorded so future commit messages keep the marker out of explanatory prose; marker pushes should carry it in the subject line only.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/.github/workflows/collect-real-data.yml",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/scripts/collect_real_data.py"
+  ]
+ },
+ {
+  "id": "IR-76",
+  "topic": "SEC insider bulk ZIPs: 'Request Rate Threshold Exceeded' is a pacing failure, not an identity failure",
+  "severity": "medium",
+  "detail": "All 16 insider-ZIP requests in the 2026-09-18 run (8 quarters x 2 documented layouts) returned HTTP 403 with SEC's 'Request Rate Threshold Exceeded' page, timestamps 5 seconds apart at ~3+ requests/second from a GitHub runner (cloud IP). The error body is the discriminator: 'Undeclared Automated Tool' would mean the User-Agent fix failed, while 'Rate Threshold' means the requests were understood but too fast. The declared-UA fix had landed; the pacing had not been adjusted for large-file bulk downloads.",
+  "resolution": "collect_insider_bulk now paces the ZIP walk at 1.2s per request (SEC_ZIP_INTERVAL) and retries the rate-threshold 403 page specifically with a 20s backoff (retry_on_403). The first marker-gated collection run after this change is the proof point; its manifest timestamps and error bodies are the evidence either way.",
+  "links": [
+   "https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data",
+   "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/collection_manifest.json"
+  ]
  }
 ]

@@ -17,9 +17,12 @@ trade.">
     <span class="brand-sub">Live Book · intents placed for future sessions, settled on
     collected verified bars</span>
   </div>
-  <nav class="wrap nav"><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../summary.html">Executive summary</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a><a href="../../official/index.html">Official Book</a></nav>
+  <nav class="wrap nav"><a class="" href="../../desk/index.html">Strict Equities Desk</a><a class="" href="../../live/index.html">Overview</a><a class="" href="../../live/forward.html">Upcoming trades</a><a class="" href="../../live/leaderboard.html">Leaderboard</a><a class="" href="../../live/blotter.html">Trade tape</a><a class="active" href="../../live/participants/index.html">Participants</a><a class="" href="../../live/method.html">Clock &amp; margin</a><a class="" href="../../live/sources.html">Official sources</a><a class="" href="../../summary.html">Executive summary</a><a class="" href="../../index.html">Season 1</a><a class="" href="../../season2/index.html">Season 2</a><a class="" href="../../simulator.html">Trade Simulator</a><a href="../../season2/index.html">Season 2 (eligibility status)</a><a href="../../official/index.html">Official Book</a></nav>
 </header>
 <main class="wrap">
+<aside class="callout"><strong>RESEARCH ONLY — excluded from the strict official-price stock competition.</strong>
+These legacy fills can use SECONDARY prices and modelled bid/ask liquidity. Date-only intents do not prove pre-execution submission, and this book's “settle” operation is not T+1 cash settlement.
+<a href="../../desk/index.html#trades">Review every forward fill and its blockers</a>.</aside>
 
 <h1>ORB Next-Open Probe <span class="muted">@ORB_NextOpen_Probe</span></h1>
 <p class="lede">The opening-range breakout is the most-posted day-trading rule on YouTube and r/daytrading, and the published academic version of it (Zarattini &amp; Aziz) needs intraday bars and finds the edge in abnormally active names. This participant exists to record what would be needed to test it honestly, and to place no intents until intraday data is collected.</p>
@@ -98,7 +101,7 @@ $0.00 paid at SOFR
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    <p>The Live Book is a <strong>legacy forward-style research simulation</strong>, not an independently timestamped forward test or a live market feed. A
     strategy writes an intent after the close of one session and the venue settles it
     against a later verified daily bar through the same microstructure model the
     competition uses. Signals, the benchmark, the trading calendar and the financing

@@ -1,3 +1,10 @@
+> **2026-09-19 review correction:** This is a legacy research register, not an
+> official-price eligibility report. “BACKTESTED” below refers to legacy models,
+> including secondary prices, not a qualified backtest. See
+> [the current 51-rule registry](strict/registry.json) for explicit data blockers.
+> An event date does not establish its publication/availability time. Missing
+> history in this repository is not proof that no archive exists elsewhere.
+
 # MasterSite, project by project: what it is, and what can be traded from it
 
 The brief named fourteen items to look at on
@@ -53,8 +60,7 @@ project with no citable source at all would not be in the register.
 * **What it is:** a Form 4 parsing toolkit over SEC EDGAR.
 * **Official source:** <https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4>
   (and `data.sec.gov/submissions/CIK##########.json` per issuer).
-* **Mapping:** STRONG - code-P open-market purchases cannot be explained by
-  compensation. **Status:** BACKTESTED.
+* **Mapping:** STRONG - code P means open-market **or private** purchase; footnotes and transaction context must be inspected before calling it an open-market purchase. **Status:** BACKTESTED.
 * **Participants:** `@InsiderCopycat_Max` (any officer/director purchase) and
   `@InsiderCluster_Alpha` (two or more distinct insiders inside ten days).
 

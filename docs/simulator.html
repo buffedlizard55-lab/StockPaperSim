@@ -17,22 +17,23 @@ audit trail.">
     <a class="brand" href="index.html">StockPaperSim</a>
     <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
   </div>
-  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="summary.html">Executive summary</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="active" href="simulator.html">Trade Simulator</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (eligibility status)</a><a href="live/index.html">Live Book</a><a href="official/index.html">Official Book</a></nav>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="desk/index.html">Official Equities Desk</a><a class="" href="summary.html">Executive summary</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="active" href="simulator.html">Trade Simulator</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (eligibility status)</a><a href="live/index.html">Live Book</a><a href="official/index.html">Official Book</a></nav>
 </header>
 <main class="wrap">
+<aside class="callout"><strong>Legacy research archive — not the strict official-price stock competition.</strong>
+<a href="desk/index.html">Open the Official Equities Desk</a> for current evidence gates, strategy research and the forward-fill exclusion audit.</aside>
 
 <h1>Live US Equities Paper-Trading Simulation &amp; Order Staging Engine</h1>
-<p class="lede">Simulate placing real trades on the US stock market across <strong>Nasdaq, NYSE, and S&amp;P 500</strong>
-with full venue microstructure modelling: Level 2 order book depth, quoted spread crossing under Reg NMS Rule 612,
-Almgren-Chriss (2001, 2005) square-root market impact, dated SEC &sect;31 ($20.60/M) and FINRA TAF ($0.000195/sh) fees,
-Reg T 50% initial margin requirements, ADV participation checks, and verified SHA-256 trade logging.</p>
+<p class="lede"><strong>Legacy interactive scenario calculator — not a live or official-price trading service.</strong>
+The “Live US Equities” name is retained for archive continuity only. Prices, spreads, depth and volume in the ticket below are hard-coded demonstration assumptions, not collected market observations.
+The S&amp;P 500 is an index, not a trading venue. These browser-local trades are never eligible for the official stock competition.</p>
 
 <div class="card notice">
   <h2>Can strategies place upcoming trades and simulate a real trading experience?</h2>
-  <p><strong>Yes.</strong> The venue models the complete order lifecycle: strategies evaluate signals, stage upcoming
-  orders for the next session's opening bell (09:30 ET) or closing bell (16:00 ET), undergo pre-trade regulatory
-  and margin checks, walk the Level 2 depth ladder, incur temporary and permanent price impact, pay statutory exchange/regulatory fees,
-  and log every fill to an immutable event memory stream.</p>
+  <p><strong>Not from this legacy calculator into the strict competition.</strong> It illustrates model arithmetic and accepts manual scenario input;
+  it does not verify a quote, capture real-time liquidity, establish order submission time, or perform verified cash settlement.
+  Browser-local storage is not an immutable audit trail. No claim is made that the displayed scenario fee settings are current broker charges.</p>
+  <p><a href="desk/index.html#orders">Open the evidence-gated US Equities Desk</a> for the strict ledger, upcoming candidates and explicit blockers.</p>
 </div>
 
 <div class="card">

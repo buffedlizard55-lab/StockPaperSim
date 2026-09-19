@@ -1,0 +1,1836 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-09-19",
+  "competition": {
+    "id": "official-equities-2026",
+    "start": "2026-09-21",
+    "end_exclusive": "2027-09-21",
+    "starting_cash": "100000",
+    "rank_metric": "net_total_return_pct",
+    "state": "WAITING_FOR_EVIDENCE",
+    "rule": "One-year window; fixed strategy version before first order. No automatic fabricated year-end liquidation."
+  },
+  "approved_feeds": {},
+  "sources": [
+    {
+      "id": "ceo",
+      "title": "CEO",
+      "url": "https://buffedlizard55-lab.github.io/MasterSite/",
+      "primary_url": "https://www.sec.gov/files/form4.pdf",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered directory excerpt and official GitHub public repository API reviewed on 2026-09-19",
+      "observation": "No repository named CEO appeared in the 42 public repositories returned by the GitHub API. Use SEC Form 4 officer fields for a separately declared CEO/CFO hypothesis.",
+      "limitation": "Official filings still need acceptance timestamps and issuer/security mapping.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "weather",
+      "title": "Weather",
+      "url": "https://buffedlizard55-lab.github.io/SFWeather/",
+      "primary_url": "https://www.ncei.noaa.gov/access/services/data/v1",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "San Francisco rain/weather outlook, not a national energy-demand trading signal.",
+      "limitation": "SF-to-energy equity mapping is an untested hypothesis; archive forecasts before publication changes.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "insider",
+      "title": "Insider trades",
+      "url": "https://buffedlizard55-lab.github.io/Insider-trades/",
+      "primary_url": "https://www.sec.gov/files/form4.pdf",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Form 4 research dashboard; reviewed page shows zero collected strategy trades.",
+      "limitation": "Code P includes open-market OR private purchases, not proof of an open-market purchase. Filing transaction prices are not executable current quotes.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "leap",
+      "title": "TheLeap",
+      "url": "https://buffedlizard55-lab.github.io/TradingViewTheLeap/",
+      "primary_url": "https://www.tradingview.com/the-leap/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Reviewed page explicitly blocks new trades; historical candidates use vendor-tier prices.",
+      "limitation": "Competition design inspiration only. Current reviewed Leap page advertises futures, not this stock universe.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "nfl-injury",
+      "title": "NFL Injury",
+      "url": "https://buffedlizard55-lab.github.io/NFLInjuryReport/",
+      "primary_url": "https://www.nfl.com/injuries/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Page separates league designations, inferred status and ESPN reporting.",
+      "limitation": "Only confirmed league designations can trigger this official-event hypothesis. No established stock-return relationship.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "nba-injury",
+      "title": "NBA Injury",
+      "url": "https://buffedlizard55-lab.github.io/NBAInjuryReport/",
+      "primary_url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Page reports unavailable current official PDF and uses ESPN/Bluesky layers.",
+      "limitation": "Do not elevate ESPN or computed lineup-impact scores to official NBA observations.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "fda",
+      "title": "FDA Decisions Drug Analysis",
+      "url": "https://buffedlizard55-lab.github.io/DrugAnalysis/",
+      "primary_url": "https://api.fda.gov/drug/drugsfda.json",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "FDA decision engine includes primary cross-checks and explicitly flagged source conflicts.",
+      "limitation": "Decision date is not publication time. Verify historical issuer mapping, corporate actions and FDA source for each event.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "ncaa",
+      "title": "NCAA Scoreboard",
+      "url": "https://buffedlizard55-lab.github.io/Ncaa-football-alerts/",
+      "primary_url": "https://www.ncaa.com/scoreboard/football/fbs",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Rendered page exposes conference navigation only; no machine-readable official result was verified in this page read.",
+      "limitation": "Capture NCAA primary results and publication time; do not infer a feed from page title.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "nfl",
+      "title": "NFL scoreboard",
+      "url": "https://buffedlizard55-lab.github.io/NFL-scoreboard/",
+      "primary_url": "https://www.nfl.com/scores/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Rendered page exposes navigation only; no official result payload was verified in this page read.",
+      "limitation": "ESPN is secondary. League result-to-listed-company mapping remains hypothetical.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "mlb",
+      "title": "MLB Scoreboard",
+      "url": "https://buffedlizard55-lab.github.io/MLB-Live-PBP/",
+      "primary_url": "https://statsapi.mlb.com/api/v1/schedule",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Page shows dated game links and scoreboard state; league results need their own retained receipts.",
+      "limitation": "Scoreboard changes are not stock prices; official result/finish times and point-in-time company mapping required.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "sports",
+      "title": "Sports Pred",
+      "url": "https://buffedlizard55-lab.github.io/SportsPred/",
+      "primary_url": "https://buffedlizard55-lab.github.io/SportsPred/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Multi-sport predictions with confidence scores. Outputs are project models, not official facts.",
+      "limitation": "Freeze prediction before game start. Confidence is not a calibrated stock-return probability.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "gold",
+      "title": "Gold",
+      "url": "https://buffedlizard55-lab.github.io/GOLD/",
+      "primary_url": "https://www.spdrgoldshares.com/usa/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Solid-gold ring directory, not a gold exchange or equity price feed.",
+      "limitation": "Retail jewellery prices cannot execute GLD. Gold trend is our own separate hypothesis.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "pine",
+      "title": "PinePilot",
+      "url": "https://buffedlizard55-lab.github.io/Tradingview-pinescript-editor/",
+      "primary_url": "https://www.tradingview.com/pine-script-docs/",
+      "reviewed_on": "2026-09-19",
+      "method": "Rendered page excerpt reviewed; not a full data or repository audit",
+      "observation": "Pine strategy lab provides copyable rules, not authenticated prices or audited returns.",
+      "limitation": "Page intro says ten modes/v1.4 while displayed code says eighteen modes/v1.9; pin exact script before claiming replication.",
+      "source_class": "PROJECT_SECONDARY",
+      "execution_price_source": false
+    },
+    {
+      "id": "sec-settlement",
+      "title": "SEC T+1 investor bulletin",
+      "url": "https://www.sec.gov/resources-for-investors/investor-alerts-bulletins/new-t1-settlement-cycle-what-investors-need-know-investor-bulletin",
+      "primary_url": "https://www.sec.gov/files/rules/final/2023/34-96930.pdf",
+      "reviewed_on": "2026-09-19",
+      "method": "Official bulletin fetched (redirect to Investor.gov)",
+      "observation": "Standard settlement for covered transactions is T+1 from May 28, 2024, subject to exceptions.",
+      "limitation": "A trading-session calendar alone is not a complete securities-settlement calendar.",
+      "source_class": "OFFICIAL_RULE",
+      "execution_price_source": false
+    },
+    {
+      "id": "nyse-hours",
+      "title": "NYSE hours and calendars",
+      "url": "https://www.nyse.com/trade/hours-calendars",
+      "primary_url": "https://www.nyse.com/trade/hours-calendars",
+      "reviewed_on": "2026-09-19",
+      "method": "Official page fetched",
+      "observation": "Core session 09:30\u201316:00 Eastern. Listed early closes include November 27 and December 24, 2026 at 13:00 Eastern.",
+      "limitation": "Emergency closures and halt state still require a current feed. Use America/New_York, not fixed EST.",
+      "source_class": "OFFICIAL_RULE",
+      "execution_price_source": false
+    },
+    {
+      "id": "totalview",
+      "title": "Nasdaq TotalView",
+      "url": "https://www.nasdaqtrader.com/Trader.aspx?id=TotalViewNonPro",
+      "primary_url": "https://www.nasdaqtrader.com/content/technicalsupport/specifications/dataproducts/NQTVITCHSpecification.pdf",
+      "reviewed_on": "2026-09-19",
+      "method": "Official search excerpts reviewed",
+      "observation": "TotalView describes depth on the Nasdaq market, including securities listed elsewhere.",
+      "limitation": "Not all-venue depth. Queue reconstruction, hidden liquidity and cancellations matter; a daily volume field is not displayed executable size.",
+      "source_class": "OFFICIAL_DOCUMENTATION",
+      "execution_price_source": false
+    },
+    {
+      "id": "trade-ideas",
+      "title": "Trade Ideas PM Challenge",
+      "url": "https://www.trade-ideas.com/stock-trading-competition/",
+      "primary_url": "https://www.trade-ideas.com/stock-trading-competition/",
+      "reviewed_on": "2026-09-19",
+      "method": "Competition page fetched",
+      "observation": "Shows order ticket and leaderboard fields for open/closed profit and trades; contest results require login. Page displays a delayed-data notice.",
+      "limitation": "Public UI inspection only, not inspection of their private execution algorithm or licensing.",
+      "source_class": "OFFICIAL_PRODUCT_PAGE",
+      "execution_price_source": false
+    },
+    {
+      "id": "candlecharts",
+      "title": "Candlecharts Showdown",
+      "url": "https://specials.candlecharts.com/contest/",
+      "primary_url": "https://specials.candlecharts.com/contest/",
+      "reviewed_on": "2026-09-19",
+      "method": "Competition page fetched",
+      "observation": "Advertises a $50,000 paper account, September 20\u201325 contest and TradingView leaderboard.",
+      "limitation": "This repository uses its own one-year/$100,000 rules; it does not copy their account size or imply affiliation.",
+      "source_class": "OFFICIAL_PRODUCT_PAGE",
+      "execution_price_source": false
+    },
+    {
+      "id": "reddit",
+      "title": "Reddit ORB discussion",
+      "url": "https://www.reddit.com/r/Daytrading/comments/10ga4wy/1m_opening_range_breakout/",
+      "primary_url": "https://www.reddit.com/r/Daytrading/comments/10ga4wy/1m_opening_range_breakout/",
+      "reviewed_on": "2026-09-19",
+      "method": "Search excerpt only",
+      "observation": "Discussion describes a one-minute opening range, gaps and VWAP/EMA filters.",
+      "limitation": "Unverified community hypothesis, no authenticated return claim. Our 5/15/30-minute variants are not exact replications.",
+      "source_class": "COMMUNITY_HYPOTHESIS",
+      "execution_price_source": false
+    },
+    {
+      "id": "youtube",
+      "title": "YouTube ORB + VWAP",
+      "url": "https://www.youtube.com/watch?v=s6QO4ulCRTQ&vl=en",
+      "primary_url": "https://www.youtube.com/watch?v=s6QO4ulCRTQ&vl=en",
+      "reviewed_on": "2026-09-19",
+      "method": "Search metadata only; video not watched/transcribed",
+      "observation": "Search surfaced a video titled Opening Range Breakout + VWAP Strategy.",
+      "limitation": "No performance, complete method or transcript verified. Discovery lead only.",
+      "source_class": "COMMUNITY_DISCOVERY",
+      "execution_price_source": false
+    },
+    {
+      "id": "x",
+      "title": "X strategy search",
+      "url": "https://x.com/search?q=opening%20range%20VWAP&f=live",
+      "primary_url": "https://x.com/",
+      "reviewed_on": "2026-09-19",
+      "method": "Domain-restricted search attempted; no usable first-party post retrieved",
+      "observation": "No reproducible X strategy source established in this pass.",
+      "limitation": "Do not invent a post or claim a platform-wide search. Await accessible timestamped source.",
+      "source_class": "UNVERIFIED_DISCOVERY",
+      "execution_price_source": false
+    },
+    {
+      "id": "facebook",
+      "title": "Facebook strategy search",
+      "url": "https://www.facebook.com/",
+      "primary_url": "https://www.facebook.com/",
+      "reviewed_on": "2026-09-19",
+      "method": "Domain-restricted search attempted; no usable first-party post retrieved",
+      "observation": "No reproducible Facebook strategy source established in this pass.",
+      "limitation": "No private group access or performance verification; discovery remains blocked.",
+      "source_class": "UNVERIFIED_DISCOVERY",
+      "execution_price_source": false
+    }
+  ],
+  "strategies": [
+    {
+      "id": "sma-10_30",
+      "username": "@Lab_sma_10_30",
+      "version": "1.0.0",
+      "family": "sma",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 10,
+        "slow": 30
+      },
+      "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+      "exit_rule": "Exit when fast SMA <= slow SMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "sma",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "sma-20_50",
+      "username": "@Lab_sma_20_50",
+      "version": "1.0.0",
+      "family": "sma",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 20,
+        "slow": 50
+      },
+      "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+      "exit_rule": "Exit when fast SMA <= slow SMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "sma",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "sma-50_200",
+      "username": "@Lab_sma_50_200",
+      "version": "1.0.0",
+      "family": "sma",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 50,
+        "slow": 200
+      },
+      "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+      "exit_rule": "Exit when fast SMA <= slow SMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "sma",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ema-9_21",
+      "username": "@Lab_ema_9_21",
+      "version": "1.0.0",
+      "family": "ema",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 9,
+        "slow": 21
+      },
+      "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+      "exit_rule": "Exit when fast EMA <= slow EMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "ema",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ema-12_26",
+      "username": "@Lab_ema_12_26",
+      "version": "1.0.0",
+      "family": "ema",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 12,
+        "slow": 26
+      },
+      "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+      "exit_rule": "Exit when fast EMA <= slow EMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "ema",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ema-20_50",
+      "username": "@Lab_ema_20_50",
+      "version": "1.0.0",
+      "family": "ema",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "fast": 20,
+        "slow": 50
+      },
+      "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+      "exit_rule": "Exit when fast EMA <= slow EMA at next executable quote.",
+      "hypothesis": "Trend persistence may outweigh turnover and spread costs.",
+      "failure_modes": "Whipsaws, lag and corporate-action errors.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "ema",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "momentum-21",
+      "username": "@Lab_momentum_21",
+      "version": "1.0.0",
+      "family": "momentum",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "lookback": 21
+      },
+      "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Sustained winners may keep outperforming.",
+      "failure_modes": "Reversals, selected-universe bias, stale constituents.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "momentum-63",
+      "username": "@Lab_momentum_63",
+      "version": "1.0.0",
+      "family": "momentum",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "lookback": 63
+      },
+      "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Sustained winners may keep outperforming.",
+      "failure_modes": "Reversals, selected-universe bias, stale constituents.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "momentum-126",
+      "username": "@Lab_momentum_126",
+      "version": "1.0.0",
+      "family": "momentum",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "lookback": 126
+      },
+      "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Sustained winners may keep outperforming.",
+      "failure_modes": "Reversals, selected-universe bias, stale constituents.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "momentum-252",
+      "username": "@Lab_momentum_252",
+      "version": "1.0.0",
+      "family": "momentum",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "lookback": 252
+      },
+      "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Sustained winners may keep outperforming.",
+      "failure_modes": "Reversals, selected-universe bias, stale constituents.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "donchian-20",
+      "username": "@Lab_donchian_20",
+      "version": "1.0.0",
+      "family": "donchian",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "lookback": 20,
+        "exit_window": 10
+      },
+      "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+      "exit_rule": "Exit after close falls below all prior exit-window lows.",
+      "hypothesis": "Range expansion may lead to sustained repricing.",
+      "failure_modes": "False breakouts, gap fills and poor displayed liquidity.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "donchian",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "donchian-55",
+      "username": "@Lab_donchian_55",
+      "version": "1.0.0",
+      "family": "donchian",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "lookback": 55,
+        "exit_window": 10
+      },
+      "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+      "exit_rule": "Exit after close falls below all prior exit-window lows.",
+      "hypothesis": "Range expansion may lead to sustained repricing.",
+      "failure_modes": "False breakouts, gap fills and poor displayed liquidity.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "donchian",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "donchian-100",
+      "username": "@Lab_donchian_100",
+      "version": "1.0.0",
+      "family": "donchian",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "lookback": 100,
+        "exit_window": 10
+      },
+      "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+      "exit_rule": "Exit after close falls below all prior exit-window lows.",
+      "hypothesis": "Range expansion may lead to sustained repricing.",
+      "failure_modes": "False breakouts, gap fills and poor displayed liquidity.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "donchian",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "rsi-2",
+      "username": "@Lab_rsi_2",
+      "version": "1.0.0",
+      "family": "rsi",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "period": 2,
+        "entry": 20,
+        "exit": 60
+      },
+      "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+      "exit_rule": "Exit when RSI rises above 60.",
+      "hypothesis": "Short-term overreaction may reverse.",
+      "failure_modes": "Persistent selloffs; turnover can consume gains.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "rsi",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "rsi-5",
+      "username": "@Lab_rsi_5",
+      "version": "1.0.0",
+      "family": "rsi",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "period": 5,
+        "entry": 20,
+        "exit": 60
+      },
+      "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+      "exit_rule": "Exit when RSI rises above 60.",
+      "hypothesis": "Short-term overreaction may reverse.",
+      "failure_modes": "Persistent selloffs; turnover can consume gains.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "rsi",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "rsi-14",
+      "username": "@Lab_rsi_14",
+      "version": "1.0.0",
+      "family": "rsi",
+      "source_ids": [
+        "pine"
+      ],
+      "parameters": {
+        "period": 14,
+        "entry": 20,
+        "exit": 60
+      },
+      "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+      "exit_rule": "Exit when RSI rises above 60.",
+      "hypothesis": "Short-term overreaction may reverse.",
+      "failure_modes": "Persistent selloffs; turnover can consume gains.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "rsi",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ceo-conviction-20",
+      "username": "@Lab_ceo_conviction_20",
+      "version": "1.0.0",
+      "family": "ceo-conviction",
+      "source_ids": [
+        "ceo",
+        "insider"
+      ],
+      "parameters": {
+        "holding_sessions": 20
+      },
+      "entry_rule": "After EDGAR acceptance, require non-derivative code P and CEO/CFO title; inspect footnotes to exclude private purchases. Buy verified issuer at next regular-session quote.",
+      "exit_rule": "Exit after holding_sessions completed sessions.",
+      "hypothesis": "Disclosed officer purchases may convey information.",
+      "failure_modes": "Private transactions, amendments, already-priced information; no trade at insider transaction price.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ceo-conviction-60",
+      "username": "@Lab_ceo_conviction_60",
+      "version": "1.0.0",
+      "family": "ceo-conviction",
+      "source_ids": [
+        "ceo",
+        "insider"
+      ],
+      "parameters": {
+        "holding_sessions": 60
+      },
+      "entry_rule": "After EDGAR acceptance, require non-derivative code P and CEO/CFO title; inspect footnotes to exclude private purchases. Buy verified issuer at next regular-session quote.",
+      "exit_rule": "Exit after holding_sessions completed sessions.",
+      "hypothesis": "Disclosed officer purchases may convey information.",
+      "failure_modes": "Private transactions, amendments, already-priced information; no trade at insider transaction price.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ceo-conviction-120",
+      "username": "@Lab_ceo_conviction_120",
+      "version": "1.0.0",
+      "family": "ceo-conviction",
+      "source_ids": [
+        "ceo",
+        "insider"
+      ],
+      "parameters": {
+        "holding_sessions": 120
+      },
+      "entry_rule": "After EDGAR acceptance, require non-derivative code P and CEO/CFO title; inspect footnotes to exclude private purchases. Buy verified issuer at next regular-session quote.",
+      "exit_rule": "Exit after holding_sessions completed sessions.",
+      "hypothesis": "Disclosed officer purchases may convey information.",
+      "failure_modes": "Private transactions, amendments, already-priced information; no trade at insider transaction price.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "insider-cluster-20",
+      "username": "@Lab_insider_cluster_20",
+      "version": "1.0.0",
+      "family": "insider-cluster",
+      "source_ids": [
+        "insider"
+      ],
+      "parameters": {
+        "holding_sessions": 20
+      },
+      "entry_rule": "At least two distinct insiders with qualifying purchases accepted within ten calendar days; exclude duplicate/amended filings.",
+      "exit_rule": "Exit after holding_sessions completed sessions.",
+      "hypothesis": "Independent purchases may be more informative than a single report.",
+      "failure_modes": "Survivorship, reporting lag and common compensation arrangements.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "insider-cluster-60",
+      "username": "@Lab_insider_cluster_60",
+      "version": "1.0.0",
+      "family": "insider-cluster",
+      "source_ids": [
+        "insider"
+      ],
+      "parameters": {
+        "holding_sessions": 60
+      },
+      "entry_rule": "At least two distinct insiders with qualifying purchases accepted within ten calendar days; exclude duplicate/amended filings.",
+      "exit_rule": "Exit after holding_sessions completed sessions.",
+      "hypothesis": "Independent purchases may be more informative than a single report.",
+      "failure_modes": "Survivorship, reporting lag and common compensation arrangements.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "weather-demand-10",
+      "username": "@Lab_weather_demand_10",
+      "version": "1.0.0",
+      "family": "weather-demand",
+      "source_ids": [
+        "weather"
+      ],
+      "parameters": {
+        "threshold_percent": 10
+      },
+      "entry_rule": "On a new archived NOAA forecast, buy an independently verified utility basket if regional population-weighted heating degree days exceed trailing forecast by threshold_percent.",
+      "exit_rule": "Exit after five sessions or a forecast revision below baseline.",
+      "hypothesis": "Regional demand shocks could affect selected utilities.",
+      "failure_modes": "SF rainfall is not national demand; revenue effects depend on regulation and geography.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "weather-demand-20",
+      "username": "@Lab_weather_demand_20",
+      "version": "1.0.0",
+      "family": "weather-demand",
+      "source_ids": [
+        "weather"
+      ],
+      "parameters": {
+        "threshold_percent": 20
+      },
+      "entry_rule": "On a new archived NOAA forecast, buy an independently verified utility basket if regional population-weighted heating degree days exceed trailing forecast by threshold_percent.",
+      "exit_rule": "Exit after five sessions or a forecast revision below baseline.",
+      "hypothesis": "Regional demand shocks could affect selected utilities.",
+      "failure_modes": "SF rainfall is not national demand; revenue effects depend on regulation and geography.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "fda-approval-1",
+      "username": "@Lab_fda_approval_1",
+      "version": "1.0.0",
+      "family": "fda-approval",
+      "source_ids": [
+        "fda"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After timestamped FDA approval publication and point-in-time sponsor-to-listed-issuer validation, enter long at the next eligible quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Approval may cause repricing beyond immediate response.",
+      "failure_modes": "Decision/publication mismatch; sponsor acquisitions; overnight gaps; positive news already priced.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "fda-approval-5",
+      "username": "@Lab_fda_approval_5",
+      "version": "1.0.0",
+      "family": "fda-approval",
+      "source_ids": [
+        "fda"
+      ],
+      "parameters": {
+        "holding_sessions": 5
+      },
+      "entry_rule": "After timestamped FDA approval publication and point-in-time sponsor-to-listed-issuer validation, enter long at the next eligible quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Approval may cause repricing beyond immediate response.",
+      "failure_modes": "Decision/publication mismatch; sponsor acquisitions; overnight gaps; positive news already priced.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "fda-approval-20",
+      "username": "@Lab_fda_approval_20",
+      "version": "1.0.0",
+      "family": "fda-approval",
+      "source_ids": [
+        "fda"
+      ],
+      "parameters": {
+        "holding_sessions": 20
+      },
+      "entry_rule": "After timestamped FDA approval publication and point-in-time sponsor-to-listed-issuer validation, enter long at the next eligible quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Approval may cause repricing beyond immediate response.",
+      "failure_modes": "Decision/publication mismatch; sponsor acquisitions; overnight gaps; positive news already priced.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "fda-sector-1",
+      "username": "@Lab_fda_sector_1",
+      "version": "1.0.0",
+      "family": "fda-sector",
+      "source_ids": [
+        "fda"
+      ],
+      "parameters": {
+        "threshold": 1
+      },
+      "entry_rule": "After verified public release, buy XBI if trailing seven-day approval count exceeds previous 90-day weekly mean by threshold.",
+      "exit_rule": "Exit when count falls below mean or after ten sessions.",
+      "hypothesis": "Sector attention may persist after clustered approvals.",
+      "failure_modes": "Sector correlation is unproven; ETF is not the drug sponsor.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "fda-sector-2",
+      "username": "@Lab_fda_sector_2",
+      "version": "1.0.0",
+      "family": "fda-sector",
+      "source_ids": [
+        "fda"
+      ],
+      "parameters": {
+        "threshold": 2
+      },
+      "entry_rule": "After verified public release, buy XBI if trailing seven-day approval count exceeds previous 90-day weekly mean by threshold.",
+      "exit_rule": "Exit when count falls below mean or after ten sessions.",
+      "hypothesis": "Sector attention may persist after clustered approvals.",
+      "failure_modes": "Sector correlation is unproven; ETF is not the drug sponsor.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nfl-injury-1",
+      "username": "@Lab_nfl_injury_1",
+      "version": "1.0.0",
+      "family": "nfl-injury",
+      "source_ids": [
+        "nfl-injury"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After NFL league-confirmed new starting-QB Out designation, compare pre-event frozen basket with no-event control; buy the pre-registered sportsbook-equity basket at next quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Event attention might affect sector trading; direction is deliberately unproven.",
+      "failure_modes": "Injury severity is not stock value; off-hours reports; multiple simultaneous games; no ticker association inferred.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nfl-injury-3",
+      "username": "@Lab_nfl_injury_3",
+      "version": "1.0.0",
+      "family": "nfl-injury",
+      "source_ids": [
+        "nfl-injury"
+      ],
+      "parameters": {
+        "holding_sessions": 3
+      },
+      "entry_rule": "After NFL league-confirmed new starting-QB Out designation, compare pre-event frozen basket with no-event control; buy the pre-registered sportsbook-equity basket at next quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Event attention might affect sector trading; direction is deliberately unproven.",
+      "failure_modes": "Injury severity is not stock value; off-hours reports; multiple simultaneous games; no ticker association inferred.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nba-injury-1",
+      "username": "@Lab_nba_injury_1",
+      "version": "1.0.0",
+      "family": "nba-injury",
+      "source_ids": [
+        "nba-injury"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After NBA official PDF change to Out for a player with verified >30 prior-game minutes, compare pre-event frozen basket with no-event control; buy the pre-registered sportsbook-equity basket at next quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Event attention might affect sector trading; direction is deliberately unproven.",
+      "failure_modes": "Injury severity is not stock value; off-hours reports; multiple simultaneous games; no ticker association inferred.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nba-injury-3",
+      "username": "@Lab_nba_injury_3",
+      "version": "1.0.0",
+      "family": "nba-injury",
+      "source_ids": [
+        "nba-injury"
+      ],
+      "parameters": {
+        "holding_sessions": 3
+      },
+      "entry_rule": "After NBA official PDF change to Out for a player with verified >30 prior-game minutes, compare pre-event frozen basket with no-event control; buy the pre-registered sportsbook-equity basket at next quote.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Event attention might affect sector trading; direction is deliberately unproven.",
+      "failure_modes": "Injury severity is not stock value; off-hours reports; multiple simultaneous games; no ticker association inferred.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ncaa-slate-1",
+      "username": "@Lab_ncaa_slate_1",
+      "version": "1.0.0",
+      "family": "ncaa-slate",
+      "source_ids": [
+        "ncaa"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "ncaa-slate-3",
+      "username": "@Lab_ncaa_slate_3",
+      "version": "1.0.0",
+      "family": "ncaa-slate",
+      "source_ids": [
+        "ncaa"
+      ],
+      "parameters": {
+        "holding_sessions": 3
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nfl-slate-1",
+      "username": "@Lab_nfl_slate_1",
+      "version": "1.0.0",
+      "family": "nfl-slate",
+      "source_ids": [
+        "nfl"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "nfl-slate-3",
+      "username": "@Lab_nfl_slate_3",
+      "version": "1.0.0",
+      "family": "nfl-slate",
+      "source_ids": [
+        "nfl"
+      ],
+      "parameters": {
+        "holding_sessions": 3
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "mlb-slate-1",
+      "username": "@Lab_mlb_slate_1",
+      "version": "1.0.0",
+      "family": "mlb-slate",
+      "source_ids": [
+        "mlb"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "mlb-slate-3",
+      "username": "@Lab_mlb_slate_3",
+      "version": "1.0.0",
+      "family": "mlb-slate",
+      "source_ids": [
+        "mlb"
+      ],
+      "parameters": {
+        "holding_sessions": 3
+      },
+      "entry_rule": "After officially published final results, buy a frozen, issuer-verified sportsbook basket when final-game count exceeds trailing eight-week same-weekday median.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Sports attention might change listed-company trading volume.",
+      "failure_modes": "Weak causal link; holidays and sports seasonality; scoreboard API may be secondary.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "sports-pred-1",
+      "username": "@Lab_sports_pred_1",
+      "version": "1.0.0",
+      "family": "sports-pred",
+      "source_ids": [
+        "sports"
+      ],
+      "parameters": {
+        "holding_sessions": 1
+      },
+      "entry_rule": "Archive model predictions before first game. After official finals, compare prediction error to trailing 30-event mean; buy a pre-registered issuer basket if error is lower.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Unexpected prediction performance might proxy an attention shock.",
+      "failure_modes": "Model outputs are not official; no established equity mapping or causal edge.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "sports-pred-5",
+      "username": "@Lab_sports_pred_5",
+      "version": "1.0.0",
+      "family": "sports-pred",
+      "source_ids": [
+        "sports"
+      ],
+      "parameters": {
+        "holding_sessions": 5
+      },
+      "entry_rule": "Archive model predictions before first game. After official finals, compare prediction error to trailing 30-event mean; buy a pre-registered issuer basket if error is lower.",
+      "exit_rule": "Exit after holding_sessions sessions.",
+      "hypothesis": "Unexpected prediction performance might proxy an attention shock.",
+      "failure_modes": "Model outputs are not official; no established equity mapping or causal edge.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "gold-trend-63",
+      "username": "@Lab_gold_trend_63",
+      "version": "1.0.0",
+      "family": "gold-trend",
+      "source_ids": [
+        "gold"
+      ],
+      "parameters": {
+        "lookback": 63
+      },
+      "entry_rule": "Apply positive trailing return rule to official GLD prices; ring listings are NOT an input.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Gold instrument price trends may persist.",
+      "failure_modes": "Jewellery project supplies no trading edge; ETF tracking differences.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "gold-trend-126",
+      "username": "@Lab_gold_trend_126",
+      "version": "1.0.0",
+      "family": "gold-trend",
+      "source_ids": [
+        "gold"
+      ],
+      "parameters": {
+        "lookback": 126
+      },
+      "entry_rule": "Apply positive trailing return rule to official GLD prices; ring listings are NOT an input.",
+      "exit_rule": "Exit on non-positive trailing return.",
+      "hypothesis": "Gold instrument price trends may persist.",
+      "failure_modes": "Jewellery project supplies no trading edge; ETF tracking differences.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "PROTOTYPE_BLOCKED_DATA",
+      "implementation": "momentum",
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "orb-5",
+      "username": "@Lab_orb_5",
+      "version": "1.0.0",
+      "family": "orb",
+      "source_ids": [
+        "reddit",
+        "youtube"
+      ],
+      "parameters": {
+        "range_minutes": 5
+      },
+      "entry_rule": "After first range_minutes of regular trading, enter on first completed one-minute close above range high and session trade-weighted VWAP.",
+      "exit_rule": "Submit liquidation five minutes before verified session close; never invent a closing fill.",
+      "hypothesis": "Opening price discovery may continue.",
+      "failure_modes": "No intraday receipts; redundant VWAP filters; hidden liquidity; halts.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "orb-15",
+      "username": "@Lab_orb_15",
+      "version": "1.0.0",
+      "family": "orb",
+      "source_ids": [
+        "reddit",
+        "youtube"
+      ],
+      "parameters": {
+        "range_minutes": 15
+      },
+      "entry_rule": "After first range_minutes of regular trading, enter on first completed one-minute close above range high and session trade-weighted VWAP.",
+      "exit_rule": "Submit liquidation five minutes before verified session close; never invent a closing fill.",
+      "hypothesis": "Opening price discovery may continue.",
+      "failure_modes": "No intraday receipts; redundant VWAP filters; hidden liquidity; halts.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "orb-30",
+      "username": "@Lab_orb_30",
+      "version": "1.0.0",
+      "family": "orb",
+      "source_ids": [
+        "reddit",
+        "youtube"
+      ],
+      "parameters": {
+        "range_minutes": 30
+      },
+      "entry_rule": "After first range_minutes of regular trading, enter on first completed one-minute close above range high and session trade-weighted VWAP.",
+      "exit_rule": "Submit liquidation five minutes before verified session close; never invent a closing fill.",
+      "hypothesis": "Opening price discovery may continue.",
+      "failure_modes": "No intraday receipts; redundant VWAP filters; hidden liquidity; halts.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "vwap-reclaim-1_5",
+      "username": "@Lab_vwap_reclaim_1_5",
+      "version": "1.0.0",
+      "family": "vwap-reclaim",
+      "source_ids": [
+        "reddit",
+        "pine"
+      ],
+      "parameters": {
+        "volume_multiple": 1.5
+      },
+      "entry_rule": "After being below session trade-weighted VWAP, enter on first completed minute close above VWAP with volume > prior 20-minute mean times volume_multiple.",
+      "exit_rule": "Exit on close below VWAP or five minutes before session close.",
+      "hypothesis": "Volume-backed reclaim might indicate sustained buying.",
+      "failure_modes": "Trade corrections, cancellations and noisy oscillation.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "vwap-reclaim-2",
+      "username": "@Lab_vwap_reclaim_2",
+      "version": "1.0.0",
+      "family": "vwap-reclaim",
+      "source_ids": [
+        "reddit",
+        "pine"
+      ],
+      "parameters": {
+        "volume_multiple": 2
+      },
+      "entry_rule": "After being below session trade-weighted VWAP, enter on first completed minute close above VWAP with volume > prior 20-minute mean times volume_multiple.",
+      "exit_rule": "Exit on close below VWAP or five minutes before session close.",
+      "hypothesis": "Volume-backed reclaim might indicate sustained buying.",
+      "failure_modes": "Trade corrections, cancellations and noisy oscillation.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "earnings-drift-1",
+      "username": "@Lab_earnings_drift_1",
+      "version": "1.0.0",
+      "family": "earnings-drift",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "threshold": 1
+      },
+      "entry_rule": "After official issuer earnings release and pre-release archived consensus, buy if standardized surprise > threshold.",
+      "exit_rule": "Exit after twenty sessions.",
+      "hypothesis": "Slow information diffusion may create drift.",
+      "failure_modes": "Consensus is not official issuer data and is absent; release revisions, other simultaneous news.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "earnings-drift-2",
+      "username": "@Lab_earnings_drift_2",
+      "version": "1.0.0",
+      "family": "earnings-drift",
+      "source_ids": [
+        "leap"
+      ],
+      "parameters": {
+        "threshold": 2
+      },
+      "entry_rule": "After official issuer earnings release and pre-release archived consensus, buy if standardized surprise > threshold.",
+      "exit_rule": "Exit after twenty sessions.",
+      "hypothesis": "Slow information diffusion may create drift.",
+      "failure_modes": "Consensus is not official issuer data and is absent; release revisions, other simultaneous news.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "market-making-1",
+      "username": "@Lab_market_making_1",
+      "version": "1.0.0",
+      "family": "market-making",
+      "source_ids": [
+        "totalview"
+      ],
+      "parameters": {
+        "inventory_skew_ticks": 1
+      },
+      "entry_rule": "Post two-sided limits one verified tick from current mid, with inventory skew after each actual queue event.",
+      "exit_rule": "Cancel on adverse quote move or five minutes before session close.",
+      "hypothesis": "Spread capture might exceed inventory and adverse-selection losses.",
+      "failure_modes": "Requires licensed order-level lifecycle, queue position and cancel latency. No passive fills from OHLC or quote touch.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    },
+    {
+      "id": "market-making-2",
+      "username": "@Lab_market_making_2",
+      "version": "1.0.0",
+      "family": "market-making",
+      "source_ids": [
+        "totalview"
+      ],
+      "parameters": {
+        "inventory_skew_ticks": 2
+      },
+      "entry_rule": "Post two-sided limits one verified tick from current mid, with inventory skew after each actual queue event.",
+      "exit_rule": "Cancel on adverse quote move or five minutes before session close.",
+      "hypothesis": "Spread capture might exceed inventory and adverse-selection losses.",
+      "failure_modes": "Requires licensed order-level lifecycle, queue position and cancel latency. No passive fills from OHLC or quote touch.",
+      "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+      "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+      "status": "DESIGN_ONLY",
+      "implementation": null,
+      "required_evidence": [
+        "Official price receipts and permitted use",
+        "Point-in-time signal available_at and received_at",
+        "Listing and corporate-action history",
+        "Bid/ask and sizes, quote condition, halt state",
+        "Trading and settlement calendars"
+      ],
+      "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+      "forward_status": "BLOCKED_NO_APPROVED_FEED",
+      "results": null
+    }
+  ],
+  "disclaimer": "Research hypotheses and code prototypes, not proven profitable strategies. No official stock backtest or strict forward fill exists in this release. No exhaustive search or line-by-line independent verification of the entire legacy repository is claimed."
+}

@@ -69,7 +69,8 @@ def _nav() -> str:
     and from the site root, which keeps every link on the page resolvable in a
     build that renders only this section.
     """
-    links = [("index.html", "Overview"), ("summary.html", "Executive summary"),
+    links = [("index.html", "Overview"), ("desk/index.html", "Official Equities Desk"),
+             ("summary.html", "Executive summary"),
              ("leaderboard.html", "Leaderboard"), ("strategies.html", "Strategies"),
              ("simulator.html", "Trade Simulator"), ("market.html", "Market &amp; factors"),
              ("sensitivity.html", "Venue sensitivity"), ("methodology.html", "Methodology"),
@@ -103,6 +104,9 @@ unblock it.">
   <nav class="wrap nav">{_nav()}</nav>
 </header>
 <main class="wrap">
+<aside class="callout"><strong>Legacy research summary — not certified stock performance.</strong>
+Daily prints and internally reproduced arithmetic do not establish observed intraday liquidity, pre-execution order submission, or T+1 cash settlement.
+<a href="desk/index.html#trades">Open the strict equities audit</a> for every forward fill's exclusion reasons.</aside>
 {body}
 </main>
 <footer class="site-footer">

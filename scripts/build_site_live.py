@@ -31,6 +31,7 @@ from typing import Dict, List, Optional, Sequence
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 NAV = [
+    ("desk/index.html", "Strict Equities Desk"),
     ("live/index.html", "Overview"),
     ("live/forward.html", "Upcoming trades"),
     ("live/leaderboard.html", "Leaderboard"),
@@ -108,11 +109,14 @@ trade.">
   <nav class="wrap nav">{nav}</nav>
 </header>
 <main class="wrap">
+<aside class="callout"><strong>RESEARCH ONLY — excluded from the strict official-price stock competition.</strong>
+These legacy fills can use SECONDARY prices and modelled bid/ask liquidity. Date-only intents do not prove pre-execution submission, and this book's “settle” operation is not T+1 cash settlement.
+<a href="{pre}desk/index.html#trades">Review every forward fill and its blockers</a>.</aside>
 {body}
 </main>
 <footer class="site-footer">
   <div class="wrap">
-    <p>The Live Book is a <strong>forward test</strong>, not a live market feed. A
+    <p>The Live Book is a <strong>legacy forward-style research simulation</strong>, not an independently timestamped forward test or a live market feed. A
     strategy writes an intent after the close of one session and the venue settles it
     against a later verified daily bar through the same microstructure model the
     competition uses. Signals, the benchmark, the trading calendar and the financing

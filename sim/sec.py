@@ -35,6 +35,7 @@ from __future__ import annotations
 
 import gzip
 import os
+import re
 import time
 import zlib
 from typing import Dict, Optional, Tuple
@@ -70,9 +71,37 @@ SEC_ENDPOINTS = {
                      "&CIK={cik}&type={form}&owner=include&count={count}&output=atom"),
     "insider_sets_page": ("https://www.sec.gov/data-research/sec-markets-data/"
                           "insider-transactions-data-sets"),
-    "insider_zip": ("https://www.sec.gov/files/structureddata/data/"
+    # Two directory layouts carry the same quarterly files. The page pins the
+    # change: 2026 Q2 (the newest set, 10.97 MB) is served from
+    # ``datastandardsinnovation`` and 2026 Q1 and earlier from ``structureddata``.
+    # Both are kept, and which is tried first depends on the quarter, because a
+    # URL that works today for Q2 is not the URL that works for 2019.
+    "insider_zip": ("https://www.sec.gov/files/datastandardsinnovation/data/"
                     "insider-transactions-data-sets/{quarter}_form345.zip"),
+    "insider_zip_legacy": ("https://www.sec.gov/files/structureddata/data/"
+                           "insider-transactions-data-sets/{quarter}_form345.zip"),
 }
+
+#: The quarter from which the SEC's current path replaced the older one.
+#: SOURCE: https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets
+INSIDER_ZIP_LAYOUT_CHANGE_QUARTER = (2026, 2)
+
+
+def insider_zip_candidates(quarter: str) -> Tuple[str, ...]:
+    """Both known URLs for a quarter's Form 3/4/5 data set, best guess first.
+
+    The published table names one layout per date range, so the quarter decides
+    the order; the other URL is still tried, because a publisher moving a file
+    back is cheaper to survive than to diagnose. Every attempt the collector
+    makes is recorded with its own URL and status, so a reader can see which one
+    answered.
+    """
+    match = re.match(r"^(\d{4})q([1-4])$", quarter)
+    year, q = (int(match.group(1)), int(match.group(2))) if match else (0, 0)
+    current = SEC_ENDPOINTS["insider_zip"].format(quarter=quarter)
+    legacy = SEC_ENDPOINTS["insider_zip_legacy"].format(quarter=quarter)
+    return ((current, legacy) if (year, q) >= INSIDER_ZIP_LAYOUT_CHANGE_QUARTER
+            else (legacy, current))
 
 
 def sec_user_agent(contact: Optional[str] = None) -> str:
@@ -225,6 +254,7 @@ def edgar_request(url: str, limiter: Optional[SecRateLimiter] = None,
 
 
 __all__ = ["SEC_MAX_REQUESTS_PER_SECOND", "SEC_MIN_INTERVAL_EFFECTIVE",
-           "SEC_HEADER_NAMES", "DEFAULT_SEC_CONTACT",
-           "DEFAULT_SEC_AGENT_NAME", "SEC_ENDPOINTS", "sec_user_agent", "sec_headers",
+           "SEC_ENDPOINTS", "INSIDER_ZIP_LAYOUT_CHANGE_QUARTER",
+           "insider_zip_candidates", "sec_user_agent", "sec_headers",
+           "SEC_HEADER_NAMES", "DEFAULT_SEC_CONTACT", "DEFAULT_SEC_AGENT_NAME",
            "declared_headers_record", "decode_body", "SecRateLimiter", "edgar_request"]

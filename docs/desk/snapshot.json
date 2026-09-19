@@ -2220,7 +2220,7 @@
         "participants": [],
         "counts": {},
         "manifest": "runs/season2-primary-seed20260918/manifest.json",
-        "sha256": "a8544450bdc1ab39f20e885ac996b289e87ddd1647128204f14e8c190d923966",
+        "sha256": "5240e7d7cda3f06f954f7ab8020e89112d47cc967799dece046d5381f7ede5b0",
         "strict_eligible": false,
         "reason": "Separate legacy format; no accepted strict quote-receipt/forward-submission audit"
       },
@@ -2230,7 +2230,7 @@
         "participants": [],
         "counts": {},
         "manifest": "runs/season2-stress-costs2x-seed20260918/manifest.json",
-        "sha256": "08451c4e1001469c1bf9eda92d69144ce61bb56720475d6361b557dc620125be",
+        "sha256": "81f86c9fb14a4af711f82c562ab383f91c3014b1035a498f5503c170ffe0ef09",
         "strict_eligible": false,
         "reason": "Separate legacy format; no accepted strict quote-receipt/forward-submission audit"
       },
@@ -2240,7 +2240,7 @@
         "participants": [],
         "counts": {},
         "manifest": "runs/season2-stress-thinliquidity-seed20260918/manifest.json",
-        "sha256": "db6179009ca6f0ccbb624ea140f4d0803157f7acf9d750c25472490c1f9fa6f0",
+        "sha256": "ca2e4b2b646ecb23670d914a609b2cd2e91cc231a62082103a6cb2911fa78a6b",
         "strict_eligible": false,
         "reason": "Separate legacy format; no accepted strict quote-receipt/forward-submission audit"
       }
@@ -2303,7 +2303,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 1.4006,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2312,6 +2312,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2375,13 +2376,14 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 0.4077,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2441,7 +2443,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 1.4006,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2450,6 +2452,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2509,7 +2512,7 @@
         "stop_price": null,
         "symbol": "SPY",
         "total_cost": 0.7963,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2518,6 +2521,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2577,7 +2581,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 0.4048,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2586,6 +2590,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2649,13 +2654,14 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 0.8879,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2715,7 +2721,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 1.4006,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2724,6 +2730,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2783,7 +2790,7 @@
         "stop_price": null,
         "symbol": "TSLA",
         "total_cost": 2.42,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -2792,6 +2799,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2855,13 +2863,14 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 3.2158,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2925,13 +2934,14 @@
         "stop_price": null,
         "symbol": "TSLA",
         "total_cost": 3.365,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -2995,13 +3005,14 @@
         "stop_price": null,
         "symbol": "TLT",
         "total_cost": 3.4914,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3061,7 +3072,7 @@
         "stop_price": null,
         "symbol": "SPY",
         "total_cost": 1.2471,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3070,6 +3081,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3129,7 +3141,7 @@
         "stop_price": null,
         "symbol": "UNG",
         "total_cost": 156.3532,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3138,6 +3150,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3197,7 +3210,7 @@
         "stop_price": null,
         "symbol": "XOM",
         "total_cost": 8.5321,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3206,6 +3219,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3265,7 +3279,7 @@
         "stop_price": null,
         "symbol": "PENN",
         "total_cost": 42.1614,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3274,6 +3288,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3337,13 +3352,14 @@
         "stop_price": null,
         "symbol": "PENN",
         "total_cost": 0.9251,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3403,7 +3419,7 @@
         "stop_price": null,
         "symbol": "GLD",
         "total_cost": 4.9469,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3412,6 +3428,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3475,13 +3492,14 @@
         "stop_price": null,
         "symbol": "GLD",
         "total_cost": 2.0395,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3541,7 +3559,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 3.1938,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3550,6 +3568,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3609,7 +3628,7 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 1.4006,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3618,6 +3637,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3681,13 +3701,14 @@
         "stop_price": null,
         "symbol": "QQQ",
         "total_cost": 0.4077,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3747,7 +3768,7 @@
         "stop_price": null,
         "symbol": "TLT",
         "total_cost": 11.0251,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3756,6 +3777,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3819,13 +3841,14 @@
         "stop_price": null,
         "symbol": "TLT",
         "total_cost": 13.362,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3889,13 +3912,14 @@
         "stop_price": null,
         "symbol": "GLD",
         "total_cost": 2.0395,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -3955,7 +3979,7 @@
         "stop_price": null,
         "symbol": "XBI",
         "total_cost": 10.5624,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -3964,6 +3988,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -4027,13 +4052,14 @@
         "stop_price": null,
         "symbol": "XBI",
         "total_cost": 4.5465,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NO_OBSERVED_BID_ASK_SIZE_RECEIPT",
           "NO_PRICE_REDISTRIBUTION_EVIDENCE",
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]
@@ -4093,7 +4119,7 @@
         "stop_price": null,
         "symbol": "SPY",
         "total_cost": 0.7963,
-        "reference_file_hash_matches_now": true,
+        "reference_file_hash_matches_now": false,
         "strict_eligible": false,
         "blockers": [
           "NON_OFFICIAL_PRICE_SOURCE",
@@ -4102,6 +4128,7 @@
           "NO_PRE_EXECUTION_SUBMISSION_TIMESTAMP",
           "NO_T_PLUS_ONE_CASH_SETTLEMENT_DATE",
           "NO_ROW_PRICE_SOURCE_URL",
+          "REFERENCE_PRICE_HASH_NOT_CURRENTLY_MATCHED",
           "EXECUTION_PRICE_AND_LIQUIDITY_MODELLED",
           "LEGACY_MODEL_NOT_STRICT_EXECUTION_ENGINE"
         ]

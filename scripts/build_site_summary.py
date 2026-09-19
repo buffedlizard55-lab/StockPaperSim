@@ -365,6 +365,14 @@ def build(memory_root: str, data_root: str, research_root: str, out: str) -> lis
             "window": eligibility.get("window")},
         "print_crosscheck": crosscheck,
         "not_run": register.get("rows"),
+        # The check behind the three not-run rows, so a reader of the payload
+        # gets the same evidence as a reader of the page.
+        "intraday_check": {
+            "verdict": intraday.get("verdict"),
+            "history_check": intraday.get("history_check"),
+            "in_this_tree": intraday.get("in_this_tree"),
+            "generated_utc": intraday.get("generated_utc"),
+            "tree": intraday.get("tree")},
         "standing_instructions": register.get("standing_instructions"),
     }
 

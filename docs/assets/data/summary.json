@@ -1861,6 +1861,24 @@
    ]
   }
  ],
+ "intraday_check": {
+  "verdict": "NOT_IN_THIS_TREE",
+  "history_check": "CANNOT_TELL_SHALLOW_CLONE",
+  "in_this_tree": false,
+  "generated_utc": "2026-09-19T04:36:17Z",
+  "tree": {
+   "data/real/intraday": {
+    "bytes": 0,
+    "exists": false,
+    "files": 0
+   },
+   "data/real/prints/intraday": {
+    "bytes": 0,
+    "exists": false,
+    "files": 0
+   }
+  }
+ },
  "standing_instructions": [
   "No manual input: every scheduled run collects, settles, rebuilds the site and opens its own pull request.",
   "No invented numbers: a missing measurement is published as NOT RUN with the reason and the artifact that would unblock it.",

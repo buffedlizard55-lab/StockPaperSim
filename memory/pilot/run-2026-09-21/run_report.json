@@ -1,0 +1,109 @@
+{
+ "broadcast": "strict equity pilot: intents are journaled with timestamps and input classes; fills remain zero while approved_feeds is empty",
+ "calendar_source": "https://www.nyse.com/trade/hours-calendars",
+ "execution_session": "2026-09-22",
+ "feeds_approved": 0,
+ "fills": 0,
+ "journal_head_after": "b6c2efb0777f8b76b87a773bc96136ef513918b618d49f2c86dca09b082bb6ba",
+ "journal_head_before": "f4ddbe898c8d9004d3cfd3a688bfd0b34c6db31d8109cec175504b22404bdbc5",
+ "market_making_gate": {
+  "allowed": false,
+  "reasons": [
+   "NO_APPROVED_FEEDS_AT_ALL"
+  ]
+ },
+ "orders_rejected": [
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "ema-20_50:SPY:cb04091f4cd5"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "gold-trend-126:SPY:af82b75f385c"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "gold-trend-63:SPY:dd3d1fcfa619"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "momentum-126:SPY:3afa112a5abd"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "momentum-252:SPY:7e6f8d2e564e"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "momentum-63:SPY:b4e0853b6be9"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "sma-20_50:SPY:02bd4b195fec"
+  },
+  {
+   "code": "EXEC:NO_APPROVED_OFFICIAL_FEED",
+   "order": "sma-50_200:SPY:3d04be88ab01"
+  }
+ ],
+ "orders_submitted": 8,
+ "run_date": "2026-09-21",
+ "seeded_rehearsal": true,
+ "settlements": 0,
+ "signals_skipped": [
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_donchian_100"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_donchian_20"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_donchian_55"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_ema_12_26"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_ema_9_21"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_momentum_21"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_rsi_14"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_rsi_2"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_rsi_5"
+  },
+  {
+   "code": "ALREADY_AT_TARGET",
+   "symbol": "SPY",
+   "username": "@Lab_sma_10_30"
+  }
+ ],
+ "submitted_at": "2026-09-21T21:10:00Z",
+ "universe": [
+  "SPY"
+ ]
+}

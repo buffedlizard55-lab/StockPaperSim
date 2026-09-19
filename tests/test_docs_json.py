@@ -58,8 +58,12 @@ class TestPublishedSite(unittest.TestCase):
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.css")))
         self.assertTrue(os.path.exists(os.path.join(DOCS, "assets", "site.js")))
         season1 = [p for p in self.pages
-                   if not p.startswith(("season2/", "live/", "official/", "desk/"))]
+                   if not p.startswith(("season2/", "live/", "official/", "desk/", "pilot/"))]
         self.assertEqual(len(season1), 33)      # 13 top level + 20 + index
+        # The Forward Pilot is its own five-page section built from
+        # memory/pilot/; it exists even with zero runs archived.
+        pilot = [p for p in self.pages if p.startswith("pilot/")]
+        self.assertEqual(len(pilot), 5)
         # (the executive summary landed as the thirteenth top-level page)
         # The Official Auction Book is its own section: seven index pages, one
         # page per participant, and its own payload under assets/data/.

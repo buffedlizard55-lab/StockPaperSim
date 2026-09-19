@@ -829,3 +829,60 @@ by a test that re-derives it from the run.
   - Updated `L-26`: Forward book simulated settled trades with real verified pricing, dates, and liquidity.
   - Added 4 verified primary sources to `config.all_verified_sources()` (total 64 sources).
 
+
+---
+
+## 2026-09-19 — Venue Administration & Forward Pilot Pass
+
+### Live verifications made this session (agent page tools; sandbox has no direct egress)
+
+* **SEC Section 31 rate** — confirmed against FINRA Information Notice
+  20260317: $0.00 per $1,000,000 → **$20.60 per $1,000,000 effective
+  2026-04-04**. Matches `SEC31_PER_MILLION`.
+  <https://www.finra.org/rules-guidance/notices/information-notice-20260317>
+* **FINRA Trading Activity Fee (2026)** — confirmed against the FINRA
+  fee-adjustment schedule: **$0.000195 per share on sales, maximum $9.79 per
+  trade**. Caught and fixed a wrong "minimum $0.01" clause in the register
+  claim text (that minimum applies to security-futures round turns only,
+  IR-72); found FINRA's By-Laws Section 1 rule-text page lagging its own dated
+  schedule ($0.000166/$8.30 shown) — IR-74.
+  <https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule>
+* **NYSE 2026 holidays + early closes** — read from the exchange's own page
+  (Good Friday 2026-04-03; Independence Day observed 2026-07-03; early closes
+  1:00pm ET 2026-11-27 and 2026-12-24). Embedded with check date into
+  `sim/venue_admin.py`. <https://www.nyse.com/trade/hours-calendars>
+* **Federal Reserve settlement holidays 2026** — read from FRBservices; the
+  old `/resources/holidays` path now 404s (IR-73), live path is
+  `/about/holiday-schedules`. Saturday-holiday rule recorded (Fed open
+  2026-07-03 even though markets close). <https://www.frbservices.org/about/holiday-schedules>
+* **Nasdaq Trader halts RSS document** — live document read; RSS 2.0 with
+  per-item CDATA tables; fixed column order recorded in
+  `data/real/regulatory/nasdaq-trader-halts-feed-structure.txt` and implemented
+  1:1 by `sim/venue_admin.parse_halts_feed`. <https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts>
+* **Equity feed re-review** — decision table with usage-rights status for
+  FRED, Treasury/FiscalData, Nasdaq public endpoints, SIP, Yahoo, Stooq,
+  Alpha Vantage/Polygon/Finnhub/Tiingo (excluded by the no-freemium-keys rule),
+  IEX Cloud (discontinued), Kalshi: `research/EQUITY_FEED_REVIEW.md`.
+
+### What shipped in this pass
+
+* `sim/venue_admin.py` — trading calendar (NYSE), settlement calendar
+  (FRBservices, T+1), official halts parser, sourced CorporateActionTable,
+  `regulator_fees()` (SEC 31 + FINRA TAF arithmetic with dated schedules).
+* `sim/equity_pilot.py` — the durable forward pilot: calendar-checked,
+  timestamped order submission into the strict hash-chained journal, gate
+  refusals journaled (`NO_APPROVED_OFFICIAL_FEED`), market-making gate closed
+  for lack of queue evidence, per-run reconciliation. Seeded rehearsal run
+  archived at `memory/pilot/run-2026-09-21/` (8 orders, 0 fills, flagged
+  SEEDED_REHEARSAL).
+* `.github/workflows/equity-pilot.yml` — weekday scheduler committing to the
+  `pilot/scheduled` branch and opening a PR (the repo's
+  no-unreviewed-scheduled-commits policy is preserved).
+* `scripts/build_site_pilot.py` — `docs/pilot/` section: overview, upcoming
+  intents (PLAN ONLY), order blotter with refusals, method (incl. corrected
+  fee documentation), sources with manual-review links.
+* Registry: `nasdaq-halts` source + 4 new grounded designs
+  (`halt-resumption-momo`, `holiday-drift`, `settlement-gap`,
+  `corp-action-standdown`) — 55 hypotheses total, each with explicit blockers.
+* 34 new tests (`test_venue_admin`, `test_equity_pilot`, `test_site_pilot`);
+  full suite green at 612.

@@ -276,6 +276,18 @@
         "limitation": "No private group access or performance verification; discovery remains blocked.",
         "source_class": "UNVERIFIED_DISCOVERY",
         "execution_price_source": false
+      },
+      {
+        "id": "nasdaq-halts",
+        "title": "Nasdaq Trader Trade Halts (official RSS)",
+        "url": "https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts",
+        "primary_url": "https://www.nasdaqtrader.com/Trader.aspx?id=TradeHalts",
+        "reviewed_on": "2026-09-19",
+        "method": "Live RSS 2.0 document read in full on 2026-09-19; per-item CDATA table column order recorded in data/real/regulatory/nasdaq-trader-halts-feed-structure.txt and parsed by sim/venue_admin.parse_halts_feed",
+        "observation": "The authority's current-halts publication: symbol, halt date/time, market, reason code, resumption times, in a fixed column order. Empty resumption cells mean the halt has not published a resumption yet.",
+        "limitation": "Current halts only - no enumerable historical halt archive here; a halt-momentum backtest still needs an official historical halt and quote archive.",
+        "source_class": "OFFICIAL",
+        "execution_price_source": false
       }
     ],
     "strategies": [
@@ -1817,6 +1829,130 @@
         "exit_rule": "Cancel on adverse quote move or five minutes before session close.",
         "hypothesis": "Spread capture might exceed inventory and adverse-selection losses.",
         "failure_modes": "Requires licensed order-level lifecycle, queue position and cancel latency. No passive fills from OHLC or quote touch.",
+        "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+        "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+        "status": "DESIGN_ONLY",
+        "implementation": null,
+        "required_evidence": [
+          "Official price receipts and permitted use",
+          "Point-in-time signal available_at and received_at",
+          "Listing and corporate-action history",
+          "Bid/ask and sizes, quote condition, halt state",
+          "Trading and settlement calendars"
+        ],
+        "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+        "forward_status": "BLOCKED_NO_APPROVED_FEED",
+        "results": null
+      },
+      {
+        "id": "halt-resumption-momo",
+        "username": "@Lab_halt-resumption-momo",
+        "version": "1.0.0",
+        "family": "event",
+        "source_ids": [
+          "nasdaq-halts",
+          "nyse-hours"
+        ],
+        "parameters": {
+          "hold_hours": 2
+        },
+        "entry_rule": "Long at the official published resumption time only, sized by the venue's consumed displayed size; no trading while the official feed shows the symbol halted.",
+        "exit_rule": "Exit two hours after resumption or at the next documented early-close start, whichever is first.",
+        "hypothesis": "Post-halt resumptions sometimes continue the pre-halt imbalance direction; the official halts feed (integrated 2026-09-19) makes the event legible without guessing.",
+        "failure_modes": "Requires official intraday quotes with quote condition and liquidity flags around resumption; a daily-bar approximation of a resumption print would be invented data. Only current halts are enumerable, so no honest backtest exists yet.",
+        "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+        "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+        "status": "DESIGN_ONLY",
+        "implementation": null,
+        "required_evidence": [
+          "Official price receipts and permitted use",
+          "Point-in-time signal available_at and received_at",
+          "Listing and corporate-action history",
+          "Bid/ask and sizes, quote condition, halt state",
+          "Trading and settlement calendars"
+        ],
+        "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+        "forward_status": "BLOCKED_NO_APPROVED_FEED",
+        "results": null
+      },
+      {
+        "id": "holiday-drift",
+        "username": "@Lab_holiday-drift",
+        "version": "1.0.0",
+        "family": "calendar",
+        "source_ids": [
+          "nyse-hours"
+        ],
+        "parameters": {
+          "entry_days_before": 2,
+          "exit_day": "first_session_after"
+        },
+        "entry_rule": "Long the broad ETF two documented sessions before a market holiday, using the exchange's own calendar (never an inferred weekday).",
+        "exit_rule": "Exit at the close of the first documented session after the holiday.",
+        "hypothesis": "Pre-holiday drift is a long-studied seasonality; the venue-admin calendar now supplies the event dates from the exchange's own page.",
+        "failure_modes": "A daily close-to-close backtest needs official daily bars with redistribution rights (the P0 blocker), and the documented holiday effect may not survive spreads, fees and selection of one broad instrument.",
+        "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+        "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+        "status": "DESIGN_ONLY",
+        "implementation": null,
+        "required_evidence": [
+          "Official price receipts and permitted use",
+          "Point-in-time signal available_at and received_at",
+          "Listing and corporate-action history",
+          "Bid/ask and sizes, quote condition, halt state",
+          "Trading and settlement calendars"
+        ],
+        "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+        "forward_status": "BLOCKED_NO_APPROVED_FEED",
+        "results": null
+      },
+      {
+        "id": "settlement-gap",
+        "username": "@Lab_settlement-gap",
+        "version": "1.0.0",
+        "family": "calendar",
+        "source_ids": [
+          "nyse-hours",
+          "sec-settlement"
+        ],
+        "parameters": {
+          "window_days": 1
+        },
+        "entry_rule": "Hold positions only across sessions where the trade date and the settlement date are both documented; explicitly stand aside for cash movements that would span days when Fedwire is closed but markets are open (the two calendars disagree in exactly four 2026 windows).",
+        "exit_rule": "Re-enter on the first fully documented trade/settlement pair.",
+        "hypothesis": "Funding timing around settlement holidays affects real carry; keeping the two official calendars separate is what the June/July 2026 Independence-Day window exercises.",
+        "failure_modes": "The edge is a financing detail, not a price prediction: it cannot show up as a return on a cash-only long-only book, so the honest expectation is near-zero; it exists to test that the dual-calendar plumbing never trades or settles on an undocumented day.",
+        "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
+        "objective": "Highest net total return over one year; no risk-adjusted ranking.",
+        "status": "DESIGN_ONLY",
+        "implementation": null,
+        "required_evidence": [
+          "Official price receipts and permitted use",
+          "Point-in-time signal available_at and received_at",
+          "Listing and corporate-action history",
+          "Bid/ask and sizes, quote condition, halt state",
+          "Trading and settlement calendars"
+        ],
+        "backtest_status": "NOT_RUN_OFFICIAL_DATA_UNAVAILABLE",
+        "forward_status": "BLOCKED_NO_APPROVED_FEED",
+        "results": null
+      },
+      {
+        "id": "corp-action-standdown",
+        "username": "@Lab_corp-action-standdown",
+        "version": "1.0.0",
+        "family": "event",
+        "source_ids": [
+          "ceo",
+          "sec-settlement"
+        ],
+        "parameters": {
+          "standdown_days": 1
+        },
+        "entry_rule": "Stand down (no new orders) in any symbol with a sourced corporate action inside +/-1 session of the order date; the CorporateActionTable in sim/venue_admin refuses unsourced rows, so this rule can only fire on real filings.",
+        "exit_rule": "Resume the session after the documented ex-date.",
+        "hypothesis": "Prices paid across unadjusted splits and ex-dates are the classic way a paper book silently doubles its holdings; standing down is cheaper than being wrong.",
+        "failure_modes": "The corporate-actions table is deliberately empty until the EDGAR-driven collection workflow exists (next session), so today the rule never fires and that emptiness is shown rather than filled with guesses.",
         "sizing": "Deploy up to 100% of settled available cash; whole shares; actual fill capped by verified displayed size shared across participants. No invented margin or borrow.",
         "objective": "Highest net total return over one year; no risk-adjusted ranking.",
         "status": "DESIGN_ONLY",

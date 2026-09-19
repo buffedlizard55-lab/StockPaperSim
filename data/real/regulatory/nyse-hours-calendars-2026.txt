@@ -1,0 +1,31 @@
+SOURCE: https://www.nyse.com/trade/hours-calendars
+        "Holidays & Trading Hours" - NYSE (owner/operator of the NYSE market venues)
+Publisher: New York Stock Exchange (NYSE Group)
+Retrieved: 2026-09-19 (fetched and read in full during the venue-admin pass; this
+           excerpt is the basis for sim/venue_admin.py MARKET_HOLIDAYS_2026)
+
+WHY THIS FILE EXISTS
+Callers must not guess trading sessions from weekday patterns. This page is the
+exchange's own calendar table; venue_admin embeds the rows below with a check
+date so a claimed session can be re-derived offline.
+
+TABLE CONTENT, quoted (2026 column)
+  "All NYSE markets observe U.S. holidays as listed below for 2026, 2027, and 2028."
+  New Year's Day                       Thursday, January 1
+  Martin Luther King, Jr. Day         Monday, January 19
+  Washington's Birthday               Monday, February 16
+  Good Friday                         Friday, April 3
+  Memorial Day                        Monday, May 25
+  Juneteenth National Independence Day Friday, June 19
+  Independence Day                    Friday, July 3 (observed)
+  Labor Day                           Monday, September 7
+  Thanksgiving Day                    Thursday, November 26
+  Christmas Day                       Friday, December 25
+
+EARLY CLOSE FOOTNOTES, quoted
+  "*** Each market will close early at 1:00 p.m. ... on Friday, November 27, 2026,
+       ... (the day after Thanksgiving). ... All times are Eastern Time."
+  "**** Each market will close early at 1:00 p.m. ... on Thursday, December 24, 2026."
+
+TRADING HOURS, quoted (core session)
+  "Core Trading Session: 9:30 a.m. to 4:00 p.m. ET"

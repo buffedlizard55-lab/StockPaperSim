@@ -1,0 +1,30 @@
+SOURCE: https://www.finra.org/rules-guidance/notices/information-notice-20260317
+        "New Rate for Fees Paid Under Section 31 of the Exchange Act"
+Publisher: FINRA
+Retrieved: 2026-09-19 (read via search-result page content during the fee
+           re-verification pass; the operative numbers were cross-checked against
+           the SEC FY2026 order already in the register)
+
+WHY THIS FILE EXISTS
+The venue charges the SEC Section 31 fee on every equity sale, so the project's
+coding of a rate change must be checkable as text, not as a number typed into
+config. The 2026-04-04 change ($0.00 -> $20.60 per $1,000,000) is what this
+Notice announces; the excerpt below is the operative statement.
+
+SUMMARY, quoted
+  "Effective April 4, 2026, the Section 31 fee rate applicable to specified
+   securities transactions on the exchanges and in the over-the-counter markets
+   will increase from its current rate of $0.00 per million dollars in
+   transactions to a new rate of $20.60 per million dollars in transactions."
+
+DISCUSSION, quoted
+  "On February 27, 2026, the Securities and Exchange Commission (SEC) announced
+   in Fee Rate Advisory for Fiscal Year 2026 that, effective April 4, 2026, the
+   Section 31 fee rate ... will increase ... to a new rate of $20.60 per million
+   dollars in transactions."
+  "...For purposes of FINRA calculations, the 'charge date' is the trade date,
+   not the settlement date. See 17 CFR 240.31(a)(3)."
+
+USE IN CODE
+sim/config.py SEC31_PER_MILLION carries ("2026-04-04", 20.60) with the same
+effect; this excerpt is the stored statement a reviewer can check offline.

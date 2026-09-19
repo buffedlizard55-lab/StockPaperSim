@@ -421,6 +421,24 @@ class PaperLedger:
             raise EvidenceError("UNKNOWN_ORDER_OR_CLOCK_REWIND")
         return self._append("cancel:" + order_id, "CANCEL", now, {"order_id": order_id})
 
+    def refuse(self, order_id, now, reason):
+        """Journal a deliberate refusal for an order that was never offered a quote.
+
+        Execution BLOCKED events only appear when a real quote was presented and
+        the evidence gate failed.  A scheduler that holds no approved feed at
+        all never offers a quote, so without this record the journal would show
+        an order stuck PENDING forever and a reviewer could not tell "waiting"
+        from "refused by policy".  Refusals carry the same BLOCKED kind so the
+        orders() projection surfaces the reason.
+        """
+        order = next((e for e in self.events() if e["event_id"] == "order:" + order_id), None)
+        if not order or timestamp(now) < timestamp(order["at"]):
+            raise EvidenceError("UNKNOWN_ORDER_OR_CLOCK_REWIND")
+        if not reason or not isinstance(reason, str):
+            raise EvidenceError("REFUSAL_REASON_REQUIRED")
+        rejected = {"order_id": order_id, "reason": reason, "feed_id": None, "quote_id": None}
+        return self._append("blocked:" + digest([rejected, now]), "BLOCKED", now, rejected)
+
     def settle(self, now):
         """Simulated completion only AFTER the scheduled settlement day has ended.
 

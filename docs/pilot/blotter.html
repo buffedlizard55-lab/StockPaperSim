@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Forward pilot of the evidence-gated US equities desk: timestamped paper orders, upcoming intents, reconciliation and source links.">
+<title>StockPaperSim Pilot · Order blotter</title><link rel="stylesheet" href="../desk/desk.css"></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header><a class="brand" href="../index.html"><span class="logo">S</span> StockPaperSim</a><span class="tag">PAPER ONLY</span>
+<nav aria-label="Pilot"><a href="index.html">Pilot overview</a><a href="upcoming.html">Upcoming intents</a><a href="blotter.html">Order blotter</a><a href="method.html">Method</a><a href="sources.html">Sources</a><a href="../desk/index.html">Desk ↗</a></nav></header>
+<main id="main"><section class="hero"><div class="eyebrow">FORWARD PILOT · STRICT US EQUITIES DESK</div>
+<h1>The pilot blotter.<br><span>Every journal line, including refusals.</span></h1></section>
+<p>Every order the pilot journaled, copied verbatim from the hash-chained journal export in <code>memory/pilot/run-*/journal.jsonl</code>. Rejections are journaled too, so this blotter is the complete record — there is no second, quieter list of orders that failed.</p><div class="table-scroll"><table><thead><tr><th scope="col">Username</th><th scope="col">Strategy</th><th scope="col">Symbol</th><th scope="col">Side × qty</th><th scope="col">Type</th><th scope="col">Session</th><th scope="col">Submitted (UTC)</th><th scope="col">Input class</th><th scope="col">State</th></tr></thead><tbody><tr><td>@Lab_ema_20_50</td><td>ema-20_50@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_gold_trend_126</td><td>gold-trend-126@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_gold_trend_63</td><td>gold-trend-63@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_momentum_126</td><td>momentum-126@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_momentum_252</td><td>momentum-252@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_momentum_63</td><td>momentum-63@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_sma_20_50</td><td>sma-20_50@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr><tr><td>@Lab_sma_50_200</td><td>sma-50_200@1.0.0</td><td>SPY</td><td>BUY 131</td><td>market</td><td>2026-09-21</td><td>2026-09-21T21:10:00Z</td><td>SECONDARY intent</td><td><span class="tag blocked">BLOCKED</span><br>NO_APPROVED_OFFICIAL_FEED</td></tr></tbody></table></div><h2>Reconciliation</h2><pre>{
+ &quot;by_kind&quot;: {
+  &quot;BLOCKED&quot;: 8,
+  &quot;CONFIG&quot;: 1,
+  &quot;ORDER&quot;: 8
+ },
+ &quot;checked_against&quot;: &quot;research/strict/registry.json::approved_feeds&quot;,
+ &quot;events&quot;: 17,
+ &quot;failures&quot;: [],
+ &quot;feeds_approved&quot;: 0,
+ &quot;journal_head&quot;: &quot;b6c2efb0777f8b76b87a773bc96136ef513918b618d49f2c86dca09b082bb6ba&quot;,
+ &quot;participants_seen&quot;: [
+  &quot;@Lab_ema_20_50&quot;,
+  &quot;@Lab_gold_trend_126&quot;,
+  &quot;@Lab_gold_trend_63&quot;,
+  &quot;@Lab_momentum_126&quot;,
+  &quot;@Lab_momentum_252&quot;,
+  &quot;@Lab_momentum_63&quot;,
+  &quot;@Lab_sma_20_50&quot;,
+  &quot;@Lab_sma_50_200&quot;
+ ],
+ &quot;verdict&quot;: &quot;PASS&quot;
+}</pre>
+</main><footer>Static, deterministic page built from committed memory — not a live trading connection. Not investment advice.</footer></body></html>

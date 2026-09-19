@@ -9,7 +9,7 @@
  {
   "priority": "P0",
   "title": "Collect and license an eligible official price set, then run strict Season 2",
-  "detail": "The Nasdaq historical and dividend adapters now retrieve the required symbols on a GitHub Actions runner, preserve raw responses and checksums, and normalize OHLCV with a complete-date audit. What remains is external: Nasdaq's public-site legal terms do not establish permission to redistribute the responses in this repository. Until a licensed/redistributable status is verified and recorded, `python3 -m sim.cli season2` fails closed and the Yahoo-backed run remains research-only.",
+  "detail": "The Nasdaq historical and dividend adapters now retrieve the required symbols on a GitHub Actions runner, preserve raw responses and checksums, and normalize OHLCV with a complete-date audit. What remains is external: Nasdaq's public-site legal terms do not establish permission to redistribute the responses in this repository. Until a licensed/redistributable status is verified and recorded, `python3 -m sim.cli season2` fails closed and the Yahoo-backed run remains research-only. [2026-09-19 update: the free, key-less, documented candidate review is now recorded with links in research/EQUITY_FEED_REVIEW.md; the Treasury auction lane is the approved official book and the strict equity pilot runs zero-fill until this license question resolves.]",
   "where": "scripts/collect_real_data.py \u00b7 sim/eligibility.py \u00b7 .github/workflows/collect-real-data.yml \u00b7 data/real/official_price_eligibility.json",
   "effort": "licensing review plus one Actions collection run"
  },
@@ -306,5 +306,33 @@
   "priority": "P1",
   "effort": "one weekday run, then read the diff",
   "where": ".github/workflows/live-rollover.yml, memory/live/forward-ladder.json"
+ },
+ {
+  "priority": "P1",
+  "title": "Corporate-action and delisting collection workflow (EDGAR-driven)",
+  "detail": "sim/venue_admin.py ships the validated CorporateActionTable (every row requires a primary-source URL and check date), but it is deliberately empty: no collector yet walks EDGAR daily indexes for 8-K item 5.03 / dividends / splits for the pilot universe. Build the collector in a workflow, land sourced rows under data/real/corporate-actions/, and the corp-action-standdown prototype becomes live blockable evidence instead of a design. This is the missing half of the 'integrate corporate actions' requirement - the schema and the standdown rule are done, the sourced rows are not.",
+  "where": "new data workflow + data/real/corporate-actions/ + sim/venue_admin.CorporateActionTable",
+  "effort": "a day or two"
+ },
+ {
+  "priority": "P1",
+  "title": "External timestamp attestation for pilot order submissions",
+  "detail": "The pilot journal is hash-chained and tamper-evident from inside, but a local chain is not proof against full-history replacement (the desk's gate 4 says so itself). Wire an external attestation (e.g. a signed run receipt stamped with the GitHub Actions run timestamp, optionally an RFC 3161 timestamping service) so 'submitted at' has third-party evidence; until then the submitted_at field is scheduler wall-clock, labelled as such.",
+  "where": ".github/workflows/equity-pilot.yml + sim/equity_pilot.py run_pilot_day()",
+  "effort": "half a day"
+ },
+ {
+  "priority": "P2",
+  "title": "Widen the pilot universe and add exit-side/edit rules as inputs allow",
+  "detail": "PILOT_UNIVERSE is SPY only, by declaration, so every run stays reviewable line by line. Committed SECONDARY files exist for 25 more symbols; widening should be done symbol by symbol with the input_class audit on each, and paired with implementable exit-aware prototypes (RSI exhaustion, Donchian exits) so the pilot exercises sells as well as buys. The upstream blocker remains the official feed - the universe question is about intent breadth, not about enabling fills.",
+  "where": "sim/equity_pilot.PILOT_UNIVERSE + research/strict/registry.json strategies",
+  "effort": "a day"
+ },
+ {
+  "priority": "P0",
+  "title": "Approve (or formally decline) the pilot-scheduler policy: cron -> branch -> PR forever",
+  "detail": "equity-pilot.yml runs weekdays 21:10 UTC, commits artifacts to pilot/scheduled and opens/refreshes a PR - the repository's documented compromise between a durable scheduler and the no-unreviewed-commits policy. A maintainer now has to live with that loop: either approve it (and merge the PRs as they arrive, which is what makes the pilot a 'durable collector'), or switch to direct commits, or dispatch-only. Until a human chooses, treat the scheduler as proposed infrastructure with the first rehearsal seeded from the sandbox.",
+  "where": ".github/workflows/equity-pilot.yml + repository owner review",
+  "effort": "review meeting, not code"
  }
 ]

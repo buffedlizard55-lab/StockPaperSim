@@ -1,0 +1,122 @@
+name: Strict equities forward pilot
+
+# WHY THIS WORKFLOW EXISTS AND WHY IT PUSHES TO A BRANCH + PULL REQUEST
+# ----------------------------------------------------------------------
+# The brief asks for a durable collector and a strategy scheduler with
+# timestamped order submission.  The repository's standing policy (see the
+# header of live-season.yml) is that scheduled automation must not change the
+# default branch without a human reading the diff.  This workflow satisfies
+# both:
+#
+#   * a weekday cron (21:10 UTC, after the 16:00 ET close) runs the pilot for
+#     the current America/New_York session - the venue-admin calendar decides
+#     whether that day is a real trading session, and the run refuses
+#     holidays/weekends rather than guessing;
+#   * the artifacts (memory/pilot/ + docs/pilot/) are committed to a dedicated
+#     branch ``pilot/scheduled`` and a pull request is opened or refreshed, so
+#     every scheduled change arrives as a reviewable diff;
+#   * the journal itself is an append-only SQLite hash chain, verified and
+#     re-exported on every run; a rejected tamper attempt fails this job.
+#
+# Zero fills is the designed state until research/strict/registry.json records
+# an approved feed (see research/EQUITY_FEED_REVIEW.md).  The workflow never
+# pretends otherwise and never injects a price by hand.
+
+on:
+  schedule:
+    # 21:10 UTC Mon-Fri.  GitHub cron is best-effort; delayed runs are
+    # acceptable - the pilot is an evening scheduler, not a clock-attested
+    # intraday execution service.
+    - cron: "10 21 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: equity-pilot-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    name: Run the forward pilot for the current NY session
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity
+        run: python3 scripts/check_purity.py
+
+      - name: Run the pilot for today (skips cleanly on closed days)
+        run: |
+          set -e
+          TODAY_NY=$(TZ=America/New_York date +%F)
+          echo "NY date: $TODAY_NY"
+          if python3 - <<PY 2>/dev/null
+          import datetime as dt
+          from sim.venue_admin import is_market_open
+          raise SystemExit(0 if is_market_open(dt.date.fromisoformat("$TODAY_NY")) else 1)
+          PY
+          then
+            echo "Documented market session - running pilot."
+            python3 -m sim.equity_pilot run --date "$TODAY_NY"
+            echo "PILOT_RAN=true" >> "$GITHUB_ENV"
+          else
+            echo "::notice::Market closed or calendar not documented for $TODAY_NY - no pilot run."
+            echo "PILOT_RAN=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Reconcile journal (fails the job on a hash-chain or custody error)
+        if: env.PILOT_RAN == 'true'
+        run: python3 -m sim.equity_pilot reconcile
+
+      - name: Rebuild the pilot site pages
+        if: env.PILOT_RAN == 'true'
+        run: python3 scripts/build_site_pilot.py
+
+      - name: Rebuild the whole site so nav and counts agree
+        if: env.PILOT_RAN == 'true'
+        run: python3 -m sim.cli build-site
+
+      - name: Commit artifacts to the pilot branch
+        if: env.PILOT_RAN == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH="pilot/scheduled"
+          git checkout -B "$BRANCH"
+          git add -A docs memory/pilot
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            echo "CHANGED=false" >> "$GITHUB_ENV"
+          else
+            git commit -m "data:pilot scheduled run $(TZ=America/New_York date +%F) [skip ci]"
+            echo "CHANGED=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Push the pilot branch and open/refresh the PR
+        if: env.PILOT_RAN == 'true' && env.CHANGED == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git push -f origin pilot/scheduled
+          EXISTING=$(gh pr list --head pilot/scheduled --json number --jq '.[0].number' || true)
+          if [ -z "$EXISTING" ]; then
+            gh pr create \
+              --title "data:pilot scheduled equity forward-pilot run" \
+              --body "Scheduled pilot artifacts (memory/pilot + docs/pilot). Zero official fills is designed state until a licensed feed lands - see research/EQUITY_FEED_REVIEW.md. Review the journaled timestamped orders; merge to advance the archive." \
+              --head pilot/scheduled --base "${{ github.ref_name }}" || {
+              echo "::warning::gh PR create failed (automation limits). Branch is pushed; open the PR manually."
+            }
+          else
+            echo "PR #$EXISTING already tracks pilot/scheduled; it now has the new run."
+          fi

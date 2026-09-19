@@ -1,0 +1,41 @@
+SOURCE: https://www.frbservices.org/about/holiday-schedules
+        "Federal Reserve System Holiday Schedule" - Federal Reserve Financial Services
+Publisher: Federal Reserve Financial Services (FRBservices)
+Retrieved: 2026-09-19 (fetched and read in full during the venue-admin pass; this
+           excerpt is the basis for sim/venue_admin.py FED_HOLIDAYS_2026)
+
+WHY THIS FILE EXISTS
+Settlement gates must not be guessed from weekday patterns. This schedule is
+the publisher's own list of the days the Federal Reserve Banks (and therefore
+Fedwire) are closed, so sim/venue_admin.settlement_date() derives T+1 from it
+and the rows below remain checkable offline after the page moves.
+
+LINK-ROT NOTE
+The previous canonical path https://www.frbservices.org/resources/holidays
+returned a 404 on 2026-09-19; this live path is now cited everywhere (IR-73).
+
+TABLE CONTENT (2026 column), holiday name then observed date
+  New Year's Day:        January 1
+  Martin Luther King Jr. Day: January 19
+  Washington's Birthday: February 16
+  Memorial Day:          May 25       (per the FedACH table: processing ends May 23, resumes May 25 evening)
+  Juneteenth National Independence Day: June 19 (FedACH processing ends June 18 11:30pm ET)
+  Independence Day:      July 4       (holiday falls on a Saturday)
+  Labor Day:             September 7
+  Columbus Day:          October 12
+  Veterans Day:          November 11
+  Thanksgiving Day:      November 26
+  Christmas Day:         December 25
+
+SATURDAY/SUNDAY NOTES, quoted verbatim
+  "*For holidays falling on Saturday, Federal Reserve Banks and Branches will be
+    open the preceding Friday."
+  "**For holidays falling on Sunday, Federal Reserve Banks and Branches will be
+    closed the following Monday."
+
+CONSEQUENCE USED IN CODE
+2026-07-04 (Independence Day) falls on a Saturday, so 2026-07-03 is OPEN for
+Fedwire/settlement even though the NYSE calendar closes (observed holiday) that
+Friday. Good Friday 2026-04-03 is not a Federal holiday: settlement runs while
+markets are closed. Both were cross-checked against the FedACH 2026 processing
+table on the same page.

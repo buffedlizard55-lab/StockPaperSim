@@ -452,7 +452,19 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         print(f"  official auction book: SKIPPED - {exc}")
 
     try:
-        # The live book is a third section and its own builder, called between
+        # The forward pilot section owns docs/pilot/.  Unlike the other
+        # builders it does NOT skip empty memory: a zero-run pilot page that
+        # says "not scheduled yet" is more honest than a missing section,
+        # because the scheduler workflow IS part of the implementation.
+        import build_site_pilot  # type: ignore
+        pilot_stats = build_site_pilot.build("memory/pilot", args.out)
+        print(f"  forward pilot: {pilot_stats['pages']} pages under docs/pilot/ "
+              f"({pilot_stats['runs']} run(s) archived)")
+    except SystemExit as exc:
+        print(f"  forward pilot: SKIPPED - {exc}")
+
+    try:
+        # The live book is a fourth section and its own builder, called between
         # the two for the same reason Season 2 is called after Season 1: each
         # builder owns its directory and CI diffs the whole tree afterwards.
         import build_site_live  # type: ignore
@@ -472,7 +484,7 @@ def cmd_build_site(args: argparse.Namespace) -> int:
         # injection is idempotent, which matters because docs/ is diffed against
         # a fresh build in CI.
         for dirpath, dirnames, filenames in os.walk(args.out):
-            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets", "desk")]
+            dirnames[:] = [d for d in dirnames if d not in ("season2", "assets", "desk", "pilot")]
             for name in sorted(filenames):
                 if not name.endswith(".html"):
                     continue
@@ -504,6 +516,14 @@ def cmd_build_site(args: argparse.Namespace) -> int:
                     f'<a href="{"../" * depth}official/index.html">Official Book'
                     f'</a></nav>', 1) \
                     if "official/index.html" not in injected else injected
+                # The Forward Pilot is the fifth section; its pages are built
+                # above this injection block in cmd_build_site, so the link is
+                # always backed by a real file.
+                injected = injected.replace(
+                    "</nav>",
+                    f'<a href="{"../" * depth}pilot/index.html">Forward Pilot'
+                    f'</a></nav>', 1) \
+                    if "pilot/index.html" not in injected else injected
                 if injected != html:
                     with open(page_path, "w", encoding="utf-8") as handle:
                         handle.write(injected)

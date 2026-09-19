@@ -48,6 +48,10 @@ ALLOWED_HOSTS = {
     # investor.gov is here so a future citation is not silently rejected, and
     # it is NOT currently used by any register row.
     "www.irs.gov", "www.investor.gov",
+    # Added 2026-09-19 with the venue-admin pass: FRBservices publishes the
+    # Federal Reserve Banks holiday schedule (settlement calendar) here. The
+    # older /resources/holidays path it replaced now 404s (IR-73).
+    "www.frbservices.org",
     # Official CPython documentation - the primary source for the hash
     # randomisation behaviour that IR-30 turns on.
     "docs.python.org",
@@ -444,6 +448,10 @@ class TestEveryCitedUrlIsRegistered(unittest.TestCase):
         # The secondary source behind IR-05, registered as SECONDARY at the
         # FINRA rule page and named in the irregularity entry.
         "https://help.revolut.com/help/wealth/order-execution-fees-and-limits/trading-regulatory-fees/",
+        # Self-references to this project's own published Pages site (the desk's
+        # gate list deep-links the Forward Pilot section by its public URL so a
+        # scratch `build_site.py`-only build has no dangling local path).
+        "https://buffedlizard55-lab.github.io/StockPaperSim/docs/pilot/",
     }
 
     @staticmethod

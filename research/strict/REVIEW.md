@@ -176,3 +176,32 @@ layers. GOLD is a jewellery directory, not a gold quote feed. The reviewed
 Alpaca documentation URL `/docs/stock-pricing-data` redirected to a 404; it was
 not used as evidence or as an activated adapter. Direct HTTPS from this sandbox
 failed for the MasterSite request; page tools and GitHub API were used instead.
+
+---
+
+## 2026-09-19 second pass — venue administration, scheduler, pilot progress
+
+Closures against the priorities above, verified in this pass (detailed checks
+in `../VERIFICATION_LOG.md`):
+
+* **Calendars/halts/fees:** `sim/venue_admin.py` now carries the exchange's own
+  2026 trading calendar, the Federal Reserve settlement calendar (T+1 across
+  the two is what makes the 2026-07-03 case work), the official halts parser
+  matched to the live Nasdaq document's real column order, and fee arithmetic
+  against the re-verified SEC §31 / FINRA TAF schedules. One fee *claim text*
+  error was found and fixed ($0.01 minimum, IR-72) and one case of publisher
+  version skew was logged (IR-74).
+* **Scheduler + timestamped submission:** `equity-pilot.yml` runs the strict
+  pilot on documented sessions; orders are timestamped into the append-only
+  hash chain and artifacts arrive via branch+PR, preserving the repo's review
+  policy. Still open: external timestamp attestation (recorded in
+  `REMAINING_WORK.json`).
+* **Reconcile-before-publish pilot:** `sim/equity_pilot.py` journals, refuses
+  (no approved feed), reconciles counts and publishes pages under
+  `docs/pilot/`. The market-making queue gate stays closed until quote-size
+  and queue-priority receipts exist.
+
+Still the same hard wall: **no approved equity quote/trade feed.** The
+candidate review with usage-rights evidence is `../EQUITY_FEED_REVIEW.md`;
+`approved_feeds` stays empty until a licensed/redistributable feed exists, and
+everything published keeps saying so.

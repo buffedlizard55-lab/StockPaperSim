@@ -1,0 +1,222 @@
+{
+ "runs": [
+  {
+   "run_date": "2026-09-21",
+   "submitted_at": "2026-09-21T21:10:00Z",
+   "orders_submitted": 8,
+   "fills": 0,
+   "seeded_rehearsal": true,
+   "journal_head_after": "b6c2efb0777f8b76b87a773bc96136ef513918b618d49f2c86dca09b082bb6ba"
+  }
+ ],
+ "reconcile": {
+  "by_kind": {
+   "BLOCKED": 8,
+   "CONFIG": 1,
+   "ORDER": 8
+  },
+  "checked_against": "research/strict/registry.json::approved_feeds",
+  "events": 17,
+  "failures": [],
+  "feeds_approved": 0,
+  "journal_head": "b6c2efb0777f8b76b87a773bc96136ef513918b618d49f2c86dca09b082bb6ba",
+  "participants_seen": [
+   "@Lab_ema_20_50",
+   "@Lab_gold_trend_126",
+   "@Lab_gold_trend_63",
+   "@Lab_momentum_126",
+   "@Lab_momentum_252",
+   "@Lab_momentum_63",
+   "@Lab_sma_20_50",
+   "@Lab_sma_50_200"
+  ],
+  "verdict": "PASS"
+ },
+ "upcoming": {
+  "calendar_source": "https://www.nyse.com/trade/hours-calendars",
+  "generated_for_session": "2026-09-22",
+  "note": "intents become timestamped orders only at the scheduled run; no row here is an order, a price, or a fill",
+  "rows": [
+   {
+    "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "donchian-100",
+    "symbol": "SPY",
+    "username": "@Lab_donchian_100",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "donchian-20",
+    "symbol": "SPY",
+    "username": "@Lab_donchian_20",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Enter after a close strictly exceeds all prior lookback highs (exclude current bar).",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "donchian-55",
+    "symbol": "SPY",
+    "username": "@Lab_donchian_55",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "ema-12_26",
+    "symbol": "SPY",
+    "username": "@Lab_ema_12_26",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "ema-20_50",
+    "symbol": "SPY",
+    "username": "@Lab_ema_20_50",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast EMA exceeds slow EMA; seed each EMA with SMA of its first N closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "ema-9_21",
+    "symbol": "SPY",
+    "username": "@Lab_ema_9_21",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Apply positive trailing return rule to official GLD prices; ring listings are NOT an input.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "gold-trend-126",
+    "symbol": "SPY",
+    "username": "@Lab_gold_trend_126",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Apply positive trailing return rule to official GLD prices; ring listings are NOT an input.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "gold-trend-63",
+    "symbol": "SPY",
+    "username": "@Lab_gold_trend_63",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "momentum-126",
+    "symbol": "SPY",
+    "username": "@Lab_momentum_126",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "momentum-21",
+    "symbol": "SPY",
+    "username": "@Lab_momentum_21",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "momentum-252",
+    "symbol": "SPY",
+    "username": "@Lab_momentum_252",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when the trailing lookback close-to-close return is positive.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "momentum-63",
+    "symbol": "SPY",
+    "username": "@Lab_momentum_63",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "rsi-14",
+    "symbol": "SPY",
+    "username": "@Lab_rsi_14",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "rsi-2",
+    "symbol": "SPY",
+    "username": "@Lab_rsi_2",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Enter when Wilder RSI(period) is below the entry threshold. Seed average gains/losses from first period changes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "rsi-5",
+    "symbol": "SPY",
+    "username": "@Lab_rsi_5",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "sma-10_30",
+    "symbol": "SPY",
+    "username": "@Lab_sma_10_30",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "sma-20_50",
+    "symbol": "SPY",
+    "username": "@Lab_sma_20_50",
+    "version": "1.0.0"
+   },
+   {
+    "entry_rule": "Long when fast SMA exceeds slow SMA, evaluated on completed closes.",
+    "input_class_required": "SECONDARY intent / OFFICIAL fill only",
+    "session": "2026-09-22",
+    "state": "SCHEDULED_FOR_EVALUATION",
+    "strategy": "sma-50_200",
+    "symbol": "SPY",
+    "username": "@Lab_sma_50_200",
+    "version": "1.0.0"
+   }
+  ]
+ }
+}

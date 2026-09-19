@@ -1,0 +1,30 @@
+SOURCE: https://www.nasdaqtrader.com/rss.aspx?feed=tradehalts
+        "NASDAQ Trade Halts" RSS 2.0 document (current halts publication)
+Publisher: Nasdaq (NasdaqTrader.com)
+Retrieved: 2026-09-19 (live document read in full; structure recorded here so the
+           parser in sim/venue_admin.parse_halts_feed is reviewable offline)
+
+WHY THIS FILE EXISTS
+A scheduler must not trade through a regulatory halt, and "no halts today" must
+be backed by the authority's own document, not inferred. Keeping the observed
+document structure here lets reviewers confirm the parser matches what the
+publisher actually serves.
+
+OBSERVED STRUCTURE (from the live document)
+- Root element: <rss version="2.0"> with one <channel>. Channel titles include
+  "NASDAQTrader.com" and "NASDAQ Trade Halts".
+- One <item> per halt. <title> is the issue symbol; <pubDate> the publication
+  stamp (e.g. "Fri, 18 Sep 2026 04:00:00 GMT").
+- <description> is a CDATA section containing an HTML table. Its header row
+  names the columns in this fixed order (quoted verbatim):
+  "Halt Date | Halt Time | Issue Symbol | Issue Name | Market | Reason Code |
+   Pause Threshold Price | Resumption Date | Resumption Quote Time |
+   Resumption Trade Time"
+- Example live rows on 2026-09-19 (values are the publisher's, kept as proof of
+  the column order): symbol "UZX" with reason code "T1" and empty resumption
+  fields; older rows "TEST-ONLY" free text is NOT used in fixtures - tests use
+  invented symbols against this real structure.
+- Empty resumption cells mean the halt has no published resumption yet; that is
+  what halted_symbols() reports as currently halted.
+
+PAGE LINK (human review): https://www.nasdaqtrader.com/Trader.aspx?id=TradeHalts

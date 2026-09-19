@@ -744,5 +744,38 @@
    "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/",
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/sec.py"
   ]
+ },
+ {
+  "id": "IR-72",
+  "topic": "The fee claim text asserted a $0.01 minimum on the equity TAF that the primary schedule does not contain",
+  "severity": "medium",
+  "detail": "The verified-sources register in sim/config.py described the FINRA Trading Activity Fee as '$0.000195 per share on equity sells (minimum $0.01, maximum $9.79) from 2026-01-01'. Re-reading FINRA's own fee-adjustment schedule (SR-FINRA-2024-019) and Schedule A Section 1 on 2026-09-19 shows the covered-equity line carries a per-trade MAXIMUM only; the minimum applies to security-futures round turns. The numeric schedules were always correct (rate_for() applies rate and cap only), so no computed fee changed - the defect was in the claim sentence a reviewer was told to trust.",
+  "resolution": "sim/config.py claim text corrected to state no equity minimum and name the rule it was confused with; sim/venue_admin.regulator_fees() documents the same; tests/test_venue_admin.py pins the arithmetic for the small-execution exemption.",
+  "links": [
+   "https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule",
+   "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees"
+  ]
+ },
+ {
+  "id": "IR-73",
+  "topic": "An official source URL moved and now returns 404: FRBservices holiday schedule",
+  "severity": "low",
+  "detail": "https://www.frbservices.org/resources/holidays - the Federal Reserve settlement-holiday page - returned a 404 page on 2026-09-19; the live page is now https://www.frbservices.org/about/holiday-schedules. This is exactly the failure mode the planned cite-hygiene job targets: a link that was correct when first recorded rots silently.",
+  "resolution": "sim/venue_admin.py records only the live URL with its 2026-09-19 check date; the stale path is documented here so the citation chain stays honest rather than silently swapped.",
+  "links": [
+   "https://www.frbservices.org/about/holiday-schedules",
+   "https://www.frbservices.org/resources/holidays"
+  ]
+ },
+ {
+  "id": "IR-74",
+  "topic": "FINRA's own pages disagree across publication dates: By-Laws rule text shows the pre-2026 TAF rate while the dated fee-adjustment schedule shows the operative 2026 rate",
+  "severity": "medium",
+  "detail": "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees (Schedule A, Section 1) displayed $0.000166 per share / $8.30 cap on 2026-09-19, while the same publisher's fee-adjustment schedule states the operative 2026 values $0.000195 / $9.79. A project that reads only the rule text would undercost 2026 sales. This is version skew inside an official publisher's site, not an aggregator error.",
+  "resolution": "sim/config.py's dated schedules (FINRA_TAF_PER_SHARE, FINRA_TAF_MAX_PER_TRADE) follow the dated fee-adjustment schedule, which is the operative rate; the rulebook page remains linked as rule text with the skew noted in the row and here.",
+  "links": [
+   "https://www.finra.org/rules-guidance/rule-filings/sr-finra-2024-019/fee-adjustment-schedule",
+   "https://www.finra.org/rules-guidance/rulebooks/corporate-organization/section-1-member-regulatory-fees"
+  ]
  }
 ]

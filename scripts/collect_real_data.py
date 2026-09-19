@@ -1328,11 +1328,14 @@ def treasury_crosscheck(out: str) -> dict:
 #       checkable rather than assumed)
 SEC_INSIDER_SETS_PAGE = ("https://www.sec.gov/data-research/sec-markets-data/"
                          "insider-transactions-data-sets")
-#: Two directory layouts have been used for the same quarterly files, so both
-#: are tried in order and whichever answers is recorded with its own URL.
+#: Kept for the register's benefit: the two published layouts, in the order the
+#: policy module tries them for a recent quarter. The collector calls
+#: ``sim.sec.insider_zip_candidates(quarter)`` so the order follows the SEC's own
+#: table (2026 Q2 from ``datastandardsinnovation``, earlier from
+#: ``structureddata``) rather than a fixed preference.
 SEC_INSIDER_ZIP_PATTERNS: Tuple[str, ...] = (
-    "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/{q}_form345.zip",
-    "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/{q}_form345.zip",
+    sec_policy.SEC_ENDPOINTS["insider_zip"],
+    sec_policy.SEC_ENDPOINTS["insider_zip_legacy"],
 )
 INSIDER_MAX_QUARTERS = 8
 #: 2026 Q2 is the newest published quarter as of 2026-09-18 (the page says the
@@ -1471,8 +1474,8 @@ def collect_insider_bulk(fetcher: Fetcher, out: str) -> dict:
     rows: List[dict] = []
     for quarter in quarters:
         body, used, attempts = None, "", []
-        for pattern in SEC_INSIDER_ZIP_PATTERNS:
-            url = pattern.format(q=quarter)
+        for pattern in sec_policy.insider_zip_candidates(quarter):
+            url = pattern
             attempts.append(url)
             body = fetcher.get(url, "sec", note=f"SEC insider data set {quarter}")
             if body is not None:

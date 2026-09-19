@@ -139,6 +139,48 @@ class _FakeResponse:
         return False
 
 
+class InsiderZipLayoutTest(unittest.TestCase):
+    """The quarterly data-set URL has two layouts, and the quarter picks one.
+
+    The SEC's page states the change in its own table: the 2026 Q2 set is served
+    from ``datastandardsinnovation`` and 2026 Q1 and earlier from
+    ``structureddata``. The collector used to try the older layout first for
+    every quarter, which spends a request proving the newer files are not where
+    they used to be - and, worse, leaves the register citing a URL that is not
+    the one the publisher names for the quarter being collected.
+    """
+
+    def test_both_layouts_are_offered_for_every_quarter(self):
+        for quarter in ("2025q4", "2026q1", "2026q2", "2019q3"):
+            candidates = sec.insider_zip_candidates(quarter)
+            self.assertEqual(len(candidates), 2, quarter)
+            self.assertEqual(len(set(candidates)), 2, quarter)
+            for url in candidates:
+                self.assertTrue(url.startswith("https://www.sec.gov/files/"), url)
+                self.assertIn(f"{quarter}_form345.zip", url)
+
+    def test_the_layout_the_publisher_names_for_the_quarter_is_tried_first(self):
+        current, legacy = (sec.SEC_ENDPOINTS["insider_zip"],
+                           sec.SEC_ENDPOINTS["insider_zip_legacy"])
+        self.assertIn("datastandardsinnovation", current)
+        self.assertIn("structureddata", legacy)
+        self.assertEqual(sec.insider_zip_candidates("2026q2")[0],
+                         current.format(quarter="2026q2"))
+        self.assertEqual(sec.insider_zip_candidates("2026q1")[0],
+                         legacy.format(quarter="2026q1"))
+        self.assertEqual(sec.insider_zip_candidates("2019q3")[0],
+                         legacy.format(quarter="2019q3"))
+
+    def test_the_change_quarter_is_the_one_the_page_states(self):
+        self.assertEqual(sec.INSIDER_ZIP_LAYOUT_CHANGE_QUARTER, (2026, 2))
+
+    def test_an_unparseable_quarter_falls_back_to_the_older_layout(self):
+        """Guessing the wrong path for a malformed quarter must not crash."""
+        self.assertEqual(sec.insider_zip_candidates("not-a-quarter")[0],
+                         sec.SEC_ENDPOINTS["insider_zip_legacy"].format(
+                             quarter="not-a-quarter"))
+
+
 class EdgarRequestTest(unittest.TestCase):
     def test_one_request_declares_the_policy_and_records_it(self):
         seen = {}

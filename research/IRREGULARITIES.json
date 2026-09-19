@@ -732,5 +732,17 @@
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regeneration_log.jsonl",
    "https://fred.stlouisfed.org/series/DGS10"
   ]
+ },
+ {
+  "id": "IR-71",
+  "topic": "The insider bulk collector asked the wrong layout first for every quarter",
+  "severity": "medium",
+  "detail": "The SEC serves the quarterly Form 3/4/5 data sets from two directory layouts, and its own page states the change: the 2026 Q2 set lives under files/datastandardsinnovation/ and 2026 Q1 and earlier under files/structureddata/. The collector tried the older layout first for every quarter and only the newest one was actually collected, so the order cost one wasted request per quarter per run - and, more importantly, left the register citing the layout the publisher no longer uses for recent files.",
+  "resolution": "sim/sec.py now carries both layouts as named endpoints and a insider_zip_candidates(quarter) helper that puts the layout the SEC's table names for that quarter's date range first, with the other as a fallback; the collector calls that helper instead of keeping its own copy of the patterns, and tests/test_sec_access.py pins the order, the change quarter and the fallback for an unparseable quarter.",
+  "links": [
+   "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
+   "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/sec.py"
+  ]
  }
 ]

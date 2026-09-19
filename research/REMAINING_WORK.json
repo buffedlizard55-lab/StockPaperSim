@@ -1,5 +1,33 @@
 [
  {
+  "priority": "P0",
+  "title": "Run the SEC insider collection and re-derive with real Form 3/4/5 data",
+  "detail": "The signal builder now reads the SEC quarterly insider-transactions data sets (data/real/insider_bulk/) and merges them with the per-filing walk, de-duplicated by accession. The collector and the declared-User-Agent fix are committed; what remains is the Actions collection run itself (the previous run's 16 ZIP requests all returned HTTP 403 before the fix landed). Once the data lands: dispatch collect-real-data.yml with only=insider_bulk,sports on the branch, let it re-derive Season 2, then update the README table (the insider personas move off 'no trades placed'), re-run both audits, and re-plan the live book (InsiderCluster_Live now reports READY the moment the file exists).",
+  "where": ".github/workflows/collect-real-data.yml (dispatch: only=insider_bulk,sports) · sim/masterfeed.py (_load_insider_rows) · sim/strategies_mf.py",
+  "effort": "one Actions run plus a README/audit update pass"
+ },
+ {
+  "priority": "P0",
+  "title": "Official feed and permission for the strict equity desk (unchanged, owner action)",
+  "detail": "Re-verified 2026-09-19 against live pages: Nasdaq's legal terms (updated May 11, 2026) still prohibit automated capture in Section 2, and no redistribution grant could be located for Stooq (its terms page did not render usable text; the old term.php URL is gone). The strict equity pilot therefore still journals timestamped orders with zero fills, by design. The concrete owner action is unchanged: contact CTA/UTQP or an exchange data-sales desk for the smallest license that permits repository reproduction of end-of-day NBBO snapshots with quote sizes.",
+  "where": "research/EQUITY_FEED_REVIEW.md · research/strict/registry.json (approved_feeds) · memory/pilot/",
+  "effort": "external licensing work, not code"
+ },
+ {
+  "priority": "P1",
+  "title": "Map SportsPred's published predictions to a dated snapshot URL",
+  "detail": "@SportsPred_Forward is registered with a declared forward rule but nothing to read. The SportsPred repository is collector-driven with per-sport workflows and client-side data plumbing; the next session should identify the exact per-sport data file(s) the site renders (raw.githubusercontent.com URLs), add them to collect_injury_archive-style dated snapshot collection, and extend _injury_signals-style parsing to score the site's own predictions against the collected ESPN finals.",
+  "where": ".github/workflows/injury-archive.yml (add the snapshot) · sim/masterfeed.py · api.github.com/repos/buffedlizard55-lab/SportsPred",
+  "effort": "half a day"
+ },
+ {
+  "priority": "P1",
+  "title": "Re-plan the live book once insider and NBA data land",
+  "detail": "InsiderCluster_Live computes its data_status at instantiation and reports READY as soon as the insider files exist, but the live rehearsal/forward book must be re-planned (sim.cli live --mode all) for the first insider intents to appear; the same re-plan picks up the NBA slate signals once the ESPN NBA collection returns rows. Both are blocked on the same collection run as the P0 above, and both change published live-book numbers, so they belong in the same reviewed re-derivation.",
+  "where": "sim/cli.py (live) · sim/strategies_live.py · memory/live/",
+  "effort": "one run plus a review of the new intents"
+ },
+ {
   "priority": "P2",
   "title": "Point GitHub Pages at /docs and drop the root redirect",
   "detail": "Pages is live and serving main, but its source path is the repository root, and changing it needs repository admin rights that this branch's automation does not have. The workaround in place is a root index.html that redirects to docs/index.html plus a root .nojekyll, so the canonical URL works today and nothing is duplicated - the redirect cannot go stale because every page, stylesheet and JSON file is served from under docs/. The remaining step for an admin is Settings -> Pages -> source: main, /docs, after which the root index.html and root .nojekyll can be deleted. Publishing the whole root also means memory/, data/ and the sources are downloadable from the Pages URL; that is no new exposure for a public repository, but /docs would serve only the site.",

@@ -19,9 +19,9 @@ on:
   workflow_dispatch:
     inputs:
       only:
-        description: "Comma-separated sections (prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk)"
+        description: "Comma-separated sections (prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk,injury_archive)"
         required: false
-        default: "prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk"
+        default: "prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk,injury_archive"
       max_seconds:
         description: "Soft budget for the whole collection run"
         required: false
@@ -62,7 +62,7 @@ jobs:
           # On a push event there are no inputs, so every one of them needs a
           # fallback; an empty --max-seconds is an argparse error (exit 2), which
           # is exactly how the first run of this workflow failed.
-          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk' }}
+          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk,injury_archive' }}
           MAX_SECONDS: ${{ github.event.inputs.max_seconds || '1500' }}
         run: |
           python scripts/collect_real_data.py --out data/real \
@@ -169,7 +169,16 @@ jobs:
       - name: Re-derive the season and the site from the new files
         if: ${{ github.event.inputs.commit != 'false' }}
         run: |
-          python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity
+          # The committed Season 2 is the Yahoo-backed research replay: the
+          # default (Nasdaq) backend fails closed on the redistribution gate,
+          # which is the correct behaviour for a *new* run but would make this
+          # step refuse to re-derive the existing research season at all. The
+          # research flags below are the same ones the committed run carries in
+          # its manifest (price_source: yahoo, eligible: false, labelled on
+          # every page). A future run that finds a licensed official source
+          # switches this step to the default and drops the flags.
+          python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity \
+            --price-source yahoo --allow-secondary-research
           # The site is rebuilt BEFORE the audits, not after: the Season 2 audit
           # re-reads the published pages and compares every number they quote with
           # the memory, so a collection that legitimately moves a number would fail

@@ -86,7 +86,7 @@
     "signal": "insider_buys_30d",
     "state": "MISSING",
     "files": [],
-    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    }
@@ -99,7 +99,7 @@
   "waiting_on": [
    "insider_buys_30d"
   ],
-  "idle_reason": "no trades: waiting on insider_buys_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+  "idle_reason": "no trades: waiting on insider_buys_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
  },
  {
   "username": "@InsiderCluster_Alpha",
@@ -109,7 +109,7 @@
     "signal": "insider_buys_30d",
     "state": "MISSING",
     "files": [],
-    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    },
@@ -117,7 +117,7 @@
     "signal": "insider_buy_ratio_30d",
     "state": "MISSING",
     "files": [],
-    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    }
@@ -132,7 +132,7 @@
    "insider_buys_30d",
    "insider_buy_ratio_30d"
   ],
-  "idle_reason": "no trades: waiting on insider_buys_30d, insider_buy_ratio_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+  "idle_reason": "no trades: waiting on insider_buys_30d, insider_buy_ratio_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
  },
  {
   "username": "@CEO_CFO_Conviction",
@@ -142,7 +142,7 @@
     "signal": "insider_ceo_buys_30d",
     "state": "MISSING",
     "files": [],
-    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    },
@@ -150,7 +150,7 @@
     "signal": "insider_buys_30d",
     "state": "MISSING",
     "files": [],
-    "url": "https://www.sec.gov/cgi-bin/browse-edgar",
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    }
@@ -165,7 +165,7 @@
    "insider_ceo_buys_30d",
    "insider_buys_30d"
   ],
-  "idle_reason": "no trades: waiting on insider_ceo_buys_30d, insider_buys_30d (MISSING) from https://www.sec.gov/cgi-bin/browse-edgar - no collected Form 4 file"
+  "idle_reason": "no trades: waiting on insider_ceo_buys_30d, insider_buys_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
  },
  {
   "username": "@MLB_Attention_Momo",
@@ -229,6 +229,107 @@
   "external_signals": [
    "mlb_upsets_7d",
    "mlb_home_win_rate_30d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@NFL_Slate_Attention",
+  "display_name": "NFL Slate Attention",
+  "signals": [
+   {
+    "signal": "nfl_games_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/nfl_scoreboard.jsonl"
+    ],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "nfl_close_games_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/nfl_scoreboard.jsonl"
+    ],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "nfl_games_7d",
+   "nfl_close_games_7d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
+ },
+ {
+  "username": "@NBA_Slate_Attention",
+  "display_name": "NBA Slate Attention",
+  "signals": [
+   {
+    "signal": "nba_games_7d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "nba_close_games_7d",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "nba_games_7d",
+   "nba_close_games_7d"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "nba_games_7d",
+   "nba_close_games_7d"
+  ],
+  "idle_reason": "no trades: waiting on nba_games_7d, nba_close_games_7d (MISSING) from https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard - no collected ESPN finals for this league (the file is absent or holds no completed games)"
+ },
+ {
+  "username": "@NCAA_Upset_Blitz",
+  "display_name": "NCAA Upset Blitz",
+  "signals": [
+   {
+    "signal": "ncaaf_games_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/ncaaf_scoreboard.jsonl"
+    ],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "ncaaf_away_wins_7d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/ncaaf_scoreboard.jsonl"
+    ],
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "ncaaf_games_7d",
+   "ncaaf_away_wins_7d"
   ],
   "signal_dependent": true,
   "gate_armed": true,
@@ -385,10 +486,7 @@
    {
     "signal": "nfl_injury_report",
     "state": "MISSING",
-    "files": [
-     "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
-     "data/real/sports/official/nfl_injuries.raw"
-    ],
+    "files": [],
     "url": "https://www.nfl.com/injuries/",
     "sessions_actionable": null,
     "price_derived": false
@@ -396,10 +494,7 @@
    {
     "signal": "nba_injury_report",
     "state": "MISSING",
-    "files": [
-     "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
-     "data/real/sports/official/nfl_injuries.raw"
-    ],
+    "files": [],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
     "sessions_actionable": null,
     "price_derived": false
@@ -415,6 +510,39 @@
    "nfl_injury_report",
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+ },
+ {
+  "username": "@NBAInjury_Forward",
+  "display_name": "NBA Injury (forward probe)",
+  "signals": [
+   {
+    "signal": "nba_injury_report",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "nba_injury_report"
+  ],
+  "signal_dependent": true,
+  "gate_armed": false,
+  "waiting_on": [
+   "nba_injury_report"
+  ],
+  "idle_reason": "no trades: waiting on nba_injury_report (MISSING) from https://official.nba.com/nba-injury-report-2025-26-season/ - official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+ },
+ {
+  "username": "@SportsPred_Forward",
+  "display_name": "Sports Pred (forward probe)",
+  "signals": [],
+  "external_signals": [],
+  "signal_dependent": false,
+  "gate_armed": false,
+  "waiting_on": [],
+  "idle_reason": null
  }
 ]

@@ -182,6 +182,13 @@ INSIDER_TICKERS: Tuple[str, ...] = ("AAPL", "MSFT", "NVDA", "JPM", "XOM",
 
 MAX_FORM4_FILINGS = 600
 SEC_MIN_INTERVAL = 0.13          # SEC asks for <= 10 requests/second
+#: The insider ZIP walk is paced far below the published 10/s cap on purpose:
+#: the 2026-09-18 run sent 16 large-file requests in five seconds from a GitHub
+#: runner (a cloud IP) and every one was answered with the SEC's
+#: "Request Rate Threshold Exceeded" page - the manifest records the timestamps
+#: and the error body. 1.2s between requests costs ~20 seconds for the whole
+#: walk and is the cheap insurance against a second full-run refusal.
+SEC_ZIP_INTERVAL = 1.2
 GENERIC_MIN_INTERVAL = 0.35
 
 SOURCE_CLASS = {
@@ -252,7 +259,8 @@ class Fetcher:
 
     def get(self, url: str, kind: str, headers: Optional[Dict[str, str]] = None,
             interval: float = GENERIC_MIN_INTERVAL, tries: Optional[int] = None,
-            note: str = "", timeout: Optional[float] = None) -> Optional[bytes]:
+            note: str = "", timeout: Optional[float] = None,
+            retry_on_403: bool = False) -> Optional[bytes]:
         if self.timed_out():
             return None
         policy = FETCH_POLICY.get(kind, DEFAULT_FETCH_POLICY)
@@ -305,10 +313,19 @@ class Fetcher:
                 except Exception:  # noqa: BLE001 - a body we cannot read is not a new failure
                     error_body = ""
                 if exc.code in (400, 401, 403, 404, 410):
-                    break
+                    # The one 403 that is worth retrying is the SEC's
+                    # "Request Rate Threshold Exceeded" page: it means the
+                    # request was understood but the client was too fast (the
+                    # 2026-09-18 insider walk hit it on all 16 requests). The
+                    # caller opts in per request family, and the backoff below
+                    # is deliberately long enough for the threshold to clear.
+                    if not (retry_on_403 and exc.code == 403
+                            and "Rate Threshold" in error_body
+                            and attempt + 1 < tries):
+                        break
             except Exception as exc:  # noqa: BLE001 - network variety is unbounded
                 last_error = f"{type(exc).__name__}: {exc}"
-            time.sleep(0.8 * (attempt + 1))
+            time.sleep(20.0 if (retry_on_403 and last_status == 403) else 0.8 * (attempt + 1))
         self.manifest.append({
             "url": url, "kind": kind, "source_class": SOURCE_CLASS.get(kind, "UNKNOWN"),
             "status": last_status, "bytes": 0, "sha256": "", "ok": False,
@@ -1477,7 +1494,8 @@ def collect_insider_bulk(fetcher: Fetcher, out: str) -> dict:
         for pattern in sec_policy.insider_zip_candidates(quarter):
             url = pattern
             attempts.append(url)
-            body = fetcher.get(url, "sec", note=f"SEC insider data set {quarter}")
+            body = fetcher.get(url, "sec", note=f"SEC insider data set {quarter}",
+                               interval=SEC_ZIP_INTERVAL, tries=3, retry_on_403=True)
             if body is not None:
                 used = url
                 break
@@ -1971,6 +1989,84 @@ def collect_official_sports_docs(fetcher: Fetcher, out: str) -> dict:
 
 
 # --------------------------------------------------------------------------
+# 4b. Injury archive - dated snapshots so the forward test can accumulate.
+# --------------------------------------------------------------------------
+#: The machine-readable injury feeds.  ESPN's structured endpoint is what the
+#: NBAInjuryReport project itself polls; it is a SECONDARY publisher (the
+#: leagues' own documents are the OFFICIAL record and are snapshotted below),
+#: but it is the only form that can be counted without scraping prose.
+ESPN_INJURY_FEEDS = {
+    "nfl": ("https://site.api.espn.com/apis/site/v2/sports/football/nfl/injuries"),
+    "nba": ("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/injuries"),
+}
+
+#: The official league documents, snapshotted with the capture date in the
+#: filename so repeated runs build an archive instead of overwriting one file.
+INJURY_ARCHIVE_OFFICIAL = {
+    "nfl_injuries": "https://www.nfl.com/injuries/",
+    "nba_injury_report_index": "https://official.nba.com/nba-injury-report-2025-26-season/",
+}
+
+
+def collect_injury_archive(fetcher: Fetcher, out: str) -> dict:
+    """One dated capture of every injury feed the forward test reads.
+
+    Neither league publishes a retrievable archive of past injury designations,
+    which is why the injury participants are forward-only.  What this function
+    adds is the archive itself: each run writes
+
+    * ``sports/official/archive/espn_<league>_injuries_<YYYY-MM-DD>.json`` -
+      the machine-readable countable snapshot (SECONDARY publisher, labelled),
+    * ``sports/official/archive/<doc>_<YYYY-MM-DD>.raw`` - the official league
+      document for the same capture date (custody evidence),
+
+    and skips files that already exist for today, so a re-run on the same date
+    is idempotent and the archive only ever grows one capture per date.
+    """
+    stamp = time.strftime("%Y-%m-%d", time.gmtime())
+    base = os.path.join(out, "sports", "official", "archive")
+    summary: Dict[str, dict] = {"date": stamp, "captures": {}, "skipped": []}
+
+    for league, url in ESPN_INJURY_FEEDS.items():
+        path = os.path.join(base, f"espn_{league}_injuries_{stamp}.json")
+        if os.path.exists(path):
+            summary["skipped"].append(os.path.basename(path))
+            continue
+        body = fetcher.get(url, "espn", headers={"Accept": "application/json"},
+                           note=f"{league} injury snapshot {stamp} (secondary)")
+        if body is None:
+            summary["captures"][f"espn_{league}_injuries"] = {"ok": False}
+            continue
+        write_bytes(path, body)
+        try:
+            payload = json.loads(body.decode("utf-8"))
+            count = sum(1 for item in payload.get("items") or []
+                        for entry in item.get("injuries") or []
+                        if entry.get("status") in ("Out", "Doubtful",
+                                                   "Injured Reserve",
+                                                   "Out for Season",
+                                                   "Out Indefinitely"))
+        except Exception as exc:  # noqa: BLE001
+            count = None
+        summary["captures"][f"espn_{league}_injuries"] = {
+            "ok": True, "bytes": len(body), "game_impacting": count}
+
+    for key, url in INJURY_ARCHIVE_OFFICIAL.items():
+        path = os.path.join(base, f"{key}_{stamp}.raw")
+        if os.path.exists(path):
+            summary["skipped"].append(os.path.basename(path))
+            continue
+        body = fetcher.get(url, "nocode", headers={"Accept": "text/html,*/*"},
+                           note=f"official injury document {key} {stamp}")
+        if body is None:
+            summary["captures"][key] = {"ok": False}
+            continue
+        write_bytes(path, body)
+        summary["captures"][key] = {"ok": True, "bytes": len(body)}
+    return summary
+
+
+# --------------------------------------------------------------------------
 # 5. Weather - NOAA/NCEI daily summaries (OFFICIAL) for San Francisco.
 # --------------------------------------------------------------------------
 WEATHER_STATIONS = {"USW00023272": "San Francisco (downtown / SFO-area co-op station)",
@@ -2269,7 +2365,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--max-seconds", type=float, default=1500.0)
     parser.add_argument("--only",
                         default=("prices,sec,fda,sports,weather,kalshi,"
-                                 "official_rates,treasury,insider_bulk"))
+                                 "official_rates,treasury,insider_bulk,"
+                                 "injury_archive"))
     args = parser.parse_args(argv)
 
     out = os.path.abspath(args.out)
@@ -2333,6 +2430,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         results["nba"] = collect_nba_official(fetcher, out)
         results["official_docs"] = collect_official_sports_docs(fetcher, out)
         print(f"sports: mlb={results['mlb']} espn={results['espn']} nba={results['nba']}")
+    if "injury_archive" in only or "sports" in only:
+        # Dated injury snapshots: the forward test's archive.  Runs with the
+        # sports section (and on its own from the weekly injury-archive
+        # workflow) so the archive grows one capture per date without anyone
+        # re-running the whole collector.
+        results["injury_archive"] = collect_injury_archive(fetcher, out)
+        print(f"injury_archive: {results['injury_archive']}")
     if "weather" in only:
         results["weather"] = collect_weather(fetcher, out)
         print(f"weather: {results['weather']}")

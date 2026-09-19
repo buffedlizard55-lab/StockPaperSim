@@ -84,14 +84,21 @@ project with no citable source at all would not be in the register.
 * **Status:** **FORWARD-ONLY.** The league publishes a live document; there is no
   retrievable archive of past seasons, so a backtest would have to be invented.
   **Participant:** `@InjuryFeed_Forward` - registered, adapter pointed at the
-  official document, **zero backdated trades**.
+  official document, **zero backdated trades**. 2026-09-19: a dated snapshot
+  archive (official page + the machine-readable ESPN companion, stamped with the
+  capture date) is now collected weekly by
+  `.github/workflows/injury-archive.yml`, so the forward test accumulates
+  observations instead of restarting every week.
 
 ### 6. NBA Injury - `NBAInjuryReport`
 * **What it is:** a 30-team injury monitor.
 * **Official source:** <https://official.nba.com/nba-injury-report-2025-26-season/>
   (the league's own injury-report page and its PDFs).
-* **Mapping / status:** as NFL Injury - WEAK mapping, FORWARD-ONLY, same
-  participant.
+* **Mapping / status:** as NFL Injury - WEAK mapping, FORWARD-ONLY, fed by the
+  same dated snapshot archive. 2026-09-19: this project now has its **own**
+  participant, `@NBAInjury_Forward` (previously it shared
+  `@InjuryFeed_Forward` with the NFL project), so the brief's two injury items
+  are measured separately.
 
 ### 7. FDA Decisions / Drug Analysis - `DrugAnalysis`
 * **What it is:** FDA decision tracking with a "biotech reaction" backtest.
@@ -110,9 +117,13 @@ project with no citable source at all would not be in the register.
 * **What it is:** college-football score alerts.
 * **Official source:** the NCAA's own data host,
   <https://data.ncaa.com/casablanca/scoreboard/football/fbs/2025/10/scoreboard.json>.
-* **Mapping:** WEAK (attention proxy). **Status:** FORWARD-ONLY - the archived
-  season is not enumerable from that endpoint within a sensible request budget.
-  No trades are placed from it this season.
+* **Mapping:** WEAK (attention proxy). **Status:** the official endpoint stays
+  FORWARD-ONLY (the archived season is not enumerable from it within a sensible
+  request budget). 2026-09-19: the ESPN-collected NCAAF finals (SECONDARY, 282
+  games) are backtested by a dedicated participant,
+  **`@NCAA_Upset_Blitz`** - long the sportsbook complex after away-win-heavy
+  weeks, the opposite side of the trade `@MLB_Upset_Short` shorts - with the
+  two source classes never mixed in one signal.
 
 ### 9. NFL scoreboard - `NFL-scoreboard`
 * **What it is:** an NFL results board.
@@ -120,9 +131,13 @@ project with no citable source at all would not be in the register.
   so results come from ESPN's scoreboard API
   (<https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard>),
   classed **SECONDARY** on every page that shows it.
-* **Mapping:** WEAK. **Status:** BACKTESTED where the collected weeks exist;
-  participants `@MLB_Attention_Momo` / `@MLB_Upset_Short` read the same
-  attention clock built from official MLB data.
+* **Mapping:** WEAK. **Status:** BACKTESTED where the collected weeks exist.
+  2026-09-19: three dedicated participants trade the ESPN slate clocks -
+  **`@NFL_Slate_Attention`** (NFL finals and close-game share),
+  **`@NBA_Slate_Attention`** (the same rule on the NBA calendar, once the ESPN
+  NBA collection lands) and `@NCAA_Upset_Blitz` (item 8). The MLB attention
+  participants `@MLB_Attention_Momo` / `@MLB_Upset_Short` read the same clock
+  built from official MLB data.
 
 ### 10. MLB Scoreboard - `MLB-Live-PBP` (and `MLB-PBP`)
 * **What it is:** pitch-by-pitch and scoreboard feeds.
@@ -139,7 +154,11 @@ project with no citable source at all would not be in the register.
   predictions with no timestamped archive.
 * **Mapping:** UNPROVEN. Recomputing the model here would test this project's
   model, not the site's, so the honest label is UNPROVEN and the status is
-  **FORWARD-ONLY** - no backdated trades.
+  **FORWARD-ONLY** - no backdated trades. 2026-09-19: a dedicated forward probe,
+  **`@SportsPred_Forward`**, registers the declared rule (long the sports-data
+  complex when the site's own published predictions beat the collected ESPN
+  finals above their trailing mean) and goes live only on dated snapshots of the
+  site's predictions collected from now on.
 
 ### 12. Gold - `GOLD`
 * **What it is:** **a solid-gold engagement-ring buyer's guide.** It is not a
@@ -196,3 +215,14 @@ The machine-readable version of this table - with the live availability of each
 signal, the sessions it was actionable for, and the file each observation came
 from - is written to every run under `masterfeed.json` and rendered at
 [`docs/season2/masterfeed.html`](../docs/season2/masterfeed.html).
+
+**2026-09-19 update.** The roster grew from 14 to 19 so that every item the brief
+named has its own measured participant: the three ESPN slate personas
+(`@NFL_Slate_Attention`, `@NBA_Slate_Attention`, `@NCAA_Upset_Blitz`) and the two
+new forward probes (`@NBAInjury_Forward`, `@SportsPred_Forward`). Item 8 (NCAA)
+is now backtested on clearly-labelled ESPN secondary finals *in addition to* its
+forward-only official endpoint; item 9's slate clocks are traded by three
+dedicated personas rather than borrowing the MLB clock. Every brief item now maps
+to at least one participant: CEO, weather, insider trades, TheLeap, NFL Injury,
+NBA Injury, FDA Decisions, NCAA Scoreboard, NFL scoreboard, MLB Scoreboard,
+Sports Pred, Gold and PinePilot.

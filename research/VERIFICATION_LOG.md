@@ -886,3 +886,44 @@ by a test that re-derives it from the run.
   `corp-action-standdown`) — 55 hypotheses total, each with explicit blockers.
 * 34 new tests (`test_venue_admin`, `test_equity_pilot`, `test_site_pilot`);
   full suite green at 612.
+
+---
+
+## 2026-09-19 (third pass, same day) — roster 19, insider bulk, slate clocks, injury archive
+
+* **Nasdaq legal terms re-read directly** (page-fetch tool, agent network):
+  <https://www.nasdaq.com/legal>, agreement "Last Updated: May 11, 2026".
+  Section 2 requires users not to "access or use the Service, or any process,
+  whether automated or manual, to capture data or content from the Service or
+  circumvent any mechanisms for preventing the unauthorized reproduction or
+  distribution of the Service for any reason" — verbatim quote kept above.
+  Status: `FETCHED`. The equity-feed BLOCKED conclusion is re-confirmed by
+  current text, not memory.
+* **Stooq terms re-checked**: `stooq.com/term.php` returns "The page you
+  requested does not exist"; the homepage and help-centre footers now point at
+  <https://stooq.com/terms.html>, which did not render usable terms text
+  through the fetch tool. Status: `FETCHED` (footer) / no grant located.
+  Stooq stays unused as a source.
+* **SportsPred repository layout checked through the official GitHub API**
+  (`api.github.com/repos/buffedlizard55-lab/SportsPred/git/trees`): the project
+  is a collector-driven multi-sport prediction site with per-sport workflow
+  files and client-side data plumbing; no single stable predictions JSON was
+  identified in the time budget, so `@SportsPred_Forward` stays a declared
+  forward-only probe rather than snapshotting a guessed URL. Status: `FETCHED`.
+* **ESPN scoreboard row shape re-derived from the committed files** (not from
+  the API): 285/285 NFL rows and 282/282 NCAAF rows are `STATUS_FINAL` with
+  both scores present (`data/real/sports/*.jsonl`), which is what the new
+  slate clocks count. The NBA file is empty in this checkout — the ESPN NBA
+  weeks configuration postdates the last sports collection — so
+  `@NBA_Slate_Attention` reports DATA-MISSING until the next collection run.
+* **SEC insider bulk reader**: the signal builder now normalises the quarterly
+  data-set rows (`symbol`/`transaction_code`/`owners[].title`) into the same
+  shape as the per-filing walk (`ticker`/`code`/`title`) and merges the two
+  de-duplicated on (accession, date, ticker, code, shares, price). The
+  trailing buy/sell ratio was made genuinely trailing-30d (it was a whole-file
+  constant before; no published number depended on it because no insider file
+  had ever landed). Covered by `tests/test_masterfeed_sports.py`.
+* **Season 2 re-derived** with the 19-persona roster: 976 fills, 480 round
+  trips, net round-trip P&L $52,994.38 on $23.9m notional, ledger digest
+  `35b5aa7d…`; independent audits 3,393 + 1,222 checks, 0 failures; full
+  suite 625 tests green.

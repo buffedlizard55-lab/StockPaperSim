@@ -1,12 +1,12 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-stress-thinliquidity-seed20260918",
- "created_utc": "2026-09-18T17:42:18Z",
- "finalised_utc": "2026-09-18T17:42:19Z",
+ "created_utc": "2026-09-19T22:15:54Z",
+ "finalised_utc": "2026-09-19T22:15:55Z",
  "code": {
   "git": {
-   "commit": "95af154e90dfa3afc09d4799ea8e930fb5fa42cf",
-   "branch": "arena/01a0b35e-stockpapersim",
+   "commit": "205dd1a1ce7c7db0dfee870e7d5c0600e03f5848",
+   "branch": "arena/01a0bba5-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
@@ -14,22 +14,38 @@
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
    "sim/analytics.py": "3d7a209133268656f72ebdf9c388e63703566cdc169c727cb71ea0c05183e9a4",
    "sim/calendar.py": "250bfee6820695c3bf715a13c097356f08eea5d0bed58a9bc95af3daf9f432da",
-   "sim/cli.py": "948b4145d819c6343f3106687a1ab384989bcba3c18e9093f08e41fcbf4132e3",
-   "sim/config.py": "6b1700e0d2a28c2a7c252bc84d17867a8c2e87a4bd34e971fa96d643c040d10f",
+   "sim/cli.py": "aaf4190dde15a8343b51dc837d9401da1cb94490a0030f60db74963389813941",
+   "sim/config.py": "66e98a14eba3663d4bcbbaabf4463f79d39076adbd058173bff2a4a6c9379ef0",
+   "sim/custody.py": "0701b17a77d122ecb65a14ad60ae49dcaddf558b3c961d9feb9156c4aeb61580",
    "sim/eligibility.py": "13db4fb6d419a4a1ae93f1b3875dd87f1f27b836f1d08595a8f39b3a7b080d9a",
    "sim/engine.py": "06ca3c41ad424a5b6d344669644f4a38ce2249501f8d3441aaa9f934713cda81",
+   "sim/equity_pilot.py": "d125345ab84c9386db3762dbbe976ead635162afbe82537777e470a45cec2161",
    "sim/ledger.py": "fe07879d26c2b34a97e5c7029133a67e204b994be71bf0f0711da1e661ab5580",
+   "sim/live.py": "f88f3e1cc66106f7d872658626ee59f0f36e5165e7c5b3873df7ab892efb4617",
+   "sim/live_season.py": "4cacfb62f1b6412637f53bddcbe320d9b0a2c3283055fdd25fd26c9c6ad1b403",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
-   "sim/masterfeed.py": "2a230440a0c5f116288109243c46d0bfa1f2539bd24886f192952b193b57ce62",
+   "sim/masterfeed.py": "a55c1c122f26c262620cd0cb181a39b61de1dc3d6bbfb31343530b5242a7fb47",
    "sim/memory.py": "e8cd939987420bea652fe31565b90c97e319bb0ecb92153950079308bf9ac405",
    "sim/microstructure.py": "946a139e446960d02dc0b86e15e5fc780238dda39c5f344216956a7078e71b9d",
+   "sim/official_season.py": "e8eace0182760812a2fb5225d70690a8c496fda5064f5adbd7499889a2253ba3",
+   "sim/officialbook.py": "41716fdd103cd559bf89a4dffaf3f8160cc07797ebe1a97c1388cfa31c191d0e",
    "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
-   "sim/realdata.py": "19a11ca7b47999ba1da2e58508a5615b72062b7b6926f4ff34e5caf791fedd60",
+   "sim/prints.py": "4b1a287b326d1a88d908f1d369dc257fb55ccafe156a7a2e2038c0e5ddde4de4",
+   "sim/realdata.py": "f6fd7d3d447c747b81512d53845b857c8241228a54108ac3dfe6f87d21a6566a",
+   "sim/research_rules.py": "ca76ee2a17840e495f1b8f70ed0121b8b40f24869dcbf7a757325c883bef2cd1",
+   "sim/rollover.py": "831f5a89b235295084e157e33f1113e3c5aea101c7adc39934455d53348bf9aa",
    "sim/season2.py": "2ccf1e1a4bbfeda87626de659672cd3a48b9fe59baf155aaf00c13bbeb1a5809",
+   "sim/sec.py": "b5b8ef1b2a6ff0274e303c0b21bc8cbd412c1179cde6f647c7bf42c909eb61de",
    "sim/sensitivity.py": "9c2a09fe044d44c7578dea911fa68e8fc59ebe471cd1897d82cd91417815e2e2",
-   "sim/strategies.py": "c428738ac9203b5c83273499f167d62274432966fb18b8faf9531f8856cebf73",
-   "sim/strategies_mf.py": "5546692c6aec6f8dc5aa556614d748936322eb52eee346b80916e1b8c3fb4fbe",
-   "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534"
+   "sim/strategies.py": "18ce8fe08e84fa34a68cd66baefce353b92d1e0fd50fc11ea692d57b39e93b6c",
+   "sim/strategies_live.py": "eeaf2f8c5e356fcb974ec8380cb34c662a6dc1f9fc20293ad8f316a8dfcbf10d",
+   "sim/strategies_mf.py": "e6345379fa30fb052f4d4d985a10affa202b4bf8ecf1f0d99e2d05735a54aeca",
+   "sim/strategies_official.py": "117747a393e7d1900422f7bd37658dea81d71401dc87a36534a9392c7ccaefe0",
+   "sim/strict_equities.py": "5e8c8fbeecad05c17a53af35c52a1a39dcf2bf55655514fd647ffb23e466528a",
+   "sim/tradelog.py": "e3acc149f9108b0cd6abbb0a555462d014f9f5f53c1c765aeaee5ca1c61b7b85",
+   "sim/treasury.py": "44560c4fb6006b036eedd7e1222bc3246aad089f005da97b285a8f171aeb6f52",
+   "sim/universe.py": "4bac26ba1487fd7414f86da0834550e98ecbcd678d52c5d6e4835f6d6f77f534",
+   "sim/venue_admin.py": "4c68ef340eac45fd9f2973bbb26cc34e85fda59d239e42fbd8323fa27ecfd766"
   }
  },
  "files": {
@@ -68,6 +84,21 @@
    "bytes": 15474,
    "kind": "json"
   },
+  "reports/NFL_Slate_Attention.json": {
+   "sha256": "80c81a4c0d6456e10b54f03623b5a315f89aeca62df2e45dff9e3a5e7ddbad72",
+   "bytes": 16376,
+   "kind": "json"
+  },
+  "reports/NBA_Slate_Attention.json": {
+   "sha256": "a66a3b9fd0f29b0f41943681a360d41f2eac55e77c55114409e50846338b36b9",
+   "bytes": 13893,
+   "kind": "json"
+  },
+  "reports/NCAA_Upset_Blitz.json": {
+   "sha256": "2df2a19a1756aeeab4fe565449fdf7eaca175943d5edf50f2b0acc21fb41ede4",
+   "bytes": 16038,
+   "kind": "json"
+  },
   "reports/Weather_ColdSnap_Max.json": {
    "sha256": "1fb54b1b75ebb3b233a74253f3e503b57d99e9ada3881197529e38920c4e8a43",
    "bytes": 15296,
@@ -103,6 +134,16 @@
    "bytes": 13792,
    "kind": "json"
   },
+  "reports/NBAInjury_Forward.json": {
+   "sha256": "9cf2706849274f8234a2b8c9c87a200375f392fa8f01c61c592b0f5c85180663",
+   "bytes": 14112,
+   "kind": "json"
+  },
+  "reports/SportsPred_Forward.json": {
+   "sha256": "125f895f4f3352811b4e1c9439391ab5d121ad47879d5cf971d9482d2967347f",
+   "bytes": 13359,
+   "kind": "json"
+  },
   "market_report.json": {
    "sha256": "3df0877bdfa93a338cf26b1f4ec9874334bd08f374f55dff2f5d7d5e1b4b8815",
    "bytes": 2957,
@@ -114,8 +155,8 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "a17068f5f17fe502106c7b2271a503f71532aab2ad86fe625de941af0f25c1d3",
-   "bytes": 7555,
+   "sha256": "08692b455016ae5e4708509a72f1cd7e972bbe240995571e13df4f455562d20c",
+   "bytes": 10196,
    "kind": "json"
   },
   "irregularities.json": {
@@ -124,33 +165,33 @@
    "kind": "json"
   },
   "participants.json": {
-   "sha256": "09862cb2beaefa0c3832b4dd4b2e3c4b7ab432731c81155336d03308e7ba6f90",
-   "bytes": 24077,
+   "sha256": "78dca20ca8745916143d45341dbb86cd68a111dc1f15bdf474f216a8f7da22ec",
+   "bytes": 34652,
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "74904424483b49f583584f309a2558fae0b5f44b4c256cce2d85097c823e2673",
-   "bytes": 35435,
+   "sha256": "f9317b0d8c80f1007c964300a97be1d33e3ae6c62106a5bfaaada16948258ce0",
+   "bytes": 42334,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "01d8d864a29334230972f1c8df840283dc1d8d8505505021c2676446667e8ad9",
-   "bytes": 31504,
+   "sha256": "10b17569ad910ad884e45d466a6197bdbba4b37c4bc730fab5c8b606f99a174d",
+   "bytes": 44767,
    "kind": "json"
   },
   "signal_status.json": {
-   "sha256": "c91736b0e6c8d35b41474c9c4219f0efb96fd80bfba4e3c04c113dd8d9c0abe3",
-   "bytes": 10291,
+   "sha256": "b168a0de95319df4c5943fc465ab049135ec4adca453ad8b605c1e619d4505ae",
+   "bytes": 14379,
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "6b1fa20986387677e36932ee00f6cbd3969561eb47f3da9fa083b69c8a2e539f",
-   "bytes": 507,
+   "sha256": "c82ee9dc48eb72e7cc829db8765ecb182676ea03a58df4bcaef57a536f5dd942",
+   "bytes": 508,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "b4a50ae4d7dfd61470700b4b03e365d522a242bfa424829a134a635ccbda1fc7",
-   "bytes": 10227,
+   "sha256": "7422ed240b6fbe4e2fd1e28ddfa80d15345fb6fd0f79ccebec89d01a4a86f629",
+   "bytes": 13257,
    "kind": "json"
   }
  },
@@ -397,16 +438,16 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-18T17:42:18Z",
-  "finished_utc": "2026-09-18T17:42:19Z",
-  "elapsed_seconds": 1.05
+  "started_utc": "2026-09-19T22:15:54Z",
+  "finished_utc": "2026-09-19T22:15:55Z",
+  "elapsed_seconds": 1.17
  },
  "irregularity_count": 0,
  "data_sources": {
   "market": {
    "SPY": {
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "e0f05aaf67be23da1db20513eaed93274b165898427ebeab80c7cb2eca1d9a2d",
+    "sha256": "7a706163d893f5ce080e118f29aed4014a4cb8e22c1b1481f6187b5775b9f0a5",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -417,7 +458,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -431,7 +472,7 @@
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "ae9ec3c0b0b8e0f5cd28ee45eac2dfcff9f95a7c5a1244e170ab0980d85979ed",
+    "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -442,7 +483,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -456,7 +497,7 @@
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "4f6191d7931ac8755dec346902f769128dd059359a542aaf947e90ff8f2d344a",
+    "sha256": "a55096d812a6b40fec0671a09e92e42570de87b382672b0d9d5169b5b827c25f",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -467,7 +508,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -481,7 +522,7 @@
    },
    "GLD": {
     "file": "data/real/prices/yahoo/GLD.json",
-    "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
+    "sha256": "87625724f861044e95b9a81f1fe2d4c5510cc810a228a5cd5337ffceab98a189",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -492,7 +533,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -506,7 +547,7 @@
    },
    "UNG": {
     "file": "data/real/prices/yahoo/UNG.json",
-    "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
+    "sha256": "e344c1088e9a97857b9ed3179868d537a2072bb0d3d9f70f66d2208be9159820",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -517,7 +558,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -531,7 +572,7 @@
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "5dddbd83cab3a8b7cd0814ea8215cbfc7d759602d4557e0cdf34937ba995df5d",
+    "sha256": "b52407169f67895b5ef7b7dfbe18029b0cb758cefd8fc2f23d54189e039f3d5e",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -542,7 +583,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -556,7 +597,7 @@
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "fe9eeb851e6faba2a7187e008fab271608d8a4d544227ad3543ac3d95d5dd769",
+    "sha256": "ab52ad384ae7b56773880fb828cba25869362fad771df8dccc2748b37825f1eb",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -567,7 +608,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -581,7 +622,7 @@
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "20849c9611587299a52489fe22060adc7823c700fb3483f21091d85a6cf8acb0",
+    "sha256": "c613f6e51f1df276d6164e20f2bdd9bebe992839143766e690d53c3922827e17",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -592,7 +633,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -606,7 +647,7 @@
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "b2914ca7451d1c04fbe97f399361df69871d9a8afcbb0121541ac2bdd13a29f3",
+    "sha256": "5328da06304eafb60c42a1fd0129869688cbb1db842625afaddf3affd4b254fd",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -617,7 +658,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -631,7 +672,7 @@
    },
    "DKNG": {
     "file": "data/real/prices/yahoo/DKNG.json",
-    "sha256": "728eccb3861f5cb322bf539a1926fb53cb11fdf0d1412a8d19111bd3a9ac37ef",
+    "sha256": "6621ae915809de2de9785da362bf6d174fab0b77ab2e3bcbfb9388d2a7606c77",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -642,7 +683,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -656,7 +697,7 @@
    },
    "FLUT": {
     "file": "data/real/prices/yahoo/FLUT.json",
-    "sha256": "b0ffbb30d24f61202de05dce905e96fb554a730be44b61df2e48712c8bcbabd0",
+    "sha256": "3c58d580c588e7bd2d9cc0583c8cbbcb0fc586c33ea722db65876463cf80ea27",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -667,7 +708,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -681,7 +722,7 @@
    },
    "PENN": {
     "file": "data/real/prices/yahoo/PENN.json",
-    "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
+    "sha256": "f638f4dda663bb73fe8783a3344b563570471fce57e4363d63d46c9ce8f1eb0a",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -692,7 +733,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -706,7 +747,7 @@
    },
    "SRAD": {
     "file": "data/real/prices/yahoo/SRAD.json",
-    "sha256": "2b98acbc8c99539adff859013008c24d152cb619d509bba11ec159ae2d4a7cb6",
+    "sha256": "a45e92e2acb699c50c3d0fc5709505364eb3f3c99230a8f028e87c5c7c60dc40",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -717,7 +758,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -731,7 +772,7 @@
    },
    "GENI": {
     "file": "data/real/prices/yahoo/GENI.json",
-    "sha256": "3fbcfe36a34a7df12623d207dcaf77cac837c5b4bec0c1a900a14c13f5844ea1",
+    "sha256": "dba7fbafab3ce720aa556856a2dd3473bfee315e001eb3ddbacc578c2074f513",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -742,7 +783,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -756,7 +797,7 @@
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "307bd8bb4f2823fad3b28842f3a7159c28d890cfb7b6e5d02e93bd0b398a4b03",
+    "sha256": "b3aeec2a6a71cb039a37c099dc8b0d37143164a5a48de3e8d4b432a17c4ef93f",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -767,7 +808,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -781,7 +822,7 @@
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "0196f65edcab1b9d2d947c2c7877be4f76efa7a45644a32723998091adc67a51",
+    "sha256": "9b48f3e3f29ff8c5d743fcc5889a6570f15ee32a9d48313e26836364152baa11",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -792,7 +833,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -806,7 +847,7 @@
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "e8c9fe33254a091dcfb1fde394469dac5a6683a2528f85b45fb2428857eadae2",
+    "sha256": "fb9685677b3e8bee644f447941ddc0122f5c0dc6c9981a31ed395efa724f1c96",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -817,7 +858,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -831,7 +872,7 @@
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "169021a2b0a0985c1c427b57fe640e22b6ce82a79377bc3075417c6a8b98d12c",
+    "sha256": "151a39e4b42024ceaa50b3c15380b68713e4fffaa3dab9beb34bb1d7a41400f9",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -842,7 +883,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -856,7 +897,7 @@
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "4a2c7d18351df35d3cb2b11781aad7ea882659abaffcd9d31683a3d09881cf97",
+    "sha256": "17232c5b2dd0171c8b7ea4dffe2f31ca57e727214cf7c3415b593570b0347d77",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -867,7 +908,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -881,7 +922,7 @@
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "246b49877837dc03c64564d27052f35ac53721ca23be92216c88ab3077d86a35",
+    "sha256": "daf5bdcb9a1a92c03817a05aaba05f9c13ba94daac50812e5cd2619bac497d6a",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -892,7 +933,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -906,7 +947,7 @@
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "0781b9787164e353fa1b03b7962e26e2a6e89cfa944ce68457088003a3540fc6",
+    "sha256": "ab03f79b7ecd6253e7003d08fc47dd05452e916d23d8df631ecc234c7b904b30",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -917,7 +958,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -931,7 +972,7 @@
    },
    "TSLA": {
     "file": "data/real/prices/yahoo/TSLA.json",
-    "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+    "sha256": "f54ea58bac88a3b695bcbc6bc5c3a822b9f89928ea3d80bfb494d8b085fb5ece",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -942,7 +983,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -956,7 +997,7 @@
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "b6edc050ee19bfdd67f1d40541aa314649fd30441b108d6e3ecd58992480bae4",
+    "sha256": "5d1c64d952beba1a6381c5a52c686201aa6324ca21171f59d854e8e8001ce308",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -967,7 +1008,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -981,7 +1022,7 @@
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "55b84067dd281ed2224dcffa8dc226f36e7058e50cea1b3b7f0366bfa6a43588",
+    "sha256": "09d8c55a343f8e1f33f34331e227ebf54a942bf6992ab9755f030b56671f3c2e",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -992,7 +1033,7 @@
     "redistribution_status": "",
     "dividend_status": "",
     "first_bar": "2024-09-16",
-    "last_bar": "2026-09-16",
+    "last_bar": "2026-09-18",
     "bars_in_window": 502,
     "sessions_forward_filled": 0,
     "forward_filled_dates": [],
@@ -1010,31 +1051,33 @@
  },
  "ledger_summary": {
   "participant": "ALL",
-  "fill_count": 798,
-  "order_days": 240,
-  "round_trips_closed": 372,
+  "fill_count": 980,
+  "order_days": 242,
+  "round_trips_closed": 483,
   "round_trips_open": 0,
-  "gross_pnl_usd": 148192.7008,
-  "fees_usd": 1323.8711,
-  "net_pnl_usd": 146868.8297,
-  "win_rate_pct": 55.38,
-  "average_holding_sessions": 52.546,
-  "total_notional_usd": 21209340.88,
-  "total_explicit_cost_usd": 1323.8711,
-  "total_modelled_execution_cost_usd": 6037.1199,
-  "median_participation_pct": 0.00032,
+  "gross_pnl_usd": 53565.2603,
+  "fees_usd": 1610.4033,
+  "net_pnl_usd": 51954.857,
+  "win_rate_pct": 46.17,
+  "average_holding_sessions": 54.706,
+  "total_notional_usd": 23917853.82,
+  "total_explicit_cost_usd": 1610.4033,
+  "total_modelled_execution_cost_usd": 7425.2299,
+  "median_participation_pct": 0.00044,
   "max_participation_pct": 0.22894,
-  "slippage_vs_open_bps_mean": -1.126,
-  "slippage_vs_close_bps_mean": -6.017,
+  "slippage_vs_open_bps_mean": -1.173,
+  "slippage_vs_close_bps_mean": 4.186,
   "symbols": [
    "DKNG",
    "FLUT",
+   "GENI",
    "GLD",
    "IBB",
    "IWM",
    "PENN",
    "QQQ",
    "SPY",
+   "SRAD",
    "TLT",
    "UNG",
    "XBI",
@@ -1042,26 +1085,26 @@
   ]
  },
  "ledger": {
-  "fills": 798,
-  "round_trips": 372,
-  "net_pnl_usd": 146868.8297,
-  "digest_sha256": "9612ef0b5621ba07fc546713d3cef45666ce263fc0df31910b11e65ade8071d2",
+  "fills": 980,
+  "round_trips": 483,
+  "net_pnl_usd": 51954.857,
+  "digest_sha256": "88b4c612c9f59021d71b745837d4bbaa99c0a7642929336faea925432744246d",
   "files": {
    "ledger_fills.jsonl": {
-    "sha256": "efcfa5272ca61e83eb16c753de59bbf99e511b7258a6d3968a002e095abdefe5",
-    "bytes": 971997
+    "sha256": "d7b4ab87a66d414b8708a9913fb8ac6aba59f89fa0599bf8cd88ed21396db0ed",
+    "bytes": 1195645
    },
    "ledger_trips.jsonl": {
-    "sha256": "caf000623b079dcbe239e12db1a2247ea7007beb20c2a8d33d88440d71c5bd88",
-    "bytes": 189789
+    "sha256": "ca73723a93f246965728129b1f2fdcdada2370d9e5a73c8bc8fe29794d84ba9b",
+    "bytes": 249207
    },
    "ledger_summary.json": {
-    "sha256": "dd65195a281272d9a119618fcc35da571fed0cccc7cdbb8d44060f56f650e6f6",
-    "bytes": 665
+    "sha256": "8bffb72f6c9418e8d8a73a00d9be1ce859c89092fa46a35ecc34bb0390034dc2",
+    "bytes": 681
    },
    "ledger_fills.csv": {
-    "sha256": "ab016994b8c6a9ebe48a8c12f2f27bc759dd68a78d481cd3b9770f4fb2d49a68",
-    "bytes": 323823
+    "sha256": "7db70f16c5e08bb53025eef175c3b59eb52183e6070f88b7318b63dbdeff02ad",
+    "bytes": 399657
    }
   }
  },
@@ -1075,6 +1118,15 @@
   "mlb_games_7d": "AVAILABLE",
   "mlb_home_win_rate_30d": "AVAILABLE",
   "mlb_upsets_7d": "AVAILABLE",
+  "nfl_games_7d": "AVAILABLE",
+  "nfl_close_games_7d": "AVAILABLE",
+  "nfl_away_wins_7d": "AVAILABLE",
+  "ncaaf_games_7d": "AVAILABLE",
+  "ncaaf_close_games_7d": "AVAILABLE",
+  "ncaaf_away_wins_7d": "AVAILABLE",
+  "nba_games_7d": "MISSING",
+  "nba_close_games_7d": "MISSING",
+  "nba_away_wins_7d": "MISSING",
   "weather_cold_anomaly_10d": "AVAILABLE",
   "weather_precip_30d_in": "AVAILABLE",
   "kalshi_settled_30d": "AVAILABLE",

@@ -11,6 +11,25 @@ re-review). Retrieval is never treated as permission: a fetchable URL answers
 "can a runner read it", not "may this repository republish it". That
 distinction is why `research/strict/registry.json::approved_feeds` is empty.
 
+**Re-verification, later the same day (second pass):**
+
+* **Nasdaq** — the legal page was re-read directly at
+  <https://www.nasdaq.com/legal> (agreement text "Last Updated: May 11, 2026").
+  Section 2 (*Your Responsibilities to Use the Services*) requires users, among
+  other things, to "Not access or use the Service, or any process, whether
+  automated or manual, to capture data or content from the Service or
+  circumvent any mechanisms for preventing the unauthorized reproduction or
+  distribution of the Service for any reason." That is a direct, current-text
+  prohibition of automated capture, and it re-confirms the BLOCKED status
+  below. The page also carries a binding-arbitration notice (Section 20).
+* **Stooq** — the previously-recorded terms URL (`stooq.com/term.php`) no
+  longer resolves ("The page you requested does not exist"). The footer of
+  both the homepage and the help centre now points at
+  <https://stooq.com/terms.html>; that page did not render usable terms text
+  through the fetch tool on 2026-09-19, so **no redistribution grant could be
+  located**, and the SECONDARY / UNVERIFIED-TERMS status below is unchanged.
+  Stooq remains unused as a source in this repository.
+
 ## Decision table
 
 | Candidate | Official? | Key-free free tier? | Documented usage rights found? | Status / use |

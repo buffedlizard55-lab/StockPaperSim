@@ -192,12 +192,13 @@ class FetcherBehaviour(unittest.TestCase):
     def test_the_nasdaq_policy_bounds_a_host_that_only_times_out(self):
         """The cross-check host has timed out on every run.
 
-        Three attempts at 45 seconds for eight symbols is eighteen of the
-        collection's twenty-five minutes spent proving the same timeout, and it
-        is why the SEC section began at minute nineteen.  The policy is a bound
-        on that, not a change to what the manifest records.
+        The 2026-09-19 run spent ~18 of its 25 budgeted minutes proving that
+        timeout 26 times over (two attempts, 20 seconds each), which is why
+        the sections after Nasdaq never started.  The policy is a bound on
+        that - one attempt, ten seconds, the section runs last - not a change
+        to what the manifest records.
         """
-        self.assertEqual(collector.FETCH_POLICY["nasdaq"]["tries"], 2)
+        self.assertEqual(collector.FETCH_POLICY["nasdaq"]["tries"], 1)
         self.assertLess(collector.FETCH_POLICY["nasdaq"]["timeout"], 45.0)
         # The kind keeps its source class: nothing about the bound hides it.
         self.assertEqual(collector.SOURCE_CLASS["nasdaq"], "OFFICIAL")

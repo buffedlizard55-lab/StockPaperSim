@@ -101,14 +101,17 @@ BROWSER_UA = ("Mozilla/5.0 (compatible; StockPaperSim/2.0; "
 BASE_HEADERS: Dict[str, str] = {"Accept": "*/*", "Accept-Encoding": "gzip, deflate"}
 
 #: Per-kind policy for how many attempts a URL gets and how long each may take.
-#: Nasdaq's quote API has timed out on every run so far - eight symbols, three
-#: attempts each, 45 seconds per attempt, which is eighteen of the collection's
-#: twenty-five minutes spent proving the same timeout, and the reason the SEC
-#: section (which runs next) did not start until minute nineteen.  The failure is
-#: recorded exactly as before; the policy changes how long the run spends proving
-#: it, not what the record says.
+#: Nasdaq's quote API has timed out on every run so far: on the 2026-09-19 run
+#: the two attempts and 20-second timeout per symbol spent ~18 of the
+#: collection's 25 minutes proving the same timeout 26 times over, which is
+#: the reason the sections after it (SEC, FDA, sports, injury archive,
+#: weather, Kalshi) never started - the global time budget was already gone.
+#: One attempt, ten seconds, and the Nasdaq section now runs LAST so a
+#: repetition of the outage cannot starve anything else.  The failure is
+#: still recorded exactly as before; the policy changes how long the run
+#: spends proving it, not what the record says.
 FETCH_POLICY: Dict[str, dict] = {
-    "nasdaq": {"tries": 2, "timeout": 20.0},
+    "nasdaq": {"tries": 1, "timeout": 10.0},
 }
 DEFAULT_FETCH_POLICY: dict = {"tries": 3, "timeout": 45.0}
 
@@ -273,7 +276,10 @@ class Fetcher:
             # ``Accept-Encoding: gzip, deflate`` its sample lists, and Host.
             # An operator with a real mailbox sets SPS_SEC_USER_AGENT and it is
             # sent verbatim - the SEC's rule is that the header names a contact.
-            hdrs = sec_policy.sec_headers()
+            # Host follows the target host (dcm.sec.gov serves the insider
+            # ZIPs; data.sec.gov serves the submissions API): one declared
+            # header set, the Host line set per request.
+            hdrs = sec_policy.sec_headers(host=host_key)
             interval = max(interval, sec_policy.SEC_MIN_INTERVAL_EFFECTIVE)
         else:
             hdrs = {"User-Agent": BROWSER_UA}
@@ -1481,6 +1487,14 @@ def _insider_rows_from_zip(body: bytes, quarter: str, url: str,
     return transactions, stats
 
 
+#: The insider ZIP walk is bounded independently of the run's global budget:
+#: the 2026-09-19 run proved that a throttled www.sec.gov burns ~40 seconds per
+#: URL (three attempts, 20-second backoffs) with nothing to show for it, and
+#: the retries silently consumed the minutes the sports section needed.  The
+#: bulk section now gets its own slice of time and yields the remainder.
+INSIDER_BULK_SUB_BUDGET_SECONDS = 300.0
+
+
 def collect_insider_bulk(fetcher: Fetcher, out: str) -> dict:
     """The SEC's quarterly Form 3/4/5 structured extracts, universe-filtered."""
     base = os.path.join(out, "insider_bulk")
@@ -1489,16 +1503,24 @@ def collect_insider_bulk(fetcher: Fetcher, out: str) -> dict:
                      "detail": [], "source": SEC_INSIDER_SETS_PAGE,
                      "documentation": "https://www.sec.gov/files/insider_transactions_readme.pdf"}
     rows: List[dict] = []
-    for quarter in quarters:
+    deadline = time.time() + INSIDER_BULK_SUB_BUDGET_SECONDS
+    for index, quarter in enumerate(quarters):
+        if time.time() >= deadline or fetcher.timed_out():
+            summary["sub_budget_exhausted"] = True
+            summary["quarters_skipped"] = quarters[index:]
+            break
         body, used, attempts = None, "", []
         for pattern in sec_policy.insider_zip_candidates(quarter):
             url = pattern
             attempts.append(url)
             body = fetcher.get(url, "sec", note=f"SEC insider data set {quarter}",
-                               interval=SEC_ZIP_INTERVAL, tries=3, retry_on_403=True)
+                               interval=SEC_ZIP_INTERVAL, tries=2, retry_on_403=True)
             if body is not None:
                 used = url
                 break
+        if body is None:
+            summary["failed"].append({"quarter": quarter, "attempts": attempts})
+            continue
         if body is None:
             summary["failed"].append({"quarter": quarter, "attempts": attempts})
             continue
@@ -1853,14 +1875,47 @@ ESPN_SPORTS = {
 }
 
 #: (season, seasontype, first week, last week).  ESPN's scoreboard endpoint
-#: answers HTTP 400 for a date *range*; it accepts a season + seasontype + week,
-#: which is what the first collection run got wrong.
+#: answers HTTP 400 for a date *range*; for the weekly-calendar sports it
+#: accepts a season + seasontype + week, which is what the first collection
+#: run got wrong.
 ESPN_WEEKS = {
     "nfl": [(2025, 2, 1, 18), (2025, 3, 1, 4)],
     "ncaaf": [(2025, 2, 1, 15), (2025, 3, 1, 1)],
-    "nba": [(2025, 2, 1, 25), (2026, 3, 1, 4)],
-    "mlb": [(2026, 2, 1, 27)],
 }
+
+#: The daily-calendar sports (basketball, baseball) IGNORE the week parameter:
+#: the same week-based form that fills the football files silently returned
+#: zero basketball events on every prior run, so nba_scoreboard.jsonl stayed
+#: empty and the NBA personas correctly reported DATA-MISSING.  Verified
+#: against the live endpoint on 2026-09-19: a bare season year returns the
+#: whole season in one response, where the year names the season that ENDS in
+#: it (dates=2026 -> the 2025-26 NBA season, dates=2026 -> the 2026 MLB
+#: season, dates=2025 -> the 2024-25 NBA season).  Only the seasons inside
+#: the trading window are collected.
+ESPN_SEASON_YEARS = {
+    "nba": [2026],
+    "mlb": [2026],
+}
+
+
+def _espn_requests(key: str, path: str) -> List[Tuple[str, str]]:
+    """Every scoreboard URL for one sport, with the note that explains it."""
+    out: List[Tuple[str, str]] = []
+    for season, seasontype, first_week, last_week in ESPN_WEEKS.get(key, []):
+        for week in range(first_week, last_week + 1):
+            out.append((
+                f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
+                f"?dates={season}&seasontype={seasontype}&week={week}&limit=1000",
+                f"{key} {season} type {seasontype} week {week} (secondary)"))
+    for year in ESPN_SEASON_YEARS.get(key, []):
+        # One request per season year.  limit=5000 because a basketball season
+        # is ~1,300 events and a baseball season with spring training ~2,800;
+        # the payload is one large JSON the runner parses in memory.
+        out.append((
+            f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
+            f"?dates={year}&limit=5000",
+            f"{key} season year {year} (whole season, secondary)"))
+    return out
 
 
 def collect_espn(fetcher: Fetcher, out: str) -> dict:
@@ -1868,40 +1923,43 @@ def collect_espn(fetcher: Fetcher, out: str) -> dict:
     for key, path in ESPN_SPORTS.items():
         rows: List[dict] = []
         failed = 0
-        for season, seasontype, first_week, last_week in ESPN_WEEKS.get(key, []):
-            for week in range(first_week, last_week + 1):
-                url = (f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
-                       f"?dates={season}&seasontype={seasontype}&week={week}&limit=1000")
-                body = fetcher.get(url, "espn",
-                                   note=f"{key} {season} type {seasontype} week {week} (secondary)")
-                if body is None:
-                    failed += 1
+        for url, note in _espn_requests(key, path):
+            body = fetcher.get(url, "espn", note=note,
+                               timeout=90.0 if key in ESPN_SEASON_YEARS else None)
+            if body is None:
+                failed += 1
+                continue
+            try:
+                payload = json.loads(body.decode("utf-8"))
+            except Exception:  # noqa: BLE001
+                failed += 1
+                continue
+            for event in payload.get("events") or []:
+                # Season type 1 is preseason: the football weeks enumerate
+                # types 2 and 3 explicitly, and the whole-season responses mix
+                # spring training and exhibition games into the same payload,
+                # so the same line is applied to every sport.
+                if ((event.get("season") or {}).get("type") or 0) == 1:
                     continue
-                try:
-                    payload = json.loads(body.decode("utf-8"))
-                except Exception:  # noqa: BLE001
-                    failed += 1
+                competitions = event.get("competitions") or [{}]
+                comp = competitions[0]
+                sides = comp.get("competitors") or []
+                if len(sides) < 2:
                     continue
-                for event in payload.get("events") or []:
-                    competitions = event.get("competitions") or [{}]
-                    comp = competitions[0]
-                    sides = comp.get("competitors") or []
-                    if len(sides) < 2:
-                        continue
-                    home = next((s for s in sides if s.get("homeAway") == "home"), sides[0])
-                    away = next((s for s in sides if s.get("homeAway") == "away"), sides[1])
-                    status = ((comp.get("status") or {}).get("type") or {}).get("name")
-                    rows.append({
-                        "league": key, "date": (event.get("date") or "")[:10],
-                        "event_id": event.get("id"), "name": event.get("name"),
-                        "status": status,
-                        "home": ((home.get("team") or {}).get("displayName")),
-                        "home_score": _score(home), "away": ((away.get("team") or {}).get("displayName")),
-                        "away_score": _score(away),
-                        "venue": ((comp.get("venue") or {}).get("fullName")),
-                        "source": "https://site.api.espn.com/apis/site/v2/sports",
-                        "source_class": "SECONDARY",
-                    })
+                home = next((s for s in sides if s.get("homeAway") == "home"), sides[0])
+                away = next((s for s in sides if s.get("homeAway") == "away"), sides[1])
+                status = ((comp.get("status") or {}).get("type") or {}).get("name")
+                rows.append({
+                    "league": key, "date": (event.get("date") or "")[:10],
+                    "event_id": event.get("id"), "name": event.get("name"),
+                    "status": status,
+                    "home": ((home.get("team") or {}).get("displayName")),
+                    "home_score": _score(home), "away": ((away.get("team") or {}).get("displayName")),
+                    "away_score": _score(away),
+                    "venue": ((comp.get("venue") or {}).get("fullName")),
+                    "source": "https://site.api.espn.com/apis/site/v2/sports",
+                    "source_class": "SECONDARY",
+                })
         n, preserved = write_jsonl_if_nonempty(
             os.path.join(out, "sports", f"{key}_scoreboard.jsonl"), rows)
         summary[key] = {"rows": n, "chunks_failed": failed,
@@ -2364,7 +2422,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--out", default=os.path.join(REPO_ROOT, "data", "real"))
     parser.add_argument("--max-seconds", type=float, default=1500.0)
     parser.add_argument("--only",
-                        default=("prices,sec,fda,sports,weather,kalshi,"
+                        default=("prices,nasdaq,sec,fda,sports,weather,kalshi,"
                                  "official_rates,treasury,insider_bulk,"
                                  "injury_archive"))
     args = parser.parse_args(argv)
@@ -2375,55 +2433,17 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     fetcher = Fetcher(manifest, args.max_seconds)
     results: dict = {}
 
-    if "prices" in only:
-        results["yahoo"] = collect_yahoo(fetcher, out)
-        print(f"yahoo: {len(results['yahoo']['ok'])} ok, {len(results['yahoo']['failed'])} failed")
-        results["stooq"] = collect_stooq(fetcher, out)
-        print(f"stooq: {len(results['stooq']['ok'])} ok, {len(results['stooq']['failed'])} failed")
-        results["fred"] = collect_fred(fetcher, out)
-        print(f"fred: {results['fred']['ok']}")
-        results["nasdaq"] = collect_nasdaq(fetcher, out)
-        print(f"nasdaq: {len(results['nasdaq']['ok'])} ok")
-    if "official_rates" in only or "live" in only or "sec" in only:
-        # The Live Book's two official endpoints.  Fetched with the sec section
-        # because the collector's sections are budgeted, not because they are
-        # related: FINRA's files are large and the SOFR API is small.
-        results["nyfed"] = collect_nyfed(fetcher, out)
-        print(f"nyfed: {results['nyfed']}")
-        results["finra"] = collect_finra(fetcher, out)
-        print(f"finra: {results['finra']['files']} files, "
-              f"{results['finra']['rows_kept']} universe rows kept")
-    if "fred" in only:
-        # The H.15 series on their own, without re-fetching the equity price
-        # files: the official auction book needs the par curve and the
-        # secondary-market bill rates, and asking for "prices" would rewrite
-        # every committed Yahoo file as a side effect.
-        results["fred"] = collect_fred(fetcher, out)
-        print(f"fred: {results['fred']['ok']}")
-    if "treasury" in only:
-        # The U.S. Treasury's own auction results and par yield curve: the only
-        # free, public source in this collector whose *executed* price is an
-        # official publisher's number, which is what the Official Auction Book
-        # trades on (sim/treasury.py).
-        results["treasury"] = collect_treasury(fetcher, out)
-        print(f"treasury: {results['treasury']['tape']} "
-              f"crosscheck={results['treasury']['crosscheck']}")
-    if "insider_bulk" in only or "sec" in only:
-        # The quarterly structured extracts are requested with the per-filing
-        # walk because they answer the same question (what did insiders trade,
-        # at what price, on what date) from the primary source, without
-        # depending on the browse endpoint that returned HTTP 403 on
-        # 2026-09-18.
-        results["insider_bulk"] = collect_insider_bulk(fetcher, out)
-        print(f"insider_bulk: {results['insider_bulk']['rows']} rows from "
-              f"{results['insider_bulk']['ok']}")
-    if "sec" in only:
-        results["sec"] = collect_sec(fetcher, out)
-        print(f"sec: {results['sec']['transactions']} transactions from "
-              f"{results['sec']['filings']} filings")
-    if "fda" in only:
-        results["fda"] = collect_fda(fetcher, out)
-        print(f"fda: {results['fda']['rows']} decision rows")
+    # Section order is a correctness decision, not a style one.  The global
+    # time budget silently ends whatever section is running when it runs out
+    # (every later fetch returns None without a manifest entry), so what is
+    # MISSING goes first and what is already-covered-and-expensive goes last:
+    # the 2026-09-19 run spent its whole budget on Nasdaq candidate timeouts
+    # and throttled SEC ZIP retries, and the NBA scoreboard, injury archive,
+    # FDA, weather and Kalshi sections never started at all.  Order now:
+    # the missing event data (sports, injuries), the cheap refreshes (FDA,
+    # weather, Kalshi), the rate feeds, the price refreshes, the SEC insider
+    # walk (with its own sub-budget), and the Nasdaq candidates last because
+    # their outage is expected and its audit fails closed by design.
     if "sports" in only:
         results["mlb"] = collect_mlb(fetcher, out)
         results["espn"] = collect_espn(fetcher, out)
@@ -2437,12 +2457,65 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         # re-running the whole collector.
         results["injury_archive"] = collect_injury_archive(fetcher, out)
         print(f"injury_archive: {results['injury_archive']}")
+    if "fda" in only:
+        results["fda"] = collect_fda(fetcher, out)
+        print(f"fda: {results['fda']['rows']} decision rows")
     if "weather" in only:
         results["weather"] = collect_weather(fetcher, out)
         print(f"weather: {results['weather']}")
     if "kalshi" in only:
         results["kalshi"] = collect_kalshi(fetcher, out)
         print(f"kalshi: {results['kalshi']}")
+    if "official_rates" in only or "live" in only:
+        # The Live Book's two official endpoints: FINRA's files are large and
+        # the SOFR API is small.
+        results["nyfed"] = collect_nyfed(fetcher, out)
+        print(f"nyfed: {results['nyfed']}")
+        results["finra"] = collect_finra(fetcher, out)
+        print(f"finra: {results['finra']['files']} files, "
+              f"{results['finra']['rows_kept']} universe rows kept")
+    if "treasury" in only:
+        # The U.S. Treasury's own auction results and par yield curve: the only
+        # free, public source in this collector whose *executed* price is an
+        # official publisher's number, which is what the Official Auction Book
+        # trades on (sim/treasury.py).
+        results["treasury"] = collect_treasury(fetcher, out)
+        print(f"treasury: {results['treasury']['tape']} "
+              f"crosscheck={results['treasury']['crosscheck']}")
+    if "fred" in only and "prices" not in only:
+        # The H.15 series on their own, without re-fetching the equity price
+        # files: the official auction book needs the par curve and the
+        # secondary-market bill rates, and asking for "prices" would rewrite
+        # every committed Yahoo file as a side effect.
+        results["fred"] = collect_fred(fetcher, out)
+        print(f"fred: {results['fred']['ok']}")
+    if "prices" in only:
+        results["yahoo"] = collect_yahoo(fetcher, out)
+        print(f"yahoo: {len(results['yahoo']['ok'])} ok, {len(results['yahoo']['failed'])} failed")
+        results["stooq"] = collect_stooq(fetcher, out)
+        print(f"stooq: {len(results['stooq']['ok'])} ok, {len(results['stooq']['failed'])} failed")
+        results["fred"] = collect_fred(fetcher, out)
+        print(f"fred: {results['fred']['ok']}")
+    if "insider_bulk" in only or "sec" in only:
+        # The quarterly structured extracts are requested with the per-filing
+        # walk because they answer the same question (what did insiders trade,
+        # at what price, on what date) from the primary source, without
+        # depending on the browse endpoint that returned HTTP 403 on
+        # 2026-09-18.  Bounded by INSIDER_BULK_SUB_BUDGET_SECONDS so a
+        # throttled host cannot eat the rest of the run again.
+        results["insider_bulk"] = collect_insider_bulk(fetcher, out)
+        print(f"insider_bulk: {results['insider_bulk']['rows']} rows from "
+              f"{results['insider_bulk']['ok']}")
+    if "sec" in only:
+        results["sec"] = collect_sec(fetcher, out)
+        print(f"sec: {results['sec']['transactions']} transactions from "
+              f"{results['sec']['filings']} filings")
+    if "nasdaq" in only:
+        # The official-price candidate probes run last: every attempt so far
+        # has timed out (the audit fails closed on exactly that), so this is
+        # the one section whose loss to the time budget costs nothing.
+        results["nasdaq"] = collect_nasdaq(fetcher, out)
+        print(f"nasdaq: {len(results['nasdaq']['ok'])} ok")
 
     if "prices" in only:
         results["crosscheck"] = crosscheck(out)

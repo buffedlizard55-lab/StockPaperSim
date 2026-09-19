@@ -551,7 +551,7 @@ scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py and independent_audit_official.py
                 (re-derive every published number from the raw streams and the
                 Treasury's own tapes; import no project code)
-tests/          625 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
+tests/          633 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -585,7 +585,7 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 625 tests
+python3 -m unittest discover -s tests   # 633 tests
 python3 -m sim.cli official             # run the official auction book
 python3 -m sim.cli official-blotter     # every settled official trade + evidence
 python3 -m sim.cli trades               # the unified store across every book

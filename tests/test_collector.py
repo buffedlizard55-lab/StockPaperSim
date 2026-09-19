@@ -72,3 +72,116 @@ class TestNasdaqCollector(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EspnRequestFormTest(unittest.TestCase):
+    """The scoreboard request form must match what each sport's calendar is.
+
+    Verified against the live endpoint on 2026-09-19: the weekly form fills
+    the football files, but basketball and baseball IGNORE the week parameter
+    and answer a bare season year with the whole season - the week form
+    returned zero basketball events on every prior run, which is why
+    nba_scoreboard.jsonl stayed empty and the NBA personas reported
+    DATA-MISSING.
+    """
+
+    def test_football_uses_the_week_form(self):
+        for key, path in (("nfl", "football/nfl"), ("ncaaf", "football/college-football")):
+            urls = [u for u, _ in COLLECTOR._espn_requests(key, path)]
+            self.assertTrue(urls, key)
+            for url in urls:
+                self.assertIn("seasontype=", url)
+                self.assertIn("week=", url)
+                self.assertNotIn("dates=2026&limit=5000", url)
+
+    def test_basketball_and_baseball_use_the_whole_season_form(self):
+        for key, path in (("nba", "basketball/nba"), ("mlb", "baseball/mlb")):
+            urls = [u for u, _ in COLLECTOR._espn_requests(key, path)]
+            self.assertTrue(urls, key)
+            for url in urls:
+                self.assertNotIn("week=", url, url)
+                self.assertNotIn("seasontype=", url, url)
+                self.assertRegex(url, r"dates=\d{4}&limit=5000$")
+
+    def test_the_nba_season_year_is_the_one_inside_the_trading_window(self):
+        # dates=2026 is the 2025-26 NBA season (the year names the season that
+        # ends in it); dates=2025 would be 2024-25, which is before the window.
+        urls = [u for u, _ in COLLECTOR._espn_requests("nba", "basketball/nba")]
+        self.assertEqual(urls, [
+            "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/"
+            "scoreboard?dates=2026&limit=5000"])
+
+    def test_every_request_carries_an_explanatory_note(self):
+        for key, path in (("nfl", "football/nfl"), ("nba", "basketball/nba"),
+                          ("mlb", "baseball/mlb")):
+            for url, note in COLLECTOR._espn_requests(key, path):
+                self.assertTrue(note, (key, url))
+
+    def test_the_parser_drops_preseason_events(self):
+        """Whole-season payloads mix spring training in; weeks never did."""
+
+        class WholeSeasonFetcher:
+            def __init__(self):
+                self.manifest = []
+
+            def get(self, url, kind, headers=None, note="", **kwargs):
+                def event(type_, date, status="STATUS_FINAL"):
+                    return {
+                        "date": date, "id": f"e{type_}{date}", "name": "A at B",
+                        "season": {"type": type_},
+                        "competitions": [{"status": {"type": {"name": status}},
+                                          "venue": {"fullName": "V"},
+                                          "competitors": [
+                                              {"homeAway": "home", "score": "110",
+                                               "team": {"displayName": "Home Team"}},
+                                              {"homeAway": "away", "score": "99",
+                                               "team": {"displayName": "Away Team"}}]}]}
+                body = {"events": [event(1, "2025-10-05T23:00Z"),
+                                   event(2, "2025-10-21T23:00Z"),
+                                   event(3, "2026-04-20T23:00Z"),
+                                   event(None, "2025-10-22T23:00Z")]}
+                raw = json.dumps(body).encode("utf-8")
+                self.manifest.append({"url": url})
+                return raw
+
+        with tempfile.TemporaryDirectory() as tmp:
+            COLLECTOR.collect_espn(WholeSeasonFetcher(), tmp)
+            # Only basketball gets rows here: the fetcher answers every URL
+            # with the same body, and football's week list is non-empty too,
+            # so nfl/ncaaf files also exist.  The assertion is on basketball.
+            rows = [json.loads(line) for line in open(
+                os.path.join(tmp, "sports", "nba_scoreboard.jsonl"))]
+        # Preseason (type 1) is dropped; regular season, postseason and an
+        # event with no season block at all are kept, in payload order.
+        self.assertEqual([r["date"] for r in rows],
+                         ["2025-10-21", "2026-04-20", "2025-10-22"])
+
+
+class InsiderBulkBudgetTest(unittest.TestCase):
+    """The insider ZIP walk must be bounded by its own sub-budget.
+
+    The 2026-09-19 run proved a throttled www.sec.gov burns ~40 seconds per
+    URL with nothing to show for it; unbounded, that consumed the minutes the
+    sports section needed, and the sections after it never started.
+    """
+
+    def test_an_expired_sub_budget_records_the_skipped_quarters(self):
+        fetcher = COLLECTOR.Fetcher([], max_seconds=60.0)
+        # A deadline already in the past: every quarter must be skipped and
+        # no URL may be requested at all.
+        COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS_BACKUP = (
+            COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS)
+        try:
+            COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS = -1.0
+            with tempfile.TemporaryDirectory() as tmp:
+                summary = COLLECTOR.collect_insider_bulk(fetcher, tmp)
+        finally:
+            COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS = (
+                COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS_BACKUP)
+        self.assertTrue(summary["sub_budget_exhausted"])
+        self.assertEqual(summary["rows"], 0)
+        self.assertEqual(summary["quarters_skipped"], summary["quarters"])
+        self.assertEqual(fetcher.manifest, [])
+
+    def test_the_sub_budget_is_a_slice_not_the_whole_run(self):
+        self.assertLessEqual(COLLECTOR.INSIDER_BULK_SUB_BUDGET_SECONDS, 300.0)

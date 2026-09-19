@@ -77,7 +77,7 @@ jobs:
           # On a push event there are no inputs, so every one of them needs a
           # fallback; an empty --max-seconds is an argparse error (exit 2), which
           # is exactly how the first run of this workflow failed.
-          ONLY: ${{ github.event.inputs.only || 'prices,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk,injury_archive' }}
+          ONLY: ${{ github.event.inputs.only || 'prices,nasdaq,sec,fda,sports,weather,kalshi,official_rates,treasury,insider_bulk,injury_archive' }}
           MAX_SECONDS: ${{ github.event.inputs.max_seconds || '1500' }}
         run: |
           python scripts/collect_real_data.py --out data/real \

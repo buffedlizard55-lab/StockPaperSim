@@ -1,0 +1,173 @@
+name: Forward rollover (scheduled)
+
+# WHY THIS ONE IS ON A SCHEDULE, WHEN THE OTHER COLLECTORS ARE NOT
+# ----------------------------------------------------------------
+# research/REMAINING_WORK.json carried one open policy question: how a forward
+# test that settles itself every session should be allowed to write to the
+# repository.  The two options were written down in the header of
+# live-season.yml (when it was manual-only), and this workflow implements
+# **option 1**: a scheduled run that pushes to a dedicated branch and opens (or
+# updates) one pull request.
+#
+# Nothing here needs a human to start it.  What a human does is read the diff
+# and the ladder and decide whether to merge it - so the archive accumulates
+# every session without the default branch ever changing unread, which is the
+# property collect-real-data.yml was protecting when it refused a schedule.
+#
+# The order matters and is the point of the run:
+#
+#   1. collect the new prints (exchange-published rows first, vendor rows as the
+#      cross-check) and the official FRED observations that have caught up;
+#   2. re-cross-check the two publishers and refuse to publish a disagreement;
+#   3. step the forward book over every session that has a print, settling the
+#      intents that target it and planning the next one;
+#   4. rebuild the site, so the ladder a reader sees is the ladder that ran;
+#   5. push the whole thing to the rollover branch and open the pull request.
+#
+# A session with no print is *not* settled: the ladder records
+# WAITING-FOR-PRINTS and names the symbols that are missing, and the next
+# scheduled run tries again.  That is what "settle automatically as the prints
+# arrive" has to mean if the P&L is to stay a record of real trades.
+
+on:
+  schedule:
+    # 22:30 UTC on weekdays: after the US close, after the exchange's own daily
+    # rows settle, and after FRED's first afternoon update. A session that has
+    # not published yet is simply picked up by the next run.
+    - cron: "30 22 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      start:
+        description: "First session to request from the publishers (YYYY-MM-DD)"
+        required: false
+        default: ""
+      end:
+        description: "Last session to request from the publishers (YYYY-MM-DD)"
+        required: false
+        default: ""
+      horizon:
+        description: "How many future sessions the projection must cover"
+        required: false
+        default: "3"
+      commit:
+        description: "Push the result to the rollover branch and open/update the PR"
+        required: false
+        default: "true"
+        type: choice
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: forward-rollover
+  cancel-in-progress: false
+
+jobs:
+  rollover:
+    name: Collect prints, settle the book, open the rollover pull request
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity
+        run: python scripts/check_purity.py
+
+      - name: Collect the new prints and official observations
+        env:
+          START: ${{ github.event.inputs.start }}
+          END: ${{ github.event.inputs.end }}
+        run: |
+          ARGS=""
+          [ -n "$START" ] && ARGS="$ARGS --start $START"
+          [ -n "$END" ] && ARGS="$ARGS --end $END"
+          python3 scripts/collect_forward_prints.py --fetch --verbose $ARGS
+
+      - name: Cross-check the two publishers before anything is settled
+        run: python3 scripts/collect_forward_prints.py --verify --verbose
+
+      - name: Step the forward book
+        env:
+          HORIZON: ${{ github.event.inputs.horizon || '3' }}
+        run: python3 -m sim.cli rollover --horizon "$HORIZON" --verbose
+
+      - name: Re-check the intraday lane, so the not-run rows stay facts
+        run: python3 scripts/check_intraday_lane.py
+
+      - name: Rebuild the site from memory
+        run: python3 -m sim.cli build-site
+
+      - name: Published site still matches the code and the memory
+        run: |
+          python3 scripts/independent_audit.py
+          python3 scripts/independent_audit_season2.py
+
+      - name: Push the rollover branch and open or update the pull request
+        if: ${{ github.event.inputs.commit != 'false' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          BRANCH="automation/forward-rollover"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A data/real memory/live docs
+          if git diff --cached --quiet; then
+            echo "no new prints; nothing to roll over"
+            exit 0
+          fi
+          SUMMARY=$(python3 - <<'PY'
+          import json
+          try:
+              ladder = json.load(open("memory/live/forward-ladder.json"))
+          except Exception:
+              print("no ladder written")
+              raise SystemExit(0)
+          print(f"{ladder.get('status','')}\n\n"
+                f"settled: {', '.join(ladder.get('sessions_settled') or []) or 'none'}\n"
+                f"waiting for prints: {', '.join(ladder.get('sessions_waiting') or []) or 'none'}\n"
+                f"outstanding intents: {len(ladder.get('pending_intents') or [])}")
+          PY
+          )
+          git checkout -B "$BRANCH"
+          git commit -m "rollover: settle the sessions that have published prints
+
+          ${SUMMARY}"
+          for attempt in 1 2 3; do
+            if git push --force-with-lease origin "$BRANCH"; then break; fi
+            echo "::warning::push attempt $attempt rejected; retrying"
+            git fetch --quiet origin "$BRANCH" || true
+            sleep 5
+            [ "$attempt" = "3" ] && { echo "::error::could not push the rollover branch"; exit 1; }
+          done
+          if gh pr view "$BRANCH" --json number >/dev/null 2>&1; then
+            echo "pull request already open; the push updated it"
+          else
+            gh pr create --base main --head "$BRANCH" \
+              --title "Forward rollover: $(date -u +%Y-%m-%d)" \
+              --body "$(printf '%s\n\n%s\n' \
+                "Scheduled forward rollover. Settles every session whose traded symbols have a published print, and reports the sessions that are still waiting with the symbols that are missing." \
+                "$SUMMARY")"
+          fi
+
+      - name: Upload the ladder and the cross-check as artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: forward-rollover
+          path: |
+            memory/live/forward-ladder.json
+            data/real/prints/*.json
+            data/real/prints/*.jsonl
+            memory/live/*/manifest.json
+          if-no-files-found: warn
+          retention-days: 30

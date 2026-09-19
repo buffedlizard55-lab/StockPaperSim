@@ -6,7 +6,7 @@
  "exchange": "NasdaqGM",
  "timezone": "America/New_York",
  "first_bar": "2024-09-16",
- "last_bar": "2026-09-16",
+ "last_bar": "2026-09-18",
  "bars": [
   {
    "date": "2024-09-16",
@@ -4525,6 +4525,24 @@
    "close": 80.879997,
    "volume": 56481700,
    "adjclose": 80.879997
+  },
+  {
+   "date": "2026-09-17",
+   "open": 81.54000091552734,
+   "high": 81.79000091552734,
+   "low": 81.41999816894531,
+   "close": 81.77999877929688,
+   "volume": 41622600,
+   "adjclose": 81.77999877929688
+  },
+  {
+   "date": "2026-09-18",
+   "open": 81.47000122070312,
+   "high": 81.47000122070312,
+   "low": 81.08999633789062,
+   "close": 81.25,
+   "volume": 41085300,
+   "adjclose": 81.25
   }
  ],
  "dividends": [
@@ -4625,5 +4643,14 @@
    "amount": 0.315
   }
  ],
- "splits": []
+ "splits": [],
+ "bars_appended_by": {
+  "collector": "scripts/collect_forward_prints.py",
+  "append_count": 2,
+  "appended_dates": [
+   "2026-09-17",
+   "2026-09-18"
+  ],
+  "source_class": "SECONDARY"
+ }
 }

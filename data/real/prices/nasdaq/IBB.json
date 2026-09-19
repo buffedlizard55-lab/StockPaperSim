@@ -1,0 +1,106 @@
+{
+ "symbol": "IBB",
+ "provider": "nasdaq-historical-api",
+ "source_class": "EXCHANGE-PUBLISHED",
+ "redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+ "url": "https://api.nasdaq.com/api/quote/IBB/historical?assetclass=etf&fromdate=2026-09-14&todate=2026-09-18&limit=5000",
+ "source": "https://api.nasdaq.com/api/quote/IBB/historical?assetclass=etf&fromdate=2026-09-14&todate=2026-09-18&limit=5000",
+ "retrieved_at": "2026-09-19T00:00:00Z",
+ "retrieved_utc": "2026-09-19T00:00:00Z",
+ "asset_class": "etf",
+ "raw_file": "data/real/prints/nasdaq_daily.jsonl",
+ "raw_sha256": "16ee7f790c6ea1404a98e8d290da63bf32aaaaa4d5b55e592057ec2c57225ac8",
+ "access_status": {
+  "ledger_written": true,
+  "retrieval": "public endpoint, no authentication",
+  "revision": "forward-window slice; the two-year archive has not been collected"
+ },
+ "session_coverage": {
+  "first_bar": "2026-09-14",
+  "last_bar": "2026-09-18",
+  "bars": 5
+ },
+ "coverage": {
+  "first_bar": "2026-09-14",
+  "last_bar": "2026-09-18",
+  "bars": 5
+ },
+ "bars": [
+  {
+   "date": "2026-09-14",
+   "open": 203.7,
+   "high": 205.7,
+   "low": 202.57,
+   "close": 204.6,
+   "volume": 1329866,
+   "raw_response_values": {
+    "close": "204.60",
+    "high": "205.70",
+    "low": "202.57",
+    "open": "203.70",
+    "volume": "1,329,866"
+   }
+  },
+  {
+   "date": "2026-09-15",
+   "open": 203.82,
+   "high": 204.18,
+   "low": 200.52,
+   "close": 202.0,
+   "volume": 1917363,
+   "raw_response_values": {
+    "close": "202.00",
+    "high": "204.18",
+    "low": "200.52",
+    "open": "203.82",
+    "volume": "1,917,363"
+   }
+  },
+  {
+   "date": "2026-09-16",
+   "open": 202.49,
+   "high": 204.1599,
+   "low": 200.98,
+   "close": 202.4,
+   "volume": 1098798,
+   "raw_response_values": {
+    "close": "202.40",
+    "high": "204.1599",
+    "low": "200.98",
+    "open": "202.49",
+    "volume": "1,098,798"
+   }
+  },
+  {
+   "date": "2026-09-17",
+   "open": 205.27,
+   "high": 207.52,
+   "low": 204.81,
+   "close": 207.07,
+   "volume": 1313496,
+   "raw_response_values": {
+    "close": "207.07",
+    "high": "207.52",
+    "low": "204.81",
+    "open": "205.27",
+    "volume": "1,313,496"
+   }
+  },
+  {
+   "date": "2026-09-18",
+   "open": 207.04,
+   "high": 207.475,
+   "low": 204.25,
+   "close": 204.56,
+   "volume": 1355070,
+   "raw_response_values": {
+    "close": "204.56",
+    "high": "207.475",
+    "low": "204.25",
+    "open": "207.04",
+    "volume": "1,355,070"
+   }
+  }
+ ],
+ "eligibility_note": "This file is a forward-window exchange record, not the two-year archive sim.eligibility requires for an official-price competition. It exists so a forward fill can cite the exchange's own published row."
+}

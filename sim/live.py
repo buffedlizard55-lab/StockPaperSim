@@ -515,6 +515,39 @@ TERMINAL_INTENT_STATES = frozenset({INTENT_FILLED, INTENT_PARTIAL, INTENT_REJECT
                                     INTENT_EXPIRED, INTENT_CANCELLED})
 
 
+def bar_is_executable(md, symbol: str, session: str) -> Tuple[bool, str]:
+    """Can a fill cite a *published* price for ``symbol`` on ``session``?
+
+    Three states are possible and only two of them may carry a fill:
+
+    ``native``
+        The collected price file carries a bar for that session (the historical
+        window).  Executable.
+    ``print``
+        ``sim.realdata.apply_forward_prints`` overlaid a row from the print
+        ledger, which cites its publisher, URL and checksum.  Executable.
+    ``carried``
+        Neither: the market holds a previous close with zero volume so the arrays
+        line up.  **Not** executable - and the caller is told exactly why, so the
+        intent can be published as waiting instead of being filled at a price
+        nobody printed.
+    """
+    provenance = (getattr(md, "bar_provenance", {}) or {}).get((symbol, session))
+    if provenance:
+        return True, ""
+    meta = md.series_meta.get(symbol)
+    if meta is not None and session in meta.by_date():
+        return True, ""
+    gaps = (getattr(md, "gaps", {}) or {}).get(symbol) or []
+    if session in gaps:
+        return False, (
+            f"no publisher printed {symbol} on {session}: the market carries the "
+            f"previous session's close forward at zero volume, and a fill may not "
+            f"cite a price that was never printed")
+    return False, (f"no collected bar for {symbol} on {session}: the intent waits "
+                   f"for a published print rather than filling at a modelled price")
+
+
 @dataclass
 class Intent:
     """One upcoming trade, written the moment it is created and never edited.
@@ -1117,6 +1150,16 @@ class LiveBook:
                                               "intent": intent.intent_id})
                 summary["rejected"] += 1
                 continue
+            executable, why_not = bar_is_executable(self.md, intent.symbol, session)
+            if not executable:
+                # No publisher printed this symbol on this session.  The market
+                # does carry a bar there (a previous close, zero volume) so the
+                # arrays stay aligned, and filling against it would put an
+                # invented price into a published P&L.  The intent waits instead.
+                intent.status = INTENT_WAITING_DATA
+                intent.settle_note = why_not
+                summary["waiting"] += 1
+                continue
             key = (intent.participant, intent.symbol)
             if key not in venues:
                 venue_day = self.engine.make_venue_day(self.md, intent.symbol, t,
@@ -1143,6 +1186,26 @@ class LiveBook:
             row["reference_source_class"] = getattr(meta, "source_class", "UNKNOWN")
             row["reference_provider"] = getattr(meta, "provider", "")
             row["reference_url"] = getattr(meta, "url", "")
+            # A bar that came from the print ledger cites its own publisher, not
+            # the vendor file the history happens to live in.
+            provenance = (getattr(self.md, "bar_provenance", {}) or {}).get(
+                (intent.symbol, session))
+            if provenance:
+                row["reference_source_class"] = provenance.get("source_class",
+                                                               row["reference_source_class"])
+                row["reference_provider"] = provenance.get("source", "")
+                row["reference_url"] = provenance.get("url", "")
+                row["reference_print_file"] = provenance.get("file", "")
+                row["reference_print_sha256"] = provenance.get("sha256", "")
+                row["reference_redistribution_status"] = provenance.get(
+                    "redistribution_status", "")
+            session_evidence = (getattr(self.md, "session_evidence", {}) or {}).get(session)
+            if session_evidence:
+                row["session_verification"] = session_evidence.get("verification", "")
+                row["session_official_missing"] = ",".join(
+                    session_evidence.get("official_series_missing", []))
+            else:
+                row["session_verification"] = "COLLECTED-OFFICIAL-CALENDAR"
             account.apply_fill(row)
             intent.fill_id = f"{intent.intent_id}-F1"
             intent.settled_on = session

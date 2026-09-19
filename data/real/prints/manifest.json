@@ -1,0 +1,192 @@
+{
+ "collector": "scripts/collect_forward_prints.py",
+ "crosscheck": {
+  "close_disagreements_beyond_tolerance": [],
+  "symbol_sessions_compared": 117,
+  "symbols_compared": 24,
+  "verdict": "AGREEMENT: both publishers describe the same bars for every compared session",
+  "worst_close_difference_bps": 0.0005,
+  "worst_field_difference_bps": 4.815
+ },
+ "generated_at": "2026-09-19T04:24:52Z",
+ "ledgers": {
+  "nasdaq": {
+   "file": "data/real/prints/nasdaq_daily.jsonl",
+   "label": "Nasdaq published daily price record",
+   "redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+   "rows": 117,
+   "sessions": [
+    "2026-09-14",
+    "2026-09-18"
+   ],
+   "sha256": "16ee7f790c6ea1404a98e8d290da63bf32aaaaa4d5b55e592057ec2c57225ac8",
+   "source": "nasdaq",
+   "source_class": "EXCHANGE-PUBLISHED",
+   "symbols": 24,
+   "tradable": true
+  },
+  "yahoo": {
+   "file": "data/real/prints/yahoo_daily.jsonl",
+   "label": "Yahoo Finance chart API (v8) daily bars",
+   "redistribution_status": "UNRECORDED",
+   "rows": 120,
+   "sessions": [
+    "2026-09-14",
+    "2026-09-18"
+   ],
+   "sha256": "a6c022d4ccb309898ec8ffd1b0902d692ba73ec87654665d8bf94ce525a0e037",
+   "source": "yahoo",
+   "source_class": "SECONDARY",
+   "symbols": 24,
+   "tradable": true
+  }
+ },
+ "note": "Ledgers hold one row per (source, symbol, session) with the publisher's own value plus its URL and retrieval time. The price files are derived from them; no price in this repository originates anywhere else.",
+ "price_files_written": [
+  {
+   "bars": 4,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/AAPL.json",
+   "sha256": "c5b7b111e4710aa6e1d02b24bf8648bf2c3acb1aeca7bdab03f8a7b1cdf0b75c"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/DKNG.json",
+   "sha256": "b3fcbc760c59f9071894caccc99743222d2d08b6202280e8a3b7d0d331ffa08b"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/FLUT.json",
+   "sha256": "fecf41aeecde1667caa5e22e674a39a3b545eb421700879a23469512df35958a"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/GENI.json",
+   "sha256": "a2aeef12d67f7097edab0e77f5df559faf01b4d4957c9c4892864bdd808bcf47"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/GLD.json",
+   "sha256": "42a5cfad03fbf6ff584c3b72510adc0abae92acf003d7e60010ce171feece6e4"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/IBB.json",
+   "sha256": "9742048dcf9cce78792b9325d139f82921edfdd18761459603598038b2a87f08"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/IWM.json",
+   "sha256": "dc52cc74c081dc0094732b9260da929b15b70c61e1670f1cff93bd45420904c6"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/JNJ.json",
+   "sha256": "b8f830255cbf0751f448f9efca67fa47444fa7021ddacf80dffdecf53e3a2337"
+  },
+  {
+   "bars": 4,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/JPM.json",
+   "sha256": "fcbd1b0c8cbc33f39bef85f31fcab6c7de63d98a0fc463e36edab65de47a203e"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/MSFT.json",
+   "sha256": "33142dfccea2497b9b64567268b0c427844418c936c91bb8129a9f5d02745bc3"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/MU.json",
+   "sha256": "389a3dc83456d8cd49e7476eaf5c1ea3a9e051fde2953f2689bf04704b5d552c"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/NVDA.json",
+   "sha256": "fcf33b6115e90f61dc59af79e4a5ae2469d88dfe03810b33d825099f56054e02"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/PENN.json",
+   "sha256": "9c979a15e9b7b168d6947c050b96871b6960a663e8d69c257ab18c03d4e99260"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/PG.json",
+   "sha256": "b11a2746e3ec914db81239ee877816adb74f2b820141f3946e8f2439802210bd"
+  },
+  {
+   "bars": 4,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/QQQ.json",
+   "sha256": "17f8d830a3ec6b29818a5cf356be845a165036152ccd4e8b1819c96bc247b940"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/SPY.json",
+   "sha256": "c29866d21f5fd7e00397e57886e4f49635df877f860a79593e1cd4e560f87fa9"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/SRAD.json",
+   "sha256": "963fcb860aca26dbeac25c42e3739bdac4c06b51d42a87e9d1ab83f3b27d7c37"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/T.json",
+   "sha256": "439fd20ff96b54b5048322cdc6f2182c8fa8c24618ecc8bca9b6925ed37dcf88"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/TLT.json",
+   "sha256": "f27a0223a6b93dabd940a2d14cfe38b51b3822374ce28005421041e9d6e9ec8c"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/TSLA.json",
+   "sha256": "276190368827d02ee00443a9313927bd91f97e162e1b5d89c6716027bfc67ea2"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/UNG.json",
+   "sha256": "4cb48980edd8b33439da94db44fca5ff4dc041f90464b59d12102454cd324fd8"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/XBI.json",
+   "sha256": "b1003a57f954ca685ebfb96868ead3dcf2660268bde47b1f6a7d79b2963b13fa"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/XLU.json",
+   "sha256": "b8e6cec75b1445719df00e22dbd6eebe9de4c54f0306f31545f6a052aa8e1bec"
+  },
+  {
+   "bars": 5,
+   "last_bar": "2026-09-18",
+   "path": "data/real/prices/nasdaq/XOM.json",
+   "sha256": "bf21a378d96dfe122c0531339599764fe2993956c742543d7f708f8b68860154"
+  }
+ ],
+ "raw_transcription": "data/real/prints/raw/sessions_2026-09-14_2026-09-18.json"
+}

@@ -320,13 +320,35 @@ class TestOfficialFeed(unittest.TestCase):
         self.assertAlmostEqual(by_date["2026-09-16"], 3.62, places=6)
 
     def test_index_history_is_a_real_observation_not_a_projection(self):
+        """The feed's last point must be an observation somebody published.
+
+        The first version of this test pinned one date per series. That is the
+        wrong assertion twice over: it goes stale the moment a publisher posts a
+        new session (NASDAQCOM and DJIA now carry 2026-09-18 while the S&P 500
+        series, which defines this project's calendar, still ends on 2026-09-17),
+        and it does not test the property in its name. What matters is that the
+        last point is *in the collected file* - a print a reader can re-fetch -
+        and not a carried-forward, interpolated or projected value.
+        """
+        from sim import realdata
         feed = live.OfficialFeed()
         for sid in ("SP500", "NASDAQCOM", "DJIA"):
             series = feed.get(sid)
             self.assertIsNotNone(series, sid)
-            self.assertEqual(series.last_date(), "2026-09-17", sid)
             self.assertEqual(series.source_class,
                              "OFFICIAL-PUBLISHER / FRED-REPUBLISHED", sid)
+            published, _path, _sha = realdata.load_fred(sid)
+            last = series.last_date()
+            self.assertEqual(last, max(published),
+                             f"{sid}: the feed's last date is not the latest "
+                             f"observation in the collected file")
+            self.assertAlmostEqual(
+                float(series.values[-1]), float(published[last]), places=6,
+                msg=f"{sid}: the feed's last value is not the published one")
+        # The calendar authority is a separate fact worth pinning: the S&P 500
+        # series is what session lists are built from, and it lags the composite
+        # indices, which is exactly why a session can be provisional.
+        self.assertEqual(feed.get("SP500").last_date(), "2026-09-17")
 
     def test_an_unreadable_series_is_reported_missing_not_substituted(self):
         import tempfile

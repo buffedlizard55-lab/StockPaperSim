@@ -36,7 +36,7 @@ import textwrap
 from typing import Dict, List, Optional, Sequence
 
 from . import analytics, config, engine, eligibility, ledger as ledger_mod, marketdata, memory
-from . import live, live_season, official_season, realdata, season2, tradelog, universe
+from . import live, live_season, official_season, realdata, rollover, season2, tradelog, universe
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_SEEDS: List[int] = list(config.SCENARIO_SEEDS)
@@ -695,6 +695,62 @@ def cmd_live(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rollover(args: argparse.Namespace) -> int:
+    """Step the forward book: settle every session that has a published print."""
+    result = rollover.step(root=args.memory_root,
+                           plan_date=args.plan_date or None,
+                           through=args.through or None,
+                           horizon=args.horizon,
+                           verbose=args.verbose,
+                           write=not args.no_write)
+    if args.json:
+        print(json.dumps({"run_id": result["run_id"], "status": result["manifest"]["status"],
+                          "ladder": result["ladder"],
+                          "pending": result["pending"]}, indent=1, default=str))
+        return 0
+    manifest = result["manifest"]
+    print("FORWARD ROLLOVER LADDER")
+    print(f"  run {result['run_id']} · plan date {manifest['plan_date']} · "
+          f"replayed {len(result['ladder'])} session(s)")
+    print(f"  {manifest['status']}")
+    roll = manifest.get("rollover", {})
+    print(f"  executable prints: {roll.get('price_print_source')} "
+          f"({roll.get('price_print_class')}, redistribution "
+          f"{roll.get('price_print_redistribution_status')})")
+    header = (f"  {'session':11s}{'verification':29s}{'targeted':>9}{'filled':>7}"
+              f"{'waiting':>8}{'notional $':>14}  evidence")
+    print(header)
+    print("  " + "-" * (len(header) - 2))
+    for row in result["ladder"]:
+        evidence = ("official series " + ",".join(row["official_series_missing"])
+                    if row["official_series_missing"] else "official series complete")
+        print(f"  {row['session']:11s}{row['verification']:29s}"
+              f"{row['intents_targeted']:>9}{row['filled']:>7}{row['waiting_for_prints']:>8}"
+              f"{row['notional_usd']:>14,.2f}  {evidence}")
+        for fill in row["fills"]:
+            print(f"      {fill['participant']:26s}{fill['side']:5s}{fill['symbol']:6s}"
+                  f"{fill['quantity']:>6} @ {fill['price']:>10,.4f}  "
+                  f"{fill['reference_source_class']}")
+    if result["pending"]:
+        print(f"\n  {len(result['pending'])} intents outstanding "
+              f"({', '.join(sorted({i['intended_session'] for i in result['pending']}))})")
+        for intent in result["pending"][:10]:
+            print(f"    {intent['participant']:26s}{intent['side']:5s}"
+                  f"{intent['symbol']:6s}{intent['quantity']:>7}  "
+                  f"for {intent['intended_session']} · {intent['status']}")
+    print(f"\n  verification: {result['verification']['verdict']} "
+          f"({result['verification']['checks']} checks, "
+          f"{result['verification']['failure_count']} failures)")
+    if result.get("dry_run"):
+        print(f"\n  dry run: nothing was written (scratch artifacts in "
+              f"{result['run_dir'] or 'a temporary directory'})")
+    else:
+        print(f"  ladder written to memory/live/{rollover.LADDER_FILE}; memory: "
+              f"{result['run_dir_rel']}")
+        print(f"  append-only run log: memory/live/{rollover.HISTORY_FILE}")
+    return 0
+
+
 def cmd_live_blotter(args: argparse.Namespace) -> int:
     """Print every settled intent with the bar it executed against."""
     base = os.path.join(args.memory_root, live_season.LIVE_MEMORY_SUBDIR)
@@ -1209,6 +1265,15 @@ def build_parser() -> argparse.ArgumentParser:
     tr.add_argument("--official-only", action="store_true",
                     help="only trades whose executed price is an official number")
     tr.set_defaults(func=cmd_trades)
+
+    ro = sub.add_parser("rollover", help="step the forward book over every session that has a published print")
+    ro.add_argument("--plan-date", default="", help="first session of the replay (default: the existing book's)")
+    ro.add_argument("--through", default="", help="last session to step (default: every collected session)")
+    ro.add_argument("--horizon", type=int, default=3, help="how many future sessions to plan")
+    ro.add_argument("--json", action="store_true", help="print the ladder as JSON")
+    ro.add_argument("--no-write", action="store_true", help="compute the ladder without writing memory")
+    ro.add_argument("--verbose", action="store_true")
+    ro.set_defaults(func=cmd_rollover)
 
     ts = sub.add_parser("trade-sim", help="simulate placing a real trade with full microstructure & cost model")
     ts.add_argument("--symbol", default="SPY", help="ticker symbol (e.g. SPY, QQQ, AAPL, NVDA)")

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive summary · StockPaperSim</title>
+<meta name="description" content="Executive summary: every headline row either carries a
+number from a named file or says NOT RUN with the reason and the artifact that would
+unblock it.">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Executive summary · measured rows cite their file, unmeasured
+    rows say why</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="active" href="summary.html">Executive summary</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="simulator.html">Trade Simulator</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a><a href="season2/index.html">Season 2 (eligibility status)</a><a href="live/index.html">Live Book</a><a href="official/index.html">Official Book</a></nav>
+</header>
+<main class="wrap">
+<h1>Executive summary</h1>
+<p>One page, every headline row. Rows that carry numbers name the file the numbers came from; rows that do not carry numbers say <strong>not run</strong> and why. The distinction is the whole point of this page: a forward test with an invented row in it is worth less than a shorter test without one.</p>
+<h2>What is measured</h2>
+<p>These rows are rendered from the files named beside them. Nothing else on this page carries a number.</p>
+<h3>Forward rollover</h3>
+<p>The forward book steps itself through every session that has a published print. A session settles only when each trade it contains can cite a real published bar; the evidence column names the official series that have (<em>present</em>) and have not (<em>missing</em>) published that session's observation, so a provisional settlement is visible as provisional.</p>
+<p><strong>Status:</strong> <span class="badge badge-ok">MEASURED</span> ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 8 intents outstanding.<br><span class="note">Plan date 2026-09-16 · calendar authority FRED SP500 observation dates · executable prints nasdaq (EXCHANGE-PUBLISHED, redistribution NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION) · generated 2026-09-19T04:25:25Z · source <code>memory/live/forward-ladder.json</code></span></p>
+<table><thead><tr><th>Session</th><th>Verification</th><th class="num">Intents</th><th class="num">Filled</th><th class="num">Waiting</th><th class="num">Notional</th><th>Official series present</th><th>Official series missing</th></tr></thead><tbody>
+<tr><td>2026-09-17</td><td><span class="badge badge-ok">COLLECTED-OFFICIAL-CALENDAR</span></td><td class="num">16</td><td class="num">16</td><td class="num">0</td><td class="num">$1,239,798.60</td><td>SP500, NASDAQCOM, DJIA, VIXCLS, SOFR, DGS10, DGS3MO</td><td>DCOILWTICO, DTWEXBGS</td></tr>
+<tr><td>2026-09-18</td><td><span class="badge badge-warn">PROVISIONAL-EXCHANGE-PRINTS</span></td><td class="num">11</td><td class="num">11</td><td class="num">0</td><td class="num">$521,201.60</td><td>NASDAQCOM, DJIA</td><td>SP500, VIXCLS, SOFR, DGS10, DGS3MO, DCOILWTICO, DTWEXBGS</td></tr>
+</tbody></table>
+<details><summary>Every settled fill on the ladder (27)</summary><table><thead><tr><th>Intent</th><th>Participant</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th class="num">Price</th><th>Reference class</th></tr></thead><tbody>
+<tr><td>NasdaqMomentum_Max-00001</td><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
+<tr><td>DowNasdaq_SpreadMax-00001</td><td>@DowNasdaq_SpreadMax</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
+<tr><td>DowNasdaq_SpreadMax-00002</td><td>@DowNasdaq_SpreadMax</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>SECONDARY</td></tr>
+<tr><td>VIXRegime_LiveMax-00001</td><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">715.96</td><td>SECONDARY</td></tr>
+<tr><td>SOFRPivot_Rider-00001</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
+<tr><td>SOFRPivot_Rider-00002</td><td>@SOFRPivot_Rider</td><td>TSLA</td><td>buy</td><td class="num">120</td><td class="num">367.5</td><td>SECONDARY</td></tr>
+<tr><td>CurveSteepener_MaxBeta-00001</td><td>@CurveSteepener_MaxBeta</td><td>SPY</td><td>buy</td><td class="num">120</td><td class="num">763.16</td><td>SECONDARY</td></tr>
+<tr><td>OilDollar_FadeUNG-00001</td><td>@OilDollar_FadeUNG</td><td>UNG</td><td>buy</td><td class="num">7700</td><td class="num">10.32</td><td>SECONDARY</td></tr>
+<tr><td>OilDollar_FadeUNG-00002</td><td>@OilDollar_FadeUNG</td><td>XOM</td><td>buy</td><td class="num">600</td><td class="num">161.85</td><td>SECONDARY</td></tr>
+<tr><td>MLB_Attention_Live-00001</td><td>@MLB_Attention_Live</td><td>PENN</td><td>sell</td><td class="num">3300</td><td class="num">17.85</td><td>SECONDARY</td></tr>
+<tr><td>LeapStyle_AutoLiquidate-00001</td><td>@LeapStyle_AutoLiquidate</td><td>GLD</td><td>buy</td><td class="num">240</td><td class="num">400.29</td><td>SECONDARY</td></tr>
+<tr><td>PinePilot_EMA_Live-00001</td><td>@PinePilot_EMA_Live</td><td>QQQ</td><td>sell</td><td class="num">120</td><td class="num">715.95</td><td>SECONDARY</td></tr>
+<tr><td>VolControl_MaxLev-00001</td><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
+<tr><td>GoldVsRealRate_Live-00001</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>buy</td><td class="num">1200</td><td class="num">81.55</td><td>SECONDARY</td></tr>
+<tr><td>FDA_Fade_Live-00001</td><td>@FDA_Fade_Live</td><td>XBI</td><td>buy</td><td class="num">600</td><td class="num">157.32</td><td>SECONDARY</td></tr>
+<tr><td>KitchenSink_Official-00001</td><td>@KitchenSink_Official</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>SECONDARY</td></tr>
+<tr><td>NasdaqMomentum_Max-00002</td><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>VIXRegime_LiveMax-00002</td><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">80</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00003</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>sell</td><td class="num">120</td><td class="num">718.83</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00004</td><td>@SOFRPivot_Rider</td><td>TSLA</td><td>sell</td><td class="num">120</td><td class="num">368.98</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00005</td><td>@SOFRPivot_Rider</td><td>TLT</td><td>buy</td><td class="num">400</td><td class="num">81.47</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>MLB_Attention_Live-00002</td><td>@MLB_Attention_Live</td><td>PENN</td><td>sell</td><td class="num">100</td><td class="num">17.21</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>LeapStyle_AutoLiquidate-00002</td><td>@LeapStyle_AutoLiquidate</td><td>GLD</td><td>buy</td><td class="num">120</td><td class="num">400.5</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>VolControl_MaxLev-00002</td><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>GoldVsRealRate_Live-00002</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>sell</td><td class="num">1200</td><td class="num">81.46</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>GoldVsRealRate_Live-00003</td><td>@GoldVsRealRate_Live</td><td>GLD</td><td>buy</td><td class="num">120</td><td class="num">400.5</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>FDA_Fade_Live-00002</td><td>@FDA_Fade_Live</td><td>XBI</td><td>buy</td><td class="num">300</td><td class="num">158.23</td><td>EXCHANGE-PUBLISHED</td></tr>
+</tbody></table></details>
+<h4>Intents outstanding</h4><table><thead><tr><th>Participant</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th>Target session</th><th>Status</th></tr></thead><tbody>
+<tr><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@SOFRPivot_Rider</td><td>TLT</td><td>buy</td><td class="num">1000</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@LeapStyle_AutoLiquidate</td><td>NVDA</td><td>buy</td><td class="num">100</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@PinePilot_EMA_Live</td><td>QQQ</td><td>buy</td><td class="num">240</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@GoldVsRealRate_Live</td><td>GLD</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@FDA_Fade_Live</td><td>XBI</td><td>sell</td><td class="num">900</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+</tbody></table>
+<h3>Exchange-versus-vendor print cross-check</h3>
+<p><span class="badge badge-warn">AGREEMENT: both publishers describe the same bars for every compared session</span> AGREEMENT: both publishers describe the same bars for every compared session. Worst close difference 0.0005 bps over 117 symbol-sessions, tolerance 5.0 bps. Source <code>data/real/prints/crosscheck.json</code>.</p>
+<h3>Official-price eligibility (strict gate)</h3>
+<p><span class="badge badge-bad">INELIGIBLE</span> <code>eligible = false</code>. Backend nasdaq, source class required OFFICIAL, redistribution statuses accepted CONFIRMED_PUBLIC_REDISTRIBUTION, LICENSED_FOR_REPOSITORY_REPRODUCTION. Window 2024-09-16 to 2026-09-16, 502 sessions and 24 symbols checked. Source <code>data/real/official_price_eligibility.json</code>.</p>
+<ul><li><code>DATE_RANGE</code> × 24</li><li><code>DIVIDEND_DATA_NOT_VERIFIED</code> × 24</li><li><code>DIVIDEND_PROVENANCE_MISSING</code> × 24</li><li><code>MANIFEST_CHECKSUM_NOT_FOUND</code> × 24</li><li><code>MISSING_SESSIONS</code> × 24</li><li><code>NON_OFFICIAL_SOURCE_CLASS</code> × 24</li><li><code>REDISTRIBUTION_NOT_CONFIRMED</code> × 24</li></ul>
+<p class="note">Every code is a reason the gate is closed, stated as the audit states it. Closing it is the point: an official-price competition may only run on data this project is allowed to republish, and that permission does not exist yet.</p>
+<h3>How the forward prints were obtained</h3>
+<p>The publisher rows in this build were transcribed from the endpoints below in a session that had no outbound HTTPS, and cross-checked against each other. Each row keeps the publisher's own string and the URL it came from; the scheduled workflow fetches the same endpoints directly so the next build does not need the transcription step at all.</p>
+<ul></ul>
+<h2>What is not run, and why</h2>
+<p>These rows are the ones this project has been asked for and cannot yet measure. Each one names the missing artifact and what would unblock it. A row stays here - with no number - until that artifact exists; it is never filled in from a proxy.</p>
+<table><thead><tr><th>Row</th><th>Status</th><th>Why there is no number</th><th>Missing artifact</th><th>Unblocks when</th><th>Sources</th></tr></thead><tbody>
+<tr id="study"><td><strong>Intraday study</strong><br><code>study</code></td><td><span class="badge badge-bad">NOT RUN</span></td><td>The real intraday capture that this study is defined on has not landed on this branch. The lane that produces it commits on its own schedule and the connection to it has been down, so no intraday tape exists in this repository to measure. An intraday result computed from daily bars would be a modelled number wearing a measured number&#x27;s name, so the row stays empty.</td><td><code>data/real/intraday/ (session-sliced intraday prints with retrievable URLs and SHA-256)</code></td><td>The intraday lane lands its extract on this branch, or a free official intraday source is collected with a recorded retrieval and a redistribution status.</td><td><a href="https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf">Nasdaq historical quote endpoint (the daily fallback the collector uses)</a><br><a href="https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regulatory/nasdaq-totalview-specs.txt">Nasdaq TotalView specification, kept locally because the product is licensed</a><br></td></tr>
+<tr id="volatile_stock_division"><td><strong>Volatile-stock division</strong><br><code>volatile_stock_division</code></td><td><span class="badge badge-bad">NOT RUN</span></td><td>A division is a scoreboard over a candidate set selected on volatility. The selector needs sessions this repository does not have: the daily files end on the last collected print and the volatility screen is defined over the intraday range, which is exactly the capture that has not landed. No candidate list has been constructed, so no division result is published.</td><td><code>an intraday capture and a written selection rule with its own pre-registration</code></td><td>The intraday capture lands and the selection rule is registered before it is applied.</td><td><a href="https://buffedlizard55-lab.github.io/StockPaperSim/season2/">Season 2 method (what a division would be a variant of)</a><br></td></tr>
+<tr id="exec_summary_stock_rows"><td><strong>Stock rows of this summary</strong><br><code>exec_summary_stock_rows</code></td><td><span class="badge badge-bad">NOT RUN</span></td><td>The stock rows are the per-name returns of the volatile-stock division. They inherit that row&#x27;s blocker: with no intraday capture there are no per-name results to report, and publishing a per-name table built from anything else would be an estimate presented as a measurement.</td><td><code>per-name results from a landed capture</code></td><td>The volatile-stock division runs.</td><td>—</td></tr>
+<tr id="tradingview_strategy_report"><td><strong>TradingView Strategy Report benchmark</strong><br><code>tradingview_strategy_report</code></td><td><span class="badge badge-bad">NOT RUN</span></td><td>TradingView&#x27;s Strategy Report is behind a paid plan and its exports are plan-gated: the export endpoint requires an authenticated session and there are no credentials for this project, and the terms of that plan do not permit redistributing the export even when one exists. The benchmark therefore cannot be reproduced from this repository, and no TradingView number is quoted.</td><td><code>a licensed export, or a written permission for the numbers this project would republish</code></td><td>Either the owner supplies a licensed export and the redistribution question is settled, or the benchmark is replaced with one this repository can cite end to end.</td><td><a href="https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regulatory/tradingview-pricing.txt">TradingView pricing and plan limits, kept locally</a><br><a href="https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/research/COMPETITION_SITES.md">Competition-site reference notes (The Leap, Trade-Ideas, Candlecharts)</a><br></td></tr>
+<tr id="real_intraday_capture"><td><strong>Real intraday capture</strong><br><code>real_intraday_capture</code></td><td><span class="badge badge-bad">NOT RUN</span></td><td>No intraday print has been collected into this repository by either lane. The daily collector reaches free public endpoints from a GitHub runner; the licensed intraday feeds require a contract and a data redistribution decision that this project has not made. Nothing substitutes a synthetic path for the missing tape.</td><td><code>data/real/intraday/ with per-request URLs, byte counts and SHA-256</code></td><td>A capture lane commits its extract, or a redistribution decision is recorded for a licensed feed.</td><td><a href="https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/.github/workflows/collect-real-data.yml">How the daily collector runs and what it may write</a><br></td></tr>
+</tbody></table>
+<h3>Standing rules this page obeys</h3><ul><li>No manual input: every scheduled run collects, settles, rebuilds the site and opens its own pull request.</li><li>No invented numbers: a missing measurement is published as NOT RUN with the reason and the artifact that would unblock it.</li><li>Irregularities are flagged rather than smoothed: every one is itemised on the irregularities page with its evidence.</li><li>Yahoo-backed results are secondary research data and are labelled as such on every page that shows them.</li></ul>
+<h3>Intraday capture check</h3>
+<p><strong>NOT_IN_THIS_TREE</strong> in this working tree · history: <code>CANNOT_TELL_SHALLOW_CLONE</code> · checked 2026-09-19T04:36:17Z by <code>scripts/check_intraday_lane.py</code>.</p>
+<table><thead><tr><th>Capture path</th><th>In this tree</th><th>Contents</th></tr></thead><tbody>
+<tr><td><code>data/real/intraday</code></td><td>absent</td><td>0 file(s), 0 bytes</td></tr><tr><td><code>data/real/prints/intraday</code></td><td>absent</td><td>0 file(s), 0 bytes</td></tr>
+</tbody></table>
+<p>a capture commits prints under data/real/intraday/ with a retrievable URL and a SHA-256 per file, or an official free intraday source is collected the same way</p>
+<p>The check answers two different questions and keeps them apart. The tree listing is definitive, which is the fact the rows below rest on. The history answer is weaker: this clone is shallow, so it reports <code>CANNOT_TELL_SHALLOW_CLONE</code> rather than claiming nothing was ever committed anywhere.</p>
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Generated by <code>scripts/build_site_summary.py</code> from
+    <code>research/EXEC_SUMMARY.json</code>, <code>memory/live/</code> and
+    <code>data/real/</code>. CI rebuilds this page and diffs it, so a number on it
+    cannot drift from the file it came from. Nothing here is investment advice.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

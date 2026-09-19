@@ -126,13 +126,6 @@
   "where": "scripts/collect_real_data.py, sim/masterfeed.py::_insider_signals, memory/runs/season2-*"
  },
  {
-  "title": "Give the collector a schedule so forward-only strategies accumulate their own archive",
-  "detail": "The injury and pre-game-probability strategies can only ever be forward-tested. A daily or weekly cron on the existing collection workflow would build the archive that makes a future backtest possible, with the same manifest, hashing and per-file provenance the price files already have.",
-  "priority": "P1",
-  "effort": "one workflow change plus a retention policy",
-  "where": ".github/workflows/collect-real-data.yml, scripts/collect_real_data.py"
- },
- {
   "title": "Publish a second, non-overlapping real season",
   "detail": "One real year is one observation (L-17). The collector can fetch an arbitrarily long window from the same endpoints, so the cheap next step is a second season over a different year, traded by the same roster, with the cross-season rank correlation published next to the current leaderboard.",
   "priority": "P1",
@@ -175,13 +168,6 @@
   "where": ".github/workflows/collect-real-data.yml, sim/strategies_mf.py"
  },
  {
-  "title": "Settle the live forward book: run the collection and the settlement pass",
-  "detail": "Session 2026-09-17 forward book has settled with 16 executed fills and full microstructure reporting. Continuing forward settlement for subsequent dates (2026-09-18 onward) requires scheduled daily collection runs and forward-stepping passes.",
-  "priority": "P1",
-  "effort": "periodic scheduled runs",
-  "where": "scripts/collect_real_data.py, .github/workflows/collect-real-data.yml, sim/live_season.py, memory/live/"
- },
- {
   "title": "Run the collection workflow (dispatch is blocked: HTTP 403 Resource not accessible by integration)",
   "detail": "The insider participants cannot trade and the EDGAR User-Agent fix cannot be proven until the collector runs on a runner. 'gh workflow run \"Collect real market data\" --ref <branch>' returns 403 for this session's automation (workflow id 361020102): the token can push and open pull requests but has no actions:write permission, and the sandbox has no outbound HTTPS so it cannot fetch the files itself. Either a token with actions:write or a manual run from the Actions tab unblocks it.",
   "priority": "P0",
@@ -194,13 +180,6 @@
   "priority": "P0",
   "effort": "an hour of reading nine series pages, then one column of the register",
   "where": "sim/live.py (OFFICIAL_SERIES_REGISTER fred_copyright_tag), docs/live/sources.html"
- },
- {
-  "title": "Schedule the live book so the forward test accumulates a record",
-  "detail": "A forward test is only worth what its archive is. A scheduled workflow that collects prices/events on business days, runs 'sim.cli live --mode forward' to plan, settles any intents whose bar has arrived, writes docs/live/ and opens a pull request (rather than pushing to main, so a human reads the diff) is the difference between one rehearsal and a track record.",
-  "priority": "P1",
-  "effort": "one workflow plus a retention policy",
-  "where": ".github/workflows/, sim/live_season.py (run_forward), scripts/build_site_live.py"
  },
  {
   "title": "Collect FINRA's REG SHO daily short-sale volume files for official per-symbol volume",
@@ -280,13 +259,6 @@
   "where": "scripts/collect_real_data.py, data/real/collection_manifest.json"
  },
  {
-  "title": "Give the forwarded book a published settlement schedule",
-  "detail": "The pending orders settle when the official record for their target session exists. Add a scheduled workflow that re-runs the official season at each auction settlement, commits the new tape and regenerates the site, so the forward book advances without a human dispatch - the same property the live book's reviewer asked for and this lane can actually deliver, because its settlement inputs are official files rather than a market feed.",
-  "priority": "P1",
-  "effort": "one workflow plus a season of patience",
-  "where": ".github/workflows/, sim/official_season.py, docs/official/forward.html"
- },
- {
   "title": "Let an official-lane rule target the issue date instead of the next session",
   "detail": "Most rejected orders in the official book are when-issued refusals: a rule wants a security the Treasury auctioned this week but does not issue until next week, and the venue books no when-issued trade, so the order is refused and the rule loses the session. 1,182 of 2,662 intents were refused, and the largest single reason is when-issued. The venue is right to refuse; the rules should instead aim at the first session on or after the issue date, which is what a participant who reads the announcement would do. The comment on the settlement path names the issue date, so the information a rule needs is already in the intent's own evidence.",
   "priority": "P1",
@@ -306,5 +278,33 @@
   "priority": "P1",
   "effort": "one card per participant page fed by the run's end-of-season marks",
   "where": "scripts/build_site.py, scripts/build_site_live.py, memory/runs, memory/live"
+ },
+ {
+  "title": "Collect the two-year official price archive and record its redistribution status",
+  "detail": "The strict official-price gate is still closed, and the forward slices make the remaining reasons precise: source class EXCHANGE-PUBLISHED rather than OFFICIAL, redistribution NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION, coverage of a forward window rather than the 2024-09-16..2026-09-16 archive, and unverified dividend rows. Two of those are permissions and one is a collection.",
+  "priority": "P0",
+  "effort": "one licensed archive, or one written redistribution decision",
+  "where": "data/real/prices/nasdaq/, data/real/official_price_eligibility.json, sim/eligibility.py"
+ },
+ {
+  "title": "Replace the transcribed print custody file with runner-fetched raw bytes",
+  "detail": "The 2026-09-14..18 rows were transcribed through the page-fetch path because the sandbox has no outbound HTTPS (IR-69). The first scheduled run of live-rollover.yml re-fetches both endpoints and writes what the runner received, which supersedes the transcription for those sessions. Nothing else may depend on a hand-copied row.",
+  "priority": "P1",
+  "effort": "one scheduled or dispatched run",
+  "where": ".github/workflows/live-rollover.yml, data/real/prints/raw/"
+ },
+ {
+  "title": "Settle the first forward session the publishers owe",
+  "detail": "2026-09-21 is the next planned session (8 intents outstanding, recorded in memory/live/forward-ladder.json). It settles on the first scheduled run after the exchange publishes the session's rows and the official series catch up; the ladder will show it WAITING-FOR-PRINTS until then, with the missing symbols named.",
+  "priority": "P1",
+  "effort": "automatic - one weekday run",
+  "where": "memory/live/forward-ladder.json, .github/workflows/live-rollover.yml"
+ },
+ {
+  "title": "Verify the first scheduled rollover run and its pull request",
+  "detail": "live-rollover.yml is written and its command chain has been exercised by hand ('collect_forward_prints.py --rebuild', '--verify', 'sim.cli rollover', 'build-site', both independent audits), but the workflow file itself has not yet run on a runner. The first scheduled run is the test: it must fetch both publisher endpoints over HTTPS, cross-check them, settle any session that has prints, push automation/forward-rollover, open or update the pull request, and leave the append-only log line in memory/live/forward-ladder-history.jsonl with independence='settled without a human in the loop'. If a step fails, the ladder will simply not advance and the failure will be in the run log, not in the data.",
+  "priority": "P1",
+  "effort": "one weekday run, then read the diff",
+  "where": ".github/workflows/live-rollover.yml, memory/live/forward-ladder.json"
  }
 ]

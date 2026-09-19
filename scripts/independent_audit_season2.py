@@ -42,6 +42,8 @@ import sys
 from typing import Dict, List, Optional, Sequence, Tuple
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, REPO_ROOT)
+from sim import custody                                       # noqa: E402
 DEFAULT_RUN = "season2-primary-seed20260918"
 
 
@@ -50,6 +52,14 @@ class Report:
         self.passed = 0
         self.failed: List[str] = []
         self.checks: Dict[str, int] = {}
+        #: Informational lines, keyed by group. They never affect the verdict -
+        #: a note is for the reader, not a check - but they are what makes a
+        #: chained change visible instead of silently passing.
+        self.notes: Dict[str, List[str]] = {}
+
+    def note(self, group: str, message: str) -> None:
+        """An informational line: counts a check cannot express."""
+        self.notes.setdefault(group, []).append(message)
 
     def check(self, group: str, ok: bool, message: str) -> None:
         self.checks[group] = self.checks.get(group, 0) + 1
@@ -100,19 +110,63 @@ def correlation(xs: Sequence[float], ys: Sequence[float]) -> float:
 # --------------------------------------------------------------------------
 
 def audit_custody(rep: Report, run_dir: str) -> None:
+    """Every file the run read either still matches, or moved through a chain.
+
+    A collected file is live: the forward collector appends a session to a price
+    file, and a collection run re-fetches the publisher's current window into a
+    CSV.  A bare hash comparison therefore fails for reasons that have nothing to
+    do with custody, and - worse - the failure is the same whether the file was
+    appended to or quietly rewritten with different numbers.
+
+    So there are three outcomes and they are reported differently:
+
+    * ``exact``   - the bytes are unchanged;
+    * ``chained`` - the file moved from the recorded hash to the current one
+      through writes the writer logged as it made them; the log row names the
+      writer, the reason and both hashes;
+    * ``failed``  - a change with no chain, which is the only one of the three
+      that is actually a custody problem.
+    """
     prov = read_json(os.path.join(run_dir, "data_provenance.json")) or {}
     files = (prov.get("inventory") or {}).get("files") or []
     rep.check("custody", bool(files), "the provenance inventory lists no files")
+    exact = chained = 0
     for row in files:
         path = os.path.join(REPO_ROOT, row["path"])
         if not os.path.exists(path):
             rep.check("custody", False, f"collected file missing: {row['path']}")
             continue
-        rep.check("custody", sha256_file(path) == row["sha256"],
-                  f"{row['path']} does not hash to the value the run recorded")
+        if sha256_file(path) == row["sha256"]:
+            exact += 1
+            rep.check("custody", True, "")
+            continue
+        link = custody.chained_forward(path, row["sha256"])
+        if link["chained"]:
+            chained += 1
+            rep.check("custody", True, "")
+            rep.note("custody",
+                     f"{row['path']}: {len(link['steps'])} logged write(s) chain the "
+                     f"recorded bytes to the file on disk "
+                     f"({link['steps'][0].get('writer')}: {link['steps'][0].get('reason')})")
+            continue
+        rep.check("custody", False,
+                  f"{row['path']}: changed with no logged chain from the recorded hash")
+    rep.note("custody", f"{exact} file(s) byte-identical, {chained} chained through the "
+                        f"regeneration log, {len(files) - exact - chained} unresolved")
 
 
 def audit_prices(rep: Report, run_dir: str) -> None:
+    """The published prices are the collected prices, and the file is accounted for.
+
+    Two claims, checked separately.  First, the *values*: every bar the published
+    run carries appears in the collected file with the same numbers, and every
+    bar appended to the file after the run is reflected in the run's own
+    provenance record.  Second, the *custody* of the file itself: either its bytes
+    are unchanged, or it moved from the recorded hash to the current one through
+    writes that were logged as they were made.  An unexplained hash difference is
+    still a failure; an explained one is not, and saying which is which is the
+    whole point.
+    """
     md = read_json(os.path.join(run_dir, "market_data.json")) or {}
     bars = md.get("bars") or {}
     provenance = (md.get("provenance") or {}).get("price_series") or {}
@@ -126,8 +180,10 @@ def audit_prices(rep: Report, run_dir: str) -> None:
         if not os.path.exists(path):
             rep.check("prices", False, f"{symbol}: collected file {meta['file']} missing")
             continue
-        rep.check("prices", sha256_file(path) == meta["sha256"],
-                  f"{symbol}: collected file hash differs from the run record")
+        rep.check("prices", sha256_file(path) == meta["sha256"]
+                  or custody.chained_forward(path, meta["sha256"])["chained"],
+                  f"{symbol}: collected file changed with no logged chain from the "
+                  f"run's recorded hash")
         payload = read_json(path) or {}
         by_date = {b["date"]: b for b in payload.get("bars", [])}
         mismatches, missing = 0, []
@@ -593,6 +649,11 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"  {group:12s} {count:6d} checks")
     print(f"  {'TOTAL':12s} {rep.total:6d} checks · {rep.passed} passed · "
           f"{len(rep.failed)} failed")
+    for group, lines in sorted(rep.notes.items()):
+        for line in lines[:6]:
+            print(f"  note [{group}] {line}")
+        if len(lines) > 6:
+            print(f"  note [{group}] ... {len(lines) - 6} more")
     if rep.failed:
         print("\nFAILURES (first 40):")
         for line in rep.failed[:40]:

@@ -271,5 +271,33 @@
   "severity": "low",
   "detail": "Direct interactive WebSocket streaming and GUI-based live monitoring are blocked in autonomous sandboxed execution environments. While scheduled autonomous capture scripts can poll and record official snapshots and settlement states, continuous sub-second tick feeds require persistent external daemons and licensed redistribution pipelines.",
   "fix": "Maintain batch autonomous snapshot capture on daily/intraday schedules and record verified auction/tape logs."
+ },
+ {
+  "id": "L-40",
+  "title": "The forward book settles only on published prints, so a session with no print is reported as waiting",
+  "severity": "medium",
+  "detail": "sim.cli rollover steps the forward book through every session in order and settles an intent only when the venue can cite a published bar for that symbol and session - the exchange's own daily row where one exists, the vendor research file where it does not. A session whose symbols have no print is recorded as WAITING-FOR-PRINTS with the missing symbols named, and a session that is tradable by the exchange's record but outside the official calendar is labelled PROVISIONAL-EXCHANGE-PRINTS with the official series it is missing. The consequence is deliberate: a scheduled run can settle nothing at all on a day the publishers have not posted, and the ladder says so instead of extrapolating.",
+  "fix": "Nothing to fix - this is the rule. The scheduled workflow retries every weekday, so a session settles on the first run after its prints appear; the ladder and the history file record which run settled it."
+ },
+ {
+  "id": "L-41",
+  "title": "Intraday study, volatile-stock division and the stock rows of the executive summary are NOT RUN",
+  "severity": "high",
+  "detail": "These three rows depend on a real intraday capture that has not landed on this branch; the lane that produces it commits on its own schedule and the connection to it is down. Nothing in the daily-bar dataset can stand in for an intraday range measure, so the rows are published as NOT RUN with the missing artifact named, and no number appears in their place. The TradingView Strategy Report benchmark is blocked for a different reason - the export is plan-gated and there are no credentials, and the plan does not permit redistribution - so it is published as NOT RUN alongside them.",
+  "fix": "Land the intraday capture in data/real/intraday/ and record a redistribution decision for any licensed feed; the register in research/EXEC_SUMMARY.json names the artifact each row waits on and the site renders it."
+ },
+ {
+  "id": "L-42",
+  "title": "A provisional forward session carries the prior market factor",
+  "severity": "low",
+  "detail": "On a session the S&P 500 series has not published, the market's own index series is carried forward from the previous observation so the arrays stay aligned, and the session is flagged provisional in memory/live/forward-ladder.json. Strategies that read the market return see a zero return for that session rather than an invented one.",
+  "fix": "Re-run the rollover after FRED publishes the observation: the same fills are re-settled with the real value and the label upgrades to the collected-calendar state."
+ },
+ {
+  "id": "L-43",
+  "title": "Chain-of-custody evidence for rewrites is an explanation, not a byte receipt",
+  "severity": "medium",
+  "detail": "A price file that gains two sessions can be proved: take the appended bars away, re-serialise the way the writer does, and the run's recorded hash comes back (24 of 30 files here). A file that was regenerated - a FRED window re-fetched, a derived index rebuilt - cannot be proved at all, because the previous bytes no longer exist anywhere in the repository. The best available evidence is the regeneration log: who wrote it, when, and why, with both hashes. A reader should treat a chained file as explained and not as verified, and the Season 2 audit prints the two counts separately for exactly that reason. Six of the 30 files changed on 2026-09-19 fall in the weaker class. Any number derived from a chained file inherits that caveat.",
+  "fix": "The audit reports the two evidence classes separately, and the regeneration log is append-only so a later write cannot erase the record of an earlier one. Closing the gap properly means the writers log at the time of the write (done for the collectors) and the publisher's own revision history is cited where one exists."
  }
 ]

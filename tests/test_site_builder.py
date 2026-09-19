@@ -312,8 +312,8 @@ class TestFullBuild(unittest.TestCase):
         self.assertFalse(missing, f"broken links: {missing[:10]}")
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
-        # 12 since simulator.html landed.
-        self.assertEqual(len(site.NAV), 12)
+        # 13 since the executive summary landed (12 when simulator.html did).
+        self.assertEqual(len(site.NAV), 13)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
             self.assertRegex(html, r'<nav[^>]*class="[^"]*\bnav\b[^"]*"', rel)

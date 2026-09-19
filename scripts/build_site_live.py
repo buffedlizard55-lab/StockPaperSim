@@ -38,6 +38,7 @@ NAV = [
     ("live/participants/index.html", "Participants"),
     ("live/method.html", "Clock &amp; margin"),
     ("live/sources.html", "Official sources"),
+    ("summary.html", "Executive summary"),
     ("index.html", "Season 1"),
     ("season2/index.html", "Season 2"),
     ("simulator.html", "Trade Simulator"),

@@ -32,6 +32,16 @@ on:
         default: "true"
         type: choice
         options: ["true", "false"]
+  # The one exception is a push whose HEAD commit message carries the
+  # [collect-data] marker. The session automation cannot dispatch this workflow
+  # (its token has no actions:write - HTTP 403, recorded in REMAINING_WORK), and
+  # a marker push is the reviewable equivalent: the collection runs on a runner,
+  # commits the data back to the branch it was pushed to, and every byte it
+  # adds still arrives as a diff a human reads before merge. The job-level
+  # `if` below is the gate; ordinary pushes (including this file changing)
+  # never start a collection.
+  push:
+    branches: ["arena/**"]
 
 permissions:
   contents: write
@@ -43,6 +53,11 @@ concurrency:
 jobs:
   collect:
     name: Fetch official and secondary sources
+    # Push-triggered runs require the [collect-data] marker in the HEAD commit
+    # message; workflow_dispatch runs are already a deliberate human act.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      contains(github.event.head_commit.message, '[collect-data]')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:

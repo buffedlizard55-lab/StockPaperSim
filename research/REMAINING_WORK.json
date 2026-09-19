@@ -2,9 +2,9 @@
  {
   "priority": "P0",
   "title": "Run the SEC insider collection and re-derive with real Form 3/4/5 data",
-  "detail": "The signal builder now reads the SEC quarterly insider-transactions data sets (data/real/insider_bulk/) and merges them with the per-filing walk, de-duplicated by accession. The collector and the declared-User-Agent fix are committed; what remains is the Actions collection run itself (the previous run's 16 ZIP requests all returned HTTP 403 before the fix landed). Once the data lands: dispatch collect-real-data.yml with only=insider_bulk,sports on the branch, let it re-derive Season 2, then update the README table (the insider personas move off 'no trades placed'), re-run both audits, and re-plan the live book (InsiderCluster_Live now reports READY the moment the file exists).",
-  "where": ".github/workflows/collect-real-data.yml (dispatch: only=insider_bulk,sports) · sim/masterfeed.py (_load_insider_rows) · sim/strategies_mf.py",
-  "effort": "one Actions run plus a README/audit update pass"
+  "detail": "The signal builder now reads the SEC quarterly insider-transactions data sets (data/real/insider_bulk/) and merges them with the per-filing walk, de-duplicated by accession. The collector, the declared-User-Agent fix and the 1.2s ZIP pacing with 403-threshold backoff are committed; the previous run's 16 ZIP requests all failed with SEC's 'Request Rate Threshold Exceeded' page because they were sent in five seconds. What remains is the collection run itself: workflow dispatch is blocked for automation (HTTP 403, no actions:write), so the trigger is a push to an arena/** branch whose HEAD commit message carries [collect-data] - collect-real-data.yml now gates its job on exactly that marker. Once the data lands, the workflow re-derives Season 2 itself; then update the README table (the insider personas move off 'no trades placed'), re-run both audits, and re-plan the live book (InsiderCluster_Live reports READY the moment the file exists).",
+  "where": ".github/workflows/collect-real-data.yml (marker-gated push trigger) · sim/masterfeed.py (_load_insider_rows) · sim/strategies_mf.py",
+  "effort": "one marker push plus a README/audit update pass"
  },
  {
   "priority": "P0",

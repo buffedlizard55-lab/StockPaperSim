@@ -165,6 +165,25 @@ class IntradayCheckTest(unittest.TestCase):
             self.assertEqual(self.payload["history_check"], "CANNOT_TELL_SHALLOW_CLONE",
                              "a shallow clone must not report a confident 'never'")
 
+    def test_the_published_page_and_payload_carry_the_same_check(self):
+        """The page and the mirror must show the same verdict.
+
+        The check was added to the page first and left out of the payload for a
+        while, which is the kind of drift a reader only notices by accident. Both
+        are built from one call, so both are asserted here.
+        """
+        with open(os.path.join(REPO_ROOT, "docs", "assets", "data", "summary.json"),
+                  encoding="utf-8") as handle:
+            payload = json.load(handle)
+        with open(os.path.join(REPO_ROOT, "docs", "summary.html"), encoding="utf-8") as handle:
+            html = handle.read()
+        self.assertIn("intraday_check", payload)
+        self.assertEqual(payload["intraday_check"]["verdict"], self.payload["verdict"])
+        self.assertEqual(payload["intraday_check"]["history_check"],
+                         self.payload["history_check"])
+        self.assertIn("Intraday capture check", html)
+        self.assertIn(self.payload["verdict"], html)
+
     def test_every_not_run_row_states_a_reason_and_needs_no_number(self):
         with open(os.path.join(RESEARCH, "EXEC_SUMMARY.json"), encoding="utf-8") as handle:
             register = json.load(handle)

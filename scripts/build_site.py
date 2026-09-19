@@ -267,6 +267,7 @@ def sparkline(points: Sequence[float], width: int = 120, height: int = 28,
 
 NAV = [
     ("index.html", "Overview"),
+    ("summary.html", "Executive summary"),
     ("leaderboard.html", "Leaderboard"),
     ("strategies.html", "Strategies"),
     ("simulator.html", "Trade Simulator"),
@@ -3084,6 +3085,26 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     write("assets/site.css", CSS)
     write("assets/site.js", JS)
     write(".nojekyll", "")
+
+    # The executive summary is part of every Season 1 build, not an extra step a
+    # caller may forget: its page is in this nav, and a nav entry that points at
+    # a file only one caller writes is how a site ends up with a 404 in its main
+    # menu. Its own builder owns the two files it writes.
+    try:
+        # Loaded by path: this module is imported both as a script and as a
+        # module by the test suite, and only one of those has scripts/ on
+        # sys.path.
+        import importlib.util
+        _spec = importlib.util.spec_from_file_location(
+            "build_site_summary", os.path.join(REPO_ROOT, "scripts", "build_site_summary.py"))
+        build_site_summary = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(build_site_summary)  # type: ignore[union-attr]
+        written.extend(build_site_summary.build(
+            args.memory_root, os.path.join(REPO_ROOT, "data", "real"),
+            os.path.join(REPO_ROOT, "research"), out))
+    except Exception as exc:  # noqa: BLE001 - a site build must say why, not vanish
+        print(f"  executive summary: FAILED - {type(exc).__name__}: {exc}")
+        raise
 
     # Prune stale participant pages. A page set is only trustworthy if it
     # *contains* exactly the pages of the run it was built from: a renamed or

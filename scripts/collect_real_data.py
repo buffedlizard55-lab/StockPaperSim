@@ -59,6 +59,11 @@ import zlib
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if REPO_ROOT not in sys.path:                                # pragma: no cover
+    sys.path.insert(0, REPO_ROOT)
+
+from sim import custody                                      # noqa: E402
+from sim import sec as sec_policy                             # noqa: E402
 
 # --------------------------------------------------------------------------
 # Window: warm-up starts a year before the competition so lookback indicators
@@ -84,7 +89,10 @@ COLLECT_END = "2026-09-17"
 # published set are now sent, the UA in the published shape (a name followed by a
 # contact address), and what came back is recorded in the manifest either way.
 #   SOURCE: https://www.sec.gov/search-filings/edgar-search-assistance/accessing-edgar-data
-SEC_UA = "StockPaperSim buffedlizard55-lab@users.noreply.github.com"
+# The declared EDGAR User-Agent now lives in one place (sim/sec.py), together
+# with the policy it implements and the environment override an operator with
+# a real mailbox sets. This name is kept for the older call sites.
+SEC_UA = sec_policy.sec_user_agent()
 BROWSER_UA = ("Mozilla/5.0 (compatible; StockPaperSim/2.0; "
               "+https://github.com/buffedlizard55-lab/StockPaperSim)")
 
@@ -188,6 +196,13 @@ SOURCE_CLASS = {
 }
 
 
+def _is_edgar_host(host: str) -> bool:
+    """Every SEC host the declared User-Agent applies to."""
+    host = (host or "").lower()
+    return host in ("www.sec.gov", "sec.gov", "data.sec.gov", "efts.sec.gov",
+                    "www.sec.gov.edgesuite.net") or host.endswith(".sec.gov")
+
+
 def _decode_body(raw: bytes, content_encoding: Optional[str]) -> bytes:
     """Undo the transport encoding, so a hash is of the representation.
 
@@ -244,8 +259,17 @@ class Fetcher:
         tries = policy["tries"] if tries is None else tries
         timeout = policy["timeout"] if timeout is None else timeout
         host_key = url.split("/")[2]
-        hdrs = {"User-Agent": SEC_UA}
-        hdrs.update(BASE_HEADERS)
+        if kind in ("sec", "sec_bulk") or _is_edgar_host(host_key):
+            # The declared header set, from the module that cites the policy:
+            # User-Agent in the SEC's documented shape, the exact
+            # ``Accept-Encoding: gzip, deflate`` its sample lists, and Host.
+            # An operator with a real mailbox sets SPS_SEC_USER_AGENT and it is
+            # sent verbatim - the SEC's rule is that the header names a contact.
+            hdrs = sec_policy.sec_headers()
+            interval = max(interval, sec_policy.SEC_MIN_INTERVAL_EFFECTIVE)
+        else:
+            hdrs = {"User-Agent": BROWSER_UA}
+            hdrs.update(BASE_HEADERS)
         hdrs.update(headers or {})
         last_error = ""
         last_status = 0
@@ -294,10 +318,48 @@ class Fetcher:
         return None
 
 
-def write_bytes(path: str, body: bytes) -> None:
+def _log_replacement(path: str, writer: str, reason: str) -> None:
+    """Chain this write to the bytes that were there before it.
+
+    The collection is re-run whenever the publisher has something new, and a
+    season run records the hash of every file it read - so a file rewritten in
+    place would leave that recorded hash matching nothing.  Logging the pair
+    (previous, new) as the file is written is what lets a later custody check
+    follow the file from the state a run read to the state on disk, instead of
+    reporting an unexplained changed hash.
+    """
+    if not os.path.exists(path):
+        return
+    previous = custody.sha256_file(path)
+    # Written after the new bytes are on disk; the caller passes the new hash in
+    # so the two cannot drift apart.
+    def _record(new_sha: str) -> None:
+        if new_sha != previous:
+            custody.log_rewrite(path, previous, new_sha, writer=writer, kind="rewrite",
+                                reason=reason)
+    _pending_log[path] = (previous, _record)
+
+
+#: Populated by :func:`_log_replacement` and consumed by the writer that follows.
+_pending_log: Dict[str, tuple] = {}
+
+
+def _finish_log(path: str) -> None:
+    entry = _pending_log.pop(path, None)
+    if entry is None or not os.path.exists(path):
+        return
+    _previous, record = entry
+    record(custody.sha256_file(path))
+
+
+def write_bytes(path: str, body: bytes, writer: str = "", reason: str = "") -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    if writer:
+        _log_replacement(path, writer, reason)
     with open(path, "wb") as handle:
         handle.write(body)
+    if writer:
+        _finish_log(path)
 
 
 def write_gzip_bytes(path: str, body: bytes) -> None:
@@ -315,11 +377,15 @@ def write_gzip_bytes(path: str, body: bytes) -> None:
         handle.write(gzip.compress(body, 9))
 
 
-def write_json(path: str, payload) -> None:
+def write_json(path: str, payload, writer: str = "", reason: str = "") -> None:
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    if writer:
+        _log_replacement(path, writer, reason)
     with open(path, "w", encoding="utf-8") as handle:
         json.dump(payload, handle, indent=1, sort_keys=False)
         handle.write("\n")
+    if writer:
+        _finish_log(path)
 
 
 def write_jsonl(path: str, rows: Iterable[dict]) -> int:
@@ -671,7 +737,11 @@ def collect_fred(fetcher: Fetcher, out: str) -> dict:
             summary["failed"].append(series)
             continue
         path = os.path.join(out, "fred", f"{series}_{start}_{COLLECT_END}.csv")
-        write_bytes(path, body)
+        write_bytes(path, body, writer="scripts/collect_real_data.py:collect_fred",
+                    reason=(f"{series}: re-fetched the publisher's current window "
+                            f"through {COLLECT_END}; the publisher can revise an "
+                            f"observation after first publication, so the bytes a "
+                            f"previous run read are not recoverable from the new file"))
         rows = 0
         for line in body.decode("utf-8", "replace").splitlines()[1:]:
             if line.strip() and line.split(",")[-1].strip():
@@ -2181,7 +2251,11 @@ def coverage_report(out: str, results: dict) -> dict:
         report["sources"].append({"label": label, "source_class": klass,
                                   "path": os.path.relpath(path, os.path.dirname(out)),
                                   "files": files, "bytes": size})
-    write_json(os.path.join(out, "coverage_report.json"), report)
+    write_json(os.path.join(out, "coverage_report.json"), report,
+               writer="scripts/collect_real_data.py",
+               reason=("derived coverage index rebuilt from the files on disk; a run "
+                       "that recorded the previous copy cannot recover its bytes, so "
+                       "the write is chained here instead"))
     return report
 
 
@@ -2272,11 +2346,19 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         "window": {"warmup_start": WARMUP_START, "season_start": SEASON_START,
                    "season_end": SEASON_END},
         "requests": manifest,
+        # What the collector declared to EDGAR, and under which policy: the
+        # insider strategies are gated on this stream, so whether the header set
+        # was the published one has to be readable in the artifact, not assumed.
+        "sec_access": sec_policy.declared_headers_record(),
         "ok": sum(1 for m in manifest if m["ok"]),
         "failed": sum(1 for m in manifest if not m["ok"]),
         "budget_exhausted": fetcher.budget_exhausted,
     }
-    write_json(os.path.join(out, "collection_manifest.json"), manifest_payload)
+    write_json(os.path.join(out, "collection_manifest.json"), manifest_payload,
+               writer="scripts/collect_real_data.py",
+               reason=("the manifest is rewritten by every collection run; the run "
+                       "that recorded this file's hash gets a chain row rather than "
+                       "an unexplained mismatch"))
     coverage = coverage_report(out, results)
     print(json.dumps({"ok_requests": manifest_payload["ok"],
                       "failed_requests": manifest_payload["failed"],

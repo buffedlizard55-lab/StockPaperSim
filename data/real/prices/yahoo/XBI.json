@@ -6,7 +6,7 @@
  "exchange": "NYSEArca",
  "timezone": "America/New_York",
  "first_bar": "2024-09-16",
- "last_bar": "2026-09-16",
+ "last_bar": "2026-09-18",
  "bars": [
   {
    "date": "2024-09-16",
@@ -4525,6 +4525,24 @@
    "close": 154.179993,
    "volume": 8847200,
    "adjclose": 154.179993
+  },
+  {
+   "date": "2026-09-17",
+   "open": 157.30999755859375,
+   "high": 160.3300018310547,
+   "low": 156.94000244140625,
+   "close": 158.25,
+   "volume": 10016100,
+   "adjclose": 158.25
+  },
+  {
+   "date": "2026-09-18",
+   "open": 158.2100067138672,
+   "high": 159.19000244140625,
+   "low": 155.88999938964844,
+   "close": 156.72000122070312,
+   "volume": 9873700,
+   "adjclose": 156.72000122070312
   }
  ],
  "dividends": [
@@ -4557,5 +4575,14 @@
    "amount": 0.138
   }
  ],
- "splits": []
+ "splits": [],
+ "bars_appended_by": {
+  "collector": "scripts/collect_forward_prints.py",
+  "append_count": 2,
+  "appended_dates": [
+   "2026-09-17",
+   "2026-09-18"
+  ],
+  "source_class": "SECONDARY"
+ }
 }

@@ -652,5 +652,85 @@
   "links": [
    "https://www.tradingview.com/pricing/"
   ]
+ },
+ {
+  "id": "IR-64",
+  "topic": "A derived 2026-09-17 bar had been fabricated for every symbol without a collected print",
+  "severity": "high",
+  "detail": "sim/realdata.py contained a branch that, for any symbol with no collected bar on 2026-09-17, scaled the previous close by a fixed index ratio (QQQ was multiplied by 26418.30/25978.42, SPY by the S&P 500 ratio) and appended it as if it were a bar. The derived QQQ close was 716.65 against the exchange's published 716.92, and the derived open was simply the previous session's close, so the first forward settlement filled 16 intents at prices no publisher had printed (for example QQQ at 704.72, which is the 2026-09-16 close, recorded as a 2026-09-17 execution). The branch was added to avoid an empty settlement and it is the exact failure mode the brief prohibits.",
+  "resolution": "The branch has been deleted. A session a symbol has no print for is a gap with zero volume, which the venue refuses to fill (sim.live.bar_is_executable); the session is settled only from published prints. The 16 intents were re-settled by 'python3 -m sim.cli rollover' against the exchange-published 2026-09-17 rows (QQQ open 715.95, close 716.92), and the replaced bars are listed in the run's diagnostics.",
+  "links": [
+   "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/memory/live/live-forward-2026-09-16/manifest.json"
+  ]
+ },
+ {
+  "id": "IR-65",
+  "topic": "Exchange and vendor share volumes differ by up to 0.42% on 2026-09-18 while closes agree to 0.0005 bps",
+  "severity": "medium",
+  "detail": "Over 117 symbol-sessions the exchange-published close and the vendor close never differ by more than 0.0005 bps, but the volume fields differ on 2026-09-18: QQQ 48,478,710 (Nasdaq) against 48,277,100 (Yahoo), MU +0.413%, DKNG +0.400%, NVDA +0.318%, and every difference has the exchange's number larger. Daily bars are consolidated-tape products and the two publishers evidently cut the tape at different moments or apply different late-correction handling. Liquidity modelling uses volume, so a 0.4% difference moves participation and ADV by more than a rounding step.",
+  "resolution": "Both numbers are kept with their publisher; the forward book cites the exchange row for liquidity and the vendor row only as the cross-check. The difference is carried in data/real/prints/crosscheck.json per symbol and session rather than averaged away, and no fill is executed against a vendor volume.",
+  "links": [
+   "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf",
+   "https://query1.finance.yahoo.com/v8/finance/chart/QQQ?range=5d&interval=1d",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/prints/crosscheck.json"
+  ]
+ },
+ {
+  "id": "IR-66",
+  "topic": "The exchange endpoint returned no 2026-09-14 row for QQQ, AAPL and JPM",
+  "severity": "low",
+  "detail": "The Nasdaq historical endpoint answered with four sessions (2026-09-15 to 2026-09-18) for QQQ, AAPL and JPM while returning five for the other 21 symbols, so the session of 2026-09-14 has no exchange-published row for those three names. The vendor file does carry 2026-09-14 for all three and the two sources agree wherever both exist, so this is read as an endpoint window effect, not as a missing session.",
+  "resolution": "Recorded in the cross-check report as 'exchange prints 21/24' for 2026-09-14; the collector re-requests with an explicit fromdate so a later run can fill the gap, and the affected sessions are listed in the rollover ladder rather than assumed.",
+  "links": [
+   "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/prints/crosscheck.json"
+  ]
+ },
+ {
+  "id": "IR-67",
+  "topic": "FRED SP500 had not published 2026-09-18 while NASDAQCOM and DJIA had",
+  "severity": "medium",
+  "detail": "At collection time the official composite series for the session of 2026-09-18 existed (NASDAQCOM 26,522.550, DJIA 51,682.640) but the S&P 500 series - the calendar authority this project builds its session list from - still ended on 2026-09-17 (7,637.76), as did VIXCLS, SOFR, DGS10 and DGS3MO. A session can therefore be tradable by the exchange's record and still be outside the official calendar, and the two states must not be presented as the same thing.",
+  "resolution": "The rollover ladder labels 2026-09-18 PROVISIONAL-EXCHANGE-PRINTS and lists exactly which official series are missing. The book settles on it, every fill records 'session_verification' and 'session_official_missing', and a later run upgrades the label to a collected-calendar session once SP500 publishes its observation. No fill is ever labelled as an official-calendar settlement when it is not one.",
+  "links": [
+   "https://fred.stlouisfed.org/series/SP500",
+   "https://fred.stlouisfed.org/series/NASDAQCOM",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/memory/live/forward-ladder.json"
+  ]
+ },
+ {
+  "id": "IR-68",
+  "topic": "DCOILWTICO and DTWEXBGS are missing from the forward sessions by publication frequency, not by collection failure",
+  "severity": "low",
+  "detail": "The WTI spot series ended on 2026-09-15 and the broad dollar index has no 2026-09-18 observation, so two of the nine registered official series cannot confirm a forward session even after every business day has passed. Presenting 'official series missing' without saying which misses are structural would overstate the gap.",
+  "resolution": "The ladder lists the series by identifier and the summary page states that these two are weekly/low-frequency reporters. The evidence block in the market records each series with its own last observation date, and no proxy or interpolation is substituted.",
+  "links": [
+   "https://fred.stlouisfed.org/series/DCOILWTICO",
+   "https://fred.stlouisfed.org/series/DTWEXBGS"
+  ]
+ },
+ {
+  "id": "IR-69",
+  "topic": "The forward print rows are transcribed from two publishers in a session with no outbound HTTPS",
+  "severity": "medium",
+  "detail": "The development sandbox cannot open an HTTPS connection, so the 2026-09-14..18 rows for all 24 symbols were retrieved through the page-fetch path and transcribed into data/real/prints/raw/. Both publishers were read for every symbol and every session, and the two transcriptions agree to 0.0005 bps on closes over 117 symbol-sessions, which is strong evidence against a transcription slip - but it is evidence, not a byte-exact raw response, and an earlier revision of the collector also had a shared-timestamp bug that could only misalign rows silently.",
+  "resolution": "The scheduled rollover workflow (live-rollover.yml) re-fetches both endpoints over HTTPS on a runner and writes the raw bytes it received, so the repository's custodian record for 2026-09-14..18 is replaced by a runner-fetched one on its first run. The transcribed rows keep the publisher's own strings, the request URL and the retrieval time, and no row is accepted unless both publishers agree within 5 bps.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/prints/raw/sessions_2026-09-14_2026-09-18.json",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/.github/workflows/live-rollover.yml"
+  ]
+ },
+ {
+  "id": "IR-70",
+  "topic": "The custody chain for the 2026-09-19 writes was recorded after the writes",
+  "severity": "medium",
+  "detail": "Thirty collected files changed on 2026-09-19 between 04:11Z and 04:25Z: the collector re-fetched three FRED windows and regenerated two derived index documents, the forward collector appended 2026-09-17/18 to all 24 Yahoo price files, and the price audit rewrote the eligibility report. The Season 2 run had already recorded the SHA-256 of every one of those files, so its custody checks then failed 54 of 2,682 checks - and nothing noticed, because the Season 2 auditor existed but was not wired into CI. The fix has two halves: sim/custody.py now logs (previous hash, new hash, writer, reason) as a writer changes a file, and scripts/collect_forward_prints.py plus scripts/collect_real_data.py call it at the moment of the write. For the 30 writes that had already happened, the chain rows were reconstructed from the hashes the run recorded together with each file's own modification time, and every one of them says so in utc_source. That is weaker evidence than a row written by the writer as it wrote, which is why it is filed here rather than presented as a write log.",
+  "resolution": "24 of the 30 files are byte-reconstructible: removing the appended sessions reproduces the recorded hash exactly, so the change is proven rather than asserted. The other six (three FRED CSVs, collection_manifest.json, coverage_report.json, official_price_eligibility.json) are regenerations whose previous bytes are gone; for those the chain row is an explanation by the project, not a receipt, and the audit prints them as chained rather than as byte-identical. Landed: sim/custody.py logs every write to a collected file as it happens, both collectors call it, the Season 2 auditor now accepts a chained change only when the chain ends at the bytes on disk, and the audit is wired into CI so the next drift cannot pass unnoticed.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/custody.py",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regeneration_log.jsonl",
+   "https://fred.stlouisfed.org/series/DGS10"
+  ]
  }
 ]

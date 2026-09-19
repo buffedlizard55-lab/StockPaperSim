@@ -1,0 +1,514 @@
+{
+ "generated_utc": "2026-09-19T04:25:25Z",
+ "run_id": "live-forward-2026-09-16",
+ "plan_date": "2026-09-16",
+ "status": "ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 8 intents outstanding.",
+ "calendar_authority": "FRED SP500 observation dates",
+ "price_print_source": "nasdaq",
+ "price_print_class": "EXCHANGE-PUBLISHED",
+ "ladder": [
+  {
+   "session": "2026-09-17",
+   "verification": "COLLECTED-OFFICIAL-CALENDAR",
+   "official_series_missing": [
+    "DCOILWTICO",
+    "DTWEXBGS"
+   ],
+   "official_series_present": [
+    {
+     "sid": "SP500",
+     "value": 7637.76
+    },
+    {
+     "sid": "NASDAQCOM",
+     "value": 26418.3
+    },
+    {
+     "sid": "DJIA",
+     "value": 51778.04
+    },
+    {
+     "sid": "VIXCLS",
+     "value": 15.44
+    },
+    {
+     "sid": "SOFR",
+     "value": 3.85
+    },
+    {
+     "sid": "DGS10",
+     "value": 4.94
+    },
+    {
+     "sid": "DGS3MO",
+     "value": 4.12
+    }
+   ],
+   "price_sources": [],
+   "intents_targeted": 16,
+   "filled": 16,
+   "partial": 0,
+   "rejected": 0,
+   "expired": 0,
+   "waiting_for_prints": 0,
+   "notional_usd": 1239798.6,
+   "symbols_waiting_for_a_print": [],
+   "status": "SETTLED",
+   "fills": [
+    {
+     "intent_id": "NasdaqMomentum_Max-00001",
+     "participant": "@NasdaqMomentum_Max",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 120,
+     "price": 715.96,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.14,
+     "participation_pct_of_session_volume": 0.00032
+    },
+    {
+     "intent_id": "DowNasdaq_SpreadMax-00001",
+     "participant": "@DowNasdaq_SpreadMax",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 120,
+     "price": 715.96,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.14,
+     "participation_pct_of_session_volume": 0.00032
+    },
+    {
+     "intent_id": "DowNasdaq_SpreadMax-00002",
+     "participant": "@DowNasdaq_SpreadMax",
+     "symbol": "SPY",
+     "side": "buy",
+     "quantity": 80,
+     "price": 763.16,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.131,
+     "participation_pct_of_session_volume": 0.00016
+    },
+    {
+     "intent_id": "VIXRegime_LiveMax-00001",
+     "participant": "@VIXRegime_LiveMax",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 40,
+     "price": 715.96,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.14,
+     "participation_pct_of_session_volume": 0.00011
+    },
+    {
+     "intent_id": "SOFRPivot_Rider-00001",
+     "participant": "@SOFRPivot_Rider",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 120,
+     "price": 715.96,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.14,
+     "participation_pct_of_session_volume": 0.00032
+    },
+    {
+     "intent_id": "SOFRPivot_Rider-00002",
+     "participant": "@SOFRPivot_Rider",
+     "symbol": "TSLA",
+     "side": "buy",
+     "quantity": 120,
+     "price": 367.5,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.544,
+     "participation_pct_of_session_volume": 0.00031
+    },
+    {
+     "intent_id": "CurveSteepener_MaxBeta-00001",
+     "participant": "@CurveSteepener_MaxBeta",
+     "symbol": "SPY",
+     "side": "buy",
+     "quantity": 120,
+     "price": 763.16,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.131,
+     "participation_pct_of_session_volume": 0.00024
+    },
+    {
+     "intent_id": "OilDollar_FadeUNG-00001",
+     "participant": "@OilDollar_FadeUNG",
+     "symbol": "UNG",
+     "side": "buy",
+     "quantity": 7700,
+     "price": 10.32,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 19.417,
+     "participation_pct_of_session_volume": 0.03019
+    },
+    {
+     "intent_id": "OilDollar_FadeUNG-00002",
+     "participant": "@OilDollar_FadeUNG",
+     "symbol": "XOM",
+     "side": "buy",
+     "quantity": 600,
+     "price": 161.85,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 1.236,
+     "participation_pct_of_session_volume": 0.00547
+    },
+    {
+     "intent_id": "MLB_Attention_Live-00001",
+     "participant": "@MLB_Attention_Live",
+     "symbol": "PENN",
+     "side": "sell",
+     "quantity": 3300,
+     "price": 17.85,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.0,
+     "participation_pct_of_session_volume": 0.15287
+    },
+    {
+     "intent_id": "LeapStyle_AutoLiquidate-00001",
+     "participant": "@LeapStyle_AutoLiquidate",
+     "symbol": "GLD",
+     "side": "buy",
+     "quantity": 240,
+     "price": 400.29,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.25,
+     "participation_pct_of_session_volume": 0.0031
+    },
+    {
+     "intent_id": "PinePilot_EMA_Live-00001",
+     "participant": "@PinePilot_EMA_Live",
+     "symbol": "QQQ",
+     "side": "sell",
+     "quantity": 120,
+     "price": 715.95,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.0,
+     "participation_pct_of_session_volume": 0.00032
+    },
+    {
+     "intent_id": "VolControl_MaxLev-00001",
+     "participant": "@VolControl_MaxLev",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 120,
+     "price": 715.96,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.14,
+     "participation_pct_of_session_volume": 0.00032
+    },
+    {
+     "intent_id": "GoldVsRealRate_Live-00001",
+     "participant": "@GoldVsRealRate_Live",
+     "symbol": "TLT",
+     "side": "buy",
+     "quantity": 1200,
+     "price": 81.55,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 1.226,
+     "participation_pct_of_session_volume": 0.00288
+    },
+    {
+     "intent_id": "FDA_Fade_Live-00001",
+     "participant": "@FDA_Fade_Live",
+     "symbol": "XBI",
+     "side": "buy",
+     "quantity": 600,
+     "price": 157.32,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.636,
+     "participation_pct_of_session_volume": 0.00599
+    },
+    {
+     "intent_id": "KitchenSink_Official-00001",
+     "participant": "@KitchenSink_Official",
+     "symbol": "SPY",
+     "side": "buy",
+     "quantity": 80,
+     "price": 763.16,
+     "reference_source_class": "SECONDARY",
+     "reference_redistribution_status": null,
+     "slippage_bps": 0.131,
+     "participation_pct_of_session_volume": 0.00016
+    }
+   ]
+  },
+  {
+   "session": "2026-09-18",
+   "verification": "PROVISIONAL-EXCHANGE-PRINTS",
+   "official_series_missing": [
+    "SP500",
+    "VIXCLS",
+    "SOFR",
+    "DGS10",
+    "DGS3MO",
+    "DCOILWTICO",
+    "DTWEXBGS"
+   ],
+   "official_series_present": [
+    {
+     "sid": "NASDAQCOM",
+     "value": 26522.55
+    },
+    {
+     "sid": "DJIA",
+     "value": 51682.64
+    }
+   ],
+   "price_sources": [
+    "EXCHANGE-PUBLISHED"
+   ],
+   "intents_targeted": 11,
+   "filled": 11,
+   "partial": 0,
+   "rejected": 0,
+   "expired": 0,
+   "waiting_for_prints": 0,
+   "notional_usd": 521201.6,
+   "symbols_waiting_for_a_print": [],
+   "status": "SETTLED",
+   "fills": [
+    {
+     "intent_id": "NasdaqMomentum_Max-00002",
+     "participant": "@NasdaqMomentum_Max",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 40,
+     "price": 718.84,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.139,
+     "participation_pct_of_session_volume": 8e-05
+    },
+    {
+     "intent_id": "VIXRegime_LiveMax-00002",
+     "participant": "@VIXRegime_LiveMax",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 80,
+     "price": 718.84,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.139,
+     "participation_pct_of_session_volume": 0.00017
+    },
+    {
+     "intent_id": "SOFRPivot_Rider-00003",
+     "participant": "@SOFRPivot_Rider",
+     "symbol": "QQQ",
+     "side": "sell",
+     "quantity": 120,
+     "price": 718.83,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": -0.0,
+     "participation_pct_of_session_volume": 0.00025
+    },
+    {
+     "intent_id": "SOFRPivot_Rider-00004",
+     "participant": "@SOFRPivot_Rider",
+     "symbol": "TSLA",
+     "side": "sell",
+     "quantity": 120,
+     "price": 368.98,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.542,
+     "participation_pct_of_session_volume": 0.00023
+    },
+    {
+     "intent_id": "SOFRPivot_Rider-00005",
+     "participant": "@SOFRPivot_Rider",
+     "symbol": "TLT",
+     "side": "buy",
+     "quantity": 400,
+     "price": 81.47,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.614,
+     "participation_pct_of_session_volume": 0.00097
+    },
+    {
+     "intent_id": "MLB_Attention_Live-00002",
+     "participant": "@MLB_Attention_Live",
+     "symbol": "PENN",
+     "side": "sell",
+     "quantity": 100,
+     "price": 17.21,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 5.807,
+     "participation_pct_of_session_volume": 0.00187
+    },
+    {
+     "intent_id": "LeapStyle_AutoLiquidate-00002",
+     "participant": "@LeapStyle_AutoLiquidate",
+     "symbol": "GLD",
+     "side": "buy",
+     "quantity": 120,
+     "price": 400.5,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.499,
+     "participation_pct_of_session_volume": 0.00126
+    },
+    {
+     "intent_id": "VolControl_MaxLev-00002",
+     "participant": "@VolControl_MaxLev",
+     "symbol": "QQQ",
+     "side": "buy",
+     "quantity": 40,
+     "price": 718.84,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.139,
+     "participation_pct_of_session_volume": 8e-05
+    },
+    {
+     "intent_id": "GoldVsRealRate_Live-00002",
+     "participant": "@GoldVsRealRate_Live",
+     "symbol": "TLT",
+     "side": "sell",
+     "quantity": 1200,
+     "price": 81.46,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.614,
+     "participation_pct_of_session_volume": 0.00292
+    },
+    {
+     "intent_id": "GoldVsRealRate_Live-00003",
+     "participant": "@GoldVsRealRate_Live",
+     "symbol": "GLD",
+     "side": "buy",
+     "quantity": 120,
+     "price": 400.5,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.499,
+     "participation_pct_of_session_volume": 0.00126
+    },
+    {
+     "intent_id": "FDA_Fade_Live-00002",
+     "participant": "@FDA_Fade_Live",
+     "symbol": "XBI",
+     "side": "buy",
+     "quantity": 300,
+     "price": 158.23,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 1.264,
+     "participation_pct_of_session_volume": 0.00304
+    }
+   ]
+  }
+ ],
+ "sessions_settled": [
+  "2026-09-17",
+  "2026-09-18"
+ ],
+ "sessions_waiting": [],
+ "blocked_sessions": [],
+ "extended_sessions": [
+  "2026-09-18"
+ ],
+ "pending_intents": [
+  {
+   "intent_id": "NasdaqMomentum_Max-00003",
+   "participant": "@NasdaqMomentum_Max",
+   "symbol": "QQQ",
+   "side": "buy",
+   "quantity": 40,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "nasdaq-momentum: NASDAQCOM 26,523 > 200d mean 24,553 and 210-session return +15.82% > 0"
+  },
+  {
+   "intent_id": "VIXRegime_LiveMax-00003",
+   "participant": "@VIXRegime_LiveMax",
+   "symbol": "QQQ",
+   "side": "buy",
+   "quantity": 40,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "vix-regime[calm]: VIX 15.44 vs 60d median 16.24, 252d 80th percentile 19.86; S&P 7,638 vs 100d mean 7,516"
+  },
+  {
+   "intent_id": "SOFRPivot_Rider-00006",
+   "participant": "@SOFRPivot_Rider",
+   "symbol": "TLT",
+   "side": "buy",
+   "quantity": 1000,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)"
+  },
+  {
+   "intent_id": "LeapStyle_AutoLiquidate-00003",
+   "participant": "@LeapStyle_AutoLiquidate",
+   "symbol": "NVDA",
+   "side": "buy",
+   "quantity": 100,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "leap: leader NVDA at +7.23% over 42 sessions"
+  },
+  {
+   "intent_id": "PinePilot_EMA_Live-00002",
+   "participant": "@PinePilot_EMA_Live",
+   "symbol": "QQQ",
+   "side": "buy",
+   "quantity": 240,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "pinepilot: EMA9 713.56 > EMA21 713.41"
+  },
+  {
+   "intent_id": "VolControl_MaxLev-00003",
+   "participant": "@VolControl_MaxLev",
+   "symbol": "QQQ",
+   "side": "buy",
+   "quantity": 40,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "vol-control: calm tercile (VIX 15.44 <= 16.41)"
+  },
+  {
+   "intent_id": "GoldVsRealRate_Live-00004",
+   "participant": "@GoldVsRealRate_Live",
+   "symbol": "GLD",
+   "side": "buy",
+   "quantity": 40,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "gold-real-rate: proxy flat (+3.0bp)"
+  },
+  {
+   "intent_id": "FDA_Fade_Live-00003",
+   "participant": "@FDA_Fade_Live",
+   "symbol": "XBI",
+   "side": "sell",
+   "quantity": 900,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "fda-fade: |z|=0.00 < 0.5"
+  }
+ ],
+ "note": "One row per session the book has stepped through. A session settles only when every trade it contains has a published print; a session with no print says so instead of showing a modelled fill."
+}

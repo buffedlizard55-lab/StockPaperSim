@@ -52,6 +52,7 @@ NAV = [
     ("season2/stress.html", "Stress panel"),
     ("season2/data.html", "Data custody"),
     ("season2/participants/index.html", "Participants"),
+    ("summary.html", "Executive summary"),
     ("simulator.html", "Live Simulator"),
     ("live/index.html", "Live Book"),
     ("index.html", "Season 1"),

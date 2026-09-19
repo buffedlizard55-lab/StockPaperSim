@@ -1,0 +1,71 @@
+{
+ "commands": {
+  "history": {
+   "data/real/intraday": {
+    "command": "git log --all --oneline -- data/real/intraday",
+    "ok": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+   },
+   "data/real/prints/intraday": {
+    "command": "git log --all --oneline -- data/real/prints/intraday",
+    "ok": true,
+    "returncode": 0,
+    "stderr": "",
+    "stdout": ""
+   }
+  },
+  "refs": {
+   "command": "git for-each-ref --format=%(refname) refs/heads refs/remotes",
+   "ok": true,
+   "returncode": 0,
+   "stderr": "",
+   "stdout": "refs/heads/arena/01a0b7dc-stockpapersim\nrefs/heads/main\nrefs/remotes/origin/HEAD\nrefs/remotes/origin/arena/01a0b0af-stockpapersim\nrefs/remotes/origin/arena/01a0b1bf-stockpapersim\nrefs/remotes/origin/arena/01a0b254-stockpapersim\nrefs/remotes/origin/arena/01a0b345-stockpapersim\nrefs/remotes/origin/arena/01a0b35e-stockpapersim\nrefs/remotes/origin/arena/01a0b5af-stockpapersim\nrefs/remotes/origin/arena/01a0b614-stockpapersim\nrefs/remotes/origin/arena/01a0b62b-stockpapersim\nrefs/remotes/origin/arena/01a0b674-stockpapersim\nrefs/remotes/origin/arena/01a0b6d7-stockpapersim\nrefs/remotes/origin/main"
+  },
+  "shallow": {
+   "command": "git rev-parse --is-shallow-repository",
+   "ok": true,
+   "returncode": 0,
+   "stderr": "",
+   "stdout": "true"
+  }
+ },
+ "commits_touching_the_path": {
+  "data/real/intraday": [],
+  "data/real/prints/intraday": []
+ },
+ "generated_utc": "2026-09-19T04:36:17Z",
+ "history_check": "CANNOT_TELL_SHALLOW_CLONE",
+ "in_this_tree": false,
+ "lane_refs_visible": [],
+ "lane_refs_visible_count": 0,
+ "runner": {
+  "on_actions": false,
+  "run_id": "",
+  "workflow": ""
+ },
+ "seen_anywhere_in_history": false,
+ "shallow_clone": true,
+ "title": "Intraday capture check",
+ "tree": {
+  "data/real/intraday": {
+   "bytes": 0,
+   "exists": false,
+   "files": 0
+  },
+  "data/real/prints/intraday": {
+   "bytes": 0,
+   "exists": false,
+   "files": 0
+  }
+ },
+ "unblocks_when": "a capture commits prints under data/real/intraday/ with a retrievable URL and a SHA-256 per file, or an official free intraday source is collected the same way",
+ "verdict": "NOT_IN_THIS_TREE",
+ "what_this_checks": "whether session-sliced intraday prints exist in this working tree or anywhere in the git history of this clone",
+ "why_it_is_not_run": {
+  "exec_summary_stock_rows": "the per-name stock rows are the division's output, so they inherit its blocker rather than reporting a number from a different sample",
+  "study": "the intraday study is defined on session-sliced intraday prints; with no capture in the tree there is no tape to study, and a daily-bar study would be a different study",
+  "volatile_stock_division": "the division's candidate set is selected on a volatility screen measured over intraday sessions, and a scoreboard cannot be published before its selector has been pre-registered and applied"
+ }
+}

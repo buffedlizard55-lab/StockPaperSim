@@ -1,0 +1,119 @@
+{
+  "title": "Executive summary",
+  "generated_by": "scripts/build_site_summary.py",
+  "how_to_read": [
+    "Every row below is a claim this project is willing to publish. A row whose evidence has not landed says NOT RUN and why; it never shows an estimated or interpolated number in place of a measurement.",
+    "The reason field names the artifact that is missing, the lane that was supposed to produce it, and what would have to exist before the row can carry a number.",
+    "Rows that do carry numbers say which file and which publisher the numbers came from, and the site's data page links that file."
+  ],
+  "rows": [
+    {
+      "id": "study",
+      "label": "Intraday study",
+      "status": "not_run",
+      "value": null,
+      "reason": "The real intraday capture that this study is defined on has not landed on this branch. The lane that produces it commits on its own schedule and the connection to it has been down, so no intraday tape exists in this repository to measure. An intraday result computed from daily bars would be a modelled number wearing a measured number's name, so the row stays empty.",
+      "missing_artifact": "data/real/intraday/ (session-sliced intraday prints with retrievable URLs and SHA-256)",
+      "unblocks_when": "The intraday lane lands its extract on this branch, or a free official intraday source is collected with a recorded retrieval and a redistribution status.",
+      "source_links": [
+        {
+          "label": "Nasdaq historical quote endpoint (the daily fallback the collector uses)",
+          "url": "https://api.nasdaq.com/api/quote/QQQ/historical?assetclass=etf"
+        },
+        {
+          "label": "Nasdaq TotalView specification, kept locally because the product is licensed",
+          "url": "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regulatory/nasdaq-totalview-specs.txt"
+        }
+      ]
+    },
+    {
+      "id": "volatile_stock_division",
+      "label": "Volatile-stock division",
+      "status": "not_run",
+      "value": null,
+      "reason": "A division is a scoreboard over a candidate set selected on volatility. The selector needs sessions this repository does not have: the daily files end on the last collected print and the volatility screen is defined over the intraday range, which is exactly the capture that has not landed. No candidate list has been constructed, so no division result is published.",
+      "missing_artifact": "an intraday capture and a written selection rule with its own pre-registration",
+      "unblocks_when": "The intraday capture lands and the selection rule is registered before it is applied.",
+      "source_links": [
+        {
+          "label": "Season 2 method (what a division would be a variant of)",
+          "url": "https://buffedlizard55-lab.github.io/StockPaperSim/season2/"
+        }
+      ]
+    },
+    {
+      "id": "exec_summary_stock_rows",
+      "label": "Stock rows of this summary",
+      "status": "not_run",
+      "value": null,
+      "reason": "The stock rows are the per-name returns of the volatile-stock division. They inherit that row's blocker: with no intraday capture there are no per-name results to report, and publishing a per-name table built from anything else would be an estimate presented as a measurement.",
+      "missing_artifact": "per-name results from a landed capture",
+      "unblocks_when": "The volatile-stock division runs.",
+      "source_links": []
+    },
+    {
+      "id": "tradingview_strategy_report",
+      "label": "TradingView Strategy Report benchmark",
+      "status": "not_run",
+      "value": null,
+      "reason": "TradingView's Strategy Report is behind a paid plan and its exports are plan-gated: the export endpoint requires an authenticated session and there are no credentials for this project, and the terms of that plan do not permit redistributing the export even when one exists. The benchmark therefore cannot be reproduced from this repository, and no TradingView number is quoted.",
+      "missing_artifact": "a licensed export, or a written permission for the numbers this project would republish",
+      "unblocks_when": "Either the owner supplies a licensed export and the redistribution question is settled, or the benchmark is replaced with one this repository can cite end to end.",
+      "source_links": [
+        {
+          "label": "TradingView pricing and plan limits, kept locally",
+          "url": "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/regulatory/tradingview-pricing.txt"
+        },
+        {
+          "label": "Competition-site reference notes (The Leap, Trade-Ideas, Candlecharts)",
+          "url": "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/research/COMPETITION_SITES.md"
+        }
+      ]
+    },
+    {
+      "id": "real_intraday_capture",
+      "label": "Real intraday capture",
+      "status": "not_run",
+      "value": null,
+      "reason": "No intraday print has been collected into this repository by either lane. The daily collector reaches free public endpoints from a GitHub runner; the licensed intraday feeds require a contract and a data redistribution decision that this project has not made. Nothing substitutes a synthetic path for the missing tape.",
+      "missing_artifact": "data/real/intraday/ with per-request URLs, byte counts and SHA-256",
+      "unblocks_when": "A capture lane commits its extract, or a redistribution decision is recorded for a licensed feed.",
+      "source_links": [
+        {
+          "label": "How the daily collector runs and what it may write",
+          "url": "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/.github/workflows/collect-real-data.yml"
+        }
+      ]
+    }
+  ],
+  "live_rows": {
+    "note": "These rows are rendered from memory/live/ by scripts/build_site_summary.py; the numbers are settled trades, not projections. A row with no settled session shows the waiting reason.",
+    "source": "memory/live/"
+  },
+  "verified_rows": [
+    {
+      "id": "forward_rollover",
+      "label": "Forward rollover (sessions settled on published prints)",
+      "status": "measured",
+      "source": "memory/live/forward-ladder.json"
+    },
+    {
+      "id": "official_price_eligibility",
+      "label": "Official-price eligibility (strict gate)",
+      "status": "measured",
+      "source": "data/real/official_price_eligibility.json"
+    },
+    {
+      "id": "print_crosscheck",
+      "label": "Exchange-versus-vendor print cross-check",
+      "status": "measured",
+      "source": "data/real/prints/crosscheck.json"
+    }
+  ],
+  "standing_instructions": [
+    "No manual input: every scheduled run collects, settles, rebuilds the site and opens its own pull request.",
+    "No invented numbers: a missing measurement is published as NOT RUN with the reason and the artifact that would unblock it.",
+    "Irregularities are flagged rather than smoothed: every one is itemised on the irregularities page with its evidence.",
+    "Yahoo-backed results are secondary research data and are labelled as such on every page that shows them."
+  ]
+}

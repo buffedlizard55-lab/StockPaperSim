@@ -78,6 +78,16 @@ jobs:
       - name: Independent audit of the published season
         run: python scripts/independent_audit.py
 
+      # Season 2 is the research run the official-price gate refuses, and it has
+      # its own auditor. It was written but never wired into CI, and the cost of
+      # that showed up later: the forward collector appended two sessions to the
+      # price files and the auditor's custody checks had been failing, invisibly,
+      # ever since. The audit now passes because each change is chained to the
+      # bytes a run recorded; without this step the next unexplained rewrite
+      # would go unnoticed again.
+      - name: Independent audit of the published Season 2 run
+        run: python scripts/independent_audit_season2.py
+
   site-is-not-stale:
     name: Published site matches the code and the run memory
     runs-on: ubuntu-latest

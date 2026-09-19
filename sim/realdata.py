@@ -414,7 +414,31 @@ def load_fred(series: str, root: str = REAL_ROOT) -> Tuple[Dict[str, float], str
     if best is None:
         raise RealDataUnavailable(f"collected FRED files for {series} are empty")
     _, path, values = best
+    # Newly published observations land in a small merge file instead of forcing
+    # a rewrite of a 500-row CSV on every daily rollover; later dates win.
+    for day, value in fred_latest_values(series, root).items():
+        try:
+            values[day] = float(value)
+        except (TypeError, ValueError):
+            continue
     return values, os.path.relpath(path, REPO_ROOT), _sha256_file(path)
+
+
+FRED_LATEST_FILE = "latest_observations.json"
+
+
+def fred_latest_values(series: str, root: str = REAL_ROOT) -> Dict[str, float]:
+    """Observations the collector appended after the bulk FRED collection."""
+    path = os.path.join(root, "fred", FRED_LATEST_FILE)
+    if not os.path.exists(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    values = ((payload.get("series") or {}).get(series) or {}).get("values") or {}
+    return {str(k): v for k, v in values.items()}
 
 
 def _ols_beta(asset: Sequence[float], market: Sequence[float]) -> float:
@@ -521,27 +545,17 @@ def build_real_market_data(root: str = REAL_ROOT,
                             continue
                     except Exception:
                         pass
-                if date == "2026-09-17" and rows:
-                    prev = rows[-1]
-                    spx_ratio = spx[-1] / spx[-2] if spx[-2] > 0 else 1.0
-                    if symbol in ("SPY", "VOO", "IVV"):
-                        c_ = round(prev.close * spx_ratio, 2)
-                    elif symbol in ("QQQ", "NDX"):
-                        c_ = round(prev.close * (26418.30 / 25978.42), 2)
-                    elif symbol == "DIA":
-                        c_ = round(prev.close * (51778.04 / 51461.90), 2)
-                    elif symbol == "TLT":
-                        c_ = round(prev.close * 0.999, 2)
-                    elif symbol == "GLD":
-                        c_ = round(prev.close * 1.0019, 2)
-                    else:
-                        c_ = round(prev.close * spx_ratio, 2)
-                    o_ = prev.close
-                    h_ = max(o_, c_)
-                    l_ = min(o_, c_)
-                    v_ = int(series.bars[-1].volume) if series.bars else 1000000
-                    rows.append(Bar(date, o_, h_, l_, c_, v_))
-                    continue
+                # REMOVED (was IR-64): a branch here derived a 2026-09-17 bar for
+                # any symbol with no collected print, by scaling the previous
+                # close with a fixed index ratio.  It was added to settle the
+                # first forward session and it was wrong: the derived QQQ close
+                # was 716.65 against the exchange's published 716.92, and the
+                # derived open was the previous session's close, so every fill
+                # settled on that date cited a bar no publisher ever printed.
+                # A session a symbol has no print for is a gap - and this loop
+                # already records it as one, with zero volume, so nothing can be
+                # executed against it.  Real prints arrive through
+                # ``apply_forward_prints`` below, which cites its source.
                 if not rows:
                     filled.append(date)
                     previous = next((b for b in reversed(series.bars) if b.date < date), None)
@@ -709,6 +723,218 @@ def build_real_market_data(root: str = REAL_ROOT,
         for row in dropped:
             print(f"    DROPPED {row['symbol']}: {row['reason']}")
     return market
+
+
+def apply_forward_prints(market,
+                         root: str = REAL_ROOT,
+                         source: str = "nasdaq",
+                         extend_sessions: bool = True,
+                         verbose: bool = False) -> dict:
+    """Overlay collected prints on a market and extend it into new sessions.
+
+    The Season 2 research window ends on the last session FRED had published.  A
+    *forward* book needs the sessions after that, and it may only get them from a
+    publisher that actually printed them: this function reads the print ledger
+    (:mod:`sim.prints`), replaces any forward-filled bar for a session the ledger
+    covers, and appends a new session when **every** traded symbol has a print for
+    it.
+
+    Three rules keep this honest:
+
+    * a bar inside the vendor history is never rewritten - only a session with no
+      collected bar is eligible for replacement;
+    * a session is appended only at full coverage, so no symbol is silently
+      carried at a stale price inside a new session;
+    * every bar written here carries its publisher, URL, retrieval time and
+      checksum in ``market.bar_provenance``, which is what a fill cites.
+
+    The session list itself comes from FRED's S&P 500 observation dates, and that
+    series lags the exchange by up to a day.  A session that FRED has not
+    published yet is appended as **provisional** and labelled, and the evidence
+    block names exactly which official series are still missing, so a reader can
+    see the difference between "the exchange says this happened" and "every
+    official series has caught up".
+    """
+    from . import prints as print_mod                     # local: keeps import cycles out
+    ledger = print_mod.load_ledger(root, source)
+    report: dict = {
+        "source": source, "ledger": ledger.meta(), "available": bool(ledger.rows),
+        "replaced": [], "kept_vendor_bar": [], "extended": [], "blocked": [],
+        "sessions": ledger.sessions(),
+    }
+    if not ledger.rows:
+        return report
+
+    traded = [s for s in market.symbols if s in market.bars]
+    native_last = {}
+    for symbol in traded:
+        meta = market.series_meta.get(symbol)
+        bars = list(getattr(meta, "bars", []) or [])
+        native_last[symbol] = bars[-1].date if bars else ""
+    provenance = getattr(market, "bar_provenance", {})
+    evidence = getattr(market, "session_evidence", {})
+    provisional = set(getattr(market, "provisional_sessions", set()))
+
+    def _reindex() -> None:
+        market._closes = {s: [b.close for b in market.bars[s]] for s in market.symbols}
+        market._vols = {s: [b.volume for b in market.bars[s]] for s in market.symbols}
+        market._rets = {}
+        for s in market.symbols:
+            closes = market._closes[s]
+            market._rets[s] = [0.0] + [closes[i] / closes[i - 1] - 1.0
+                                       for i in range(1, len(closes))]
+        market.market_ret = [0.0] + [market.spx[i] / market.spx[i - 1] - 1.0
+                                     for i in range(1, len(market.spx))]
+
+    # -- 1. replace forward-filled bars for sessions the ledger covers -------
+    for symbol in traded:
+        for session in ledger.sessions():
+            if session not in market.dates:
+                continue
+            if session <= native_last.get(symbol, ""):
+                report["kept_vendor_bar"].append({"symbol": symbol, "session": session})
+                continue
+            row = ledger.get(symbol, session)
+            if row is None or row.get("close") is None or row.get("open") is None:
+                continue
+            index = market.dates.index(session)
+            previous = market.bars[symbol][index]
+            market.bars[symbol][index] = Bar(session, float(row["open"]),
+                                             float(row["high"]), float(row["low"]),
+                                             float(row["close"]), int(row["volume"] or 0))
+            gaps = getattr(market, "gaps", {}).get(symbol)
+            if gaps and session in gaps:
+                gaps.remove(session)
+            provenance[(symbol, session)] = {
+                "source": source, "source_class": row.get("source_class", ""),
+                "redistribution_status": row.get("redistribution_status", ""),
+                "url": row.get("url", ""), "retrieved_utc": row.get("retrieved_utc", ""),
+                "file": ledger.meta().get("file", ""), "sha256": ledger.sha256,
+                "replaced_forward_fill": {"close": getattr(previous, "close", None),
+                                          "volume": getattr(previous, "volume", None)},
+            }
+            report["replaced"].append({"symbol": symbol, "session": session,
+                                       "close": float(row["close"]),
+                                       "replaced_close": getattr(previous, "close", None)})
+
+    # -- 2. append sessions the calendar has not published yet ---------------
+    if extend_sessions:
+        candidates = sorted({s for s in ledger.sessions() if s not in market.dates})
+        for session in candidates:
+            covered, missing = ledger.coverage(session, traded)
+            if missing:
+                report["blocked"].append({
+                    "session": session, "missing": missing,
+                    "reason": (f"{len(missing)} of {len(traded)} traded symbols have no "
+                               f"print for {session}; a session is never opened at "
+                               f"partial coverage")})
+                continue
+            closures = getattr(market.calendar, "closed_dates", set())
+            if session in closures:
+                report["blocked"].append({
+                    "session": session, "missing": [],
+                    "reason": "the collected official calendar lists this date as a closure"})
+                continue
+            for symbol in traded:
+                row = ledger.get(symbol, session)
+                market.bars[symbol].append(
+                    Bar(session, float(row["open"]), float(row["high"]),
+                        float(row["low"]), float(row["close"]), int(row["volume"] or 0)))
+                provenance[(symbol, session)] = {
+                    "source": source, "source_class": row.get("source_class", ""),
+                    "redistribution_status": row.get("redistribution_status", ""),
+                    "url": row.get("url", ""), "retrieved_utc": row.get("retrieved_utc", ""),
+                    "file": ledger.meta().get("file", ""), "sha256": ledger.sha256,
+                    "replaced_forward_fill": None,
+                }
+            market.dates.append(session)
+            market.spx.append(market.spx[-1])
+            market.vix.append(market.vix[-1])
+            provisional.add(session)
+            report["extended"].append({"session": session, "symbols": len(traded),
+                                       "volumes_total": sum(
+                                           int(market.bars[s][-1].volume) for s in traded)})
+
+    market.bar_provenance = provenance
+    market.provisional_sessions = provisional
+    market.session_evidence = evidence
+    _reindex()
+
+    # -- 3. what official series have caught up with each new session --------
+    official_series = _official_series_ids()
+    for session in [row["session"] for row in report["extended"]]:
+        present, missing_series = [], []
+        for sid in official_series:
+            values = ({}, "", "")[0]
+            if _fred_file_exists(sid, root):
+                values = load_fred(sid, root)[0]
+            if session in values:
+                present.append({"sid": sid, "value": values[session]})
+            else:
+                missing_series.append(sid)
+        evidence[session] = {
+            "session": session,
+            "verification": (print_mod.PROVISIONAL if missing_series
+                             else print_mod.FULL),
+            "official_series_present": present,
+            "official_series_missing": missing_series,
+            "official_calendar_authority": ("FRED SP500 observation dates; the S&P 500 "
+                                            "series has not published this date yet"),
+            "price_evidence": {
+                "source": source,
+                "source_class": ledger.meta().get("source_class", ""),
+                "symbols_with_prints": len(traded),
+                "symbols_required": len(traded),
+                "file": ledger.meta().get("file", ""),
+                "sha256": ledger.sha256,
+            },
+            "note": ("Settling on this session is allowed because every traded symbol "
+                     "has a published print and the date is not a calendar closure. "
+                     "The session is provisional until the official series above "
+                     "publish their own observation, and it is labelled that way on "
+                     "every fill it settles."),
+        }
+    report["session_evidence"] = evidence
+    market.session_evidence = evidence
+    market.diagnostics["forward_prints"] = {
+        "source": source, "ledger": ledger.meta(),
+        "replaced_bars": len(report["replaced"]),
+        "extended_sessions": [row["session"] for row in report["extended"]],
+        "blocked_sessions": report["blocked"],
+        "provisional_sessions": sorted(provisional),
+        "session_evidence": evidence,
+    }
+    if verbose:
+        print(f"  forward prints: {len(report['replaced'])} bars replaced, "
+              f"{len(report['extended'])} session(s) extended "
+              f"({', '.join(row['session'] for row in report['extended']) or 'none'})")
+        for row in report["blocked"]:
+            print(f"    BLOCKED {row['session']}: {row['reason']}")
+    return report
+
+
+def _fred_file_exists(series: str, root: str) -> bool:
+    directory = os.path.join(root, "fred")
+    if not os.path.isdir(directory):
+        return False
+    return any(name.startswith(series + "_") for name in os.listdir(directory))
+
+
+def _official_series_ids() -> Tuple[str, ...]:
+    """The official FRED series a session's evidence block reports on.
+
+    Read from the live book's register when it is importable (it is the one place
+    that record lives), with a literal fallback so this module never depends on
+    the import order.
+    """
+    fallback = ("SP500", "NASDAQCOM", "DJIA", "VIXCLS", "SOFR", "DGS10", "DGS3MO",
+                "DCOILWTICO", "DTWEXBGS")
+    try:
+        from . import live
+        return tuple(row["sid"] for row in live.OFFICIAL_SERIES_REGISTER
+                     if row.get("sid"))
+    except Exception:                                       # pragma: no cover
+        return fallback
 
 
 def data_inventory(root: str = REAL_ROOT, digest: bool = True) -> dict:

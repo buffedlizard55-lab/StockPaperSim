@@ -39,6 +39,7 @@ NAV = [
     ("official/ledger.html", "Trade store"),
     ("official/method.html", "Venue &amp; formulas"),
     ("official/sources.html", "Official sources"),
+    ("summary.html", "Executive summary"),
     ("index.html", "Season 1"),
     ("season2/index.html", "Season 2"),
     ("live/index.html", "Live Book"),

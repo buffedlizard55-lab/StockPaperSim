@@ -40,7 +40,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 61 flags this project raised against itself.
+> carries the 63 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -293,7 +293,7 @@ needs an entitlement; the free publisher pages forbid redistribution), so the
 equity books stay SECONDARY and the coverage number stays visible. The official
 lane answers that part of the brief with the instrument family where a publisher
 prints the price of every trade. The remaining gaps are registered as **L-27** to
-**L-37** — the withheld SEC insider extracts (HTTP 403 from the collection
+**L-39** — the withheld SEC insider extracts (HTTP 403 from the collection
 runner), the derived secondary leg, TIPS marked without inflation indexation,
 same-day settlement of auction awards, a house maintenance rule rather than a
 cited one, assumed secondary depth, the mixed-class totals in the unified trade
@@ -449,7 +449,7 @@ python3 -m sim.cli live-report @CrowdFade_Live
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    60-row verified-source register
+                    64-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -486,7 +486,7 @@ docs/           the published site (GitHub Pages serves this directory);
                 docs/live/ is the Live Book section and docs/official/ the
                 Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (61), LIMITATIONS.json (37),
+                IRREGULARITIES.json (63), LIMITATIONS.json (39),
                 REMAINING_WORK.json (44), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
@@ -547,7 +547,7 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 66-row register (60 source rows plus 6 provider rows), every URL
+  — the 70-row register (64 source rows plus 6 provider rows), every URL
   clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not
@@ -559,10 +559,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 61 flags, including the ones raised against this project's own modelling
+  — all 63 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 37 limitations, 44 items of remaining work in priority order, and what
+  — 39 limitations, 44 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

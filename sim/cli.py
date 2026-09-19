@@ -639,8 +639,10 @@ def cmd_live(args: argparse.Namespace) -> int:
     """Plan the live forward book and/or run its walk-forward rehearsal."""
     mode = args.mode
     if mode in ("forward", "all"):
+        settle_sess = getattr(args, "settle_session", "") or None
         result = live_season.run_forward(root=args.memory_root, as_of=args.as_of,
                                          horizon=args.horizon,
+                                         settle_session=settle_sess,
                                          verbose=args.verbose)
         manifest = result["manifest"]
         print(f"LIVE FORWARD BOOK  {result['run_id']}")
@@ -1162,6 +1164,8 @@ def build_parser() -> argparse.ArgumentParser:
     lv.add_argument("--as-of", default="", help="plan date (default: the last verified session)")
     lv.add_argument("--horizon", type=int, default=3,
                     help="how many future sessions the projection must cover")
+    lv.add_argument("--settle-session", default="",
+                    help="settle forward book on this session if verified data exists")
     lv.add_argument("--verbose", action="store_true")
     lv.set_defaults(func=cmd_live)
 

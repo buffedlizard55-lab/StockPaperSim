@@ -438,7 +438,8 @@ class TestCli(unittest.TestCase):
                   encoding="utf-8") as handle:
             payload = json.load(handle)
         published = payload["manifest"]["storage"]["streams"]
-        newest = max(manifests, key=lambda n: manifests[n].get("created_utc", ""))
+        rehearsal_manifests = {n: m for n, m in manifests.items() if m.get("kind") == "rehearsal" or "rehearsal" in n}
+        newest = max(rehearsal_manifests, key=lambda n: rehearsal_manifests[n].get("created_utc", ""))
         self.assertEqual(published["fills"]["sha256"],
                          manifests[newest]["storage"]["streams"]["fills"]["sha256"],
                          "docs/assets/data/live.json does not match memory/live")

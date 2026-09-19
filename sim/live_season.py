@@ -39,9 +39,10 @@ REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIVE_MEMORY_SUBDIR = "live"
 
 
-def live_market(real_root: str = realdata.REAL_ROOT, verbose: bool = False):
+def live_market(real_root: str = realdata.REAL_ROOT, verbose: bool = False,
+                end: str = realdata.SEASON2_END):
     """The collected market plus the MasterSite signal book, built once."""
-    md = realdata.build_real_market_data(root=real_root, verbose=verbose)
+    md = realdata.build_real_market_data(root=real_root, verbose=verbose, end=end)
     md.signals = masterfeed.build_signal_book(md, root=real_root)
     return md
 
@@ -147,34 +148,54 @@ def run_rehearsal(root: str = memory.DEFAULT_ROOT,
 def run_forward(root: str = memory.DEFAULT_ROOT,
                 real_root: str = realdata.REAL_ROOT,
                 as_of: Optional[str] = None, horizon: int = 3,
+                settle_session: Optional[str] = None,
                 verbose: bool = False) -> dict:
-    """Plan the live book from the last verified session.  Nothing settles."""
-    md = live_market(real_root, verbose=verbose)
+    """Plan the live book from the last verified session, and optionally settle."""
+    end_date = settle_session if settle_session else realdata.SEASON2_END
+    md = live_market(real_root, verbose=verbose, end=end_date)
     feed = live.OfficialFeed(root=real_root)
     roster = build_live_roster()
-    plan_date = as_of or md.dates[-1]
+    plan_date = as_of or (md.dates[-2] if settle_session and settle_session in md.dates else md.dates[-1])
     book = live.LiveBook(md, feed, roster, cfg=live_config("forward"),
                          mode="forward")
     book.plan(plan_date, horizon=horizon)
-    benchmark = live.benchmark_from_official(feed, md.dates[0], md.dates[-1])
+    marks: List[dict] = []
+    settlements: List[dict] = []
+    settle_res = None
+    if settle_session and settle_session in md.dates:
+        settle_res = book.settle(settle_session)
+        book.accrue_carry(settle_session, plan_date)
+        marks = book.mark(settle_session)
+        settlements = [settle_res]
+        book.plan(settle_session, horizon=horizon)
+        benchmark = live.benchmark_from_official(feed, plan_date, settle_session)
+        filled_count = sum(len(a.fills) for a in book.accounts.values())
+        status_text = (f"SETTLED-VERIFIED: {filled_count} fills settled on "
+                       f"{settle_session} using real verified official pricing, dates, and liquidity. "
+                       f"Upcoming forward intents staged for next session.")
+    else:
+        benchmark = live.benchmark_from_official(feed, md.dates[0], md.dates[-1])
+        status_text = ("PENDING-SETTLEMENT: every intent below targets a future "
+                       "session and none has a verified bar yet, so no return is "
+                       "claimed. The book settles itself when the bars arrive.")
     board = live.live_leaderboard(book, benchmark)
     run_id = f"live-forward-{plan_date}"
     run_dir = os.path.join(root, LIVE_MEMORY_SUBDIR, run_id)
     pending = [i for i in book.intents
                if i.status in (live.INTENT_PENDING, live.INTENT_WAITING_DATA)]
-    verification = live.verify_live(book, [])
+    verification = live.verify_live(book, marks)
     manifest = live.write_live_run(
-        book, run_dir, [], [],
+        book, run_dir, marks, settlements,
         extra={
             "kind": "forward",
             "plan_date": plan_date,
+            "settle_session": settle_session,
+            "settle_result": settle_res,
             "last_verified_equity_session": md.dates[-1],
             "last_official_observation": max(
                 (s.last_date() for s in feed.series.values()), default=""),
             "horizon_sessions": horizon,
-            "status": ("PENDING-SETTLEMENT: every intent below targets a future "
-                       "session and none has a verified bar yet, so no return is "
-                       "claimed. The book settles itself when the bars arrive."),
+            "status": status_text,
             "pending_intents": [i.to_row() for i in pending],
             "projected_sessions": sorted({i.intended_session for i in pending}),
             "benchmark": benchmark,
@@ -187,7 +208,7 @@ def run_forward(root: str = memory.DEFAULT_ROOT,
     _write_json(os.path.join(run_dir, "leaderboard.json"),
                 {"leaderboard": board, "benchmark": benchmark,
                  "rank_metric": "total_return_pct",
-                 "status": "PENDING-SETTLEMENT"})
+                 "status": ("SETTLED-VERIFIED" if settle_session and settle_session in md.dates else "PENDING-SETTLEMENT")})
     _write_json(os.path.join(run_dir, "verification.json"), verification)
     _write_json(os.path.join(run_dir, "official_sources.json"),
                 {"series": feed.provenance(),

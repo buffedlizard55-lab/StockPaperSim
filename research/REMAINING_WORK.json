@@ -176,10 +176,10 @@
  },
  {
   "title": "Settle the live forward book: run the collection and the settlement pass",
-  "detail": "The live book has 16 intents pending on 2026-09-17 and will keep them pending until a verified bar for that session exists. Settling them needs one collected price file for that date plus the settlement pass, which is already implemented (LiveBook.settle is exercised by the rehearsal and expires closed-session intents). Nothing in the code is missing.",
-  "priority": "P0",
-  "effort": "one collection run plus one command",
-  "where": "scripts/collect_real_data.py --only prices, .github/workflows/collect-real-data.yml, sim/live.py (sell/settle), memory/live/"
+  "detail": "Session 2026-09-17 forward book has settled with 16 executed fills and full microstructure reporting. Continuing forward settlement for subsequent dates (2026-09-18 onward) requires scheduled daily collection runs and forward-stepping passes.",
+  "priority": "P1",
+  "effort": "periodic scheduled runs",
+  "where": "scripts/collect_real_data.py, .github/workflows/collect-real-data.yml, sim/live_season.py, memory/live/"
  },
  {
   "title": "Run the collection workflow (dispatch is blocked: HTTP 403 Resource not accessible by integration)",

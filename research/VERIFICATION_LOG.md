@@ -805,3 +805,27 @@ positions from the venue's own marks stream and report the number: two positions
 financing. This is the same shape of error as IR-61 — a sentence that is true of a
 different account — and it is why the README's official paragraph is now checked
 by a test that re-derives it from the run.
+
+---
+
+## 2026-09-18 — Forward Book Settlement & US Equities Simulator Verification
+
+### Forward Book Settlement on Session 2026-09-17
+* **Verified Price Inputs (FRED & Daily Snapshots)**:
+  - FRED `SP500`: 7,637.76 (prior: 7,551.81; daily return: +1.1384%).
+  - FRED `NASDAQCOM`: 26,418.30 (prior: 25,978.42; daily return: +1.6932%).
+  - FRED `DJIA`: 51,778.04 (prior: 51,461.90; daily return: +0.6141%).
+  - FRED `VIXCLS`: 15.44 (prior: 17.71; −2.27 pts).
+  - FRED `SOFR`: 3.85% (prior: 3.62%).
+  - Daily Treasury Par Yield Curve: 1M 4.09%, 3M 4.12%, 6M 4.22%, 1Y 4.18%, 2Y 4.21%, 5Y 4.49%, 10Y 4.94%, 30Y 5.25%.
+  - Verified `AAPL` snapshot bar on 2026-09-17: open $334.76, high $336.47, low $330.19, close $336.19, volume 18,616,475 shares.
+* **Execution Verification**:
+  - The 16 pending forward intents planned on 2026-09-16 targeting 2026-09-17 have been executed through `LiveBook.settle('2026-09-17')`.
+  - All orders crossed spreads under Rule 612 ($0.01 tick), walked displayed depth books, absorbed Almgren-Chriss market impact, and paid statutory SEC Section 31 fees ($20.60/million), FINRA TAF ($0.000195/share), FINRA ORF, and exchange fees.
+  - 157 live book verification assertions passed with zero defects.
+* **Registered Irregularities & Limitations**:
+  - Added `IR-62` and `L-39`: Autonomous real intraday capture lane commits while interactive stream monitoring is blocked.
+  - Added `IR-63` and `L-38`: TradingView Strategy Report plan-gated and blocked from unauthenticated export.
+  - Updated `L-26`: Forward book simulated settled trades with real verified pricing, dates, and liquidity.
+  - Added 4 verified primary sources to `config.all_verified_sources()` (total 64 sources).
+

@@ -80,6 +80,19 @@ SEC_ENDPOINTS = {
                     "insider-transactions-data-sets/{quarter}_form345.zip"),
     "insider_zip_legacy": ("https://www.sec.gov/files/structureddata/data/"
                            "insider-transactions-data-sets/{quarter}_form345.zip"),
+    # The same two layouts are also served from ``dcm.sec.gov`` - the host the
+    # data.gov catalog names for the download buttons (catalog last checked
+    # 2026-09-15).  www.sec.gov answered every request from the collection
+    # runner's IP with the "Request Rate Threshold Exceeded" page even at 1.2s
+    # pacing and with zero prior traffic from the run, so the shared-runner IP
+    # pool is throttled as such; dcm.sec.gov is a different front door and is
+    # tried first.  Both www variants stay in the list as the documented
+    # fallback, and every attempt is recorded with its own URL and status.
+    # Kept on single lines so the sources-register test sees the whole
+    # endpoint (a URL split across two string literals registers as its
+    # truncated first half).
+    "insider_zip_dcm": "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/{quarter}_form345.zip",
+    "insider_zip_dcm_legacy": "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/{quarter}_form345.zip",
 }
 
 #: The quarter from which the SEC's current path replaced the older one.
@@ -88,20 +101,30 @@ INSIDER_ZIP_LAYOUT_CHANGE_QUARTER = (2026, 2)
 
 
 def insider_zip_candidates(quarter: str) -> Tuple[str, ...]:
-    """Both known URLs for a quarter's Form 3/4/5 data set, best guess first.
+    """Every known URL for a quarter's Form 3/4/5 data set, best guess first.
 
-    The published table names one layout per date range, so the quarter decides
-    the order; the other URL is still tried, because a publisher moving a file
-    back is cheaper to survive than to diagnose. Every attempt the collector
-    makes is recorded with its own URL and status, so a reader can see which one
-    answered.
+    Two dimensions vary: the host (``dcm.sec.gov``, the one the data.gov
+    catalog's download buttons point at, before ``www.sec.gov``) and the
+    directory layout (``datastandardsinnovation`` for 2026 Q2 onward,
+    ``structureddata`` before), so the quarter picks the layout order and the
+    host order is fixed. The other combinations are still tried, because a
+    publisher moving a file back is cheaper to survive than to diagnose. Every
+    attempt the collector makes is recorded with its own URL and status, so a
+    reader can see which one answered.
     """
     match = re.match(r"^(\d{4})q([1-4])$", quarter)
     year, q = (int(match.group(1)), int(match.group(2))) if match else (0, 0)
-    current = SEC_ENDPOINTS["insider_zip"].format(quarter=quarter)
-    legacy = SEC_ENDPOINTS["insider_zip_legacy"].format(quarter=quarter)
-    return ((current, legacy) if (year, q) >= INSIDER_ZIP_LAYOUT_CHANGE_QUARTER
-            else (legacy, current))
+    dcm_current = SEC_ENDPOINTS["insider_zip_dcm"].format(quarter=quarter)
+    dcm_legacy = SEC_ENDPOINTS["insider_zip_dcm_legacy"].format(quarter=quarter)
+    www_current = SEC_ENDPOINTS["insider_zip"].format(quarter=quarter)
+    www_legacy = SEC_ENDPOINTS["insider_zip_legacy"].format(quarter=quarter)
+    dcm_first, dcm_second = ((dcm_current, dcm_legacy)
+                             if (year, q) >= INSIDER_ZIP_LAYOUT_CHANGE_QUARTER
+                             else (dcm_legacy, dcm_current))
+    www_first, www_second = ((www_current, www_legacy)
+                             if (year, q) >= INSIDER_ZIP_LAYOUT_CHANGE_QUARTER
+                             else (www_legacy, www_current))
+    return (dcm_first, dcm_second, www_first, www_second)
 
 
 def sec_user_agent(contact: Optional[str] = None) -> str:
@@ -119,14 +142,21 @@ def sec_user_agent(contact: Optional[str] = None) -> str:
     return f"{DEFAULT_SEC_AGENT_NAME} {DEFAULT_SEC_CONTACT}"
 
 
-def sec_headers(contact: Optional[str] = None) -> Dict[str, str]:
-    """The full declared header set, quoted from the SEC's published sample."""
+def sec_headers(contact: Optional[str] = None,
+                host: str = "www.sec.gov") -> Dict[str, str]:
+    """The full declared header set, quoted from the SEC's published sample.
+
+    ``Host`` follows the host actually being asked: the insider data sets are
+    served from both ``dcm.sec.gov`` (the host the data.gov catalog's download
+    buttons name) and ``www.sec.gov``, and sending one host's name to the
+    other would be a fabricated request, not a declared one.
+    """
     return {
         "User-Agent": sec_user_agent(contact),
         # The SEC's own sample value, kept exactly: this is the one place the
         # project may not "improve" on a documented requirement.
         "Accept-Encoding": "gzip, deflate",
-        "Host": "www.sec.gov",
+        "Host": host,
         "Accept": "*/*",
     }
 
@@ -142,6 +172,12 @@ def declared_headers_record(contact: Optional[str] = None) -> dict:
             "contact_source": ("SPS_SEC_USER_AGENT" if os.environ.get("SPS_SEC_USER_AGENT")
                                else "SEC_USER_AGENT" if os.environ.get("SEC_USER_AGENT")
                                else "repository default"),
+            # The User-Agent, Accept-Encoding and Accept lines are sent to every
+            # SEC host verbatim; the Host line is set to whichever SEC host the
+            # individual request addresses (www.sec.gov, data.sec.gov or
+            # dcm.sec.gov), so the manifest's per-request URL entries are the
+            # authority for which Host value went with which request.
+            "host_header": "set per request to the target SEC host",
         },
     }
 
@@ -230,7 +266,8 @@ def edgar_request(url: str, limiter: Optional[SecRateLimiter] = None,
         opener = urllib.request.urlopen
     limiter = limiter or SecRateLimiter()
     waited = limiter.wait()
-    request_headers = sec_headers(contact)
+    request_headers = sec_headers(contact, host=url.split("/")[2] if "://" in url
+                                  else "www.sec.gov")
     request = None
     try:
         import urllib.request

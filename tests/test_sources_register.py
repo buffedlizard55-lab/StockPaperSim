@@ -55,6 +55,12 @@ ALLOWED_HOSTS = {
     # Official CPython documentation - the primary source for the hash
     # randomisation behaviour that IR-30 turns on.
     "docs.python.org",
+    # Added 2026-09-19 with the insider-bulk host fix: dcm.sec.gov is the SEC
+    # host the data.gov catalog's download buttons point at (the www.sec.gov
+    # front door answered every runner request with the rate-threshold page,
+    # IR-76), and catalog.data.gov is the U.S. government's open-data catalog
+    # that names it.
+    "dcm.sec.gov", "catalog.data.gov",
     # Added 2026-09-18 for Season 2's collected data sources: the official
     # endpoints the strategies read, plus the two aggregators that are classed
     # SECONDARY and cross-checked against an independent publisher.

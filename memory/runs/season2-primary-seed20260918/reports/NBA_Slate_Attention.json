@@ -1,0 +1,411 @@
+{
+ "username": "@NBA_Slate_Attention",
+ "strategy_id": "NBASlateAttention",
+ "archetype": "event attention proxy",
+ "starting_cash": 100000.0,
+ "final_equity": 82308.43,
+ "net_pnl_usd": -17691.57,
+ "total_return_pct": -17.6916,
+ "cagr_pct": -17.7554,
+ "sessions": 251,
+ "risk": {
+  "max_drawdown_pct": -37.508,
+  "max_drawdown_usd": -37880.07,
+  "peak_date": "2025-10-23",
+  "peak_equity": 100992.02,
+  "trough_date": "2025-11-20",
+  "trough_equity": 63111.95,
+  "recovery_date": "2026-06-10",
+  "sessions_underwater": 137,
+  "never_recovered": false,
+  "sharpe": -0.2486,
+  "sortino": -0.2732,
+  "calmar": 0.4734,
+  "daily_vol_pct": 2.6813,
+  "annualised_vol_pct": 42.564,
+  "skew": 0.2149,
+  "excess_kurtosis": 10.893,
+  "best_session_pct": 13.089,
+  "worst_session_pct": -14.4314,
+  "var_95_pct": -4.1739,
+  "cvar_95_pct": -6.2951,
+  "var_99_pct": -5.6504,
+  "cvar_99_pct": -11.5822
+ },
+ "market_relation": {
+  "beta": 0.583,
+  "alpha_annual_pct": -18.9802,
+  "r_squared": 0.0312,
+  "tracking_error_annual_pct": 41.895,
+  "information_ratio": -0.453,
+  "market_return_pct": 14.415,
+  "beta_contribution_pct": 8.403,
+  "residual_return_pct": -26.095
+ },
+ "trades": {
+  "closed_trades": 79,
+  "open_trades": 0,
+  "wins": 35,
+  "losses": 44,
+  "win_rate_pct": 44.304,
+  "gross_win_usd": 24381.62,
+  "gross_loss_usd": 42073.21,
+  "profit_factor": 0.5795,
+  "avg_win_usd": 696.62,
+  "avg_loss_usd": -956.21,
+  "expectancy_usd_per_trade": -223.94,
+  "best_trade": {
+   "symbol": "DKNG",
+   "net_pnl": 3532.81,
+   "entry_date": "2026-03-26",
+   "exit_date": "2026-04-29",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "FLUT",
+   "net_pnl": -5435.69,
+   "entry_date": "2025-10-22",
+   "exit_date": "2025-12-29",
+   "direction": "long"
+  },
+  "longest_win_streak": 5,
+  "longest_loss_streak": 16,
+  "avg_sessions_held": 15.32,
+  "median_sessions_held": 8.0,
+  "sessions_in_market": 196,
+  "per_symbol_sessions_in_market": {
+   "GENI": 155,
+   "FLUT": 133,
+   "DKNG": 105
+  },
+  "sum_of_tranche_sessions": 1210,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
+ },
+ "costs": {
+  "fills": 151,
+  "shares_traded": 242402,
+  "traded_notional_usd": 3593654.78,
+  "spread_cost_usd": 2157.07,
+  "depth_cost_usd": 1066.04,
+  "impact_cost_usd": 893.42,
+  "commission_usd": 0.0,
+  "exchange_fee_usd": 727.21,
+  "regulatory_fee_usd": 33.31,
+  "rebate_usd": 0.0,
+  "total_cost_usd": 4877.05,
+  "total_cost_bps_of_traded": 13.571,
+  "total_cost_pct_of_starting_cash": 4.877,
+  "net_liquidity_provider": false,
+  "market_vs_liquidity_split": {
+   "explicit_fees_pct": 15.59,
+   "spread_and_impact_pct": 84.41
+  },
+  "avg_execution_cost_bps_per_fill": 10.578,
+  "median_execution_cost_bps_per_fill": 3.6,
+  "worst_execution_cost_bps": 70.007,
+  "intraday_drift_usd": -54.41,
+  "avg_price_difference_bps_per_fill": 8.253,
+  "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
+ },
+ "implementation_shortfall": {
+  "orders": 151,
+  "fully_unfilled_orders": 0,
+  "partially_filled_orders": 0,
+  "paper_notional_usd": 3592052.38,
+  "spread_cost_usd": 2157.07,
+  "depth_cost_usd": 1066.04,
+  "impact_cost_usd": 893.42,
+  "intraday_drift_usd": -54.41,
+  "fees_usd": 760.51,
+  "missed_trade_cost_usd": 0.0,
+  "total_shortfall_usd": 4822.64,
+  "shortfall_bps_of_paper": 13.426,
+  "friction_only_bps_of_paper": 13.577,
+  "worst_single_order_drift_usd": 40.32,
+  "best_single_order_drift_usd": -36.64,
+  "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
+ },
+ "carry": {
+  "dividends_received_usd": 0.0,
+  "dividends_in_lieu_paid_usd": 0.0,
+  "borrow_fees_paid_usd": 0.0,
+  "net_carry_usd": 0.0,
+  "margin_calls": [],
+  "margin_call_count": 0,
+  "day_trades": 0,
+  "day_trade_count": 0
+ },
+ "exposure": {
+  "avg_gross_pct_of_starting_cash": 45.74,
+  "max_gross_pct_of_starting_cash": 188.41,
+  "avg_net_pct_of_starting_cash": 45.74,
+  "max_net_pct_of_starting_cash": 188.41,
+  "avg_leverage": 0.539,
+  "max_leverage": 1.929,
+  "sessions_flat": 139,
+  "avg_open_positions": 1.47
+ },
+ "turnover": {
+  "traded_notional_usd": 3593654.78,
+  "annualised_turnover_x": 42.172
+ },
+ "contribution_by_symbol": [
+  {
+   "symbol": "DKNG",
+   "realized_pnl": 10521.61,
+   "open_pnl": 0.0,
+   "total_pnl": 10521.61,
+   "closed_trades": 27,
+   "fees": 140.8,
+   "all_in_cost_usd": 520.26
+  },
+  {
+   "symbol": "GENI",
+   "realized_pnl": -11890.22,
+   "open_pnl": 0.0,
+   "total_pnl": -11890.22,
+   "closed_trades": 30,
+   "fees": 588.59,
+   "all_in_cost_usd": 4153.02
+  },
+  {
+   "symbol": "FLUT",
+   "realized_pnl": -16322.98,
+   "open_pnl": 0.0,
+   "total_pnl": -16322.98,
+   "closed_trades": 22,
+   "fees": 31.16,
+   "all_in_cost_usd": 203.76
+  }
+ ],
+ "monthly_returns": [
+  {
+   "month": "2025-09",
+   "sessions": 10,
+   "start_equity": 100000.0,
+   "end_equity": 100000.0,
+   "return_pct": 0.0
+  },
+  {
+   "month": "2025-10",
+   "sessions": 23,
+   "start_equity": 100000.0,
+   "end_equity": 86038.31,
+   "return_pct": -13.9617
+  },
+  {
+   "month": "2025-11",
+   "sessions": 19,
+   "start_equity": 86038.31,
+   "end_equity": 78290.87,
+   "return_pct": -9.0046
+  },
+  {
+   "month": "2025-12",
+   "sessions": 22,
+   "start_equity": 78290.87,
+   "end_equity": 86418.21,
+   "return_pct": 10.3809
+  },
+  {
+   "month": "2026-01",
+   "sessions": 20,
+   "start_equity": 86418.21,
+   "end_equity": 87284.51,
+   "return_pct": 1.0025
+  },
+  {
+   "month": "2026-02",
+   "sessions": 19,
+   "start_equity": 87284.51,
+   "end_equity": 87209.35,
+   "return_pct": -0.0861
+  },
+  {
+   "month": "2026-03",
+   "sessions": 22,
+   "start_equity": 87209.35,
+   "end_equity": 80027.04,
+   "return_pct": -8.2357
+  },
+  {
+   "month": "2026-04",
+   "sessions": 21,
+   "start_equity": 80027.04,
+   "end_equity": 83567.98,
+   "return_pct": 4.4247
+  },
+  {
+   "month": "2026-05",
+   "sessions": 20,
+   "start_equity": 83567.98,
+   "end_equity": 81610.22,
+   "return_pct": -2.3427
+  },
+  {
+   "month": "2026-06",
+   "sessions": 21,
+   "start_equity": 81610.22,
+   "end_equity": 82307.88,
+   "return_pct": 0.8549
+  },
+  {
+   "month": "2026-07",
+   "sessions": 22,
+   "start_equity": 82307.88,
+   "end_equity": 82308.75,
+   "return_pct": 0.0011
+  },
+  {
+   "month": "2026-08",
+   "sessions": 21,
+   "start_equity": 82308.75,
+   "end_equity": 82309.24,
+   "return_pct": 0.0006
+  },
+  {
+   "month": "2026-09",
+   "sessions": 11,
+   "start_equity": 82309.24,
+   "end_equity": 82308.43,
+   "return_pct": -0.001
+  }
+ ],
+ "pnl_decomposition": {
+  "realized_trading_pnl_usd": -17691.59,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 0.0,
+  "dividends_in_lieu_usd": -0.0,
+  "borrow_fees_usd": -0.0,
+  "execution_costs_already_netted_usd": -4877.05,
+  "total_net_pnl_usd": -17691.57,
+  "unexplained_residual_usd": 0.02,
+  "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
+ },
+ "narrative": {
+  "verdict": "lost money",
+  "headline": "Lost money: -17.69% total return vs +14.41% for the index, -26.10pp residual after beta, -37.5% max drawdown, 4.88% of capital lost to execution costs.",
+  "clauses": [
+   {
+    "kind": "verdict",
+    "text": "Finished at -17.69% - a 17,692 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   },
+   {
+    "kind": "factor",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 17.69% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "factor",
+    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 17.69% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "kind": "attribution",
+    "text": "Of the -17.69% total, about +8.40pp is explained by carrying beta 0.58 against a +14.41% market (R^2 0.03); the residual -26.10pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "DKNG contributed +10,522 USD (-59% of net P&L) across 27 closed trades; FLUT was the biggest drag at -16,323 USD."
+   },
+   {
+    "kind": "costs",
+    "text": "Execution cost 4,877 USD (4.88% of starting capital, 10.6 bp per fill, 13.6 bp of the 3,593,655 USD traded). 84% of that was spread/depth/impact and 16% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "79 closed round trips, 44.3% winners, profit factor 0.58, average winner +697 vs average loser -956 USD, median holding 8 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 196 sessions held at least one position (the per-tranche holding periods above sum to 1210 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: FLUT long 2025-10-22 to 2025-12-29, -5,436 USD."
+   },
+   {
+    "kind": "drawdown",
+    "text": "Worst peak-to-trough drawdown -37.51% (-9.10% for the index), trough on 2025-11-20, recovered 2026-06-10. Average gross exposure 46% of starting capital, peak leverage 1.93x."
+   },
+   {
+    "kind": "tail",
+    "text": "Daily returns were +0.21 skewed with excess kurtosis +10.89; historical 95% VaR -4.17%/day with CVaR -6.30%/day. Worst single session -14.43%, best +13.09%."
+   },
+   {
+    "kind": "caveat",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "kind": "failure_mode",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "kind": "failure_mode_untested",
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): The NBA plays almost every day in season, so the density signal is a season indicator plus playoff weeks; Close-game share is a drama proxy, not a handle measurement."
+   },
+   {
+    "kind": "regime",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   }
+  ],
+  "prose": [
+   {
+    "title": "Mandate (as declared before the season)",
+    "text": "@NBA_Slate_Attention (NBA Slate Attention) ran the \"event attention proxy\" archetype. Declared thesis: The NBAInjuryReport project watches a league whose regular season runs October to June and whose betting volume is second only to football. The same attention rule as the NFL participant, on the NBA calendar: hold the sportsbook complex while the league is playing and the week's finals were close. Entry: Count NBA finals in the trailing 7 calendar days from the collected ESPN scoreboard file (SECONDARY publisher); Count finals decided by 3 points or fewer as close games; In season and with the close-game share at or above its trailing-60-session median, hold DKNG, FLUT and GENI at 60% of equity each. Exit: Flatten when the season goes quiet or the close-game share falls below its median; No stop loss. Sizing: 60% per name, three names = 1.8x gross. Leverage: 1.8x gross. Cadence: weekly check, horizon the NBA season. Aggression 4/5. This participant was built to maximise return, not to manage risk: Same 1.8x gross basket as the NFL participant, on a different league calendar, so the season measures whether the attention rule generalises."
+   },
+   {
+    "title": "Outcome (as measured after the season)",
+    "text": "Outcome: -17.69% over 251 sessions - -17,692 USD on 100,000 of paper capital, ending at 82,308. Verdict: lost money."
+   },
+   {
+    "title": "Why: the style premia that were actually live",
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 17.69% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 17.69% - so the loss came from implementation, timing or leverage, not from a missing signal."
+   },
+   {
+    "title": "Why: attribution of the return",
+    "text": "Of the -17.69% total, about +8.40pp is explained by carrying beta 0.58 against a +14.41% market (R^2 0.03); the residual -26.10pp is everything else - selection, timing, leverage and cost. DKNG contributed +10,522 USD (-59% of net P&L) across 27 closed trades; FLUT was the biggest drag at -16,323 USD."
+   },
+   {
+    "title": "Why: what execution cost",
+    "text": "Execution cost 4,877 USD (4.88% of starting capital, 10.6 bp per fill, 13.6 bp of the 3,593,655 USD traded). 84% of that was spread/depth/impact and 16% was explicit fees and rebates."
+   },
+   {
+    "title": "Why: trade-level behaviour",
+    "text": "79 closed round trips, 44.3% winners, profit factor 0.58, average winner +697 vs average loser -956 USD, median holding 8 sessions. Time in market, measured without double counting: 196 sessions held at least one position (the per-tranche holding periods above sum to 1210 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: FLUT long 2025-10-22 to 2025-12-29, -5,436 USD."
+   },
+   {
+    "title": "What the return-maximising mandate cost in drawdown",
+    "text": "Worst peak-to-trough drawdown -37.51% (-9.10% for the index), trough on 2025-11-20, recovered 2026-06-10. Average gross exposure 46% of starting capital, peak leverage 1.93x. Daily returns were +0.21 skewed with excess kurtosis +10.89; historical 95% VaR -4.17%/day with CVaR -6.30%/day. Worst single session -14.43%, best +13.09%."
+   },
+   {
+    "title": "Regime context (real market data)",
+    "text": "Season context: the real S&P 500 fell 9.10% from 2026-01-27 to 2026-03-30, VIX peaked at 31.05 on 2026-03-27, and cross-sectional dispersion was 103.8pp (stdev of individual 1-year returns)."
+   },
+   {
+    "title": "Declared failure modes that fired",
+    "text": "None of the failure modes declared in the strategy spec fired in this window."
+   },
+   {
+    "title": "Standing caveats: what this simulation cannot represent",
+    "text": "The style premia quoted above are measured on the simulated replay, whose cross-sectional drifts are DECLARED scenario parameters (see sim/universe.py). They describe this competition, not the real market: IR-16."
+   },
+   {
+    "title": "Answer: did it work, and why",
+    "text": "It did not work: -17.69% in a market that returned +14.41%, and a residual of -26.09pp after beta - the trading itself destroyed value, not just the market direction. Finished at -17.69% - a 17,692 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+   }
+  ],
+  "failure_modes_fired": [],
+  "failure_modes_untested": [
+   "The NBA plays almost every day in season, so the density signal is a season indicator plus playoff weeks",
+   "Close-game share is a drama proxy, not a handle measurement"
+  ],
+  "structural_caveats": [],
+  "factors_considered": [
+   "momentum",
+   "beta"
+  ]
+ },
+ "errors": [],
+ "account_closed_early": false,
+ "sessions_with_orders": 72
+}

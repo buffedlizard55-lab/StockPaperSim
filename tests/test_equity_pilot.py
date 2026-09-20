@@ -99,7 +99,13 @@ class PilotRunTests(unittest.TestCase):
             )
         self.assertEqual(report["orders_submitted"], 0)
         stands = [s for s in report["signals_skipped"] if s["code"] == "CORP_ACTION_STANDDOWN"]
-        self.assertEqual(len(stands), 8)
+        # A count snapshot, not a roster claim: every signal that fires on the
+        # rehearsal day must be stood down. The 2026-09-19 collection rewrote
+        # the Yahoo files to the canonical window (last bar 2026-09-16, the
+        # season end - the pre-audit local copies carried two extra out-of-
+        # window bars), and with the last collected bar at 2026-09-16 one more
+        # @Lab spec's signal fires on the 2026-09-21 pilot day: 9, not 8.
+        self.assertEqual(len(stands), 9)
         self.assertIn("SPLIT@2026-09-21", stands[0]["actions"])
 
     def test_closed_day_refused(self):

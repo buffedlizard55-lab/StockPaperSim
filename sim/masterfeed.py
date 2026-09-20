@@ -169,7 +169,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "NFLInjuryReport",
-        "signals": [],
+        "signals": ["nfl_injury_report"],
         "requested_as": "NFL Injury",
         "repo": "NFLInjuryReport",
         "title": "NFL Injury Report - 32 team tracker",
@@ -183,15 +183,19 @@ MASTER_SITE_SIGNALS: List[dict] = [
             "official archive endpoint for a past season that this project could "
             "retrieve, so the injury rule runs forward from the next collection instead "
             "of being backdated. ESPN's archive is a secondary feed and is used only for "
-            "scores, never as the official injury designation."),
-        "evidence": ["data/real/sports/official/nfl_injuries.raw"],
+            "scores, never as the official injury designation. A dated snapshot archive "
+            "(official page plus the machine-readable ESPN companion, both stamped with "
+            "the capture date) is now collected on a schedule, so the forward test "
+            "accumulates observations instead of restarting every week."),
+        "evidence": ["data/real/sports/official/nfl_injuries.raw",
+                     "data/real/sports/official/archive/"],
         "hypothesis": ("Heavy injury weeks at contending teams move sportsbook equities "
                        "through expected-handle revisions."),
         "tradable": ["FLUT", "DKNG", "PENN"],
     },
     {
         "id": "NBAInjuryReport",
-        "signals": [],
+        "signals": ["nba_injury_report"],
         "requested_as": "NBA Injury",
         "repo": "NBAInjuryReport",
         "title": "NBA Injury Watch - 30 team monitor",
@@ -204,8 +208,11 @@ MASTER_SITE_SIGNALS: List[dict] = [
             "The NBA publishes its injury report as a dated PDF; the 2025-26 archive is "
             "not retrievable as a machine-readable series, so the rule is forward-tested "
             "against the live document (whose existence is verified and hashed in "
-            "data/real/sports/official/)."),
-        "evidence": ["data/real/sports/official/nba_injury_report_index.raw"],
+            "data/real/sports/official/). Season 2 adds a dedicated participant "
+            "(@NBAInjury_Forward) so the NBA injury project has its own forward probe, "
+            "fed by the same dated snapshot archive as the NFL one."),
+        "evidence": ["data/real/sports/official/nba_injury_report_index.raw",
+                     "data/real/sports/official/archive/"],
         "hypothesis": ("Games lost by star players to injury raise expected in-game "
                        "variance, which is positive for sportsbook and sports-data "
                        "equities."),
@@ -235,7 +242,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "Ncaa-football-alerts",
-        "signals": [],
+        "signals": ["ncaaf_games_7d", "ncaaf_close_games_7d", "ncaaf_away_wins_7d"],
         "requested_as": "NCAA Scoreboard",
         "repo": "Ncaa-football-alerts",
         "title": "Ncaa-football-alerts",
@@ -246,16 +253,22 @@ MASTER_SITE_SIGNALS: List[dict] = [
         "mapping": WEAK,
         "mapping_note": (
             "The NCAA scoreboard endpoint is official but the archived 2025-26 season "
-            "had to be probed rather than enumerated; the same attention rule that is "
-            "backtested on MLB scores runs forward on NCAA weeks."),
-        "evidence": ["data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw"],
+            "had to be probed rather than enumerated. The ESPN-collected NCAAF finals "
+            "(SECONDARY publisher, 282 games) are now backtested by @NCAA_Upset_Blitz "
+            "under this row's own slate clocks; the official NCAA endpoint itself stays "
+            "forward-only, and the two source classes are never mixed in one signal."),
+        "evidence": ["data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+                     "data/real/sports/ncaaf_scoreboard.jsonl"],
         "hypothesis": ("High-profile college-football weekends drive betting handle, "
                        "which lifts sportsbook and sports-data equities."),
         "tradable": ["GENI", "SRAD", "DKNG"],
     },
     {
         "id": "NFL-scoreboard",
-        "signals": ['mlb_games_7d', 'mlb_upsets_7d'],
+        "signals": ["nfl_games_7d", "nfl_close_games_7d", "nfl_away_wins_7d",
+                    "nba_games_7d", "nba_close_games_7d", "nba_away_wins_7d",
+                    "ncaaf_games_7d", "ncaaf_close_games_7d", "ncaaf_away_wins_7d",
+                    "mlb_games_7d", "mlb_upsets_7d"],
         "requested_as": "NFL scoreboard",
         "repo": "NFL-scoreboard",
         "title": "NFL-scoreboard",
@@ -268,11 +281,17 @@ MASTER_SITE_SIGNALS: List[dict] = [
             "The retrieved NFL/NBA/NCAAF scores come from ESPN's public scoreboard "
             "endpoint, which is a secondary publisher; the official league endpoints "
             "were probed and are recorded with their HTTP status. The sports-derived "
-            "signals are therefore labelled as resting on secondary data."),
-        "evidence": ["data/real/sports/nfl_scoreboard.jsonl"],
+            "signals are therefore labelled as resting on secondary data. Season 2 "
+            "trades these slate clocks with three dedicated participants: "
+            "@NFL_Slate_Attention (NFL finals and close-game share), "
+            "@NBA_Slate_Attention (the same rule on the NBA calendar) and "
+            "@NCAA_Upset_Blitz (away-win-heavy college weeks)."),
+        "evidence": ["data/real/sports/nfl_scoreboard.jsonl",
+                     "data/real/sports/nba_scoreboard.jsonl",
+                     "data/real/sports/ncaaf_scoreboard.jsonl"],
         "hypothesis": ("A weekend with many upsets raises gambling attention and "
                        "handle, which lifts sportsbook equities in the following week."),
-        "tradable": ["DKNG", "FLUT", "PENN"],
+        "tradable": ["DKNG", "FLUT", "PENN", "SRAD", "GENI"],
     },
     {
         "id": "MLB-Live-PBP",
@@ -309,7 +328,9 @@ MASTER_SITE_SIGNALS: List[dict] = [
             "SportsPred emits pre-game probabilities. There is no archived, timestamped "
             "snapshot of those predictions for the past season, so a backtest would have "
             "to recompute them - which would be this project's model, not the site's. "
-            "The participant therefore trades only on snapshots collected from now on."),
+            "Season 2 registers a dedicated forward probe (@SportsPred_Forward): it "
+            "places no backdated trades and goes live only on dated snapshots of the "
+            "site's own published predictions collected from now on."),
         "evidence": [],
         "hypothesis": ("Where a model's probability disagrees materially with the "
                        "market's implied probability, the sports-data complex is "
@@ -478,41 +499,122 @@ def _count_in_window(event_dates: Sequence[str], dates: Sequence[str], t: int,
     return sum(1 for d in event_dates if lo <= d < hi)
 
 
-# -- League injury feeds (OFFICIAL documents, no retrievable archive) -------
+# -- League injury feeds (OFFICIAL documents + a dated archive) --------------
 INJURY_SIGNALS = ("nfl_injury_report", "nba_injury_report")
+
+#: Statuses that keep a player out of a game.  The ESPN injuries endpoint is
+#: the machine-readable companion the league pages do not offer; it is a
+#: SECONDARY publisher and every count built from it says so.
+INJURY_OUT_STATUSES = ("Out", "Doubtful", "Injured Reserve", "Out for Season",
+                       "Out Indefinitely")
+
+
+def _injury_snapshot_counts(archive_dir: str, league: str) -> Dict[str, int]:
+    """Dated ESPN injury snapshots for one league -> {capture date: count}.
+
+    The archive holds one dated file per capture
+    (``espn_<league>_injuries_YYYY-MM-DD.json``, written by the injury-archive
+    collection).  The count is of listed designations whose status removes the
+    player from the game; the file itself is stored verbatim so a reader can
+    re-derive the number, and a file that cannot be parsed counts as zero
+    rather than aborting the signal.
+    """
+    out: Dict[str, int] = {}
+    if not os.path.isdir(archive_dir):
+        return out
+    prefix = f"espn_{league}_injuries_"
+    for name in sorted(os.listdir(archive_dir)):
+        if not (name.startswith(prefix) and name.endswith(".json")):
+            continue
+        stamp = name[len(prefix):-len(".json")]
+        if len(stamp) != 10 or stamp[4] != "-" or stamp[7] != "-":
+            continue
+        try:
+            payload = json.loads(
+                open(os.path.join(archive_dir, name), "r", encoding="utf-8").read())
+        except (OSError, json.JSONDecodeError):
+            out[stamp] = 0
+            continue
+        count = 0
+        for item in payload.get("items") or []:
+            for entry in item.get("injuries") or []:
+                status = str(entry.get("status") or "")
+                if status in INJURY_OUT_STATUSES:
+                    count += 1
+        out[stamp] = count
+    return out
 
 
 def _injury_signals(book: SignalBook, md, root: str) -> None:
     """Register the two league injury feeds as forward-only signals.
 
-    The NFL publishes the weekly injury report as a live page and the NBA as a
-    dated PDF index; neither league offers an enumerable archive, so there is no
-    historical series to trade.  Both are registered explicitly - as MISSING
-    arrays with the official URL - so that "this strategy is waiting for data
-    that cannot be backfilled" is a published state of the competition rather
-    than a participant that silently returns 0.0%.
+    Neither league publishes a retrievable archive of past injury
+    designations, so no backdated series exists and no backdated trades are
+    placed from these signals.  What *can* exist from the injury-archive
+    collection onward is a dated snapshot archive under
+    ``sports/official/archive/`` (one file per league per capture date).  The
+    signal for a session is the designation count of the most recent snapshot
+    dated on or before it and no more than 7 days stale; while no snapshot
+    qualifies the array is zero and the signal reports MISSING, which is the
+    difference between "waiting for the archive" and a measured zero.
     """
-    captured = sorted(
-        name for name in os.listdir(os.path.join(root, "sports", "official"))
-        if name.endswith(".raw")
-    ) if os.path.isdir(os.path.join(root, "sports", "official")) else []
-    evidence = [os.path.join("data/real/sports/official", name) for name in captured]
     urls = {
         "nfl_injury_report": "https://www.nfl.com/injuries/",
         "nba_injury_report":
             "https://official.nba.com/nba-injury-report-2025-26-season/",
     }
-    for name in INJURY_SIGNALS:
+    archive = os.path.join(root, "sports", "official", "archive")
+    captured_evidence = sorted(
+        name for name in os.listdir(archive)
+        if name.endswith((".raw", ".json"))
+    ) if os.path.isdir(archive) else []
+    for name, league in (("nfl_injury_report", "nfl"),
+                         ("nba_injury_report", "nba")):
         book._blank(name)
+        snapshots = _injury_snapshot_counts(archive, league)
+        captures = sorted(snapshots)
+        usable = [d for d in captures if d <= md.dates[-1]]
+        if usable:
+            arrays: List[float] = []
+            for session in md.dates:
+                candidates = [d for d in usable if d <= session]
+                latest = candidates[-1] if candidates else None
+                if latest and latest >= _shift_date(session, -7):
+                    arrays.append(float(snapshots[latest]))
+                else:
+                    arrays.append(0.0)
+            if any(v != 0.0 for v in arrays):
+                book.arrays[name] = arrays
+                book._register(
+                    name, "AVAILABLE", len(captures), captures,
+                    [f"data/real/sports/official/archive"] if captured_evidence else [],
+                    (f"dated ESPN injury snapshots (SECONDARY) plus the official "
+                     f"league document; {len(captures)} captures "
+                     f"{captures[0]}..{captures[-1]}; forward-only observations, "
+                     "never backfilled"),
+                    urls[name])
+                continue
+        archive_note = (
+            f"the dated archive holds {len(captures)} capture(s)"
+            + (f" ({captures[0]}..{captures[-1]})" if captures else "")
+            + ", none dated on or before the last session of this window"
+        ) if captures else "no dated archive captures yet"
+        evidence = ([f"data/real/sports/official/archive/{n}"
+                     for n in captured_evidence
+                     if n.startswith(f"espn_{league}_") or league in n][:4]
+                    + [f"data/real/sports/official/archive"]
+                    if captured_evidence else [])
         book._register(
-            name, "MISSING", 0, [], evidence,
-            "official feed resolves"
-            + (f" (captured: {', '.join(captured)})" if captured
-               else " (not captured by the last collection run)")
-            + ", but the league publishes it as a live document with no "
-              "retrievable history, so it is forward-only and places no "
-              "backdated trades",
+            name, "MISSING", 0, [],
+            evidence,
+            "official feed resolves (" + archive_note + "), the league publishes "
+            "it as a live document with no retrievable history, so it is "
+            "forward-only and places no backdated trades",
             urls[name])
+
+
+def _shift_date(iso: str, days: int) -> str:
+    return (dt.date.fromisoformat(iso) + dt.timedelta(days=days)).isoformat()
 
 
 def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
@@ -521,6 +623,7 @@ def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
     _fda_signals(book, md, root)
     _insider_signals(book, md, root)
     _mlb_signals(book, md, root)
+    _slate_signals(book, md, root)
     _weather_signals(book, md, root)
     _kalshi_signals(book, md, root)
     _fred_signals(book, md, root)
@@ -583,14 +686,122 @@ def _fda_signals(book: SignalBook, md, root: str) -> None:
 CEO_TITLES = ("chief executive officer", "ceo", "chief financial officer", "cfo")
 
 
+def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
+    """Insider transaction rows from whichever SEC collections have landed.
+
+    Two collectors write SEC insider data, and they are complements rather than
+    duplicates:
+
+    * ``insider_bulk/insider_transactions.jsonl`` - the SEC's own quarterly
+      Form 3/4/5 structured data sets, complete for whole quarters
+      (https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets).
+      This is the primary publication and the preferred source.
+    * ``sec/form4_transactions.jsonl`` - the per-filing Form 4 XML walk, which
+      reaches the newest filings first and is bounded by a request budget.
+
+    Both carry the accession number, the transaction code, the date and the
+    transaction facts, so the merge below de-duplicates on
+    ``(accession, date, ticker, code, shares, price)`` and every count the
+    strategies read is of distinct filings' transactions.  Rows are normalised
+    to one shape (ticker, code, transaction_date, title, roles) whichever file
+    they came from, so the signal arithmetic cannot depend on which collector
+    happened to succeed.
+    """
+    per_filing = os.path.join(root, "sec", "form4_transactions.jsonl")
+    bulk = os.path.join(root, "insider_bulk", "insider_transactions.jsonl")
+    files: List[str] = []
+    rows: List[dict] = []
+    seen: set = set()
+
+    def _add(raw: dict, source: str) -> None:
+        if source == "bulk":
+            owners = raw.get("owners") or []
+            title = "; ".join(str(o.get("title") or "").strip()
+                              for o in owners if str(o.get("title") or "").strip())
+            roles = [str(o.get("relationship") or "").strip()
+                     for o in owners if o.get("relationship")]
+            row = {
+                "ticker": str(raw.get("symbol") or "").upper(),
+                "code": str(raw.get("transaction_code") or "").upper(),
+                "transaction_date": str(raw.get("transaction_date") or ""),
+                "title": title,
+                "roles": roles,
+                "accession": str(raw.get("accession_number") or ""),
+                "shares": raw.get("shares"),
+                "price": raw.get("price_per_share"),
+            }
+        else:
+            row = {
+                "ticker": str(raw.get("ticker") or "").upper(),
+                "code": str(raw.get("code") or "").upper(),
+                "transaction_date": str(raw.get("transaction_date") or ""),
+                "title": str(raw.get("title") or ""),
+                "roles": list(raw.get("roles") or []),
+                "accession": str(raw.get("accession") or ""),
+                "shares": raw.get("shares"),
+                "price": raw.get("price"),
+            }
+        if not row["ticker"] or len(row["transaction_date"]) != 10:
+            return
+        key = (row["accession"], row["transaction_date"], row["ticker"],
+               row["code"], row["shares"], row["price"])
+        if key in seen:
+            return
+        seen.add(key)
+        rows.append(row)
+
+    if os.path.exists(bulk):
+        files.append("data/real/insider_bulk/insider_transactions.jsonl")
+        with open(bulk, "r", encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    try:
+                        _add(json.loads(line), "bulk")
+                    except json.JSONDecodeError:
+                        continue
+    if os.path.exists(per_filing):
+        files.append("data/real/sec/form4_transactions.jsonl")
+        with open(per_filing, "r", encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    try:
+                        _add(json.loads(line), "walk")
+                    except json.JSONDecodeError:
+                        continue
+    note = ""
+    if "data/real/insider_bulk/insider_transactions.jsonl" in files:
+        note = ("SEC quarterly insider-transactions data sets (Form 3/4/5 extracts)"
+                + (", plus newer per-filing Form 4 XML rows" if len(files) > 1 else ""))
+    elif files:
+        note = "per-filing Form 4 XML walk (EDGAR)"
+    return rows, files, note
+
+
+def insider_collection_present(root: str = REAL_ROOT) -> Dict[str, object]:
+    """Whether an SEC insider collection has landed, and what it covers.
+
+    Used by the live lane (``sim/strategies_live.py``) to report READY instead
+    of a stale DATA-MISSING the moment the collection exists, without the live
+    book having to be re-run first.
+    """
+    rows, files, _note = _load_insider_rows(root)
+    dates = [r["transaction_date"] for r in rows if len(r["transaction_date"]) == 10]
+    return {
+        "present": bool(files),
+        "files": files,
+        "rows": len(rows),
+        "coverage": [min(dates), max(dates)] if dates else [],
+    }
+
+
 def _insider_signals(book: SignalBook, md, root: str) -> None:
-    path = os.path.join(root, "sec", "form4_transactions.jsonl")
     tickers = sorted({i.symbol for i in md.instruments.values()})
     for symbol in tickers:
         book._blank(f"insider_buys_30d::{symbol}")
         book._blank(f"insider_ceo_buys_30d::{symbol}")
     book._blank("insider_buy_ratio_30d")
-    if not os.path.exists(path):
+    rows, files, source_note = _load_insider_rows(root)
+    if not files:
         # Registered as MISSING *and* left as a real zero array: the site plots a
         # series for every registered name, and a strategy that reads a missing
         # signal must see 0.0 (which is what ``value`` returns) rather than a
@@ -602,51 +813,59 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
         book._register_all(("insider_buys_30d", "insider_ceo_buys_30d",
                             "insider_buy_ratio_30d"),
                            "MISSING", 0, [], [],
-                           "no collected Form 4 file",
-                           "https://www.sec.gov/cgi-bin/browse-edgar")
+                           "no collected SEC insider file (bulk data sets and the "
+                           "per-filing walk have both been requested; neither has "
+                           "landed in this checkout)",
+                           "https://www.sec.gov/data-research/sec-markets-data/"
+                           "insider-transactions-data-sets")
         return
     buys: Dict[str, List[str]] = {s: [] for s in tickers}
     ceo_buys: Dict[str, List[str]] = {s: [] for s in tickers}
-    sales = 0
+    sales: Dict[str, List[str]] = {s: [] for s in tickers}
     purchases = 0
-    rows = 0
-    with open(path, "r", encoding="utf-8") as fh:
-        for line in fh:
-            row = json.loads(line)
-            rows += 1
-            symbol = row.get("ticker")
-            code = (row.get("code") or "").upper()
-            date = str(row.get("transaction_date") or "")
-            if len(date) != 10:
-                continue
-            if symbol in buys and code == "P":
-                buys[symbol].append(date)
-                purchases += 1
-                title = (row.get("title") or "").lower()
-                roles = row.get("roles") or []
-                if any(term in title for term in CEO_TITLES) or "ceo" in title:
-                    ceo_buys[symbol].append(date)
-            elif code == "S":
-                sales += 1
+    for row in rows:
+        symbol = row.get("ticker")
+        code = (row.get("code") or "").upper()
+        date = row.get("transaction_date") or ""
+        if symbol in buys and code == "P":
+            buys[symbol].append(date)
+            purchases += 1
+            title = (row.get("title") or "").lower()
+            if any(term in title for term in CEO_TITLES) or "ceo" in title:
+                ceo_buys[symbol].append(date)
+        elif code == "S" and symbol in sales:
+            sales[symbol].append(date)
     for t in range(len(md.dates)):
         for symbol in tickers:
             book.arrays[f"insider_buys_30d::{symbol}"][t] = float(
                 _count_in_window(buys[symbol], md.dates, t, 30))
             book.arrays[f"insider_ceo_buys_30d::{symbol}"][t] = float(
                 _count_in_window(ceo_buys[symbol], md.dates, t, 30))
-        ratio = (purchases / max(1, sales))
-        book.arrays["insider_buy_ratio_30d"][t] = ratio
-    book.provenance["insider"] = {"file": "data/real/sec/form4_transactions.jsonl",
-                                  "url": "https://www.sec.gov/cgi-bin/browse-edgar"}
+        # The ratio is trailing-30d by name, so it is counted per session from
+        # the same windows the buy counts use (an earlier draft divided two
+        # whole-file totals into one constant series; that was fixed before any
+        # insider data ever landed, so no published number depends on it).
+        lo, hi = _window_before(md.dates, t, 30)
+        n_buys = sum(1 for s in buys for d in buys[s] if lo <= d < hi)
+        n_sales = sum(1 for s in sales for d in sales[s] if lo <= d < hi)
+        book.arrays["insider_buy_ratio_30d"][t] = n_buys / max(1, n_sales)
+    coverage = sorted({d for s in buys for d in buys[s]}
+                      | {d for s in sales for d in sales[s]})
+    book.provenance["insider"] = {
+        "files": files, "url": ("https://www.sec.gov/data-research/sec-markets-data/"
+                                "insider-transactions-data-sets")}
     names = [f"insider_buys_30d::{s}" for s in tickers] + \
             [f"insider_ceo_buys_30d::{s}" for s in tickers] + \
             ["insider_buys_30d", "insider_ceo_buys_30d", "insider_buy_ratio_30d"]
-    book._register_all(names, "AVAILABLE", rows,
-                       sorted(d for s in buys for d in buys[s]),
-                       ["data/real/sec/form4_transactions.jsonl"],
+    book._register_all(names, "AVAILABLE", len(rows), coverage,
+                       files,
                        f"open-market purchases (code P) by ticker; {purchases} buys "
-                       f"and {sales} sales parsed from real filings",
-                       "https://www.sec.gov/cgi-bin/browse-edgar")
+                       f"and {sum(len(v) for v in sales.values())} sales, "
+                       f"{source_note}, transactions "
+                       f"{coverage[0]}..{coverage[-1]}" if coverage else
+                       f"open-market purchases (code P) by ticker; {source_note}",
+                       "https://www.sec.gov/data-research/sec-markets-data/"
+                       "insider-transactions-data-sets")
 
 
 # -- Sports (MLB official, ESPN secondary) ----------------------------------
@@ -703,6 +922,103 @@ def _pct(record: Optional[str]) -> float:
         return 0.5
     total = wins + losses
     return wins / total if total else 0.5
+
+
+# -- ESPN slate clocks (SECONDARY publisher, dated finals) -------------------
+#: The three ESPN scoreboard files the collector writes.  ESPN is an aggregator,
+#: not the league, so every signal built from these files is labelled SECONDARY
+#: on the pages that show it - exactly like the register row that owns them.
+ESPN_SLATE_SOURCES = {
+    "nfl": {
+        "file": "nfl_scoreboard.jsonl",
+        "url": ("https://site.api.espn.com/apis/site/v2/sports/football/nfl/"
+                "scoreboard"),
+        "close_margin": 3.0,  # a one-score field-goal game
+    },
+    "ncaaf": {
+        "file": "ncaaf_scoreboard.jsonl",
+        "url": ("https://site.api.espn.com/apis/site/v2/sports/football/"
+                "college-football/scoreboard"),
+        "close_margin": 3.0,
+    },
+    "nba": {
+        "file": "nba_scoreboard.jsonl",
+        "url": ("https://site.api.espn.com/apis/site/v2/sports/basketball/nba/"
+                "scoreboard"),
+        "close_margin": 3.0,  # a one-possession game
+    },
+}
+
+
+def _slate_signals(book: SignalBook, md, root: str) -> None:
+    """Attention clocks from the collected ESPN scoreboard finals.
+
+    Three arrays per league, all from the collected ``*_scoreboard.jsonl``
+    rows (``STATUS_FINAL`` games with both scores present):
+
+    * ``<lg>_games_7d``       - finals in the trailing 7 calendar days.  For a
+      weekly league this is close to a season indicator, which is itself the
+      honest content of the signal (sportsbook attention is seasonal);
+    * ``<lg>_close_games_7d`` - finals decided by at most the league's close
+      margin, a declared drama proxy;
+    * ``<lg>_away_wins_7d``   - finals won by the away side.  No pre-game odds
+      were collected, so home advantage is the only prior in the data and the
+      register says WEAK-MAPPING rather than calling these upsets.
+
+    A league whose collection is missing or empty registers MISSING: nothing is
+    back-filled from a calendar or another league.
+    """
+    for league, source in ESPN_SLATE_SOURCES.items():
+        names = (f"{league}_games_7d", f"{league}_close_games_7d",
+                 f"{league}_away_wins_7d")
+        for name in names:
+            book._blank(name)
+        path = os.path.join(root, "sports", source["file"])
+        games: List[dict] = []
+        if os.path.exists(path):
+            with open(path, "r", encoding="utf-8") as fh:
+                for line in fh:
+                    try:
+                        row = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    if row.get("status") != "STATUS_FINAL":
+                        continue
+                    if row.get("home_score") is None or row.get("away_score") is None:
+                        continue
+                    if not row.get("date"):
+                        continue
+                    games.append(row)
+        if not games:
+            book._register_all(names, "MISSING", 0, [], [],
+                               "no collected ESPN finals for this league "
+                               "(the file is absent or holds no completed games)",
+                               source["url"])
+            continue
+        games.sort(key=lambda g: g["date"])
+        dates = [g["date"] for g in games]
+        margin = float(source["close_margin"])
+        for t in range(len(md.dates)):
+            lo7, hi7 = _window_before(md.dates, t, 7)
+            window = [g for g in games if lo7 <= g["date"] < hi7]
+            book.arrays[names[0]][t] = float(len(window))
+            book.arrays[names[1]][t] = float(sum(
+                1 for g in window
+                if 0 < abs(g["home_score"] - g["away_score"]) <= margin))
+            book.arrays[names[2]][t] = float(sum(
+                1 for g in window if g["away_score"] > g["home_score"]))
+        book.provenance[league] = {
+            "file": f"data/real/sports/{source['file']}",
+            "url": source["url"],
+            "source_class": "SECONDARY",
+        }
+        book._register_all(
+            names, "AVAILABLE", len(games), dates,
+            [f"data/real/sports/{source['file']}"],
+            (f"ESPN scoreboard finals (SECONDARY publisher), {len(games)} games "
+             f"{dates[0]}..{dates[-1]}; close margin <= {margin:g} points; away "
+             "wins are the only upset prior in the collected data"),
+            source["url"])
 
 
 # -- Weather (NOAA/NCEI, OFFICIAL) ------------------------------------------

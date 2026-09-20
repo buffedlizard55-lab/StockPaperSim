@@ -1,0 +1,93 @@
+name: Injury snapshot archive (scheduled)
+
+# WHY THIS RUNS ON A SCHEDULE, LIKE THE PILOT AND UNLIKE THE BIG COLLECTOR
+# ----------------------------------------------------------------------
+# The NFL and NBA injury projects are forward-only: neither league publishes a
+# retrievable archive of past injury designations, so the injury participants
+# (@InjuryFeed_Forward, @NBAInjury_Forward) can never be backtested. What they
+# CAN have is an archive that starts today: one dated snapshot per week of the
+# official league document plus the machine-readable ESPN companion
+# (SECONDARY, labelled as such in the signal register).
+#
+# Following the pattern of equity-pilot.yml and live-rollover.yml - the runs
+# that the repository has already accepted on schedules - this workflow commits
+# only to a dedicated branch (archive/injuries) and opens or refreshes one
+# pull request, so the default branch never changes unread. The big
+# collect-real-data.yml stays manual-only; this one is narrow on purpose
+# (4 requests per week, one dated file each, idempotent per date).
+#
+# The snapshots dated after the last collected session cannot affect any
+# published season: sim/masterfeed.py only turns the injury signals AVAILABLE
+# when a snapshot is dated on or before the window it is building, and the
+# forward-only participants place no backdated trades either way.
+
+on:
+  schedule:
+    # 09:15 UTC Tuesdays: after Monday Night Football, after the NBA week is
+    # underway, before the week's injury designations roll over.
+    - cron: "15 9 * * 2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: injury-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    name: Capture the week's injury snapshots
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Standard-library purity (the collector must stay stdlib-only)
+        run: python scripts/check_purity.py
+
+      - name: Collect the dated injury snapshots
+        run: |
+          python scripts/collect_real_data.py --out data/real \
+            --only injury_archive --max-seconds 600
+
+      - name: Commit to the archive branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          BRANCH="archive/injuries"
+          git checkout -B "$BRANCH"
+          git add -A data/real/sports/official/archive data/real/collection_manifest.json
+          if git diff --cached --quiet; then
+            echo "No new snapshots to commit (already captured today)."
+            echo "CHANGED=false" >> "$GITHUB_ENV"
+          else
+            git commit -m "data: injury snapshot archive $(date -u +%F) [skip ci]"
+            echo "CHANGED=true" >> "$GITHUB_ENV"
+          fi
+
+      - name: Push the archive branch and open/refresh the PR
+        if: env.CHANGED == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          git push -f origin archive/injuries
+          EXISTING=$(gh pr list --head archive/injuries --json number --jq '.[0].number' || true)
+          if [ -z "$EXISTING" ]; then
+            gh pr create \
+              --title "data: weekly injury snapshot archive" \
+              --body "Dated NFL/NBA injury snapshots (official league documents + the machine-readable ESPN companion, SECONDARY). One file per feed per capture date; the run is idempotent within a date. This archive is what the forward-only injury participants (@InjuryFeed_Forward, @NBAInjury_Forward) will trade on once it holds enough dated captures - never backdated. Review the dated files and merge to advance the archive." \
+              --head archive/injuries --base main || {
+              echo "::warning::gh PR create failed (automation limits). Branch is pushed; open the PR manually."
+            }
+          else
+            echo "PR #$EXISTING already tracks archive/injuries; it now has the new capture."
+          fi

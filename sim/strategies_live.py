@@ -763,12 +763,34 @@ class InsiderClusterLive(LiveStrategy):
 
     username = "@InsiderCluster_Live"
     event_inputs = ("insider_buys_30d", "insider_buy_ratio_30d")
-    data_status = "DATA-MISSING"
-    signal_note = ("The SEC Form 4 stream is not in data/real/sec/ because the "
-                   "collection runner's first EDGAR request was refused and the "
-                   "re-collection has not landed; the rule therefore places no "
-                   "intents and this book reports a measurement gap, not a zero "
-                   "result.")
+
+    def __init__(self) -> None:
+        # The insider collection state is a fact about the checkout, not about
+        # this class, so the status is computed at instantiation: the moment the
+        # bulk data sets or the per-filing walk land, the participant reports
+        # READY and the next rollover plans from real filings - without a code
+        # change that could silently claim data that is not there.
+        super().__init__()
+        from . import masterfeed
+        info = masterfeed.insider_collection_present()
+        if info["present"]:
+            self.data_status = "READY"
+            coverage = info.get("coverage") or []
+            window = (f" ({coverage[0]}..{coverage[-1]})" if len(coverage) == 2 else "")
+            self.signal_note = (
+                f"SEC insider data has landed: {info['rows']} normalised "
+                f"transactions{window} from "
+                + ", ".join(str(f) for f in info["files"])
+                + ". The rule reads code-P clusters and CEO/CFO purchases from it; "
+                  "the first intents appear in the next planned session, never "
+                  "backdated.")
+        else:
+            self.data_status = "DATA-MISSING"
+            self.signal_note = (
+                "The SEC insider collections (quarterly bulk data sets and the "
+                "per-filing walk) have not landed in this checkout; the rule "
+                "therefore places no intents and this book reports a measurement "
+                "gap, not a zero result.")
     spec = StrategySpec(
         username=username,
         display_name="Insider Cluster Live",
@@ -838,7 +860,11 @@ class InjuryFeedForward(LiveStrategy):
     data_status = "FORWARD-ONLY"
     signal_note = ("Neither league publishes a retrievable archive of past injury "
                    "designations, so this participant can only ever run forward. It "
-                   "places no backdated intents by design.")
+                   "places no backdated intents by design. A dated snapshot archive "
+                   "(official league documents plus the machine-readable ESPN "
+                   "companion) is collected on a schedule into "
+                   "data/real/sports/official/archive/, so the forward test now "
+                   "accumulates week by week instead of resetting.")
     spec = StrategySpec(
         username=username,
         display_name="Injury Feed Forward",

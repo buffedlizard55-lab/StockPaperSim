@@ -116,7 +116,9 @@
   },
   {
    "id": "NFLInjuryReport",
-   "signals": [],
+   "signals": [
+    "nfl_injury_report"
+   ],
    "requested_as": "NFL Injury",
    "repo": "NFLInjuryReport",
    "title": "NFL Injury Report - 32 team tracker",
@@ -125,9 +127,10 @@
    "source_class": "OFFICIAL",
    "status": "FORWARD-ONLY",
    "mapping": "WEAK-MAPPING",
-   "mapping_note": "nfl.com publishes the current week's injury designations; there is no official archive endpoint for a past season that this project could retrieve, so the injury rule runs forward from the next collection instead of being backdated. ESPN's archive is a secondary feed and is used only for scores, never as the official injury designation.",
+   "mapping_note": "nfl.com publishes the current week's injury designations; there is no official archive endpoint for a past season that this project could retrieve, so the injury rule runs forward from the next collection instead of being backdated. ESPN's archive is a secondary feed and is used only for scores, never as the official injury designation. A dated snapshot archive (official page plus the machine-readable ESPN companion, both stamped with the capture date) is now collected on a schedule, so the forward test accumulates observations instead of restarting every week.",
    "evidence": [
-    "data/real/sports/official/nfl_injuries.raw"
+    "data/real/sports/official/nfl_injuries.raw",
+    "data/real/sports/official/archive/"
    ],
    "hypothesis": "Heavy injury weeks at contending teams move sportsbook equities through expected-handle revisions.",
    "tradable": [
@@ -138,7 +141,9 @@
   },
   {
    "id": "NBAInjuryReport",
-   "signals": [],
+   "signals": [
+    "nba_injury_report"
+   ],
    "requested_as": "NBA Injury",
    "repo": "NBAInjuryReport",
    "title": "NBA Injury Watch - 30 team monitor",
@@ -147,9 +152,10 @@
    "source_class": "OFFICIAL",
    "status": "FORWARD-ONLY",
    "mapping": "WEAK-MAPPING",
-   "mapping_note": "The NBA publishes its injury report as a dated PDF; the 2025-26 archive is not retrievable as a machine-readable series, so the rule is forward-tested against the live document (whose existence is verified and hashed in data/real/sports/official/).",
+   "mapping_note": "The NBA publishes its injury report as a dated PDF; the 2025-26 archive is not retrievable as a machine-readable series, so the rule is forward-tested against the live document (whose existence is verified and hashed in data/real/sports/official/). Season 2 adds a dedicated participant (@NBAInjury_Forward) so the NBA injury project has its own forward probe, fed by the same dated snapshot archive as the NFL one.",
    "evidence": [
-    "data/real/sports/official/nba_injury_report_index.raw"
+    "data/real/sports/official/nba_injury_report_index.raw",
+    "data/real/sports/official/archive/"
    ],
    "hypothesis": "Games lost by star players to injury raise expected in-game variance, which is positive for sportsbook and sports-data equities.",
    "tradable": [
@@ -186,7 +192,11 @@
   },
   {
    "id": "Ncaa-football-alerts",
-   "signals": [],
+   "signals": [
+    "ncaaf_games_7d",
+    "ncaaf_close_games_7d",
+    "ncaaf_away_wins_7d"
+   ],
    "requested_as": "NCAA Scoreboard",
    "repo": "Ncaa-football-alerts",
    "title": "Ncaa-football-alerts",
@@ -195,9 +205,10 @@
    "source_class": "OFFICIAL",
    "status": "FORWARD-ONLY",
    "mapping": "WEAK-MAPPING",
-   "mapping_note": "The NCAA scoreboard endpoint is official but the archived 2025-26 season had to be probed rather than enumerated; the same attention rule that is backtested on MLB scores runs forward on NCAA weeks.",
+   "mapping_note": "The NCAA scoreboard endpoint is official but the archived 2025-26 season had to be probed rather than enumerated. The ESPN-collected NCAAF finals (SECONDARY publisher, 282 games) are now backtested by @NCAA_Upset_Blitz under this row's own slate clocks; the official NCAA endpoint itself stays forward-only, and the two source classes are never mixed in one signal.",
    "evidence": [
-    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw"
+    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
+    "data/real/sports/ncaaf_scoreboard.jsonl"
    ],
    "hypothesis": "High-profile college-football weekends drive betting handle, which lifts sportsbook and sports-data equities.",
    "tradable": [
@@ -209,6 +220,15 @@
   {
    "id": "NFL-scoreboard",
    "signals": [
+    "nfl_games_7d",
+    "nfl_close_games_7d",
+    "nfl_away_wins_7d",
+    "nba_games_7d",
+    "nba_close_games_7d",
+    "nba_away_wins_7d",
+    "ncaaf_games_7d",
+    "ncaaf_close_games_7d",
+    "ncaaf_away_wins_7d",
     "mlb_games_7d",
     "mlb_upsets_7d"
    ],
@@ -220,15 +240,19 @@
    "source_class": "SECONDARY",
    "status": "BACKTESTED",
    "mapping": "WEAK-MAPPING",
-   "mapping_note": "The retrieved NFL/NBA/NCAAF scores come from ESPN's public scoreboard endpoint, which is a secondary publisher; the official league endpoints were probed and are recorded with their HTTP status. The sports-derived signals are therefore labelled as resting on secondary data.",
+   "mapping_note": "The retrieved NFL/NBA/NCAAF scores come from ESPN's public scoreboard endpoint, which is a secondary publisher; the official league endpoints were probed and are recorded with their HTTP status. The sports-derived signals are therefore labelled as resting on secondary data. Season 2 trades these slate clocks with three dedicated participants: @NFL_Slate_Attention (NFL finals and close-game share), @NBA_Slate_Attention (the same rule on the NBA calendar) and @NCAA_Upset_Blitz (away-win-heavy college weeks).",
    "evidence": [
-    "data/real/sports/nfl_scoreboard.jsonl"
+    "data/real/sports/nfl_scoreboard.jsonl",
+    "data/real/sports/nba_scoreboard.jsonl",
+    "data/real/sports/ncaaf_scoreboard.jsonl"
    ],
    "hypothesis": "A weekend with many upsets raises gambling attention and handle, which lifts sportsbook equities in the following week.",
    "tradable": [
     "DKNG",
     "FLUT",
-    "PENN"
+    "PENN",
+    "SRAD",
+    "GENI"
    ]
   },
   {
@@ -268,7 +292,7 @@
    "source_class": "OFFICIAL",
    "status": "FORWARD-ONLY",
    "mapping": "UNPROVEN-MAPPING",
-   "mapping_note": "SportsPred emits pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would be this project's model, not the site's. The participant therefore trades only on snapshots collected from now on.",
+   "mapping_note": "SportsPred emits pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would be this project's model, not the site's. Season 2 registers a dedicated forward probe (@SportsPred_Forward): it places no backdated trades and goes live only on dated snapshots of the site's own published predictions collected from now on.",
    "evidence": [],
    "hypothesis": "Where a model's probability disagrees materially with the market's implied probability, the sports-data complex is mispriced in the same direction.",
    "tradable": [
@@ -397,8 +421,8 @@
     null
    ],
    "files": [],
-   "note": "no collected Form 4 file",
-   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
+   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "insider_ceo_buys_30d": {
    "state": "MISSING",
@@ -408,8 +432,8 @@
     null
    ],
    "files": [],
-   "note": "no collected Form 4 file",
-   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
+   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "insider_buy_ratio_30d": {
    "state": "MISSING",
@@ -419,8 +443,8 @@
     null
    ],
    "files": [],
-   "note": "no collected Form 4 file",
-   "url": "https://www.sec.gov/cgi-bin/browse-edgar"
+   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "mlb_games_7d": {
    "state": "AVAILABLE",
@@ -461,12 +485,129 @@
    "note": "MLB regular-season finals, official league feed",
    "url": "https://statsapi.mlb.com/api/v1/schedule"
   },
+  "nfl_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 285,
+   "window": [
+    "2025-09-05",
+    "2026-02-04"
+   ],
+   "files": [
+    "data/real/sports/nfl_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 285 games 2025-09-05..2026-02-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+  },
+  "nfl_close_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 285,
+   "window": [
+    "2025-09-05",
+    "2026-02-04"
+   ],
+   "files": [
+    "data/real/sports/nfl_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 285 games 2025-09-05..2026-02-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+  },
+  "nfl_away_wins_7d": {
+   "state": "AVAILABLE",
+   "rows": 285,
+   "window": [
+    "2025-09-05",
+    "2026-02-04"
+   ],
+   "files": [
+    "data/real/sports/nfl_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 285 games 2025-09-05..2026-02-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard"
+  },
+  "ncaaf_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 282,
+   "window": [
+    "2025-08-23",
+    "2025-12-21"
+   ],
+   "files": [
+    "data/real/sports/ncaaf_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 282 games 2025-08-23..2025-12-21; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+  },
+  "ncaaf_close_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 282,
+   "window": [
+    "2025-08-23",
+    "2025-12-21"
+   ],
+   "files": [
+    "data/real/sports/ncaaf_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 282 games 2025-08-23..2025-12-21; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+  },
+  "ncaaf_away_wins_7d": {
+   "state": "AVAILABLE",
+   "rows": 282,
+   "window": [
+    "2025-08-23",
+    "2025-12-21"
+   ],
+   "files": [
+    "data/real/sports/ncaaf_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 282 games 2025-08-23..2025-12-21; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
+  },
+  "nba_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 1326,
+   "window": [
+    "2025-10-21",
+    "2026-06-14"
+   ],
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
+  },
+  "nba_close_games_7d": {
+   "state": "AVAILABLE",
+   "rows": 1326,
+   "window": [
+    "2025-10-21",
+    "2026-06-14"
+   ],
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
+  },
+  "nba_away_wins_7d": {
+   "state": "AVAILABLE",
+   "rows": 1326,
+   "window": [
+    "2025-10-21",
+    "2026-06-14"
+   ],
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
+  },
   "weather_cold_anomaly_10d": {
    "state": "AVAILABLE",
-   "rows": 723,
+   "rows": 724,
    "window": [
     "2024-09-16",
-    "2026-09-15"
+    "2026-09-16"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -476,10 +617,10 @@
   },
   "weather_precip_30d_in": {
    "state": "AVAILABLE",
-   "rows": 723,
+   "rows": 724,
    "window": [
     "2024-09-16",
-    "2026-09-15"
+    "2026-09-16"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -489,10 +630,10 @@
   },
   "kalshi_settled_30d": {
    "state": "AVAILABLE",
-   "rows": 612,
+   "rows": 5,
    "window": [
     "2026-07-31",
-    "2026-09-18"
+    "2026-09-12"
    ],
    "files": [
     "data/real/kalshi/"
@@ -502,10 +643,10 @@
   },
   "kalshi_volume_30d": {
    "state": "AVAILABLE",
-   "rows": 612,
+   "rows": 5,
    "window": [
     "2026-07-31",
-    "2026-09-18"
+    "2026-09-12"
    ],
    "files": [
     "data/real/kalshi/"
@@ -515,10 +656,10 @@
   },
   "fred_slope_bps": {
    "state": "AVAILABLE",
-   "rows": 500,
+   "rows": 501,
    "window": [
     "2024-09-16",
-    "2026-09-16"
+    "2026-09-17"
    ],
    "files": [
     "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
@@ -528,10 +669,10 @@
   },
   "fred_slope_change_21d": {
    "state": "AVAILABLE",
-   "rows": 500,
+   "rows": 501,
    "window": [
     "2024-09-16",
-    "2026-09-16"
+    "2026-09-17"
    ],
    "files": [
     "data/real/fred/DGS10_2024-09-16_2026-09-17.csv"
@@ -573,10 +714,13 @@
     null
    ],
    "files": [
-    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
-    "data/real/sports/official/nfl_injuries.raw"
+    "data/real/sports/official/archive/espn_nfl_injuries_2026-09-19.json",
+    "data/real/sports/official/archive/espn_nfl_injuries_2026-09-20.json",
+    "data/real/sports/official/archive/nfl_injuries_2026-09-19.raw",
+    "data/real/sports/official/archive/nfl_injuries_2026-09-20.raw",
+    "data/real/sports/official/archive"
    ],
-   "note": "official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "note": "official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://www.nfl.com/injuries/"
   },
   "nba_injury_report": {
@@ -587,10 +731,11 @@
     null
    ],
    "files": [
-    "data/real/sports/official/ncaa_scoreboard_fbs_2025_week10.raw",
-    "data/real/sports/official/nfl_injuries.raw"
+    "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+    "data/real/sports/official/archive/espn_nba_injuries_2026-09-20.json",
+    "data/real/sports/official/archive"
    ],
-   "note": "official feed resolves (captured: ncaa_scoreboard_fbs_2025_week10.raw, nfl_injuries.raw), but the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "note": "official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
   },
   "insider_buys_30d::AAPL": {
@@ -1131,6 +1276,21 @@
    "file": "data/real/sports/mlb_games_2026.jsonl",
    "url": "https://statsapi.mlb.com/api/v1/schedule"
   },
+  "nfl": {
+   "file": "data/real/sports/nfl_scoreboard.jsonl",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+   "source_class": "SECONDARY"
+  },
+  "ncaaf": {
+   "file": "data/real/sports/ncaaf_scoreboard.jsonl",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+   "source_class": "SECONDARY"
+  },
+  "nba": {
+   "file": "data/real/sports/nba_scoreboard.jsonl",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+   "source_class": "SECONDARY"
+  },
   "weather": {
    "file": "data/real/weather/USW00023272_daily.json",
    "url": "https://www.ncei.noaa.gov/access/services/data/v1"
@@ -1199,6 +1359,60 @@
    "last_value": 39.0,
    "state": "AVAILABLE"
   },
+  "nfl_games_7d": {
+   "sessions_actionable": 99,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "nfl_close_games_7d": {
+   "sessions_actionable": 94,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "nfl_away_wins_7d": {
+   "sessions_actionable": 99,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "ncaaf_games_7d": {
+   "sessions_actionable": 71,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "ncaaf_close_games_7d": {
+   "sessions_actionable": 67,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "ncaaf_away_wins_7d": {
+   "sessions_actionable": 71,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "nba_games_7d": {
+   "sessions_actionable": 165,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "nba_close_games_7d": {
+   "sessions_actionable": 146,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
+  "nba_away_wins_7d": {
+   "sessions_actionable": 164,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
+  },
   "weather_cold_anomaly_10d": {
    "sessions_actionable": 95,
    "sessions_in_window": 251,
@@ -1214,13 +1428,13 @@
   "kalshi_settled_30d": {
    "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 442.0,
+   "last_value": 4.0,
    "state": "AVAILABLE"
   },
   "kalshi_volume_30d": {
    "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 790220737.08,
+   "last_value": 30255926.81,
    "state": "AVAILABLE"
   },
   "fred_slope_bps": {

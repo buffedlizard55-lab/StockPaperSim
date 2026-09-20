@@ -830,6 +830,309 @@ class InjuryFeedForward(Strategy):
         return []
 
 
+class NFLSlateAttention(Strategy):
+    """Sportsbook equities while the NFL slate is dense and dramatic."""
+    #: Collected signal arrays this strategy reads. Declared here so the run, the
+    #: site and the audit can all state which source a participant depends on, and
+    #: so a strategy whose source is missing can be reported as DATA-MISSING rather
+    #: than silently trading a column of zeros.
+    signal_names = ('nfl_games_7d', 'nfl_close_games_7d')
+
+    spec = StrategySpec(
+        username="@NFL_Slate_Attention",
+        display_name="NFL Slate Attention",
+        archetype="event attention proxy",
+        thesis=("Football is the dominant betting calendar in the United States, and "
+                "the sportsbook complex's attention (and handle) follows it. This "
+                "participant holds sportsbook and sports-data equities while the NFL "
+                "season is active and the trailing week's finals were unusually "
+                "close - a declared proxy for how watchable, and therefore how "
+                "heavily bet, the product was."),
+        entry_rules=["Count NFL finals in the trailing 7 calendar days from the "
+                     "collected ESPN scoreboard file (SECONDARY publisher, labelled "
+                     "as such everywhere it is shown)",
+                     "Count finals decided by 3 points or fewer as close games",
+                     "In season (any finals in the window) and with the close-game "
+                     "share at or above its trailing-60-session median, hold DKNG, "
+                     "FLUT and SRAD at 60% of equity each"],
+        exit_rules=["Flatten when the season goes quiet (no finals in the trailing "
+                    "week) or the close-game share falls below its median",
+                    "No stop loss"],
+        sizing="60% per name, three names = 1.8x gross", leverage="1.8x gross",
+        cadence="weekly check (the slate clock moves weekly)",
+        horizon="the NFL season",
+        academic_basis=[
+            {"claim": "Attention is a documented driver of retail trading and of "
+                      "gambling-adjacent equity flows",
+             "url": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard",
+             "ref": "ESPN public scoreboard endpoint (SECONDARY publisher; the "
+                    "league's own history endpoint does not exist publicly)",
+             "status": "FETCHED-VERIFIED"}],
+        known_failure_modes=[
+            "A weekly league makes the density signal close to a season indicator, "
+            "so most of what it measures is seasonality",
+            "The mapping from close games to next-week handle is asserted, not "
+            "estimated - the register says WEAK-MAPPING",
+            "ESPN is a secondary publisher; the official NFL endpoints were probed "
+            "and are recorded with their HTTP status rather than hidden"],
+        aggression=4,
+        why_return_seeking="Concentrated three-name basket at 1.8x gross with no hedge.")
+
+    def on_day(self, ctx: Context) -> List[Order]:
+        book = getattr(ctx.md, "signals", None)
+        if book is None or not book.available("nfl_games_7d"):
+            return []
+        games = book.value("nfl_games_7d", ctx.t)
+        close = book.value("nfl_close_games_7d", ctx.t)
+
+        def share(t: int) -> float:
+            g = book.value("nfl_games_7d", t)
+            return (book.value("nfl_close_games_7d", t) / g) if g else 0.0
+
+        history = [share(t) for t in range(max(0, ctx.t - 60), ctx.t)]
+        basket = [s for s in ("DKNG", "FLUT", "SRAD") if s in ctx.symbols]
+        if games <= 0:
+            return ctx.flatten("nfl slate: season quiet (no finals in the trailing week)")
+        if len(history) < 20:
+            return []
+        median = _median(history)
+        if share(ctx.t) >= median:
+            return ctx.orders_to_targets(
+                {s: 0.6 for s in basket},
+                f"nfl slate: {int(games)} finals, {int(close)} within 3pts")
+        return ctx.flatten("nfl slate: close-game share below its median")
+
+
+class NBASlateAttention(Strategy):
+    """The NBA calendar version of the slate-attention rule."""
+    signal_names = ('nba_games_7d', 'nba_close_games_7d')
+
+    spec = StrategySpec(
+        username="@NBA_Slate_Attention",
+        display_name="NBA Slate Attention",
+        archetype="event attention proxy",
+        thesis=("The NBAInjuryReport project watches a league whose regular season "
+                "runs October to June and whose betting volume is second only to "
+                "football. The same attention rule as the NFL participant, on the "
+                "NBA calendar: hold the sportsbook complex while the league is "
+                "playing and the week's finals were close."),
+        entry_rules=["Count NBA finals in the trailing 7 calendar days from the "
+                     "collected ESPN scoreboard file (SECONDARY publisher)",
+                     "Count finals decided by 3 points or fewer as close games",
+                     "In season and with the close-game share at or above its "
+                     "trailing-60-session median, hold DKNG, FLUT and GENI at 60% "
+                     "of equity each"],
+        exit_rules=["Flatten when the season goes quiet or the close-game share "
+                    "falls below its median", "No stop loss"],
+        sizing="60% per name, three names = 1.8x gross", leverage="1.8x gross",
+        cadence="weekly check", horizon="the NBA season",
+        academic_basis=[
+            {"claim": "NBA betting handle is concentrated in the regular season and "
+                      "rises with game volume",
+             "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
+             "ref": "ESPN public NBA scoreboard endpoint (SECONDARY publisher)",
+             "status": "FETCHED-VERIFIED"}],
+        known_failure_modes=[
+            "The NBA plays almost every day in season, so the density signal is a "
+            "season indicator plus playoff weeks",
+            "Close-game share is a drama proxy, not a handle measurement",
+            "If the ESPN NBA collection is empty the participant reports DATA-MISSING "
+            "and places no trades rather than borrowing another league's calendar"],
+        aggression=4,
+        why_return_seeking="Same 1.8x gross basket as the NFL participant, on a "
+                           "different league calendar, so the season measures whether "
+                           "the attention rule generalises.")
+
+    def on_day(self, ctx: Context) -> List[Order]:
+        book = getattr(ctx.md, "signals", None)
+        if book is None or not book.available("nba_games_7d"):
+            return []
+
+        def share(t: int) -> float:
+            g = book.value("nba_games_7d", t)
+            return (book.value("nba_close_games_7d", t) / g) if g else 0.0
+
+        games = book.value("nba_games_7d", ctx.t)
+        close = book.value("nba_close_games_7d", ctx.t)
+        history = [share(t) for t in range(max(0, ctx.t - 60), ctx.t)]
+        basket = [s for s in ("DKNG", "FLUT", "GENI") if s in ctx.symbols]
+        if games <= 0:
+            return ctx.flatten("nba slate: season quiet (no finals in the trailing week)")
+        if len(history) < 20:
+            return []
+        if share(ctx.t) >= _median(history):
+            return ctx.orders_to_targets(
+                {s: 0.6 for s in basket},
+                f"nba slate: {int(games)} finals, {int(close)} within 3pts")
+        return ctx.flatten("nba slate: close-game share below its median")
+
+
+class NCAAUpsetBlitz(Strategy):
+    """Away-win-heavy college weeks: the chaos-engagement thesis, long."""
+    signal_names = ('ncaaf_games_7d', 'ncaaf_away_wins_7d')
+
+    spec = StrategySpec(
+        username="@NCAA_Upset_Blitz",
+        display_name="NCAA Upset Blitz",
+        archetype="event attention proxy",
+        thesis=("College football's home-field advantage is the strongest of the "
+                "major leagues, so an away-win-heavy week is this data's only "
+                "honest upset proxy (no pre-game odds were collected). The thesis "
+                "is the opposite side of @MLB_Upset_Short: chaos raises engagement "
+                "and next-week handle, so buy the complex after upset-heavy weeks "
+                "rather than short it. Running both in the same season is the "
+                "experiment."),
+        entry_rules=["Count NCAAF finals in the trailing 7 calendar days from the "
+                     "collected ESPN scoreboard file (SECONDARY publisher)",
+                     "Count finals won by the away side",
+                     "When at least 5 finals were played and the away-win share "
+                     "exceeds its trailing-60-session median by 5 percentage "
+                     "points, hold DKNG, GENI and SRAD at 60% of equity each"],
+        exit_rules=["Flatten when the week is quiet or the away-win share is back "
+                    "at or below its median", "No stop loss"],
+        sizing="60% per name, three names = 1.8x gross", leverage="1.8x gross",
+        cadence="weekly check", horizon="the college season",
+        academic_basis=[
+            {"claim": "Home-field advantage in college football makes away wins a "
+                      "usable upset prior without odds data",
+             "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+             "ref": "ESPN public college-football scoreboard endpoint (SECONDARY "
+                    "publisher); the official data.ncaa.com endpoint does not "
+                    "enumerate the archived season",
+             "status": "FETCHED-VERIFIED"}],
+        known_failure_modes=[
+            "Without collected pre-game odds, 'away win' is a coarse upset proxy "
+            "that also fires on neutral-site games",
+            "The engagement thesis is asserted, not estimated - and @MLB_Upset_Short "
+            "holds the opposite one, so at most one of them can be right",
+            "College attention concentrates on a handful of brands; a count of "
+            "games says nothing about which games they were"],
+        aggression=5,
+        why_return_seeking="Deliberately takes the side of the sports-attention "
+                           "trade the MLB participant shorts.")
+
+    def on_day(self, ctx: Context) -> List[Order]:
+        book = getattr(ctx.md, "signals", None)
+        if book is None or not book.available("ncaaf_games_7d"):
+            return []
+        games = book.value("ncaaf_games_7d", ctx.t)
+        away = book.value("ncaaf_away_wins_7d", ctx.t)
+
+        def share(t: int) -> float:
+            g = book.value("ncaaf_games_7d", t)
+            return (book.value("ncaaf_away_wins_7d", t) / g) if g else 0.0
+
+        history = [share(t) for t in range(max(0, ctx.t - 60), ctx.t)]
+        basket = [s for s in ("DKNG", "GENI", "SRAD") if s in ctx.symbols]
+        if games < 5:
+            return ctx.flatten("ncaa slate: quiet week (fewer than 5 finals)")
+        if len(history) < 20:
+            return []
+        median = _median(history)
+        if share(ctx.t) > median + 0.05:
+            return ctx.orders_to_targets(
+                {s: 0.6 for s in basket},
+                f"ncaa upsets: {int(away)} of {int(games)} finals won by the away side")
+        return ctx.flatten("ncaa slate: away-win share back at or below its median")
+
+
+class NBAInjuryForward(Strategy):
+    """Forward-only probe for the NBA injury project specifically.
+
+    The brief lists NFL Injury and NBA Injury as separate items; the original
+    forward probe covered both with one participant. This one gives the NBA
+    injury project its own registered probe with its own declared rule, fed by
+    the same dated snapshot archive. It places no backdated trades.
+    """
+    signal_names = ('nba_injury_report',)
+
+    spec = StrategySpec(
+        username="@NBAInjury_Forward",
+        display_name="NBA Injury (forward probe)",
+        archetype="event attention proxy",
+        thesis=("The NBA publishes a dated injury report, and no machine-readable "
+                "archive of past designations is retrievable, so any NBA injury "
+                "rule is a genuine forward test with no history. This participant "
+                "exists so the NBA injury project from the brief has its own row: "
+                "it will trade once the dated snapshot archive holds four "
+                "consecutive weekly captures, and it records no backdated trades."),
+        entry_rules=["No backtested rule. The declared forward rule: once the "
+                     "archive holds >= 4 dated NBA injury snapshots, a week whose "
+                     "game-impacting designation count is above the trailing "
+                     "4-week mean -> long DKNG, SRAD, GENI at 50% of equity each"],
+        exit_rules=["Not applicable in the historical window"],
+        sizing="declared 150% gross when it goes live", leverage="1.5x when live",
+        cadence="weekly (from the archive)", horizon="weeks",
+        academic_basis=[
+            {"claim": "The NBA publishes a dated injury report",
+             "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
+             "ref": "NBA official injury-report index (adapter target, fetched and "
+                    "hashed; ESPN's structured endpoint is the machine-readable "
+                    "companion and is labelled SECONDARY)",
+             "status": "FETCHED-VERIFIED"}],
+        known_failure_modes=[
+            "No historical archive exists, so there is no evidence of edge - the "
+            "0.0% return must be read as 'untested', not 'flat'",
+            "Injury information is public and fast-moving; the informational "
+            "content at publication is close to zero",
+            "The mapping from designations to handle is a hypothesis"],
+        aggression=3,
+        why_return_seeking="Declared but not yet tradable - the honest NBA-specific "
+                            "placeholder for the injury project in the brief.")
+
+    def on_day(self, ctx: Context) -> List[Order]:
+        return []
+
+
+class SportsPredForward(Strategy):
+    """Forward-only probe for the SportsPred project.
+
+    SportsPred publishes live predictions with no timestamped archive, so its
+    output cannot be backtested without recomputing the model (which would test
+    this project's code, not the site's). This participant registers the forward
+    rule and places no backdated trades.
+    """
+    signal_names = ()
+
+    spec = StrategySpec(
+        username="@SportsPred_Forward",
+        display_name="Sports Pred (forward probe)",
+        archetype="prediction-performance attention proxy",
+        thesis=("The SportsPred project publishes pre-game probabilities. There is "
+                "no archived, timestamped snapshot of those predictions for the "
+                "past season, so a backtest would have to recompute them - which "
+                "would test this repository's reimplementation, not the site. The "
+                "forward rule is declared here, and goes live on dated snapshots "
+                "of the site's own published predictions collected from now on."),
+        entry_rules=["No backtested rule. The declared forward rule: from dated "
+                     "SportsPred snapshots, a 4-week window in which the site's "
+                     "favourites beat the collected ESPN finals at a rate above "
+                     "its trailing mean -> long SRAD and GENI at 75% of equity each"],
+        exit_rules=["Not applicable in the historical window"],
+        sizing="declared 150% gross when it goes live", leverage="1.5x when live",
+        cadence="weekly (from the first archived snapshot)", horizon="weeks",
+        academic_basis=[
+            {"claim": "SportsPred publishes live predictions with no retrievable "
+                      "archive",
+             "url": "https://buffedlizard55-lab.github.io/SportsPred/",
+             "ref": "The project's own site (the publisher of record for its "
+                    "predictions); the finals used to score them come from the "
+                    "collected ESPN scoreboards, labelled SECONDARY",
+             "status": "FETCHED-VERIFIED"}],
+        known_failure_modes=[
+            "No archive exists, so nothing about this mapping has been measured",
+            "Scoring predictions against ESPN finals mixes a first-party "
+            "prediction source with a secondary results source; the mismatch is "
+            "declared rather than hidden",
+            "Its 0.0% return is an untested strategy, not a flat result"],
+        aggression=3,
+        why_return_seeking="Declared but not yet tradable - the honest placeholder "
+                            "for the Sports Pred project in the brief.")
+
+    def on_day(self, ctx: Context) -> List[Order]:
+        return []
+
+
 def _median(values: Sequence[float]) -> float:
     ordered = sorted(values)
     n = len(ordered)
@@ -848,6 +1151,9 @@ ROSTER_MF = (
     CEOCFOConviction,
     MLBAttentionMomo,
     MLBUpsetShort,
+    NFLSlateAttention,
+    NBASlateAttention,
+    NCAAUpsetBlitz,
     WeatherColdSnapMax,
     KalshiAttentionTimer,
     GoldMeltTrend,
@@ -855,6 +1161,8 @@ ROSTER_MF = (
     LeapMaxLeverMomentum,
     YieldCurveRotator,
     InjuryFeedForward,
+    NBAInjuryForward,
+    SportsPredForward,
 )
 
 

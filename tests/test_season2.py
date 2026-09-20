@@ -125,6 +125,45 @@ class TestLedger(unittest.TestCase):
         self.assertEqual(trips[1]["direction"], "short")
         self.assertAlmostEqual(trips[1]["gross_pnl_usd"], 1000.0, places=4)
 
+    def test_trips_carry_their_participant_and_never_mix_lots(self):
+        """A participant page's trip table filters on the participant field.
+
+        The all-participant ledger used to key open lots by symbol alone, so
+        two participants trading the same name blended into - or closed -
+        each other's lots, and no trip row carried a participant at all.
+        Every participant page therefore rendered "No closed round trips"
+        next to prose that counted them (IR-78).
+        """
+        def fill(participant, date, side, qty, price):
+            row = self._fill(date, "DKNG", side, qty, price)
+            row["participant"] = participant
+            return row
+
+        # A buys 100 at 100; B buys 100 at 102 the next day; A sells 100 at
+        # 110.  With symbol-only keys A's sell would close the blended lot at
+        # 101 (gross +900) and leave B a phantom half-lot at 101.
+        fills = [fill("@A", "2026-01-02", "buy", 100, 100.0),
+                 fill("@B", "2026-01-03", "buy", 100, 102.0),
+                 fill("@A", "2026-01-05", "sell", 100, 110.0)]
+        trips = ledger.build_round_trips(fills)
+        closed = [t for t in trips if t["status"] == "closed"]
+        self.assertEqual(len(closed), 1)
+        self.assertEqual(closed[0]["participant"], "@A")
+        self.assertAlmostEqual(closed[0]["gross_pnl_usd"], 1000.0, places=4)
+        open_rows = [t for t in trips if t["status"] == "open"]
+        self.assertEqual(len(open_rows), 1)
+        self.assertEqual(open_rows[0]["participant"], "@B")
+        self.assertAlmostEqual(open_rows[0]["entry_price"], 102.0, places=6)
+        # The all-participant ledger must be exactly the union of the
+        # per-participant ledgers.
+        all_doc = ledger.build_ledger(fills, None)
+        per = [ledger.build_ledger(fills, None, username=u)
+               for u in ("@A", "@B")]
+        self.assertEqual(all_doc["summary"]["round_trips_closed"],
+                         sum(d["summary"]["round_trips_closed"] for d in per))
+        self.assertEqual(all_doc["summary"]["fill_count"],
+                         sum(d["summary"]["fill_count"] for d in per))
+
     def test_verify_reproduces_equity_when_carry_is_given(self):
         fills = [self._fill("2026-01-02", "XBI", "buy", 100, 100.0, fee=0.10),
                  self._fill("2026-01-05", "XBI", "sell", 100, 110.0, fee=0.10)]

@@ -391,7 +391,7 @@ formula on every published bill price, two-publisher agreement, no look-ahead, n
 equity residual, maturity dates, price classes, and no reachable secondary path):
 **8,045 checks, 0 failures**. Then `scripts/independent_audit_official.py` - which
 imports **nothing** from `sim/` and re-derives everything from the raw Treasury
-tapes and the run's own streams - adds **1,870 checks**, including the
+tapes and the run's own streams - adds **1,871 checks**, including the
 two-publisher comparison on every primary price the book actually executed. CI
 rewrites that report and fails if the committed copy changes, so the number here
 cannot drift from the run.

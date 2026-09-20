@@ -694,44 +694,50 @@
    "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard"
   },
   "nba_games_7d": {
-   "state": "MISSING",
-   "rows": 0,
+   "state": "AVAILABLE",
+   "rows": 25,
    "window": [
-    null,
-    null
+    "2026-01-01",
+    "2026-01-04"
    ],
-   "files": [],
-   "note": "no collected ESPN finals for this league (the file is absent or holds no completed games)",
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "nba_close_games_7d": {
-   "state": "MISSING",
-   "rows": 0,
+   "state": "AVAILABLE",
+   "rows": 25,
    "window": [
-    null,
-    null
+    "2026-01-01",
+    "2026-01-04"
    ],
-   "files": [],
-   "note": "no collected ESPN finals for this league (the file is absent or holds no completed games)",
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "nba_away_wins_7d": {
-   "state": "MISSING",
-   "rows": 0,
+   "state": "AVAILABLE",
+   "rows": 25,
    "window": [
-    null,
-    null
+    "2026-01-01",
+    "2026-01-04"
    ],
-   "files": [],
-   "note": "no collected ESPN finals for this league (the file is absent or holds no completed games)",
+   "files": [
+    "data/real/sports/nba_scoreboard.jsonl"
+   ],
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "weather_cold_anomaly_10d": {
    "state": "AVAILABLE",
-   "rows": 723,
+   "rows": 724,
    "window": [
     "2024-09-16",
-    "2026-09-15"
+    "2026-09-16"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -741,10 +747,10 @@
   },
   "weather_precip_30d_in": {
    "state": "AVAILABLE",
-   "rows": 723,
+   "rows": 724,
    "window": [
     "2024-09-16",
-    "2026-09-15"
+    "2026-09-16"
    ],
    "files": [
     "data/real/weather/USW00023272_daily.json"
@@ -757,7 +763,7 @@
    "rows": 5,
    "window": [
     "2026-07-31",
-    "2026-09-10"
+    "2026-09-12"
    ],
    "files": [
     "data/real/kalshi/"
@@ -770,7 +776,7 @@
    "rows": 5,
    "window": [
     "2026-07-31",
-    "2026-09-10"
+    "2026-09-12"
    ],
    "files": [
     "data/real/kalshi/"
@@ -837,8 +843,12 @@
     null,
     null
    ],
-   "files": [],
-   "note": "official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "files": [
+    "data/real/sports/official/archive/espn_nfl_injuries_2026-09-19.json",
+    "data/real/sports/official/archive/nfl_injuries_2026-09-19.raw",
+    "data/real/sports/official/archive"
+   ],
+   "note": "official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://www.nfl.com/injuries/"
   },
   "nba_injury_report": {
@@ -848,8 +858,11 @@
     null,
     null
    ],
-   "files": [],
-   "note": "official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "files": [
+    "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+    "data/real/sports/official/archive"
+   ],
+   "note": "official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
   },
   "insider_buys_30d::AAPL": {
@@ -1398,6 +1411,11 @@
   "ncaaf": {
    "file": "data/real/sports/ncaaf_scoreboard.jsonl",
    "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard",
+   "source_class": "SECONDARY"
+  },
+  "nba": {
+   "file": "data/real/sports/nba_scoreboard.jsonl",
+   "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
    "source_class": "SECONDARY"
   },
   "weather": {
@@ -30623,7 +30641,7 @@
    1.0,
    1.0,
    1.0,
-   2.0,
+   1.0,
    2.0,
    2.0,
    2.0,
@@ -30641,10 +30659,10 @@
    1.0,
    1.0,
    1.0,
+   2.0,
    4.0,
    4.0,
-   4.0,
-   3.0
+   4.0
   ],
   "kalshi_volume_30d": [
    0,
@@ -31127,28 +31145,28 @@
    1903.17,
    1903.17,
    1903.17,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   7787.89,
-   5884.72,
-   5884.72,
-   5884.72,
-   5884.72,
-   5884.72,
-   5884.72,
-   5884.72,
-   5884.72,
-   32857098.67,
-   32857098.67,
-   32857098.67,
-   32851213.95
+   1903.17,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   8988.01,
+   7084.84,
+   7084.84,
+   7084.84,
+   7084.84,
+   7084.84,
+   7084.84,
+   7084.84,
+   7084.84,
+   27857059.25,
+   30255926.81,
+   30255926.81,
+   30255926.81
   ],
   "mlb_games_7d": [
    0.0,
@@ -32988,12 +33006,12 @@
    0.0,
    0.0,
    0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
+   1.0,
+   14.0,
+   14.0,
+   14.0,
+   14.0,
+   13.0,
    0.0,
    0.0,
    0.0,
@@ -33493,11 +33511,11 @@
    0.0,
    0.0,
    0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.0,
    0.0,
    0.0,
    0.0,
@@ -33996,12 +34014,12 @@
    0.0,
    0.0,
    0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
+   1.0,
+   25.0,
+   25.0,
+   25.0,
+   25.0,
+   24.0,
    0.0,
    0.0,
    0.0,

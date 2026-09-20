@@ -275,16 +275,20 @@
   "signals": [
    {
     "signal": "nba_games_7d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/nba_scoreboard.jsonl"
+    ],
     "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
     "sessions_actionable": null,
     "price_derived": false
    },
    {
     "signal": "nba_close_games_7d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sports/nba_scoreboard.jsonl"
+    ],
     "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard",
     "sessions_actionable": null,
     "price_derived": false
@@ -295,12 +299,9 @@
    "nba_close_games_7d"
   ],
   "signal_dependent": true,
-  "gate_armed": false,
-  "waiting_on": [
-   "nba_games_7d",
-   "nba_close_games_7d"
-  ],
-  "idle_reason": "no trades: waiting on nba_games_7d, nba_close_games_7d (MISSING) from https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard - no collected ESPN finals for this league (the file is absent or holds no completed games)"
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
  },
  {
   "username": "@NCAA_Upset_Blitz",
@@ -486,7 +487,11 @@
    {
     "signal": "nfl_injury_report",
     "state": "MISSING",
-    "files": [],
+    "files": [
+     "data/real/sports/official/archive/espn_nfl_injuries_2026-09-19.json",
+     "data/real/sports/official/archive/nfl_injuries_2026-09-19.raw",
+     "data/real/sports/official/archive"
+    ],
     "url": "https://www.nfl.com/injuries/",
     "sessions_actionable": null,
     "price_derived": false
@@ -494,7 +499,10 @@
    {
     "signal": "nba_injury_report",
     "state": "MISSING",
-    "files": [],
+    "files": [
+     "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+     "data/real/sports/official/archive"
+    ],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
     "sessions_actionable": null,
     "price_derived": false
@@ -510,7 +518,7 @@
    "nfl_injury_report",
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
  },
  {
   "username": "@NBAInjury_Forward",
@@ -519,7 +527,10 @@
    {
     "signal": "nba_injury_report",
     "state": "MISSING",
-    "files": [],
+    "files": [
+     "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+     "data/real/sports/official/archive"
+    ],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
     "sessions_actionable": null,
     "price_derived": false
@@ -533,7 +544,7 @@
   "waiting_on": [
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nba_injury_report (MISSING) from https://official.nba.com/nba-injury-report-2025-26-season/ - official feed resolves (no dated archive captures yet), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nba_injury_report (MISSING) from https://official.nba.com/nba-injury-report-2025-26-season/ - official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
  },
  {
   "username": "@SportsPred_Forward",

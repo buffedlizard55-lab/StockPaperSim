@@ -1,11 +1,11 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-stress-costs2x-seed20260918",
- "created_utc": "2026-09-19T22:50:05Z",
- "finalised_utc": "2026-09-19T22:50:06Z",
+ "created_utc": "2026-09-20T00:01:52Z",
+ "finalised_utc": "2026-09-20T00:01:53Z",
  "code": {
   "git": {
-   "commit": "e055c4eeed835b56b75f06b35c87f33869ddf598",
+   "commit": "5dbbf7854589d2826558c444d9f1ec0bb82fd80c",
    "branch": "arena/01a0bba5-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim"
@@ -35,7 +35,7 @@
    "sim/research_rules.py": "ca76ee2a17840e495f1b8f70ed0121b8b40f24869dcbf7a757325c883bef2cd1",
    "sim/rollover.py": "831f5a89b235295084e157e33f1113e3c5aea101c7adc39934455d53348bf9aa",
    "sim/season2.py": "2ccf1e1a4bbfeda87626de659672cd3a48b9fe59baf155aaf00c13bbeb1a5809",
-   "sim/sec.py": "b5b8ef1b2a6ff0274e303c0b21bc8cbd412c1179cde6f647c7bf42c909eb61de",
+   "sim/sec.py": "7e26d2fa9270564eb2e6360be2ac47e5dbd7588072c58f2867fc2fc4ba983e16",
    "sim/sensitivity.py": "9c2a09fe044d44c7578dea911fa68e8fc59ebe471cd1897d82cd91417815e2e2",
    "sim/strategies.py": "18ce8fe08e84fa34a68cd66baefce353b92d1e0fd50fc11ea692d57b39e93b6c",
    "sim/strategies_live.py": "eeaf2f8c5e356fcb974ec8380cb34c662a6dc1f9fc20293ad8f316a8dfcbf10d",
@@ -90,8 +90,8 @@
    "kind": "json"
   },
   "reports/NBA_Slate_Attention.json": {
-   "sha256": "a66a3b9fd0f29b0f41943681a360d41f2eac55e77c55114409e50846338b36b9",
-   "bytes": 13893,
+   "sha256": "3803b664147605861e954933a189484579415c2d77a8cf4bb91ce472ef057c39",
+   "bytes": 15697,
    "kind": "json"
   },
   "reports/NCAA_Upset_Blitz.json": {
@@ -155,8 +155,8 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "3a4ec4c97caa5e51cc1368d73abc3471559741c48c52d151e0e435a6a648e4a7",
-   "bytes": 10197,
+   "sha256": "dc19e9f5810a138097e39e87bef9e44c26aca32a39c6c97a0e8af242a9f076d5",
+   "bytes": 10228,
    "kind": "json"
   },
   "irregularities.json": {
@@ -170,28 +170,28 @@
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "376e7278952f4ea6fd95711aa1523967c4f8259587f89fd06cd27035bdfa67aa",
-   "bytes": 42334,
+   "sha256": "f3a731e12903c569f4a5281b09642df3d78361f95570e0718eec7a18a8439ceb",
+   "bytes": 43426,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "2f70296521d7ddb53d38e7198cbc75dda5336e431432ee47306dcde655641142",
-   "bytes": 44769,
+   "sha256": "026f91a592f397dba65a119796853ed9eadbc3f9adaf2c9b58ee37267140b84a",
+   "bytes": 45356,
    "kind": "json"
   },
   "signal_status.json": {
-   "sha256": "b168a0de95319df4c5943fc465ab049135ec4adca453ad8b605c1e619d4505ae",
-   "bytes": 14379,
+   "sha256": "21cf0d513a9e4af7b81ea5193a93143f169c1b0b9562863f34959176e12e6f34",
+   "bytes": 14819,
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "79eeea59068f08cbb007d1d8ee2371d0b579a7fc974812b897661c4748b6da82",
+   "sha256": "8158bb8b4f90930b2ee05b9eb75d6851099782d2911e38eaaf929b1a63d1b0bc",
    "bytes": 508,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "c711ad9b0af9eac4851ab098c1d110ecf04073c3e0a4113af5c3d86e015393d6",
-   "bytes": 13278,
+   "sha256": "262f4380b13d4a0539222edfabda8678ea57608be23e5480bdaed08f4c46de59",
+   "bytes": 13317,
    "kind": "json"
   }
  },
@@ -438,16 +438,16 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-19T22:50:05Z",
-  "finished_utc": "2026-09-19T22:50:06Z",
-  "elapsed_seconds": 0.65
+  "started_utc": "2026-09-20T00:01:52Z",
+  "finished_utc": "2026-09-20T00:01:53Z",
+  "elapsed_seconds": 1.25
  },
  "irregularity_count": 0,
  "data_sources": {
   "market": {
    "SPY": {
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "39db04f4ac1b741a7f766e313bee79d82a318ccbacf7b8c39afbadeb83d9bfcd",
+    "sha256": "67cd54488bddcf4243b7a01d2511ce7bf9c764aa3d95c2046747f9596b2ed1c3",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -472,7 +472,7 @@
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "e2d0b468c2f47818dd1d97678c004e77e63e1a902e6ebe437ee081d0a8f0eb3f",
+    "sha256": "81197b804a5dd74951b4d1d31cebcd2db07dea1596eef6cbedd251548bebe352",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -497,7 +497,7 @@
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "723d3d61b1a9b63cbc9ac3567633d8613a60cb8e614325e432d9ed659c4da2d1",
+    "sha256": "396795a6b914a72df2fb491d52f4fc72354857c398c47b8eb838f8cddb3ee3f1",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -572,7 +572,7 @@
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "9bca53ee8c33cca9a6f344f145c3268c27ac03db4b789b8798937cf27fbe621d",
+    "sha256": "a924ca20f78a1d969118f4e0d0a0393c6da7b0b5464e5e4352cf4884d0a1a705",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -597,7 +597,7 @@
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "ba4bc5c60a51748a167f2c4e9f545e61b88e214801d77af2af1c26e2cb277a97",
+    "sha256": "cea13292e9d574ce9a4f5e4eb64c1d0175034a911b79daf540f3ca04d9b58eb0",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -622,7 +622,7 @@
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "e675abe18421f2c0b3c7605a0858d41e334a7672c9ef9e2e1d75df91d5d09475",
+    "sha256": "7fa0cc4f6f88d693fc9522a8622736dc2f8ec175c397bbf814fc6afece2b9fff",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -647,7 +647,7 @@
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "2061bff66a0e5086d36947ccd54642b9f886885d2376657be48a94573473b547",
+    "sha256": "f158649da414945225c7b63ef10397a5ca900a385e3aa2f38ae6234b50084c10",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -797,7 +797,7 @@
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "d191b9f9203aa6b550601ac15b75e38f1a2ae62e6b48c11fa6781c687cde7507",
+    "sha256": "7ffa155b1b94afcf76ea90febc6d56eb4d4ae7e88dad7d107cb1101b15448919",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -822,7 +822,7 @@
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "6f8def824f947c6129440848da79f8ec84c970ebeda6cd8a174b6c02cb0b5735",
+    "sha256": "e977d112441426136a08cd90cd6b7938192bf0f537eb249a6f6cea7d3bb6163e",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -847,7 +847,7 @@
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "440c3e8909f89e3d32153d891536826eef53da9b4b7ebddb387416a47123fafe",
+    "sha256": "c3a3a5115d5001a25f2f35579c12f01c06bcb063ad7ef0a7752275751e626e72",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -872,7 +872,7 @@
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "534aad51ee74cc97ed0aca50301df3c594d0db6b346959193e77581d14223fbe",
+    "sha256": "d7a5341e5cad11d5117f658bb3056884a442f3b70663e4efffca7ff0bbcbf974",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -897,7 +897,7 @@
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "b6232e54af38f2605bbfd3122654d97abe3b034f5d892facb025b9d8deb139db",
+    "sha256": "067fb872f6dc69dfa38fad48bd6e4ec4f9411413526cb67ecbcbb47b0e201377",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -922,7 +922,7 @@
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "477d2270a6f890066ac4a1495a98e06158d0b15c26730b4d1c7f94b69d2c8e34",
+    "sha256": "f67940aad9c8a4c17618f80c5092624340bb5fd6cf01b949ad72f4c05bc6b535",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -947,7 +947,7 @@
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "028f0ece8eef7d082b13433c53fb0b5e65a075da223104825605cc7548fb44a4",
+    "sha256": "83266d5afa574cc900be482801c9edba1b9ca9bb95aea9520557f955de5db3ac",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -997,7 +997,7 @@
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "5835424e892347cd0a92bb3aa425e2a520d94ccd3158dce2173221ff214762d8",
+    "sha256": "93612e8da61cae4a0124e93c93afbe724580efcf1da9910178833d7c0979641b",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -1022,7 +1022,7 @@
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "2d3632e0e02975ce973af86199407e31d2fadd713dcf7f0425832172dc332ce7",
+    "sha256": "2950f2a442d2086dc5b08171d37a7aed55d0c99b2d2de7cd3fed9e8355d029e2",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -1051,22 +1051,22 @@
  },
  "ledger_summary": {
   "participant": "ALL",
-  "fill_count": 973,
+  "fill_count": 990,
   "order_days": 242,
-  "round_trips_closed": 485,
+  "round_trips_closed": 493,
   "round_trips_open": 0,
-  "gross_pnl_usd": 51312.3792,
-  "fees_usd": 3990.0936,
-  "net_pnl_usd": 47322.2866,
-  "win_rate_pct": 46.19,
-  "average_holding_sessions": 42.338,
-  "total_notional_usd": 23856243.22,
-  "total_explicit_cost_usd": 3990.0948,
-  "total_modelled_execution_cost_usd": 9439.1484,
-  "median_participation_pct": 0.00045,
+  "gross_pnl_usd": 47452.7886,
+  "fees_usd": 4104.227,
+  "net_pnl_usd": 43348.5633,
+  "win_rate_pct": 45.64,
+  "average_holding_sessions": 41.862,
+  "total_notional_usd": 24237863.09,
+  "total_explicit_cost_usd": 4104.2279,
+  "total_modelled_execution_cost_usd": 9725.8655,
+  "median_participation_pct": 0.00047,
   "max_participation_pct": 0.22778,
-  "slippage_vs_open_bps_mean": -0.833,
-  "slippage_vs_close_bps_mean": 3.419,
+  "slippage_vs_open_bps_mean": -0.816,
+  "slippage_vs_close_bps_mean": 5.053,
   "symbols": [
    "DKNG",
    "FLUT",
@@ -1085,26 +1085,26 @@
   ]
  },
  "ledger": {
-  "fills": 973,
-  "round_trips": 485,
-  "net_pnl_usd": 47322.2866,
-  "digest_sha256": "aa151ce1abaf7b6155753af6a3e6ac47efff239b1081e941dbc7ea822f471994",
+  "fills": 990,
+  "round_trips": 493,
+  "net_pnl_usd": 43348.5633,
+  "digest_sha256": "4985d4beb8ed78e4743cf349762f21b7ac9012b0e827aa869d13881a97a53aff",
   "files": {
    "ledger_fills.jsonl": {
-    "sha256": "96a1069276d879c9a98c1cda80e667309083bfb6be7ea93129e5faf7a8c7b5c8",
-    "bytes": 1188037
+    "sha256": "7167a850c463e109ff3f1c6b1b0ef6732a01c6d6f12d4abe6eefbf3bc97cf773",
+    "bytes": 1208885
    },
    "ledger_trips.jsonl": {
-    "sha256": "ad2555b52ba2065c1a8b1c345647bc81a6baf05299598f7a71d8fb767aa311d8",
-    "bytes": 249926
+    "sha256": "c629bd3bf71cd947e06673b16435355b0b411e05b37b3441b044a26baa261475",
+    "bytes": 254092
    },
    "ledger_summary.json": {
-    "sha256": "73015928e2a251dc60906d3cfaf3bd29847c4f42cb80696e795aec0bb4bccf01",
-    "bytes": 682
+    "sha256": "5b79e2b97093d7d131f85b913dc6ce94c9873edd823a19e829295c28342d2b70",
+    "bytes": 681
    },
    "ledger_fills.csv": {
-    "sha256": "c7291d9084d689169095b37cd83d9d7c6efbf3d5343151012cfb8d590883fa57",
-    "bytes": 397738
+    "sha256": "ae70333a6db922e01d96760b49ba5ca1623ada6da69e3d5a94a464a6dbbc7e28",
+    "bytes": 404793
    }
   }
  },
@@ -1124,9 +1124,9 @@
   "ncaaf_games_7d": "AVAILABLE",
   "ncaaf_close_games_7d": "AVAILABLE",
   "ncaaf_away_wins_7d": "AVAILABLE",
-  "nba_games_7d": "MISSING",
-  "nba_close_games_7d": "MISSING",
-  "nba_away_wins_7d": "MISSING",
+  "nba_games_7d": "AVAILABLE",
+  "nba_close_games_7d": "AVAILABLE",
+  "nba_away_wins_7d": "AVAILABLE",
   "weather_cold_anomaly_10d": "AVAILABLE",
   "weather_precip_30d_in": "AVAILABLE",
   "kalshi_settled_30d": "AVAILABLE",

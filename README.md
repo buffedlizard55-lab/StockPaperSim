@@ -207,7 +207,7 @@ Yahoo Finance daily files marked `SECONDARY`; therefore it does **not** satisfy 
 official-price competition requirement, even where a Nasdaq cross-check agrees.
 Window **2025-09-17 → 2026-09-16**
 (251 sessions), $100,000 each, ranked on total return. Benchmark: the real S&P 500 returned **+14.41%** over the same window
-(FRED `SP500`); **4 of 19 participants beat it** and **7 never traded at all**,
+(FRED `SP500`); **5 of 19 participants beat it** and **6 never traded at all**,
 which the site reports as *no trades placed* rather than as a 0.00% performance.
 These table values must not be presented as an official-source backtest until the
 Nasdaq adapter's full raw-response and redistribution gate passes.
@@ -223,14 +223,14 @@ Nasdaq adapter's full raw-response and redistribution gate passes.
 | 7 | `@InsiderCopycat_Max` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
 | 8 | `@InsiderCluster_Alpha` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
 | 9 | `@CEO_CFO_Conviction` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 10 | `@NBA_Slate_Attention` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 11 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 12 | `@NBAInjury_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 13 | `@SportsPred_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 14 | `@Kalshi_Attention_Timer` | −2.0% | −6.2% | −0.16 | −0.06 | 14 | 0.37% | lost money |
-| 15 | `@MLB_Upset_Short` | −9.6% | −11.3% | −0.78 | −0.02 | 22 | 0.59% | lost money |
-| 16 | `@YieldCurve_Rotator` | −10.1% | −12.9% | −0.64 | 0.26 | 4 | 0.04% | lost money |
-| 17 | `@Weather_ColdSnap_Max` | −11.2% | −40.4% | −0.07 | −0.19 | 49 | 1.36% | lost money |
+| 10 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
+| 11 | `@NBAInjury_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
+| 12 | `@SportsPred_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
+| 13 | `@Kalshi_Attention_Timer` | −2.0% | −6.2% | −0.16 | −0.06 | 14 | 0.37% | lost money |
+| 14 | `@MLB_Upset_Short` | −9.6% | −11.3% | −0.78 | −0.02 | 22 | 0.59% | lost money |
+| 15 | `@YieldCurve_Rotator` | −10.1% | −12.9% | −0.64 | 0.26 | 4 | 0.04% | lost money |
+| 16 | `@Weather_ColdSnap_Max` | −11.2% | −40.4% | −0.07 | −0.19 | 49 | 1.36% | lost money |
+| 17 | `@NBA_Slate_Attention` | −17.7% | −37.5% | −0.25 | 0.58 | 79 | 4.88% | lost money |
 | 18 | `@NCAA_Upset_Blitz` | −38.1% | −46.0% | −1.21 | 0.35 | 50 | 0.74% | lost money |
 | 19 | `@NFL_Slate_Attention` | −56.6% | −57.3% | −2.05 | 0.40 | 60 | 0.76% | lost money |
 
@@ -240,15 +240,17 @@ the deepest losers is *the same signal traded the other way*
 opposite implementations, and the difference between first and near-last. Nothing here
 is a claim that FDA approvals predict XBI. The sports-attention family is the
 2026-09-19 addition and it lost across the board: `@NFL_Slate_Attention`
-(−56.6%) and `@NCAA_Upset_Blitz` (−38.1%) bought the sportsbook complex in
-season on an attention clock while the complex itself de-rated - the
+(−56.6%), `@NCAA_Upset_Blitz` (−38.1%) and `@NBA_Slate_Attention` (−17.7%,
+79 round trips once the complete 2025-26 ESPN scoreboard landed) bought the
+sportsbook complex in season on an attention clock while the complex itself
+de-rated - the
 post-mortems attribute the losses to the basket, not to the signal timing, and
 `@MLB_Upset_Short`'s −9.6% shows the same complex was a bad short too. The idle
-seven are the other half of the result:
+six are the other half of the result:
 `@InsiderCopycat_Max`, `@InsiderCluster_Alpha` and `@CEO_CFO_Conviction` still
-await the SEC insider collection (the quarterly bulk data sets are collected on
-a runner - see the 2026-09-19 note below); `@NBA_Slate_Attention` awaits the
-ESPN NBA scoreboard collection; `@InjuryFeed_Forward`, `@NBAInjury_Forward` and
+await the SEC insider collection (the quarterly bulk data sets are unreachable
+from shared runner IPs - see the 2026-09-20 note below);
+`@InjuryFeed_Forward`, `@NBAInjury_Forward` and
 `@SportsPred_Forward` are declared forward-only probes that place no backdated
 trades by design. The site labels each one *DATA-MISSING* with the URL and the
 reason, which is the difference between "we tested it and it did not work" and
@@ -263,14 +265,26 @@ reason, which is the difference between "we tested it and it did not work" and
 > forward-only probes (NBA injury, Sports Pred) bring the roster to 19; a
 > weekly dated injury-snapshot archive (`.github/workflows/injury-archive.yml`)
 > starts accumulating the observations the injury probes need.
+>
+> **2026-09-20 note.** The complete ESPN NBA scoreboard landed (1,330 rows,
+> 2025-10-21 → 2026-06-14, collected one calendar date per request after both
+> the week form and the capped bare-year form failed - IR-77), so
+> `@NBA_Slate_Attention` now trades the full 2025-26 season (−17.7%, 79 round
+> trips) instead of reporting DATA-MISSING. The SEC insider data sets are now
+> *proven* unreachable from shared GitHub runner IPs: `dcm.sec.gov` (the host
+> the data.gov catalog names) does not resolve at all, and `www.sec.gov`
+> answers every request shape with the rate-threshold page (IR-76). The
+> insider personas stay flat until an owner runs the collector from a clean
+> IP; the injury-snapshot archive and the complete NBA/MLB scoreboards are
+> committed with full manifest custody.
 
-**Verification.** 976 fills and 480 round trips, net round-trip P&L
-**$52,994.38** on $23.9m of traded notional, ledger digest `35b5aa7d…`. The
+**Verification.** 1127 fills and 559 round trips, net round-trip P&L
+**$35,302.81** on $27.5m of traded notional, ledger digest `71af44a0…`. The
 account is re-derived from the raw fill tape by code that never imports the
 engine: max |equity residual| **$0.0072** against a per-account rounding bound of
-$2.925 (the tape stores six-decimal prices). Median participation is 0.00044% of a
-session's volume and the largest single fill is 0.23% of it. The independent audit
-re-reads every published number: **3,393 checks, 0 failures**, plus 1,222 more in
+$2.925 (the tape stores six-decimal prices). Median participation is 0.00058% of a
+session's volume and the largest single fill is 0.37% of it. The independent audit
+re-reads every published number: **3,873 checks, 0 failures**, plus 1,260 more in
 the Season 1 audit. Cost sensitivity is published as a panel, not a footnote:
 doubling spreads, impact and fees costs the leader 1.2pp and halving the venue's
 depth costs 0.1pp, while `@Weather_ColdSnap_Max` loses 0.8pp to the fee-doubling

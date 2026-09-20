@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-20T00:01:45Z",
+ "generated_at": "2026-09-20T00:27:08Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
@@ -23,14 +23,14 @@
     "preserved_existing": false
    },
    "nba": {
-    "rows": 25,
+    "rows": 1330,
     "chunks_failed": 0,
     "preserved_existing": false
    },
    "mlb": {
-    "rows": 0,
+    "rows": 2314,
     "chunks_failed": 0,
-    "preserved_existing": true
+    "preserved_existing": false
    }
   },
   "nba": {
@@ -43,7 +43,7 @@
    },
    "nfl_injuries": {
     "ok": true,
-    "bytes": 387312
+    "bytes": 382041
    },
    "ncaa_scoreboard_fbs_2025_week10": {
     "ok": true,
@@ -54,11 +54,11 @@
    }
   },
   "injury_archive": {
-   "date": "2026-09-19",
+   "date": "2026-09-20",
    "captures": {
     "espn_nfl_injuries": {
      "ok": true,
-     "bytes": 8783198,
+     "bytes": 8783169,
      "game_impacting": 0
     },
     "espn_nba_injuries": {
@@ -68,7 +68,7 @@
     },
     "nfl_injuries": {
      "ok": true,
-     "bytes": 387312
+     "bytes": 382041
     },
     "nba_injury_report_index": {
      "ok": false
@@ -405,7 +405,7 @@
     }
    },
    "crosscheck": {
-    "generated_at": "2026-09-19T23:51:30Z",
+    "generated_at": "2026-09-20T00:16:54Z",
     "treasurydirect_auctions": 470,
     "fiscaldata_auctions": 2000,
     "shared_auctions": 470,
@@ -697,7 +697,7 @@
    "dividends": {}
   },
   "crosscheck": {
-   "generated_at": "2026-09-20T00:01:45Z",
+   "generated_at": "2026-09-20T00:27:08Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -728,7 +728,7 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201250
+   "bytes": 2201263
   },
   {
    "label": "Stooq daily CSV (blocked)",
@@ -804,8 +804,8 @@
    "label": "League scoreboards",
    "source_class": "MIXED",
    "path": "real/sports",
-   "files": 11,
-   "bytes": 12347105
+   "files": 14,
+   "bytes": 23635608
   },
   {
    "label": "NOAA/NCEI daily summaries",
@@ -819,7 +819,7 @@
    "source_class": "OFFICIAL-VENDOR",
    "path": "real/kalshi",
    "files": 5,
-   "bytes": 520613
+   "bytes": 520611
   }
  ]
 }

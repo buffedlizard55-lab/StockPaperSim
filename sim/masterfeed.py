@@ -689,8 +689,8 @@ CEO_TITLES = ("chief executive officer", "ceo", "chief financial officer", "cfo"
 def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
     """Insider transaction rows from whichever SEC collections have landed.
 
-    Two collectors write SEC insider data, and they are complements rather than
-    duplicates:
+    Three collectors write SEC insider data, and they are complements rather
+    than duplicates:
 
     * ``insider_bulk/insider_transactions.jsonl`` - the SEC's own quarterly
       Form 3/4/5 structured data sets, complete for whole quarters
@@ -698,9 +698,16 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
       This is the primary publication and the preferred source.
     * ``sec/form4_transactions.jsonl`` - the per-filing Form 4 XML walk, which
       reaches the newest filings first and is bounded by a request budget.
+    * ``sec_agent/form4_transactions.jsonl`` - the rendered-extraction lane:
+      the SEC's own XSL presentation view of each Form 4, captured through the
+      agent page-fetch route (the only route that reads www.sec.gov from
+      IP pools the SEC's rate gate refuses) and parsed fail-closed by
+      ``sim.edgar_rendered``.  Every row carries ``channel:
+      agent-rendered-extract``; the values are the SEC's, the transport is
+      degraded, and the transport is named.
 
-    Both carry the accession number, the transaction code, the date and the
-    transaction facts, so the merge below de-duplicates on
+    All three carry the accession number, the transaction code, the date and
+    the transaction facts, so the merge below de-duplicates on
     ``(accession, date, ticker, code, shares, price)`` and every count the
     strategies read is of distinct filings' transactions.  Rows are normalised
     to one shape (ticker, code, transaction_date, title, roles) whichever file
@@ -709,6 +716,7 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
     """
     per_filing = os.path.join(root, "sec", "form4_transactions.jsonl")
     bulk = os.path.join(root, "insider_bulk", "insider_transactions.jsonl")
+    agent = os.path.join(root, "sec_agent", "form4_transactions.jsonl")
     files: List[str] = []
     rows: List[dict] = []
     seen: set = set()
@@ -768,12 +776,26 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
                         _add(json.loads(line), "walk")
                     except json.JSONDecodeError:
                         continue
+    if os.path.exists(agent):
+        files.append("data/real/sec_agent/form4_transactions.jsonl")
+        with open(agent, "r", encoding="utf-8") as fh:
+            for line in fh:
+                if line.strip():
+                    try:
+                        _add(json.loads(line), "agent")
+                    except json.JSONDecodeError:
+                        continue
     note = ""
     if "data/real/insider_bulk/insider_transactions.jsonl" in files:
         note = ("SEC quarterly insider-transactions data sets (Form 3/4/5 extracts)"
                 + (", plus newer per-filing Form 4 XML rows" if len(files) > 1 else ""))
+    elif "data/real/sec/form4_transactions.jsonl" in files:
+        note = ("per-filing Form 4 XML walk (EDGAR)"
+                + (", plus the rendered-extraction lane" if len(files) > 1 else ""))
     elif files:
-        note = "per-filing Form 4 XML walk (EDGAR)"
+        note = ("rendered-extraction lane: the SEC's own XSL presentation views, "
+                "captured through the agent page-fetch route and parsed fail-closed "
+                "(channel: agent-rendered-extract)")
     return rows, files, note
 
 
@@ -799,6 +821,11 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
     for symbol in tickers:
         book._blank(f"insider_buys_30d::{symbol}")
         book._blank(f"insider_ceo_buys_30d::{symbol}")
+    # The unqualified names are cross-ticker totals; blank them here (in every
+    # branch) so the invariant "every registered name has an array" holds no
+    # matter whether the collection landed.
+    book._blank("insider_buys_30d")
+    book._blank("insider_ceo_buys_30d")
     book._blank("insider_buy_ratio_30d")
     rows, files, source_note = _load_insider_rows(root)
     if not files:
@@ -849,23 +876,37 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
         n_buys = sum(1 for s in buys for d in buys[s] if lo <= d < hi)
         n_sales = sum(1 for s in sales for d in sales[s] if lo <= d < hi)
         book.arrays["insider_buy_ratio_30d"][t] = n_buys / max(1, n_sales)
+        book.arrays["insider_buys_30d"][t] = float(n_buys)
+        book.arrays["insider_ceo_buys_30d"][t] = float(
+            sum(1 for s in ceo_buys for d in ceo_buys[s] if lo <= d < hi))
     coverage = sorted({d for s in buys for d in buys[s]}
                       | {d for s in sales for d in sales[s]})
     book.provenance["insider"] = {
         "files": files, "url": ("https://www.sec.gov/data-research/sec-markets-data/"
                                 "insider-transactions-data-sets")}
+    url = ("https://www.sec.gov/data-research/sec-markets-data/"
+           "insider-transactions-data-sets")
+    base_note = (f"open-market purchases (code P) by ticker; {purchases} buys "
+                 f"and {sum(len(v) for v in sales.values())} sales, "
+                 f"{source_note}, transactions "
+                 f"{coverage[0]}..{coverage[-1]}" if coverage else
+                 f"open-market purchases (code P) by ticker; {source_note}")
+    # The collection existing does not guarantee that *buy* signals have any
+    # observations: a walk of recent Form 4 filings can legitimately contain
+    # only S/A/F/M/G codes and zero open-market purchases.  Register each buy
+    # array under its real state so a strategy never reads an all-zero series
+    # that claims to be AVAILABLE (that shape misled two early signal builders).
     names = [f"insider_buys_30d::{s}" for s in tickers] + \
             [f"insider_ceo_buys_30d::{s}" for s in tickers] + \
             ["insider_buys_30d", "insider_ceo_buys_30d", "insider_buy_ratio_30d"]
-    book._register_all(names, "AVAILABLE", len(rows), coverage,
-                       files,
-                       f"open-market purchases (code P) by ticker; {purchases} buys "
-                       f"and {sum(len(v) for v in sales.values())} sales, "
-                       f"{source_note}, transactions "
-                       f"{coverage[0]}..{coverage[-1]}" if coverage else
-                       f"open-market purchases (code P) by ticker; {source_note}",
-                       "https://www.sec.gov/data-research/sec-markets-data/"
-                       "insider-transactions-data-sets")
+    for name in names:
+        has_observation = any(v != 0.0 for v in book.arrays[name])
+        state = "AVAILABLE" if has_observation else "NO-OBSERVATIONS"
+        note = base_note if has_observation else (
+            base_note + "; collection landed but contains no open-market "
+            "purchases (code P) inside the season window, so this series is "
+            "registered as observed-but-empty")
+        book._register(name, state, len(rows), coverage, files, note, url)
 
 
 # -- Sports (MLB official, ESPN secondary) ----------------------------------
@@ -1093,16 +1134,24 @@ def _kalshi_signals(book: SignalBook, md, root: str) -> None:
                 if len(close) != 10:
                     continue
                 volume = row.get("volume")
-            if volume is None:
-                volume = row.get("open_interest")
-            if volume is not None:
-                values_present += 1
-            events.append(close)
-            try:
-                volumes[close] = volumes.get(close, 0.0) + float(volume or 0)
-            except (TypeError, ValueError):
-                continue
+                if volume is None:
+                    volume = row.get("open_interest")
+                if volume is not None:
+                    values_present += 1
+                events.append(close)
+                try:
+                    volumes[close] = volumes.get(close, 0.0) + float(volume or 0)
+                except (TypeError, ValueError):
+                    continue
     events.sort()
+    if not events:
+        # A directory of files that yielded no countable row is a missing
+        # signal, not a measured zero: nothing was observed.
+        book._register_all(("kalshi_settled_30d", "kalshi_volume_30d"),
+                           "MISSING", rows_total, [], [f"data/real/kalshi/"],
+                           "collected Kalshi files held no countable settled rows",
+                           "https://api.elections.kalshi.com/trade-api/v2/markets")
+        return
     if values_present == 0:
         # Guard for a payload that carries no number this code can read: a file
         # that exists but holds no values is a missing signal, not an available

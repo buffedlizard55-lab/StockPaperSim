@@ -48,6 +48,7 @@ NAV = [
 
 BADGE = {
     "ACTIVE": "badge-ok", "READY": "badge-ok", "PASS": "badge-ok",
+    "READY-NO-OBSERVATIONS": "badge-warn",
     "FILLED": "badge-ok", "OFFICIAL": "badge-ok", "OFFICIAL-DERIVED": "badge-warn",
     "PARTIAL": "badge-warn", "PENDING": "badge-warn", "WAITING-DATA": "badge-warn",
     "CANCELLED": "badge-warn", "RUINED": "badge-bad", "REJECTED": "badge-bad",

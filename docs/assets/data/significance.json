@@ -1,0 +1,902 @@
+{
+ "method": {
+  "bootstrap": "iid percentile bootstrap, 2000 replicates, resampling each participant's own daily returns; iid understates the uncertainty of autocorrelated series, so read each interval as a floor",
+  "deflated_sharpe": "Bailey & Lopez de Prado (2014); n_trials = roster size (20); trial Sharpe variance from the estimator's asymptotic variance because committed memory holds scenario totals, not scenario curves",
+  "rank_test": "exact binomial tail on scenario wins against the 1/N chance level",
+  "seed": 20260920
+ },
+ "participants": {
+  "@BetaChaser_3xProxy": {
+   "alpha": {
+    "alpha_annual_pct": 2.7768,
+    "alpha_daily": 0.001749,
+    "beta": 3.9212,
+    "beta_ci95": [
+     3.3873,
+     4.4938
+    ],
+    "ci95_high_pct": 9.3402,
+    "ci95_low_pct": -3.6552,
+    "p_alpha_le_zero": 0.197,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.3061,
+    "expected_max_sharpe_daily_under_null": 0.120248,
+    "kurtosis": 3.4939,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.088182,
+    "skew": 0.0935,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -24.4761,
+    "ci95_low_pct": -70.8735,
+    "max_drawdown_pct": -43.5191,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.3855,
+    "ci95_low": -0.5347,
+    "p_sharpe_le_zero": 0.068,
+    "sessions": 250,
+    "sharpe_annualised": 1.3998
+   }
+  },
+  "@BuyHold_MaxBeta": {
+   "alpha": {
+    "alpha_annual_pct": 1.256,
+    "alpha_daily": 0.000791,
+    "beta": 3.1742,
+    "beta_ci95": [
+     2.4781,
+     3.8732
+    ],
+    "ci95_high_pct": 8.9212,
+    "ci95_low_pct": -6.4918,
+    "p_alpha_le_zero": 0.356,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.1558,
+    "expected_max_sharpe_daily_under_null": 0.120519,
+    "kurtosis": 3.1198,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.056371,
+    "skew": 0.0104,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -26.1972,
+    "ci95_low_pct": -77.6318,
+    "max_drawdown_pct": -31.9695,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.0029,
+    "ci95_low": -0.898,
+    "p_sharpe_le_zero": 0.176,
+    "sessions": 250,
+    "sharpe_annualised": 0.8949
+   }
+  },
+  "@Contrarian_DeepValue": {
+   "alpha": {
+    "alpha_annual_pct": -0.5343,
+    "alpha_daily": -0.000337,
+    "beta": 2.777,
+    "beta_ci95": [
+     2.385,
+     3.1421
+    ],
+    "ci95_high_pct": 4.1477,
+    "ci95_low_pct": -5.032,
+    "p_alpha_le_zero": 0.5775,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0989,
+    "expected_max_sharpe_daily_under_null": 0.1203,
+    "kurtosis": 3.4831,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.038806,
+    "skew": 0.0891,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -19.5993,
+    "ci95_low_pct": -67.0662,
+    "max_drawdown_pct": -51.1503,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.5942,
+    "ci95_low": -1.4134,
+    "p_sharpe_le_zero": 0.2705,
+    "sessions": 250,
+    "sharpe_annualised": 0.616
+   }
+  },
+  "@DonchianBreakout_20": {
+   "alpha": {
+    "alpha_annual_pct": 0.0362,
+    "alpha_daily": 2.3e-05,
+    "beta": 1.5724,
+    "beta_ci95": [
+     1.2893,
+     1.839
+    ],
+    "ci95_high_pct": 3.5588,
+    "ci95_low_pct": -3.3519,
+    "p_alpha_le_zero": 0.4855,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.1083,
+    "expected_max_sharpe_daily_under_null": 0.12101,
+    "kurtosis": 2.8131,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.042351,
+    "skew": -0.1998,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -13.769,
+    "ci95_low_pct": -49.9425,
+    "max_drawdown_pct": -19.4384,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.6958,
+    "ci95_low": -1.1568,
+    "p_sharpe_le_zero": 0.2555,
+    "sessions": 250,
+    "sharpe_annualised": 0.6723
+   }
+  },
+  "@DriftRider_PEAD": {
+   "alpha": {
+    "alpha_annual_pct": 1.1633,
+    "alpha_daily": 0.000733,
+    "beta": 0.2334,
+    "beta_ci95": [
+     -0.0685,
+     0.552
+    ],
+    "ci95_high_pct": 4.0993,
+    "ci95_low_pct": -1.9298,
+    "p_alpha_le_zero": 0.2265,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.1597,
+    "expected_max_sharpe_daily_under_null": 0.120559,
+    "kurtosis": 6.0778,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.057406,
+    "skew": 0.0421,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -8.8083,
+    "ci95_low_pct": -34.5788,
+    "max_drawdown_pct": -14.8016,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.8883,
+    "ci95_low": -0.9848,
+    "p_sharpe_le_zero": 0.18,
+    "sessions": 250,
+    "sharpe_annualised": 0.9113
+   }
+  },
+  "@GapAndGo_YOLO": {
+   "alpha": {
+    "alpha_annual_pct": -16.2163,
+    "alpha_daily": -0.010215,
+    "beta": 0.822,
+    "beta_ci95": [
+     0.5191,
+     1.1656
+    ],
+    "ci95_high_pct": -12.5629,
+    "ci95_low_pct": -19.7802,
+    "p_alpha_le_zero": 1.0,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0,
+    "expected_max_sharpe_daily_under_null": 0.098575,
+    "kurtosis": 4.6289,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": -0.509549,
+    "skew": -1.1104,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -85.4659,
+    "ci95_low_pct": -95.5469,
+    "max_drawdown_pct": -91.8656,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": -6.5033,
+    "ci95_low": -9.6381,
+    "p_sharpe_le_zero": 1.0,
+    "sessions": 250,
+    "sharpe_annualised": -8.0888
+   }
+  },
+  "@IlliquidRocket_Degen": {
+   "alpha": {
+    "alpha_annual_pct": 2.1908,
+    "alpha_daily": 0.00138,
+    "beta": 1.0175,
+    "beta_ci95": [
+     0.3797,
+     1.7296
+    ],
+    "ci95_high_pct": 12.639,
+    "ci95_low_pct": -8.2442,
+    "p_alpha_le_zero": 0.341,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0935,
+    "expected_max_sharpe_daily_under_null": 0.121388,
+    "kurtosis": 12.2342,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.037105,
+    "skew": -0.3162,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -27.9719,
+    "ci95_low_pct": -85.9428,
+    "max_drawdown_pct": -45.0454,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.5849,
+    "ci95_low": -1.3666,
+    "p_sharpe_le_zero": 0.2815,
+    "sessions": 250,
+    "sharpe_annualised": 0.589
+   }
+  },
+  "@KitchenSink_AllIn": {
+   "alpha": {
+    "alpha_annual_pct": -0.4869,
+    "alpha_daily": -0.000307,
+    "beta": 1.5461,
+    "beta_ci95": [
+     1.1584,
+     1.9459
+    ],
+    "ci95_high_pct": 3.1173,
+    "ci95_low_pct": -3.9141,
+    "p_alpha_le_zero": 0.5885,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0681,
+    "expected_max_sharpe_daily_under_null": 0.12046,
+    "kurtosis": 5.7767,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.026008,
+    "skew": 0.0263,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -14.2412,
+    "ci95_low_pct": -52.8459,
+    "max_drawdown_pct": -31.0932,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.3451,
+    "ci95_low": -1.5283,
+    "p_sharpe_le_zero": 0.334,
+    "sessions": 250,
+    "sharpe_annualised": 0.4129
+   }
+  },
+  "@MeanRev_Z2Sigma": {
+   "alpha": {
+    "alpha_annual_pct": 3.0958,
+    "alpha_daily": 0.00195,
+    "beta": 0.5419,
+    "beta_ci95": [
+     0.3598,
+     0.7618
+    ],
+    "ci95_high_pct": 4.9195,
+    "ci95_low_pct": 1.2555,
+    "p_alpha_le_zero": 0.001,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.9758,
+    "expected_max_sharpe_daily_under_null": 0.103878,
+    "kurtosis": 14.6728,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.211745,
+    "skew": 1.9341,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -2.7321,
+    "ci95_low_pct": -12.2909,
+    "max_drawdown_pct": -7.008,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 5.0249,
+    "ci95_low": 1.612,
+    "p_sharpe_le_zero": 0.0005,
+    "sessions": 250,
+    "sharpe_annualised": 3.3613
+   }
+  },
+  "@MomentumMax_12x1": {
+   "alpha": {
+    "alpha_annual_pct": 0.8194,
+    "alpha_daily": 0.000516,
+    "beta": 3.2499,
+    "beta_ci95": [
+     2.8566,
+     3.6274
+    ],
+    "ci95_high_pct": 5.4571,
+    "ci95_low_pct": -3.9774,
+    "p_alpha_le_zero": 0.3785,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.2027,
+    "expected_max_sharpe_daily_under_null": 0.119638,
+    "kurtosis": 3.3547,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.067257,
+    "skew": 0.24,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -20.0433,
+    "ci95_low_pct": -64.3237,
+    "max_drawdown_pct": -45.0455,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.0637,
+    "ci95_low": -0.8917,
+    "p_sharpe_le_zero": 0.1435,
+    "sessions": 250,
+    "sharpe_annualised": 1.0677
+   }
+  },
+  "@OneBigBet_Concentra": {
+   "alpha": {
+    "alpha_annual_pct": 2.1791,
+    "alpha_daily": 0.001373,
+    "beta": 0.405,
+    "beta_ci95": [
+     0.063,
+     0.767
+    ],
+    "ci95_high_pct": 5.8483,
+    "ci95_low_pct": -1.4994,
+    "p_alpha_le_zero": 0.1195,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.2984,
+    "expected_max_sharpe_daily_under_null": 0.119501,
+    "kurtosis": 7.8942,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.086234,
+    "skew": 0.331,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -8.8729,
+    "ci95_low_pct": -36.9689,
+    "max_drawdown_pct": -22.1489,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.2663,
+    "ci95_low": -0.5057,
+    "p_sharpe_le_zero": 0.083,
+    "sessions": 250,
+    "sharpe_annualised": 1.3689
+   }
+  },
+  "@OvernightCarry_NO": {
+   "alpha": {
+    "alpha_annual_pct": 0.5263,
+    "alpha_daily": 0.000332,
+    "beta": 0.0393,
+    "beta_ci95": [
+     -0.046,
+     0.1182
+    ],
+    "ci95_high_pct": 1.4212,
+    "ci95_low_pct": -0.3853,
+    "p_alpha_le_zero": 0.125,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.2543,
+    "expected_max_sharpe_daily_under_null": 0.120931,
+    "kurtosis": 5.6967,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.078884,
+    "skew": -0.0084,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -2.4007,
+    "ci95_low_pct": -10.6582,
+    "max_drawdown_pct": -4.8562,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.3281,
+    "ci95_low": -0.6526,
+    "p_sharpe_le_zero": 0.0995,
+    "sessions": 250,
+    "sharpe_annualised": 1.2522
+   }
+  },
+  "@OverreactionFade_LT": {
+   "alpha": {
+    "alpha_annual_pct": 1.9742,
+    "alpha_daily": 0.001244,
+    "beta": 0.4708,
+    "beta_ci95": [
+     0.1897,
+     0.802
+    ],
+    "ci95_high_pct": 4.7492,
+    "ci95_low_pct": -0.8633,
+    "p_alpha_le_zero": 0.0965,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.3922,
+    "expected_max_sharpe_daily_under_null": 0.121502,
+    "kurtosis": 12.4785,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.104016,
+    "skew": 0.1302,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -6.6506,
+    "ci95_low_pct": -27.5092,
+    "max_drawdown_pct": -12.6039,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.6852,
+    "ci95_low": -0.2596,
+    "p_sharpe_le_zero": 0.0515,
+    "sessions": 250,
+    "sharpe_annualised": 1.6512
+   }
+  },
+  "@PairsArb_ZScore2": {
+   "alpha": {
+    "alpha_annual_pct": 0.0704,
+    "alpha_daily": 4.4e-05,
+    "beta": -0.0073,
+    "beta_ci95": [
+     -0.0209,
+     0.0021
+    ],
+    "ci95_high_pct": 0.2244,
+    "ci95_low_pct": -0.0402,
+    "p_alpha_le_zero": 0.1465,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.3084,
+    "expected_max_sharpe_daily_under_null": 0.086122,
+    "kurtosis": 111.3076,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.063448,
+    "skew": 9.4536,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -0.1517,
+    "ci95_low_pct": -0.9181,
+    "max_drawdown_pct": -0.3666,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 2.1002,
+    "ci95_low": -1.6553,
+    "p_sharpe_le_zero": 0.1515,
+    "sessions": 250,
+    "sharpe_annualised": 1.0072
+   }
+  },
+  "@SectorRotator_AlphaX": {
+   "alpha": {
+    "alpha_annual_pct": 2.8137,
+    "alpha_daily": 0.001772,
+    "beta": 2.4373,
+    "beta_ci95": [
+     2.0825,
+     2.7588
+    ],
+    "ci95_high_pct": 6.2103,
+    "ci95_low_pct": -0.5496,
+    "p_alpha_le_zero": 0.0515,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.4859,
+    "expected_max_sharpe_daily_under_null": 0.122819,
+    "kurtosis": 3.8618,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.120536,
+    "skew": -0.243,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -13.2223,
+    "ci95_low_pct": -44.0906,
+    "max_drawdown_pct": -32.1503,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 4.0206,
+    "ci95_low": -0.0215,
+    "p_sharpe_le_zero": 0.027,
+    "sessions": 250,
+    "sharpe_annualised": 1.9135
+   }
+  },
+  "@SpreadHarvester_MM": {
+   "alpha": {
+    "alpha_annual_pct": -0.0027,
+    "alpha_daily": -2e-06,
+    "beta": -1.9317,
+    "beta_ci95": [
+     -2.5146,
+     -1.3577
+    ],
+    "ci95_high_pct": 5.7451,
+    "ci95_low_pct": -5.9162,
+    "p_alpha_le_zero": 0.479,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0079,
+    "expected_max_sharpe_daily_under_null": 0.120554,
+    "kurtosis": 5.6053,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": -0.032508,
+    "skew": 0.0145,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -26.6927,
+    "ci95_low_pct": -80.5237,
+    "max_drawdown_pct": -53.6417,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 1.3829,
+    "ci95_low": -2.5942,
+    "p_sharpe_le_zero": 0.704,
+    "sessions": 250,
+    "sharpe_annualised": -0.5161
+   }
+  },
+  "@SqueezeHunter_TF": {
+   "alpha": {
+    "alpha_annual_pct": -0.1865,
+    "alpha_daily": -0.000117,
+    "beta": 0.1285,
+    "beta_ci95": [
+     0.0169,
+     0.2743
+    ],
+    "ci95_high_pct": 1.2883,
+    "ci95_low_pct": -1.6804,
+    "p_alpha_le_zero": 0.609,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0233,
+    "expected_max_sharpe_daily_under_null": 0.120472,
+    "kurtosis": 19.2036,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": -0.005626,
+    "skew": 0.0318,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -4.9473,
+    "ci95_low_pct": -26.7905,
+    "max_drawdown_pct": -10.7616,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 1.8498,
+    "ci95_low": -2.0439,
+    "p_sharpe_le_zero": 0.53,
+    "sessions": 250,
+    "sharpe_annualised": -0.0893
+   }
+  },
+  "@TrendSurfer_GoldenX": {
+   "alpha": {
+    "alpha_annual_pct": -0.013,
+    "alpha_daily": -8e-06,
+    "beta": 2.2259,
+    "beta_ci95": [
+     2.0613,
+     2.3731
+    ],
+    "ci95_high_pct": 1.9633,
+    "ci95_low_pct": -1.9903,
+    "p_alpha_le_zero": 0.493,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.1715,
+    "expected_max_sharpe_daily_under_null": 0.121431,
+    "kurtosis": 3.6862,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.060858,
+    "skew": -0.2272,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -12.1437,
+    "ci95_low_pct": -46.6355,
+    "max_drawdown_pct": -26.864,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.0928,
+    "ci95_low": -0.9072,
+    "p_sharpe_le_zero": 0.1695,
+    "sessions": 250,
+    "sharpe_annualised": 0.9661
+   }
+  },
+  "@VIXRegime_Timer": {
+   "alpha": {
+    "alpha_annual_pct": 0.4291,
+    "alpha_daily": 0.00027,
+    "beta": 1.3412,
+    "beta_ci95": [
+     1.2517,
+     1.4394
+    ],
+    "ci95_high_pct": 1.0015,
+    "ci95_low_pct": -0.186,
+    "p_alpha_le_zero": 0.0765,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.3296,
+    "expected_max_sharpe_daily_under_null": 0.119618,
+    "kurtosis": 6.1598,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": 0.091862,
+    "skew": 0.2688,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -5.9737,
+    "ci95_low_pct": -23.279,
+    "max_drawdown_pct": -14.6774,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 3.5191,
+    "ci95_low": -0.5344,
+    "p_sharpe_le_zero": 0.074,
+    "sessions": 250,
+    "sharpe_annualised": 1.4583
+   }
+  },
+  "@VolCarry_LowHigh": {
+   "alpha": {
+    "alpha_annual_pct": -0.3248,
+    "alpha_daily": -0.000205,
+    "beta": -1.3061,
+    "beta_ci95": [
+     -1.7839,
+     -0.8512
+    ],
+    "ci95_high_pct": 5.4539,
+    "ci95_low_pct": -6.0269,
+    "p_alpha_le_zero": 0.558,
+    "sessions": 250
+   },
+   "deflated_sharpe": {
+    "dsr": 0.0084,
+    "expected_max_sharpe_daily_under_null": 0.121482,
+    "kurtosis": 4.0194,
+    "n_trials": 20,
+    "sessions": 250,
+    "sharpe_daily": -0.031225,
+    "skew": 0.5263,
+    "trial_sr_variance_source": "asymptotic estimator variance"
+   },
+   "max_drawdown": {
+    "ci95_high_pct": -24.9433,
+    "ci95_low_pct": -76.6598,
+    "max_drawdown_pct": -48.1739,
+    "sessions": 250
+   },
+   "sharpe": {
+    "ci95_high": 1.3439,
+    "ci95_low": -2.5262,
+    "p_sharpe_le_zero": 0.7075,
+    "sessions": 250,
+    "sharpe_annualised": -0.4957
+   }
+  }
+ },
+ "published_leader": "@BetaChaser_3xProxy",
+ "rank_test": {
+  "participants": 20,
+  "rows": {
+   "@BetaChaser_3xProxy": {
+    "chance_rate": 0.05,
+    "p_value": 0.0328,
+    "scenario_wins": 2,
+    "win_rate": 0.3333
+   },
+   "@BuyHold_MaxBeta": {
+    "chance_rate": 0.05,
+    "p_value": 0.0328,
+    "scenario_wins": 2,
+    "win_rate": 0.3333
+   },
+   "@Contrarian_DeepValue": {
+    "chance_rate": 0.05,
+    "p_value": 0.2649,
+    "scenario_wins": 1,
+    "win_rate": 0.1667
+   },
+   "@DonchianBreakout_20": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@DriftRider_PEAD": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@GapAndGo_YOLO": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@IlliquidRocket_Degen": {
+    "chance_rate": 0.05,
+    "p_value": 0.2649,
+    "scenario_wins": 1,
+    "win_rate": 0.1667
+   },
+   "@KitchenSink_AllIn": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@MeanRev_Z2Sigma": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@MomentumMax_12x1": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@OneBigBet_Concentra": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@OvernightCarry_NO": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@OverreactionFade_LT": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@PairsArb_ZScore2": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@SectorRotator_AlphaX": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@SpreadHarvester_MM": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@SqueezeHunter_TF": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@TrendSurfer_GoldenX": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@VIXRegime_Timer": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   },
+   "@VolCarry_LowHigh": {
+    "chance_rate": 0.05,
+    "p_value": 1.0,
+    "scenario_wins": 0,
+    "win_rate": 0.0
+   }
+  },
+  "scenarios": 6
+ },
+ "run_id": "season1-primary-seed20260917",
+ "window": [
+  "2025-09-17",
+  "2026-09-16"
+ ]
+}

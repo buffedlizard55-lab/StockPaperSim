@@ -58,6 +58,18 @@ from .universe import Instrument
 MARKET = "market"
 LIMIT = "limit"
 STOP = "stop"
+# Closing-auction order types (the minute-bar lane, 2026-09-20).  A market-on-
+# close order participates in the closing auction only: it meets the book at
+# the session's final interval and fills at the closing print's walked price.
+# A limit-on-close order adds price protection: it fills at the close only if
+# the close is marketable against its limit, otherwise it expires at the bell.
+# The exchanges operate exactly these orders in their closing crosses.
+#   SOURCE: https://www.nasdaqtrader.com/Trader.aspx?id=CloseCross  (MOC/LOC
+#   order types and their cancellation deadlines are the exchange's published
+#   closing-cross mechanics; the 3:50 p.m. ET deadline itself is not modelled -
+#   see research/LIMITATIONS.json L-04 for the time-of-day gap).
+MOC = "moc"
+LOC = "loc"
 BUY = "buy"
 SELL = "sell"
 
@@ -67,7 +79,7 @@ class Order:
     symbol: str
     side: str                 # BUY | SELL
     quantity: int
-    order_type: str = MARKET  # MARKET | LIMIT | STOP
+    order_type: str = MARKET  # MARKET | LIMIT | STOP | MOC | LOC
     limit_price: Optional[float] = None
     stop_price: Optional[float] = None
     tif: str = "DAY"
@@ -85,12 +97,16 @@ class Order:
     def __post_init__(self) -> None:
         if self.side not in (BUY, SELL):
             raise ValueError(f"bad side {self.side!r}")
-        if self.order_type not in (MARKET, LIMIT, STOP):
+        if self.order_type not in (MARKET, LIMIT, STOP, MOC, LOC):
             raise ValueError(f"bad order type {self.order_type!r}")
         if self.order_type == LIMIT and self.limit_price is None:
             raise ValueError("limit order needs limit_price")
         if self.order_type == STOP and self.stop_price is None:
             raise ValueError("stop order needs stop_price")
+        if self.order_type == LOC and self.limit_price is None:
+            raise ValueError("limit-on-close order needs limit_price")
+        if self.order_type == MOC and (self.limit_price or self.stop_price):
+            raise ValueError("market-on-close takes no price; use LOC to protect one")
         if self.quantity <= 0:
             raise ValueError("quantity must be positive; use side to express direction")
 
@@ -305,9 +321,17 @@ class IntradayPath:
             den += v
         return num / den if den else self.price(k0)
 
-    def crossed(self, price: float, side: str) -> Tuple[bool, int]:
-        """Did the path trade through ``price``?  Returns (crossed, interval)."""
-        for k in range(1, self.K + 1):
+    def crossed(self, price: float, side: str,
+                from_interval: int = 0) -> Tuple[bool, int]:
+        """Did the path trade through ``price``?  Returns (crossed, interval).
+
+        ``from_interval`` bounds the search to intervals at or after the
+        order's arrival: a limit that starts working mid-session must not
+        fill on a trade-through that happened before it existed (that would
+        be lookahead).  Interval 0 is the opening print, so the scan starts
+        at interval 1 unless the caller says otherwise.
+        """
+        for k in range(max(1, from_interval), self.K + 1):
             p = self.price(k)
             if side == BUY and p <= price:
                 return True, k
@@ -807,6 +831,13 @@ class ExecutionEngine:
         rng = random.Random(
             f"{seed}:{order.participant}:{order.symbol}:{dm.date}:{order.side}:"
             f"{order.quantity}:{start_interval}:{order.reason[:8]}")
+        # Closing-auction orders only meet the book at the closing cross, no
+        # matter when the decision that wrote them was made.  Forcing the
+        # interval here (rather than trusting the caller) is what makes MOC/LOC
+        # semantically different from ``at_close=True``: the ticket itself
+        # carries the execution window.
+        if order.order_type in (MOC, LOC):
+            start_interval = dm.path.K
         decision_book, decision_mid = self.quote_at(dm, start_interval)
         decision_price = decision_mid
 
@@ -832,6 +863,25 @@ class ExecutionEngine:
         if order.order_type == STOP:
             return self._execute_stop(dm, order, target_qty, decision_price,
                                       decision_book, rng, start_interval)
+        if order.order_type == LOC:
+            # Limit-on-close: the closing cross is the only print that can
+            # fill it, and only if the close is marketable against the limit.
+            book, _mid = self.quote_at(dm, start_interval)
+            limit = float(order.limit_price or 0.0)
+            marketable = ((order.side == BUY and limit >= book.best_ask) or
+                          (order.side == SELL and limit <= book.best_bid
+                           and book.best_bid > 0))
+            if not marketable:
+                return self._reject(order, dm, decision_price, decision_book,
+                                    "limit-on-close not marketable at the closing cross",
+                                    status="expired")
+            return self._execute_market(dm, order, target_qty, decision_price,
+                                        decision_book, rng,
+                                        start_interval=start_interval)
+        if order.order_type == MOC:
+            return self._execute_market(dm, order, target_qty, decision_price,
+                                        decision_book, rng,
+                                        start_interval=start_interval)
         return self._execute_market(dm, order, target_qty, decision_price,
                                     decision_book, rng, start_interval=start_interval)
 
@@ -889,7 +939,8 @@ class ExecutionEngine:
             return self._execute_market(dm, order, qty, decision_price,
                                         decision_book, rng,
                                         start_interval=start_interval)
-        crossed, k_cross = dm.path.crossed(limit, order.side)
+        crossed, k_cross = dm.path.crossed(limit, order.side,
+                                           from_interval=start_interval)
         if not crossed:
             return self._reject(order, dm, decision_price, decision_book,
                                 "limit never traded through (expired)", status="expired")

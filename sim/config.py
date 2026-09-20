@@ -402,6 +402,14 @@ class CompetitionConfig:
     force_liquidate_at_end: bool = True   # matches The Leap: all open
     # positions are auto-closed at the end of the competition period.
     #   SOURCE: https://www.tradingview.com/the-leap/december-2025/rules/
+    # Minute-bar lane: extra strategy decision points inside each session,
+    # evenly spaced over the venue replica's K intraday intervals.  0 (the
+    # default) preserves Season 1's one-decision-per-session semantics
+    # exactly; a strategy that also implements on_intraday(ctx, interval)
+    # is called at each point, and its unfilled DAY limit/LOC orders rest in
+    # a per-participant book that stays alive across the remaining points
+    # and expires at the bell.  13 intervals ≈ one decision per 30 minutes.
+    intraday_decisions: int = 0
     rank_metric: str = "total_return_pct"  # SIM CHOICE: highest return wins
     costs: CostConfig = field(default_factory=CostConfig)
     liquidity: LiquidityConfig = field(default_factory=LiquidityConfig)
@@ -415,9 +423,26 @@ class CompetitionConfig:
     def as_dict(self) -> dict:
         return asdict(self)
 
+    # Fields that change how ORDERS are worked but not the market tape
+    # itself.  They are excluded from the fingerprint on purpose: the
+    # fingerprint seeds the per-symbol bar generators (marketdata.build_replay
+    # line "seed:fingerprint:symbol"), so a pure execution-lane knob in the
+    # hash would reshuffle every bar in history and make archived runs
+    # unreproducible the moment the lane gained an option.
+    FINGERPRINT_EXCLUDE = frozenset({"intraday_decisions"})
+
     def fingerprint(self) -> str:
-        """Stable hash of the whole configuration, for reproducibility."""
-        blob = json.dumps(self.as_dict(), sort_keys=True, default=str)
+        """Stable hash of the market-affecting configuration.
+
+        Everything in ``FINGERPRINT_EXCLUDE`` is left out: the fingerprint
+        must reseed the tape, so it may only see fields that change the tape.
+        The full config (excluded fields included) is still written to the
+        run manifest by ``as_dict``.
+        """
+        blob = json.dumps(
+            {k: v for k, v in self.as_dict().items()
+             if k not in self.FINGERPRINT_EXCLUDE},
+            sort_keys=True, default=str)
         return hashlib.sha256(blob.encode("utf-8")).hexdigest()[:16]
 
 
@@ -460,6 +485,8 @@ def all_verified_sources() -> List[dict]:
          "url": "https://www.ecfr.gov/current/title-17/chapter-II/part-242/section-242.612",
          "publisher": "eCFR / SEC Regulation NMS (17 CFR 242.612)",
          "status": "FETCHED"},
+        {"claim": "SportsPred snapshot archive root (the repo this project's SportsPred collector mirrors): prediction records and grading files under data/, fetched on a dated schedule so the signal book never reads anything the site published after the trading window closed. The concrete files are data/predictions.json, data/results.json and data/slate.json, read through this raw host because the sandbox cannot clone the repo directly.",
+         "url": "https://raw.githubusercontent.com/buffedlizard55-lab/SportsPred/main/", "publisher": "GitHub (SportsPred repository)", "status": "FETCHED"},
         {"claim": "Nasdaq's historical quote API root: the exchange's own daily row (date, open, high, low, close, volume) for a symbol, requested per symbol and asset class. The forward-print collector calls the templated path under this root, and the concrete per-symbol URLs it has retrieved are listed separately in the collected-source register.", "url": "https://api.nasdaq.com/api/quote", "publisher": "Nasdaq", "status": "FETCHED"},
         {"claim": "This repository, cited inside the collector User-Agent strings as the project's own identity (the SEC's published shape is 'Name contact@host', so the name has to resolve to something a reviewer can find)", "url": "https://github.com/buffedlizard55-lab/", "publisher": "GitHub (project repository)", "status": "ADAPTER-DOCS"},
         {"claim": "The SEC's current directory for quarterly Form 3/4/5 data sets: the page's own table serves 2026 Q2 (the newest set) from this path, while 2026 Q1 and earlier come from the older 'structureddata' path. The collector tries the layout the quarter's date range names first and records which one answered, so the ZIP a run read can be re-fetched from the URL beside it.", "url": "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/", "publisher": "U.S. Securities and Exchange Commission", "status": "FETCHED"},

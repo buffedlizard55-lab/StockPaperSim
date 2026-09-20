@@ -1,4 +1,4 @@
-name: Injury snapshot archive (scheduled)
+name: Injury and SportsPred snapshot archive (scheduled)
 
 # WHY THIS RUNS ON A SCHEDULE, LIKE THE PILOT AND UNLIKE THE BIG COLLECTOR
 # ----------------------------------------------------------------------
@@ -38,7 +38,7 @@ concurrency:
 
 jobs:
   archive:
-    name: Capture the week's injury snapshots
+    name: Capture the week's injury and SportsPred snapshots
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -56,7 +56,7 @@ jobs:
       - name: Collect the dated injury snapshots
         run: |
           python scripts/collect_real_data.py --out data/real \
-            --only injury_archive --max-seconds 600
+            --only injury_archive,sportspred --max-seconds 600
 
       - name: Commit to the archive branch
         run: |
@@ -64,12 +64,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           BRANCH="archive/injuries"
           git checkout -B "$BRANCH"
-          git add -A data/real/sports/official/archive data/real/collection_manifest.json
+          git add -A data/real/sports/official/archive data/real/sportspred/archive data/real/collection_manifest.json
           if git diff --cached --quiet; then
             echo "No new snapshots to commit (already captured today)."
             echo "CHANGED=false" >> "$GITHUB_ENV"
           else
-            git commit -m "data: injury snapshot archive $(date -u +%F) [skip ci]"
+            git commit -m "data: injury + sportspred snapshot archive $(date -u +%F) [skip ci]"
             echo "CHANGED=true" >> "$GITHUB_ENV"
           fi
 
@@ -84,7 +84,7 @@ jobs:
           if [ -z "$EXISTING" ]; then
             gh pr create \
               --title "data: weekly injury snapshot archive" \
-              --body "Dated NFL/NBA injury snapshots (official league documents + the machine-readable ESPN companion, SECONDARY). One file per feed per capture date; the run is idempotent within a date. This archive is what the forward-only injury participants (@InjuryFeed_Forward, @NBAInjury_Forward) will trade on once it holds enough dated captures - never backdated. Review the dated files and merge to advance the archive." \
+              --body "Dated NFL/NBA injury snapshots (official league documents + the machine-readable ESPN companion, SECONDARY). One file per feed per capture date; the run is idempotent within a date. This archive is what the forward-only injury participants (@InjuryFeed_Forward, @NBAInjury_Forward) and the SportsPred forward probe (@SportsPred_Forward) trade on once they hold enough dated captures - never backdated. Review the dated files and merge to advance the archive." \
               --head archive/injuries --base main || {
               echo "::warning::gh PR create failed (automation limits). Branch is pushed; open the PR manually."
             }

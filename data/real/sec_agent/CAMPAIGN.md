@@ -131,19 +131,60 @@ the digest and `channel: agent-rendered-extract`.
 
 ## Exclusions (recorded, not hidden)
 
-- MU 0000034088-26-000003 (Arntzen; form ~39 KB rendered) and MU
-  0001242654-26-000013 (Mehrotra, first of two paired Forms 4; ~63 KB rendered)
-  exceed the practical page-fetch size budget and were dropped. The Mehrotra
-  second filing (0001242654-26-000014, 12 S rows under a 2026-01-30 10b5-1 plan,
-  President and CEO) was captured instead.
-- MU 0001242654-26-000012 (Mehrotra; ~42 KB rendered) likewise not captured.
-- Every other Form 4 filed in window for the ten tickers was captured up to the
-  eight-most-recent cap per ticker.
+**Rewritten 2026-09-20 (second pass).** The original note below named a filing
+that was never an MU filing: accession 0000034088-26-000003 is a **Form 3 for
+Exxon Mobil Corp** (issuer CIK 0000034088, reporter Gjervik Staale, filed
+2026-01-05, primary doc 2,054 bytes). The reporting owner the note meant is
+**ARNZEN APRIL S** (EVP and Chief People Officer, owner CIK 0001632063; the name
+was also misspelled "Arntzen"). Flagged as IR-79. The selection had also drifted
+from its own "eight most recent on or after 2026-06-01" rule (IR-80): three
+August filings were missing while two older July filings were present. Both
+flags are recorded in `research/IRREGULARITIES.json`.
+
+**Captured in the 2026-09-20 second pass** (chunked page-fetch route — the
+route reads large documents in chunks and reassembles them, which is what
+retired the old "page-fetch size budget" limit), all SHA-256 digested and
+re-verified at staging:
+
+| accession | filed | reporter | rows | note |
+| --- | --- | --- | --- | --- |
+| 0001242654-26-000013 | 2026-07-28 | MEHROTRA SANJAY | 30 S | first of the July pair (2026-01-30 10b5-1 plan); was "oversized" (~63 KB) |
+| 0001242654-26-000012 | 2026-06-30 | MEHROTRA SANJAY | 19 S + GRAT balance row | second of the June pair (same plan); was "oversized" (~42 KB) |
+| 0001798757-26-000007 | 2026-08-28 | BJORLIN ALEXIS | 1 S | August gap (IR-80) |
+| 0001311079-26-000003 | 2026-08-20 | SADANA SUMIT | 1 S | August gap (IR-80) |
+| 0001632063-26-000003 | 2026-07-06 | ARNZEN APRIL S | 18 S | the true "Arntzen" filing (IR-79), 39 KB |
+| 0001224095-26-000001 | 2026-05-13 | GOMO STEVEN J | 2 S | deeper walk (pre-2026-06-01) |
+| 0001652149-26-000003 | 2026-04-17 | ALLEN SCOTT R. | 2 F | deeper walk; tax withholding |
+| 0001201490-26-000003 | 2026-04-16 | CORDANO MICHAEL D | 1 S | deeper walk |
+| 0001311079-26-000002 | 2026-04-14 | SADANA SUMIT | 1 S | deeper walk |
+| 0001632063-26-000002 | 2026-04-03 | ARNZEN APRIL S | 4 S | deeper walk |
+| 0002058769-26-000003 | 2026-04-02 | LIU TEYIN M | 1 A | deeper walk; director RSU grant |
+| 0001218363-26-000002 | 2026-04-02 | SWAN ROBERT HOLMES | 0 | deeper walk; RSU grant, balance-only (flagged) |
+| 0001201490-26-000002 | 2026-04-13 | CORDANO MICHAEL D | 1 S | deeper walk |
+
+Still not captured (explicit gaps, not silently dropped):
+
+- MU 0001242654-26-000015 (Mehrotra, filed 2026-08-25, ~58 KB) and
+  MU 0001242654-26-000005 (Mehrotra, filed 2026-05-05, ~59 KB) — same paired
+  10b5-1 plan family as the two captured Mehrotra filings; deprioritised on the
+  session's fetch budget.
+- MU 0001593199-26-000003 (RAY MICHAEL CHARLES, filed 2026-05-05, ~53 KB) and
+  the January 2026 / December 2025 MU filings (0001593199-26-000001/2,
+  0001689498-26-000001, 0001652149-26-000001/2, 0002058769-26-000001/2,
+  0001201490-26-000001, 0001218363-26-000001, 0001498287-25-000009,
+  0001632063-25-000011, 0001224095-25-000006).
+- The other nine tickers' pre-2026-06-01 filings (the walk this pass performed
+  was MU only, chosen because it was the named blocker).
 
 ## Staging result
 
-- Filings staged: **65**, digests verified: **65**,
-  transactions parsed: **99**, flags: **11** (all derivative-only or
+- Filings staged: **78**, digests verified: **78**,
+  transactions parsed: **180**, flags: **12** (derivative-only or
   balance-only statements, listed in `parse_report.json`).
-- The window contains zero code-P open-market purchases, so the buy-side insider
-  signals register NO-OBSERVATIONS (see LIMITATIONS L-27/L-35).
+- The deeper walk's finding: **still zero code-P open-market purchases**
+  anywhere in the lane (codes: S=130, A=19, F=15, M=11, G=5). MU's own
+  transaction-date coverage now runs 2026-03-31 → 2026-08-25 across 98 rows, so
+  the buy-side insider signals register NO-OBSERVATIONS on the deepest
+  single-issuer history this lane has held (see LIMITATIONS L-27/L-35). This is
+  an economically coherent picture of a stock that re-rated upward through the
+  window: insiders sold into strength under 10b5-1 plans; none bought.

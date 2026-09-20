@@ -203,6 +203,10 @@ SOURCE_CLASS = {
     "finra": "OFFICIAL", "nyfed": "OFFICIAL",
     "treasury": "OFFICIAL", "fiscaldata": "OFFICIAL", "sec_bulk": "OFFICIAL",
      "kalshi": "OFFICIAL-VENDOR", "derived": "DERIVED",
+    # The SportsPred repository's own prediction record: the project is the
+    # publisher of record for its own predictions (the OLBG tips it reads are
+    # secondary, and the snapshot note says so). Same taxonomy slot as Kalshi.
+    "sportspred": "OFFICIAL-VENDOR",
 }
 
 
@@ -2424,6 +2428,90 @@ def coverage_report(out: str, results: dict) -> dict:
 
 
 # --------------------------------------------------------------------------
+# 4b. SportsPred dated snapshots (the P1 "map SportsPred's predictions to a
+#     dated snapshot URL" item, implemented as an archive).
+#
+#     The SportsPred repository (buffedlizard55-lab/SportsPred) publishes its
+#     model's own record as small JSON files on its default branch:
+#
+#     * ``data/predictions.json`` - append-only record of every selection the
+#       model has made, keyed by OLBG event_id, graded by the site's own
+#       backtest script. ``price`` is null unless actually sourced.
+#     * ``data/results.json``     - settled outcomes used to grade those
+#       predictions; empty until a verified results source is reachable.
+#     * ``data/slate.json``       - the dated OLBG consensus slate the model
+#       reads (event_id, market, selection, tips_for/tips_total, pct).
+#     * ``data/provenance.json``  - the site's own collection environment and
+#       irregularity register.
+#     * per-sport ``data/<sport>_slate.json`` slates.
+#
+#     None of these are archived by the site itself, so this collector writes
+#     one dated capture per file per run under
+#     ``data/real/sportspred/archive/`` (idempotent within a date, like the
+#     injury archive). Files larger than SPORTSPRED_BYTE_BUDGET are recorded
+#     as skipped-oversized by reading at most budget+1 bytes - never stored,
+#     and never silently absent: the summary names them. raw.githubusercontent
+#     is reachable from GitHub runners but NOT from the sandbox (IR-76 family),
+#     so this section is runner-driven by design.
+# --------------------------------------------------------------------------
+SPORTSPRED_RAW_BASE = "https://raw.githubusercontent.com/buffedlizard55-lab/SportsPred/main/data"  # noqa: E501 - kept on one line so the sources-register test sees the full URL
+#: Small, bounded files worth capturing whole. Everything else in the site's
+#: data/ directory is either generated per-sport bulk (data/baseball_predictions
+#. json alone is ~96 MB) or derivable from these.
+SPORTSPRED_SNAPSHOT_FILES = (
+    "predictions.json", "results.json", "slate.json", "provenance.json",
+    "card.json", "leagues.json", "olbg_sports.json", "league_context.json",
+    "baseball_slate.json", "basketball_slate.json", "cricket_slate.json",
+    "darts_slate.json", "f1_slate.json", "gaa_slate.json",
+    "gaa_hurling_slate.json", "golf_slate.json", "greyhound_slate.json",
+    "handball_slate.json", "ice_hockey_slate.json", "nrl_origin.json",
+    "rugby_league_slate.json", "snooker_slate.json",
+    "t20_blast_competition.json", "volleyball_slate.json",
+)
+SPORTSPRED_BYTE_BUDGET = 512_000
+
+
+def collect_sportspred(fetcher: Fetcher, out: str) -> dict:
+    """One dated capture of SportsPred's own published prediction record.
+
+    Writes ``sportspred/archive/sportspred_<name>_<YYYY-MM-DD>.json`` for every
+    site file in SPORTSPRED_SNAPSHOT_FILES that exists and fits the byte
+    budget, skips captures already written today (idempotent per date), and
+    reports oversize files as skipped rather than truncated or absent. Every
+    request goes through the Fetcher so the manifest carries URL, status,
+    bytes and SHA-256 like every other section.
+    """
+    stamp = time.strftime("%Y-%m-%d", time.gmtime())
+    base = os.path.join(out, "sportspred", "archive")
+    os.makedirs(base, exist_ok=True)
+    summary: Dict[str, dict] = {"date": stamp, "captures": {}, "skipped": [],
+                                "skipped_oversized": {}}
+    for name in SPORTSPRED_SNAPSHOT_FILES:
+        path = os.path.join(base, f"sportspred_{name[:-len('.json')]}_{stamp}.json")
+        if os.path.exists(path):
+            summary["skipped"].append(os.path.basename(path))
+            continue
+        url = f"{SPORTSPRED_RAW_BASE}/{name}"
+        body = fetcher.get(url, "sportspred",
+                           headers={"Accept": "application/json"},
+                           note=f"SportsPred snapshot {name} {stamp} "
+                                "(the site's own prediction record)")
+        if body is None:
+            summary["captures"][name] = {"ok": False}
+            continue
+        if len(body) > SPORTSPRED_BYTE_BUDGET:
+            summary["skipped_oversized"][name] = {
+                "budget": SPORTSPRED_BYTE_BUDGET,
+                "bytes_seen": len(body),
+                "note": ("file exceeds the snapshot budget; recorded here, "
+                         "not stored and not truncated")}
+            continue
+        write_bytes(path, body)
+        summary["captures"][name] = {"ok": True, "bytes": len(body)}
+    return summary
+
+
+# --------------------------------------------------------------------------
 def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", default=os.path.join(REPO_ROOT, "data", "real"))
@@ -2431,7 +2519,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser.add_argument("--only",
                         default=("prices,nasdaq,sec,fda,sports,weather,kalshi,"
                                  "official_rates,treasury,insider_bulk,"
-                                 "injury_archive"))
+                                 "injury_archive,sportspred"))
     args = parser.parse_args(argv)
 
     out = os.path.abspath(args.out)
@@ -2464,6 +2552,12 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         # re-running the whole collector.
         results["injury_archive"] = collect_injury_archive(fetcher, out)
         print(f"injury_archive: {results['injury_archive']}")
+    if "sportspred" in only or "injury_archive" in only or "sports" in only:
+        # Dated SportsPred snapshots: the P1 mapping item. Same archive shape
+        # and cadence as the injury captures, so the weekly workflow collects
+        # both in one pass.
+        results["sportspred"] = collect_sportspred(fetcher, out)
+        print(f"sportspred: {results['sportspred']}")
     if "fda" in only:
         results["fda"] = collect_fda(fetcher, out)
         print(f"fda: {results['fda']['rows']} decision rows")

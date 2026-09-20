@@ -313,7 +313,7 @@ class TestFullBuild(unittest.TestCase):
 
     def test_navigation_is_present_and_consistent_on_every_page(self):
         # The evidence-first desk is a separate section with its own accessible navigation.
-        self.assertEqual(len(site.NAV), 14)
+        self.assertEqual(len(site.NAV), 15)
         self.assertEqual([h for h, _ in site.NAV][-1], "participants/index.html")
         for rel, html in sorted(self.html.items()):
             if rel.startswith("desk/"):

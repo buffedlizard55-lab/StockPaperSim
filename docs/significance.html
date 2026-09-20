@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Statistical significance · StockPaperSim</title>
+<meta name="description" content="StockPaperSim: a one-year paper-trading stock
+competition between 20 return-seeking strategies, simulated on a replay of the
+real S&amp;P 500 and VIX path, with full execution-cost modelling and a complete
+audit trail.">
+<link rel="stylesheet" href="assets/site.css">
+
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">StockPaperSim</a>
+    <span class="brand-sub">Alpha Cup · Season 1 · 2025-09-17 → 2026-09-16</span>
+  </div>
+  <nav class="wrap nav"><a class="" href="index.html">Overview</a><a class="" href="desk/index.html">Official Equities Desk</a><a class="" href="summary.html">Executive summary</a><a class="" href="leaderboard.html">Leaderboard</a><a class="" href="strategies.html">Strategies</a><a class="" href="simulator.html">Trade Simulator</a><a class="" href="market.html">Market &amp; factors</a><a class="" href="sensitivity.html">Venue sensitivity</a><a class="active" href="significance.html">Significance</a><a class="" href="methodology.html">Methodology</a><a class="" href="data.html">Data provenance</a><a class="" href="sources.html">Sources</a><a class="" href="irregularities.html">Irregularities</a><a class="" href="limitations.html">Limitations</a><a class="" href="participants/index.html">Participants</a></nav>
+</header>
+<main class="wrap">
+<aside class="callout"><strong>Legacy research archive — not the strict official-price stock competition.</strong>
+<a href="desk/index.html">Open the Official Equities Desk</a> for current evidence gates, strategy research and the forward-fill exclusion audit.</aside>
+
+<h1>Are the results statistically real?</h1>
+<p class="lede">A ranking is a point estimate. This page tests the published
+season's own numbers for three failure modes of a one-year contest: a Sharpe
+ratio that a lucky path produces, an alpha that vanishes under resampling, and
+a winner who is only the winner of the one scenario that actually happened.
+The estimators live in <code>sim/significance.py</code>; every number below is
+re-derived from the committed equity panel of
+<code>season1-primary-seed20260917</code> (2025-09-17
+&rarr; 2026-09-16).</p>
+
+<div class="cards">
+  <div class="stat"><strong>1/20</strong>
+    <span>participants whose 95% bootstrap Sharpe interval excludes zero</span></div>
+  <div class="stat"><strong>2</strong>
+    <span>wins across 6 scenarios for the published leader
+    (<code>@BetaChaser_3xProxy</code>) &mdash; chance is
+    5% per scenario</span></div>
+</div>
+
+<h2>What is computed, and what each test assumes</h2>
+<div class="card">
+<ul>
+<li><strong>Bootstrap intervals</strong> &mdash; iid percentile bootstrap, 2000 replicates, resampling each participant's own daily returns; iid understates the uncertainty of autocorrelated series, so read each interval as a floor.</li>
+<li><strong>Deflated Sharpe Ratio</strong> &mdash; Bailey &amp; Lopez de Prado (2014); n_trials = roster size (20); trial Sharpe variance from the estimator's asymptotic variance because committed memory holds scenario totals, not scenario curves.
+The trial count is the roster size: twenty strategies were run against the same
+tape, so the bar a winner must clear is the expected best of twenty, not zero.</li>
+<li><strong>Rank test</strong> &mdash; exact binomial tail on scenario wins against the 1/N chance level.</li>
+</ul>
+<p class="muted small">Seeded with 20260920; the JSON behind this
+page is <code>assets/data/significance.json</code> and regenerates byte-identically
+from the same memory.</p>
+</div>
+
+<h2>Per-participant tests</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr><th>Participant</th><th>Sharpe (ann.)</th><th>Sharpe 95% CI</th>
+<th>Alpha (ann.)</th><th>Alpha 95% CI</th><th>Max DD</th><th>Max DD 95% CI</th>
+<th>Deflated Sharpe</th></tr></thead>
+<tbody><tr><td><code>@BetaChaser_3xProxy</code></td><td>1.3998</td><td>[-0.5347, 3.3855]</td><td>2.8%</td><td>[-3.6552, 9.3402]</td><td>-43.5191%</td><td>[-70.8735, -24.4761]</td><td>0.3061</td></tr><tr><td><code>@BuyHold_MaxBeta</code></td><td>0.8949</td><td>[-0.898, 3.0029]</td><td>1.3%</td><td>[-6.4918, 8.9212]</td><td>-31.9695%</td><td>[-77.6318, -26.1972]</td><td>0.1558</td></tr><tr><td><code>@Contrarian_DeepValue</code></td><td>0.616</td><td>[-1.4134, 2.5942]</td><td>-0.5%</td><td>[-5.032, 4.1477]</td><td>-51.1503%</td><td>[-67.0662, -19.5993]</td><td>0.0989</td></tr><tr><td><code>@DonchianBreakout_20</code></td><td>0.6723</td><td>[-1.1568, 2.6958]</td><td>0.0%</td><td>[-3.3519, 3.5588]</td><td>-19.4384%</td><td>[-49.9425, -13.769]</td><td>0.1083</td></tr><tr><td><code>@DriftRider_PEAD</code></td><td>0.9113</td><td>[-0.9848, 2.8883]</td><td>1.2%</td><td>[-1.9298, 4.0993]</td><td>-14.8016%</td><td>[-34.5788, -8.8083]</td><td>0.1597</td></tr><tr><td><code>@GapAndGo_YOLO</code></td><td>-8.0888 <span class="badge badge-muted">CI straddles 0</span></td><td>[-9.6381, -6.5033]</td><td>-16.2%</td><td>[-19.7802, -12.5629]</td><td>-91.8656%</td><td>[-95.5469, -85.4659]</td><td>0.0</td></tr><tr><td><code>@IlliquidRocket_Degen</code></td><td>0.589</td><td>[-1.3666, 2.5849]</td><td>2.2%</td><td>[-8.2442, 12.639]</td><td>-45.0454%</td><td>[-85.9428, -27.9719]</td><td>0.0935</td></tr><tr><td><code>@KitchenSink_AllIn</code></td><td>0.4129</td><td>[-1.5283, 2.3451]</td><td>-0.5%</td><td>[-3.9141, 3.1173]</td><td>-31.0932%</td><td>[-52.8459, -14.2412]</td><td>0.0681</td></tr><tr><td><code>@MeanRev_Z2Sigma</code></td><td>3.3613 <span class="badge badge-ok">CI&gt;0</span></td><td>[1.612, 5.0249]</td><td>3.1%</td><td>[1.2555, 4.9195]</td><td>-7.008%</td><td>[-12.2909, -2.7321]</td><td>0.9758</td></tr><tr><td><code>@MomentumMax_12x1</code></td><td>1.0677</td><td>[-0.8917, 3.0637]</td><td>0.8%</td><td>[-3.9774, 5.4571]</td><td>-45.0455%</td><td>[-64.3237, -20.0433]</td><td>0.2027</td></tr><tr><td><code>@OneBigBet_Concentra</code></td><td>1.3689</td><td>[-0.5057, 3.2663]</td><td>2.2%</td><td>[-1.4994, 5.8483]</td><td>-22.1489%</td><td>[-36.9689, -8.8729]</td><td>0.2984</td></tr><tr><td><code>@OvernightCarry_NO</code></td><td>1.2522</td><td>[-0.6526, 3.3281]</td><td>0.5%</td><td>[-0.3853, 1.4212]</td><td>-4.8562%</td><td>[-10.6582, -2.4007]</td><td>0.2543</td></tr><tr><td><code>@OverreactionFade_LT</code></td><td>1.6512</td><td>[-0.2596, 3.6852]</td><td>2.0%</td><td>[-0.8633, 4.7492]</td><td>-12.6039%</td><td>[-27.5092, -6.6506]</td><td>0.3922</td></tr><tr><td><code>@PairsArb_ZScore2</code></td><td>1.0072</td><td>[-1.6553, 2.1002]</td><td>0.1%</td><td>[-0.0402, 0.2244]</td><td>-0.3666%</td><td>[-0.9181, -0.1517]</td><td>0.3084</td></tr><tr><td><code>@SectorRotator_AlphaX</code></td><td>1.9135</td><td>[-0.0215, 4.0206]</td><td>2.8%</td><td>[-0.5496, 6.2103]</td><td>-32.1503%</td><td>[-44.0906, -13.2223]</td><td>0.4859</td></tr><tr><td><code>@SpreadHarvester_MM</code></td><td>-0.5161 <span class="badge badge-muted">CI straddles 0</span></td><td>[-2.5942, 1.3829]</td><td>-0.0%</td><td>[-5.9162, 5.7451]</td><td>-53.6417%</td><td>[-80.5237, -26.6927]</td><td>0.0079</td></tr><tr><td><code>@SqueezeHunter_TF</code></td><td>-0.0893 <span class="badge badge-muted">CI straddles 0</span></td><td>[-2.0439, 1.8498]</td><td>-0.2%</td><td>[-1.6804, 1.2883]</td><td>-10.7616%</td><td>[-26.7905, -4.9473]</td><td>0.0233</td></tr><tr><td><code>@TrendSurfer_GoldenX</code></td><td>0.9661</td><td>[-0.9072, 3.0928]</td><td>-0.0%</td><td>[-1.9903, 1.9633]</td><td>-26.864%</td><td>[-46.6355, -12.1437]</td><td>0.1715</td></tr><tr><td><code>@VIXRegime_Timer</code></td><td>1.4583</td><td>[-0.5344, 3.5191]</td><td>0.4%</td><td>[-0.186, 1.0015]</td><td>-14.6774%</td><td>[-23.279, -5.9737]</td><td>0.3296</td></tr><tr><td><code>@VolCarry_LowHigh</code></td><td>-0.4957 <span class="badge badge-muted">CI straddles 0</span></td><td>[-2.5262, 1.3439]</td><td>-0.3%</td><td>[-6.0269, 5.4539]</td><td>-48.1739%</td><td>[-76.6598, -24.9433]</td><td>0.0084</td></tr></tbody>
+</table></div>
+<p class="muted small">A negative-alpha participant whose interval excludes zero
+on the downside is significantly <em>negative</em>, which is a real finding about
+that strategy, not a footnote. The Deflated Sharpe column is the probability the
+participant's Sharpe clears the expected best-of-roster bar; values near 1.0
+survive selection, values near 0.5 or below do not.</p>
+
+<h2>Does the winner repeat across scenarios?</h2>
+<div class="table-scroll"><table class="data">
+<thead><tr><th>Participant</th><th>Scenario wins</th><th>Win rate</th>
+<th>Chance rate</th><th>P(wins this many by luck)</th></tr></thead>
+<tbody><tr><td><code>@BetaChaser_3xProxy</code></td><td>2</td><td>33%</td><td>5%</td><td><span class="badge badge-ok">0.0328</span></td></tr><tr><td><code>@BuyHold_MaxBeta</code></td><td>2</td><td>33%</td><td>5%</td><td><span class="badge badge-ok">0.0328</span></td></tr><tr><td><code>@Contrarian_DeepValue</code></td><td>1</td><td>17%</td><td>5%</td><td><span class="badge badge-muted">0.2649</span></td></tr><tr><td><code>@IlliquidRocket_Degen</code></td><td>1</td><td>17%</td><td>5%</td><td><span class="badge badge-muted">0.2649</span></td></tr><tr><td><code>@DonchianBreakout_20</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@DriftRider_PEAD</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@GapAndGo_YOLO</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@KitchenSink_AllIn</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@MeanRev_Z2Sigma</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@MomentumMax_12x1</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@OneBigBet_Concentra</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@OvernightCarry_NO</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@OverreactionFade_LT</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@PairsArb_ZScore2</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@SectorRotator_AlphaX</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@SpreadHarvester_MM</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@SqueezeHunter_TF</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@TrendSurfer_GoldenX</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@VIXRegime_Timer</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr><tr><td><code>@VolCarry_LowHigh</code></td><td>0</td><td>0%</td><td>5%</td><td><span class="badge badge-muted">1.0</span></td></tr></tbody>
+</table></div>
+<p class="muted small">Read the p-values as one-sided: the probability that a
+participant with no skill wins at least this many of the 6
+scenarios by chance. A winner confirmed in every scenario still holds one
+calendar year's worth of evidence (L-17) &mdash; the test bounds the luck, it does
+not repeal it.</p>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>StockPaperSim is a research and education project. Every price series a
+    participant traded on is either a real published observation (FRED S&amp;P 500
+    and VIX closes, Yahoo Finance monthly SPY bars and AAPL bars/dividends) or an
+    explicitly labelled simulation of it. Nothing here is investment advice, and
+    no result on this site should be read as evidence about a strategy's real
+    future performance. See <a href="limitations.html">Limitations</a>.</p>
+    <p>Built from run memory by <code>scripts/build_site.py</code>.
+    Data integrity: every file is SHA-256 checksummed in its run manifest.</p>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+</body>
+</html>

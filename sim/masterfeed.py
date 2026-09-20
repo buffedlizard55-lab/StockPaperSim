@@ -37,6 +37,7 @@ import datetime as dt
 import json
 import math
 import os
+import re
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from .calendar import REPO_ROOT
@@ -315,23 +316,29 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "SportsPred",
-        "signals": [],
+        "signals": ["sportspred_predictions", "sportspred_graded"],
         "requested_as": "Sports Pred",
         "repo": "SportsPred",
         "title": "SportsPred - game prediction models",
         "site_url": "https://buffedlizard55-lab.github.io/SportsPred/",
-        "official_url": "https://statsapi.mlb.com/api/v1/schedule",
-        "source_class": "OFFICIAL",
+        "official_url": "https://github.com/buffedlizard55-lab/SportsPred",
+        "source_class": "OFFICIAL-VENDOR",
         "status": FORWARD_ONLY,
         "mapping": UNPROVEN,
         "mapping_note": (
-            "SportsPred emits pre-game probabilities. There is no archived, timestamped "
-            "snapshot of those predictions for the past season, so a backtest would have "
-            "to recompute them - which would be this project's model, not the site's. "
-            "Season 2 registers a dedicated forward probe (@SportsPred_Forward): it "
-            "places no backdated trades and goes live only on dated snapshots of the "
-            "site's own published predictions collected from now on."),
-        "evidence": [],
+            "Mapped 2026-09-20 to the site's own files: data/predictions.json is "
+            "the append-only record of every selection the model has made (keyed "
+            "by OLBG event_id, graded by the site's own backtest script), "
+            "data/results.json is its grading record, data/slate.json is the "
+            "dated OLBG consensus slate, and data/provenance.json carries the "
+            "site's own collection notes. The site archives none of them, so "
+            "this repository now collects dated snapshots of all four plus the "
+            "per-sport slates (collector section 'sportspred', weekly archive "
+            "workflow) under data/real/sportspred/archive/. Backtesting them "
+            "would still be recomputing someone else's model, so the forward "
+            "probe @SportsPred_Forward trades only on the snapshots as they "
+            "accumulate - never backdated."),
+        "evidence": ["data/real/sportspred/archive"],
         "hypothesis": ("Where a model's probability disagrees materially with the "
                        "market's implied probability, the sports-data complex is "
                        "mispriced in the same direction."),
@@ -617,6 +624,110 @@ def _shift_date(iso: str, days: int) -> str:
     return (dt.date.fromisoformat(iso) + dt.timedelta(days=days)).isoformat()
 
 
+# -- SportsPred dated snapshots (the site's own prediction record) ------------
+
+#: Files the sportspred archive captures that carry the model's actual
+#: prediction record and grading, as opposed to the per-sport consensus slates.
+SPORTSPRED_RECORD_FILES = ("predictions", "results")
+SPORTSPRED_SIGNALS = ("sportspred_predictions", "sportspred_graded")
+
+
+def _sportspred_snapshot_state(archive_dir: str) -> Dict[str, dict]:
+    """Dated SportsPred snapshots -> {capture date: record-state dict}.
+
+    ``sportspred_predictions_<date>.json`` is the site's append-only record of
+    its own selections (keyed by OLBG event_id); the value here is the count of
+    recorded predictions in that dated capture plus the file's own
+    ``last_run_utc``. ``sportspred_results_<date>.json`` is the site's grading
+    record; its count is reported separately because a prediction that is not
+    graded is not a tradeable observation. A file that cannot be parsed counts
+    as zeros rather than aborting the signal.
+    """
+    out: Dict[str, dict] = {}
+    if not os.path.isdir(archive_dir):
+        return out
+    for name in sorted(os.listdir(archive_dir)):
+        m = re.match(r"^sportspred_(predictions|results)_(\d{4}-\d{2}-\d{2})\.json$",
+                     name)
+        if not m:
+            continue
+        kind, stamp = m.group(1), m.group(2)
+        try:
+            payload = json.loads(
+                open(os.path.join(archive_dir, name), "r", encoding="utf-8").read())
+        except (OSError, json.JSONDecodeError):
+            payload = {}
+        slot = out.setdefault(stamp, {"predictions": 0, "results": 0,
+                                      "last_run_utc": None})
+        if kind == "predictions":
+            preds = payload.get("predictions")
+            slot["predictions"] = len(preds) if isinstance(preds, list) else 0
+            slot["last_run_utc"] = payload.get("last_run_utc")
+        else:
+            res = payload.get("results")
+            slot["results"] = len(res) if isinstance(res, list) else 0
+    return out
+
+
+def _sportspred_signals(book: SignalBook, md, root: str) -> None:
+    """Register SportsPred's own prediction record as a forward-only signal.
+
+    The P1 mapping item, landed: SportsPred publishes its predictions as an
+    append-only JSON record and grades them against settled results, but it
+    archives neither, so this project collects dated snapshots of both files
+    (``scripts/collect_real_data.py`` section ``sportspred``, captured by the
+    weekly archive workflow). The signal for a session is the prediction count
+    of the most recent snapshot dated on or before it; the graded count is a
+    second signal because a prediction with no grade is not evidence. While no
+    snapshot exists the arrays are zero and the signals report MISSING - the
+    difference between "waiting for the archive" and a measured zero.
+    """
+    archive = os.path.join(root, "sportspred", "archive")
+    url = "https://github.com/buffedlizard55-lab/SportsPred"
+    state = _sportspred_snapshot_state(archive)
+    captures = sorted(state)
+    usable = [d for d in captures if d <= md.dates[-1]]
+    rows_by_kind = {
+        "sportspred_predictions": (lambda s: state[s]["predictions"]),
+        "sportspred_graded": (lambda s: state[s]["results"]),
+    }
+    for name, picker in rows_by_kind.items():
+        book._blank(name)
+        if usable:
+            arrays: List[float] = []
+            for session in md.dates:
+                candidates = [d for d in usable if d <= session]
+                latest = candidates[-1] if candidates else None
+                arrays.append(float(picker(latest)) if latest else 0.0)
+            if any(v != 0.0 for v in arrays):
+                book.arrays[name] = arrays
+                book._register(
+                    name, "AVAILABLE", len(captures), captures,
+                    ["data/real/sportspred/archive"],
+                    (f"dated snapshots of SportsPred's own published record "
+                     f"({'predictions.json' if name.endswith('predictions') else 'results.json'}, "
+                     f"OFFICIAL-VENDOR for the site's own output); "
+                     f"{len(captures)} capture(s) {captures[0]}..{captures[-1]}; "
+                     "forward-only observations, never backfilled"),
+                    url)
+                continue
+        note = (f"the dated archive holds {len(captures)} capture(s)"
+                + (f" ({captures[0]}..{captures[-1]})" if captures else "")
+                + ", none dated on or before the last session of this window"
+                if captures else
+                "no dated snapshot captured yet - the weekly archive workflow "
+                "(injury-archive.yml) collects sportspred_* files on each run")
+        evidence = ([f"data/real/sportspred/archive"]
+                    if os.path.isdir(archive) else [])
+        book._register(
+            name, "MISSING", 0, [],
+            evidence,
+            "the site publishes an append-only prediction record and grading "
+            "file but archives neither (" + note + "), so this signal is "
+            "forward-only and places no backdated trades",
+            url)
+
+
 def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
     """Build every signal from the collected files; missing files stay missing."""
     book = SignalBook(md.dates)
@@ -629,6 +740,7 @@ def build_signal_book(md, root: str = REAL_ROOT) -> SignalBook:
     _fred_signals(book, md, root)
     _yahoo_signals(book, md, root)
     _injury_signals(book, md, root)
+    _sportspred_signals(book, md, root)
     book.finalise()
     return book
 

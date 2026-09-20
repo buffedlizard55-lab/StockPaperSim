@@ -41,6 +41,11 @@ ALLOWED_HOSTS = {
     "www.risk.net", "www.govinfo.gov", "stooq.com", "docs.alpaca.markets",
     "polygon.io", "finnhub.io", "www.tiingo.com", "www.cboe.com",
     "www.cftc.gov", "ir.thecorporatesecretary.com", "pages.stern.nyu.edu",
+    # Added 2026-09-20 with the SportsPred snapshot lane: the collector reads
+    # the SportsPred repo's data files through the GitHub raw host (the sandbox
+    # cannot clone; raw is the read path), and the register row for it cites
+    # the same host.
+    "raw.githubusercontent.com",
     "www.spglobal.com", "help.revolut.com", "www.cis.upenn.edu",
     # Added 2026-09-17 while fixing IR-31/IR-32: the IRS publication is the
     # primary source for payments in lieu of dividends on borrowed stock, and

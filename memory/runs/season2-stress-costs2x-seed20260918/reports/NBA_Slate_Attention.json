@@ -3,127 +3,127 @@
  "strategy_id": "NBASlateAttention",
  "archetype": "event attention proxy",
  "starting_cash": 100000.0,
- "final_equity": 96026.28,
- "net_pnl_usd": -3973.72,
- "total_return_pct": -3.9737,
- "cagr_pct": -3.9892,
+ "final_equity": 80254.04,
+ "net_pnl_usd": -19745.96,
+ "total_return_pct": -19.746,
+ "cagr_pct": -19.8163,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": -10.0132,
-  "max_drawdown_usd": -10514.59,
-  "peak_date": "2026-01-05",
-  "peak_equity": 105007.39,
-  "trough_date": "2026-01-07",
-  "trough_equity": 94492.79,
-  "recovery_date": null,
-  "sessions_underwater": 173,
-  "never_recovered": true,
-  "sharpe": -0.3422,
-  "sortino": -0.0985,
-  "calmar": 0.3984,
-  "daily_vol_pct": 0.653,
-  "annualised_vol_pct": 10.366,
-  "skew": -1.5125,
-  "excess_kurtosis": 60.7322,
-  "best_session_pct": 4.9772,
-  "worst_session_pct": -6.3178,
-  "var_95_pct": 0.0,
-  "cvar_95_pct": -0.0546,
-  "var_99_pct": -1.6168,
-  "cvar_99_pct": -4.0694
+  "max_drawdown_pct": -37.5421,
+  "max_drawdown_usd": -37902.82,
+  "peak_date": "2025-10-23",
+  "peak_equity": 100960.76,
+  "trough_date": "2025-11-20",
+  "trough_equity": 63057.94,
+  "recovery_date": "2026-06-10",
+  "sessions_underwater": 137,
+  "never_recovered": false,
+  "sharpe": -0.3082,
+  "sortino": -0.3542,
+  "calmar": 0.5278,
+  "daily_vol_pct": 2.6819,
+  "annualised_vol_pct": 42.574,
+  "skew": 0.206,
+  "excess_kurtosis": 10.8647,
+  "best_session_pct": 13.086,
+  "worst_session_pct": -14.4321,
+  "var_95_pct": -4.1776,
+  "cvar_95_pct": -6.3185,
+  "var_99_pct": -5.6539,
+  "cvar_99_pct": -11.5863
  },
  "market_relation": {
-  "beta": -0.003,
-  "alpha_annual_pct": -3.5042,
-  "r_squared": 0.0,
-  "tracking_error_annual_pct": 10.366,
-  "information_ratio": -0.338,
+  "beta": 0.5858,
+  "alpha_annual_pct": -21.5605,
+  "r_squared": 0.0315,
+  "tracking_error_annual_pct": 41.898,
+  "information_ratio": -0.515,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": -0.043,
-  "residual_return_pct": -3.93
+  "beta_contribution_pct": 8.444,
+  "residual_return_pct": -28.19
  },
  "trades": {
-  "closed_trades": 8,
+  "closed_trades": 80,
   "open_trades": 0,
-  "wins": 2,
-  "losses": 6,
-  "win_rate_pct": 25.0,
-  "gross_win_usd": 50.75,
-  "gross_loss_usd": 4024.48,
-  "profit_factor": 0.0126,
-  "avg_win_usd": 25.38,
-  "avg_loss_usd": -670.75,
-  "expectancy_usd_per_trade": -496.72,
+  "wins": 34,
+  "losses": 46,
+  "win_rate_pct": 42.5,
+  "gross_win_usd": 23418.19,
+  "gross_loss_usd": 43164.17,
+  "profit_factor": 0.5425,
+  "avg_win_usd": 688.77,
+  "avg_loss_usd": -938.35,
+  "expectancy_usd_per_trade": -246.82,
   "best_trade": {
    "symbol": "DKNG",
-   "net_pnl": 49.28,
-   "entry_date": "2026-01-02",
-   "exit_date": "2026-01-05",
+   "net_pnl": 3416.75,
+   "entry_date": "2026-03-10",
+   "exit_date": "2026-04-29",
    "direction": "long"
   },
   "worst_trade": {
-   "symbol": "GENI",
-   "net_pnl": -2789.78,
-   "entry_date": "2026-01-02",
-   "exit_date": "2026-01-12",
+   "symbol": "FLUT",
+   "net_pnl": -5452.76,
+   "entry_date": "2025-10-22",
+   "exit_date": "2025-12-29",
    "direction": "long"
   },
-  "longest_win_streak": 1,
-  "longest_loss_streak": 4,
-  "avg_sessions_held": 4.0,
-  "median_sessions_held": 3.5,
-  "sessions_in_market": 7,
+  "longest_win_streak": 5,
+  "longest_loss_streak": 16,
+  "avg_sessions_held": 22.38,
+  "median_sessions_held": 12.0,
+  "sessions_in_market": 216,
   "per_symbol_sessions_in_market": {
-   "DKNG": 7,
-   "FLUT": 7,
-   "GENI": 7
+   "DKNG": 215,
+   "FLUT": 214,
+   "GENI": 104
   },
-  "sum_of_tranche_sessions": 32,
+  "sum_of_tranche_sessions": 1790,
   "tranche_intervals_overlap": true,
   "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 17,
-  "shares_traded": 15930,
-  "traded_notional_usd": 381619.87,
-  "spread_cost_usd": 140.58,
-  "depth_cost_usd": 36.1,
-  "impact_cost_usd": 110.04,
-  "commission_usd": 17.0,
-  "exchange_fee_usd": 95.58,
-  "regulatory_fee_usd": 1.55,
+  "fills": 151,
+  "shares_traded": 239550,
+  "traded_notional_usd": 3554754.47,
+  "spread_cost_usd": 2177.51,
+  "depth_cost_usd": 1038.48,
+  "impact_cost_usd": 1755.7,
+  "commission_usd": 151.0,
+  "exchange_fee_usd": 1437.3,
+  "regulatory_fee_usd": 32.81,
   "rebate_usd": 0.0,
-  "total_cost_usd": 400.85,
-  "total_cost_bps_of_traded": 10.504,
-  "total_cost_pct_of_starting_cash": 0.4009,
+  "total_cost_usd": 6592.8,
+  "total_cost_bps_of_traded": 18.546,
+  "total_cost_pct_of_starting_cash": 6.5928,
   "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": 28.47,
-   "spread_and_impact_pct": 71.53
+   "explicit_fees_pct": 24.59,
+   "spread_and_impact_pct": 75.41
   },
-  "avg_execution_cost_bps_per_fill": 11.144,
-  "median_execution_cost_bps_per_fill": 8.341,
-  "worst_execution_cost_bps": 27.84,
-  "intraday_drift_usd": 10.5,
-  "avg_price_difference_bps_per_fill": 5.043,
+  "avg_execution_cost_bps_per_fill": 20.793,
+  "median_execution_cost_bps_per_fill": 9.497,
+  "worst_execution_cost_bps": 416.057,
+  "intraday_drift_usd": 205.82,
+  "avg_price_difference_bps_per_fill": 9.859,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 17,
+  "orders": 151,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 381639.99,
-  "spread_cost_usd": 140.58,
-  "depth_cost_usd": 36.1,
-  "impact_cost_usd": 110.04,
-  "intraday_drift_usd": 10.5,
-  "fees_usd": 114.13,
+  "paper_notional_usd": 3553887.1,
+  "spread_cost_usd": 2177.51,
+  "depth_cost_usd": 1038.48,
+  "impact_cost_usd": 1755.7,
+  "intraday_drift_usd": 205.82,
+  "fees_usd": 1621.11,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 411.35,
-  "shortfall_bps_of_paper": 10.779,
-  "friction_only_bps_of_paper": 10.503,
-  "worst_single_order_drift_usd": 21.55,
-  "best_single_order_drift_usd": -25.8,
+  "total_shortfall_usd": 6798.62,
+  "shortfall_bps_of_paper": 19.13,
+  "friction_only_bps_of_paper": 18.551,
+  "worst_single_order_drift_usd": 50.35,
+  "best_single_order_drift_usd": -43.78,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
@@ -137,46 +137,46 @@
   "day_trade_count": 0
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 4.29,
-  "max_gross_pct_of_starting_cash": 185.65,
-  "avg_net_pct_of_starting_cash": 4.29,
-  "max_net_pct_of_starting_cash": 185.65,
-  "avg_leverage": 0.043,
-  "max_leverage": 1.852,
-  "sessions_flat": 245,
-  "avg_open_positions": 0.07
+  "avg_gross_pct_of_starting_cash": 45.5,
+  "max_gross_pct_of_starting_cash": 184.08,
+  "avg_net_pct_of_starting_cash": 45.5,
+  "max_net_pct_of_starting_cash": 184.08,
+  "avg_leverage": 0.539,
+  "max_leverage": 1.929,
+  "sessions_flat": 42,
+  "avg_open_positions": 2.06
  },
  "turnover": {
-  "traded_notional_usd": 381619.87,
-  "annualised_turnover_x": 3.939
+  "traded_notional_usd": 3554754.47,
+  "annualised_turnover_x": 42.237
  },
  "contribution_by_symbol": [
   {
    "symbol": "DKNG",
-   "realized_pnl": 42.76,
+   "realized_pnl": 9875.9,
    "open_pnl": 0.0,
-   "total_pnl": 42.76,
-   "closed_trades": 4,
-   "fees": 29.83,
-   "all_in_cost_usd": 66.09
-  },
-  {
-   "symbol": "FLUT",
-   "realized_pnl": -1168.87,
-   "open_pnl": 0.0,
-   "total_pnl": -1168.87,
-   "closed_trades": 2,
-   "fees": 8.56,
-   "all_in_cost_usd": 27.18
+   "total_pnl": 9875.9,
+   "closed_trades": 28,
+   "fees": 319.01,
+   "all_in_cost_usd": 835.61
   },
   {
    "symbol": "GENI",
-   "realized_pnl": -2847.62,
+   "realized_pnl": -13105.57,
    "open_pnl": 0.0,
-   "total_pnl": -2847.62,
-   "closed_trades": 2,
-   "fees": 75.74,
-   "all_in_cost_usd": 307.58
+   "total_pnl": -13105.57,
+   "closed_trades": 29,
+   "fees": 1196.9,
+   "all_in_cost_usd": 5311.19
+  },
+  {
+   "symbol": "FLUT",
+   "realized_pnl": -16516.31,
+   "open_pnl": 0.0,
+   "total_pnl": -16516.31,
+   "closed_trades": 23,
+   "fees": 105.23,
+   "all_in_cost_usd": 445.98
   }
  ],
  "monthly_returns": [
@@ -191,145 +191,149 @@
    "month": "2025-10",
    "sessions": 23,
    "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "end_equity": 85997.69,
+   "return_pct": -14.0023
   },
   {
    "month": "2025-11",
    "sessions": 19,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 85997.69,
+   "end_equity": 78220.17,
+   "return_pct": -9.0439
   },
   {
    "month": "2025-12",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 78220.17,
+   "end_equity": 86246.02,
+   "return_pct": 10.2606
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 100000.0,
-   "end_equity": 96026.28,
-   "return_pct": -3.9737
+   "start_equity": 86246.02,
+   "end_equity": 86722.64,
+   "return_pct": 0.5526
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 86722.64,
+   "end_equity": 86478.75,
+   "return_pct": -0.2812
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 86478.75,
+   "end_equity": 78748.75,
+   "return_pct": -8.9386
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 78748.75,
+   "end_equity": 81974.9,
+   "return_pct": 4.0968
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 81974.9,
+   "end_equity": 79806.49,
+   "return_pct": -2.6452
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 79806.49,
+   "end_equity": 80261.62,
+   "return_pct": 0.5703
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 80261.62,
+   "end_equity": 80262.14,
+   "return_pct": 0.0006
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 80262.14,
+   "end_equity": 80258.66,
+   "return_pct": -0.0043
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 96026.28,
-   "end_equity": 96026.28,
-   "return_pct": 0.0
+   "start_equity": 80258.66,
+   "end_equity": 80254.04,
+   "return_pct": -0.0058
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": -3973.73,
+  "realized_trading_pnl_usd": -19745.98,
   "open_position_pnl_usd": 0.0,
   "dividends_usd": 0.0,
   "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
-  "execution_costs_already_netted_usd": -400.85,
-  "total_net_pnl_usd": -3973.72,
-  "unexplained_residual_usd": 0.01,
+  "execution_costs_already_netted_usd": -6592.8,
+  "total_net_pnl_usd": -19745.96,
+  "unexplained_residual_usd": 0.02,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
   "verdict": "lost money",
-  "headline": "Lost money: -3.97% total return vs +14.41% for the index, -3.93pp residual after beta, -10.0% max drawdown, 0.40% of capital lost to execution costs.",
+  "headline": "Lost money: -19.75% total return vs +14.41% for the index, -28.19pp residual after beta, -37.5% max drawdown, 6.59% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Finished at -3.97% - a 3,974 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "Finished at -19.75% - a 19,746 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 3.97% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 19.75% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "kind": "factor",
-    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 3.97% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 19.75% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "kind": "attribution",
-    "text": "Of the -3.97% total, about -0.04pp is explained by carrying beta -0.00 against a +14.41% market (R^2 0.00); the residual -3.93pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the -19.75% total, about +8.44pp is explained by carrying beta 0.59 against a +14.41% market (R^2 0.03); the residual -28.19pp is everything else - selection, timing, leverage and cost."
    },
    {
     "kind": "concentration",
-    "text": "DKNG contributed +43 USD across 4 closed trades; GENI was the biggest drag at -2,848 USD."
+    "text": "DKNG contributed +9,876 USD (-50% of net P&L) across 28 closed trades; FLUT was the biggest drag at -16,516 USD."
    },
    {
     "kind": "costs",
-    "text": "Execution cost 401 USD (0.40% of starting capital, 11.1 bp per fill, 10.5 bp of the 381,620 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
+    "text": "Execution cost 6,593 USD (6.59% of starting capital, 20.8 bp per fill, 18.5 bp of the 3,554,754 USD traded). 75% of that was spread/depth/impact and 25% was explicit fees and rebates."
+   },
+   {
+    "kind": "costs",
+    "text": "Costs exceeded 5% of starting capital and the account still lost money: the turnover was not paid for by the edge."
    },
    {
     "kind": "trades",
-    "text": "8 closed round trips, 25.0% winners, profit factor 0.01, average winner +25 vs average loser -671 USD, median holding 4 sessions."
+    "text": "80 closed round trips, 42.5% winners, profit factor 0.54, average winner +689 vs average loser -938 USD, median holding 12 sessions."
    },
    {
     "kind": "trades",
-    "text": "Time in market, measured without double counting: 7 sessions held at least one position (the per-tranche holding periods above sum to 32 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+    "text": "Time in market, measured without double counting: 216 sessions held at least one position (the per-tranche holding periods above sum to 1790 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
    },
    {
     "kind": "trades",
-    "text": "Single worst trade: GENI long 2026-01-02 to 2026-01-12, -2,790 USD."
+    "text": "Single worst trade: FLUT long 2025-10-22 to 2025-12-29, -5,453 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown -10.01% (-9.10% for the index), trough on 2026-01-07, never recovered. Average gross exposure 4% of starting capital, peak leverage 1.85x."
+    "text": "Worst peak-to-trough drawdown -37.54% (-9.10% for the index), trough on 2025-11-20, recovered 2026-06-10. Average gross exposure 46% of starting capital, peak leverage 1.93x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were -1.51 skewed with excess kurtosis +60.73; historical 95% VaR 0.00%/day with CVaR -0.05%/day. Worst single session -6.32%, best +4.98%."
+    "text": "Daily returns were +0.21 skewed with excess kurtosis +10.86; historical 95% VaR -4.18%/day with CVaR -6.32%/day. Worst single session -14.43%, best +13.09%."
    },
    {
     "kind": "caveat",
@@ -355,27 +359,27 @@
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: -3.97% over 251 sessions - -3,974 USD on 100,000 of paper capital, ending at 96,026. Verdict: lost money."
+    "text": "Outcome: -19.75% over 251 sessions - -19,746 USD on 100,000 of paper capital, ending at 80,254. Verdict: lost money."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 3.97% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 3.97% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 19.75% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 19.75% - so the loss came from implementation, timing or leverage, not from a missing signal."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the -3.97% total, about -0.04pp is explained by carrying beta -0.00 against a +14.41% market (R^2 0.00); the residual -3.93pp is everything else - selection, timing, leverage and cost. DKNG contributed +43 USD across 4 closed trades; GENI was the biggest drag at -2,848 USD."
+    "text": "Of the -19.75% total, about +8.44pp is explained by carrying beta 0.59 against a +14.41% market (R^2 0.03); the residual -28.19pp is everything else - selection, timing, leverage and cost. DKNG contributed +9,876 USD (-50% of net P&L) across 28 closed trades; FLUT was the biggest drag at -16,516 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "Execution cost 401 USD (0.40% of starting capital, 11.1 bp per fill, 10.5 bp of the 381,620 USD traded). 72% of that was spread/depth/impact and 28% was explicit fees and rebates."
+    "text": "Execution cost 6,593 USD (6.59% of starting capital, 20.8 bp per fill, 18.5 bp of the 3,554,754 USD traded). 75% of that was spread/depth/impact and 25% was explicit fees and rebates. Costs exceeded 5% of starting capital and the account still lost money: the turnover was not paid for by the edge."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": "8 closed round trips, 25.0% winners, profit factor 0.01, average winner +25 vs average loser -671 USD, median holding 4 sessions. Time in market, measured without double counting: 7 sessions held at least one position (the per-tranche holding periods above sum to 32 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: GENI long 2026-01-02 to 2026-01-12, -2,790 USD."
+    "text": "80 closed round trips, 42.5% winners, profit factor 0.54, average winner +689 vs average loser -938 USD, median holding 12 sessions. Time in market, measured without double counting: 216 sessions held at least one position (the per-tranche holding periods above sum to 1790 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: FLUT long 2025-10-22 to 2025-12-29, -5,453 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown -10.01% (-9.10% for the index), trough on 2026-01-07, never recovered. Average gross exposure 4% of starting capital, peak leverage 1.85x. Daily returns were -1.51 skewed with excess kurtosis +60.73; historical 95% VaR 0.00%/day with CVaR -0.05%/day. Worst single session -6.32%, best +4.98%."
+    "text": "Worst peak-to-trough drawdown -37.54% (-9.10% for the index), trough on 2025-11-20, recovered 2026-06-10. Average gross exposure 46% of starting capital, peak leverage 1.93x. Daily returns were +0.21 skewed with excess kurtosis +10.86; historical 95% VaR -4.18%/day with CVaR -6.32%/day. Worst single session -14.43%, best +13.09%."
    },
    {
     "title": "Regime context (real market data)",
@@ -391,7 +395,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: -3.97% in a market that returned +14.41%, and a residual of -3.93pp after beta - the trading itself destroyed value, not just the market direction. Finished at -3.97% - a 3,974 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
+    "text": "It did not work: -19.75% in a market that returned +14.41%, and a residual of -28.19pp after beta - the trading itself destroyed value, not just the market direction. Finished at -19.75% - a 19,746 dollar loss on 100,000 of starting capital, in a market that returned +14.41%."
    }
   ],
   "failure_modes_fired": [],
@@ -407,5 +411,5 @@
  },
  "errors": [],
  "account_closed_early": false,
- "sessions_with_orders": 7
+ "sessions_with_orders": 71
 }

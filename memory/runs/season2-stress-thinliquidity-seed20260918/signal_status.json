@@ -489,7 +489,9 @@
     "state": "MISSING",
     "files": [
      "data/real/sports/official/archive/espn_nfl_injuries_2026-09-19.json",
+     "data/real/sports/official/archive/espn_nfl_injuries_2026-09-20.json",
      "data/real/sports/official/archive/nfl_injuries_2026-09-19.raw",
+     "data/real/sports/official/archive/nfl_injuries_2026-09-20.raw",
      "data/real/sports/official/archive"
     ],
     "url": "https://www.nfl.com/injuries/",
@@ -501,6 +503,7 @@
     "state": "MISSING",
     "files": [
      "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+     "data/real/sports/official/archive/espn_nba_injuries_2026-09-20.json",
      "data/real/sports/official/archive"
     ],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
@@ -518,7 +521,7 @@
    "nfl_injury_report",
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nfl_injury_report, nba_injury_report (MISSING) from https://www.nfl.com/injuries/ - official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
  },
  {
   "username": "@NBAInjury_Forward",
@@ -529,6 +532,7 @@
     "state": "MISSING",
     "files": [
      "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+     "data/real/sports/official/archive/espn_nba_injuries_2026-09-20.json",
      "data/real/sports/official/archive"
     ],
     "url": "https://official.nba.com/nba-injury-report-2025-26-season/",
@@ -544,7 +548,7 @@
   "waiting_on": [
    "nba_injury_report"
   ],
-  "idle_reason": "no trades: waiting on nba_injury_report (MISSING) from https://official.nba.com/nba-injury-report-2025-26-season/ - official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
+  "idle_reason": "no trades: waiting on nba_injury_report (MISSING) from https://official.nba.com/nba-injury-report-2025-26-season/ - official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades"
  },
  {
   "username": "@SportsPred_Forward",

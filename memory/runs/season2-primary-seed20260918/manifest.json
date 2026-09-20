@@ -1,11 +1,11 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-primary-seed20260918",
- "created_utc": "2026-09-20T00:01:50Z",
- "finalised_utc": "2026-09-20T00:01:52Z",
+ "created_utc": "2026-09-20T00:27:12Z",
+ "finalised_utc": "2026-09-20T00:27:14Z",
  "code": {
   "git": {
-   "commit": "5dbbf7854589d2826558c444d9f1ec0bb82fd80c",
+   "commit": "48de90dfef9d1921178ecf367944dbff5989ada7",
    "branch": "arena/01a0bba5-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim"
@@ -90,8 +90,8 @@
    "kind": "json"
   },
   "reports/NBA_Slate_Attention.json": {
-   "sha256": "5184e6959c33f28c782d66f4b6e33cdb1141e576784af64b065ef46ca623c790",
-   "bytes": 15733,
+   "sha256": "2f844297b9566344194578e59f85d19f082754f5e208105e723a150fa2b108e2",
+   "bytes": 15928,
    "kind": "json"
   },
   "reports/NCAA_Upset_Blitz.json": {
@@ -155,8 +155,8 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "3a46bcac57d27a75e2dfc7266f2d0c69feefb343d88f2487f611510c5582299f",
-   "bytes": 10225,
+   "sha256": "536369c1d4808848073f8ea5eb7b1bf9b7bd263dae3df621fe843b11b909dc14",
+   "bytes": 10227,
    "kind": "json"
   },
   "irregularities.json": {
@@ -170,38 +170,38 @@
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "f3a731e12903c569f4a5281b09642df3d78361f95570e0718eec7a18a8439ceb",
-   "bytes": 43426,
+   "sha256": "003fdc8634ee2bf5fc1511fa5848cd4fd268df3c2fc26d898e56f2738634435d",
+   "bytes": 43663,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "026f91a592f397dba65a119796853ed9eadbc3f9adaf2c9b58ee37267140b84a",
-   "bytes": 45356,
+   "sha256": "d15ac82e0ccfd714370fcccf9a4fef76289d1d3af04265574dfab3e892f17524",
+   "bytes": 45946,
    "kind": "json"
   },
   "signal_status.json": {
-   "sha256": "21cf0d513a9e4af7b81ea5193a93143f169c1b0b9562863f34959176e12e6f34",
-   "bytes": 14819,
+   "sha256": "13babd8fde8e34461d5d91b979cb74bf320f05d6183ad75a6f65d28fd428841d",
+   "bytes": 15117,
    "kind": "json"
   },
   "signal_book.json": {
-   "sha256": "6d662c5ec88c9fb149d48d5665849a94ed3268f0ac09337278b75b46d4e28a1d",
-   "bytes": 353629,
+   "sha256": "ad90d2be091ff43f6721f507ab38e10c093148898c22ba6ba3ba85269453ccad",
+   "bytes": 354133,
    "kind": "json"
   },
   "market_data.json": {
-   "sha256": "870c3c4749574e681faccf125a16706b5f0912827ab89e3dc89347ea2521e788",
+   "sha256": "da0e2b674c8477aca8dfdfceb063b696234f25984a8d5ba4a7e6c92e84f5ff2b",
    "bytes": 1287148,
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "b937d8f169545cae9b658fa55cbf5c812be41e8aa291841eaa46f610a774df72",
+   "sha256": "3c25a46e70c0ed1320e77483684fb283ea18c012424c9b26283d9f640175b01f",
    "bytes": 508,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "7383f38a0ac0fb2a0913a03278800f0906420a49e6072d23b8e0b0fe2b59e29a",
-   "bytes": 13306,
+   "sha256": "9391e4b6c777eee0624d0be207e4de1b88325f0e1623cb4baad4cb99658b9db4",
+   "bytes": 13309,
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
@@ -211,34 +211,34 @@
    "rows": 168
   },
   "events/equity.jsonl.gz": {
-   "sha256": "ef282336db415409950ac77bead07acf9a4a1048057d3f378044f57133398147",
-   "bytes": 96172,
+   "sha256": "5867d6a70a4caa9eb6fe411602235a024dd6a748af6ee583bf43e1e83f04dde7",
+   "bytes": 98529,
    "kind": "jsonl.gz",
    "rows": 4769
   },
   "events/fills.jsonl.gz": {
-   "sha256": "0af133cd440eac609fd34b98e6e972aabf41ca510799653dbee58f714a897ecb",
-   "bytes": 78655,
+   "sha256": "32bd7d751ad6d7fde05bf90d8af9fc63a2055973c7198e8416c888195dba114f",
+   "bytes": 89884,
    "kind": "jsonl.gz",
-   "rows": 994
+   "rows": 1127
   },
   "events/margin.jsonl.gz": {
-   "sha256": "ba34177a458b8c0aae7af2bdb4a5eadce35b2816aa21f28ca641533db231c9a5",
-   "bytes": 395,
+   "sha256": "a150725bf2444488b047aeb9fb5940c56d8d8f0a9131ebc6d0cfc25a5e789f27",
+   "bytes": 393,
    "kind": "jsonl.gz",
    "rows": 11
   },
   "events/orders.jsonl.gz": {
-   "sha256": "c32b2c2a8e84fea83391b98c7622f1e5e52bd057aedc94d6cc93269341a71b0d",
-   "bytes": 10491,
+   "sha256": "71699ba90bfdaa65ec6358dd7e0b3cac15f25039a433c9f6c8e15e375c8abb14",
+   "bytes": 11974,
    "kind": "jsonl.gz",
-   "rows": 994
+   "rows": 1127
   },
   "events/positions.jsonl.gz": {
-   "sha256": "e01f2b679aca34946fa073f15b4c42a1168fcbf0d21e72bc2bcb1a3745c18b49",
-   "bytes": 89100,
+   "sha256": "a346e3e33dfd378e16d7f1efcc7daf1f3a64a2c8237e6e9bf01f2adf9c8ee79c",
+   "bytes": 95229,
    "kind": "jsonl.gz",
-   "rows": 3545
+   "rows": 3727
   },
   "events/quotes.jsonl.gz": {
    "sha256": "5431a47708ec75a790ab1bc6227ff13e333d2eded67b397920f7756b4fd41084",
@@ -490,16 +490,16 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-20T00:01:50Z",
-  "finished_utc": "2026-09-20T00:01:51Z",
-  "elapsed_seconds": 1.65
+  "started_utc": "2026-09-20T00:27:12Z",
+  "finished_utc": "2026-09-20T00:27:14Z",
+  "elapsed_seconds": 1.72
  },
  "irregularity_count": 0,
  "data_sources": {
   "market": {
    "SPY": {
     "file": "data/real/prices/yahoo/SPY.json",
-    "sha256": "67cd54488bddcf4243b7a01d2511ce7bf9c764aa3d95c2046747f9596b2ed1c3",
+    "sha256": "3931ea57b2a1e13aeae86b8e45a8f43ed01fa8803291277dbba43b2e25ef71d2",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -524,7 +524,7 @@
    },
    "QQQ": {
     "file": "data/real/prices/yahoo/QQQ.json",
-    "sha256": "81197b804a5dd74951b4d1d31cebcd2db07dea1596eef6cbedd251548bebe352",
+    "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -549,7 +549,7 @@
    },
    "IWM": {
     "file": "data/real/prices/yahoo/IWM.json",
-    "sha256": "396795a6b914a72df2fb491d52f4fc72354857c398c47b8eb838f8cddb3ee3f1",
+    "sha256": "963af45e95ba4dd88d6c1ea585f19d77033200e37ddd28a5121a94e2a7955658",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -624,7 +624,7 @@
    },
    "XLU": {
     "file": "data/real/prices/yahoo/XLU.json",
-    "sha256": "a924ca20f78a1d969118f4e0d0a0393c6da7b0b5464e5e4352cf4884d0a1a705",
+    "sha256": "f045431d1840319d38f48f282207c4bfe6f3631f996b89dfab8157389963987a",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -649,7 +649,7 @@
    },
    "XBI": {
     "file": "data/real/prices/yahoo/XBI.json",
-    "sha256": "cea13292e9d574ce9a4f5e4eb64c1d0175034a911b79daf540f3ca04d9b58eb0",
+    "sha256": "0b046f02546a501b244d3bce7680f57cb0205664c019fede60f39f493e2eb3c8",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -674,7 +674,7 @@
    },
    "IBB": {
     "file": "data/real/prices/yahoo/IBB.json",
-    "sha256": "7fa0cc4f6f88d693fc9522a8622736dc2f8ec175c397bbf814fc6afece2b9fff",
+    "sha256": "bbf8d17609a30eaff10086ae0a6baa3b70ade87cc438a0c013a3a4f64462c7b8",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -699,7 +699,7 @@
    },
    "TLT": {
     "file": "data/real/prices/yahoo/TLT.json",
-    "sha256": "f158649da414945225c7b63ef10397a5ca900a385e3aa2f38ae6234b50084c10",
+    "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -849,7 +849,7 @@
    },
    "AAPL": {
     "file": "data/real/prices/yahoo/AAPL.json",
-    "sha256": "7ffa155b1b94afcf76ea90febc6d56eb4d4ae7e88dad7d107cb1101b15448919",
+    "sha256": "ef28156c9d5bb28622e5a26ac4df84282c342db4f436ac8371710e8689192924",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -874,7 +874,7 @@
    },
    "MSFT": {
     "file": "data/real/prices/yahoo/MSFT.json",
-    "sha256": "e977d112441426136a08cd90cd6b7938192bf0f537eb249a6f6cea7d3bb6163e",
+    "sha256": "ddfbc8eb1d06673860cf5c257832ebc4c2dfaba6e920993255de8b6a9ef7a558",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -899,7 +899,7 @@
    },
    "NVDA": {
     "file": "data/real/prices/yahoo/NVDA.json",
-    "sha256": "c3a3a5115d5001a25f2f35579c12f01c06bcb063ad7ef0a7752275751e626e72",
+    "sha256": "b08a8e56330af28cb5cf13f3d4f3484fe79919c5e0961baa172b8901ad0f2a07",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -924,7 +924,7 @@
    },
    "JPM": {
     "file": "data/real/prices/yahoo/JPM.json",
-    "sha256": "d7a5341e5cad11d5117f658bb3056884a442f3b70663e4efffca7ff0bbcbf974",
+    "sha256": "7c16ee6677fecaf1eb23d519369050b7c38f05d7e1615beb6f9a6261c24453af",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -949,7 +949,7 @@
    },
    "XOM": {
     "file": "data/real/prices/yahoo/XOM.json",
-    "sha256": "067fb872f6dc69dfa38fad48bd6e4ec4f9411413526cb67ecbcbb47b0e201377",
+    "sha256": "8404fbe647a1eb61948a8d69f30f7709a1bc70505e490376ed2499c77fb09f9e",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -974,7 +974,7 @@
    },
    "JNJ": {
     "file": "data/real/prices/yahoo/JNJ.json",
-    "sha256": "f67940aad9c8a4c17618f80c5092624340bb5fd6cf01b949ad72f4c05bc6b535",
+    "sha256": "5ff43bbfca6b767bc93ef3424ab9dbf029f3ca2da10ff1a43de91fbc525aad5b",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -999,7 +999,7 @@
    },
    "PG": {
     "file": "data/real/prices/yahoo/PG.json",
-    "sha256": "83266d5afa574cc900be482801c9edba1b9ca9bb95aea9520557f955de5db3ac",
+    "sha256": "d248e1aacf84d523d4e5b393b8c2f83da5c50d4ab08efc47ac0fc3350279daac",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -1049,7 +1049,7 @@
    },
    "MU": {
     "file": "data/real/prices/yahoo/MU.json",
-    "sha256": "93612e8da61cae4a0124e93c93afbe724580efcf1da9910178833d7c0979641b",
+    "sha256": "18cdbbd4cf978fecc178bca160ddf6697fc79f1820b191d13ce74954bcce91db",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -1074,7 +1074,7 @@
    },
    "T": {
     "file": "data/real/prices/yahoo/T.json",
-    "sha256": "2950f2a442d2086dc5b08171d37a7aed55d0c99b2d2de7cd3fed9e8355d029e2",
+    "sha256": "63602bc11968f6b65d858bd14aa5a4cabebba3386789e3715dea5c9197a6f1f3",
     "provider": "yahoo-v8-chart",
     "source_class": "SECONDARY",
     "url": "",
@@ -1103,22 +1103,22 @@
  },
  "ledger_summary": {
   "participant": "ALL",
-  "fill_count": 994,
-  "order_days": 242,
-  "round_trips_closed": 489,
+  "fill_count": 1127,
+  "order_days": 243,
+  "round_trips_closed": 559,
   "round_trips_open": 0,
-  "gross_pnl_usd": 50812.4104,
-  "fees_usd": 1661.5792,
-  "net_pnl_usd": 49150.8311,
-  "win_rate_pct": 45.6,
-  "average_holding_sessions": 49.822,
-  "total_notional_usd": 24311944.43,
-  "total_explicit_cost_usd": 1661.5792,
-  "total_modelled_execution_cost_usd": 6580.7581,
-  "median_participation_pct": 0.00046,
-  "max_participation_pct": 0.22942,
-  "slippage_vs_open_bps_mean": -0.914,
-  "slippage_vs_close_bps_mean": 6.086,
+  "gross_pnl_usd": 37675.5413,
+  "fees_usd": 2372.7323,
+  "net_pnl_usd": 35302.809,
+  "win_rate_pct": 45.8,
+  "average_holding_sessions": 52.884,
+  "total_notional_usd": 27523427.84,
+  "total_explicit_cost_usd": 2372.7323,
+  "total_modelled_execution_cost_usd": 10468.4295,
+  "median_participation_pct": 0.00058,
+  "max_participation_pct": 0.3661,
+  "slippage_vs_open_bps_mean": -0.556,
+  "slippage_vs_close_bps_mean": 7.231,
   "symbols": [
    "DKNG",
    "FLUT",
@@ -1137,26 +1137,26 @@
   ]
  },
  "ledger": {
-  "fills": 994,
-  "round_trips": 489,
-  "net_pnl_usd": 49150.8311,
-  "digest_sha256": "fb620cab356df4e7153ed05f2c49975510252ea6445ec92ecedf1f261caa23ec",
+  "fills": 1127,
+  "round_trips": 559,
+  "net_pnl_usd": 35302.809,
+  "digest_sha256": "71af44a07a598216b6c1fbd8b380084db0c208c292f019ad259601e8db59a498",
   "files": {
    "ledger_fills.jsonl": {
-    "sha256": "0c6f0ec8a78b45e2a03fb1a46620f6c2684f639a44a57dd871175d1f15856ef7",
-    "bytes": 1212652
+    "sha256": "8e2104b9ecad0e37e3e0ff4e4ebce8604bae19ebf1b8abc391e2b087ff6b28ba",
+    "bytes": 1375653
    },
    "ledger_trips.jsonl": {
-    "sha256": "d6190578df5898c07cb78c6cd0491a329f1bd343e5d7d687bdfb135c6c2a1728",
-    "bytes": 252009
+    "sha256": "01ebdb6e12d87d923383e402d51cde68b5a3af1ee892a148b8f8ff74d6acfcd7",
+    "bytes": 289266
    },
    "ledger_summary.json": {
-    "sha256": "9e345afc2323a879e77abd3f66638663cb16d2434c3cc6f0837e85063c1f6a56",
+    "sha256": "e9b460d856eda280c4d3f6e0be2163d01be5b962242a12440434556af44bfa10",
     "bytes": 681
    },
    "ledger_fills.csv": {
-    "sha256": "c8ff48c225e91cc9ada4fff85f760954af3b24c75bd58692d84a882cca2e0a33",
-    "bytes": 405308
+    "sha256": "d5a0bb0740cadc05cccf0532f04bf73c017cdf966195daac939a7bb697567f71",
+    "bytes": 460386
    }
   }
  },

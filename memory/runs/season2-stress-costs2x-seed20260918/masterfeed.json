@@ -565,41 +565,41 @@
   },
   "nba_games_7d": {
    "state": "AVAILABLE",
-   "rows": 25,
+   "rows": 1326,
    "window": [
-    "2026-01-01",
-    "2026-01-04"
+    "2025-10-21",
+    "2026-06-14"
    ],
    "files": [
     "data/real/sports/nba_scoreboard.jsonl"
    ],
-   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "nba_close_games_7d": {
    "state": "AVAILABLE",
-   "rows": 25,
+   "rows": 1326,
    "window": [
-    "2026-01-01",
-    "2026-01-04"
+    "2025-10-21",
+    "2026-06-14"
    ],
    "files": [
     "data/real/sports/nba_scoreboard.jsonl"
    ],
-   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "nba_away_wins_7d": {
    "state": "AVAILABLE",
-   "rows": 25,
+   "rows": 1326,
    "window": [
-    "2026-01-01",
-    "2026-01-04"
+    "2025-10-21",
+    "2026-06-14"
    ],
    "files": [
     "data/real/sports/nba_scoreboard.jsonl"
    ],
-   "note": "ESPN scoreboard finals (SECONDARY publisher), 25 games 2026-01-01..2026-01-04; close margin <= 3 points; away wins are the only upset prior in the collected data",
+   "note": "ESPN scoreboard finals (SECONDARY publisher), 1326 games 2025-10-21..2026-06-14; close margin <= 3 points; away wins are the only upset prior in the collected data",
    "url": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard"
   },
   "weather_cold_anomaly_10d": {
@@ -715,10 +715,12 @@
    ],
    "files": [
     "data/real/sports/official/archive/espn_nfl_injuries_2026-09-19.json",
+    "data/real/sports/official/archive/espn_nfl_injuries_2026-09-20.json",
     "data/real/sports/official/archive/nfl_injuries_2026-09-19.raw",
+    "data/real/sports/official/archive/nfl_injuries_2026-09-20.raw",
     "data/real/sports/official/archive"
    ],
-   "note": "official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "note": "official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://www.nfl.com/injuries/"
   },
   "nba_injury_report": {
@@ -730,9 +732,10 @@
    ],
    "files": [
     "data/real/sports/official/archive/espn_nba_injuries_2026-09-19.json",
+    "data/real/sports/official/archive/espn_nba_injuries_2026-09-20.json",
     "data/real/sports/official/archive"
    ],
-   "note": "official feed resolves (the dated archive holds 1 capture(s) (2026-09-19..2026-09-19), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
+   "note": "official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
   },
   "insider_buys_30d::AAPL": {
@@ -1393,19 +1396,19 @@
    "state": "AVAILABLE"
   },
   "nba_games_7d": {
-   "sessions_actionable": 6,
+   "sessions_actionable": 165,
    "sessions_in_window": 251,
    "last_value": 0.0,
    "state": "AVAILABLE"
   },
   "nba_close_games_7d": {
-   "sessions_actionable": 5,
+   "sessions_actionable": 146,
    "sessions_in_window": 251,
    "last_value": 0.0,
    "state": "AVAILABLE"
   },
   "nba_away_wins_7d": {
-   "sessions_actionable": 6,
+   "sessions_actionable": 164,
    "sessions_in_window": 251,
    "last_value": 0.0,
    "state": "AVAILABLE"

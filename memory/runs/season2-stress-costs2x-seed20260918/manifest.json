@@ -1,14 +1,14 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-stress-costs2x-seed20260918",
- "created_utc": "2026-09-20T00:27:14Z",
- "finalised_utc": "2026-09-20T00:27:16Z",
+ "created_utc": "2026-09-20T00:59:39Z",
+ "finalised_utc": "2026-09-20T00:59:41Z",
  "code": {
   "git": {
-   "commit": "48de90dfef9d1921178ecf367944dbff5989ada7",
+   "commit": "205dd1a1ce7c7db0dfee870e7d5c0600e03f5848",
    "branch": "arena/01a0bba5-stockpapersim",
    "dirty": true,
-   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim"
+   "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
   "python_module_hashes": {
    "sim/__init__.py": "a0ad02725d524ff86cdf74609a42200620a4d0f22afc372ec9ec024dd942a60e",
@@ -20,7 +20,7 @@
    "sim/eligibility.py": "13db4fb6d419a4a1ae93f1b3875dd87f1f27b836f1d08595a8f39b3a7b080d9a",
    "sim/engine.py": "06ca3c41ad424a5b6d344669644f4a38ce2249501f8d3441aaa9f934713cda81",
    "sim/equity_pilot.py": "d125345ab84c9386db3762dbbe976ead635162afbe82537777e470a45cec2161",
-   "sim/ledger.py": "fe07879d26c2b34a97e5c7029133a67e204b994be71bf0f0711da1e661ab5580",
+   "sim/ledger.py": "a77f152dc53e6f5cefdeb8a160f531c97f3618726d572312b30faa1f7fa2cecf",
    "sim/live.py": "f88f3e1cc66106f7d872658626ee59f0f36e5165e7c5b3873df7ab892efb4617",
    "sim/live_season.py": "4cacfb62f1b6412637f53bddcbe320d9b0a2c3283055fdd25fd26c9c6ad1b403",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
@@ -185,13 +185,13 @@
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "4067768946b83e98db7a63b457ffe84767155592644de1a7ba174b9c82b29fb5",
+   "sha256": "2bafef2db3adb49cc1d41a13ac70b1fcb0a2dab7a47167a45b8de700b5ab9c48",
    "bytes": 508,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "40330f59f51f9d0dda95552082f3b384af2ef36d79c296f689ed6a3b057606e6",
-   "bytes": 13322,
+   "sha256": "6557f12cb02aebbe905f1d8adc7a470e795096d4a34c5886e27ec4ebb60a7644",
+   "bytes": 13321,
    "kind": "json"
   }
  },
@@ -438,9 +438,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-20T00:27:14Z",
-  "finished_utc": "2026-09-20T00:27:16Z",
-  "elapsed_seconds": 1.29
+  "started_utc": "2026-09-20T00:59:39Z",
+  "finished_utc": "2026-09-20T00:59:41Z",
+  "elapsed_seconds": 1.41
  },
  "irregularity_count": 0,
  "data_sources": {
@@ -1053,13 +1053,13 @@
   "participant": "ALL",
   "fill_count": 1124,
   "order_days": 243,
-  "round_trips_closed": 565,
+  "round_trips_closed": 566,
   "round_trips_open": 0,
-  "gross_pnl_usd": 33187.5291,
-  "fees_usd": 5611.2021,
-  "net_pnl_usd": 27576.3268,
-  "win_rate_pct": 45.49,
-  "average_holding_sessions": 53.096,
+  "gross_pnl_usd": 33187.5293,
+  "fees_usd": 5611.2028,
+  "net_pnl_usd": 27576.328,
+  "win_rate_pct": 44.17,
+  "average_holding_sessions": 33.629,
   "total_notional_usd": 27410997.69,
   "total_explicit_cost_usd": 5611.2037,
   "total_modelled_execution_cost_usd": 14410.842,
@@ -1086,8 +1086,8 @@
  },
  "ledger": {
   "fills": 1124,
-  "round_trips": 565,
-  "net_pnl_usd": 27576.3268,
+  "round_trips": 566,
+  "net_pnl_usd": 27576.328,
   "digest_sha256": "07931fa7b5b4097edac31bccbfffce5cbd6ab98cc44b39bd5374c18440f06df2",
   "files": {
    "ledger_fills.jsonl": {
@@ -1095,12 +1095,12 @@
     "bytes": 1373184
    },
    "ledger_trips.jsonl": {
-    "sha256": "a45b68799b7f2151cbda98d73b8c41921fb9ccac065e8edb44d00ac525b399f9",
-    "bytes": 292795
+    "sha256": "71f19fb80cfe304d101d01645e23f4a5caa4da2b95e427dbb752da6259233c00",
+    "bytes": 314033
    },
    "ledger_summary.json": {
-    "sha256": "bc55bf27e364338767646f23054fabe05f6a8510628fad25cc303e671000e7a5",
-    "bytes": 682
+    "sha256": "15cb4d5797fba10d162d344d3bef009d4a9c9e68d4bd1264e3cfdaf08bce976d",
+    "bytes": 681
    },
    "ledger_fills.csv": {
     "sha256": "2658c6cf86ca32399ca5e546225151f7d5a86ebc303cd623797709e3de25c5aa",

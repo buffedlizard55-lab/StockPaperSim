@@ -359,19 +359,23 @@ def _round_trips(fills: Sequence[dict]) -> List[dict]:
     the result is a difference in arithmetic, not a difference in ordering.
     """
     ordered = sorted(fills, key=lambda f: (f["date"], f["symbol"], int(f.get("interval") or 0)))
-    lots: Dict[str, dict] = {}
+    # Lots are keyed per (participant, symbol): two participants trading the
+    # same name must not close each other's lots, or the all-participant trip
+    # list stops being the union of the per-participant lists (IR-78).
+    lots: Dict[tuple, dict] = {}
     trips: List[dict] = []
     for fill in ordered:
         qty = int(fill["filled_qty"])
         if qty <= 0:
             continue
         symbol = fill["symbol"]
+        lot_key = (fill.get("participant") or "", symbol)
         side = fill["side"]
         signed = qty if side == "buy" else -qty
         price = float(fill["avg_price"])
         fee = (float(fill.get("commission") or 0.0) + float(fill.get("exchange_fee") or 0.0)
                + float(fill.get("regulatory_fee") or 0.0) - float(fill.get("rebate") or 0.0))
-        lot = lots.get(symbol)
+        lot = lots.get(lot_key)
         if lot and lot["qty"] != 0 and (lot["qty"] > 0) != (signed > 0):
             close = min(abs(lot["qty"]), qty)
             share_closed = close / abs(lot["qty"])
@@ -380,6 +384,7 @@ def _round_trips(fills: Sequence[dict]) -> List[dict]:
             entry_fee = lot["fee"] * share_closed
             exit_fee = fee * (close / qty)
             trips.append({
+                "participant": lot_key[0],
                 "symbol": symbol,
                 "direction": "long" if lot["qty"] > 0 else "short",
                 "entry_date": lot["date"], "exit_date": fill["date"],
@@ -390,14 +395,14 @@ def _round_trips(fills: Sequence[dict]) -> List[dict]:
             lot["fee"] -= entry_fee
             remainder = qty - close
             if lot["qty"] == 0:
-                lots.pop(symbol, None)
+                lots.pop(lot_key, None)
             if remainder > 0:
-                lots[symbol] = {"qty": remainder * (1 if signed > 0 else -1),
-                                "avg": price, "date": fill["date"],
-                                "fee": fee * (remainder / qty)}
+                lots[lot_key] = {"qty": remainder * (1 if signed > 0 else -1),
+                                 "avg": price, "date": fill["date"],
+                                 "fee": fee * (remainder / qty)}
             continue
         if not lot or lot["qty"] == 0:
-            lots[symbol] = {"qty": signed, "avg": price, "date": fill["date"], "fee": fee}
+            lots[lot_key] = {"qty": signed, "avg": price, "date": fill["date"], "fee": fee}
             continue
         total = abs(lot["qty"]) + qty
         lot["avg"] = (lot["avg"] * abs(lot["qty"]) + price * qty) / total
@@ -425,10 +430,11 @@ def audit_ledger(rep: Report, run_dir: str) -> None:
     theirs = [t for t in published if t.get("status") == "closed"]
     rep.check("ledger", len(mine) == len(theirs),
               f"re-derived {len(mine)} closed round trips, published {len(theirs)}")
-    by_key = {(t["symbol"], t["entry_date"], t["exit_date"], int(t["quantity"])): t
-              for t in theirs}
+    by_key = {(t.get("participant"), t["symbol"], t["entry_date"], t["exit_date"],
+               int(t["quantity"])): t for t in theirs}
     for trip in mine:
-        key = (trip["symbol"], trip["entry_date"], trip["exit_date"], trip["quantity"])
+        key = (trip["participant"], trip["symbol"], trip["entry_date"],
+               trip["exit_date"], trip["quantity"])
         ref = by_key.get(key)
         if ref is None:
             rep.check("ledger", False, f"round trip {key} is not in the published ledger")
@@ -443,6 +449,27 @@ def audit_ledger(rep: Report, run_dir: str) -> None:
               f"{round(total_net, 2)}")
     rep.check("ledger", int(summary.get("fill_count", -1)) == len(fills),
               f"summary says {summary.get('fill_count')} fills, the tape has {len(fills)}")
+
+    # IR-78: a published trip without a participant renders on nobody's page.
+    names = {f.get("participant") for f in fills}
+    for t in published:
+        if t.get("status") != "closed":
+            continue
+        rep.check("ledger", bool(t.get("participant")),
+                  f"closed trip {t.get('symbol')} {t.get('entry_date')} has no participant")
+        rep.check("ledger", t.get("participant") in names,
+                  f"closed trip names participant {t.get('participant')!r}, "
+                  "which has no fills in the tape")
+    board = read_json(os.path.join(run_dir, "leaderboard.json")) or {}
+    for row in board.get("leaderboard", []):
+        user = row.get("username", "")
+        mine_n = sum(1 for t in mine if t["participant"] == user)
+        published_n = sum(1 for t in theirs if t.get("participant") == user)
+        rep.check("ledger", published_n == row.get("closed_trades", -1),
+                  f"{user}: leaderboard says {row.get('closed_trades')} closed trades, "
+                  f"the published trip list has {published_n}")
+        rep.check("ledger", mine_n == published_n,
+                  f"{user}: re-derived {mine_n} closed trips, published {published_n}")
 
 
 def audit_fill_references(rep: Report, run_dir: str, data_root: str) -> None:

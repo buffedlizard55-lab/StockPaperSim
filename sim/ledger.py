@@ -101,19 +101,27 @@ def build_round_trips(fills: Sequence[dict]) -> List[dict]:
     average cost; a fill that crosses zero closes the lot and opens a new one in
     the opposite direction.
     """
-    open_lots: Dict[str, dict] = {}
+    # Lots are keyed by (participant, symbol), never symbol alone: in the
+    # all-participant ledger two participants trading the same symbol must not
+    # blend into or close each other's lots, or the trip list stops being the
+    # union of the per-participant trip lists.  Each trip row carries the
+    # participant whose lot it closed, which is what the participant pages and
+    # the site builder's trips_for() filter on.
+    open_lots: Dict[tuple, dict] = {}
     trips: List[dict] = []
     for fill in fills:
         if fill.get("filled_qty", 0) <= 0:
             continue
         symbol = fill["symbol"]
+        participant = fill.get("participant") or ""
+        lot_key = (participant, symbol)
         signed = fill["filled_qty"] if fill["side"] == "buy" else -fill["filled_qty"]
         direction = "long" if signed > 0 else "short"
         price = fill["avg_price"]
         qty = abs(signed)
         fees = (fill.get("commission", 0.0) + fill.get("exchange_fee", 0.0)
                 + fill.get("regulatory_fee", 0.0) - fill.get("rebate", 0.0))
-        lot = open_lots.get(symbol)
+        lot = open_lots.get(lot_key)
         if lot and lot["remaining"] > 0 and lot["direction"] != direction:
             close_qty = min(lot["remaining"], qty)
             share_in = close_qty / lot["remaining"] if lot["remaining"] else 0.0
@@ -123,7 +131,8 @@ def build_round_trips(fills: Sequence[dict]) -> List[dict]:
             sign = 1.0 if lot["direction"] == "long" else -1.0
             gross = sign * (price - lot["avg_cost"]) * close_qty
             trips.append({
-                "symbol": symbol, "direction": lot["direction"], "quantity": close_qty,
+                "participant": participant, "symbol": symbol,
+                "direction": lot["direction"], "quantity": close_qty,
                 "entry_date": lot["entry_date"], "entry_price": round(lot["avg_cost"], 6),
                 "exit_date": fill["date"], "exit_price": round(price, 6),
                 "gross_pnl_usd": round(gross, 4),
@@ -142,9 +151,10 @@ def build_round_trips(fills: Sequence[dict]) -> List[dict]:
             lot["fees"] -= entry_fees
             residual = qty - close_qty
             if lot["remaining"] <= 0:
-                open_lots.pop(symbol, None)
+                open_lots.pop(lot_key, None)
             if residual > 0:
-                open_lots[symbol] = {
+                open_lots[lot_key] = {
+                    "participant": participant,
                     "direction": direction, "remaining": residual, "avg_cost": price,
                     "entry_date": fill["date"], "fees": fees - exit_fees,
                     "reason": fill.get("reason", ""), "fills": 1,
@@ -153,7 +163,8 @@ def build_round_trips(fills: Sequence[dict]) -> List[dict]:
                 }
             continue
         if lot is None or lot["remaining"] <= 0:
-            open_lots[symbol] = {
+            open_lots[lot_key] = {
+                "participant": participant,
                 "direction": direction, "remaining": qty, "avg_cost": price,
                 "entry_date": fill["date"], "fees": fees,
                 "reason": fill.get("reason", ""), "fills": 1,
@@ -166,10 +177,12 @@ def build_round_trips(fills: Sequence[dict]) -> List[dict]:
         lot["remaining"] = prev + qty
         lot["fees"] += fees
         lot["fills"] = lot.get("fills", 1) + 1
-    for symbol, lot in sorted(open_lots.items()):
+    for _key, lot in sorted(open_lots.items()):
         if lot["remaining"]:
             trips.append({
-                "symbol": symbol, "direction": lot["direction"], "quantity": lot["remaining"],
+                "participant": lot.get("participant", ""),
+                "symbol": _key[1], "direction": lot["direction"],
+                "quantity": lot["remaining"],
                 "entry_date": lot["entry_date"], "entry_price": round(lot["avg_cost"], 6),
                 "exit_date": "OPEN", "exit_price": None,
                 "gross_pnl_usd": 0.0, "fees_usd": round(lot["fees"], 4),

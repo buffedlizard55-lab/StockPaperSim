@@ -816,5 +816,18 @@
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/data/real/collection_manifest.json",
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/scripts/collect_real_data.py"
   ]
+ },
+ {
+  "id": "IR-78",
+  "topic": "Every participant page said 'No closed round trips' next to prose that counted them",
+  "severity": "medium",
+  "detail": "Found 2026-09-20 while spot-checking the merged site: @NBA_Slate_Attention's page reported '79 closed round trips' in its post-mortem, a per-symbol P&L attribution and a largest-worst-trade - and directly below that, 'Round trips (largest 40): No closed round trips'. The cause is in the ledger, not the page: build_round_trips keyed open lots by symbol alone and never wrote a participant field into any trip row, so the site builder's trips_for(username) - which filters on t['participant'] - matched nothing for every participant, on every page, since the first Season 2 publication. The same symbol-only keying meant that in the all-participant ledger two participants trading the same symbol could blend into or close each other's lots, so the trip list was not the union of the per-participant ledgers even in aggregate statistics (the stress labels' round-trip counts moved by 1-3 when the keying was fixed; the primary window's count did not, and total net P&L is fill-invariant in any case).",
+  "resolution": "sim/ledger.py now keys open lots by (participant, symbol) and every trip row - closed and open - carries the participant whose lot it closed, so the all-participant ledger is exactly the union of the per-participant ledgers. The Season 2 memory was re-derived: per-participant trip counts now equal the leaderboard's closed_trades for all 19 participants, total net P&L is unchanged to the cent ($35,302.81; the ledger digest hashes the fill tape, which did not change), and the participant pages render their round-trip tables. The independent audit's own re-derivation was fixed the same way (it had the same symbol-only keying, which is why it agreed with the contaminated published list) and now additionally checks that every published closed trip names a participant with fills in the tape, that each participant's published trip count equals their leaderboard closed_trades, and that the audit's re-derived per-participant counts equal the published ones. A regression test covers the two-participants-one-symbol blending case that produced phantom attribution.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/ledger.py",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/scripts/independent_audit_season2.py",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/scripts/build_site_season2.py",
+   "https://buffedlizard55-lab.github.io/StockPaperSim/docs/season2/participants/NBA_Slate_Attention.html"
+  ]
  }
 ]

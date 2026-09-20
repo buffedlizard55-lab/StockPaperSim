@@ -1,173 +1,125 @@
 {
- "generated_at": "2026-09-19T22:50:00Z",
+ "generated_at": "2026-09-20T00:01:45Z",
  "window": {
   "warmup_start": "2024-09-16",
   "season_start": "2025-09-17",
   "season_end": "2026-09-16"
  },
  "collected": {
-  "yahoo": {
-   "ok": [
-    "SPY",
-    "QQQ",
-    "IWM",
-    "GLD",
-    "UNG",
-    "XLU",
-    "XBI",
-    "IBB",
-    "TLT",
-    "DKNG",
-    "FLUT",
-    "PENN",
-    "SRAD",
-    "GENI",
-    "AAPL",
-    "MSFT",
-    "NVDA",
-    "JPM",
-    "XOM",
-    "JNJ",
-    "PG",
-    "TSLA",
-    "MU",
-    "T",
-    "^GSPC",
-    "^VIX"
-   ],
+  "mlb": {
+   "rows": 2322,
+   "ok": true,
+   "preserved_existing": false
+  },
+  "espn": {
+   "nfl": {
+    "rows": 285,
+    "chunks_failed": 0,
+    "preserved_existing": false
+   },
+   "ncaaf": {
+    "rows": 282,
+    "chunks_failed": 0,
+    "preserved_existing": false
+   },
+   "nba": {
+    "rows": 25,
+    "chunks_failed": 0,
+    "preserved_existing": false
+   },
+   "mlb": {
+    "rows": 0,
+    "chunks_failed": 0,
+    "preserved_existing": true
+   }
+  },
+  "nba": {
+   "ok": false,
+   "rows": 0
+  },
+  "official_docs": {
+   "nba_injury_report_index": {
+    "ok": false
+   },
+   "nfl_injuries": {
+    "ok": true,
+    "bytes": 387312
+   },
+   "ncaa_scoreboard_fbs_2025_week10": {
+    "ok": true,
+    "bytes": 72675
+   },
+   "nba_stats_scoreboard_probe": {
+    "ok": false
+   }
+  },
+  "injury_archive": {
+   "date": "2026-09-19",
+   "captures": {
+    "espn_nfl_injuries": {
+     "ok": true,
+     "bytes": 8783198,
+     "game_impacting": 0
+    },
+    "espn_nba_injuries": {
+     "ok": true,
+     "bytes": 859816,
+     "game_impacting": 0
+    },
+    "nfl_injuries": {
+     "ok": true,
+     "bytes": 387312
+    },
+    "nba_injury_report_index": {
+     "ok": false
+    }
+   },
+   "skipped": []
+  },
+  "fda": {
+   "rows": 10760,
    "failed": [],
-   "rows": {
-    "SPY": 502,
-    "QQQ": 502,
-    "IWM": 502,
-    "GLD": 502,
-    "UNG": 502,
-    "XLU": 502,
-    "XBI": 502,
-    "IBB": 502,
-    "TLT": 502,
-    "DKNG": 502,
-    "FLUT": 502,
-    "PENN": 502,
-    "SRAD": 502,
-    "GENI": 502,
-    "AAPL": 502,
-    "MSFT": 502,
-    "NVDA": 502,
-    "JPM": 502,
-    "XOM": 502,
-    "JNJ": 502,
-    "PG": 502,
-    "TSLA": 502,
-    "MU": 502,
-    "T": 502,
-    "^GSPC": 502,
-    "^VIX": 504
+   "pages": 7,
+   "preserved_existing": false
+  },
+  "weather": {
+   "USW00023272": {
+    "ok": true,
+    "rows": 724,
+    "label": "San Francisco (downtown / SFO-area co-op station)"
+   },
+   "USW00023234": {
+    "ok": true,
+    "rows": 731,
+    "label": "San Francisco International Airport"
    }
   },
-  "stooq": {
-   "ok": [],
-   "failed": [
-    "SPY: host refused (Access denied)",
-    "QQQ: host refused (Access denied)",
-    "GLD: host refused (Access denied)",
-    "XBI: host refused (Access denied)",
-    "DKNG: host refused (Access denied)",
-    "AAPL: host refused (Access denied)",
-    "MSFT: host refused (Access denied)",
-    "NVDA: host refused (Access denied)"
-   ],
-   "rows": {}
-  },
-  "fred": {
-   "ok": [
-    "SP500",
-    "VIXCLS",
-    "DGS10",
-    "DGS3MO",
-    "DCOILWTICO",
-    "DTWEXBGS",
-    "NASDAQCOM",
-    "DJIA",
-    "SOFR",
-    "DGS1MO",
-    "DGS6MO",
-    "DGS1",
-    "DGS2",
-    "DGS5",
-    "DGS7",
-    "DGS20",
-    "DGS30",
-    "DTB4WK",
-    "DTB3",
-    "DTB6",
-    "CPIAUCSL",
-    "DFII5",
-    "DFII10",
-    "DFII30"
-   ],
-   "failed": [
-    "GOLDAMGBD228NLBM",
-    "GOLDPMGBD228NLBM"
-   ],
-   "rows": {
-    "SP500": 503,
-    "VIXCLS": 518,
-    "DGS10": 501,
-    "DGS3MO": 501,
-    "DCOILWTICO": 497,
-    "DTWEXBGS": 498,
-    "NASDAQCOM": 503,
-    "DJIA": 503,
-    "SOFR": 500,
-    "DGS1MO": 501,
-    "DGS6MO": 501,
-    "DGS1": 501,
-    "DGS2": 501,
-    "DGS5": 501,
-    "DGS7": 501,
-    "DGS20": 501,
-    "DGS30": 501,
-    "DTB4WK": 501,
-    "DTB3": 501,
-    "DTB6": 501,
-    "CPIAUCSL": 439,
-    "DFII5": 501,
-    "DFII10": 501,
-    "DFII30": 501
+  "kalshi": {
+   "KXNFLGAME": {
+    "ok": true,
+    "rows": 132,
+    "rows_with_volume": 132
+   },
+   "KXNBA": {
+    "ok": true,
+    "rows": 0,
+    "rows_with_volume": 0
+   },
+   "KXMLBGAME": {
+    "ok": true,
+    "rows": 200,
+    "rows_with_volume": 200
+   },
+   "KXHIGHNY": {
+    "ok": true,
+    "rows": 200,
+    "rows_with_volume": 200
+   },
+   "KXAAAGASM": {
+    "ok": true,
+    "rows": 80,
+    "rows_with_volume": 80
    }
-  },
-  "nasdaq": {
-   "ok": [],
-   "failed": [
-    "SPY",
-    "QQQ",
-    "IWM",
-    "GLD",
-    "UNG",
-    "XLU",
-    "XBI",
-    "IBB",
-    "TLT",
-    "DKNG",
-    "FLUT",
-    "PENN",
-    "SRAD",
-    "GENI",
-    "AAPL",
-    "MSFT",
-    "NVDA",
-    "JPM",
-    "XOM",
-    "JNJ",
-    "PG",
-    "TSLA",
-    "MU",
-    "T"
-   ],
-   "rows": {},
-   "dividends_failed": [],
-   "dividends": {}
   },
   "nyfed": {
    "ok": true,
@@ -453,7 +405,7 @@
     }
    },
    "crosscheck": {
-    "generated_at": "2026-09-19T22:44:30Z",
+    "generated_at": "2026-09-19T23:51:30Z",
     "treasurydirect_auctions": 470,
     "fiscaldata_auctions": 2000,
     "shared_auctions": 470,
@@ -483,6 +435,137 @@
     "file": "data/real/treasury/auction_tape.jsonl"
    }
   },
+  "yahoo": {
+   "ok": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "GLD",
+    "UNG",
+    "XLU",
+    "XBI",
+    "IBB",
+    "TLT",
+    "DKNG",
+    "FLUT",
+    "PENN",
+    "SRAD",
+    "GENI",
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T",
+    "^GSPC",
+    "^VIX"
+   ],
+   "failed": [],
+   "rows": {
+    "SPY": 502,
+    "QQQ": 502,
+    "IWM": 502,
+    "GLD": 502,
+    "UNG": 502,
+    "XLU": 502,
+    "XBI": 502,
+    "IBB": 502,
+    "TLT": 502,
+    "DKNG": 502,
+    "FLUT": 502,
+    "PENN": 502,
+    "SRAD": 502,
+    "GENI": 502,
+    "AAPL": 502,
+    "MSFT": 502,
+    "NVDA": 502,
+    "JPM": 502,
+    "XOM": 502,
+    "JNJ": 502,
+    "PG": 502,
+    "TSLA": 502,
+    "MU": 502,
+    "T": 502,
+    "^GSPC": 502,
+    "^VIX": 504
+   }
+  },
+  "stooq": {
+   "ok": [],
+   "failed": [
+    "SPY: host refused (Access denied)",
+    "QQQ: host refused (Access denied)",
+    "GLD: host refused (Access denied)",
+    "XBI: host refused (Access denied)",
+    "DKNG: host refused (Access denied)",
+    "AAPL: host refused (Access denied)",
+    "MSFT: host refused (Access denied)",
+    "NVDA: host refused (Access denied)"
+   ],
+   "rows": {}
+  },
+  "fred": {
+   "ok": [
+    "SP500",
+    "VIXCLS",
+    "DGS10",
+    "DGS3MO",
+    "DCOILWTICO",
+    "DTWEXBGS",
+    "NASDAQCOM",
+    "DJIA",
+    "SOFR",
+    "DGS1MO",
+    "DGS6MO",
+    "DGS1",
+    "DGS2",
+    "DGS5",
+    "DGS7",
+    "DGS20",
+    "DGS30",
+    "DTB4WK",
+    "DTB3",
+    "DTB6",
+    "CPIAUCSL",
+    "DFII5",
+    "DFII10",
+    "DFII30"
+   ],
+   "failed": [
+    "GOLDAMGBD228NLBM",
+    "GOLDPMGBD228NLBM"
+   ],
+   "rows": {
+    "SP500": 503,
+    "VIXCLS": 518,
+    "DGS10": 501,
+    "DGS3MO": 501,
+    "DCOILWTICO": 497,
+    "DTWEXBGS": 498,
+    "NASDAQCOM": 503,
+    "DJIA": 503,
+    "SOFR": 500,
+    "DGS1MO": 501,
+    "DGS6MO": 501,
+    "DGS1": 501,
+    "DGS2": 501,
+    "DGS5": 501,
+    "DGS7": 501,
+    "DGS20": 501,
+    "DGS30": 501,
+    "DTB4WK": 501,
+    "DTB3": 501,
+    "DTB6": 501,
+    "CPIAUCSL": 439,
+    "DFII5": 501,
+    "DFII10": 501,
+    "DFII30": 501
+   }
+  },
   "insider_bulk": {
    "quarters": [
     "2026q2",
@@ -499,6 +582,8 @@
     {
      "quarter": "2026q2",
      "attempts": [
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q2_form345.zip",
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q2_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q2_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q2_form345.zip"
      ]
@@ -506,6 +591,8 @@
     {
      "quarter": "2026q1",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q1_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q1_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2026q1_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2026q1_form345.zip"
      ]
@@ -513,6 +600,8 @@
     {
      "quarter": "2025q4",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q4_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q4_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q4_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q4_form345.zip"
      ]
@@ -520,6 +609,8 @@
     {
      "quarter": "2025q3",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q3_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q3_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q3_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q3_form345.zip"
      ]
@@ -527,6 +618,8 @@
     {
      "quarter": "2025q2",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q2_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q2_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q2_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q2_form345.zip"
      ]
@@ -534,6 +627,8 @@
     {
      "quarter": "2025q1",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q1_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q1_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2025q1_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2025q1_form345.zip"
      ]
@@ -541,22 +636,21 @@
     {
      "quarter": "2024q4",
      "attempts": [
+      "https://dcm.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q4_form345.zip",
+      "https://dcm.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q4_form345.zip",
       "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q4_form345.zip",
       "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q4_form345.zip"
-     ]
-    },
-    {
-     "quarter": "2024q3",
-     "attempts": [
-      "https://www.sec.gov/files/structureddata/data/insider-transactions-data-sets/2024q3_form345.zip",
-      "https://www.sec.gov/files/datastandardsinnovation/data/insider-transactions-data-sets/2024q3_form345.zip"
      ]
     }
    ],
    "rows": 0,
    "detail": [],
    "source": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
-   "documentation": "https://www.sec.gov/files/insider_transactions_readme.pdf"
+   "documentation": "https://www.sec.gov/files/insider_transactions_readme.pdf",
+   "sub_budget_exhausted": true,
+   "quarters_skipped": [
+    "2024q3"
+   ]
   },
   "sec": {
    "tickers_ok": [],
@@ -570,103 +664,40 @@
    ],
    "cik_map_source": ""
   },
-  "fda": {
-   "rows": 0,
+  "nasdaq": {
+   "ok": [],
    "failed": [
-    "skip=0"
+    "SPY",
+    "QQQ",
+    "IWM",
+    "GLD",
+    "UNG",
+    "XLU",
+    "XBI",
+    "IBB",
+    "TLT",
+    "DKNG",
+    "FLUT",
+    "PENN",
+    "SRAD",
+    "GENI",
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "JPM",
+    "XOM",
+    "JNJ",
+    "PG",
+    "TSLA",
+    "MU",
+    "T"
    ],
-   "pages": 0,
-   "preserved_existing": true
-  },
-  "mlb": {
-   "rows": 0,
-   "ok": false
-  },
-  "espn": {
-   "nfl": {
-    "rows": 0,
-    "chunks_failed": 22,
-    "preserved_existing": true
-   },
-   "ncaaf": {
-    "rows": 0,
-    "chunks_failed": 16,
-    "preserved_existing": true
-   },
-   "nba": {
-    "rows": 0,
-    "chunks_failed": 29,
-    "preserved_existing": true
-   },
-   "mlb": {
-    "rows": 0,
-    "chunks_failed": 27,
-    "preserved_existing": true
-   }
-  },
-  "nba": {
-   "ok": false,
-   "rows": 0
-  },
-  "official_docs": {
-   "nba_injury_report_index": {
-    "ok": false
-   },
-   "nfl_injuries": {
-    "ok": false
-   },
-   "ncaa_scoreboard_fbs_2025_week10": {
-    "ok": false
-   },
-   "nba_stats_scoreboard_probe": {
-    "ok": false
-   }
-  },
-  "injury_archive": {
-   "date": "2026-09-19",
-   "captures": {
-    "espn_nfl_injuries": {
-     "ok": false
-    },
-    "espn_nba_injuries": {
-     "ok": false
-    },
-    "nfl_injuries": {
-     "ok": false
-    },
-    "nba_injury_report_index": {
-     "ok": false
-    }
-   },
-   "skipped": []
-  },
-  "weather": {
-   "USW00023272": {
-    "ok": false
-   },
-   "USW00023234": {
-    "ok": false
-   }
-  },
-  "kalshi": {
-   "KXNFLGAME": {
-    "ok": false
-   },
-   "KXNBA": {
-    "ok": false
-   },
-   "KXMLBGAME": {
-    "ok": false
-   },
-   "KXHIGHNY": {
-    "ok": false
-   },
-   "KXAAAGASM": {
-    "ok": false
-   }
+   "rows": {},
+   "dividends_failed": [],
+   "dividends": {}
   },
   "crosscheck": {
-   "generated_at": "2026-09-19T22:50:00Z",
+   "generated_at": "2026-09-20T00:01:45Z",
    "pairs": [
     {
      "kind": "yahoo-vs-yahoo",
@@ -697,7 +728,7 @@
    "source_class": "SECONDARY",
    "path": "real/prices/yahoo",
    "files": 26,
-   "bytes": 2201243
+   "bytes": 2201250
   },
   {
    "label": "Stooq daily CSV (blocked)",
@@ -773,22 +804,22 @@
    "label": "League scoreboards",
    "source_class": "MIXED",
    "path": "real/sports",
-   "files": 8,
-   "bytes": 2302008
+   "files": 11,
+   "bytes": 12347105
   },
   {
    "label": "NOAA/NCEI daily summaries",
    "source_class": "OFFICIAL",
    "path": "real/weather",
    "files": 2,
-   "bytes": 123487
+   "bytes": 123657
   },
   {
    "label": "Kalshi trade API (settled markets)",
    "source_class": "OFFICIAL-VENDOR",
    "path": "real/kalshi",
    "files": 5,
-   "bytes": 520556
+   "bytes": 520613
   }
  ]
 }

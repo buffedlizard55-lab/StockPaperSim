@@ -274,6 +274,7 @@ NAV = [
     ("simulator.html", "Trade Simulator"),
     ("market.html", "Market &amp; factors"),
     ("sensitivity.html", "Venue sensitivity"),
+    ("significance.html", "Significance"),
     ("methodology.html", "Methodology"),
     ("data.html", "Data provenance"),
     ("sources.html", "Sources"),
@@ -3106,6 +3107,21 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             os.path.join(REPO_ROOT, "research"), out))
     except Exception as exc:  # noqa: BLE001 - a site build must say why, not vanish
         print(f"  executive summary: FAILED - {type(exc).__name__}: {exc}")
+        raise
+
+    # The significance page (sim/significance.py) is part of the standard build
+    # for the same reason the executive summary is: a nav entry pointing at a
+    # file only an optional step writes is how a menu collects 404s.
+    try:
+        import importlib.util
+        _sig_spec = importlib.util.spec_from_file_location(
+            "build_site_significance",
+            os.path.join(REPO_ROOT, "scripts", "build_site_significance.py"))
+        build_site_significance = importlib.util.module_from_spec(_sig_spec)
+        _sig_spec.loader.exec_module(build_site_significance)  # type: ignore[union-attr]
+        written.extend(build_site_significance.build(args.memory_root, out))
+    except Exception as exc:  # noqa: BLE001 - a site build must say why, not vanish
+        print(f"  significance: FAILED - {type(exc).__name__}: {exc}")
         raise
 
     _desk_spec = importlib.util.spec_from_file_location(

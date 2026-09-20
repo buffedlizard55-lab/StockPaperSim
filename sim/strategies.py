@@ -133,6 +133,11 @@ class Context:
         self.rng = random.Random(f"{seed}:{account.participant}:{self.date}")
         self.symbols = [s for s in md.symbols if md.instruments[s].tradable_by_strategies]
         self._marks = {s: self.open_price(s) for s in md.symbols}
+        # Minute-bar lane: the engine re-issues the context at each intraday
+        # decision point and stamps which interval the decision lands on
+        # (0 = the open, the venue path's K = the closing cross).  Season 1's
+        # one-decision-per-session semantics leave it at 0.
+        self.interval = 0
 
     # -- prices ------------------------------------------------------------
     def open_price(self, symbol: str) -> float:

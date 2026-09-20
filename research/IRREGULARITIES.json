@@ -829,5 +829,38 @@
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/scripts/build_site_season2.py",
    "https://buffedlizard55-lab.github.io/StockPaperSim/docs/season2/participants/NBA_Slate_Attention.html"
   ]
+ },
+ {
+  "id": "IR-79",
+  "severity": "medium",
+  "topic": "The Form 4 campaign's exclusion list named a filing that does not belong to this issuer ('MU 0000034088-26-000003 (Arntzen)')",
+  "detail": "Found 2026-09-20 during the raw-bytes re-capture pass. CAMPAIGN.md's exclusions section listed 'MU 0000034088-26-000003 (Arntzen; form ~39 KB rendered)' as an oversized MU filing that was dropped. Fetching that accession shows it is a Form 3 for EXXON MOBIL CORP (issuer CIK 0000034088, reporter Gjervik Staale, filed 2026-01-05, primary document form3.xml, 2,054 bytes raw) - a different issuer and a different form. The reporting owner the note meant is ARNZEN APRIL S (EVP and Chief People Officer, owner CIK 0001632063), whose name was also misspelled. The real Arnzen in-window filing the campaign dropped is 0001632063-26-000003 (filed 2026-07-06, primary document 39,347 bytes raw). The error hid one real in-window filing behind a citation that could never resolve.",
+  "resolution": "The true Arnzen filing 0001632063-26-000003 and her 2026-04-03 filing 0001632063-26-000002 are now staged in the agent lane (chunked page-fetch route, SHA-256 digested, parsed fail-closed); CAMPAIGN.md's exclusion section is rewritten with the corrected identity. No published number depended on the wrong citation (the filing was recorded as excluded, not as data). The XOM Form 3 is NOT staged into the MU lane; it is recorded here instead.",
+  "links": [
+   "https://www.sec.gov/Archives/edgar/data/34088/000003408826000003/0000034088-26-000003-index.htm",
+   "https://www.sec.gov/Archives/edgar/data/723125/000163206326000003/0001632063-26-000003-index.htm"
+  ]
+ },
+ {
+  "id": "IR-80",
+  "severity": "low",
+  "topic": "The Form 4 campaign's 'eight most recent filings on or after 2026-06-01' selection silently drifted from its own rule",
+  "detail": "Found 2026-09-20 while re-deriving the MU inventory from the issuer's own browse-edgar listing (40 filings, 2025-11-10 to 2026-08-28). The campaign's stated rule was 'for each of the ten tracked tickers, the up-to-eight most recent Form 4 filings filed on or after 2026-06-01'. The staged MU set held five in-window filings; three later August filings that pre-date the campaign's own fetch timestamp (0001798757-26-000007 filed 2026-08-28, 0001242654-26-000015 filed 2026-08-25, 0001311079-26-000003 filed 2026-08-20) were absent, while two older July filings were present, and the exclusion note named a non-existent filing (IR-79) instead of the actual gap. The selection therefore cannot be re-derived from the stated rule - the exact failure mode the project's audit discipline exists to catch.",
+  "resolution": "The three August filings are now staged and parsed (Bjorlin 25-share trust sale; Sadana 15,000-share 10b5-1 sale; Mehrotra 0001242654-26-000015 remains oversized-uncaptured and is recorded as an explicit gap rather than silently dropped). A deeper MU walk added eight pre-June filings (2026-03-31 to 2026-05-13 transaction dates). The lane now covers MU transactions 2026-03-31 through 2026-08-25 and still contains zero code-P open-market purchases, so the NO-OBSERVATIONS verdict now rests on 98 MU rows instead of the earlier 49.",
+  "links": [
+   "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000723125&type=4&owner=include&count=40",
+   "https://www.sec.gov/Archives/edgar/data/723125/000179875726000007/0001798757-26-000007-index.htm",
+   "https://www.sec.gov/Archives/edgar/data/723125/000131107926000003/0001311079-26-000003-index.htm"
+  ]
+ },
+ {
+  "id": "IR-81",
+  "severity": "medium",
+  "topic": "An at-the-close limit order could fill on intraday prints that preceded its arrival (found and fixed with the minute-bar lane)",
+  "detail": "The limit-order executor searched the whole session path for a trade-through (sim/microstructure.py IntradayPath.crossed) regardless of the interval the order started working. For orders placed at the open (interval 0) that is correct, but a limit ticket submitted for the closing interval (at_close=True, or the new MOC/LOC types) could fill on a cross that happened hours before the order existed - lookahead in the audit trail's own terms: a fill the strategy could not have earned while its ticket was live. Found on 2026-09-20 while building the minute-bar decision lane, where a resting limit retried at a later decision point would have filled on the earlier part of the same path.",
+  "resolution": "IntradayPath.crossed now takes from_interval and _execute_limit passes the order's arrival interval, mirroring the bound _execute_stop already had. Every existing engine test passes unchanged, and tests/test_minute_bar.py pins both directions: an at-the-close limit near the path low no longer fills on the intraday cross, and a resting limit retried at a later decision point only fills on intervals at or after its arrival.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/arena/01a0bfa2-stockpapersim/tests/test_minute_bar.py"
+  ]
  }
 ]

@@ -73,7 +73,8 @@ def _nav() -> str:
              ("summary.html", "Executive summary"),
              ("leaderboard.html", "Leaderboard"), ("strategies.html", "Strategies"),
              ("simulator.html", "Trade Simulator"), ("market.html", "Market &amp; factors"),
-             ("sensitivity.html", "Venue sensitivity"), ("methodology.html", "Methodology"),
+             ("sensitivity.html", "Venue sensitivity"),
+             ("significance.html", "Significance"), ("methodology.html", "Methodology"),
              ("data.html", "Data provenance"), ("sources.html", "Sources"),
              ("irregularities.html", "Irregularities"), ("limitations.html", "Limitations"),
              ("participants/index.html", "Participants")]

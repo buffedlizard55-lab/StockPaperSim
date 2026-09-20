@@ -38,8 +38,8 @@ from collections import defaultdict
 from typing import Dict, List, Optional, Sequence, Tuple
 
 from . import analytics, config, memory
-from .microstructure import (BUY, SELL, MARKET, ExecutionEngine, Fill, Order,
-                             ParticipantVenue, VenueDay)
+from .microstructure import (BUY, SELL, LIMIT, LOC, MARKET, ExecutionEngine,
+                             Fill, Order, ParticipantVenue, VenueDay)
 from .portfolio import Account
 from .strategies import Context, Strategy, StrategySpec, build_roster
 
@@ -59,6 +59,7 @@ class ParticipantRuntime:
         self.errors: List[dict] = []
         self.closed = False
         self.sessions_traded = 0
+        self.open_orders: List[Order] = []   # resting DAY book (minute-bar lane)
         self.final_marks: Dict[str, float] = {}
         self.final_positions: Dict[str, int] = {}
 
@@ -199,7 +200,9 @@ class CompetitionEngine:
             if late:
                 fills = self._submit(p, early, t, marks, start_interval)
                 K = self._venue(late[0].symbol, t).path.K
-                return fills + self._submit(p, late, t, marks, start_interval=K)
+                if start_interval < K:
+                    return fills + self._submit(p, late, t, marks,
+                                                start_interval=K)
         fills: List[Fill] = []
         for order in orders:
             order = self._risk_check(p, order, marks)
@@ -372,6 +375,55 @@ class CompetitionEngine:
             if orders:
                 p.sessions_traded += 1
 
+            # Minute-bar lane: extra decision points inside the session,
+            # evenly spaced over the venue replica's intervals.  Each point
+            # first works the resting DAY book carried in from earlier points
+            # (an unfilled limit is re-priced against the book from the point
+            # it now arrives at, never against intervals it has already lived
+            # through), then asks the strategy again.  Whatever is still
+            # unfilled after the last point is submitted once at the closing
+            # cross so the audit trail carries its expiry; the book then
+            # clears at the bell (DAY semantics).
+            points = self._intraday_decision_points(t)
+            if points and hasattr(p.strategy, "on_intraday"):
+                for k in points:
+                    if p.open_orders:
+                        resting, p.open_orders = p.open_orders, []
+                        fills = self._submit(p, resting, t, marks,
+                                             start_interval=k)
+                        for o, f in zip(resting, fills):
+                            if (f.filled_qty == 0
+                                    and o.order_type in (LIMIT, LOC)
+                                    and o.tif == "DAY"):
+                                p.open_orders.append(o)
+                    ctx = Context(self.md, t, acct, self.cfg, quotes, self.seed)
+                    ctx.interval = k
+                    try:
+                        iorders = p.strategy.on_intraday(ctx, k) or []
+                    except Exception as exc:
+                        p.errors.append({
+                            "date": date, "participant": p.spec.username,
+                            "interval": k,
+                            "error": f"{type(exc).__name__}: {exc}",
+                            "traceback": traceback.format_exc(limit=3)})
+                        self._flag("IR-12", "high", None,
+                                   f"{p.spec.username} raised "
+                                   f"{type(exc).__name__} intraday on "
+                                   f"{date}@{k}: {exc}")
+                        iorders = []
+                    marks = ctx.marks()
+                    ifills = self._submit(p, iorders, t, marks,
+                                          start_interval=k)
+                    for o, f in zip(iorders, ifills):
+                        if (f.filled_qty == 0
+                                and o.order_type in (LIMIT, LOC)
+                                and o.tif == "DAY"):
+                            p.open_orders.append(o)
+                if p.open_orders:
+                    resting, p.open_orders = p.open_orders, []
+                    K = self._venue(resting[0].symbol, t).path.K
+                    self._submit(p, resting, t, marks, start_interval=K)
+
         # End-of-competition liquidation at the last intraday interval.
         if is_final and self.cfg.force_liquidate_at_end:
             open_syms = [s for s in self.md.symbols if acct.quantity(s)]
@@ -418,6 +470,21 @@ class CompetitionEngine:
                 "kind": "borrow_fee", "amount": round(-carry["borrow_fee"], 2)})
 
     # -- mark, snapshot, margin test -----------------------------------
+    def _intraday_decision_points(self, t: int) -> List[int]:
+        """Evenly spaced intraday intervals for the minute-bar lane.
+
+        With ``cfg.intraday_decisions = D`` and a K-interval path the points
+        are ``round(i*K/(D+1))`` for i = 1..D: never interval 0 (the on_day
+        decision already owns the open) and never exactly K unless D forces
+        it, so a mid-session decision cannot silently become an at-the-open
+        or at-the-close one.  Returns [] when the lane is off.
+        """
+        d = max(0, int(getattr(self.cfg, "intraday_decisions", 0) or 0))
+        if d <= 0:
+            return []
+        K = self._venue(self.md.symbols[0], t).path.K
+        return [max(1, min(K, round(i * K / (d + 1)))) for i in range(1, d + 1)]
+
     def _close_session(self, p: ParticipantRuntime, t: int, date: str,
                        closes: Dict[str, float]) -> None:
         acct = p.account

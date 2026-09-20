@@ -1087,43 +1087,56 @@ class NBAInjuryForward(Strategy):
 class SportsPredForward(Strategy):
     """Forward-only probe for the SportsPred project.
 
-    SportsPred publishes live predictions with no timestamped archive, so its
-    output cannot be backtested without recomputing the model (which would test
-    this project's code, not the site's). This participant registers the forward
-    rule and places no backdated trades.
+    SportsPred's own record of its predictions is two small JSON files on its
+    default branch - ``data/predictions.json`` (append-only, keyed by OLBG
+    event_id, graded by the site's own backtest script) and
+    ``data/results.json`` (the settled outcomes it grades against) - plus the
+    dated ``data/slate.json`` consensus slate. The site archives none of them,
+    so this repository captures dated snapshots of all of them (collector
+    section ``sportspred``, weekly archive workflow). Until those snapshots
+    exist this participant places no trades; its absence of return is reported
+    as a data limitation, not a result.
     """
-    signal_names = ()
+    #: Collected signal arrays this strategy reads (the dated snapshots).
+    signal_names = ("sportspred_predictions", "sportspred_graded")
 
     spec = StrategySpec(
         username="@SportsPred_Forward",
         display_name="Sports Pred (forward probe)",
         archetype="prediction-performance attention proxy",
-        thesis=("The SportsPred project publishes pre-game probabilities. There is "
-                "no archived, timestamped snapshot of those predictions for the "
-                "past season, so a backtest would have to recompute them - which "
-                "would test this repository's reimplementation, not the site. The "
-                "forward rule is declared here, and goes live on dated snapshots "
-                "of the site's own published predictions collected from now on."),
+        thesis=("The SportsPred project publishes pre-game probabilities and "
+                "grades them, but archives nothing, so its past output cannot "
+                "be backtested without recomputing the model - which would "
+                "test this repository's reimplementation, not the site. The "
+                "mapping is now concrete: dated snapshots of the site's own "
+                "predictions.json / results.json / slate.json, collected "
+                "weekly from now on. The forward rule goes live on those "
+                "snapshots."),
         entry_rules=["No backtested rule. The declared forward rule: from dated "
                      "SportsPred snapshots, a 4-week window in which the site's "
-                     "favourites beat the collected ESPN finals at a rate above "
-                     "its trailing mean -> long SRAD and GENI at 75% of equity each"],
+                     "graded favourites (predictions.json vs results.json) beat "
+                     "their trailing hit rate -> long SRAD and GENI at 75% of "
+                     "equity each"],
         exit_rules=["Not applicable in the historical window"],
         sizing="declared 150% gross when it goes live", leverage="1.5x when live",
         cadence="weekly (from the first archived snapshot)", horizon="weeks",
         academic_basis=[
-            {"claim": "SportsPred publishes live predictions with no retrievable "
-                      "archive",
-             "url": "https://buffedlizard55-lab.github.io/SportsPred/",
-             "ref": "The project's own site (the publisher of record for its "
-                    "predictions); the finals used to score them come from the "
-                    "collected ESPN scoreboards, labelled SECONDARY",
+            {"claim": "SportsPred's prediction record is data/predictions.json, "
+                      "keyed by OLBG event_id, graded against data/results.json",
+             "url": "https://github.com/buffedlizard55-lab/SportsPred",
+             "ref": "The project's own repository (the publisher of record for "
+                    "its predictions); snapshots are captured into "
+                    "data/real/sportspred/archive/",
              "status": "FETCHED-VERIFIED"}],
         known_failure_modes=[
-            "No archive exists, so nothing about this mapping has been measured",
-            "Scoring predictions against ESPN finals mixes a first-party "
-            "prediction source with a secondary results source; the mismatch is "
-            "declared rather than hidden",
+            "No snapshot archive exists yet, so nothing about this mapping has "
+            "been measured",
+            "predictions.json carries no sourced prices (the site's own IR-01: "
+            "OLBG exposes no structured odds), so a live rule cannot size from "
+            "implied probabilities",
+            "Scoring predictions against results mixes a first-party "
+            "prediction source with a grading source that is itself empty "
+            "today; the mismatch is declared rather than hidden",
             "Its 0.0% return is an untested strategy, not a flat result"],
         aggression=3,
         why_return_seeking="Declared but not yet tradable - the honest placeholder "

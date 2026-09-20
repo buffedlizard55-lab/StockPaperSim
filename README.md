@@ -1,5 +1,24 @@
 # StockPaperSim
 
+> **2026-09-20 fourth pass — SEC Form 4 insider data has landed (agent lane).**
+> A rendered-extraction campaign collected **65 filings / 99 parsed transactions
+> across all ten tracked tickers** (AAPL, MSFT, NVDA, JPM, XOM, JNJ, PG, TSLA,
+> MU, T), every filing dated on or after 2026-06-01, captured as the SEC's own
+> XSL-rendered Form 4 views plus filing indexes through the page-fetch route
+> (`data/real/sec_agent/`: 131-entry `staged_manifest.json`, every file SHA-256
+> digested and re-verified at staging). `sim/edgar_rendered.py` parses the
+> captures fail-closed (footnoted codes/prices, dual and triple checkbox roles,
+> 10b5-1 plan flags) and `scripts/stage_sec_rendered.py` integrates the lane
+> into the same JSONL the walk and the bulk sets feed, de-duplicated on
+> (accession, date, ticker, code, shares, price). Eleven filings parse to no
+> Table I trade rows (derivative-only DSU/RSU grants or balance-only rows) and
+> are flagged, not dropped silently. Honest gaps recorded, not hidden: two MU
+> filings exceed the page-fetch size budget and were excluded, and the window
+> contains **zero code-P purchases**, so the buy-side insider signals register
+> as NO-OBSERVATIONS and `@InsiderCluster_Live` reports READY-NO-OBSERVATIONS —
+> ready and reading real filings, placing no intents until purchases land. Suite:
+> **648 tests green**.
+>
 > **2026-09-19 third pass — every brief item now has its own measured participant.**
 > The Season 2 research roster grew from **14 to 19 personas** so that each item
 > the brief named (CEO, weather, insider trades, TheLeap, NFL Injury, NBA
@@ -565,7 +584,7 @@ scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py and independent_audit_official.py
                 (re-derive every published number from the raw streams and the
                 Treasury's own tapes; import no project code)
-tests/          634 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
+tests/          648 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -576,7 +595,7 @@ docs/           the published site (GitHub Pages serves this directory);
                 docs/live/ is the Live Book section and docs/official/ the
                 Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (78), LIMITATIONS.json (43),
+                IRREGULARITIES.json (78), LIMITATIONS.json (44),
                 REMAINING_WORK.json (52), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
@@ -599,7 +618,7 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 634 tests
+python3 -m unittest discover -s tests   # 648 tests
 python3 -m sim.cli official             # run the official auction book
 python3 -m sim.cli official-blotter     # every settled official trade + evidence
 python3 -m sim.cli trades               # the unified store across every book
@@ -686,10 +705,16 @@ manual review, and flag irregularities rather than paper over them.
    than OFFICIAL (L-28), and secondary size is assumed rather than measured
    (L-32). Primary awards, which are where most of the notional executes, are
    the published price exactly.
-8. **The SEC insider extracts are not in the repository.** Every quarter and both
-   path layouts answered HTTP 403 from the collection runner on 2026-09-18
-   (L-27), so the insider rules hold no positions and say why instead of
-   substituting an aggregator for a filing.
+8. **The SEC insider bulk data sets are not in the repository; a rendered Form 4
+   extract lane is.** The quarterly structured sets remain refused to the runner
+   (HTTP 403 / rate gate, L-27), but on 2026-09-20 a complementary lane landed:
+   65 filings (99 parsed transactions) across AAPL, MSFT, NVDA, JPM, XOM, JNJ,
+   PG, TSLA, MU and T, filed on or after 2026-06-01, captured as the SEC's own
+   XSL-rendered Form 4 views (`data/real/sec_agent/`, digests re-verified at
+   staging). The extracted window contains no open-market purchases (code P),
+   so the buy-side insider signals register as observed-but-empty
+   (NO-OBSERVATIONS) and the insider participants hold no positions and say why
+   instead of substituting an aggregator for a filing.
 9. **Circadian granularity.** The live book has one decision point per session
    and executes at the open or the close. A rule that needs the first thirty
    minutes (an opening-range breakout) cannot be expressed here at all and is

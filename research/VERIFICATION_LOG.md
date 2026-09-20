@@ -927,3 +927,31 @@ by a test that re-derives it from the run.
   trips, net round-trip P&L $52,994.38 on $23.9m notional, ledger digest
   `35b5aa7d…`; independent audits 3,393 + 1,222 checks, 0 failures; full
   suite 625 tests green.
+
+## 2026-09-20 — SEC Form 4 agent-lane campaign complete (all ten tickers)
+
+* Scope: every INSIDER_TICKERS issuer, up to its eight most recent Form 4
+  filings filed on or after 2026-06-01, via canonical
+  `https://www.sec.gov/Archives/edgar/data/...` URLs only.
+* Landed: **65 filings, 99 parsed transactions** (NVDA 18, MU 17, JNJ 14,
+  AAPL 13, MSFT 13, PG 8, JPM 7, TSLA 6, T 3), plus 66 filing indexes.
+  Manifest: `data/real/sec_agent/staged_manifest.json` (131 entries). Each
+  staged file's SHA-256 was re-verified at staging; every index Filing Date
+  cross-checked against the parsed form; 65/65 digests verified, 0 failures.
+* Flags (11, all expected): filings that parse to no Table I trade row —
+  AAPL 0001140361-26-035362, JPM 0001225208-26-006542, XOM
+  0000034088-26-000085 / -000083, JNJ 0000200406-26-000185 / -184 / -183,
+  MU 0001218363-26-000003, T 0000732717-26-000319 / -315 / -314 — each is a
+  derivative-only DSU/RSU grant or balance-only statement, recorded in
+  `parse_report.json` rather than silently dropped.
+* Excluded on purpose (coverage limitation, see LIMITATIONS L-27): MU
+  0000034088-26-000003 (Arntzen, ~39 KB) and 0001242654-26-000013
+  (Mehrotra first-of-two, ~63 KB) exceed the practical page-fetch size
+  budget. The Mehrotra second filing (0001242654-26-000014, 12 S rows under
+  a 2026-01-30 10b5-1 plan, President and CEO) DID land.
+* Signal-book consequence: zero code-P purchases exist in the window, so
+  `insider_buys_30d*` register as NO-OBSERVATIONS (observed-but-empty, never
+  AVAILABLE while all-zero) and InsiderCluster_Live reports
+  READY-NO-OBSERVATIONS. Regression-tested in
+  `tests/test_masterfeed_insider_state.py` (3 tests).
+* Suite: 648 tests, all green.

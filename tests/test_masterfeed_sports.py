@@ -377,3 +377,107 @@ class TestNewParticipantsOnCollectedData(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAgentInsiderLane(unittest.TestCase):
+    """The rendered-extraction lane merges with the other two and deduplicates."""
+
+    def test_agent_rows_merge_and_dedupe(self):
+        with tempfile.TemporaryDirectory(prefix="insider-agent-") as root:
+            walk_row = {
+                "ticker": "AAA", "code": "P", "transaction_date": "2026-08-01",
+                "accession": "ACC-9", "shares": 100.0, "price": 12.0,
+                "title": "Director", "roles": ["director"],
+            }
+            _write_jsonl(os.path.join(root, "sec", "form4_transactions.jsonl"),
+                         [walk_row])
+            _write_jsonl(
+                os.path.join(root, "sec_agent", "form4_transactions.jsonl"),
+                [
+                    {  # same filing via the rendered lane: must deduplicate
+                        "ticker": "AAA", "code": "P",
+                        "transaction_date": "2026-08-01", "accession": "ACC-9",
+                        "shares": 100.0, "price": 12.0, "title": "Director",
+                        "roles": ["officer"], "channel": "agent-rendered-extract",
+                    },
+                    {  # a newer filing only the agent lane has
+                        "ticker": "AAA", "code": "P",
+                        "transaction_date": "2026-09-15", "accession": "ACC-10",
+                        "shares": 75.0, "price": 13.0,
+                        "title": "Chief Executive Officer", "roles": ["officer"],
+                        "channel": "agent-rendered-extract",
+                    },
+                ])
+            rows, files, note = masterfeed._load_insider_rows(root)
+            self.assertEqual(len(rows), 2, "the shared filing must deduplicate")
+            self.assertIn("data/real/sec_agent/form4_transactions.jsonl", files)
+            self.assertIn("rendered-extraction lane", note)
+            dates = sorted(r["transaction_date"] for r in rows)
+            self.assertEqual(dates, ["2026-08-01", "2026-09-15"])
+            present = masterfeed.insider_collection_present(root)
+            self.assertTrue(present["present"])
+            self.assertEqual(present["rows"], 2)
+            self.assertEqual(present["coverage"], ["2026-08-01", "2026-09-15"])
+
+    def test_agent_lane_alone_registers_available_and_names_the_lane(self):
+        with tempfile.TemporaryDirectory(prefix="insider-agent-") as root:
+            _write_jsonl(
+                os.path.join(root, "sec_agent", "form4_transactions.jsonl"),
+                [{"ticker": "AAA", "code": "P", "transaction_date": "2026-09-15",
+                  "accession": "ACC-10", "shares": 75.0, "price": 13.0,
+                  "title": "Chief Executive Officer", "roles": ["officer"],
+                  "channel": "agent-rendered-extract"}])
+            md = FakeMD(["2026-09-15", "2026-09-16", "2026-09-17"],
+                        symbols=("AAA",))
+            book = masterfeed.SignalBook(md.dates)
+            masterfeed._insider_signals(book, md, root)
+            self.assertEqual(book.availability["insider_buys_30d"]["state"],
+                             "AVAILABLE")
+            # a purchase dated on the session itself is not yet visible
+            self.assertEqual(book.value("insider_buys_30d::AAA", 0), 0.0)
+            # visible from the next session onward
+            self.assertEqual(book.value("insider_buys_30d::AAA", 1), 1.0)
+            self.assertEqual(book.value("insider_ceo_buys_30d::AAA", 1), 1.0)
+            self.assertIn("agent-rendered-extract",
+                          book.availability["insider_buys_30d"]["note"])
+
+
+class TestKalshiSignalRowCounting(unittest.TestCase):
+    """Regression: the builder must read every row of every collected file.
+
+    The first version of this loop dedented its accounting block out of the
+    ``for line in fh`` loop, so each file contributed only its last row and an
+    empty file crashed on an unbound name. Both behaviours are pinned here.
+    """
+
+    def _book(self, root):
+        md = FakeMD(["2026-09-01", "2026-09-18", "2026-09-19"], symbols=("AAA",))
+        book = masterfeed.SignalBook(md.dates)
+        masterfeed._kalshi_signals(book, md, root)
+        return book
+
+    def test_every_row_of_every_file_is_counted(self):
+        with tempfile.TemporaryDirectory(prefix="kalshi-") as root:
+            _write_jsonl(os.path.join(root, "kalshi", "KXONE_settled.jsonl"), [
+                {"close_time": "2026-09-15T05:00:00Z", "volume": 10.0},
+                {"close_time": "2026-09-16T05:00:00Z", "volume": 20.0},
+                {"close_time": "2026-09-17T05:00:00Z", "open_interest": 30.0},
+            ])
+            _write_jsonl(os.path.join(root, "kalshi", "KXTWO_settled.jsonl"), [
+                {"close_time": "2026-09-17T05:00:00Z", "volume": 5.0},
+            ])
+            book = self._book(root)
+            self.assertEqual(book.availability["kalshi_settled_30d"]["state"],
+                             "AVAILABLE")
+            self.assertEqual(book.availability["kalshi_settled_30d"]["rows"], 4)
+            # trailing-30d settled count at 2026-09-18 sees all four closes
+            self.assertEqual(book.value("kalshi_settled_30d", 1), 4.0)
+            # volume aggregates per close date, including the open_interest row
+            self.assertEqual(book.value("kalshi_volume_30d", 1), 65.0)
+
+    def test_empty_file_does_not_crash_and_counts_nothing(self):
+        with tempfile.TemporaryDirectory(prefix="kalshi-") as root:
+            _write_jsonl(os.path.join(root, "kalshi", "KXEMPTY_settled.jsonl"), [])
+            book = self._book(root)
+            self.assertEqual(book.availability["kalshi_settled_30d"]["state"],
+                             "MISSING")

@@ -774,16 +774,38 @@ class InsiderClusterLive(LiveStrategy):
         from . import masterfeed
         info = masterfeed.insider_collection_present()
         if info["present"]:
-            self.data_status = "READY"
+            # The collection landing is necessary but not sufficient for this
+            # rule to trade: it only acts on open-market purchases (code P),
+            # and a walk of recent Form 4 filings can legitimately contain
+            # none.  Distinguish the two so an idle book is explained, not
+            # dressed up as "READY but traded nothing".
+            rows, _files, _note = masterfeed._load_insider_rows(
+                masterfeed.REAL_ROOT)
+            p_purchases = sum(
+                1 for r in rows if str(r.get("code") or "").upper() == "P")
             coverage = info.get("coverage") or []
             window = (f" ({coverage[0]}..{coverage[-1]})" if len(coverage) == 2 else "")
-            self.signal_note = (
-                f"SEC insider data has landed: {info['rows']} normalised "
-                f"transactions{window} from "
-                + ", ".join(str(f) for f in info["files"])
-                + ". The rule reads code-P clusters and CEO/CFO purchases from it; "
-                  "the first intents appear in the next planned session, never "
-                  "backdated.")
+            if p_purchases:
+                self.data_status = "READY"
+                self.signal_note = (
+                    f"SEC insider data has landed: {info['rows']} normalised "
+                    f"transactions{window} from "
+                    + ", ".join(str(f) for f in info["files"])
+                    + f", including {p_purchases} open-market purchases (code P). "
+                      "The rule reads code-P clusters and CEO/CFO purchases from "
+                      "it; the first intents appear in the next planned session, "
+                      "never backdated.")
+            else:
+                self.data_status = "READY-NO-OBSERVATIONS"
+                self.signal_note = (
+                    f"SEC insider data has landed: {info['rows']} normalised "
+                    f"transactions{window} from "
+                    + ", ".join(str(f) for f in info["files"])
+                    + ", but none is an open-market purchase (code P), which is "
+                      "the only code this rule trades. The participant is ready "
+                      "and reading real filings; it places no intents because the "
+                      "collected window contains no qualifying observation - a "
+                      "measurement gap inside real data, reported as such.")
         else:
             self.data_status = "DATA-MISSING"
             self.signal_note = (

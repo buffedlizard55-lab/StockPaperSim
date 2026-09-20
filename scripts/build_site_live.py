@@ -50,6 +50,7 @@ BADGE = {
     "COLLECTED": "badge-ok", "OFFICIAL": "badge-ok",
     "OFFICIAL-PUBLISHER / FRED-REPUBLISHED": "badge-ok",
     "SECONDARY": "badge-warn", "PROJECTED": "badge-warn",
+    "READY-NO-OBSERVATIONS": "badge-warn",
     "DATA-MISSING": "badge-bad", "FORWARD-ONLY": "badge-warn",
     "MISSING": "badge-bad", "FAIL": "badge-bad", "PENDING-SETTLEMENT": "badge-warn",
 }

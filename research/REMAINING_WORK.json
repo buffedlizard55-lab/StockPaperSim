@@ -1,30 +1,30 @@
 [
  {
   "priority": "P0",
-  "title": "Run the SEC insider collection and re-derive with real Form 3/4/5 data",
-  "detail": "The signal builder now reads the SEC quarterly insider-transactions data sets (data/real/insider_bulk/) and merges them with the per-filing walk, de-duplicated by accession. The collector, the declared-User-Agent fix and the 1.2s ZIP pacing with 403-threshold backoff are committed; the previous run's 16 ZIP requests all failed with SEC's 'Request Rate Threshold Exceeded' page because they were sent in five seconds. What remains is the collection run itself: workflow dispatch is blocked for automation (HTTP 403, no actions:write), so the trigger is a push to an arena/** branch whose HEAD commit message carries [collect-data] - collect-real-data.yml now gates its job on exactly that marker. Once the data lands, the workflow re-derives Season 2 itself; then update the README table (the insider personas move off 'no trades placed'), re-run both audits, and re-plan the live book (InsiderCluster_Live reports READY the moment the file exists).",
-  "where": ".github/workflows/collect-real-data.yml (marker-gated push trigger) · sim/masterfeed.py (_load_insider_rows) · sim/strategies_mf.py",
+  "title": "Collect the SEC insider data sets from a clean IP (owner action; blocked from shared runners)",
+  "detail": "PROVEN BLOCKED from shared runners, 2026-09-20 (run 35477020017): dcm.sec.gov - the host the data.gov catalog's download buttons name - does not resolve at all from a GitHub runner (DNS failure on all 16 attempts), www.sec.gov answers every request shape with the 'Request Rate Threshold Exceeded' page even at 1.2s pacing with 2 tries and 20s backoffs, and even company_tickers.json 403s. The sub-budget fix worked exactly as designed (every other section ran; budget_exhausted=false), so the collector is no longer the constraint - the runner's shared IP pool is (IR-76). The signal builder, the bulk reader and the merge/dedup logic are all committed and tested; what remains is an owner action: run scripts/collect_real_data.py --only insider_bulk,sec,official_rates from any machine with a normal residential/office IP (it writes the same manifest and the same commit-ready files), or attach a self-hosted runner with a clean egress IP. The insider personas correctly stay flat until then, and the register carries the caveat.",
+  "where": ".github/workflows/collect-real-data.yml (marker-gated push trigger) \u00b7 sim/masterfeed.py (_load_insider_rows) \u00b7 sim/strategies_mf.py",
   "effort": "one marker push plus a README/audit update pass"
  },
  {
   "priority": "P0",
   "title": "Official feed and permission for the strict equity desk (unchanged, owner action)",
   "detail": "Re-verified 2026-09-19 against live pages: Nasdaq's legal terms (updated May 11, 2026) still prohibit automated capture in Section 2, and no redistribution grant could be located for Stooq (its terms page did not render usable text; the old term.php URL is gone). The strict equity pilot therefore still journals timestamped orders with zero fills, by design. The concrete owner action is unchanged: contact CTA/UTQP or an exchange data-sales desk for the smallest license that permits repository reproduction of end-of-day NBBO snapshots with quote sizes.",
-  "where": "research/EQUITY_FEED_REVIEW.md · research/strict/registry.json (approved_feeds) · memory/pilot/",
+  "where": "research/EQUITY_FEED_REVIEW.md \u00b7 research/strict/registry.json (approved_feeds) \u00b7 memory/pilot/",
   "effort": "external licensing work, not code"
  },
  {
   "priority": "P1",
   "title": "Map SportsPred's published predictions to a dated snapshot URL",
   "detail": "@SportsPred_Forward is registered with a declared forward rule but nothing to read. The SportsPred repository is collector-driven with per-sport workflows and client-side data plumbing; the next session should identify the exact per-sport data file(s) the site renders (raw.githubusercontent.com URLs), add them to collect_injury_archive-style dated snapshot collection, and extend _injury_signals-style parsing to score the site's own predictions against the collected ESPN finals.",
-  "where": ".github/workflows/injury-archive.yml (add the snapshot) · sim/masterfeed.py · api.github.com/repos/buffedlizard55-lab/SportsPred",
+  "where": ".github/workflows/injury-archive.yml (add the snapshot) \u00b7 sim/masterfeed.py \u00b7 api.github.com/repos/buffedlizard55-lab/SportsPred",
   "effort": "half a day"
  },
  {
   "priority": "P1",
   "title": "Re-plan the live book once insider and NBA data land",
   "detail": "InsiderCluster_Live computes its data_status at instantiation and reports READY as soon as the insider files exist, but the live rehearsal/forward book must be re-planned (sim.cli live --mode all) for the first insider intents to appear; the same re-plan picks up the NBA slate signals once the ESPN NBA collection returns rows. Both are blocked on the same collection run as the P0 above, and both change published live-book numbers, so they belong in the same reviewed re-derivation.",
-  "where": "sim/cli.py (live) · sim/strategies_live.py · memory/live/",
+  "where": "sim/cli.py (live) \u00b7 sim/strategies_live.py \u00b7 memory/live/",
   "effort": "one run plus a review of the new intents"
  },
  {

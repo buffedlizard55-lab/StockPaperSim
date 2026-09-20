@@ -1883,18 +1883,22 @@ ESPN_WEEKS = {
     "ncaaf": [(2025, 2, 1, 15), (2025, 3, 1, 1)],
 }
 
-#: The daily-calendar sports (basketball, baseball) IGNORE the week parameter:
-#: the same week-based form that fills the football files silently returned
-#: zero basketball events on every prior run, so nba_scoreboard.jsonl stayed
-#: empty and the NBA personas correctly reported DATA-MISSING.  Verified
-#: against the live endpoint on 2026-09-19: a bare season year returns the
-#: whole season in one response, where the year names the season that ENDS in
-#: it (dates=2026 -> the 2025-26 NBA season, dates=2026 -> the 2026 MLB
-#: season, dates=2025 -> the 2024-25 NBA season).  Only the seasons inside
-#: the trading window are collected.
-ESPN_SEASON_YEARS = {
-    "nba": [2026],
-    "mlb": [2026],
+#: The daily-calendar sports (basketball, baseball) IGNORE the week parameter,
+#: and their bare-season-year form is a trap: the response is capped at ~25
+#: events from an arbitrary mid-season window (the 2026-09-20 run's manifest
+#: is the evidence: dates=2026&limit=5000 answered HTTP 200 with 340,836 bytes
+#: whose only NBA events were 2026-01-01..2026-01-04, and the baseball variant
+#: returned spring-training games that the preseason filter dropped - 0 rows).
+#: The form that returns a complete answer is a SINGLE calendar date:
+#: dates=20251021 returned that day's completed games with final scores when
+#: verified against the live endpoint on 2026-09-19.  Each daily sport is
+#: therefore walked day by day across the dates its season can intersect the
+#: trading window; ranges (dates=YYYYMMDD-YYYYMMDD) answer HTTP 400.
+ESPN_DAY_WALKS = {
+    # The 2025-26 NBA season: preseason from early October, playoffs into June.
+    "nba": ("2025-10-01", "2026-06-30"),
+    # The 2026 MLB season: spring training from late February to the window end.
+    "mlb": ("2026-02-20", "2026-09-16"),
 }
 
 
@@ -1907,14 +1911,18 @@ def _espn_requests(key: str, path: str) -> List[Tuple[str, str]]:
                 f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
                 f"?dates={season}&seasontype={seasontype}&week={week}&limit=1000",
                 f"{key} {season} type {seasontype} week {week} (secondary)"))
-    for year in ESPN_SEASON_YEARS.get(key, []):
-        # One request per season year.  limit=5000 because a basketball season
-        # is ~1,300 events and a baseball season with spring training ~2,800;
-        # the payload is one large JSON the runner parses in memory.
-        out.append((
-            f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
-            f"?dates={year}&limit=5000",
-            f"{key} season year {year} (whole season, secondary)"))
+    if key in ESPN_DAY_WALKS:
+        start, end = ESPN_DAY_WALKS[key]
+        import datetime as dt
+        cur = dt.date.fromisoformat(start)
+        stop = dt.date.fromisoformat(end)
+        while cur <= stop:
+            stamp = cur.strftime("%Y%m%d")
+            out.append((
+                f"https://site.api.espn.com/apis/site/v2/sports/{path}/scoreboard"
+                f"?dates={stamp}&limit=1000",
+                f"{key} {cur.isoformat()} (secondary)"))
+            cur += dt.timedelta(days=1)
     return out
 
 
@@ -1924,8 +1932,7 @@ def collect_espn(fetcher: Fetcher, out: str) -> dict:
         rows: List[dict] = []
         failed = 0
         for url, note in _espn_requests(key, path):
-            body = fetcher.get(url, "espn", note=note,
-                               timeout=90.0 if key in ESPN_SEASON_YEARS else None)
+            body = fetcher.get(url, "espn", note=note)
             if body is None:
                 failed += 1
                 continue

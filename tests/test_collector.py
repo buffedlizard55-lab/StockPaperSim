@@ -77,12 +77,13 @@ if __name__ == "__main__":
 class EspnRequestFormTest(unittest.TestCase):
     """The scoreboard request form must match what each sport's calendar is.
 
-    Verified against the live endpoint on 2026-09-19: the weekly form fills
-    the football files, but basketball and baseball IGNORE the week parameter
-    and answer a bare season year with the whole season - the week form
-    returned zero basketball events on every prior run, which is why
-    nba_scoreboard.jsonl stayed empty and the NBA personas reported
-    DATA-MISSING.
+    Verified against the live endpoint on 2026-09-19/20: the weekly form
+    fills the football files, but basketball and baseball IGNORE the week
+    parameter, their bare-season-year form is capped at ~25 events from an
+    arbitrary mid-season window (run 35477020017's manifest: 340,836 bytes,
+    NBA events only from 2026-01-01..04, baseball only spring training), and
+    date RANGES answer HTTP 400.  The complete answer for a daily sport is
+    one request per calendar date, so the daily sports are walked day by day.
     """
 
     def test_football_uses_the_week_form(self):
@@ -92,24 +93,28 @@ class EspnRequestFormTest(unittest.TestCase):
             for url in urls:
                 self.assertIn("seasontype=", url)
                 self.assertIn("week=", url)
-                self.assertNotIn("dates=2026&limit=5000", url)
 
-    def test_basketball_and_baseball_use_the_whole_season_form(self):
+    def test_basketball_and_baseball_are_walked_day_by_day(self):
         for key, path in (("nba", "basketball/nba"), ("mlb", "baseball/mlb")):
             urls = [u for u, _ in COLLECTOR._espn_requests(key, path)]
             self.assertTrue(urls, key)
             for url in urls:
                 self.assertNotIn("week=", url, url)
                 self.assertNotIn("seasontype=", url, url)
-                self.assertRegex(url, r"dates=\d{4}&limit=5000$")
+                self.assertRegex(url, r"dates=\d{8}&limit=1000$")
 
-    def test_the_nba_season_year_is_the_one_inside_the_trading_window(self):
-        # dates=2026 is the 2025-26 NBA season (the year names the season that
-        # ends in it); dates=2025 would be 2024-25, which is before the window.
-        urls = [u for u, _ in COLLECTOR._espn_requests("nba", "basketball/nba")]
-        self.assertEqual(urls, [
-            "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/"
-            "scoreboard?dates=2026&limit=5000"])
+    def test_the_day_walks_cover_the_in_window_seasons(self):
+        import datetime as dt
+        nba = [u for u, _ in COLLECTOR._espn_requests("nba", "basketball/nba")]
+        # The 2025-26 NBA season: preseason in October, playoffs into June.
+        start = dt.date(2025, 10, 1)
+        stamps = [(start + dt.timedelta(days=i)).strftime("%Y%m%d")
+                  for i in range((dt.date(2026, 6, 30) - start).days + 1)]
+        self.assertEqual([u.split("dates=")[1][:8] for u in nba], stamps)
+        mlb = [u for u, _ in COLLECTOR._espn_requests("mlb", "baseball/mlb")]
+        # The 2026 MLB season: spring training from 2026-02-20 to the window end.
+        self.assertEqual([u.split("dates=")[1][:8] for u in mlb][0], "20260220")
+        self.assertEqual([u.split("dates=")[1][:8] for u in mlb][-1], "20260916")
 
     def test_every_request_carries_an_explanatory_note(self):
         for key, path in (("nfl", "football/nfl"), ("nba", "basketball/nba"),
@@ -119,42 +124,51 @@ class EspnRequestFormTest(unittest.TestCase):
 
     def test_the_parser_drops_preseason_events(self):
         """Whole-season payloads mix spring training in; weeks never did."""
+        import datetime as dt
 
-        class WholeSeasonFetcher:
+        def event(type_, date, status="STATUS_FINAL"):
+            return {
+                "date": date, "id": f"e{type_}{date}", "name": "A at B",
+                "season": {"type": type_},
+                "competitions": [{"status": {"type": {"name": status}},
+                                  "venue": {"fullName": "V"},
+                                  "competitors": [
+                                      {"homeAway": "home", "score": "110",
+                                       "team": {"displayName": "Home Team"}},
+                                      {"homeAway": "away", "score": "99",
+                                       "team": {"displayName": "Away Team"}}]}]}
+
+        # One preseason, two regular-season, one postseason and one undated
+        # event, served on the day each was played.
+        season = {
+            "2025-10-05": [event(1, "2025-10-05T23:00Z")],
+            "2025-10-21": [event(2, "2025-10-21T23:00Z")],
+            "2025-10-22": [event(None, "2025-10-22T23:00Z")],
+            "2026-04-20": [event(3, "2026-04-20T23:00Z")],
+        }
+
+        class DayWalkFetcher:
             def __init__(self):
                 self.manifest = []
 
             def get(self, url, kind, headers=None, note="", **kwargs):
-                def event(type_, date, status="STATUS_FINAL"):
-                    return {
-                        "date": date, "id": f"e{type_}{date}", "name": "A at B",
-                        "season": {"type": type_},
-                        "competitions": [{"status": {"type": {"name": status}},
-                                          "venue": {"fullName": "V"},
-                                          "competitors": [
-                                              {"homeAway": "home", "score": "110",
-                                               "team": {"displayName": "Home Team"}},
-                                              {"homeAway": "away", "score": "99",
-                                               "team": {"displayName": "Away Team"}}]}]}
-                body = {"events": [event(1, "2025-10-05T23:00Z"),
-                                   event(2, "2025-10-21T23:00Z"),
-                                   event(3, "2026-04-20T23:00Z"),
-                                   event(None, "2025-10-22T23:00Z")]}
+                import re
+                m = re.search(r"dates=(\d{8})", url)
+                day = (dt.datetime.strptime(m.group(1), "%Y%m%d").date().isoformat()
+                       if m else None)
+                body = {"events": season.get(day, [])}
                 raw = json.dumps(body).encode("utf-8")
                 self.manifest.append({"url": url})
                 return raw
 
         with tempfile.TemporaryDirectory() as tmp:
-            COLLECTOR.collect_espn(WholeSeasonFetcher(), tmp)
-            # Only basketball gets rows here: the fetcher answers every URL
-            # with the same body, and football's week list is non-empty too,
-            # so nfl/ncaaf files also exist.  The assertion is on basketball.
+            COLLECTOR.collect_espn(DayWalkFetcher(), tmp)
             rows = [json.loads(line) for line in open(
                 os.path.join(tmp, "sports", "nba_scoreboard.jsonl"))]
         # Preseason (type 1) is dropped; regular season, postseason and an
         # event with no season block at all are kept, in payload order.
         self.assertEqual([r["date"] for r in rows],
-                         ["2025-10-21", "2026-04-20", "2025-10-22"])
+                         ["2025-10-21", "2025-10-22", "2026-04-20"])
 
 
 class InsiderBulkBudgetTest(unittest.TestCase):

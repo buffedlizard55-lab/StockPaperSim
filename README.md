@@ -1,5 +1,29 @@
 # StockPaperSim
 
+> **2026-09-21 fifth pass — the insider participants trade: an EDGAR full-text
+> purchase locator found every open-market buy, and a look-ahead bug was fixed
+> before it could matter.** The 2026-09-20 walk was recency-ordered and could
+> only say "no purchases in the most recent filings". This pass asked EDGAR's
+> own full-text index for **every Form 4 that carries a code-P transaction**
+> for the ten issuers over 27 months (`"4 P false"` / `"4 P 0"`, the XML
+> transaction-coding phrase, validated first against known MU sales - every
+> query URL is in `data/real/sec_agent/fts_locator.json`). It found **eight**
+> purchase filings and all eight are captured and staged (34 code-P rows, lane
+> now **86 filings / 216 transactions**; two of the eight are pre-season
+> director purchases that only touch the warm-up window). Only one purchase in the window is
+> by a CEO (TSLA, 2025-09-15, 25 lots / 2.57m shares); one MSFT row is a
+> broker-initiated purchase the officer disavowed and still counts because the
+> rules are code tests (IR-83). Before the rows landed, the signal builder was
+> found to date purchases by **trade date** rather than **filing date** - a
+> look-ahead of two business days normally and seven months for one late
+> filing; it is fixed and pinned by tests (IR-82). Two cluster personas had
+> declared an exit they never coded and held TSLA for a year in the first
+> replay; fixed and recorded with the pre-fix numbers (IR-84). Result: Season 2
+> `@InsiderCopycat_Max` +12.0%, `@CEO_CFO_Conviction` +7.5%,
+> `@InsiderCluster_Alpha` +5.3%; live rehearsal `@InsiderCluster_Live` +3.05%
+> and READY in the forward book with no intent outstanding (no purchase filed
+> in the trailing 30 days). Suite: **697 tests green**.
+>
 > **2026-09-20 fourth pass — SEC Form 4 insider data has landed (agent lane).**
 > A rendered-extraction campaign collected **65 filings / 99 parsed transactions
 > across all ten tracked tickers** (AAPL, MSFT, NVDA, JPM, XOM, JNJ, PG, TSLA,
@@ -13,11 +37,12 @@
 > (accession, date, ticker, code, shares, price). Eleven filings parse to no
 > Table I trade rows (derivative-only DSU/RSU grants or balance-only rows) and
 > are flagged, not dropped silently. Honest gaps recorded, not hidden: two MU
-> filings exceed the page-fetch size budget and were excluded, and the window
-> contains **zero code-P purchases**, so the buy-side insider signals register
-> as NO-OBSERVATIONS and `@InsiderCluster_Live` reports READY-NO-OBSERVATIONS —
-> ready and reading real filings, placing no intents until purchases land. Suite:
-> **687 tests green**.
+> filings exceeded the page-fetch size budget at first (both were captured later
+> the same day through the chunked route), and the recency window contained
+> **zero code-P purchases**, so the buy-side insider signals registered
+> as NO-OBSERVATIONS and `@InsiderCluster_Live` reported READY-NO-OBSERVATIONS —
+> ready and reading real filings, placing no intents until purchases landed
+> (they did, in the fifth pass above). Suite at the time: 687 tests green.
 >
 > **2026-09-19 third pass — every brief item now has its own measured participant.**
 > The Season 2 research roster grew from **14 to 19 personas** so that each item
@@ -111,7 +136,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 81 flags this project raised against itself.
+> carries the 85 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -226,7 +251,7 @@ Yahoo Finance daily files marked `SECONDARY`; therefore it does **not** satisfy 
 official-price competition requirement, even where a Nasdaq cross-check agrees.
 Window **2025-09-17 → 2026-09-16**
 (251 sessions), $100,000 each, ranked on total return. Benchmark: the real S&P 500 returned **+14.41%** over the same window
-(FRED `SP500`); **5 of 19 participants beat it** and **6 never traded at all**,
+(FRED `SP500`); **5 of 19 participants beat it** and **3 never traded at all**,
 which the site reports as *no trades placed* rather than as a 0.00% performance.
 These table values must not be presented as an official-source backtest until the
 Nasdaq adapter's full raw-response and redistribution gate passes.
@@ -238,10 +263,10 @@ Nasdaq adapter's full raw-response and redistribution gate passes.
 | 3 | `@GOLD_Trend_GLD` | +32.8% | −36.3% | 0.88 | 0.53 | 43 | 0.21% | beat the market |
 | 4 | `@MLB_Attention_Momo` | +23.8% | −28.1% | 0.68 | 0.36 | 105 | 2.59% | beat the market |
 | 5 | `@PinePilot_EMA_Cross` | +18.8% | −12.1% | 0.79 | 1.77 | 49 | 0.03% | roughly matched the market |
-| 6 | `@FDA_ClusterFade` | +2.8% | −22.3% | 0.25 | −0.16 | 34 | 0.45% | made money but lagged the index |
-| 7 | `@InsiderCopycat_Max` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 8 | `@InsiderCluster_Alpha` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
-| 9 | `@CEO_CFO_Conviction` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
+| 6 | `@InsiderCopycat_Max` | +12.0% | −13.3% | 0.50 | 0.42 | 13 | 0.05% | roughly matched the market |
+| 7 | `@CEO_CFO_Conviction` | +7.5% | −18.8% | 0.24 | 0.40 | 11 | 0.02% | made money but lagged the index |
+| 8 | `@InsiderCluster_Alpha` | +5.3% | −12.0% | 0.22 | 0.26 | 4 | 0.01% | made money but lagged the index |
+| 9 | `@FDA_ClusterFade` | +2.8% | −22.3% | 0.25 | −0.16 | 34 | 0.45% | made money but lagged the index |
 | 10 | `@InjuryFeed_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
 | 11 | `@NBAInjury_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
 | 12 | `@SportsPred_Forward` | +0.0% | 0.0% | 0.00 | 0.00 | 0 | 0.00% | no trades placed |
@@ -264,13 +289,17 @@ is a claim that FDA approvals predict XBI. The sports-attention family is the
 sportsbook complex in season on an attention clock while the complex itself
 de-rated - the
 post-mortems attribute the losses to the basket, not to the signal timing, and
-`@MLB_Upset_Short`'s −9.6% shows the same complex was a bad short too. The idle
-six are the other half of the result:
-`@InsiderCopycat_Max`, `@InsiderCluster_Alpha` and `@CEO_CFO_Conviction` still
-await the SEC insider collection (the quarterly bulk data sets are unreachable
-from shared runner IPs - see the 2026-09-20 note below);
-`@InjuryFeed_Forward`, `@NBAInjury_Forward` and
-`@SportsPred_Forward` are declared forward-only probes that place no backdated
+`@MLB_Upset_Short`'s −9.6% shows the same complex was a bad short too. The
+three insider personas traded for the first time in this replay (2026-09-21),
+from real purchase filings dated by their EDGAR filing date (six fall inside
+the competition window): all three
+bought TSLA on 2025-09-17 after the 2025-09-15 Musk Form 4 and rode it for a
+month, then `@InsiderCopycat_Max` copied the JNJ, MSFT and MU director
+purchases (its best trade is MU, +$12,406 from the 2026-01-15 Liu filing; its
+worst is MSFT from the broker-initiated Smith row, IR-83). A handful of trades
+dominated by one name is a first observation, not evidence (L-35). The idle
+three are `@InjuryFeed_Forward`, `@NBAInjury_Forward` and
+`@SportsPred_Forward`: declared forward-only probes that place no backdated
 trades by design. The site labels each one *DATA-MISSING* with the URL and the
 reason, which is the difference between "we tested it and it did not work" and
 "we could not test it".
@@ -297,14 +326,14 @@ reason, which is the difference between "we tested it and it did not work" and
 > IP; the injury-snapshot archive and the complete NBA/MLB scoreboards are
 > committed with full manifest custody.
 
-**Verification.** 1127 fills and 559 round trips, net round-trip P&L
-**$35,302.81** on $27.5m of traded notional, ledger digest `71af44a0…`. The
+**Verification.** 1179 fills and 587 round trips, net round-trip P&L
+**$60,055.69** on $29.2m of traded notional, ledger digest `1f892da7…`. The
 account is re-derived from the raw fill tape by code that never imports the
 engine: max |equity residual| **$0.0072** against a per-account rounding bound of
-$2.925 (the tape stores six-decimal prices). Median participation is 0.00058% of a
+$2.925 (the tape stores six-decimal prices). Median participation is 0.00055% of a
 session's volume and the largest single fill is 0.37% of it. The independent audit
-re-reads every published number: **3,873 checks, 0 failures**, plus 1,260 more in
-the Season 1 audit. Cost sensitivity is published as a panel, not a footnote:
+re-reads every published number: **5,513 checks, 0 failures**, plus the
+Season 1 audit. Cost sensitivity is published as a panel, not a footnote:
 doubling spreads, impact and fees costs the leader 1.2pp and halving the venue's
 depth costs 0.1pp, while `@Weather_ColdSnap_Max` loses 0.8pp to the fee-doubling
 alone.
@@ -323,7 +352,7 @@ python3 scripts/collect_real_data.py --out data/real   # on a runner with networ
 python3 -m sim.cli season2 --labels primary,stress-costs2x,stress-thinliquidity \
   --price-source yahoo --allow-secondary-research     # the committed run is the research replay
 python3 -m sim.cli ledger --run season2-primary-seed20260918 --participant @FDACatalyst_Rider
-python3 scripts/independent_audit_season2.py           # 3,393 checks, no project imports
+python3 scripts/independent_audit_season2.py           # 5,513 checks, no project imports
 python3 -m sim.cli build-site                          # Season 1 + Season 2 into docs/
 ```
 
@@ -436,16 +465,18 @@ It runs in two states, and both are published:
 | | Planned on | Settled against | Published as |
 |---|---|---|---|
 | **Rehearsal** | 2025-09-17 → 2026-09-16, one session at a time | the next session's verified bar | a measurable leaderboard — this is the forward test |
-| **Forward book** | 2026-09-16, the last session with a verified equity bar | nothing yet: 16 intents target 2026-09-17 and are `PENDING` | a status page, and **no return at all** |
+| **Forward book** | 2026-09-16, the last session with a verified equity bar; rolled forward by the ladder | 2026-09-17 and 2026-09-18 settled against exchange-published prints (27 fills); 9 intents target 2026-09-21 and are `PENDING` | a status page and a two-session ladder, and **no return claimed** |
 
-That second row is the honest state of a live competition on day one. The page
-reports 16 open intents and the exact evidence behind each one, and it reports no
-performance, because none exists.
+That second row is the honest state of a live competition in its first week. The
+page reports every settled fill with its print, the 9 open intents and the exact
+evidence behind each one, and it reports no performance, because two sessions
+are not one. `@InsiderCluster_Live` is READY in that book and holds no intent:
+no code-P purchase has been filed for its ten issuers in the trailing 30 days.
 
 **Rehearsal result (251 sessions, decide at `T`, settle at `T+1`).** 19
 participants, $100,000 each, ranked on total return. The official S&P 500 daily
 close returned **+14.42%** over the same window; **4 of 19 beat it**, the median
-return was **+3.87%**, and **three participants placed nothing at all** and say
+return was **+3.87%**, and **two participants placed nothing at all** and say
 why instead of printing a zero.
 
 | # | Participant | Return | Max DD | Fills | Cost | Slip (bps) | Data |
@@ -459,7 +490,8 @@ why instead of printing a zero.
 | 7 | `@VIXRegime_LiveMax` | +8.88% | −19.13% | 53 | 0.003% | 0.15 | READY |
 | 8 | `@KitchenSink_Official` | +4.09% | −16.48% | 200 | 0.005% | 0.24 | READY |
 | 9 | `@CurveSteepener_MaxBeta` | +3.99% | −14.78% | 195 | 0.006% | 0.33 | READY |
-| 10–12 | `@InsiderCluster_Live` · `@InjuryFeed_Forward` · `@ORB_NextOpen_Probe` | +3.87% (cash only) | 0.00% | 0 | 0.000% | — | DATA-MISSING / FORWARD-ONLY |
+| 10–11 | `@InjuryFeed_Forward` · `@ORB_NextOpen_Probe` | +3.87% (cash only) | 0.00% | 0 | 0.000% | — | FORWARD-ONLY |
+| 12 | `@InsiderCluster_Live` | +3.05% | −13.37% | 3 | 0.005% | 0.47 | READY |
 | 13 | `@Weather_ColdSnap_Live` | +1.09% | −19.29% | 23 | 0.098% | 3.42 | READY |
 | 14 | `@GoldVsRealRate_Live` | −7.50% | −25.37% | 123 | 0.008% | 0.48 | READY |
 | 15 | `@PinePilot_EMA_Live` | −8.23% | −24.79% | 29 | 0.003% | 0.19 | READY |
@@ -487,14 +519,22 @@ why instead of printing a zero.
 * `@NasdaqMomentum_Max` took **12 trades** to make +19.00%: the official Nasdaq
   Composite's own 210-session trend, levered into QQQ. The fewest decisions in
   the roster produced the fourth-best return.
-* The three idle participants are the other half of the result. Two are declared
-  forward-only because the data does not exist to backtest them, and one is
-  waiting on the SEC Form 4 stream. Their +3.87% is official SOFR credited on
-  idle cash, and their verdict column says *no trades placed* rather than
-  letting a cash return masquerade as a strategy result.
+* `@InsiderCluster_Live` traded for the first time on 2026-09-21's re-run:
+  three fills, all TSLA - long at 1.4x from 2025-09-17 after the 2025-09-15 Musk
+  Form 4 (the only CEO/CFO purchase EDGAR's full-text index finds for the ten
+  issuers), flat again on 2025-10-16 when the 30-day filing window emptied.
+  +3.05% with a −13.4% drawdown inside one month is what one filing looks
+  like; no second cluster or CEO/CFO purchase appeared in the year, so the
+  book sat in cash (official SOFR) for the other eleven months. Its first
+  rehearsal held that position for a year because the declared exit was never
+  coded (IR-84, −24.56% before the fix; both numbers are on record).
+* The two idle participants are declared forward-only because the data does not
+  exist to backtest them. Their +3.87% is official SOFR credited on idle cash,
+  and their verdict column says *no trades placed* rather than letting a cash
+  return masquerade as a strategy result.
 
-**Verification and the clock.** 1,368 intents, 1,372 fills (four of them forced
-liquidations the broker generated), 607 round trips, audit **PASS on 9,377
+**Verification and the clock.** 1,371 intents, 1,375 fills (four of them forced
+liquidations the broker generated), 608 round trips, audit **PASS on 9,392
 checks with zero failures**. The audit re-derives cash and positions from the
 fill tape plus the carry rows without asking the account what it thinks it holds;
 max cash residual **$0.000000**. Three clock properties are enforced in code:
@@ -558,7 +598,7 @@ python3 -m sim.cli live-report @CrowdFade_Live
 ```
 sim/            the engine - pure standard library, no third-party imports
   config.py         dated fee schedules, tick grid, margin, impact; the
-                    79-row verified-source register
+                    81-row verified-source register
   calendar.py       sessions, closures, early closes
   universe.py       the 17-instrument whitelist with real/simulated labels
   marketdata.py     replay generator: real factor + real VIX regime -> bars
@@ -584,7 +624,7 @@ scripts/        build_site.py (the GitHub Pages generator), check_purity.py,
                 independent_audit.py and independent_audit_official.py
                 (re-derive every published number from the raw streams and the
                 Treasury's own tapes; import no project code)
-tests/          687 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
+tests/          697 tests - engine, venue, memory, site, live book, official book, registers, docs, README,
                 official-price eligibility, sensitivity and trade simulation
 data/real/      verbatim FRED and Yahoo research downloads, plus any official
                 adapter responses only when their raw custody and status are recorded
@@ -595,8 +635,8 @@ docs/           the published site (GitHub Pages serves this directory);
                 docs/live/ is the Live Book section and docs/official/ the
                 Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (81), LIMITATIONS.json (44),
-                REMAINING_WORK.json (52), MASTER_SITE_SIGNALS.md,
+                IRREGULARITIES.json (85), LIMITATIONS.json (44),
+                REMAINING_WORK.json (54), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -618,7 +658,7 @@ python3 -m sim.cli live-blotter         # every live intent with its verified ba
 python3 -m sim.cli live-report @FDA_PDUFA_Drifter
 python3 -m sim.cli build-site           # regenerate docs/
 python3 scripts/independent_audit.py  # re-derive the published numbers from events (763 checks)
-python3 -m unittest discover -s tests   # 687 tests
+python3 -m unittest discover -s tests   # 697 tests
 python3 -m sim.cli official             # run the official auction book
 python3 -m sim.cli official-blotter     # every settled official trade + evidence
 python3 -m sim.cli trades               # the unified store across every book
@@ -656,7 +696,7 @@ manual review, and flag irregularities rather than paper over them.
   1993; an Almgren 2005 author list, page range and DOI; a PEAD DOI from the
   wrong journal; an unverifiable Amihud DOI).
 * [`docs/sources.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/sources.html)
-  — the 85-row register (79 source rows plus 6 provider rows), every URL
+  — the 87-row register (81 source rows plus 6 provider rows), every URL
   clickable, every row carrying an honesty
   status (`FETCHED-VERIFIED`, `FETCHED`, `FETCHED-VIA-SEARCH`, `SECONDARY`,
   `KNOWN-NOT-FETCHED`, `ADAPTER-DOCS`). Nothing is marked verified that was not
@@ -668,7 +708,7 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 81 flags, including the ones raised against this project's own modelling
+  — all 85 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
   — 43 limitations, 44 items of remaining work in priority order, and what
@@ -706,15 +746,17 @@ manual review, and flag irregularities rather than paper over them.
    (L-32). Primary awards, which are where most of the notional executes, are
    the published price exactly.
 8. **The SEC insider bulk data sets are not in the repository; a rendered Form 4
-   extract lane is.** The quarterly structured sets remain refused to the runner
-   (HTTP 403 / rate gate, L-27), but on 2026-09-20 a complementary lane landed:
-   65 filings (99 parsed transactions) across AAPL, MSFT, NVDA, JPM, XOM, JNJ,
-   PG, TSLA, MU and T, filed on or after 2026-06-01, captured as the SEC's own
-   XSL-rendered Form 4 views (`data/real/sec_agent/`, digests re-verified at
-   staging). The extracted window contains no open-market purchases (code P),
-   so the buy-side insider signals register as observed-but-empty
-   (NO-OBSERVATIONS) and the insider participants hold no positions and say why
-   instead of substituting an aggregator for a filing.
+   extract lane plus an EDGAR full-text purchase locator are.** The quarterly
+   structured sets remain refused to the runner (HTTP 403 / rate gate, L-27).
+   The lane holds 86 filings (216 parsed transactions) across AAPL, MSFT, NVDA,
+   JPM, XOM, JNJ, PG, TSLA, MU and T as the SEC's own XSL-rendered Form 4 views
+   (`data/real/sec_agent/`, digests re-verified at staging); the recency walk
+   covers filings on or after 2026-06-01, and the locator
+   (`fts_locator.json`) adds every code-P purchase filing EDGAR's full-text
+   index reports for the ten issuers since 2024-06 (eight, all captured; two
+   are pre-season). The insider participants trade those purchases, dated by
+   filing date (IR-82); the in-window sample is six filings and is published
+   as a first observation, not evidence (L-35).
 9. **Circadian granularity.** The live book has one decision point per session
    and executes at the open or the close. A rule that needs the first thirty
    minutes (an opening-range breakout) cannot be expressed here at all and is

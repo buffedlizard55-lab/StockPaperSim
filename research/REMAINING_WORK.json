@@ -2,9 +2,23 @@
  {
   "priority": "P1",
   "title": "Collect the SEC insider data sets from a clean IP (owner action; blocked from shared runners)",
-  "detail": "UPDATE 2026-09-20: the agent-rendered Form 4 lane has landed (65 filings, 99 transactions, 10 tickers, filed >= 2026-06-01; data/real/sec_agent/). _load_insider_rows merges it automatically; the three insider participants left DATA-MISSING state. What remains is the owner action for the *bulk* quarterly sets themselves: PROVEN BLOCKED from shared runners, 2026-09-20 (run 35477020017): dcm.sec.gov - the host the data.gov catalog's download buttons name - does not resolve at all from a GitHub runner (DNS failure on all 16 attempts), www.sec.gov answers every request shape with the 'Request Rate Threshold Exceeded' page even at 1.2s pacing with 2 tries and 20s backoffs, and even company_tickers.json 403s. The sub-budget fix worked exactly as designed (every other section ran; budget_exhausted=false), so the collector is no longer the constraint - the runner's shared IP pool is (IR-76). The signal builder, the bulk reader and the merge/dedup logic are all committed and tested; what remains is an owner action: run scripts/collect_real_data.py --only insider_bulk,sec,official_rates from any machine with a normal residential/office IP (it writes the same manifest and the same commit-ready files), or attach a self-hosted runner with a clean egress IP. The insider personas correctly stay flat until then, and the register carries the caveat.",
+  "detail": "UPDATE 2026-09-21: the agent-rendered Form 4 lane now holds 86 filings / 216 transactions (10 tickers), and an EDGAR full-text purchase locator (data/real/sec_agent/fts_locator.json) found and captured all eight code-P purchase filings (34 rows) for 2024-06..2026-02, so the insider personas and @InsiderCluster_Live trade from real filings (dated by filing date, IR-82). What the bulk sets would still add: every sale/grant/exercise row for every issuer and quarter (the lane's non-P coverage is a recency walk filed >= 2026-06-01 plus a deeper MU walk), and a raw-XML cross-check of the rendered extracts (L-44). PROVEN BLOCKED from shared runners, 2026-09-20 (run 35477020017): dcm.sec.gov does not resolve from a GitHub runner and www.sec.gov answers every request shape with the 'Request Rate Threshold Exceeded' page (IR-76). Owner action: run scripts/collect_real_data.py --only insider_bulk,sec,official_rates from any machine with a normal residential/office IP, or attach a self-hosted runner with a clean egress IP.",
   "where": ".github/workflows/collect-real-data.yml (marker-gated push trigger) \u00b7 sim/masterfeed.py (_load_insider_rows) \u00b7 sim/strategies_mf.py",
   "effort": "one marker push plus a README/audit update pass"
+ },
+ {
+  "priority": "P1",
+  "title": "Re-run the EDGAR purchase locator on a schedule so new Form 4 purchases reach the live book the day after they are filed",
+  "detail": "fts_locator.json lists the eight code-P Form 4 filings EDGAR's full-text index reports for the ten issuers since 2024-06; all eight are captured (2026-09-21). The locator queries are plain URLs and should be re-run at each collection, because a new purchase matters to @InsiderCluster_Live only inside its 30-day filing window. If efts.sec.gov is reachable from the GitHub runner (www.sec.gov is not, IR-76) the collector can call it directly and stage any new accession through the rendered-view route or, from a clean IP, the raw XML; otherwise it is an agent-session step.",
+  "where": "data/real/sec_agent/fts_locator.json \u00b7 scripts/stage_sec_rendered.py \u00b7 scripts/collect_real_data.py \u00b7 .github/workflows/collect-real-data.yml",
+  "effort": "half a day: a collector step plus a workflow line; per-filing capture stays the rendered-view route"
+ },
+ {
+  "priority": "P2",
+  "title": "The insider lane is complete for purchases, not for sales: widen the non-P coverage or land the bulk sets",
+  "detail": "The buy-side series now rest on every code-P filing EDGAR's full-text index reports, but the sell side (insider_buy_ratio_30d's denominator) is still the recency walk (filed >= 2026-06-01, plus a deeper MU walk), so the ratio is biased upward before June 2026. The same phrase locator works for sales (\"4 S false\" / \"4 S 0\") but returns hundreds of filings for ten mega-caps, which is bulk-set territory rather than page-by-page capture. Until the quarterly sets land, the ratio should be read as a partial-denominator figure (the register note says which files back it).",
+  "where": "sim/masterfeed.py (_insider_signals) \u00b7 data/real/sec_agent/CAMPAIGN.md",
+  "effort": "owner action for the bulk sets; or a paged locator + capture loop for sales (many fetches)"
  },
  {
   "priority": "P0",

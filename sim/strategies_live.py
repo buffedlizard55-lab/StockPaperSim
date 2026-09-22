@@ -762,7 +762,8 @@ class InsiderClusterLive(LiveStrategy):
     """Form 4 cluster purchases - implemented, gated on the filing stream."""
 
     username = "@InsiderCluster_Live"
-    event_inputs = ("insider_buys_30d", "insider_buy_ratio_30d")
+    event_inputs = ("insider_buys_30d", "insider_buyers_30d", "insider_ceo_buys_30d",
+                    "insider_buy_ratio_30d")
 
     def __init__(self) -> None:
         # The insider collection state is a fact about the checkout, not about
@@ -825,11 +826,16 @@ class InsiderClusterLive(LiveStrategy):
                 "says so rather than substituting a price proxy."),
         entry_rules=[
             "Count open-market purchases (transaction code P) per issuer over the "
-            "trailing 30 days from the collected Form 4 JSONL",
-            "Two or more distinct insiders -> target the issuer at 0.9x equity",
+            "trailing 30 days from the collected Form 4 JSONL, dated by the EDGAR "
+            "filing date (when the purchase became public), never by the trade date",
+            "Two or more distinct reporting persons bought -> target the issuer at "
+            "0.9x equity (lots are not people: one filing reporting 25 lots by one "
+            "insider is one buyer)",
             "A CEO/CFO purchase present -> target 1.4x equity",
         ],
-        exit_rules=["Flatten 30 sessions after the last counted purchase"],
+        exit_rules=["Flatten a name once its trailing 30-day filing window holds "
+                    "neither a cluster nor a CEO/CFO purchase (about a month after "
+                    "the last qualifying filing)"],
         sizing="0.9-1.4x per name, up to 1.9x gross across names",
         leverage="up to 1.9x gross",
         cadence="every session, executed the next session",
@@ -839,13 +845,21 @@ class InsiderClusterLive(LiveStrategy):
                      "returns over the following months",
             "ref": "SEC Form 4 filings (primary record)",
             "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4",
-            "status": "OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION NOT LANDED"}],
+            "status": "OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION LANDED VIA THE "
+                      "RENDERED-VIEW LANE (data/real/sec_agent/)"}],
         known_failure_modes=[
-            "The filing arrives up to two business days after the trade, so the "
-            "informational edge is partly gone by the time it is readable",
+            "The filing arrives up to two business days after the trade (and a late "
+            "filing can arrive months after it), so the informational edge is partly "
+            "gone by the time it is readable; the rule dates every purchase by its "
+            "filing date for exactly that reason",
             "Cluster rules fire rarely, so the sample is thin by construction",
-            "With no collected stream the participant is idle, which is the current "
-            "honest state"],
+            "Code P is a mechanical filter: a broker-initiated purchase the insider "
+            "later disavowed (MSFT, accession 0000789019-25-000120) still counts as "
+            "one purchase, because the rule reads the transaction code, not the "
+            "footnotes",
+            "The collected stream is the rendered-view lane plus the EDGAR full-text "
+            "locator; until the SEC quarterly bulk sets land it is complete only for "
+            "the purchases that locator found"],
         aggression=4,
         why_return_seeking="Concentrated single-name exposure on a rare, dated signal.",
     )
@@ -858,20 +872,30 @@ class InsiderClusterLive(LiveStrategy):
         for symbol in ("AAPL", "MSFT", "NVDA", "JPM", "XOM", "JNJ", "PG", "TSLA",
                        "MU", "T"):
             buys = ctx.signal_by_symbol("insider_buys_30d", symbol) or 0.0
+            buyers = ctx.signal_by_symbol("insider_buyers_30d", symbol) or 0.0
             ceo = ctx.signal_by_symbol("insider_ceo_buys_30d", symbol) or 0.0
             price = ctx.close(symbol)
             if not price:
                 continue
             if ceo >= 1.0:
                 self.move_to(ctx, {symbol: 1.4},
-                             f"insider: {ceo:.0f} CEO/CFO purchase(s) in 30d",
+                             f"insider: {ceo:.0f} CEO/CFO purchase lot(s) filed in 30d",
                              "Form 4 code-P purchases by a CEO or CFO", ev,
                              min_fraction=0.03)
-            elif buys >= 2.0:
+            elif buyers >= 2.0:
                 self.move_to(ctx, {symbol: 0.9},
-                             f"insider: {buys:.0f} open-market purchases in 30 days, "
+                             f"insider: {buyers:.0f} distinct insiders, {buys:.0f} "
+                             f"open-market purchase lots filed in 30 days, "
                              f"buy/sell ratio {ratio:.2f}",
                              "Form 4 code-P cluster", ev, min_fraction=0.03)
+            elif ctx.position(symbol):
+                # The window has emptied: the declared exit.  The first
+                # rehearsal with real filings held TSLA for a year because this
+                # branch did not exist (the exit was declared, never coded).
+                self.flatten(ctx, (symbol,),
+                             "insider: no cluster or CEO/CFO purchase filed in the "
+                             "trailing 30 days - window emptied",
+                             "Form 4 code-P window exit", ev)
 
 
 class InjuryFeedForward(LiveStrategy):

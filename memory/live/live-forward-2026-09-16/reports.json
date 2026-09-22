@@ -151,7 +151,7 @@
       "value": 17.690001,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/PENN.json",
-      "sha256": "f638f4dda663bb73fe8783a3344b563570471fce57e4363d63d46c9ce8f1eb0a",
+      "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
       "url": ""
      }
     },
@@ -210,15 +210,15 @@
      "PENN_price": {
       "series": "PENN daily bar",
       "observation_date": "2026-09-17",
-      "value": 17.459999084472656,
+      "value": 17.46,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/PENN.json",
-      "sha256": "f638f4dda663bb73fe8783a3344b563570471fce57e4363d63d46c9ce8f1eb0a",
+      "sha256": "a08c607c0926b67cf07c1d783cb680772c85851bf312595d1e12c5291078fa04",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 17.459999,
+     "reference_price": 17.46,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 100
@@ -231,6 +231,7 @@
   ],
   "trips": [
    {
+    "participant": "@MLB_Attention_Live",
     "symbol": "PENN",
     "direction": "short",
     "quantity": 3400,
@@ -244,7 +245,7 @@
     "entry_reason": "mlb-attention: sparse schedule (90 vs median 93)",
     "exit_reason": "",
     "entry_fill_count": 2,
-    "entry_reference_close": 17.459999084472656,
+    "entry_reference_close": 17.46,
     "exit_reference_close": null,
     "entry_participation_pct": 0.15287,
     "exit_participation_pct": null,
@@ -445,7 +446,7 @@
       "value": 10.36,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/UNG.json",
-      "sha256": "e344c1088e9a97857b9ed3179868d537a2072bb0d3d9f70f66d2208be9159820",
+      "sha256": "eb7bcc0769945fb2c40fbcd98753ed7e17e367cf69d2ce2bde9ae60f00a462cc",
       "url": ""
      }
     },
@@ -501,7 +502,7 @@
       "value": 163.320007,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/XOM.json",
-      "sha256": "17232c5b2dd0171c8b7ea4dffe2f31ca57e727214cf7c3415b593570b0347d77",
+      "sha256": "8404fbe647a1eb61948a8d69f30f7709a1bc70505e490376ed2499c77fb09f9e",
       "url": ""
      }
     },
@@ -519,6 +520,7 @@
   ],
   "trips": [
    {
+    "participant": "@OilDollar_FadeUNG",
     "symbol": "UNG",
     "direction": "long",
     "quantity": 7700,
@@ -532,13 +534,14 @@
     "entry_reason": "oil-dollar: oil +27.4%/21d with dollar -0.8%/21d",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 10.329999923706055,
+    "entry_reference_close": 10.33,
     "exit_reference_close": null,
     "entry_participation_pct": 0.03019,
     "exit_participation_pct": null,
     "status": "open"
    },
    {
+    "participant": "@OilDollar_FadeUNG",
     "symbol": "XOM",
     "direction": "long",
     "quantity": 600,
@@ -552,7 +555,7 @@
     "entry_reason": "oil-dollar: oil +27.4%/21d with dollar -0.8%/21d",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 163.27000427246094,
+    "entry_reference_close": 163.27,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00547,
     "exit_participation_pct": null,
@@ -753,7 +756,7 @@
       "value": 704.719971,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -815,15 +818,15 @@
      "QQQ_price": {
       "series": "QQQ daily bar",
       "observation_date": "2026-09-17",
-      "value": 716.9199829101562,
+      "value": 716.92,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 716.919983,
+     "reference_price": 716.92,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 40,
@@ -883,7 +886,7 @@
       "value": 721.45,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -910,6 +913,7 @@
   ],
   "trips": [
    {
+    "participant": "@NasdaqMomentum_Max",
     "symbol": "QQQ",
     "direction": "long",
     "quantity": 160,
@@ -923,7 +927,7 @@
     "entry_reason": "nasdaq-momentum: NASDAQCOM 25,978 > 200d mean 24,522 and 210-session return +10.99% > 0",
     "exit_reason": "",
     "entry_fill_count": 2,
-    "entry_reference_close": 716.9199829101562,
+    "entry_reference_close": 716.92,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00032,
     "exit_participation_pct": null,
@@ -1123,7 +1127,7 @@
       "value": 704.719971,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -1176,15 +1180,15 @@
      "QQQ_price": {
       "series": "QQQ daily bar",
       "observation_date": "2026-09-17",
-      "value": 716.9199829101562,
+      "value": 716.92,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 716.919983,
+     "reference_price": 716.92,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 40,
@@ -1244,7 +1248,7 @@
       "value": 721.45,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -1271,6 +1275,7 @@
   ],
   "trips": [
    {
+    "participant": "@VolControl_MaxLev",
     "symbol": "QQQ",
     "direction": "long",
     "quantity": 160,
@@ -1284,7 +1289,7 @@
     "entry_reason": "vol-control: middle tercile (VIX 17.71)",
     "exit_reason": "",
     "entry_fill_count": 2,
-    "entry_reference_close": 716.9199829101562,
+    "entry_reference_close": 716.92,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00032,
     "exit_participation_pct": null,
@@ -1303,6 +1308,612 @@
   ],
   "symbols_traded": [
    "QQQ"
+  ],
+  "symbols_available": [
+   "AAPL",
+   "DKNG",
+   "FLUT",
+   "GENI",
+   "GLD",
+   "IBB",
+   "IWM",
+   "JNJ",
+   "JPM",
+   "MSFT",
+   "MU",
+   "NVDA",
+   "PENN",
+   "PG",
+   "QQQ",
+   "SPY",
+   "SRAD",
+   "T",
+   "TLT",
+   "TSLA",
+   "UNG",
+   "XBI",
+   "XLU",
+   "XOM"
+  ]
+ },
+ "@SOFRPivot_Rider": {
+  "username": "@SOFRPivot_Rider",
+  "spec": {
+   "username": "@SOFRPivot_Rider",
+   "display_name": "SOFR Pivot Rider",
+   "archetype": "curve/carry rotation",
+   "thesis": "SOFR is the secured funding rate the Federal Reserve Bank of New York publishes every business day. Its 21-session direction is a public read on whether funding conditions are easing. Easing regimes should favour long-duration and high-beta equity; a rising funding rate should not. The rate series was collected for this book, so unlike Season 1 the rule is measured on an official observation rather than a declared parameter.",
+   "entry_rules": [
+    "Compute the change in the official SOFR over 21 sessions",
+    "SOFR lower by more than 3bp -> target long QQQ 1.5x plus TSLA 0.45x",
+    "SOFR higher by more than 5bp -> target long TLT 1.8x (duration bid as growth expectations fade)",
+    "Otherwise hold 0.8x SPY"
+   ],
+   "exit_rules": [
+    "Re-evaluated every session; the rate series, not a price, closes the position"
+   ],
+   "sizing": "up to 1.95x gross",
+   "leverage": "1.5-1.8x gross",
+   "cadence": "every session, executed the next session",
+   "horizon": "weeks",
+   "academic_basis": [
+    {
+     "claim": "The Federal Reserve Bank of New York publishes SOFR daily; the collected history and the publisher's own API agree on both cross-checked observations",
+     "ref": "FRED series SOFR (data/real/fred/SOFR_2024-09-16_2026-09-17.csv)",
+     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json",
+     "status": "FETCHED-VERIFIED"
+    },
+    {
+     "claim": "Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here",
+     "ref": "Federal Reserve Board Reg T; FINRA Rule 4210",
+     "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210",
+     "status": "FETCHED-VERIFIED"
+    }
+   ],
+   "known_failure_modes": [
+    "A 21-session funding change is a noisy proxy for policy expectations; repo rates move on quarter-end and settlement mechanics unrelated to equity discount rates (the collected history shows a 23bp one-day jump on 2026-09-17 that is a settlement effect, not a policy signal)",
+    "TLT is a duration bet with its own convexity and rate-path risk",
+    "TSLA is a single-name residual risk wearing a macro signal"
+   ],
+   "aggression": 4,
+   "why_return_seeking": "Concentrated rotation, levered, no volatility target."
+  },
+  "data_status": "READY",
+  "official_inputs": [
+   "SOFR",
+   "SP500"
+  ],
+  "event_inputs": [],
+  "signal_note": "",
+  "summary": {
+   "username": "@SOFRPivot_Rider",
+   "display_name": "SOFR Pivot Rider",
+   "archetype": "curve/carry rotation",
+   "data_status": "READY",
+   "starting_cash": 100000.0,
+   "final_equity": 100532.21,
+   "net_pnl_usd": 532.21,
+   "total_return_pct": 0.5322,
+   "max_drawdown_pct": 0.0,
+   "sharpe": null,
+   "sessions_marked": 2,
+   "intents_placed": 6,
+   "intents_filled": 5,
+   "intents_partial": 0,
+   "intents_rejected": 0,
+   "intents_cancelled": 0,
+   "intents_pending": 1,
+   "fills": 5,
+   "traded_notional_usd": 264387.2,
+   "execution_cost_usd": 12.77,
+   "execution_cost_pct": 0.0048,
+   "slippage_bps_mean": 0.368,
+   "slippage_bps_max": 0.614,
+   "participation_pct_median": 0.00031,
+   "participation_pct_max": 0.00097,
+   "official_price_notional_usd": 0,
+   "official_price_share_pct": 0.0,
+   "carry_received_usd": 4.19,
+   "carry_paid_usd": 6.13,
+   "margin_events": 0,
+   "rank": 5,
+   "verdict": "roughly matched the benchmark",
+   "round_trips_closed": 4,
+   "round_trips_open": 0,
+   "win_rate_pct": 50.0,
+   "profit_factor": 305.9578,
+   "largest_trip_usd": 227.92,
+   "worst_trip_usd": -1.2,
+   "best_symbol": "QQQ",
+   "worst_symbol": "TLT"
+  },
+  "round_trips_closed": 4,
+  "round_trips_open": 0,
+  "win_rate_pct": 50.0,
+  "profit_factor": 305.9578,
+  "largest_trip_usd": 227.92,
+  "worst_trip_usd": -1.2,
+  "best_symbol": "QQQ",
+  "worst_symbol": "TLT",
+  "pnl_by_symbol": {
+   "QQQ": 227.8,
+   "TSLA": 175.94,
+   "TLT": -1.2
+  },
+  "carry": {
+   "received_usd": 4.19,
+   "paid_usd": 6.13,
+   "rate_series": "SOFR",
+   "rate_source_class": "OFFICIAL",
+   "day_count": "ACT/360 (declared)",
+   "margin_debit_spread": 0.035
+  },
+  "margin_events": [],
+  "intents": [
+   {
+    "intent_id": "SOFRPivot_Rider-00001",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-16",
+    "intended_session": "2026-09-17",
+    "session_status": "COLLECTED",
+    "symbol": "QQQ",
+    "side": "buy",
+    "quantity": 120,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: easing (-4.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-16",
+      "value": 3.62,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-16",
+      "value": 7551.81,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "QQQ_price": {
+      "series": "QQQ daily bar",
+      "observation_date": "2026-09-16",
+      "value": 704.719971,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/QQQ.json",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 704.719971,
+     "reference_date": "2026-09-16",
+     "reference_source_class": "SECONDARY",
+     "quantity": 120,
+     "trimmed_by_margin": {
+      "requested_quantity": 200,
+      "allowed_quantity": 120,
+      "closing_shares": 0,
+      "gross_exposure_usd": 0,
+      "house_gross_limit_usd": 200000.0,
+      "max_gross_leverage": 2.0,
+      "buying_power_usd": 100000.0
+     }
+    },
+    "status": "FILLED",
+    "settled_on": "2026-09-17",
+    "settle_note": "",
+    "fill_id": "SOFRPivot_Rider-00001-F1"
+   },
+   {
+    "intent_id": "SOFRPivot_Rider-00002",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-16",
+    "intended_session": "2026-09-17",
+    "session_status": "COLLECTED",
+    "symbol": "TSLA",
+    "side": "buy",
+    "quantity": 120,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: easing (-4.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-16",
+      "value": 3.62,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-16",
+      "value": 7551.81,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "TSLA_price": {
+      "series": "TSLA daily bar",
+      "observation_date": "2026-09-16",
+      "value": 358.079987,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/TSLA.json",
+      "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 358.079987,
+     "reference_date": "2026-09-16",
+     "reference_source_class": "SECONDARY",
+     "quantity": 120
+    },
+    "status": "FILLED",
+    "settled_on": "2026-09-17",
+    "settle_note": "",
+    "fill_id": "SOFRPivot_Rider-00002-F1"
+   },
+   {
+    "intent_id": "SOFRPivot_Rider-00003",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-17",
+    "intended_session": "2026-09-18",
+    "session_status": "COLLECTED",
+    "symbol": "QQQ",
+    "side": "sell",
+    "quantity": 80,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-17",
+      "value": 3.85,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-17",
+      "value": 7637.76,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "QQQ_price": {
+      "series": "QQQ daily bar",
+      "observation_date": "2026-09-17",
+      "value": 716.92,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/QQQ.json",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 716.92,
+     "reference_date": "2026-09-17",
+     "reference_source_class": "SECONDARY",
+     "quantity": 80
+    },
+    "status": "FILLED",
+    "settled_on": "2026-09-18",
+    "settle_note": "",
+    "fill_id": "SOFRPivot_Rider-00003-F1"
+   },
+   {
+    "intent_id": "SOFRPivot_Rider-00004",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-17",
+    "intended_session": "2026-09-18",
+    "session_status": "COLLECTED",
+    "symbol": "TSLA",
+    "side": "sell",
+    "quantity": 120,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-17",
+      "value": 3.85,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-17",
+      "value": 7637.76,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "TSLA_price": {
+      "series": "TSLA daily bar",
+      "observation_date": "2026-09-17",
+      "value": 366.2,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/TSLA.json",
+      "sha256": "6916f4c63d07180ce9efd08a9e88d50b7d43121d02443b933214c54bbb6e84f7",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 366.2,
+     "reference_date": "2026-09-17",
+     "reference_source_class": "SECONDARY",
+     "quantity": 120
+    },
+    "status": "FILLED",
+    "settled_on": "2026-09-18",
+    "settle_note": "",
+    "fill_id": "SOFRPivot_Rider-00004-F1"
+   },
+   {
+    "intent_id": "SOFRPivot_Rider-00005",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-17",
+    "intended_session": "2026-09-18",
+    "session_status": "COLLECTED",
+    "symbol": "TLT",
+    "side": "buy",
+    "quantity": 400,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-17",
+      "value": 3.85,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-17",
+      "value": 7637.76,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "TLT_price": {
+      "series": "TLT daily bar",
+      "observation_date": "2026-09-17",
+      "value": 81.78,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/TLT.json",
+      "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 81.78,
+     "reference_date": "2026-09-17",
+     "reference_source_class": "SECONDARY",
+     "quantity": 400,
+     "trimmed_by_margin": {
+      "requested_quantity": 2100,
+      "allowed_quantity": 400,
+      "closing_shares": 0,
+      "gross_exposure_usd": 129974.4,
+      "house_gross_limit_usd": 199904.7,
+      "max_gross_leverage": 2.0,
+      "buying_power_usd": 34965.15
+     }
+    },
+    "status": "FILLED",
+    "settled_on": "2026-09-18",
+    "settle_note": "",
+    "fill_id": "SOFRPivot_Rider-00005-F1"
+   },
+   {
+    "intent_id": "SOFRPivot_Rider-00006",
+    "participant": "@SOFRPivot_Rider",
+    "created_on": "2026-09-18",
+    "intended_session": "2026-09-21",
+    "session_status": "PROJECTED",
+    "symbol": "TLT",
+    "side": "buy",
+    "quantity": 800,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "rule": "official SOFR 21-session direction",
+    "evidence": {
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-17",
+      "value": 3.85,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-17",
+      "value": 7637.76,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "TLT_price": {
+      "series": "TLT daily bar",
+      "observation_date": "2026-09-18",
+      "value": 81.25,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/TLT.json",
+      "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 81.25,
+     "reference_date": "2026-09-18",
+     "reference_source_class": "SECONDARY",
+     "quantity": 800,
+     "trimmed_by_margin": {
+      "requested_quantity": 1800,
+      "allowed_quantity": 800,
+      "closing_shares": 0,
+      "gross_exposure_usd": 61358.0,
+      "house_gross_limit_usd": 201064.41,
+      "max_gross_leverage": 2.0,
+      "buying_power_usd": 69853.21
+     }
+    },
+    "status": "PENDING",
+    "settled_on": null,
+    "settle_note": "",
+    "fill_id": null
+   }
+  ],
+  "trips": [
+   {
+    "participant": "@SOFRPivot_Rider",
+    "symbol": "QQQ",
+    "direction": "long",
+    "quantity": 80,
+    "entry_date": "2026-09-17",
+    "entry_price": 715.96,
+    "exit_date": "2026-09-18",
+    "exit_price": 718.83,
+    "gross_pnl_usd": 229.6,
+    "fees_usd": 1.6802,
+    "net_pnl_usd": 227.9198,
+    "entry_reason": "sofr-pivot: easing (-4.0bp over 21 sessions)",
+    "exit_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "entry_fill_count": 1,
+    "entry_reference_close": 716.92,
+    "exit_reference_close": 721.45,
+    "entry_participation_pct": 0.00032,
+    "exit_participation_pct": 0.00017,
+    "status": "closed"
+   },
+   {
+    "participant": "@SOFRPivot_Rider",
+    "symbol": "TSLA",
+    "direction": "long",
+    "quantity": 120,
+    "entry_date": "2026-09-17",
+    "entry_price": 367.5,
+    "exit_date": "2026-09-18",
+    "exit_price": 368.98,
+    "gross_pnl_usd": 177.6,
+    "fees_usd": 1.6555,
+    "net_pnl_usd": 175.9445,
+    "entry_reason": "sofr-pivot: easing (-4.0bp over 21 sessions)",
+    "exit_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "entry_fill_count": 1,
+    "entry_reference_close": 366.2,
+    "exit_reference_close": 364.27,
+    "entry_participation_pct": 0.00031,
+    "exit_participation_pct": 0.00023,
+    "status": "closed"
+   },
+   {
+    "participant": "@SOFRPivot_Rider",
+    "symbol": "QQQ",
+    "direction": "long",
+    "quantity": 40,
+    "entry_date": "2026-09-17",
+    "entry_price": 715.96,
+    "exit_date": "OPEN",
+    "exit_price": null,
+    "gross_pnl_usd": 0.0,
+    "fees_usd": 0.12,
+    "net_pnl_usd": -0.12,
+    "entry_reason": "sofr-pivot: easing (-4.0bp over 21 sessions)",
+    "exit_reason": "",
+    "entry_fill_count": 1,
+    "entry_reference_close": 716.92,
+    "exit_reference_close": null,
+    "entry_participation_pct": 0.00032,
+    "exit_participation_pct": null,
+    "status": "open"
+   },
+   {
+    "participant": "@SOFRPivot_Rider",
+    "symbol": "TLT",
+    "direction": "long",
+    "quantity": 400,
+    "entry_date": "2026-09-18",
+    "entry_price": 81.47,
+    "exit_date": "OPEN",
+    "exit_price": null,
+    "gross_pnl_usd": 0.0,
+    "fees_usd": 1.2,
+    "net_pnl_usd": -1.2,
+    "entry_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
+    "exit_reason": "",
+    "entry_fill_count": 1,
+    "entry_reference_close": 81.25,
+    "exit_reference_close": null,
+    "entry_participation_pct": 0.00097,
+    "exit_participation_pct": null,
+    "status": "open"
+   }
+  ],
+  "narrative": [
+   "SOFR Pivot Rider (@SOFRPivot_Rider) planned 6 forward intents and saw 5 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
+   "Final equity 100,532.21 USD on 100,000 starting cash: +0.53% with a worst peak-to-trough drawdown of 0.00% over 2 marked sessions.",
+   "The benchmark (S&P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2026-09-16 7551.81 -> 2026-09-17 7637.76) returned +1.14% over the same window, so this participant roughly matched the benchmark.",
+   "Execution cost was 12.77 USD, 0.005% of 264,387 USD traded, at a mean slippage of 0.368 bps against the decision mid; median participation was 0.00031% of the session's real volume (max 0.00097%).",
+   "4 round trips closed; win rate 50.0% and profit factor 305.9578. The largest single trip was 227.92 USD and the worst -1.20 USD.",
+   "Contribution by instrument: QQQ +227.80 USD was the biggest positive and TLT -1.20 USD the biggest negative, out of 3 instruments traded.",
+   "Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.",
+   "0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition."
+  ],
+  "symbols_traded": [
+   "QQQ",
+   "TLT",
+   "TSLA"
   ],
   "symbols_available": [
    "AAPL",
@@ -1410,7 +2021,7 @@
    "carry_received_usd": 0.0,
    "carry_paid_usd": 19.18,
    "margin_events": 0,
-   "rank": 5,
+   "rank": 6,
    "verdict": "roughly matched the benchmark",
    "round_trips_closed": 2,
    "round_trips_open": 0,
@@ -1484,7 +2095,7 @@
       "value": 704.719971,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -1540,7 +2151,7 @@
       "value": 754.049988,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/SPY.json",
-      "sha256": "7a706163d893f5ce080e118f29aed4014a4cb8e22c1b1481f6187b5775b9f0a5",
+      "sha256": "3931ea57b2a1e13aeae86b8e45a8f43ed01fa8803291277dbba43b2e25ef71d2",
       "url": ""
      }
     },
@@ -1558,6 +2169,7 @@
   ],
   "trips": [
    {
+    "participant": "@DowNasdaq_SpreadMax",
     "symbol": "QQQ",
     "direction": "long",
     "quantity": 120,
@@ -1571,13 +2183,14 @@
     "entry_reason": "dow-vs-nasdaq: within 1pp (Dow -1.03% vs Nasdaq -1.51%)",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 716.9199829101562,
+    "entry_reference_close": 716.92,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00032,
     "exit_participation_pct": null,
     "status": "open"
    },
    {
+    "participant": "@DowNasdaq_SpreadMax",
     "symbol": "SPY",
     "direction": "long",
     "quantity": 80,
@@ -1591,7 +2204,7 @@
     "entry_reason": "dow-vs-nasdaq: within 1pp (Dow -1.03% vs Nasdaq -1.51%)",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 762.5999755859375,
+    "entry_reference_close": 762.6,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00016,
     "exit_participation_pct": null,
@@ -1718,7 +2331,7 @@
    "carry_received_usd": 9.11,
    "carry_paid_usd": 0.0,
    "margin_events": 0,
-   "rank": 6,
+   "rank": 7,
    "verdict": "roughly matched the benchmark",
    "round_trips_closed": 1,
    "round_trips_open": 0,
@@ -1791,7 +2404,7 @@
       "value": 704.719971,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -1844,15 +2457,15 @@
      "QQQ_price": {
       "series": "QQQ daily bar",
       "observation_date": "2026-09-17",
-      "value": 716.9199829101562,
+      "value": 716.92,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 716.919983,
+     "reference_price": 716.92,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 80,
@@ -1912,7 +2525,7 @@
       "value": 721.45,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -1939,6 +2552,7 @@
   ],
   "trips": [
    {
+    "participant": "@VIXRegime_LiveMax",
     "symbol": "QQQ",
     "direction": "long",
     "quantity": 120,
@@ -1952,7 +2566,7 @@
     "entry_reason": "vix-regime[undecided]: VIX 17.71 vs 60d median 16.30, 252d 80th percentile 19.86; S&P 7,552 vs 100d mean 7,511",
     "exit_reason": "",
     "entry_fill_count": 2,
-    "entry_reference_close": 716.9199829101562,
+    "entry_reference_close": 716.92,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00011,
     "exit_participation_pct": null,
@@ -1971,588 +2585,6 @@
   ],
   "symbols_traded": [
    "QQQ"
-  ],
-  "symbols_available": [
-   "AAPL",
-   "DKNG",
-   "FLUT",
-   "GENI",
-   "GLD",
-   "IBB",
-   "IWM",
-   "JNJ",
-   "JPM",
-   "MSFT",
-   "MU",
-   "NVDA",
-   "PENN",
-   "PG",
-   "QQQ",
-   "SPY",
-   "SRAD",
-   "T",
-   "TLT",
-   "TSLA",
-   "UNG",
-   "XBI",
-   "XLU",
-   "XOM"
-  ]
- },
- "@SOFRPivot_Rider": {
-  "username": "@SOFRPivot_Rider",
-  "spec": {
-   "username": "@SOFRPivot_Rider",
-   "display_name": "SOFR Pivot Rider",
-   "archetype": "curve/carry rotation",
-   "thesis": "SOFR is the secured funding rate the Federal Reserve Bank of New York publishes every business day. Its 21-session direction is a public read on whether funding conditions are easing. Easing regimes should favour long-duration and high-beta equity; a rising funding rate should not. The rate series was collected for this book, so unlike Season 1 the rule is measured on an official observation rather than a declared parameter.",
-   "entry_rules": [
-    "Compute the change in the official SOFR over 21 sessions",
-    "SOFR lower by more than 3bp -> target long QQQ 1.5x plus TSLA 0.45x",
-    "SOFR higher by more than 5bp -> target long TLT 1.8x (duration bid as growth expectations fade)",
-    "Otherwise hold 0.8x SPY"
-   ],
-   "exit_rules": [
-    "Re-evaluated every session; the rate series, not a price, closes the position"
-   ],
-   "sizing": "up to 1.95x gross",
-   "leverage": "1.5-1.8x gross",
-   "cadence": "every session, executed the next session",
-   "horizon": "weeks",
-   "academic_basis": [
-    {
-     "claim": "The Federal Reserve Bank of New York publishes SOFR daily; the collected history and the publisher's own API agree on both cross-checked observations",
-     "ref": "FRED series SOFR (data/real/fred/SOFR_2024-09-16_2026-09-17.csv)",
-     "url": "https://markets.newyorkfed.org/api/rates/secured/sofr/last/10.json",
-     "status": "FETCHED-VERIFIED"
-    },
-    {
-     "claim": "Regulation T sets initial margin at 50% and FINRA 4210 sets the maintenance floor, so leverage is a rule-bound quantity here",
-     "ref": "Federal Reserve Board Reg T; FINRA Rule 4210",
-     "url": "https://www.finra.org/rules-guidance/rulebooks/finra-rules/4210",
-     "status": "FETCHED-VERIFIED"
-    }
-   ],
-   "known_failure_modes": [
-    "A 21-session funding change is a noisy proxy for policy expectations; repo rates move on quarter-end and settlement mechanics unrelated to equity discount rates (the collected history shows a 23bp one-day jump on 2026-09-17 that is a settlement effect, not a policy signal)",
-    "TLT is a duration bet with its own convexity and rate-path risk",
-    "TSLA is a single-name residual risk wearing a macro signal"
-   ],
-   "aggression": 4,
-   "why_return_seeking": "Concentrated rotation, levered, no volatility target."
-  },
-  "data_status": "READY",
-  "official_inputs": [
-   "SOFR",
-   "SP500"
-  ],
-  "event_inputs": [],
-  "signal_note": "",
-  "summary": {
-   "username": "@SOFRPivot_Rider",
-   "display_name": "SOFR Pivot Rider",
-   "archetype": "curve/carry rotation",
-   "data_status": "READY",
-   "starting_cash": 100000.0,
-   "final_equity": 100429.76,
-   "net_pnl_usd": 429.76,
-   "total_return_pct": 0.4298,
-   "max_drawdown_pct": 0.0,
-   "sharpe": null,
-   "sessions_marked": 2,
-   "intents_placed": 6,
-   "intents_filled": 5,
-   "intents_partial": 0,
-   "intents_rejected": 0,
-   "intents_cancelled": 0,
-   "intents_pending": 1,
-   "fills": 5,
-   "traded_notional_usd": 293140.4,
-   "execution_cost_usd": 13.89,
-   "execution_cost_pct": 0.0047,
-   "slippage_bps_mean": 0.368,
-   "slippage_bps_max": 0.614,
-   "participation_pct_median": 0.00031,
-   "participation_pct_max": 0.00097,
-   "official_price_notional_usd": 0,
-   "official_price_share_pct": 0.0,
-   "carry_received_usd": 7.26,
-   "carry_paid_usd": 6.13,
-   "margin_events": 0,
-   "rank": 7,
-   "verdict": "roughly matched the benchmark",
-   "round_trips_closed": 3,
-   "round_trips_open": 0,
-   "win_rate_pct": 66.67,
-   "profit_factor": 431.5202,
-   "largest_trip_usd": 341.88,
-   "worst_trip_usd": -1.2,
-   "best_symbol": "QQQ",
-   "worst_symbol": "TLT"
-  },
-  "round_trips_closed": 3,
-  "round_trips_open": 0,
-  "win_rate_pct": 66.67,
-  "profit_factor": 431.5202,
-  "largest_trip_usd": 341.88,
-  "worst_trip_usd": -1.2,
-  "best_symbol": "QQQ",
-  "worst_symbol": "TLT",
-  "pnl_by_symbol": {
-   "QQQ": 341.88,
-   "TSLA": 175.94,
-   "TLT": -1.2
-  },
-  "carry": {
-   "received_usd": 7.26,
-   "paid_usd": 6.13,
-   "rate_series": "SOFR",
-   "rate_source_class": "OFFICIAL",
-   "day_count": "ACT/360 (declared)",
-   "margin_debit_spread": 0.035
-  },
-  "margin_events": [],
-  "intents": [
-   {
-    "intent_id": "SOFRPivot_Rider-00001",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-16",
-    "intended_session": "2026-09-17",
-    "session_status": "COLLECTED",
-    "symbol": "QQQ",
-    "side": "buy",
-    "quantity": 120,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: easing (-4.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-16",
-      "value": 3.62,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-16",
-      "value": 7551.81,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "QQQ_price": {
-      "series": "QQQ daily bar",
-      "observation_date": "2026-09-16",
-      "value": 704.719971,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 704.719971,
-     "reference_date": "2026-09-16",
-     "reference_source_class": "SECONDARY",
-     "quantity": 120,
-     "trimmed_by_margin": {
-      "requested_quantity": 200,
-      "allowed_quantity": 120,
-      "closing_shares": 0,
-      "gross_exposure_usd": 0,
-      "house_gross_limit_usd": 200000.0,
-      "max_gross_leverage": 2.0,
-      "buying_power_usd": 100000.0
-     }
-    },
-    "status": "FILLED",
-    "settled_on": "2026-09-17",
-    "settle_note": "",
-    "fill_id": "SOFRPivot_Rider-00001-F1"
-   },
-   {
-    "intent_id": "SOFRPivot_Rider-00002",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-16",
-    "intended_session": "2026-09-17",
-    "session_status": "COLLECTED",
-    "symbol": "TSLA",
-    "side": "buy",
-    "quantity": 120,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: easing (-4.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-16",
-      "value": 3.62,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-16",
-      "value": 7551.81,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "TSLA_price": {
-      "series": "TSLA daily bar",
-      "observation_date": "2026-09-16",
-      "value": 358.079987,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/TSLA.json",
-      "sha256": "f54ea58bac88a3b695bcbc6bc5c3a822b9f89928ea3d80bfb494d8b085fb5ece",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 358.079987,
-     "reference_date": "2026-09-16",
-     "reference_source_class": "SECONDARY",
-     "quantity": 120
-    },
-    "status": "FILLED",
-    "settled_on": "2026-09-17",
-    "settle_note": "",
-    "fill_id": "SOFRPivot_Rider-00002-F1"
-   },
-   {
-    "intent_id": "SOFRPivot_Rider-00003",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-17",
-    "intended_session": "2026-09-18",
-    "session_status": "COLLECTED",
-    "symbol": "QQQ",
-    "side": "sell",
-    "quantity": 120,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-17",
-      "value": 3.85,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-17",
-      "value": 7637.76,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "QQQ_price": {
-      "series": "QQQ daily bar",
-      "observation_date": "2026-09-17",
-      "value": 716.9199829101562,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 716.919983,
-     "reference_date": "2026-09-17",
-     "reference_source_class": "SECONDARY",
-     "quantity": 120
-    },
-    "status": "FILLED",
-    "settled_on": "2026-09-18",
-    "settle_note": "",
-    "fill_id": "SOFRPivot_Rider-00003-F1"
-   },
-   {
-    "intent_id": "SOFRPivot_Rider-00004",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-17",
-    "intended_session": "2026-09-18",
-    "session_status": "COLLECTED",
-    "symbol": "TSLA",
-    "side": "sell",
-    "quantity": 120,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-17",
-      "value": 3.85,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-17",
-      "value": 7637.76,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "TSLA_price": {
-      "series": "TSLA daily bar",
-      "observation_date": "2026-09-17",
-      "value": 366.20001220703125,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/TSLA.json",
-      "sha256": "f54ea58bac88a3b695bcbc6bc5c3a822b9f89928ea3d80bfb494d8b085fb5ece",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 366.200012,
-     "reference_date": "2026-09-17",
-     "reference_source_class": "SECONDARY",
-     "quantity": 120
-    },
-    "status": "FILLED",
-    "settled_on": "2026-09-18",
-    "settle_note": "",
-    "fill_id": "SOFRPivot_Rider-00004-F1"
-   },
-   {
-    "intent_id": "SOFRPivot_Rider-00005",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-17",
-    "intended_session": "2026-09-18",
-    "session_status": "COLLECTED",
-    "symbol": "TLT",
-    "side": "buy",
-    "quantity": 400,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-17",
-      "value": 3.85,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-17",
-      "value": 7637.76,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "TLT_price": {
-      "series": "TLT daily bar",
-      "observation_date": "2026-09-17",
-      "value": 81.77999877929688,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/TLT.json",
-      "sha256": "5328da06304eafb60c42a1fd0129869688cbb1db842625afaddf3affd4b254fd",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 81.779999,
-     "reference_date": "2026-09-17",
-     "reference_source_class": "SECONDARY",
-     "quantity": 400,
-     "trimmed_by_margin": {
-      "requested_quantity": 2100,
-      "allowed_quantity": 400,
-      "closing_shares": 0,
-      "gross_exposure_usd": 129974.4,
-      "house_gross_limit_usd": 199904.7,
-      "max_gross_leverage": 2.0,
-      "buying_power_usd": 34965.15
-     }
-    },
-    "status": "FILLED",
-    "settled_on": "2026-09-18",
-    "settle_note": "",
-    "fill_id": "SOFRPivot_Rider-00005-F1"
-   },
-   {
-    "intent_id": "SOFRPivot_Rider-00006",
-    "participant": "@SOFRPivot_Rider",
-    "created_on": "2026-09-18",
-    "intended_session": "2026-09-21",
-    "session_status": "PROJECTED",
-    "symbol": "TLT",
-    "side": "buy",
-    "quantity": 1000,
-    "order_type": "market",
-    "limit_price": null,
-    "at_close": false,
-    "rationale": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "rule": "official SOFR 21-session direction",
-    "evidence": {
-     "SOFR": {
-      "series": "SOFR",
-      "observation_date": "2026-09-17",
-      "value": 3.85,
-      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
-      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
-      "source_class": "OFFICIAL",
-      "url": "https://fred.stlouisfed.org/series/SOFR",
-      "publisher": "Federal Reserve Bank of New York"
-     },
-     "SP500": {
-      "series": "SP500",
-      "observation_date": "2026-09-17",
-      "value": 7637.76,
-      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
-      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
-      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
-      "url": "https://fred.stlouisfed.org/series/SP500",
-      "publisher": "S&P Dow Jones Indices LLC"
-     },
-     "TLT_price": {
-      "series": "TLT daily bar",
-      "observation_date": "2026-09-18",
-      "value": 81.25,
-      "source_class": "SECONDARY",
-      "file": "data/real/prices/yahoo/TLT.json",
-      "sha256": "5328da06304eafb60c42a1fd0129869688cbb1db842625afaddf3affd4b254fd",
-      "url": ""
-     }
-    },
-    "sizing": {
-     "reference_price": 81.25,
-     "reference_date": "2026-09-18",
-     "reference_source_class": "SECONDARY",
-     "quantity": 1000,
-     "trimmed_by_margin": {
-      "requested_quantity": 1800,
-      "allowed_quantity": 1000,
-      "closing_shares": 0,
-      "gross_exposure_usd": 32500.0,
-      "house_gross_limit_usd": 200859.52,
-      "max_gross_leverage": 2.0,
-      "buying_power_usd": 84179.76
-     }
-    },
-    "status": "PENDING",
-    "settled_on": null,
-    "settle_note": "",
-    "fill_id": null
-   }
-  ],
-  "trips": [
-   {
-    "symbol": "QQQ",
-    "direction": "long",
-    "quantity": 120,
-    "entry_date": "2026-09-17",
-    "entry_price": 715.96,
-    "exit_date": "2026-09-18",
-    "exit_price": 718.83,
-    "gross_pnl_usd": 344.4,
-    "fees_usd": 2.5203,
-    "net_pnl_usd": 341.8797,
-    "entry_reason": "sofr-pivot: easing (-4.0bp over 21 sessions)",
-    "exit_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "entry_fill_count": 1,
-    "entry_reference_close": 716.9199829101562,
-    "exit_reference_close": 721.45,
-    "entry_participation_pct": 0.00032,
-    "exit_participation_pct": 0.00025,
-    "status": "closed"
-   },
-   {
-    "symbol": "TSLA",
-    "direction": "long",
-    "quantity": 120,
-    "entry_date": "2026-09-17",
-    "entry_price": 367.5,
-    "exit_date": "2026-09-18",
-    "exit_price": 368.98,
-    "gross_pnl_usd": 177.6,
-    "fees_usd": 1.6555,
-    "net_pnl_usd": 175.9445,
-    "entry_reason": "sofr-pivot: easing (-4.0bp over 21 sessions)",
-    "exit_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "entry_fill_count": 1,
-    "entry_reference_close": 366.20001220703125,
-    "exit_reference_close": 364.27,
-    "entry_participation_pct": 0.00031,
-    "exit_participation_pct": 0.00023,
-    "status": "closed"
-   },
-   {
-    "symbol": "TLT",
-    "direction": "long",
-    "quantity": 400,
-    "entry_date": "2026-09-18",
-    "entry_price": 81.47,
-    "exit_date": "OPEN",
-    "exit_price": null,
-    "gross_pnl_usd": 0.0,
-    "fees_usd": 1.2,
-    "net_pnl_usd": -1.2,
-    "entry_reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)",
-    "exit_reason": "",
-    "entry_fill_count": 1,
-    "entry_reference_close": 81.25,
-    "exit_reference_close": null,
-    "entry_participation_pct": 0.00097,
-    "exit_participation_pct": null,
-    "status": "open"
-   }
-  ],
-  "narrative": [
-   "SOFR Pivot Rider (@SOFRPivot_Rider) planned 6 forward intents and saw 5 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "Final equity 100,429.76 USD on 100,000 starting cash: +0.43% with a worst peak-to-trough drawdown of 0.00% over 2 marked sessions.",
-   "The benchmark (S&P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2026-09-16 7551.81 -> 2026-09-17 7637.76) returned +1.14% over the same window, so this participant roughly matched the benchmark.",
-   "Execution cost was 13.89 USD, 0.005% of 293,140 USD traded, at a mean slippage of 0.368 bps against the decision mid; median participation was 0.00031% of the session's real volume (max 0.00097%).",
-   "3 round trips closed; win rate 66.67% and profit factor 431.5202. The largest single trip was 341.88 USD and the worst -1.20 USD.",
-   "Contribution by instrument: QQQ +341.88 USD was the biggest positive and TLT -1.20 USD the biggest negative, out of 3 instruments traded.",
-   "Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.",
-   "0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition."
-  ],
-  "symbols_traded": [
-   "QQQ",
-   "TLT",
-   "TSLA"
   ],
   "symbols_available": [
    "AAPL",
@@ -2636,9 +2668,9 @@
    "archetype": "levered beta",
    "data_status": "READY",
    "starting_cash": 100000.0,
-   "final_equity": 100281.93,
-   "net_pnl_usd": 281.93,
-   "total_return_pct": 0.2819,
+   "final_equity": 100279.53,
+   "net_pnl_usd": 279.53,
+   "total_return_pct": 0.2795,
    "max_drawdown_pct": 0.0,
    "sharpe": null,
    "sessions_marked": 2,
@@ -2649,11 +2681,11 @@
    "intents_cancelled": 0,
    "intents_pending": 1,
    "fills": 2,
-   "traded_notional_usd": 144129.6,
+   "traded_notional_usd": 144132.0,
    "execution_cost_usd": 6.99,
    "execution_cost_pct": 0.0048,
-   "slippage_bps_mean": 0.374,
-   "slippage_bps_max": 0.499,
+   "slippage_bps_mean": 0.499,
+   "slippage_bps_max": 0.5,
    "participation_pct_median": 0.0031,
    "participation_pct_max": 0.0031,
    "official_price_notional_usd": 0,
@@ -2734,7 +2766,7 @@
       "value": 391.73999,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/GLD.json",
-      "sha256": "87625724f861044e95b9a81f1fe2d4c5510cc810a228a5cd5337ffceab98a189",
+      "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
       "url": ""
      }
     },
@@ -2796,15 +2828,15 @@
      "GLD_price": {
       "series": "GLD daily bar",
       "observation_date": "2026-09-17",
-      "value": 398.3599853515625,
+      "value": 398.36,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/GLD.json",
-      "sha256": "87625724f861044e95b9a81f1fe2d4c5510cc810a228a5cd5337ffceab98a189",
+      "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 398.359985,
+     "reference_price": 398.36,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 120,
@@ -2813,9 +2845,9 @@
       "allowed_quantity": 120,
       "closing_shares": 0,
       "gross_exposure_usd": 95606.4,
-      "house_gross_limit_usd": 199072.99,
+      "house_gross_limit_usd": 199068.2,
       "max_gross_leverage": 2.0,
-      "buying_power_usd": 51733.3
+      "buying_power_usd": 51730.9
      }
     },
     "status": "FILLED",
@@ -2864,7 +2896,7 @@
       "value": 222.27,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/NVDA.json",
-      "sha256": "fb9685677b3e8bee644f447941ddc0122f5c0dc6c9981a31ed395efa724f1c96",
+      "sha256": "b08a8e56330af28cb5cf13f3d4f3484fe79919c5e0961baa172b8901ad0f2a07",
       "url": ""
      }
     },
@@ -2878,9 +2910,9 @@
       "allowed_quantity": 100,
       "closing_shares": 0,
       "gross_exposure_usd": 144421.2,
-      "house_gross_limit_usd": 200563.86,
+      "house_gross_limit_usd": 200559.06,
       "max_gross_leverage": 2.0,
-      "buying_power_usd": 28071.33
+      "buying_power_usd": 28068.93
      }
     },
     "status": "PENDING",
@@ -2891,11 +2923,12 @@
   ],
   "trips": [
    {
+    "participant": "@LeapStyle_AutoLiquidate",
     "symbol": "GLD",
     "direction": "long",
     "quantity": 360,
     "entry_date": "2026-09-17",
-    "entry_price": 400.36,
+    "entry_price": 400.366667,
     "exit_date": "OPEN",
     "exit_price": null,
     "gross_pnl_usd": 0.0,
@@ -2904,7 +2937,7 @@
     "entry_reason": "leap: leader GLD at +6.33% over 42 sessions",
     "exit_reason": "",
     "entry_fill_count": 2,
-    "entry_reference_close": 398.3599853515625,
+    "entry_reference_close": 398.36,
     "exit_reference_close": null,
     "entry_participation_pct": 0.0031,
     "exit_participation_pct": null,
@@ -2913,9 +2946,9 @@
   ],
   "narrative": [
    "Leap-Style Auto Liquidator (@LeapStyle_AutoLiquidate) planned 3 forward intents and saw 2 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "Final equity 100,281.93 USD on 100,000 starting cash: +0.28% with a worst peak-to-trough drawdown of 0.00% over 2 marked sessions.",
+   "Final equity 100,279.53 USD on 100,000 starting cash: +0.28% with a worst peak-to-trough drawdown of 0.00% over 2 marked sessions.",
    "The benchmark (S&P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2026-09-16 7551.81 -> 2026-09-17 7637.76) returned +1.14% over the same window, so this participant roughly matched the benchmark.",
-   "Execution cost was 6.99 USD, 0.005% of 144,130 USD traded, at a mean slippage of 0.374 bps against the decision mid; median participation was 0.0031% of the session's real volume (max 0.0031%).",
+   "Execution cost was 6.99 USD, 0.005% of 144,132 USD traded, at a mean slippage of 0.499 bps against the decision mid; median participation was 0.0031% of the session's real volume (max 0.0031%).",
    "1 round trips closed; win rate 0.0% and profit factor 0.0. The largest single trip was -1.08 USD and the worst -1.08 USD.",
    "Contribution by instrument: GLD -1.08 USD was the biggest positive and GLD -1.08 USD the biggest negative, out of 1 instruments traded.",
    "Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.",
@@ -3234,12 +3267,12 @@
    "archetype": "informed-flow following",
    "thesis": "SEC Form 4 is the primary filing for insider transactions and it carries the execution date, price and the reporting officer's title. This participant buys a name when two or more insiders bought it in the open market inside ten days. It is implemented and gated: with no collected filing stream it cannot trade, and says so rather than substituting a price proxy.",
    "entry_rules": [
-    "Count open-market purchases (transaction code P) per issuer over the trailing 30 days from the collected Form 4 JSONL",
-    "Two or more distinct insiders -> target the issuer at 0.9x equity",
+    "Count open-market purchases (transaction code P) per issuer over the trailing 30 days from the collected Form 4 JSONL, dated by the EDGAR filing date (when the purchase became public), never by the trade date",
+    "Two or more distinct reporting persons bought -> target the issuer at 0.9x equity (lots are not people: one filing reporting 25 lots by one insider is one buyer)",
     "A CEO/CFO purchase present -> target 1.4x equity"
    ],
    "exit_rules": [
-    "Flatten 30 sessions after the last counted purchase"
+    "Flatten a name once its trailing 30-day filing window holds neither a cluster nor a CEO/CFO purchase (about a month after the last qualifying filing)"
    ],
    "sizing": "0.9-1.4x per name, up to 1.9x gross across names",
    "leverage": "up to 1.9x gross",
@@ -3250,29 +3283,32 @@
      "claim": "Insider open-market purchases predict positive abnormal returns over the following months",
      "ref": "SEC Form 4 filings (primary record)",
      "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=4",
-     "status": "OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION NOT LANDED"
+     "status": "OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION LANDED VIA THE RENDERED-VIEW LANE (data/real/sec_agent/)"
     }
    ],
    "known_failure_modes": [
-    "The filing arrives up to two business days after the trade, so the informational edge is partly gone by the time it is readable",
+    "The filing arrives up to two business days after the trade (and a late filing can arrive months after it), so the informational edge is partly gone by the time it is readable; the rule dates every purchase by its filing date for exactly that reason",
     "Cluster rules fire rarely, so the sample is thin by construction",
-    "With no collected stream the participant is idle, which is the current honest state"
+    "Code P is a mechanical filter: a broker-initiated purchase the insider later disavowed (MSFT, accession 0000789019-25-000120) still counts as one purchase, because the rule reads the transaction code, not the footnotes",
+    "The collected stream is the rendered-view lane plus the EDGAR full-text locator; until the SEC quarterly bulk sets land it is complete only for the purchases that locator found"
    ],
    "aggression": 4,
    "why_return_seeking": "Concentrated single-name exposure on a rare, dated signal."
   },
-  "data_status": "DATA-MISSING",
+  "data_status": "READY",
   "official_inputs": [],
   "event_inputs": [
    "insider_buys_30d",
+   "insider_buyers_30d",
+   "insider_ceo_buys_30d",
    "insider_buy_ratio_30d"
   ],
-  "signal_note": "The SEC Form 4 stream is not in data/real/sec/ because the collection runner's first EDGAR request was refused and the re-collection has not landed; the rule therefore places no intents and this book reports a measurement gap, not a zero result.",
+  "signal_note": "SEC insider data has landed: 216 normalised transactions (2024-06-17..2026-09-17) from data/real/sec_agent/form4_transactions.jsonl, including 34 open-market purchases (code P). The rule reads code-P clusters and CEO/CFO purchases from it; the first intents appear in the next planned session, never backdated.",
   "summary": {
    "username": "@InsiderCluster_Live",
    "display_name": "Insider Cluster Live",
    "archetype": "informed-flow following",
-   "data_status": "DATA-MISSING",
+   "data_status": "READY",
    "starting_cash": 100000.0,
    "final_equity": 100021.39,
    "net_pnl_usd": 21.39,
@@ -3300,7 +3336,7 @@
    "carry_paid_usd": 0.0,
    "margin_events": 0,
    "rank": 11,
-   "verdict": "no trades placed (DATA-MISSING)",
+   "verdict": "no trades placed (READY)",
    "round_trips_closed": 0,
    "round_trips_open": 0,
    "win_rate_pct": null,
@@ -3332,7 +3368,7 @@
   "trips": [],
   "narrative": [
    "Insider Cluster Live (@InsiderCluster_Live) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "No trade ever executed, so the +0.02% is cash financing only (21.39 USD of official SOFR credit). The status is DATA-MISSING: The SEC Form 4 stream is not in data/real/sec/ because the collection runner's first EDGAR request was refused and the re-collection has not landed; the rule therefore places no intents and this book reports a measurement gap, not a zero result..",
+   "No trade ever executed, so the +0.02% is cash financing only (21.39 USD of official SOFR credit). The status is READY: SEC insider data has landed: 216 normalised transactions (2024-06-17..2026-09-17) from data/real/sec_agent/form4_transactions.jsonl, including 34 open-market purchases (code P). The rule reads code-P clusters and CEO/CFO purchases from it; the first intents appear in the next planned session, never backdated..",
    "This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked."
   ],
   "symbols_traded": [],
@@ -3404,7 +3440,7 @@
    "nfl_injury_report",
    "nba_injury_report"
   ],
-  "signal_note": "Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design.",
+  "signal_note": "Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design. A dated snapshot archive (official league documents plus the machine-readable ESPN companion) is collected on a schedule into data/real/sports/official/archive/, so the forward test now accumulates week by week instead of resetting.",
   "summary": {
    "username": "@InjuryFeed_Forward",
    "display_name": "Injury Feed Forward",
@@ -3469,7 +3505,7 @@
   "trips": [],
   "narrative": [
    "Injury Feed Forward (@InjuryFeed_Forward) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "No trade ever executed, so the +0.02% is cash financing only (21.39 USD of official SOFR credit). The status is FORWARD-ONLY: Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design..",
+   "No trade ever executed, so the +0.02% is cash financing only (21.39 USD of official SOFR credit). The status is FORWARD-ONLY: Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design. A dated snapshot archive (official league documents plus the machine-readable ESPN companion) is collected on a schedule into data/real/sports/official/archive/, so the forward test now accumulates week by week instead of resetting..",
    "This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked."
   ],
   "symbols_traded": [],
@@ -3823,56 +3859,56 @@
    "archetype": "commodity-macro proxy",
    "data_status": "READY",
    "starting_cash": 100000.0,
-   "final_equity": 99968.36,
-   "net_pnl_usd": -31.64,
-   "total_return_pct": -0.0316,
-   "max_drawdown_pct": -0.3034,
+   "final_equity": 99946.98,
+   "net_pnl_usd": -53.02,
+   "total_return_pct": -0.053,
+   "max_drawdown_pct": -0.3248,
    "sharpe": null,
    "sessions_marked": 2,
-   "intents_placed": 4,
+   "intents_placed": 5,
    "intents_filled": 3,
    "intents_partial": 0,
    "intents_rejected": 0,
    "intents_cancelled": 0,
-   "intents_pending": 1,
+   "intents_pending": 2,
    "fills": 3,
-   "traded_notional_usd": 243672.0,
-   "execution_cost_usd": 26.43,
-   "execution_cost_pct": 0.0108,
+   "traded_notional_usd": 235526.0,
+   "execution_cost_usd": 25.25,
+   "execution_cost_pct": 0.0107,
    "slippage_bps_mean": 0.78,
    "slippage_bps_max": 1.226,
-   "participation_pct_median": 0.00288,
-   "participation_pct_max": 0.00292,
+   "participation_pct_median": 0.00268,
+   "participation_pct_max": 0.00288,
    "official_price_notional_usd": 0,
    "official_price_share_pct": 0.0,
-   "carry_received_usd": 5.77,
+   "carry_received_usd": 4.9,
    "carry_paid_usd": 0.0,
    "margin_events": 0,
    "rank": 15,
    "verdict": "lagged the benchmark by 1.2pp",
-   "round_trips_closed": 2,
+   "round_trips_closed": 3,
    "round_trips_open": 0,
    "win_rate_pct": 0.0,
    "profit_factor": 0.0,
-   "largest_trip_usd": -0.36,
-   "worst_trip_usd": -117.45,
+   "largest_trip_usd": -0.3,
+   "worst_trip_usd": -107.66,
    "best_symbol": "GLD",
    "worst_symbol": "TLT"
   },
-  "round_trips_closed": 2,
+  "round_trips_closed": 3,
   "round_trips_open": 0,
   "win_rate_pct": 0.0,
   "profit_factor": 0.0,
-  "largest_trip_usd": -0.36,
-  "worst_trip_usd": -117.45,
+  "largest_trip_usd": -0.3,
+  "worst_trip_usd": -107.66,
   "best_symbol": "GLD",
   "worst_symbol": "TLT",
   "pnl_by_symbol": {
-   "TLT": -117.45,
+   "TLT": -107.96,
    "GLD": -0.36
   },
   "carry": {
-   "received_usd": 5.77,
+   "received_usd": 4.9,
    "paid_usd": 0.0,
    "rate_series": "SOFR",
    "rate_source_class": "OFFICIAL",
@@ -3932,7 +3968,7 @@
       "value": 80.879997,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/TLT.json",
-      "sha256": "5328da06304eafb60c42a1fd0129869688cbb1db842625afaddf3affd4b254fd",
+      "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
       "url": ""
      }
     },
@@ -3964,7 +4000,7 @@
     "session_status": "COLLECTED",
     "symbol": "TLT",
     "side": "sell",
-    "quantity": 1200,
+    "quantity": 1100,
     "order_type": "market",
     "limit_price": null,
     "at_close": false,
@@ -4004,18 +4040,18 @@
      "TLT_price": {
       "series": "TLT daily bar",
       "observation_date": "2026-09-17",
-      "value": 81.77999877929688,
+      "value": 81.78,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/TLT.json",
-      "sha256": "5328da06304eafb60c42a1fd0129869688cbb1db842625afaddf3affd4b254fd",
+      "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 81.779999,
+     "reference_price": 81.78,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
-     "quantity": 1200
+     "quantity": 1100
     },
     "status": "FILLED",
     "settled_on": "2026-09-18",
@@ -4070,15 +4106,15 @@
      "GLD_price": {
       "series": "GLD daily bar",
       "observation_date": "2026-09-17",
-      "value": 398.3599853515625,
+      "value": 398.36,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/GLD.json",
-      "sha256": "87625724f861044e95b9a81f1fe2d4c5510cc810a228a5cd5337ffceab98a189",
+      "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
       "url": ""
      }
     },
     "sizing": {
-     "reference_price": 398.359985,
+     "reference_price": 398.36,
      "reference_date": "2026-09-17",
      "reference_source_class": "SECONDARY",
      "quantity": 120,
@@ -4087,7 +4123,7 @@
       "allowed_quantity": 120,
       "closing_shares": 0,
       "gross_exposure_usd": 98136.0,
-      "house_gross_limit_usd": 200545.25,
+      "house_gross_limit_usd": 200545.26,
       "max_gross_leverage": 2.0,
       "buying_power_usd": 51204.63
      }
@@ -4099,6 +4135,72 @@
    },
    {
     "intent_id": "GoldVsRealRate_Live-00004",
+    "participant": "@GoldVsRealRate_Live",
+    "created_on": "2026-09-18",
+    "intended_session": "2026-09-21",
+    "session_status": "PROJECTED",
+    "symbol": "TLT",
+    "side": "sell",
+    "quantity": 100,
+    "order_type": "market",
+    "limit_price": null,
+    "at_close": false,
+    "rationale": "gold-real-rate: proxy flat (+3.0bp)",
+    "rule": "DGS10 minus SOFR, 21-session change",
+    "evidence": {
+     "DGS10": {
+      "series": "DGS10",
+      "observation_date": "2026-09-17",
+      "value": 4.94,
+      "file": "data/real/fred/DGS10_2024-09-16_2026-09-17.csv",
+      "sha256": "74ec5085783dd5ab59d92be75e5e0b6324cf0080233c4a4bf62c25e2b10f99e6",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/DGS10",
+      "publisher": "U.S. Department of the Treasury"
+     },
+     "SOFR": {
+      "series": "SOFR",
+      "observation_date": "2026-09-17",
+      "value": 3.85,
+      "file": "data/real/fred/SOFR_2024-09-16_2026-09-17.csv",
+      "sha256": "6cb81337d24ef54f839ede0d597bf6149a84ebe78e4428f3a426fdd2c87017c2",
+      "source_class": "OFFICIAL",
+      "url": "https://fred.stlouisfed.org/series/SOFR",
+      "publisher": "Federal Reserve Bank of New York"
+     },
+     "SP500": {
+      "series": "SP500",
+      "observation_date": "2026-09-17",
+      "value": 7637.76,
+      "file": "data/real/fred/SP500_2024-09-16_2026-09-17.csv",
+      "sha256": "7113e8cb4b097027a68c1542796b25aafa101299acdb9268ccab533133c305ce",
+      "source_class": "OFFICIAL-PUBLISHER / FRED-REPUBLISHED",
+      "url": "https://fred.stlouisfed.org/series/SP500",
+      "publisher": "S&P Dow Jones Indices LLC"
+     },
+     "TLT_price": {
+      "series": "TLT daily bar",
+      "observation_date": "2026-09-18",
+      "value": 81.25,
+      "source_class": "SECONDARY",
+      "file": "data/real/prices/yahoo/TLT.json",
+      "sha256": "c941cd146962900e4af6deb6ebec78da62eec2e7c7e7d79e51ca3a42449c8b6f",
+      "url": ""
+     }
+    },
+    "sizing": {
+     "reference_price": 81.25,
+     "reference_date": "2026-09-18",
+     "reference_source_class": "SECONDARY",
+     "quantity": 100
+    },
+    "status": "PENDING",
+    "settled_on": null,
+    "settle_note": "",
+    "fill_id": null
+   },
+   {
+    "intent_id": "GoldVsRealRate_Live-00005",
     "participant": "@GoldVsRealRate_Live",
     "created_on": "2026-09-18",
     "intended_session": "2026-09-21",
@@ -4148,7 +4250,7 @@
       "value": 401.17,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/GLD.json",
-      "sha256": "87625724f861044e95b9a81f1fe2d4c5510cc810a228a5cd5337ffceab98a189",
+      "sha256": "545093d31c9d8284e3b5dc66f668a6cb7391d9925b5abdf3e82bcaa71e423b40",
       "url": ""
      }
     },
@@ -4166,26 +4268,28 @@
   ],
   "trips": [
    {
+    "participant": "@GoldVsRealRate_Live",
     "symbol": "TLT",
     "direction": "long",
-    "quantity": 1200,
+    "quantity": 1100,
     "entry_date": "2026-09-17",
     "entry_price": 81.55,
     "exit_date": "2026-09-18",
     "exit_price": 81.46,
-    "gross_pnl_usd": -108.0,
-    "fees_usd": 9.4477,
-    "net_pnl_usd": -117.4477,
+    "gross_pnl_usd": -99.0,
+    "fees_usd": 8.6604,
+    "net_pnl_usd": -107.6604,
     "entry_reason": "gold-real-rate: opportunity-cost proxy rising +33.0bp",
     "exit_reason": "gold-real-rate: proxy flat (+3.0bp)",
     "entry_fill_count": 1,
-    "entry_reference_close": 81.77999877929688,
+    "entry_reference_close": 81.78,
     "exit_reference_close": 81.25,
     "entry_participation_pct": 0.00288,
-    "exit_participation_pct": 0.00292,
+    "exit_participation_pct": 0.00268,
     "status": "closed"
    },
    {
+    "participant": "@GoldVsRealRate_Live",
     "symbol": "GLD",
     "direction": "long",
     "quantity": 120,
@@ -4204,15 +4308,36 @@
     "entry_participation_pct": 0.00126,
     "exit_participation_pct": null,
     "status": "open"
+   },
+   {
+    "participant": "@GoldVsRealRate_Live",
+    "symbol": "TLT",
+    "direction": "long",
+    "quantity": 100,
+    "entry_date": "2026-09-17",
+    "entry_price": 81.55,
+    "exit_date": "OPEN",
+    "exit_price": null,
+    "gross_pnl_usd": 0.0,
+    "fees_usd": 0.3,
+    "net_pnl_usd": -0.3,
+    "entry_reason": "gold-real-rate: opportunity-cost proxy rising +33.0bp",
+    "exit_reason": "",
+    "entry_fill_count": 1,
+    "entry_reference_close": 81.78,
+    "exit_reference_close": null,
+    "entry_participation_pct": 0.00288,
+    "exit_participation_pct": null,
+    "status": "open"
    }
   ],
   "narrative": [
-   "Gold vs Real Rate Live (@GoldVsRealRate_Live) planned 4 forward intents and saw 3 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "Final equity 99,968.36 USD on 100,000 starting cash: -0.03% with a worst peak-to-trough drawdown of -0.30% over 2 marked sessions.",
+   "Gold vs Real Rate Live (@GoldVsRealRate_Live) planned 5 forward intents and saw 3 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
+   "Final equity 99,946.98 USD on 100,000 starting cash: -0.05% with a worst peak-to-trough drawdown of -0.32% over 2 marked sessions.",
    "The benchmark (S&P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2026-09-16 7551.81 -> 2026-09-17 7637.76) returned +1.14% over the same window, so this participant lagged the benchmark by 1.2pp.",
-   "Execution cost was 26.43 USD, 0.011% of 243,672 USD traded, at a mean slippage of 0.78 bps against the decision mid; median participation was 0.00288% of the session's real volume (max 0.00292%).",
-   "2 round trips closed; win rate 0.0% and profit factor 0.0. The largest single trip was -0.36 USD and the worst -117.45 USD.",
-   "Contribution by instrument: GLD -0.36 USD was the biggest positive and TLT -117.45 USD the biggest negative, out of 2 instruments traded.",
+   "Execution cost was 25.25 USD, 0.011% of 235,526 USD traded, at a mean slippage of 0.78 bps against the decision mid; median participation was 0.00268% of the session's real volume (max 0.00288%).",
+   "3 round trips closed; win rate 0.0% and profit factor 0.0. The largest single trip was -0.30 USD and the worst -107.66 USD.",
+   "Contribution by instrument: GLD -0.36 USD was the biggest positive and TLT -107.96 USD the biggest negative, out of 2 instruments traded.",
    "Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.",
    "0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition."
   ],
@@ -4465,7 +4590,7 @@
       "value": 754.049988,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/SPY.json",
-      "sha256": "7a706163d893f5ce080e118f29aed4014a4cb8e22c1b1481f6187b5775b9f0a5",
+      "sha256": "3931ea57b2a1e13aeae86b8e45a8f43ed01fa8803291277dbba43b2e25ef71d2",
       "url": ""
      }
     },
@@ -4483,6 +4608,7 @@
   ],
   "trips": [
    {
+    "participant": "@KitchenSink_Official",
     "symbol": "SPY",
     "direction": "long",
     "quantity": 80,
@@ -4496,7 +4622,7 @@
     "entry_reason": "kitchen-sink[undecided]: score -2 of 8 official signs",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 762.5999755859375,
+    "entry_reference_close": 762.6,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00016,
     "exit_participation_pct": null,
@@ -4696,7 +4822,7 @@
       "value": 754.049988,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/SPY.json",
-      "sha256": "7a706163d893f5ce080e118f29aed4014a4cb8e22c1b1481f6187b5775b9f0a5",
+      "sha256": "3931ea57b2a1e13aeae86b8e45a8f43ed01fa8803291277dbba43b2e25ef71d2",
       "url": ""
      }
     },
@@ -4714,6 +4840,7 @@
   ],
   "trips": [
    {
+    "participant": "@CurveSteepener_MaxBeta",
     "symbol": "SPY",
     "direction": "long",
     "quantity": 120,
@@ -4727,7 +4854,7 @@
     "entry_reason": "curve-steepener: flat +5.0bp",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 762.5999755859375,
+    "entry_reference_close": 762.6,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00024,
     "exit_participation_pct": null,
@@ -4902,7 +5029,7 @@
       "value": 704.719971,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -4938,7 +5065,7 @@
       "value": 721.45,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/QQQ.json",
-      "sha256": "456c2467c597f91bc117784e30f28340faf0cfc82465feaff7905f3a6c37ced0",
+      "sha256": "fc35201ba17fae5f470d2f267e1e079449fb7c35cfff9e8f2caff2244c437134",
       "url": ""
      }
     },
@@ -4965,6 +5092,7 @@
   ],
   "trips": [
    {
+    "participant": "@PinePilot_EMA_Live",
     "symbol": "QQQ",
     "direction": "short",
     "quantity": 120,
@@ -4978,7 +5106,7 @@
     "entry_reason": "pinepilot: EMA9 710.26 < EMA21 712.18",
     "exit_reason": "",
     "entry_fill_count": 1,
-    "entry_reference_close": 716.9199829101562,
+    "entry_reference_close": 716.92,
     "exit_reference_close": null,
     "entry_participation_pct": 0.00032,
     "exit_participation_pct": null,
@@ -5079,10 +5207,10 @@
    "archetype": "contrarian reversal",
    "data_status": "READY",
    "starting_cash": 100000.0,
-   "final_equity": 99176.35,
-   "net_pnl_usd": -823.65,
-   "total_return_pct": -0.8236,
-   "max_drawdown_pct": -1.3728,
+   "final_equity": 99170.35,
+   "net_pnl_usd": -829.65,
+   "total_return_pct": -0.8296,
+   "max_drawdown_pct": -1.3729,
    "sharpe": null,
    "sessions_marked": 2,
    "intents_placed": 3,
@@ -5092,11 +5220,11 @@
    "intents_cancelled": 0,
    "intents_pending": 1,
    "fills": 2,
-   "traded_notional_usd": 141861.0,
+   "traded_notional_usd": 141867.0,
    "execution_cost_usd": 15.11,
    "execution_cost_pct": 0.0107,
-   "slippage_bps_mean": 0.95,
-   "slippage_bps_max": 1.264,
+   "slippage_bps_mean": 1.268,
+   "slippage_bps_max": 1.271,
    "participation_pct_median": 0.00599,
    "participation_pct_max": 0.00599,
    "official_price_notional_usd": 0,
@@ -5170,7 +5298,7 @@
       "value": 154.179993,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/XBI.json",
-      "sha256": "ab52ad384ae7b56773880fb828cba25869362fad771df8dccc2748b37825f1eb",
+      "sha256": "0b046f02546a501b244d3bce7680f57cb0205664c019fede60f39f493e2eb3c8",
       "url": ""
      }
     },
@@ -5228,7 +5356,7 @@
       "value": 158.25,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/XBI.json",
-      "sha256": "ab52ad384ae7b56773880fb828cba25869362fad771df8dccc2748b37825f1eb",
+      "sha256": "0b046f02546a501b244d3bce7680f57cb0205664c019fede60f39f493e2eb3c8",
       "url": ""
      }
     },
@@ -5277,7 +5405,7 @@
       "value": 156.72,
       "source_class": "SECONDARY",
       "file": "data/real/prices/yahoo/XBI.json",
-      "sha256": "ab52ad384ae7b56773880fb828cba25869362fad771df8dccc2748b37825f1eb",
+      "sha256": "0b046f02546a501b244d3bce7680f57cb0205664c019fede60f39f493e2eb3c8",
       "url": ""
      }
     },
@@ -5295,11 +5423,12 @@
   ],
   "trips": [
    {
+    "participant": "@FDA_Fade_Live",
     "symbol": "XBI",
     "direction": "long",
     "quantity": 900,
     "entry_date": "2026-09-17",
-    "entry_price": 157.623333,
+    "entry_price": 157.63,
     "exit_date": "OPEN",
     "exit_price": null,
     "gross_pnl_usd": 0.0,
@@ -5317,9 +5446,9 @@
   ],
   "narrative": [
    "FDA Fade Live (@FDA_Fade_Live) planned 3 forward intents and saw 2 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.",
-   "Final equity 99,176.35 USD on 100,000 starting cash: -0.82% with a worst peak-to-trough drawdown of -1.37% over 2 marked sessions.",
+   "Final equity 99,170.35 USD on 100,000 starting cash: -0.83% with a worst peak-to-trough drawdown of -1.37% over 2 marked sessions.",
    "The benchmark (S&P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2026-09-16 7551.81 -> 2026-09-17 7637.76) returned +1.14% over the same window, so this participant lagged the benchmark by 2.0pp.",
-   "Execution cost was 15.11 USD, 0.011% of 141,861 USD traded, at a mean slippage of 0.95 bps against the decision mid; median participation was 0.00599% of the session's real volume (max 0.00599%).",
+   "Execution cost was 15.11 USD, 0.011% of 141,867 USD traded, at a mean slippage of 1.268 bps against the decision mid; median participation was 0.00599% of the session's real volume (max 0.00599%).",
    "1 round trips closed; win rate 0.0% and profit factor 0.0. The largest single trip was -2.70 USD and the worst -2.70 USD.",
    "Contribution by instrument: XBI -2.70 USD was the biggest positive and XBI -2.70 USD the biggest negative, out of 1 instruments traded.",
    "Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.",

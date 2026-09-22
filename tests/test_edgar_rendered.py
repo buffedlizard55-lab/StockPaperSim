@@ -130,3 +130,39 @@ class FootnoteMarkerTests(unittest.TestCase):
                                        .replace("34,352", "34,352(2)(3)"))
         self.assertEqual(row["shares"], 1438.0)
         self.assertEqual(row["shares_after"], 34352.0)
+
+
+class IndexFactsTests(unittest.TestCase):
+    """Filing dates come from an SEC document in either of the two shapes the
+    SEC serves: the rendered ``-index.htm`` page or the SGML header page
+    (``-index-headers.html``), which is what the lane falls back to when the
+    rendered page answers with the SEC's "File Unavailable" apology."""
+
+    RENDERED = ("**SEC Accession No.** 0000789019-26-000028\n\n\nFiling Date\n\n"
+                "2026-02-18\n\nAccepted\n\n2026-02-18 18:14:22\n\nDocuments\n\n2\n\n"
+                "Period of Report\n\n2026-02-18\n")
+    HEADER = ("<SEC-DOCUMENT>0000789019-25-000120-index.html : 20251212\n"
+              "<SEC-HEADER>0000789019-25-000120.hdr.sgml : 20251212\n"
+              "<ACCEPTANCE-DATETIME>20251212182017\n"
+              "ACCESSION NUMBER:\t\t0000789019-25-000120\n"
+              "CONFORMED SUBMISSION TYPE:\t4\n"
+              "CONFORMED PERIOD OF REPORT:\t20250423\n"
+              "FILED AS OF DATE:\t\t20251212\n")
+    APOLOGY = "# This page is temporarily unavailable.\n\nSEC.gov is undergoing maintenance."
+
+    def test_rendered_index_page(self) -> None:
+        from sim.edgar_rendered import _index_facts
+        self.assertEqual(_index_facts(self.RENDERED), {
+            "filing_date": "2026-02-18", "accepted": "2026-02-18 18:14:22",
+            "period_of_report": "2026-02-18"})
+
+    def test_sgml_header_page(self) -> None:
+        from sim.edgar_rendered import _index_facts
+        self.assertEqual(_index_facts(self.HEADER), {
+            "filing_date": "2025-12-12", "accepted": "2025-12-12 18:20:17",
+            "period_of_report": "2025-04-23"})
+
+    def test_apology_page_yields_no_facts(self) -> None:
+        from sim.edgar_rendered import _index_facts
+        self.assertEqual(_index_facts(self.APOLOGY), {
+            "filing_date": None, "accepted": None, "period_of_report": None})

@@ -34,6 +34,9 @@ STATUS_VOCABULARY = {
 # this list would mean a URL was invented.
 ALLOWED_HOSTS = {
     "www.sec.gov", "sec.gov", "www.ecfr.gov", "ecfr.gov", "www.federalregister.gov",
+    # Added 2026-09-21 with the Form 4 purchase locator: EDGAR full-text
+    # search is served from its own SEC host.
+    "efts.sec.gov",
     "www.federalreserve.gov", "fred.stlouisfed.org", "www.nasdaq.com",
     "www.nasdaqtrader.com", "otctransparency.finra.org", "www.finra.org",
     "www.nyse.com", "www.tradingview.com", "www.trade-ideas.com",

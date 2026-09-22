@@ -124,7 +124,7 @@ MASTER_SITE_SIGNALS: List[dict] = [
     },
     {
         "id": "Insider-trades",
-        "signals": ['insider_buys_30d', 'insider_buy_ratio_30d'],
+        "signals": ['insider_buys_30d', 'insider_buyers_30d', 'insider_buy_ratio_30d'],
         "requested_as": "insider trades",
         "repo": "Insider-trades",
         "title": "Insider-trades - SEC EDGAR Form 4 toolkit",
@@ -137,10 +137,12 @@ MASTER_SITE_SIGNALS: List[dict] = [
             "Form 4 is the primary filing for insider transactions and carries the "
             "execution price and date of each trade, so both the signal and the fill "
             "are verifiable against the issuer's own filing."),
-        "evidence": ["data/real/sec/form4_transactions.jsonl",
+        "evidence": ["data/real/sec_agent/form4_transactions.jsonl",
+                     "data/real/sec_agent/raw/form/*.md",
+                     "data/real/sec/form4_transactions.jsonl",
                      "data/real/sec/form4/*.xml"],
         "hypothesis": ("Cluster purchases - two or more distinct insiders buying in the "
-                       "open market inside ten days - outperform, because insiders trade "
+                       "open market inside a month - outperform, because insiders trade "
                        "only when their private valuation gap is large."),
         "tradable": ["AAPL", "MSFT", "NVDA", "JPM", "XOM", "JNJ", "PG", "TSLA", "MU", "T"],
     },
@@ -822,9 +824,13 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
     the transaction facts, so the merge below de-duplicates on
     ``(accession, date, ticker, code, shares, price)`` and every count the
     strategies read is of distinct filings' transactions.  Rows are normalised
-    to one shape (ticker, code, transaction_date, title, roles) whichever file
-    they came from, so the signal arithmetic cannot depend on which collector
-    happened to succeed.
+    to one shape (ticker, code, transaction_date, filed_date, insider, title,
+    roles) whichever file they came from, so the signal arithmetic cannot
+    depend on which collector happened to succeed.  ``filed_date`` is the
+    EDGAR filing date (the bulk sets call it ``filing_date``); it is the date
+    the signal builder windows on, because that is when the transaction became
+    public.  ``insider`` identifies the reporting person (CIK where recorded,
+    else the conformed name) so cluster counts are of distinct people.
     """
     per_filing = os.path.join(root, "sec", "form4_transactions.jsonl")
     bulk = os.path.join(root, "insider_bulk", "insider_transactions.jsonl")
@@ -840,10 +846,21 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
                               for o in owners if str(o.get("title") or "").strip())
             roles = [str(o.get("relationship") or "").strip()
                      for o in owners if o.get("relationship")]
+            # One key per reporting person, so a "cluster" can be counted as
+            # distinct people rather than as lots.  The SEC conformed name is
+            # the key because it is the one identifier all three collectors
+            # carry (the per-filing walk records no owner CIK); the CIK is the
+            # fallback for a row with no name.  A joint filing by several
+            # reporting persons is one key, i.e. one buyer.
+            insider = "|".join(
+                str(o.get("owner_name") or o.get("owner_cik") or "").strip().upper()
+                for o in owners) or "?"
             row = {
                 "ticker": str(raw.get("symbol") or "").upper(),
                 "code": str(raw.get("transaction_code") or "").upper(),
                 "transaction_date": str(raw.get("transaction_date") or ""),
+                "filed_date": str(raw.get("filing_date") or ""),
+                "insider": insider,
                 "title": title,
                 "roles": roles,
                 "accession": str(raw.get("accession_number") or ""),
@@ -851,10 +868,13 @@ def _load_insider_rows(root: str) -> Tuple[List[dict], List[str], str]:
                 "price": raw.get("price_per_share"),
             }
         else:
+            insider = str(raw.get("insider") or raw.get("owner_cik") or "").strip().upper()
             row = {
                 "ticker": str(raw.get("ticker") or "").upper(),
                 "code": str(raw.get("code") or "").upper(),
                 "transaction_date": str(raw.get("transaction_date") or ""),
+                "filed_date": str(raw.get("filed_date") or ""),
+                "insider": insider or "?",
                 "title": str(raw.get("title") or ""),
                 "roles": list(raw.get("roles") or []),
                 "accession": str(raw.get("accession") or ""),
@@ -932,11 +952,13 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
     tickers = sorted({i.symbol for i in md.instruments.values()})
     for symbol in tickers:
         book._blank(f"insider_buys_30d::{symbol}")
+        book._blank(f"insider_buyers_30d::{symbol}")
         book._blank(f"insider_ceo_buys_30d::{symbol}")
     # The unqualified names are cross-ticker totals; blank them here (in every
     # branch) so the invariant "every registered name has an array" holds no
     # matter whether the collection landed.
     book._blank("insider_buys_30d")
+    book._blank("insider_buyers_30d")
     book._blank("insider_ceo_buys_30d")
     book._blank("insider_buy_ratio_30d")
     rows, files, source_note = _load_insider_rows(root)
@@ -946,11 +968,11 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
         # signal must see 0.0 (which is what ``value`` returns) rather than a
         # crash or an unregistered hole.  The unqualified names are blanked here
         # as well, so the invariant "every registered name has an array" holds.
-        for name in ("insider_buys_30d", "insider_ceo_buys_30d",
+        for name in ("insider_buys_30d", "insider_buyers_30d", "insider_ceo_buys_30d",
                      "insider_buy_ratio_30d"):
             book._blank(name)
-        book._register_all(("insider_buys_30d", "insider_ceo_buys_30d",
-                            "insider_buy_ratio_30d"),
+        book._register_all(("insider_buys_30d", "insider_buyers_30d",
+                            "insider_ceo_buys_30d", "insider_buy_ratio_30d"),
                            "MISSING", 0, [], [],
                            "no collected SEC insider file (bulk data sets and the "
                            "per-filing walk have both been requested; neither has "
@@ -959,15 +981,32 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
                            "insider-transactions-data-sets")
         return
     buys: Dict[str, List[str]] = {s: [] for s in tickers}
+    # (filing date, reporting person) per purchase, for the distinct-buyer
+    # count: one filing that reports 25 lots of one person's buying is one
+    # buyer, not a cluster.
+    buyers: Dict[str, List[Tuple[str, str]]] = {s: [] for s in tickers}
     ceo_buys: Dict[str, List[str]] = {s: [] for s in tickers}
     sales: Dict[str, List[str]] = {s: [] for s in tickers}
     purchases = 0
+    undated_filings = 0
     for row in rows:
         symbol = row.get("ticker")
         code = (row.get("code") or "").upper()
-        date = row.get("transaction_date") or ""
+        # A Form 4 transaction becomes *knowable* on its filing date, not on
+        # its trade date: Section 16(a) allows two business days between the
+        # two, and a late filing can separate them by months (an MSFT officer's
+        # 2025-04-23 trade was filed on 2025-12-12).  Every signal here is
+        # therefore dated by the filing date so a strategy can never react to
+        # a purchase before EDGAR disseminated it (IR-82).  A row whose
+        # collector recorded no filing date falls back to the trade date and
+        # is counted, so the fallback is visible in the register note.
+        date = row.get("filed_date") or ""
+        if len(date) != 10:
+            date = row.get("transaction_date") or ""
+            undated_filings += 1
         if symbol in buys and code == "P":
             buys[symbol].append(date)
+            buyers[symbol].append((date, str(row.get("insider") or "?")))
             purchases += 1
             title = (row.get("title") or "").lower()
             if any(term in title for term in CEO_TITLES) or "ceo" in title:
@@ -975,20 +1014,24 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
         elif code == "S" and symbol in sales:
             sales[symbol].append(date)
     for t in range(len(md.dates)):
+        lo, hi = _window_before(md.dates, t, 30)
         for symbol in tickers:
             book.arrays[f"insider_buys_30d::{symbol}"][t] = float(
                 _count_in_window(buys[symbol], md.dates, t, 30))
+            book.arrays[f"insider_buyers_30d::{symbol}"][t] = float(len(
+                {who for d, who in buyers[symbol] if lo <= d < hi}))
             book.arrays[f"insider_ceo_buys_30d::{symbol}"][t] = float(
                 _count_in_window(ceo_buys[symbol], md.dates, t, 30))
         # The ratio is trailing-30d by name, so it is counted per session from
         # the same windows the buy counts use (an earlier draft divided two
         # whole-file totals into one constant series; that was fixed before any
         # insider data ever landed, so no published number depends on it).
-        lo, hi = _window_before(md.dates, t, 30)
         n_buys = sum(1 for s in buys for d in buys[s] if lo <= d < hi)
         n_sales = sum(1 for s in sales for d in sales[s] if lo <= d < hi)
         book.arrays["insider_buy_ratio_30d"][t] = n_buys / max(1, n_sales)
         book.arrays["insider_buys_30d"][t] = float(n_buys)
+        book.arrays["insider_buyers_30d"][t] = float(len(
+            {(s, who) for s in buyers for d, who in buyers[s] if lo <= d < hi}))
         book.arrays["insider_ceo_buys_30d"][t] = float(
             sum(1 for s in ceo_buys for d in ceo_buys[s] if lo <= d < hi))
     coverage = sorted({d for s in buys for d in buys[s]}
@@ -1000,17 +1043,22 @@ def _insider_signals(book: SignalBook, md, root: str) -> None:
            "insider-transactions-data-sets")
     base_note = (f"open-market purchases (code P) by ticker; {purchases} buys "
                  f"and {sum(len(v) for v in sales.values())} sales, "
-                 f"{source_note}, transactions "
+                 f"{source_note}, dated by EDGAR filing date "
                  f"{coverage[0]}..{coverage[-1]}" if coverage else
                  f"open-market purchases (code P) by ticker; {source_note}")
+    if undated_filings:
+        base_note += (f"; {undated_filings} row(s) carried no filing date and "
+                      f"fell back to the transaction date")
     # The collection existing does not guarantee that *buy* signals have any
     # observations: a walk of recent Form 4 filings can legitimately contain
     # only S/A/F/M/G codes and zero open-market purchases.  Register each buy
     # array under its real state so a strategy never reads an all-zero series
     # that claims to be AVAILABLE (that shape misled two early signal builders).
     names = [f"insider_buys_30d::{s}" for s in tickers] + \
+            [f"insider_buyers_30d::{s}" for s in tickers] + \
             [f"insider_ceo_buys_30d::{s}" for s in tickers] + \
-            ["insider_buys_30d", "insider_ceo_buys_30d", "insider_buy_ratio_30d"]
+            ["insider_buys_30d", "insider_buyers_30d", "insider_ceo_buys_30d",
+             "insider_buy_ratio_30d"]
     for name in names:
         has_observation = any(v != 0.0 for v in book.arrays[name])
         state = "AVAILABLE" if has_observation else "NO-OBSERVATIONS"

@@ -183,10 +183,10 @@
   },
   {
     "id": "L-27",
-    "title": "The SEC insider bulk data sets are still uncollected; a rendered Form 4 extract lane has landed instead",
+    "title": "The SEC insider bulk data sets are still uncollected; the rendered Form 4 lane plus an EDGAR full-text purchase locator stand in",
     "severity": "medium",
-    "detail": "The SEC's quarterly Form 3/4/5 structured data sets remain blocked: the runner's shared IP pool is refused by www.sec.gov (rate-gate 403) and dcm.sec.gov does not resolve from it (IR-76, 2026-09-20). On 2026-09-20 a complementary lane landed instead: 65 filings (99 parsed transactions) across AAPL, MSFT, NVDA, JPM, XOM, JNJ, PG, TSLA, MU and T, filed on or after 2026-06-01, captured as the SEC's own XSL-rendered Form 4 views through the page-fetch route and parsed fail-closed by sim.edgar_rendered (data/real/sec_agent/, staged_manifest.json digests re-verified at staging). Coverage gaps inside that lane, recorded rather than hidden: the MU filings 0000034088-26-000003 (Arntzen) and 0001242654-26-000013 (Mehrotra, first of two paired Forms 4) exceed the practical page-fetch size budget and were excluded; the collected window contains zero open-market purchases (code P), so every buy-side insider signal registers as NO-OBSERVATIONS, not AVAILABLE.",
-    "fix": "Owner action for the bulk sets is unchanged (run scripts/collect_real_data.py --only insider_bulk,sec from a residential IP or a self-hosted runner). To widen the agent lane, extend the per-ticker Form 4 walk in future sessions; large filings need a raw-bytes route the sandbox does not have."
+    "detail": "The SEC's quarterly Form 3/4/5 structured data sets remain blocked from shared runners (IR-76). The complementary lane that landed 2026-09-20 now holds 86 filings / 216 parsed transactions across the ten issuers (data/real/sec_agent/, digests re-verified at staging). On 2026-09-21 a purchase locator was added: EDGAR full-text search for the Form 4 transaction-coding phrase (\"4 P false\" / \"4 P 0\") over 2024-06-01..2026-09-21, validated against known MU sales, found eight code-P filings for the ten issuers in 27 months, all eight captured (34 P rows; two are pre-season director purchases that only touch the warm-up window) - fts_locator.json. The lane is therefore complete for open-market purchases inside the Season 2 / live windows to the extent the SEC's full-text index is; sales and other codes are still only the recency walk (filed >= 2026-06-01 plus a deeper MU walk). The earlier note that two MU filings were 'excluded for size' is obsolete: both were captured on 2026-09-20 through the chunked page-fetch route.",
+    "fix": "Owner action for the bulk sets is unchanged (run scripts/collect_real_data.py --only insider_bulk,sec from a residential IP or a self-hosted runner). Until then, re-run the locator queries in fts_locator.json periodically (they are plain URLs) and capture any new purchase filing through the rendered-view route."
   },
   {
     "id": "L-28",
@@ -239,10 +239,10 @@
   },
   {
     "id": "L-35",
-    "title": "Insider strategies read a real but purchase-free Form 4 extract; the buy signals are registered as observed-but-empty",
+    "title": "Insider strategies now trade a thin purchase sample (six filings in the window); results are first observations, not evidence",
     "severity": "medium",
-    "detail": "With the agent-rendered Form 4 lane landed (see L-27), the insider rules are no longer unbacked: _load_insider_rows merges the walk with the bulk sets and deduplicates on (accession, date, ticker, code, shares, price). But the extracted window holds 52 sales and no code-P purchases, so insider_buys_30d, insider_ceo_buys_30d and insider_buy_ratio_30d register NO-OBSERVATIONS and InsiderCluster_Live reports READY-NO-OBSERVATIONS: ready, reading real filings, placing no intents because no qualifying observation exists. That is an honest measurement gap, not a zero result.",
-    "fix": "Re-collect wider history (older quarters carry P-code purchases) via the bulk sets or a deeper walk, then re-plan the live book and Season 2 signals."
+    "detail": "With the purchase locator (L-27) the buy-side series register AVAILABLE and the three Season 2 insider personas and @InsiderCluster_Live trade. But the sample is what the SEC's index says it is: eight code-P filings by seven reporting persons across ten mega-caps in 27 months, of which one (TSLA 2025-09-15, Musk, CEO) is the only CEO/CFO purchase and one (MSFT 0000789019-25-000120) is a broker-initiated purchase the insider disavowed (IR-83). Season 2 replay: @InsiderCopycat_Max +12.02%, @CEO_CFO_Conviction +7.47%, @InsiderCluster_Alpha +5.27% - each is a handful of trades, dominated by TSLA in Sep-Oct 2025, and cannot be separated from that single name's path. Every purchase is dated by its EDGAR filing date (IR-82). One more asymmetry: the buy side now rests on every code-P filing EDGAR's full-text index reports, while the sell side (the denominator of insider_buy_ratio_30d) is still the recency walk (filed on or after 2026-06-01, plus a deeper MU walk back to 2026-03-31), so the ratio is biased upward before June 2026 and no participant should be read as having 'confirmed' a buy with it.",
+    "fix": "Widen the issuer universe or the history (the bulk sets carry every issuer) before reading anything into the insider personas' returns; the significance page treats them as hypothesis-generating."
   },
   {
     "id": "L-36",

@@ -333,17 +333,42 @@ _ACCESSION_RE = re.compile(r"(\d{10})-(\d{2})-(\d{6})")
 _INDEX_FILED = re.compile(r"Filing Date\s+(\d{4}-\d{2}-\d{2})")
 _INDEX_ACCEPTED = re.compile(r"Accepted\s+(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})")
 _INDEX_PERIOD = re.compile(r"Period of Report\s+(\d{4}-\d{2}-\d{2})")
+# The SEC also serves every filing's SGML header
+# (``{accession}-index-headers.html``); it carries the same three facts in
+# EDGAR's compact form.  It is read when the rendered index page is not
+# available (the SEC's "File Unavailable" apology page), so a filing's dates
+# still come from an SEC document rather than from a guess.
+_HDR_FILED = re.compile(r"FILED AS OF DATE:\s*(\d{8})")
+_HDR_ACCEPTED = re.compile(r"<ACCEPTANCE-DATETIME>\s*(\d{14})")
+_HDR_PERIOD = re.compile(r"CONFORMED PERIOD OF REPORT:\s*(\d{8})")
+
+
+def _compact_date(value: str) -> str:
+    return f"{value[0:4]}-{value[4:6]}-{value[6:8]}"
 
 
 def _index_facts(markdown: str) -> Dict[str, Optional[str]]:
     filed = _INDEX_FILED.search(markdown)
     accepted = _INDEX_ACCEPTED.search(markdown)
     period = _INDEX_PERIOD.search(markdown)
-    return {
+    facts: Dict[str, Optional[str]] = {
         "filing_date": filed.group(1) if filed else None,
         "accepted": accepted.group(1) if accepted else None,
         "period_of_report": period.group(1) if period else None,
     }
+    if facts["filing_date"] is None:
+        hdr_filed = _HDR_FILED.search(markdown)
+        hdr_accepted = _HDR_ACCEPTED.search(markdown)
+        hdr_period = _HDR_PERIOD.search(markdown)
+        if hdr_filed:
+            facts["filing_date"] = _compact_date(hdr_filed.group(1))
+        if hdr_accepted:
+            stamp = hdr_accepted.group(1)
+            facts["accepted"] = (f"{_compact_date(stamp)} {stamp[8:10]}:"
+                                 f"{stamp[10:12]}:{stamp[12:14]}")
+        if hdr_period:
+            facts["period_of_report"] = _compact_date(hdr_period.group(1))
+    return facts
 
 
 def integrate_staged_lane(root: str) -> dict:

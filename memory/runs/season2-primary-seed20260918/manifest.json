@@ -1,12 +1,12 @@
 {
  "schema_version": "1.0.0",
  "run_id": "season2-primary-seed20260918",
- "created_utc": "2026-09-20T00:59:37Z",
- "finalised_utc": "2026-09-20T00:59:39Z",
+ "created_utc": "2026-09-21T23:57:19Z",
+ "finalised_utc": "2026-09-21T23:57:22Z",
  "code": {
   "git": {
-   "commit": "205dd1a1ce7c7db0dfee870e7d5c0600e03f5848",
-   "branch": "arena/01a0bba5-stockpapersim",
+   "commit": "d77601088935af3bdaae7305d45063dbc4054834",
+   "branch": "arena/01a0c625-stockpapersim",
    "dirty": true,
    "remote": "https://github.com/buffedlizard55-lab/StockPaperSim.git"
   },
@@ -15,18 +15,19 @@
    "sim/analytics.py": "3d7a209133268656f72ebdf9c388e63703566cdc169c727cb71ea0c05183e9a4",
    "sim/calendar.py": "250bfee6820695c3bf715a13c097356f08eea5d0bed58a9bc95af3daf9f432da",
    "sim/cli.py": "aaf4190dde15a8343b51dc837d9401da1cb94490a0030f60db74963389813941",
-   "sim/config.py": "66e98a14eba3663d4bcbbaabf4463f79d39076adbd058173bff2a4a6c9379ef0",
+   "sim/config.py": "502d270c23bfe84c09e368843a5f0f8dfdff5903824652d3bfcf7217697561e7",
    "sim/custody.py": "0701b17a77d122ecb65a14ad60ae49dcaddf558b3c961d9feb9156c4aeb61580",
+   "sim/edgar_rendered.py": "9c889f0ea11b7ed0c90587bbbdd5d03c81e9a493af8687a5b4443c18a475f962",
    "sim/eligibility.py": "13db4fb6d419a4a1ae93f1b3875dd87f1f27b836f1d08595a8f39b3a7b080d9a",
-   "sim/engine.py": "06ca3c41ad424a5b6d344669644f4a38ce2249501f8d3441aaa9f934713cda81",
+   "sim/engine.py": "f0dd42a937df62e1d000ddbc972e7573ce5d05b2c0b4c1782f7a6754f1766b6c",
    "sim/equity_pilot.py": "d125345ab84c9386db3762dbbe976ead635162afbe82537777e470a45cec2161",
    "sim/ledger.py": "a77f152dc53e6f5cefdeb8a160f531c97f3618726d572312b30faa1f7fa2cecf",
    "sim/live.py": "f88f3e1cc66106f7d872658626ee59f0f36e5165e7c5b3873df7ab892efb4617",
    "sim/live_season.py": "4cacfb62f1b6412637f53bddcbe320d9b0a2c3283055fdd25fd26c9c6ad1b403",
    "sim/marketdata.py": "19e1430d27503ca90f176cd59bbc79683968c4eed35627974b7c6ee3c5814d4a",
-   "sim/masterfeed.py": "a55c1c122f26c262620cd0cb181a39b61de1dc3d6bbfb31343530b5242a7fb47",
+   "sim/masterfeed.py": "53839ca8b929d512db9da64f47355aaef26ba9ee96ffff5c1048a12ee49f761d",
    "sim/memory.py": "e8cd939987420bea652fe31565b90c97e319bb0ecb92153950079308bf9ac405",
-   "sim/microstructure.py": "946a139e446960d02dc0b86e15e5fc780238dda39c5f344216956a7078e71b9d",
+   "sim/microstructure.py": "9d19d92fbf2cf79bbe7a180546b94ad882431805e7cadfec2f015bea087e16b2",
    "sim/official_season.py": "e8eace0182760812a2fb5225d70690a8c496fda5064f5adbd7499889a2253ba3",
    "sim/officialbook.py": "41716fdd103cd559bf89a4dffaf3f8160cc07797ebe1a97c1388cfa31c191d0e",
    "sim/portfolio.py": "1b78956572f9dcafb096c4750e0fa1743735a0f76042cc87b12c243b91f80244",
@@ -37,9 +38,10 @@
    "sim/season2.py": "2ccf1e1a4bbfeda87626de659672cd3a48b9fe59baf155aaf00c13bbeb1a5809",
    "sim/sec.py": "7e26d2fa9270564eb2e6360be2ac47e5dbd7588072c58f2867fc2fc4ba983e16",
    "sim/sensitivity.py": "9c2a09fe044d44c7578dea911fa68e8fc59ebe471cd1897d82cd91417815e2e2",
-   "sim/strategies.py": "18ce8fe08e84fa34a68cd66baefce353b92d1e0fd50fc11ea692d57b39e93b6c",
-   "sim/strategies_live.py": "eeaf2f8c5e356fcb974ec8380cb34c662a6dc1f9fc20293ad8f316a8dfcbf10d",
-   "sim/strategies_mf.py": "e6345379fa30fb052f4d4d985a10affa202b4bf8ecf1f0d99e2d05735a54aeca",
+   "sim/significance.py": "830b8a9b2abc48f19fb1f32f1b729f1c14feecbe9e9378e1053cdde88281249d",
+   "sim/strategies.py": "74ebd8784e7d123a336c1df5467bc30d34c3b4409dcfd90db50edd500946750f",
+   "sim/strategies_live.py": "ba76e29dfe2278f7d31996466ad19392947b13b09ef7d789be5eb0cfad9cbad3",
+   "sim/strategies_mf.py": "1dffa724c1ceef28121bd1462b14c12f8e2fc6302680c5a5794f71785661ccb3",
    "sim/strategies_official.py": "117747a393e7d1900422f7bd37658dea81d71401dc87a36534a9392c7ccaefe0",
    "sim/strict_equities.py": "5e8c8fbeecad05c17a53af35c52a1a39dcf2bf55655514fd647ffb23e466528a",
    "sim/tradelog.py": "e3acc149f9108b0cd6abbb0a555462d014f9f5f53c1c765aeaee5ca1c61b7b85",
@@ -60,18 +62,18 @@
    "kind": "json"
   },
   "reports/InsiderCopycat_Max.json": {
-   "sha256": "158153f25aa96deb9f563ca87e0d363bb25918c6a0fbf3cb945d5dc9d25cdfb2",
-   "bytes": 13979,
+   "sha256": "e9c2c5bfe501840311c0a2f073e512bdbcef266872bc96d05f4dc8480e53325d",
+   "bytes": 16293,
    "kind": "json"
   },
   "reports/InsiderCluster_Alpha.json": {
-   "sha256": "a823254e27a9dfd61d902aa3a3e79508a9f058870c17b8d04faef10fe340e6df",
-   "bytes": 13804,
+   "sha256": "842883388ccc7e1524f28e6e0490116b6631e0dd8aff637ad6562f1e2d521a98",
+   "bytes": 15566,
    "kind": "json"
   },
   "reports/CEO_CFO_Conviction.json": {
-   "sha256": "ad2dc18abfff60ceeb9c000c01274a6a11607e4913812abf5e5e03343a25f06b",
-   "bytes": 13926,
+   "sha256": "a92bc973d2e9d6ac4b228372071c9f7843850f42b0a5db9ccb7658e513c61823",
+   "bytes": 15623,
    "kind": "json"
   },
   "reports/MLB_Attention_Momo.json": {
@@ -140,8 +142,8 @@
    "kind": "json"
   },
   "reports/SportsPred_Forward.json": {
-   "sha256": "125f895f4f3352811b4e1c9439391ab5d121ad47879d5cf971d9482d2967347f",
-   "bytes": 13359,
+   "sha256": "a38fc8b3b86d5cf0ce416d1a87182b1bda1418a95da06eda451dae489e2d5d10",
+   "bytes": 13767,
    "kind": "json"
   },
   "market_report.json": {
@@ -155,8 +157,8 @@
    "kind": "json"
   },
   "leaderboard.json": {
-   "sha256": "536369c1d4808848073f8ea5eb7b1bf9b7bd263dae3df621fe843b11b909dc14",
-   "bytes": 10227,
+   "sha256": "57da4cc26652951d768fce7b3b7f16d2fe9fa096d6a15be0186881dbd0e4fe35",
+   "bytes": 10371,
    "kind": "json"
   },
   "irregularities.json": {
@@ -165,28 +167,28 @@
    "kind": "json"
   },
   "participants.json": {
-   "sha256": "78dca20ca8745916143d45341dbb86cd68a111dc1f15bdf474f216a8f7da22ec",
-   "bytes": 34652,
+   "sha256": "a81cb15752e05aeea74e247b85ba827ef6e591298488bc00b7b5ca41270d50e2",
+   "bytes": 35631,
    "kind": "json"
   },
   "masterfeed.json": {
-   "sha256": "003fdc8634ee2bf5fc1511fa5848cd4fd268df3c2fc26d898e56f2738634435d",
-   "bytes": 43663,
+   "sha256": "51038538e4322dcbeb9d0a526b1913296f18b0fd6340cd55f8f28be33a56051e",
+   "bytes": 87745,
    "kind": "json"
   },
   "data_provenance.json": {
-   "sha256": "d15ac82e0ccfd714370fcccf9a4fef76289d1d3af04265574dfab3e892f17524",
-   "bytes": 45946,
+   "sha256": "f1bd5377dea25f05f55f4618cad57f0de25729cab36fe796d0ec883104c4eb7c",
+   "bytes": 79072,
    "kind": "json"
   },
   "signal_status.json": {
-   "sha256": "13babd8fde8e34461d5d91b979cb74bf320f05d6183ad75a6f65d28fd428841d",
-   "bytes": 15117,
+   "sha256": "62c6a2077d2877c3ec0ecfd5c63a8a2ecc1d169b515a411223e682abdf39ec05",
+   "bytes": 15698,
    "kind": "json"
   },
   "signal_book.json": {
-   "sha256": "ad90d2be091ff43f6721f507ab38e10c093148898c22ba6ba3ba85269453ccad",
-   "bytes": 354133,
+   "sha256": "6cfab71aaacdaaa0cda23c7f4dacb425dd3489403c0e08e1c24f644f81f01846",
+   "bytes": 506899,
    "kind": "json"
   },
   "market_data.json": {
@@ -195,50 +197,50 @@
    "kind": "json"
   },
   "ledger_manifest.json": {
-   "sha256": "c794a07f6a356e4abbd202cb08658c4152429144296f4ee0a37c155b12cd591b",
+   "sha256": "c20450535a6aa8c0a3d7d1042858f7395e971f3f349ac4fbde2207036933e1fb",
    "bytes": 508,
    "kind": "json"
   },
   "verification.json": {
-   "sha256": "5a6c9dfe6fdde2408b1434d0f8b8100ba94eec2d3568e89d13ebc40fdc669cc4",
-   "bytes": 13311,
+   "sha256": "f57984cf9a6f0c1a40a0ec94789bd57c6c5da98c9fa61d88fd12abd1de8c0d33",
+   "bytes": 13469,
    "kind": "json"
   },
   "events/carry.jsonl.gz": {
-   "sha256": "a36c813f4586abbb611ae2109bfaee149edece46f16da6e531b90d23e0be46d6",
-   "bytes": 1510,
+   "sha256": "6e5cff5df414077295188f903f4ae625fd592af6f70811d3e99861bc55709627",
+   "bytes": 1581,
    "kind": "jsonl.gz",
-   "rows": 168
+   "rows": 172
   },
   "events/equity.jsonl.gz": {
-   "sha256": "5867d6a70a4caa9eb6fe411602235a024dd6a748af6ee583bf43e1e83f04dde7",
-   "bytes": 98529,
+   "sha256": "59de57959e62593fb91d5eb986c4bfd8da27aee5c791ed7f8803216f427a95c0",
+   "bytes": 115984,
    "kind": "jsonl.gz",
    "rows": 4769
   },
   "events/fills.jsonl.gz": {
-   "sha256": "32bd7d751ad6d7fde05bf90d8af9fc63a2055973c7198e8416c888195dba114f",
-   "bytes": 89884,
+   "sha256": "cd5ac279a6ff858b102d020b67eaead8de0e33317425a4a1dbc54c54736c1e34",
+   "bytes": 94245,
    "kind": "jsonl.gz",
-   "rows": 1127
+   "rows": 1179
   },
   "events/margin.jsonl.gz": {
-   "sha256": "a150725bf2444488b047aeb9fb5940c56d8d8f0a9131ebc6d0cfc25a5e789f27",
-   "bytes": 393,
+   "sha256": "0b6f9c194dfcc6616cf55b8d0a1abf5a0b92490ca0de8ef54546cff571e4c914",
+   "bytes": 457,
    "kind": "jsonl.gz",
-   "rows": 11
+   "rows": 14
   },
   "events/orders.jsonl.gz": {
-   "sha256": "71699ba90bfdaa65ec6358dd7e0b3cac15f25039a433c9f6c8e15e375c8abb14",
-   "bytes": 11974,
+   "sha256": "9a0a1bf2586bb675ad31f5dce2ea98ae9910fa914789a0d176fb9cdbd52520c7",
+   "bytes": 12777,
    "kind": "jsonl.gz",
-   "rows": 1127
+   "rows": 1179
   },
   "events/positions.jsonl.gz": {
-   "sha256": "a346e3e33dfd378e16d7f1efcc7daf1f3a64a2c8237e6e9bf01f2adf9c8ee79c",
-   "bytes": 95229,
+   "sha256": "97a4ee6da4b333cc29361d6e088ea74885901c437324f7e2398c2170c3523d5f",
+   "bytes": 113935,
    "kind": "jsonl.gz",
-   "rows": 3727
+   "rows": 4760
   },
   "events/quotes.jsonl.gz": {
    "sha256": "5431a47708ec75a790ab1bc6227ff13e333d2eded67b397920f7756b4fd41084",
@@ -490,9 +492,9 @@
   }
  },
  "timing": {
-  "started_utc": "2026-09-20T00:59:37Z",
-  "finished_utc": "2026-09-20T00:59:39Z",
-  "elapsed_seconds": 1.71
+  "started_utc": "2026-09-21T23:57:19Z",
+  "finished_utc": "2026-09-21T23:57:21Z",
+  "elapsed_seconds": 2.19
  },
  "irregularity_count": 0,
  "data_sources": {
@@ -1103,22 +1105,22 @@
  },
  "ledger_summary": {
   "participant": "ALL",
-  "fill_count": 1127,
-  "order_days": 243,
-  "round_trips_closed": 559,
+  "fill_count": 1179,
+  "order_days": 247,
+  "round_trips_closed": 587,
   "round_trips_open": 0,
-  "gross_pnl_usd": 37675.5407,
-  "fees_usd": 2372.7321,
-  "net_pnl_usd": 35302.8083,
-  "win_rate_pct": 44.72,
-  "average_holding_sessions": 36.474,
-  "total_notional_usd": 27523427.84,
-  "total_explicit_cost_usd": 2372.7323,
-  "total_modelled_execution_cost_usd": 10468.4295,
-  "median_participation_pct": 0.00058,
+  "gross_pnl_usd": 62442.4307,
+  "fees_usd": 2386.7418,
+  "net_pnl_usd": 60055.6886,
+  "win_rate_pct": 46.34,
+  "average_holding_sessions": 36.969,
+  "total_notional_usd": 29222305.49,
+  "total_explicit_cost_usd": 2386.742,
+  "total_modelled_execution_cost_usd": 10546.0806,
+  "median_participation_pct": 0.00055,
   "max_participation_pct": 0.3661,
-  "slippage_vs_open_bps_mean": -0.556,
-  "slippage_vs_close_bps_mean": 7.231,
+  "slippage_vs_open_bps_mean": -0.506,
+  "slippage_vs_close_bps_mean": 8.823,
   "symbols": [
    "DKNG",
    "FLUT",
@@ -1126,37 +1128,41 @@
    "GLD",
    "IBB",
    "IWM",
+   "JNJ",
+   "MSFT",
+   "MU",
    "PENN",
    "QQQ",
    "SPY",
    "SRAD",
    "TLT",
+   "TSLA",
    "UNG",
    "XBI",
    "XLU"
   ]
  },
  "ledger": {
-  "fills": 1127,
-  "round_trips": 559,
-  "net_pnl_usd": 35302.8083,
-  "digest_sha256": "71af44a07a598216b6c1fbd8b380084db0c208c292f019ad259601e8db59a498",
+  "fills": 1179,
+  "round_trips": 587,
+  "net_pnl_usd": 60055.6886,
+  "digest_sha256": "1f892da72d2e6c05312f1a014b17bd9eae93bf17ce9d4617c04d07ae3bae4290",
   "files": {
    "ledger_fills.jsonl": {
-    "sha256": "8e2104b9ecad0e37e3e0ff4e4ebce8604bae19ebf1b8abc391e2b087ff6b28ba",
-    "bytes": 1375653
+    "sha256": "8e39a55431d861a5650a53794a65a306572ecd7a5bd409a05e5c3a9352b0eda9",
+    "bytes": 1440392
    },
    "ledger_trips.jsonl": {
-    "sha256": "9bf99b19e8a300d8eb54c811a603ff7a56f4e4ae12c1e8a63ee9fc6f26a57272",
-    "bytes": 310012
+    "sha256": "0fac1180dae71ab25d6bf1fc4b33eec08bd8bce16e72033e7826500a222697ee",
+    "bytes": 326510
    },
    "ledger_summary.json": {
-    "sha256": "4e53151a074cd1acbc03d7be23b11a1200da5c7a133f175d22559d2c15b751b1",
-    "bytes": 683
+    "sha256": "e63ea9914c3cc5b0b8dc59ecdf2dc30960f2b393c2b3763444de84e804a949fa",
+    "bytes": 719
    },
    "ledger_fills.csv": {
-    "sha256": "d5a0bb0740cadc05cccf0532f04bf73c017cdf966195daac939a7bb697567f71",
-    "bytes": 460386
+    "sha256": "9c43d2332cafc0c739388d0ac7db8f9192cd16ab0504d36300f51c4d2bde7970",
+    "bytes": 482879
    }
   }
  },
@@ -1164,9 +1170,82 @@
   "fda_orig_30d": "AVAILABLE",
   "fda_orig_z": "AVAILABLE",
   "fda_all_30d": "AVAILABLE",
-  "insider_buys_30d": "MISSING",
-  "insider_ceo_buys_30d": "MISSING",
-  "insider_buy_ratio_30d": "MISSING",
+  "insider_buys_30d::AAPL": "NO-OBSERVATIONS",
+  "insider_buys_30d::DKNG": "NO-OBSERVATIONS",
+  "insider_buys_30d::FLUT": "NO-OBSERVATIONS",
+  "insider_buys_30d::GENI": "NO-OBSERVATIONS",
+  "insider_buys_30d::GLD": "NO-OBSERVATIONS",
+  "insider_buys_30d::IBB": "NO-OBSERVATIONS",
+  "insider_buys_30d::IWM": "NO-OBSERVATIONS",
+  "insider_buys_30d::JNJ": "AVAILABLE",
+  "insider_buys_30d::JPM": "NO-OBSERVATIONS",
+  "insider_buys_30d::MSFT": "AVAILABLE",
+  "insider_buys_30d::MU": "AVAILABLE",
+  "insider_buys_30d::NVDA": "NO-OBSERVATIONS",
+  "insider_buys_30d::PENN": "NO-OBSERVATIONS",
+  "insider_buys_30d::PG": "NO-OBSERVATIONS",
+  "insider_buys_30d::QQQ": "NO-OBSERVATIONS",
+  "insider_buys_30d::SPY": "NO-OBSERVATIONS",
+  "insider_buys_30d::SRAD": "NO-OBSERVATIONS",
+  "insider_buys_30d::T": "NO-OBSERVATIONS",
+  "insider_buys_30d::TLT": "NO-OBSERVATIONS",
+  "insider_buys_30d::TSLA": "AVAILABLE",
+  "insider_buys_30d::UNG": "NO-OBSERVATIONS",
+  "insider_buys_30d::XBI": "NO-OBSERVATIONS",
+  "insider_buys_30d::XLU": "NO-OBSERVATIONS",
+  "insider_buys_30d::XOM": "NO-OBSERVATIONS",
+  "insider_buyers_30d::AAPL": "NO-OBSERVATIONS",
+  "insider_buyers_30d::DKNG": "NO-OBSERVATIONS",
+  "insider_buyers_30d::FLUT": "NO-OBSERVATIONS",
+  "insider_buyers_30d::GENI": "NO-OBSERVATIONS",
+  "insider_buyers_30d::GLD": "NO-OBSERVATIONS",
+  "insider_buyers_30d::IBB": "NO-OBSERVATIONS",
+  "insider_buyers_30d::IWM": "NO-OBSERVATIONS",
+  "insider_buyers_30d::JNJ": "AVAILABLE",
+  "insider_buyers_30d::JPM": "NO-OBSERVATIONS",
+  "insider_buyers_30d::MSFT": "AVAILABLE",
+  "insider_buyers_30d::MU": "AVAILABLE",
+  "insider_buyers_30d::NVDA": "NO-OBSERVATIONS",
+  "insider_buyers_30d::PENN": "NO-OBSERVATIONS",
+  "insider_buyers_30d::PG": "NO-OBSERVATIONS",
+  "insider_buyers_30d::QQQ": "NO-OBSERVATIONS",
+  "insider_buyers_30d::SPY": "NO-OBSERVATIONS",
+  "insider_buyers_30d::SRAD": "NO-OBSERVATIONS",
+  "insider_buyers_30d::T": "NO-OBSERVATIONS",
+  "insider_buyers_30d::TLT": "NO-OBSERVATIONS",
+  "insider_buyers_30d::TSLA": "AVAILABLE",
+  "insider_buyers_30d::UNG": "NO-OBSERVATIONS",
+  "insider_buyers_30d::XBI": "NO-OBSERVATIONS",
+  "insider_buyers_30d::XLU": "NO-OBSERVATIONS",
+  "insider_buyers_30d::XOM": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::AAPL": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::DKNG": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::FLUT": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::GENI": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::GLD": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::IBB": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::IWM": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::JNJ": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::JPM": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::MSFT": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::MU": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::NVDA": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::PENN": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::PG": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::QQQ": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::SPY": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::SRAD": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::T": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::TLT": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::TSLA": "AVAILABLE",
+  "insider_ceo_buys_30d::UNG": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::XBI": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::XLU": "NO-OBSERVATIONS",
+  "insider_ceo_buys_30d::XOM": "NO-OBSERVATIONS",
+  "insider_buys_30d": "AVAILABLE",
+  "insider_buyers_30d": "AVAILABLE",
+  "insider_ceo_buys_30d": "AVAILABLE",
+  "insider_buy_ratio_30d": "AVAILABLE",
   "mlb_games_7d": "AVAILABLE",
   "mlb_home_win_rate_30d": "AVAILABLE",
   "mlb_upsets_7d": "AVAILABLE",
@@ -1189,53 +1268,7 @@
   "spy_dollar_volume_20d": "AVAILABLE",
   "nfl_injury_report": "MISSING",
   "nba_injury_report": "MISSING",
-  "insider_buys_30d::AAPL": "MISSING",
-  "insider_buys_30d::DKNG": "MISSING",
-  "insider_buys_30d::FLUT": "MISSING",
-  "insider_buys_30d::GENI": "MISSING",
-  "insider_buys_30d::GLD": "MISSING",
-  "insider_buys_30d::IBB": "MISSING",
-  "insider_buys_30d::IWM": "MISSING",
-  "insider_buys_30d::JNJ": "MISSING",
-  "insider_buys_30d::JPM": "MISSING",
-  "insider_buys_30d::MSFT": "MISSING",
-  "insider_buys_30d::MU": "MISSING",
-  "insider_buys_30d::NVDA": "MISSING",
-  "insider_buys_30d::PENN": "MISSING",
-  "insider_buys_30d::PG": "MISSING",
-  "insider_buys_30d::QQQ": "MISSING",
-  "insider_buys_30d::SPY": "MISSING",
-  "insider_buys_30d::SRAD": "MISSING",
-  "insider_buys_30d::T": "MISSING",
-  "insider_buys_30d::TLT": "MISSING",
-  "insider_buys_30d::TSLA": "MISSING",
-  "insider_buys_30d::UNG": "MISSING",
-  "insider_buys_30d::XBI": "MISSING",
-  "insider_buys_30d::XLU": "MISSING",
-  "insider_buys_30d::XOM": "MISSING",
-  "insider_ceo_buys_30d::AAPL": "MISSING",
-  "insider_ceo_buys_30d::DKNG": "MISSING",
-  "insider_ceo_buys_30d::FLUT": "MISSING",
-  "insider_ceo_buys_30d::GENI": "MISSING",
-  "insider_ceo_buys_30d::GLD": "MISSING",
-  "insider_ceo_buys_30d::IBB": "MISSING",
-  "insider_ceo_buys_30d::IWM": "MISSING",
-  "insider_ceo_buys_30d::JNJ": "MISSING",
-  "insider_ceo_buys_30d::JPM": "MISSING",
-  "insider_ceo_buys_30d::MSFT": "MISSING",
-  "insider_ceo_buys_30d::MU": "MISSING",
-  "insider_ceo_buys_30d::NVDA": "MISSING",
-  "insider_ceo_buys_30d::PENN": "MISSING",
-  "insider_ceo_buys_30d::PG": "MISSING",
-  "insider_ceo_buys_30d::QQQ": "MISSING",
-  "insider_ceo_buys_30d::SPY": "MISSING",
-  "insider_ceo_buys_30d::SRAD": "MISSING",
-  "insider_ceo_buys_30d::T": "MISSING",
-  "insider_ceo_buys_30d::TLT": "MISSING",
-  "insider_ceo_buys_30d::TSLA": "MISSING",
-  "insider_ceo_buys_30d::UNG": "MISSING",
-  "insider_ceo_buys_30d::XBI": "MISSING",
-  "insider_ceo_buys_30d::XLU": "MISSING",
-  "insider_ceo_buys_30d::XOM": "MISSING"
+  "sportspred_predictions": "MISSING",
+  "sportspred_graded": "MISSING"
  }
 }

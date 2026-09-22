@@ -164,15 +164,18 @@ class InsiderCopycatMax(Strategy):
         thesis=("Form 4 open-market purchases (transaction code P) are the one insider "
                 "signal that cannot be explained by compensation: an officer or director "
                 "chose to buy with personal money at a market price. Copy the purchase, "
-                "size it at the limit, hold for a quarter."),
-        entry_rules=["Read every collected Form 4 XML (SEC EDGAR) for the traded issuers",
-                     "A code-P purchase with a transaction date in the trailing 30 days "
-                     "puts that issuer on the list",
-                     "Hold the two most recent qualifying issuers at 90% of equity each"],
-        exit_rules=["Exit an issuer 60 sessions after its last qualifying purchase",
+                "size it at the limit, hold while the filing is fresh."),
+        entry_rules=["Read every collected Form 4 (SEC EDGAR) for the traded issuers",
+                     "A code-P purchase whose EDGAR filing date is in the trailing 30 days "
+                     "puts that issuer on the list (the filing date is when the purchase "
+                     "became public; the trade date can be months earlier)",
+                     "Hold the two issuers with the most qualifying purchase lots at 90% "
+                     "of equity each"],
+        exit_rules=["Exit an issuer once its trailing 30-day filing window holds no "
+                    "qualifying purchase (about a month after the last filing)",
                     "No stop loss"],
         sizing="90% of equity per name, maximum two names = 1.8x gross",
-        leverage="1.8x gross", cadence="daily check", horizon="one quarter",
+        leverage="1.8x gross", cadence="daily check", horizon="about one month per filing",
         academic_basis=[
             {"claim": "Insiders earn abnormal returns on their open-market purchases",
              "url": "https://www.sec.gov/files/form4.pdf",
@@ -215,7 +218,7 @@ class InsiderClusterAlpha(Strategy):
     #: site and the audit can all state which source a participant depends on, and
     #: so a strategy whose source is missing can be reported as DATA-MISSING rather
     #: than silently trading a column of zeros.
-    signal_names = ('insider_buys_30d', 'insider_buy_ratio_30d')
+    signal_names = ('insider_buys_30d', 'insider_buyers_30d', 'insider_buy_ratio_30d')
 
 
     spec = StrategySpec(
@@ -226,15 +229,19 @@ class InsiderClusterAlpha(Strategy):
                 "same name inside a month is a coordination signal, and the highest "
                 "conviction case is the CEO or CFO buying. Cluster participants trade "
                 "only those."),
-        entry_rules=["Count code-P purchases per issuer in the trailing 30 days from "
-                     "the collected Form 4 rows",
-                     "Trade the issuer at 120% of equity when the count is at least 2, "
-                     "or when the purchase is attributed to a CEO/CFO title",
-                     "Maximum two issuers, ranked by count then by recency"],
-        exit_rules=["Exit when the count drops to zero and 45 sessions have passed",
+        entry_rules=["Count distinct reporting persons with a code-P purchase per issuer "
+                     "in the trailing 30 days (by EDGAR filing date) from the collected "
+                     "Form 4 rows - lots are not people, so one filing that reports 25 "
+                     "lots by one insider counts as one buyer",
+                     "Trade the issuer at 120% of equity when at least 2 distinct insiders "
+                     "bought, or when a purchase is attributed to a CEO/CFO title",
+                     "Maximum two issuers, ranked by distinct buyers plus CEO/CFO purchases"],
+        exit_rules=["Exit when the trailing 30-day filing window no longer holds a "
+                    "cluster or a CEO/CFO purchase for the name (about a month after "
+                    "the last qualifying filing)",
                     "No stop loss"],
         sizing="120% of equity per name, maximum two names", leverage="up to 2.0x gross",
-        cadence="daily check", horizon="one to two quarters",
+        cadence="daily check", horizon="about one month per filing",
         academic_basis=[
             {"claim": "Cluster insider buying predicts larger abnormal returns than "
                       "isolated purchases",
@@ -254,9 +261,12 @@ class InsiderClusterAlpha(Strategy):
         if book is None or not book.available("insider_buys_30d"):
             return []
         ceo = book.by_symbol("insider_ceo_buys_30d")
-        buys = book.by_symbol("insider_buys_30d")
+        # Distinct reporting persons, not lots: the cluster thesis is about
+        # several insiders buying, and one Form 4 can report dozens of lots by
+        # one person.
+        buyers = book.by_symbol("insider_buyers_30d")
         scored = []
-        for symbol, array in buys.items():
+        for symbol, array in buyers.items():
             if symbol not in ctx.symbols:
                 continue
             count = array[ctx.t]
@@ -265,9 +275,16 @@ class InsiderClusterAlpha(Strategy):
                 scored.append((count + ceo_count, symbol))
         scored.sort(reverse=True)
         targets = {symbol: 1.2 for _, symbol in scored[:2]}
+        # Names whose window has emptied are flattened: the first replay with
+        # real filings showed this participant holding TSLA for a full year
+        # because the exit rule was declared but never coded.
+        stale = [s for s in ctx.symbols if ctx.position(s) and s not in targets]
+        orders = ctx.flatten("insider cluster: window emptied", symbols=stale) \
+            if stale else []
         if not targets:
-            return []
-        return ctx.orders_to_targets(targets, "insider cluster (>=2 buys or CEO/CFO buy)")
+            return orders
+        return orders + ctx.orders_to_targets(
+            targets, "insider cluster (>=2 distinct buyers or CEO/CFO buy)")
 
 
 class CEOCFOConviction(Strategy):
@@ -287,13 +304,16 @@ class CEOCFOConviction(Strategy):
                 "directory (verified against the GitHub API), so the CEO idea is taken "
                 "from the filing that actually records CEO behaviour: Form 4, filtered "
                 "to the Chief Executive Officer and Chief Financial Officer titles."),
-        entry_rules=["Parse the collected Form 4 XML for officerTitle",
+        entry_rules=["Parse the collected Form 4 for the reporting officer's title",
                      "A code-P purchase whose title contains 'Chief Executive Officer', "
-                     "'CEO', 'Chief Financial Officer' or 'CFO' puts the issuer on the list",
-                     "Hold a single name - the most recent qualifying purchase - at 190% of equity"],
-        exit_rules=["Exit 120 sessions after the purchase", "No stop loss"],
+                     "'CEO', 'Chief Financial Officer' or 'CFO', with an EDGAR filing date "
+                     "in the trailing 30 days, puts the issuer on the list",
+                     "Hold a single name - the issuer with the most qualifying purchase "
+                     "lots in the window - at 190% of equity"],
+        exit_rules=["Exit when the trailing 30-day filing window no longer holds a "
+                    "CEO/CFO purchase (about a month after the filing)", "No stop loss"],
         sizing="190% of equity in one name (Reg T limit)", leverage="1.9x gross",
-        cadence="daily check", horizon="six months",
+        cadence="daily check", horizon="about one month per filing",
         academic_basis=[
             {"claim": "Top-executive purchases carry more information than rank-and-file "
                       "or director purchases",
@@ -319,8 +339,6 @@ class CEOCFOConviction(Strategy):
                 scored.append((array[ctx.t], symbol))
         scored.sort(reverse=True)
         if not scored:
-            if ctx.position("MU") or ctx.position("XOM"):
-                pass
             held = [s for s in ctx.symbols if ctx.position(s)]
             if held:
                 return ctx.flatten("ceo/cfo: no live qualifying purchase")

@@ -1,0 +1,30 @@
+{
+ "schema_version": 1,
+ "sport": "Baseball",
+ "olbg_sport_id": "12",
+ "fetched_at_utc": "2026-09-05T04:42:44Z",
+ "source": {
+  "name": "OLBG Baseball betting-tips index",
+  "url": "https://www.olbg.com/betting-tips/Baseball/12",
+  "method": "HTTP GET of server-rendered HTML via urllib; no JavaScript execution",
+  "licence_note": "Publicly viewable listing of facts (fixture, league, kickoff, tip counts) recorded for manual review. No bookmaker price is published in this HTML, so no price field is produced."
+ },
+ "events": [],
+ "markets_seen": [],
+ "warnings": [
+  "OLBG delivered a complete Baseball index page that lists no upcoming fixtures. Recorded as a genuinely empty slate."
+ ],
+ "page_health": {
+  "status": "empty-slate",
+  "warnings": [
+   "OLBG delivered a complete Baseball index page that lists no upcoming fixtures. Recorded as a genuinely empty slate."
+  ],
+  "evidence": {
+   "bytes": 145730,
+   "event_count": 0,
+   "sport": "Baseball"
+  },
+  "healthy": true
+ },
+ "note": "Display-and-join context for the baseball engine. OLBG publishes tipster consensus, not odds, so this slate can never supply a price. Fixtures, standings, team stats and probable starters come from the official MLB StatsAPI; the ESPN scoreboard supplies venue/weather context."
+}

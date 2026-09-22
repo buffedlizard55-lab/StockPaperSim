@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "sport": "Golf",
+  "source": {
+    "name": "OLBG — Golf Betting Tips",
+    "url": "https://www.olbg.com/betting-tips/Golf/5",
+    "indexes": [
+      "https://www.olbg.com/betting-tips/Golf/5",
+      "https://www.olbg.com/betting-tips/Golf/All_Golf/All_Events/5"
+    ],
+    "fetched_at_utc": "2026-09-04T19:49:23Z",
+    "method": "HTTP GET of server-rendered HTML via urllib; no JavaScript execution",
+    "licence_note": "Publicly viewable page. Redistribution limited to this factual fixture/market listing; see docs/GOLF_SOURCES.md."
+  },
+  "notes": [
+    "Every field was read from the pages listed in source.indexes. Nothing is inferred unless date_basis says \"derived\".",
+    "OLBG does not expose structured odds in server-rendered HTML, so no price fields exist in this file. IR-GOLF-01.",
+    "Tipster consensus counts are display-only and are never fed into model scoring.",
+    "form_table and owgr_links are editorial content from the index article, kept for cross-checking the OWGR feed only."
+  ],
+  "collection_warnings": [],
+  "events": [
+    {
+      "event_id": "101769",
+      "url": "https://www.olbg.com/betting-tips/Golf/All_Golf/All_Events/Omega_European_Masters/5?event_id=101769",
+      "slug": "Omega_European_Masters",
+      "event_name": "Masters",
+      "display_date": null,
+      "display_time": null,
+      "type": "tournament",
+      "consensus": null,
+      "markets_verified": false,
+      "resolved_date": null,
+      "date_basis": "unknown",
+      "markets_on_event_page": []
+    }
+  ],
+  "team_events": [
+    {
+      "event_id": "101768",
+      "url": "https://www.olbg.com/betting-tips/Golf/All_Golf/All_Events/Walker_Cup/5?event_id=101768",
+      "slug": "Walker_Cup",
+      "event_name": "Walker Cup",
+      "display_date": "06 Sept",
+      "display_time": "19:00",
+      "type": "team",
+      "consensus": {
+        "market": "Win Tournament",
+        "selection": "USA",
+        "tips_for": 8,
+        "tips_total": 17,
+        "pct": 47,
+        "comments": 4,
+        "experts": 1
+      },
+      "markets_verified": true,
+      "resolved_date": "2026-09-06",
+      "date_basis": "observed",
+      "markets_on_event_page": [
+        "Win Tournament"
+      ]
+    }
+  ],
+  "form_table": [
+    {
+      "name": "Scottie Scheffler",
+      "owgr": 1,
+      "tour": "PGA"
+    },
+    {
+      "name": "Stewart Cink",
+      "owgr": null,
+      "tour": "Champ"
+    },
+    {
+      "name": "Wyndham Clark",
+      "owgr": 5,
+      "tour": "PGA"
+    },
+    {
+      "name": "Ross Steelman",
+      "owgr": 83,
+      "tour": "KFT"
+    },
+    {
+      "name": "Zach Johnson",
+      "owgr": 377,
+      "tour": "Champ"
+    },
+    {
+      "name": "Rory McIlroy",
+      "owgr": 2,
+      "tour": "PGA"
+    },
+    {
+      "name": "Chris Gotterup",
+      "owgr": 7,
+      "tour": "PGA"
+    },
+    {
+      "name": "Tom McKibbin",
+      "owgr": 134,
+      "tour": "LIV"
+    },
+    {
+      "name": "Scott Vincent",
+      "owgr": 139,
+      "tour": "LIV"
+    },
+    {
+      "name": "Matthew Jordan",
+      "owgr": 213,
+      "tour": "DPT"
+    },
+    {
+      "name": "Davis Shore",
+      "owgr": 220,
+      "tour": "KFT"
+    },
+    {
+      "name": "Rasmus Hojgaard",
+      "owgr": 76,
+      "tour": "PGA"
+    },
+    {
+      "name": "Bobby Shelton",
+      "owgr": 233,
+      "tour": "KFT"
+    }
+  ],
+  "owgr_links": []
+}

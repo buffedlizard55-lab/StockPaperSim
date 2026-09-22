@@ -89,6 +89,10 @@ ALLOWED_HOSTS = {
     # for the access policy it follows.
     "data.sec.gov", "cdn.nba.com", "stats.nba.com", "www.nba.com",
     "github.com",
+    # Added 2026-09-22 with IR-86: the official GitHub API host, opened live to
+    # re-enumerate the MasterSite directory (55 public repositories). IR-86
+    # cites the exact query URL as its evidence link.
+    "api.github.com",
     # Added 2026-09-18 with IR-59's correction: the St. Louis Fed's own
     # announcement that it removed the ICE/LBMA benchmark series from FRED on
     # 2022-01-31 is the primary source for why the gold URLs 404.

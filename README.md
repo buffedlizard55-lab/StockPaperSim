@@ -1,5 +1,18 @@
 # StockPaperSim
 
+> **2026-09-22 sixth pass — re-verification, no number changes.** Every external
+> claim this project leans on was re-fetched and re-checked: the three
+> reverse-engineered competitions (TradingView's December 2025 rules page is
+> still live with the same $100,000 / $1-per-trade / 3-day / 60-per-minute /
+> auto-liquidation figures; Trade Ideas still publishes the same ten-column
+> leaderboard schema with its 15-minute-delay notice; CandleCharts is running a
+> September 20–25, 2026 edition with the same $50,000-paper-account, top-three
+> structure), and the MasterSite directory (55 public repositories via the
+> official GitHub API, up from 42 - all twelve existing brief-named projects
+> still present, still no repository named CEO, new trading-adjacent projects
+> recorded as unreviewed candidates in IR-86). Suite: **697 tests green**,
+> still.
+
 > **2026-09-21 fifth pass — the insider participants trade: an EDGAR full-text
 > purchase locator found every open-market buy, and a look-ahead bug was fixed
 > before it could matter.** The 2026-09-20 walk was recency-ordered and could
@@ -136,7 +149,7 @@ include `/docs/` for that reason; an admin can drop it by setting
 > silently, no result here is investment advice, and nothing on the site should
 > be read as evidence about a strategy's real future performance. The site says
 > this on every page, and [`research/IRREGULARITIES.json`](research/IRREGULARITIES.json)
-> carries the 85 flags this project raised against itself.
+> carries the 86 flags this project raised against itself.
 >
 > **Season 2 is reproducible research, not yet official-price eligible.** The
 > historical run is matched to collected Yahoo daily bars (the page prints the
@@ -635,8 +648,8 @@ docs/           the published site (GitHub Pages serves this directory);
                 docs/live/ is the Live Book section and docs/official/ the
                 Official Auction Book section
 research/       VERIFICATION_LOG.md, COMPETITION_SITES.md,
-                IRREGULARITIES.json (85), LIMITATIONS.json (44),
-                REMAINING_WORK.json (54), MASTER_SITE_SIGNALS.md,
+                IRREGULARITIES.json (86), LIMITATIONS.json (44),
+                REMAINING_WORK.json (55), MASTER_SITE_SIGNALS.md,
                 SOCIAL_STRATEGY_SOURCES.md
 ```
 
@@ -708,10 +721,10 @@ manual review, and flag irregularities rather than paper over them.
   rule was copied, which was widened as a declared SIM CHOICE, and which is
   honestly marked *not applicable*.
 * [`docs/irregularities.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/irregularities.html)
-  — all 85 flags, including the ones raised against this project's own modelling
+  — all 86 flags, including the ones raised against this project's own modelling
   choices.
 * [`docs/limitations.html`](https://buffedlizard55-lab.github.io/StockPaperSim/docs/limitations.html)
-  — 43 limitations, 44 items of remaining work in priority order, and what
+  — 44 limitations, 55 items of remaining work in priority order, and what
   success would require.
 
 ## Known limits (the short version)

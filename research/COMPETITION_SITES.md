@@ -147,6 +147,24 @@ users, trades and P&L. Where each of those lives:
 | Track P&L | daily NAV per participant, realised/unrealised split, per-symbol contribution, Perold implementation shortfall, ledger closure to $0.10 | `docs/leaderboard.html`, `assets/data/leaderboard.json`, `assets/data/factors.json`, and `reports/<strategy_id>.json` in memory |
 | Competition structure | fixed 251-session year, fixed $100k, forced liquidation, ranked table | `docs/index.html`, `docs/methodology.html` (section 1 is this reverse-engineering table, published) |
 | Liquidity / market making / pricing | `sim/microstructure.py` - depth book, U-shaped intraday volume, Avellaneda-Stoikov quoting, dated Rule 612 tick grid, access-fee cap | `docs/methodology.html` sections 2-4, `docs/market.html` |
-| Irregularity flags | `research/IRREGULARITIES.json` (30 entries) | `docs/irregularities.html` |
-| Limitations and remaining work | `research/LIMITATIONS.json` (16 entries), `research/REMAINING_WORK.json` (16 entries) | `docs/limitations.html` - all 16, all 16 in priority order, plus "What success would require" |
+| Irregularity flags | `research/IRREGULARITIES.json` (86 entries as of 2026-09-22) | `docs/irregularities.html` |
+| Limitations and remaining work | `research/LIMITATIONS.json` (44 entries), `research/REMAINING_WORK.json` (55 entries, as of 2026-09-22) | `docs/limitations.html` - all of each in priority order, plus "What success would require" |
 | Verified sources with links | `sim/config.py::all_verified_sources()` (52 rows) plus the 6 live-data adapter entries | `docs/sources.html` - 58 rows, every URL clickable, every row carrying its honesty status badge |
+
+---
+
+## 6. Re-verification, 2026-09-22 (IR-86 pass)
+
+All three contests were re-fetched on **2026-09-22** and every figure this file
+quotes was checked against the live page. Nothing quoted here changed.
+
+| Contest | What was re-checked | Result |
+|---|---|---|
+| TradingView **The Leap**, December 2025 rules (`.../the-leap/december-2025/rules/`) | preset balance, leverage, commission, minimum activity, rate limit, ranking metric, leaderboard latency, auto-close, account deletion | **Page still live, all figures identical**: 100,000 virtual USD preset balance; 1:1 stock leverage; $1 commission; at least 3 active days; ban at 60+ transactions/minute; rank on realised P&L; leaderboard refreshed at most hourly; open positions auto-closed at period end and counted; accounts deleted 30 days after the end. |
+| TradingView **The Leap** hub (`.../the-leap/`) | whether the competition still exists and in what form | Live. The hub now runs **monthly editions** (September 2026 edition sponsored, futures, $50K prize pool; past champions listed back to February 2025 with net-profit and profitable-trade percentages). The December 2025 rules quoted above remain the version this project reverse-engineered. |
+| **Trade Ideas** PM Challenge (`trade-ideas.com/stock-trading-competition/`) | leaderboard column order, delay notice | **Unchanged**: `Rank \| User \| Total Profit \| Open Profit \| Close Profit \| Total Trades \| Open Trades \| Closed Trades \| Account Value \| Average Profit/Trade`, and the page still carries the **"data delayed by 15 minutes"** notice. Per-row values sit behind a login; no row values are quoted here. |
+| **CandleCharts** Showdown (`specials.candlecharts.com/contest/`) | account size, venue, horizon, prizes | Currently advertising a **September 20–25, 2026** edition: **$50,000 paper account**, entry through **TradingView Community Competitions**, trade any market, final leaderboard decides **top-three prizes** (journal access / $100 / $50 Candle Cash), plus a post-showdown wrap-up session. Same structure as the edition quoted in section 3. |
+
+Method note: pages were read through the agent page-fetch route on 2026-09-22;
+quoted figures are transcriptions of the rendered text above, not remembered
+values. No login-gated row values were used.

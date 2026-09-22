@@ -226,3 +226,29 @@ dedicated personas rather than borrowing the MLB clock. Every brief item now map
 to at least one participant: CEO, weather, insider trades, TheLeap, NFL Injury,
 NBA Injury, FDA Decisions, NCAA Scoreboard, NFL scoreboard, MLB Scoreboard,
 Sports Pred, Gold and PinePilot.
+
+**2026-09-22 re-verification (IR-86).** The directory was re-enumerated through
+the official GitHub API
+(`api.github.com/users/buffedlizard55-lab/repos?per_page=100`): **55 public
+repositories**, up from the 42 recorded in `research/strict/registry.json` on
+2026-09-19 (and 39 at the original enumeration). The MasterSite directory page
+itself now shows **52 verified sites**. Re-checked against the live API list,
+name by name: all twelve existing brief-named projects are still present
+(`DrugAnalysis`, `GOLD`, `Insider-trades`, `NFLInjuryReport`, `NBAInjuryReport`,
+`Ncaa-football-alerts`, `NFL-scoreboard`, `MLB-Live-PBP`, `MLB-PBP`,
+`SportsPred`, `SFWeather`, `TradingViewTheLeap`,
+`Tradingview-pinescript-editor` — thirteen repositories, since MLB has two),
+as are the two Kalshi repositories behind register item 14 (`KalshiPaperSim`,
+`PriceKalshiHistorical`), and there is **still no repository named CEO** — so every present/absent claim
+in the register above re-checks and no per-item section was rewritten.
+
+What changed is the arrival of trading-adjacent projects that post-date the
+review and are **not yet reviewed as signal sources**: `Commodities` (an
+evidence-first Kalshi forward-test desk — also a methodology reference for this
+repository's own pilot lane), `MLBComp`, `NBAComp`, `NFLComp`, `NHLComp`,
+`NFLPRED`, `OLBG-Competition`, `ParlaySports`, `SocialMediaComp`,
+`MLBRainDelay`, `MLB-Prediction-model-backtest`. They are recorded as
+unreviewed candidates in `research/REMAINING_WORK.json`, not silently treated
+as covered or as absent. Repository and site counts anywhere in this project
+are point-in-time figures. No signal, participant or number changes in this
+pass.

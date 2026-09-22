@@ -28,47 +28,48 @@ Daily prints and internally reproduced arithmetic do not establish observed intr
 <p>These rows are rendered from the files named beside them. Nothing else on this page carries a number.</p>
 <h3>Forward rollover</h3>
 <p>The forward book steps itself through every session that has a published print. A session settles only when each trade it contains can cite a real published bar; the evidence column names the official series that have (<em>present</em>) and have not (<em>missing</em>) published that session's observation, so a provisional settlement is visible as provisional.</p>
-<p><strong>Status:</strong> <span class="badge badge-ok">MEASURED</span> ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 8 intents outstanding.<br><span class="note">Plan date 2026-09-16 · calendar authority FRED SP500 observation dates · executable prints nasdaq (EXCHANGE-PUBLISHED, redistribution NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION) · generated 2026-09-19T04:25:25Z · source <code>memory/live/forward-ladder.json</code></span></p>
+<p><strong>Status:</strong> <span class="badge badge-ok">MEASURED</span> ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 9 intents outstanding.<br><span class="note">Plan date 2026-09-16 · calendar authority FRED SP500 observation dates · executable prints nasdaq (EXCHANGE-PUBLISHED, redistribution NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION) · generated 2026-09-21T23:57:30Z · source <code>memory/live/forward-ladder.json</code></span></p>
 <table><thead><tr><th>Session</th><th>Verification</th><th class="num">Intents</th><th class="num">Filled</th><th class="num">Waiting</th><th class="num">Notional</th><th>Official series present</th><th>Official series missing</th></tr></thead><tbody>
-<tr><td>2026-09-17</td><td><span class="badge badge-ok">COLLECTED-OFFICIAL-CALENDAR</span></td><td class="num">16</td><td class="num">16</td><td class="num">0</td><td class="num">$1,239,798.60</td><td>SP500, NASDAQCOM, DJIA, VIXCLS, SOFR, DGS10, DGS3MO</td><td>DCOILWTICO, DTWEXBGS</td></tr>
-<tr><td>2026-09-18</td><td><span class="badge badge-warn">PROVISIONAL-EXCHANGE-PRINTS</span></td><td class="num">11</td><td class="num">11</td><td class="num">0</td><td class="num">$521,201.60</td><td>NASDAQCOM, DJIA</td><td>SP500, VIXCLS, SOFR, DGS10, DGS3MO, DCOILWTICO, DTWEXBGS</td></tr>
+<tr><td>2026-09-17</td><td><span class="badge badge-ok">COLLECTED-OFFICIAL-CALENDAR</span></td><td class="num">16</td><td class="num">16</td><td class="num">0</td><td class="num">$1,239,807.00</td><td>SP500, NASDAQCOM, DJIA, VIXCLS, SOFR, DGS10, DGS3MO</td><td>DCOILWTICO, DTWEXBGS</td></tr>
+<tr><td>2026-09-18</td><td><span class="badge badge-warn">PROVISIONAL-EXCHANGE-PRINTS</span></td><td class="num">11</td><td class="num">11</td><td class="num">0</td><td class="num">$484,302.40</td><td>NASDAQCOM, DJIA</td><td>SP500, VIXCLS, SOFR, DGS10, DGS3MO, DCOILWTICO, DTWEXBGS</td></tr>
 </tbody></table>
 <details><summary>Every settled fill on the ladder (27)</summary><table><thead><tr><th>Intent</th><th>Participant</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th class="num">Price</th><th>Reference class</th></tr></thead><tbody>
-<tr><td>NasdaqMomentum_Max-00001</td><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
-<tr><td>DowNasdaq_SpreadMax-00001</td><td>@DowNasdaq_SpreadMax</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
-<tr><td>DowNasdaq_SpreadMax-00002</td><td>@DowNasdaq_SpreadMax</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>SECONDARY</td></tr>
-<tr><td>VIXRegime_LiveMax-00001</td><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">715.96</td><td>SECONDARY</td></tr>
-<tr><td>SOFRPivot_Rider-00001</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
-<tr><td>SOFRPivot_Rider-00002</td><td>@SOFRPivot_Rider</td><td>TSLA</td><td>buy</td><td class="num">120</td><td class="num">367.5</td><td>SECONDARY</td></tr>
-<tr><td>CurveSteepener_MaxBeta-00001</td><td>@CurveSteepener_MaxBeta</td><td>SPY</td><td>buy</td><td class="num">120</td><td class="num">763.16</td><td>SECONDARY</td></tr>
-<tr><td>OilDollar_FadeUNG-00001</td><td>@OilDollar_FadeUNG</td><td>UNG</td><td>buy</td><td class="num">7700</td><td class="num">10.32</td><td>SECONDARY</td></tr>
-<tr><td>OilDollar_FadeUNG-00002</td><td>@OilDollar_FadeUNG</td><td>XOM</td><td>buy</td><td class="num">600</td><td class="num">161.85</td><td>SECONDARY</td></tr>
-<tr><td>MLB_Attention_Live-00001</td><td>@MLB_Attention_Live</td><td>PENN</td><td>sell</td><td class="num">3300</td><td class="num">17.85</td><td>SECONDARY</td></tr>
-<tr><td>LeapStyle_AutoLiquidate-00001</td><td>@LeapStyle_AutoLiquidate</td><td>GLD</td><td>buy</td><td class="num">240</td><td class="num">400.29</td><td>SECONDARY</td></tr>
-<tr><td>PinePilot_EMA_Live-00001</td><td>@PinePilot_EMA_Live</td><td>QQQ</td><td>sell</td><td class="num">120</td><td class="num">715.95</td><td>SECONDARY</td></tr>
-<tr><td>VolControl_MaxLev-00001</td><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>SECONDARY</td></tr>
-<tr><td>GoldVsRealRate_Live-00001</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>buy</td><td class="num">1200</td><td class="num">81.55</td><td>SECONDARY</td></tr>
-<tr><td>FDA_Fade_Live-00001</td><td>@FDA_Fade_Live</td><td>XBI</td><td>buy</td><td class="num">600</td><td class="num">157.32</td><td>SECONDARY</td></tr>
-<tr><td>KitchenSink_Official-00001</td><td>@KitchenSink_Official</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>SECONDARY</td></tr>
+<tr><td>NasdaqMomentum_Max-00001</td><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>DowNasdaq_SpreadMax-00001</td><td>@DowNasdaq_SpreadMax</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>DowNasdaq_SpreadMax-00002</td><td>@DowNasdaq_SpreadMax</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>VIXRegime_LiveMax-00001</td><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">715.96</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00001</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00002</td><td>@SOFRPivot_Rider</td><td>TSLA</td><td>buy</td><td class="num">120</td><td class="num">367.5</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>CurveSteepener_MaxBeta-00001</td><td>@CurveSteepener_MaxBeta</td><td>SPY</td><td>buy</td><td class="num">120</td><td class="num">763.16</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>OilDollar_FadeUNG-00001</td><td>@OilDollar_FadeUNG</td><td>UNG</td><td>buy</td><td class="num">7700</td><td class="num">10.32</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>OilDollar_FadeUNG-00002</td><td>@OilDollar_FadeUNG</td><td>XOM</td><td>buy</td><td class="num">600</td><td class="num">161.85</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>MLB_Attention_Live-00001</td><td>@MLB_Attention_Live</td><td>PENN</td><td>sell</td><td class="num">3300</td><td class="num">17.85</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>LeapStyle_AutoLiquidate-00001</td><td>@LeapStyle_AutoLiquidate</td><td>GLD</td><td>buy</td><td class="num">240</td><td class="num">400.3</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>PinePilot_EMA_Live-00001</td><td>@PinePilot_EMA_Live</td><td>QQQ</td><td>sell</td><td class="num">120</td><td class="num">715.95</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>VolControl_MaxLev-00001</td><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">120</td><td class="num">715.96</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>GoldVsRealRate_Live-00001</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>buy</td><td class="num">1200</td><td class="num">81.55</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>FDA_Fade_Live-00001</td><td>@FDA_Fade_Live</td><td>XBI</td><td>buy</td><td class="num">600</td><td class="num">157.33</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>KitchenSink_Official-00001</td><td>@KitchenSink_Official</td><td>SPY</td><td>buy</td><td class="num">80</td><td class="num">763.16</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>NasdaqMomentum_Max-00002</td><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>VIXRegime_LiveMax-00002</td><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">80</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
-<tr><td>SOFRPivot_Rider-00003</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>sell</td><td class="num">120</td><td class="num">718.83</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>SOFRPivot_Rider-00003</td><td>@SOFRPivot_Rider</td><td>QQQ</td><td>sell</td><td class="num">80</td><td class="num">718.83</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>SOFRPivot_Rider-00004</td><td>@SOFRPivot_Rider</td><td>TSLA</td><td>sell</td><td class="num">120</td><td class="num">368.98</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>SOFRPivot_Rider-00005</td><td>@SOFRPivot_Rider</td><td>TLT</td><td>buy</td><td class="num">400</td><td class="num">81.47</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>MLB_Attention_Live-00002</td><td>@MLB_Attention_Live</td><td>PENN</td><td>sell</td><td class="num">100</td><td class="num">17.21</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>LeapStyle_AutoLiquidate-00002</td><td>@LeapStyle_AutoLiquidate</td><td>GLD</td><td>buy</td><td class="num">120</td><td class="num">400.5</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>VolControl_MaxLev-00002</td><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">40</td><td class="num">718.84</td><td>EXCHANGE-PUBLISHED</td></tr>
-<tr><td>GoldVsRealRate_Live-00002</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>sell</td><td class="num">1200</td><td class="num">81.46</td><td>EXCHANGE-PUBLISHED</td></tr>
+<tr><td>GoldVsRealRate_Live-00002</td><td>@GoldVsRealRate_Live</td><td>TLT</td><td>sell</td><td class="num">1100</td><td class="num">81.46</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>GoldVsRealRate_Live-00003</td><td>@GoldVsRealRate_Live</td><td>GLD</td><td>buy</td><td class="num">120</td><td class="num">400.5</td><td>EXCHANGE-PUBLISHED</td></tr>
 <tr><td>FDA_Fade_Live-00002</td><td>@FDA_Fade_Live</td><td>XBI</td><td>buy</td><td class="num">300</td><td class="num">158.23</td><td>EXCHANGE-PUBLISHED</td></tr>
 </tbody></table></details>
 <h4>Intents outstanding</h4><table><thead><tr><th>Participant</th><th>Symbol</th><th>Side</th><th class="num">Qty</th><th>Target session</th><th>Status</th></tr></thead><tbody>
 <tr><td>@NasdaqMomentum_Max</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@VIXRegime_LiveMax</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
-<tr><td>@SOFRPivot_Rider</td><td>TLT</td><td>buy</td><td class="num">1000</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@SOFRPivot_Rider</td><td>TLT</td><td>buy</td><td class="num">800</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@LeapStyle_AutoLiquidate</td><td>NVDA</td><td>buy</td><td class="num">100</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@PinePilot_EMA_Live</td><td>QQQ</td><td>buy</td><td class="num">240</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@VolControl_MaxLev</td><td>QQQ</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
+<tr><td>@GoldVsRealRate_Live</td><td>TLT</td><td>sell</td><td class="num">100</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@GoldVsRealRate_Live</td><td>GLD</td><td>buy</td><td class="num">40</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 <tr><td>@FDA_Fade_Live</td><td>XBI</td><td>sell</td><td class="num">900</td><td>2026-09-21</td><td><span class="badge badge-warn">PENDING</span></td></tr>
 </tbody></table>

@@ -273,7 +273,7 @@
    },
    {
     "kind": "failure_mode_untested",
-    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): No archive exists, so nothing about this mapping has been measured; Scoring predictions against ESPN finals mixes a first-party prediction source with a secondary results source; the mismatch is declared rather than hidden."
+    "text": "Declared failure mode(s) this run CANNOT test, because no measurable condition matches their wording (they are neither confirmed nor ruled out): No snapshot archive exists yet, so nothing about this mapping has been measured; predictions.json carries no sourced prices (the site's own IR-01: OLBG exposes no structured odds), so a live rule cannot size from implied probabilities; Scoring predictions against results mixes a first-party prediction source with a grading source that is itself empty today; the mismatch is declared rather than hidden."
    },
    {
     "kind": "regime",
@@ -283,7 +283,7 @@
   "prose": [
    {
     "title": "Mandate (as declared before the season)",
-    "text": "@SportsPred_Forward (Sports Pred (forward probe)) ran the \"prediction-performance attention proxy\" archetype. Declared thesis: The SportsPred project publishes pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would test this repository's reimplementation, not the site. The forward rule is declared here, and goes live on dated snapshots of the site's own published predictions collected from now on. Entry: No backtested rule. The declared forward rule: from dated SportsPred snapshots, a 4-week window in which the site's favourites beat the collected ESPN finals at a rate above its trailing mean -> long SRAD and GENI at 75% of equity each. Exit: Not applicable in the historical window. Sizing: declared 150% gross when it goes live. Leverage: 1.5x when live. Cadence: weekly (from the first archived snapshot), horizon weeks. Aggression 3/5. This participant was built to maximise return, not to manage risk: Declared but not yet tradable - the honest placeholder for the Sports Pred project in the brief."
+    "text": "@SportsPred_Forward (Sports Pred (forward probe)) ran the \"prediction-performance attention proxy\" archetype. Declared thesis: The SportsPred project publishes pre-game probabilities and grades them, but archives nothing, so its past output cannot be backtested without recomputing the model - which would test this repository's reimplementation, not the site. The mapping is now concrete: dated snapshots of the site's own predictions.json / results.json / slate.json, collected weekly from now on. The forward rule goes live on those snapshots. Entry: No backtested rule. The declared forward rule: from dated SportsPred snapshots, a 4-week window in which the site's graded favourites (predictions.json vs results.json) beat their trailing hit rate -> long SRAD and GENI at 75% of equity each. Exit: Not applicable in the historical window. Sizing: declared 150% gross when it goes live. Leverage: 1.5x when live. Cadence: weekly (from the first archived snapshot), horizon weeks. Aggression 3/5. This participant was built to maximise return, not to manage risk: Declared but not yet tradable - the honest placeholder for the Sports Pred project in the brief."
    },
    {
     "title": "Outcome (as measured after the season)",
@@ -330,8 +330,9 @@
    "Its 0.0% return is an untested strategy, not a flat result"
   ],
   "failure_modes_untested": [
-   "No archive exists, so nothing about this mapping has been measured",
-   "Scoring predictions against ESPN finals mixes a first-party prediction source with a secondary results source; the mismatch is declared rather than hidden"
+   "No snapshot archive exists yet, so nothing about this mapping has been measured",
+   "predictions.json carries no sourced prices (the site's own IR-01: OLBG exposes no structured odds), so a live rule cannot size from implied probabilities",
+   "Scoring predictions against results mixes a first-party prediction source with a grading source that is itself empty today; the mismatch is declared rather than hidden"
   ],
   "structural_caveats": [],
   "factors_considered": []

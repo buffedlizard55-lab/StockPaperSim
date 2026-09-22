@@ -30,55 +30,55 @@ These legacy fills can use SECONDARY prices and modelled bid/ask liquidity. Date
 <div class="kpis">
   <div class="kpi"><div class="kpi-label">Forward-tested return</div>
     <div class="kpi-value pos">
-    +3.87%</div>
-    <div class="kpi-sub">$3,873.87 net on
+    +3.05%</div>
+    <div class="kpi-sub">$3,046.88 net on
     $100,000.00 starting cash</div></div>
   <div class="kpi"><div class="kpi-label">Risk</div>
-    <div class="kpi-value">0.00%</div>
+    <div class="kpi-value">-13.37%</div>
     <div class="kpi-sub">max drawdown · Sharpe
-    26.1329</div></div>
+    0.2499</div></div>
   <div class="kpi"><div class="kpi-label">Execution</div>
-    <div class="kpi-value">0 fills</div>
-    <div class="kpi-sub">0 intents ·
+    <div class="kpi-value">3 fills</div>
+    <div class="kpi-sub">3 intents ·
     0 refused · cost
-    0.000%</div></div>
+    0.005%</div></div>
   <div class="kpi"><div class="kpi-label">Data status</div>
-    <div class="kpi-value"><span class="badge badge-bad">DATA-MISSING</span></div>
-    <div class="kpi-sub">The SEC Form 4 stream is not in data/real/sec/ because the collection runner&#x27;s first EDGAR request was refused and the re-collection has not landed; the rule therefore places no intents and this book reports a measurement gap, not a zero result.</div></div>
+    <div class="kpi-value"><span class="badge badge-ok">READY</span></div>
+    <div class="kpi-sub">SEC insider data has landed: 216 normalised transactions (2024-06-17..2026-09-17) from data/real/sec_agent/form4_transactions.jsonl, including 34 open-market purchases (code P). The rule reads code-P clusters and CEO/CFO purchases from it; the first intents appear in the next planned session, never backdated.</div></div>
 </div>
 
 <h2>Why the result is what it is</h2>
-<ul><li>Insider Cluster Live (@InsiderCluster_Live) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>No trade ever executed, so the +3.87% is cash financing only (3,873.87 USD of official SOFR credit). The status is DATA-MISSING: The SEC Form 4 stream is not in data/real/sec/ because the collection runner&#x27;s first EDGAR request was refused and the re-collection has not landed; the rule therefore places no intents and this book reports a measurement gap, not a zero result..</li><li>This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked.</li></ul>
+<ul><li>Insider Cluster Live (@InsiderCluster_Live) planned 3 forward intents and saw 3 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>Final equity 103,046.88 USD on 100,000 starting cash: +3.05% with a worst peak-to-trough drawdown of -13.37% over 251 marked sessions.</li><li>The benchmark (S&amp;P 500 index, daily close, OFFICIAL-PUBLISHER / FRED-REPUBLISHED, 2025-09-17 6600.35 -&gt; 2026-09-16 7551.81) returned +14.42% over the same window, so this participant lagged the benchmark by 11.4pp.</li><li>Execution cost was 13.35 USD, 0.005% of 272,552 USD traded, at a mean slippage of 0.47 bps against the decision mid; median participation was 0.00022% of the session&#x27;s real volume (max 0.00036%).</li><li>1 round trips closed; win rate 0.0% and profit factor 0.0. The largest single trip was -247.17 USD and the worst -247.17 USD.</li><li>Contribution by instrument: TSLA -247.17 USD was the biggest positive and TSLA -247.17 USD the biggest negative, out of 1 instruments traded.</li><li>Waiting for execution is the whole point of this book: every intent here was written after the close of its plan date and settled against a later verified bar, so the cost of the delay is inside the number rather than assumed away.</li><li>0.0% of traded notional executed against a reference bar from an OFFICIAL source; the rest is SECONDARY (the collected Yahoo research files), which is why this book is not an official-price competition.</li></ul>
 
 <h2>The rule as it ran</h2>
-<p><strong>Inputs:</strong> <code>insider_buys_30d</code>, <code>insider_buy_ratio_30d</code></p>
+<p><strong>Inputs:</strong> <code>insider_buys_30d</code>, <code>insider_buyers_30d</code>, <code>insider_ceo_buys_30d</code>, <code>insider_buy_ratio_30d</code></p>
 <p><strong>Sizing:</strong> 0.9-1.4x per name, up to 1.9x gross across names ·
 <strong>leverage:</strong> up to 1.9x gross ·
 <strong>cadence:</strong> every session, executed the next session ·
 <strong>horizon:</strong> one to three months</p>
 <h3>Entry rules</h3>
-<ul><li>Count open-market purchases (transaction code P) per issuer over the trailing 30 days from the collected Form 4 JSONL</li><li>Two or more distinct insiders -&gt; target the issuer at 0.9x equity</li><li>A CEO/CFO purchase present -&gt; target 1.4x equity</li></ul>
+<ul><li>Count open-market purchases (transaction code P) per issuer over the trailing 30 days from the collected Form 4 JSONL, dated by the EDGAR filing date (when the purchase became public), never by the trade date</li><li>Two or more distinct reporting persons bought -&gt; target the issuer at 0.9x equity (lots are not people: one filing reporting 25 lots by one insider is one buyer)</li><li>A CEO/CFO purchase present -&gt; target 1.4x equity</li></ul>
 <h3>Exit rules</h3>
-<ul><li>Flatten 30 sessions after the last counted purchase</li></ul>
+<ul><li>Flatten a name once its trailing 30-day filing window holds neither a cluster nor a CEO/CFO purchase (about a month after the last qualifying filing)</li></ul>
 <h3>Evidence base</h3>
-<ul><li>Insider open-market purchases predict positive abnormal returns over the following months — <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&amp;type=4">SEC Form 4 filings (primary record)</a> <span class="muted small">[OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION NOT LANDED]</span></li></ul>
+<ul><li>Insider open-market purchases predict positive abnormal returns over the following months — <a href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&amp;type=4">SEC Form 4 filings (primary record)</a> <span class="muted small">[OFFICIAL-ENDPOINT-DOCUMENTED; COLLECTION LANDED VIA THE RENDERED-VIEW LANE (data/real/sec_agent/)]</span></li></ul>
 <h3>Declared failure modes</h3>
-<ul><li>The filing arrives up to two business days after the trade, so the informational edge is partly gone by the time it is readable</li><li>Cluster rules fire rarely, so the sample is thin by construction</li><li>With no collected stream the participant is idle, which is the current honest state</li></ul>
+<ul><li>The filing arrives up to two business days after the trade (and a late filing can arrive months after it), so the informational edge is partly gone by the time it is readable; the rule dates every purchase by its filing date for exactly that reason</li><li>Cluster rules fire rarely, so the sample is thin by construction</li><li>Code P is a mechanical filter: a broker-initiated purchase the insider later disavowed (MSFT, accession 0000789019-25-000120) still counts as one purchase, because the rule reads the transaction code, not the footnotes</li><li>The collected stream is the rendered-view lane plus the EDGAR full-text locator; until the SEC quarterly bulk sets land it is complete only for the purchases that locator found</li></ul>
 
 <h2>Contribution by instrument</h2>
 <table class="participants"><thead><tr><th>symbol</th><th>net P&amp;L</th></tr></thead>
-<tbody><tr><td colspan="2">no closed trades</td></tr></tbody></table>
+<tbody><tr><td>TSLA</td><td class="neg">$-247.17</td></tr></tbody></table>
 
 <h2>Post-mortem statistics</h2>
 <ul>
-<li>Round trips closed: 0 · still open:
+<li>Round trips closed: 1 · still open:
 0</li>
-<li>Win rate: — · profit factor:
-—</li>
-<li>Largest trip: $0.00 · worst trip:
-$0.00</li>
-<li>Carry: $3,873.87 received,
-$0.00 paid at SOFR
+<li>Win rate: 0.00% · profit factor:
+0.0</li>
+<li>Largest trip: $-247.17 · worst trip:
+$-247.17</li>
+<li>Carry: $3,511.53 received,
+$217.49 paid at SOFR
 (ACT/360 (declared)); rate source
 <span class="badge badge-ok">OFFICIAL</span></li>
 <li>Margin events: 0</li>
@@ -89,13 +89,29 @@ $0.00 paid at SOFR
 <thead><tr><th>symbol</th><th>direction</th><th>entry</th><th>entry px</th><th>exit</th>
 <th>exit px</th><th>qty</th><th>net P&amp;L</th><th>sessions</th><th>why it closed</th>
 </tr></thead>
-<tbody><tr><td colspan="10">no closed round trips</td></tr></tbody></table>
+<tbody><tr><td>TSLA</td><td>long</td>
+<td>2025-09-18</td><td>426.2462</td>
+<td>2025-10-17</td>
+<td>425.4800</td><td>320</td>
+<td class="neg">
+$-247.17</td>
+<td>None</td><td>insider: no cluster or CEO/CFO purchase filed in the trailin</td>
+</tr></tbody></table>
 
 <h2>Intents placed</h2>
 <table class="participants">
 <thead><tr><th>session</th><th>symbol</th><th>side</th><th>shares</th><th>status</th>
 <th>settlement note</th><th>evidence read</th></tr></thead>
-<tbody><tr><td colspan="7">no intents placed</td></tr></tbody></table>
+<tbody><tr><td>2025-09-18</td>
+<td>TSLA</td><td>buy</td><td>200</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>TSLA_price, insider_buy_ratio_30d</td></tr><tr><td>2025-09-19</td>
+<td>TSLA</td><td>buy</td><td>120</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>TSLA_price, insider_buy_ratio_30d</td></tr><tr><td>2025-10-17</td>
+<td>TSLA</td><td>sell</td><td>320</td>
+<td><span class="badge badge-warn">FILLED</span></td><td></td>
+<td>TSLA_price, insider_buy_ratio_30d</td></tr></tbody></table>
 <p class="more"><a href="../blotter.html">Back to the trade tape &rarr;</a></p>
 
 </main>

@@ -1,8 +1,8 @@
 {
- "generated_utc": "2026-09-19T04:25:25Z",
+ "generated_utc": "2026-09-21T23:57:30Z",
  "run_id": "live-forward-2026-09-16",
  "plan_date": "2026-09-16",
- "status": "ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 8 intents outstanding.",
+ "status": "ROLLOVER: 2 session(s) settled (2026-09-17, 2026-09-18), 0 waiting for prints, 9 intents outstanding.",
  "calendar_authority": "FRED SP500 observation dates",
  "price_print_source": "nasdaq",
  "price_print_class": "EXCHANGE-PUBLISHED",
@@ -44,14 +44,16 @@
      "value": 4.12
     }
    ],
-   "price_sources": [],
+   "price_sources": [
+    "EXCHANGE-PUBLISHED"
+   ],
    "intents_targeted": 16,
    "filled": 16,
    "partial": 0,
    "rejected": 0,
    "expired": 0,
    "waiting_for_prints": 0,
-   "notional_usd": 1239798.6,
+   "notional_usd": 1239807.0,
    "symbols_waiting_for_a_print": [],
    "status": "SETTLED",
    "fills": [
@@ -62,8 +64,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 715.96,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.14,
      "participation_pct_of_session_volume": 0.00032
     },
@@ -74,8 +76,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 715.96,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.14,
      "participation_pct_of_session_volume": 0.00032
     },
@@ -86,8 +88,8 @@
      "side": "buy",
      "quantity": 80,
      "price": 763.16,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.131,
      "participation_pct_of_session_volume": 0.00016
     },
@@ -98,8 +100,8 @@
      "side": "buy",
      "quantity": 40,
      "price": 715.96,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.14,
      "participation_pct_of_session_volume": 0.00011
     },
@@ -110,8 +112,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 715.96,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.14,
      "participation_pct_of_session_volume": 0.00032
     },
@@ -122,8 +124,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 367.5,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.544,
      "participation_pct_of_session_volume": 0.00031
     },
@@ -134,8 +136,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 763.16,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.131,
      "participation_pct_of_session_volume": 0.00024
     },
@@ -146,8 +148,8 @@
      "side": "buy",
      "quantity": 7700,
      "price": 10.32,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 19.417,
      "participation_pct_of_session_volume": 0.03019
     },
@@ -158,8 +160,8 @@
      "side": "buy",
      "quantity": 600,
      "price": 161.85,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 1.236,
      "participation_pct_of_session_volume": 0.00547
     },
@@ -170,9 +172,9 @@
      "side": "sell",
      "quantity": 3300,
      "price": 17.85,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
-     "slippage_bps": 0.0,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": -0.0,
      "participation_pct_of_session_volume": 0.15287
     },
     {
@@ -181,10 +183,10 @@
      "symbol": "GLD",
      "side": "buy",
      "quantity": 240,
-     "price": 400.29,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
-     "slippage_bps": 0.25,
+     "price": 400.3,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 0.5,
      "participation_pct_of_session_volume": 0.0031
     },
     {
@@ -194,9 +196,9 @@
      "side": "sell",
      "quantity": 120,
      "price": 715.95,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
-     "slippage_bps": 0.0,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": -0.0,
      "participation_pct_of_session_volume": 0.00032
     },
     {
@@ -206,8 +208,8 @@
      "side": "buy",
      "quantity": 120,
      "price": 715.96,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.14,
      "participation_pct_of_session_volume": 0.00032
     },
@@ -218,8 +220,8 @@
      "side": "buy",
      "quantity": 1200,
      "price": 81.55,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 1.226,
      "participation_pct_of_session_volume": 0.00288
     },
@@ -229,10 +231,10 @@
      "symbol": "XBI",
      "side": "buy",
      "quantity": 600,
-     "price": 157.32,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
-     "slippage_bps": 0.636,
+     "price": 157.33,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
+     "slippage_bps": 1.271,
      "participation_pct_of_session_volume": 0.00599
     },
     {
@@ -242,8 +244,8 @@
      "side": "buy",
      "quantity": 80,
      "price": 763.16,
-     "reference_source_class": "SECONDARY",
-     "reference_redistribution_status": null,
+     "reference_source_class": "EXCHANGE-PUBLISHED",
+     "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.131,
      "participation_pct_of_session_volume": 0.00016
     }
@@ -280,7 +282,7 @@
    "rejected": 0,
    "expired": 0,
    "waiting_for_prints": 0,
-   "notional_usd": 521201.6,
+   "notional_usd": 484302.4,
    "symbols_waiting_for_a_print": [],
    "status": "SETTLED",
    "fills": [
@@ -313,12 +315,12 @@
      "participant": "@SOFRPivot_Rider",
      "symbol": "QQQ",
      "side": "sell",
-     "quantity": 120,
+     "quantity": 80,
      "price": 718.83,
      "reference_source_class": "EXCHANGE-PUBLISHED",
      "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": -0.0,
-     "participation_pct_of_session_volume": 0.00025
+     "participation_pct_of_session_volume": 0.00017
     },
     {
      "intent_id": "SOFRPivot_Rider-00004",
@@ -385,12 +387,12 @@
      "participant": "@GoldVsRealRate_Live",
      "symbol": "TLT",
      "side": "sell",
-     "quantity": 1200,
+     "quantity": 1100,
      "price": 81.46,
      "reference_source_class": "EXCHANGE-PUBLISHED",
      "reference_redistribution_status": "NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION",
      "slippage_bps": 0.614,
-     "participation_pct_of_session_volume": 0.00292
+     "participation_pct_of_session_volume": 0.00268
     },
     {
      "intent_id": "GoldVsRealRate_Live-00003",
@@ -454,7 +456,7 @@
    "participant": "@SOFRPivot_Rider",
    "symbol": "TLT",
    "side": "buy",
-   "quantity": 1000,
+   "quantity": 800,
    "intended_session": "2026-09-21",
    "status": "PENDING",
    "reason": "sofr-pivot: tightening (+20.0bp over 21 sessions)"
@@ -491,6 +493,16 @@
   },
   {
    "intent_id": "GoldVsRealRate_Live-00004",
+   "participant": "@GoldVsRealRate_Live",
+   "symbol": "TLT",
+   "side": "sell",
+   "quantity": 100,
+   "intended_session": "2026-09-21",
+   "status": "PENDING",
+   "reason": "gold-real-rate: proxy flat (+3.0bp)"
+  },
+  {
+   "intent_id": "GoldVsRealRate_Live-00005",
    "participant": "@GoldVsRealRate_Live",
    "symbol": "GLD",
    "side": "buy",

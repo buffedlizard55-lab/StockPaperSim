@@ -1,4 +1,4 @@
-# SEC Form 4 agent-lane campaign — final selection (2026-09-20)
+# SEC Form 4 agent-lane campaign — final selection (2026-09-20; purchase locator pass 2026-09-21)
 
 Seed rule (owner-approved scope): for each of the ten tracked tickers, the up-to-eight
 most recent Form 4 filings **filed on or after 2026-06-01**, captured as the SEC's own
@@ -176,15 +176,58 @@ Still not captured (explicit gaps, not silently dropped):
 - The other nine tickers' pre-2026-06-01 filings (the walk this pass performed
   was MU only, chosen because it was the named blocker).
 
+## Purchase locator pass (2026-09-21) — the wider Form 4 history
+
+The 2026-09-20 walk was recency-ordered, so it could only ever say "no
+purchases in the most recent N filings". This pass inverted the question and
+asked EDGAR's own full-text index for **every Form 4 that reports a code-P
+transaction** for the ten issuers, from 2024-06-01 to 2026-09-21:
+
+- Route: `https://efts.sec.gov/LATEST/search-index?q=%224%20P%20false%22&forms=4&ciks=<ten CIKs>&dateRange=custom&startdt=…&enddt=…`
+  and the same with `"4 P 0"` (the Form 4 XML `transactionCoding` block
+  tokenises as `formType transactionCode equitySwapInvolved`, so the phrase
+  matches exactly the filings carrying a code-P non-derivative row). The
+  locator was validated first on known MU sales: `"4 S false"` returned exactly
+  the three MU August-2026 Form 4s that report code-S sales, and nothing else.
+  `"4 P true"`, `"4 P 1"` and the `forms=4/A` amendment query returned nothing.
+- Every query URL, hit count and accession is in `fts_locator.json`; the two
+  hits where a tracked issuer was the *reporting owner* of another company
+  (JPM/Ribbon, NVIDIA/Serve Robotics) are recorded there as NOT-ISSUER and
+  were not captured.
+- Result: **eight** purchase filings exist for the ten issuers in 27 months,
+  and all eight are captured (SEC rendered view + index or SGML header page,
+  digested, staged). Two of them are pre-season director purchases (JNJ
+  Weinberger 2024-12-12, XOM Dreyfus 2024-06-20) that only touch the warm-up
+  window or precede it.
+
+| accession | ticker | filed | reporter | P rows | note |
+| --- | --- | --- | --- | --- | --- |
+| 0001104659-25-089693 | TSLA | 2025-09-15 | Musk Elon — CEO, director, 10% owner | 25 lots, 2,568,732 sh | trades 2025-09-12; the only CEO/CFO purchase in the window |
+| 0000200406-25-000211 | JNJ | 2025-12-01 | MORIKIS JOHN G — director | 1 (1,250 @ $206.15) | |
+| 0000789019-25-000120 | MSFT | 2025-12-12 | SMITH BRADFORD L — Vice Chair and President | 1 (3,842 @ $377.465) + 2 S | trade 2025-04-23, filed late; the filer states it was broker-initiated and rescinded (IR-83) |
+| 0002058769-26-000002 | MU | 2026-01-15 | Liu Teyin M — director | 3 lots, 23,200 sh | |
+| 0000789019-26-000028 | MSFT | 2026-02-18 | STANTON JOHN W — director | 1 (5,000 @ $397.35) | |
+| 0001771340-25-000006 | TSLA | 2025-04-28 | Gebbia Joseph — director | 1 (4,000 @ $256.308) | pre-season (warm-up window) |
+| 0000200406-24-000106 | JNJ | 2024-12-12 | WEINBERGER MARK A — director | 1 (1,000 @ $147.22) | pre-season (warm-up window); SGML header page |
+| 0001127602-24-018937 | XOM | 2024-06-20 | Dreyfus Maria S. — director | 1 (18,310 @ $109.251) | before the warm-up window; no trading effect; SGML header page |
+
+Where `www.sec.gov` answered a filing-index request with its "File
+Unavailable" apology page, the SGML header page
+(`<accession>-index-headers.html`) was captured instead; it carries the same
+filing date, acceptance time and period of report, and
+`sim/edgar_rendered.py` now reads both shapes.
+
 ## Staging result
 
-- Filings staged: **78**, digests verified: **78**,
-  transactions parsed: **180**, flags: **12** (derivative-only or
+- Filings staged: **86**, digests verified: **86**,
+  transactions parsed: **216**, flags: **12** (derivative-only or
   balance-only statements, listed in `parse_report.json`).
-- The deeper walk's finding: **still zero code-P open-market purchases**
-  anywhere in the lane (codes: S=130, A=19, F=15, M=11, G=5). MU's own
-  transaction-date coverage now runs 2026-03-31 → 2026-08-25 across 98 rows, so
-  the buy-side insider signals register NO-OBSERVATIONS on the deepest
-  single-issuer history this lane has held (see LIMITATIONS L-27/L-35). This is
-  an economically coherent picture of a stock that re-rated upward through the
-  window: insiders sold into strength under 10b5-1 plans; none bought.
+- Codes: S=132, **P=34**, A=19, F=15, M=11, G=5. The 34 code-P rows come from
+  eight filings by eight reporting persons (six filings inside the Season 2 /
+  live windows); only one (TSLA, 2025-09-15) carries a CEO title. The buy-side insider signals now register AVAILABLE and the three
+  Season 2 insider personas and `@InsiderCluster_Live` trade from them — dated
+  by **filing date**, never by trade date (IR-82).
+- The 2026-09-20 finding stands for what it measured: the recency walk of
+  78 filings held zero purchases because large-cap insiders mostly sell under
+  10b5-1 plans; the locator shows purchases are rare (eight in 27 months across
+  ten issuers), not absent.

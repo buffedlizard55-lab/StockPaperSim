@@ -862,5 +862,48 @@
   "links": [
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/arena/01a0bfa2-stockpapersim/tests/test_minute_bar.py"
   ]
+ },
+ {
+  "id": "IR-82",
+  "severity": "high",
+  "topic": "Insider buy signals were windowed by the trade date, not the EDGAR filing date - a look-ahead that never bit only because the lane held no purchases",
+  "detail": "Found 2026-09-21 while re-reading sim/masterfeed._insider_signals before the first code-P rows landed. The builder dated every purchase and sale by transaction_date (the day the insider traded) and dropped the filing date at load time (_load_insider_rows kept no filed_date), so a strategy would have counted a purchase on the trade day - up to two business days before the Form 4 existed, and in the case of MSFT accession 0000789019-25-000120 more than seven months before it (trade 2025-04-23, filed 2025-12-12). No published number depended on it: until this pass every insider series registered NO-OBSERVATIONS, so no strategy ever read a purchase through the wrong date.",
+  "resolution": "_load_insider_rows now carries filed_date for all three collectors (the bulk sets' filing_date, the walk's and the agent lane's filed_date), and _insider_signals windows every count - buys, distinct buyers, CEO/CFO buys, sales and the ratio - on the filing date, falling back to the trade date only for a row with no filing date and saying so in the register note. tests/test_masterfeed_insider_state.py pins it: a trade on 07-15 filed on 07-28 is invisible on 07-16 and 07-27 and counted from 07-29. Filings are visible from the session after the filing date (one session conservative for filings accepted before the open), never before.",
+  "links": [
+   "https://www.sec.gov/Archives/edgar/data/789019/000078901925000120/xslF345X05/form4.xml",
+   "https://www.sec.gov/about/forms/form4.pdf"
+  ]
+ },
+ {
+  "id": "IR-83",
+  "severity": "low",
+  "topic": "One counted code-P purchase is a broker-initiated trade the reporting person disavowed and later rescinded (MSFT, Bradford L. Smith)",
+  "detail": "Accession 0000789019-25-000120 (filed 2025-12-12, late) reports a 3,842-share code-P acquisition on 2025-04-23 at $377.465, then a 30-share sale on 2025-04-30 and a 3,812-share sale on 2025-05-05. Footnotes 1-3 and the Remarks state that the broker removed the account's trading restrictions in error, bought and sold without the reporting person's direction, approval or knowledge, reversed the transactions through its error account, and that the short-swing profit was paid to the issuer. The transaction code is nonetheless P, and every insider rule in this project is declared as a code test, so the row counts as one open-market purchase for MSFT in the 30 days after 2025-12-12 (it puts MSFT on @InsiderCopycat_Max's list in December 2025; it does not by itself trigger a cluster or a CEO/CFO rule).",
+  "resolution": "Kept in the data exactly as the SEC published it, counted exactly as the declared rules say, and flagged here and in the strategies' known failure modes rather than filtered by a footnote reader that would have to make judgement calls. A reader can see the footnote in data/real/sec_agent/raw/form/0000789019-25-000120-form4.md.",
+  "links": [
+   "https://www.sec.gov/Archives/edgar/data/789019/000078901925000120/xslF345X05/form4.xml",
+   "https://www.sec.gov/Archives/edgar/data/789019/000078901925000120/0000789019-25-000120-index-headers.html"
+  ]
+ },
+ {
+  "id": "IR-84",
+  "severity": "medium",
+  "topic": "Two insider participants declared an exit rule their code never executed; the first replay with real purchases held TSLA for a year",
+  "detail": "Found 2026-09-21 in the first Season 2 replay and live rehearsal with code-P rows present. @InsiderCluster_Alpha (sim/strategies_mf.py) declared 'exit when the count drops to zero and 45 sessions have passed' and @InsiderCluster_Live (sim/strategies_live.py) declared 'flatten 30 sessions after the last counted purchase', but neither plan path contained a sell branch: when no name qualified they returned no orders and simply kept whatever they held. Both entered TSLA on 2025-09-17 after the 2025-09-15 Musk filing and were still long at 1.2x/1.4x on 2026-09-16 (replay -16.96% and rehearsal -24.56% with a -52.6% drawdown, all of it TSLA after the signal window had closed). The bug was invisible while the signals were empty. @CEO_CFO_Conviction and @InsiderCopycat_Max did flatten, but their declared exits ('120 sessions', '60 sessions') did not match the window exit their code performs either.",
+  "resolution": "Both cluster participants now flatten a name once its trailing 30-day filing window holds neither a cluster nor a CEO/CFO purchase, and all four insider rule cards state that exit. The cluster count now reads a new distinct-buyer series (insider_buyers_30d) instead of the lot count, so 25 same-day lots by one person are one buyer, matching the cluster thesis as written. Re-run after the fix: @InsiderCluster_Alpha +5.27% (from -16.96%), @InsiderCluster_Live +3.05% (from -24.56%). Both numbers are published as the first result with data; the pre-fix numbers are recorded here so the change is not silent.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/strategies_mf.py",
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/strategies_live.py"
+  ]
+ },
+ {
+  "id": "IR-85",
+  "severity": "low",
+  "topic": "The committed forward ladder was generated by older code than the checkout it shipped with (fill reference class SECONDARY vs EXCHANGE-PUBLISHED)",
+  "detail": "Found 2026-09-21: re-running python3 -m sim.cli rollover at HEAD 91588a2 with no data or code changes regenerates memory/live/forward-ladder.json with different metadata from the committed file - reference_source_class EXCHANGE-PUBLISHED with a NOT-AUTHORIZED-FOR-REPOSITORY-REPRODUCTION redistribution status where the committed ladder said SECONDARY with no redistribution status, and a settled notional of 1,239,807.00 vs 1,239,798.60 (8.40 USD). The ladder in the repository therefore lagged the print-ledger code that a later pull request changed; the rollover itself is deterministic (two runs at HEAD agree exactly, timestamps aside).",
+  "resolution": "The ladder, the forward run directory and docs/assets/data/live.json are regenerated in this pass from the current code and the current collected data, and the regeneration is part of the same commit as the code that produces it. Owner/next-session: the live-rollover workflow already re-runs this daily, so the drift closes itself on the next scheduled run.",
+  "links": [
+   "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/rollover.py"
+  ]
  }
 ]

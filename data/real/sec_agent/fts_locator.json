@@ -1,0 +1,158 @@
+{
+ "purpose": "Locate every Form 4 that reports an open-market purchase (transaction code P) for the ten tracked issuers, using the SEC's own EDGAR full-text search instead of walking every filing. The rendered-view lane then captures each located filing verbatim (raw/form, raw/index) and scripts/stage_sec_rendered.py parses it fail-closed.",
+ "method": {
+  "endpoint": "https://efts.sec.gov/LATEST/search-index",
+  "phrase_logic": "A Form 4 XML transactionCoding block tokenises as '<formType> <transactionCode> <equitySwapInvolved>'. The phrase \"4 P false\" (or \"4 P 0\" for filers that write the boolean as 0) therefore matches exactly the filings that carry a code-P non-derivative transaction. Validated on MU August 2026 sales: the phrase \"4 S false\" returned exactly the three MU Form 4s that report code-S sales (0001242654-26-000015, 0001798757-26-000007, 0001311079-26-000003) and nothing else.",
+  "caveats": [
+   "The ciks= filter matches any CIK on the filing, including filings where a tracked issuer is the *reporting owner* of another company (JPM as owner of Ribbon Communications, NVIDIA as owner of Serve Robotics). Those hits are recorded below as NOT-ISSUER and were not captured; the parser would also reject them on the issuer ticker check.",
+   "forms=4 excludes amendments; the 4/A query below was run separately and returned nothing.",
+   "Purchases that a filer reports only in Table II (derivative) or with a non-standard boolean spelling would not match; phrases \"4 P true\" and \"4 P 1\" were also run and returned nothing.",
+   "www.sec.gov answered several index-page requests with its 'File Unavailable' apology page during this pass; for those filings the SGML header page (<accession>-index-headers.html) was captured instead, which carries the same filing/acceptance/period dates."
+  ]
+ },
+ "issuers": {
+  "AAPL": "0000320193",
+  "MSFT": "0000789019",
+  "NVDA": "0001045810",
+  "JPM": "0000019617",
+  "XOM": "0000034088",
+  "JNJ": "0000200406",
+  "PG": "0000080424",
+  "TSLA": "0001318605",
+  "MU": "0000723125",
+  "T": "0000732717"
+ },
+ "queries": [
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%20false%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2025-06-01&enddt=2026-09-21",
+   "hits": 1,
+   "adsh": [
+    "0001104659-25-089693"
+   ]
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%200%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2025-06-01&enddt=2026-09-21",
+   "hits": 4,
+   "adsh": [
+    "0000200406-25-000211",
+    "0000789019-25-000120",
+    "0002058769-26-000002",
+    "0000789019-26-000028"
+   ]
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%20true%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2025-06-01&enddt=2026-09-21",
+   "hits": 0,
+   "adsh": []
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%201%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2025-06-01&enddt=2026-09-21",
+   "hits": 0,
+   "adsh": []
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%200%22%20OR%20%224%20P%20false%22&forms=4%2FA&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2025-06-01&enddt=2026-09-21",
+   "hits": 0,
+   "adsh": [],
+   "note": "amendments (4/A) reporting a code-P purchase: none"
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%200%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2024-06-01&enddt=2025-05-30",
+   "hits": 5,
+   "adsh": [
+    "0001127602-24-018937",
+    "0000019617-25-000335",
+    "0000200406-24-000106",
+    "0001771340-25-000006",
+    "0001045810-24-000232"
+   ],
+   "note": "0000019617-25-000335 (JPMorgan as reporting owner of Ribbon Communications) and 0001045810-24-000232 (NVIDIA as reporting owner of Serve Robotics) are NOT-ISSUER hits and were not captured. enddt=2025-05-31 answered 'Internal server error'; 2025-05-30 was used, so 2025-05-31 (a Saturday, no filings) is the only day not covered by either window."
+  },
+  {
+   "run_utc": "2026-09-21",
+   "url": "https://efts.sec.gov/LATEST/search-index?q=%224%20P%20false%22&forms=4&ciks=0000320193,0000789019,0001045810,0000019617,0000034088,0000200406,0000080424,0001318605,0000723125,0000732717&dateRange=custom&startdt=2024-06-01&enddt=2025-05-30",
+   "hits": 0,
+   "adsh": []
+  }
+ ],
+ "located_purchase_filings": [
+  {
+   "adsh": "0001104659-25-089693",
+   "ticker": "TSLA",
+   "reporter": "Musk Elon (CEO, director, 10% owner)",
+   "filed": "2025-09-15",
+   "period": "2025-09-12",
+   "captured": true,
+   "rows": "25 P lots, 2,568,732 shares, weighted prices $371.90-$396.359"
+  },
+  {
+   "adsh": "0000200406-25-000211",
+   "ticker": "JNJ",
+   "reporter": "MORIKIS JOHN G (director)",
+   "filed": "2025-12-01",
+   "period": "2025-11-26",
+   "captured": true,
+   "rows": "1 P, 1,250 shares @ $206.15"
+  },
+  {
+   "adsh": "0000789019-25-000120",
+   "ticker": "MSFT",
+   "reporter": "SMITH BRADFORD L (Vice Chair and President)",
+   "filed": "2025-12-12",
+   "period": "2025-04-23",
+   "captured": true,
+   "rows": "1 P (3,842 @ $377.465) + 2 S; the filing states the purchase was broker-initiated without the reporting person's direction and later rescinded (IR-83); filed late"
+  },
+  {
+   "adsh": "0002058769-26-000002",
+   "ticker": "MU",
+   "reporter": "Liu Teyin M (director)",
+   "filed": "2026-01-15",
+   "period": "2026-01-13",
+   "captured": true,
+   "rows": "3 P lots, 23,200 shares @ $336.63-$337.50"
+  },
+  {
+   "adsh": "0000789019-26-000028",
+   "ticker": "MSFT",
+   "reporter": "STANTON JOHN W (director)",
+   "filed": "2026-02-18",
+   "period": "2026-02-18",
+   "captured": true,
+   "rows": "1 P, 5,000 shares @ $397.35"
+  },
+  {
+   "adsh": "0001771340-25-000006",
+   "ticker": "TSLA",
+   "reporter": "Gebbia Joseph (director)",
+   "filed": "2025-04-28",
+   "period": "2025-04-24",
+   "captured": true,
+   "rows": "1 P, 4,000 shares @ $256.308 (pre-season; warm-up window only)"
+  },
+  {
+   "adsh": "0000200406-24-000106",
+   "ticker": "JNJ",
+   "reporter": "WEINBERGER MARK A (director)",
+   "filed": "2024-12-12",
+   "period": "2024-12-12",
+   "captured": true,
+   "rows": "1 P, 1,000 shares @ $147.22 (pre-season; warm-up window only); index facts from the SGML header page"
+  },
+  {
+   "adsh": "0001127602-24-018937",
+   "ticker": "XOM",
+   "reporter": "Dreyfus Maria S. (director)",
+   "filed": "2024-06-20",
+   "period": "2024-06-17",
+   "captured": true,
+   "rows": "1 P, 18,310 shares @ $109.251 (before the Season 2 warm-up window; no trading effect); index facts from the SGML header page"
+  }
+ ]
+}

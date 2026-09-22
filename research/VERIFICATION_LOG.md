@@ -955,3 +955,68 @@ by a test that re-derives it from the run.
   READY-NO-OBSERVATIONS. Regression-tested in
   `tests/test_masterfeed_insider_state.py` (3 tests).
 * Suite: 648 tests, all green.
+
+## 2026-09-21 — Form 4 purchase locator (EDGAR full-text search) and the filing-date fix
+
+Environment: sandbox bash had no egress at all this session (every host refused);
+every SEC page below was read through the page-fetch tool. `www.sec.gov` served
+its "File Unavailable" maintenance page intermittently; where a rendered
+`-index.htm` page did that, the filing's SGML header page was captured instead.
+
+* **Locator validated before use.** EDGAR full-text search
+  (`https://efts.sec.gov/LATEST/search-index`) with the phrase `"4 S false"`,
+  `forms=4`, `ciks=0000723125`, 2026-08-01..2026-09-21 returned exactly the three
+  MU Form 4s that report code-S sales (0001242654-26-000015, 0001798757-26-000007,
+  0001311079-26-000003) and nothing else; the naive phrases `"4 S 0"` and
+  `"4Sfalse"` returned nothing, and a price token (`"934.29"`) returned the one
+  filing that carries it. The transaction-coding phrase is therefore a reliable
+  code filter. Status: FETCHED (query URLs stored in
+  `data/real/sec_agent/fts_locator.json`).
+* **Purchases, ten issuers, 2025-06-01..2026-09-21:** `"4 P false"` → 1 hit
+  (TSLA 0001104659-25-089693); `"4 P 0"` → 4 hits (JNJ 0000200406-25-000211, MSFT
+  0000789019-25-000120, MU 0002058769-26-000002, MSFT 0000789019-26-000028);
+  `"4 P true"`, `"4 P 1"` and the `forms=4/A` amendment query → 0. **2024-06-01..
+  2025-05-30:** `"4 P 0"` → 5 hits, of which two are NOT-ISSUER (JPM as owner of
+  Ribbon Communications, NVIDIA as owner of Serve Robotics) and three are
+  director purchases (TSLA Gebbia 0001771340-25-000006, JNJ Weinberger
+  0000200406-24-000106, XOM Dreyfus 0001127602-24-018937); `"4 P false"` → 0.
+  `enddt=2025-05-31` answered "Internal server error"; 2025-05-31 is a Saturday.
+* **Captured and cross-checked (rendered view vs index/SGML header):**
+  - TSLA 0001104659-25-089693 — Musk Elon, CEO/director/10% owner; 25 code-P lots
+    on 2025-09-12, 2,568,732 shares, weighted prices $371.90..$396.359, indirect
+    "By Trust"; filed 2025-09-15, accepted 06:01:19. Parsed 25 rows, 0 flags.
+  - JNJ 0000200406-25-000211 — Morikis John G, director; 1,250 @ $206.15 on
+    2025-11-26; filed 2025-12-01 16:15:39.
+  - MSFT 0000789019-25-000120 — Smith Bradford L, Vice Chair and President; P
+    3,842 @ $377.465 on 2025-04-23 plus S 30 @ $390.5729 and S 3,812 @ $438.8197;
+    filed 2025-12-12 (SGML header: FILED AS OF DATE 20251212, ACCEPTANCE
+    20251212182017, PERIOD 20250423). Footnotes and Remarks: broker-initiated,
+    rescinded, short-swing profit paid to the issuer → IR-83.
+  - MU 0002058769-26-000002 — Liu Teyin M, director; 11,600 @ $337.07 (01-13),
+    3,780 @ $336.63 and 7,820 @ $337.50 (01-14); filed 2026-01-15 19:07:13.
+  - MSFT 0000789019-26-000028 — Stanton John W, director; 5,000 @ $397.35 on
+    2026-02-18; filed 2026-02-18 18:14:22 (Section 16 filings accepted by 10 p.m.
+    keep the same filing date).
+  - TSLA 0001771340-25-000006 — Gebbia Joseph, director; 4,000 @ $256.308 on
+    2025-04-24, "by Trust"; filed 2025-04-28 (SGML header).
+  - JNJ 0000200406-24-000106 - Weinberger Mark A, director; 1,000 @ $147.22 on
+    2024-12-12; filed 2024-12-12 17:27:36 (SGML header; captured on a retry after
+    the rendered view first answered with the maintenance page).
+  - XOM 0001127602-24-018937 - Dreyfus Maria S., director; 18,310 @ $109.251 on
+    2024-06-17; filed 2024-06-20 09:38:43 (SGML header). Before the warm-up
+    window, so it has no trading effect; captured for completeness of the
+    locator's result.
+  Every capture is SHA-256 digested in `staged_manifest.json` (172 entries) and
+  re-verified by `scripts/stage_sec_rendered.py`: 86 filings, 86 digests, 216
+  rows, 34 code-P, 12 expected flags.
+* **Look-ahead found and fixed (IR-82):** `_insider_signals` windowed by
+  transaction date; it now windows by filing date (fallback to trade date only
+  when a collector recorded none, and the register note says so). Pinned by
+  `tests/test_masterfeed_insider_state.py` (10 tests now).
+* **Declared-but-uncoded exits found and fixed (IR-84):** both cluster
+  participants; pre-fix numbers recorded in the irregularity.
+* **Re-runs:** Season 2 replay (Yahoo research replay, same command as before),
+  live rehearsal, forward rollover (2 sessions settled, 9 intents outstanding),
+  site rebuilt byte-stable (two consecutive builds hash-identical). Independent
+  audits: Season 2 5,513 checks / 0 failures; Season 1 1,374 / 0; official book
+  1,871 / 0. Suite: 697 tests, all green.

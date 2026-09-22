@@ -3,273 +3,343 @@
  "strategy_id": "InsiderCopycatMax",
  "archetype": "informed-flow following",
  "starting_cash": 100000.0,
- "final_equity": 100000.0,
- "net_pnl_usd": 0.0,
- "total_return_pct": 0.0,
- "cagr_pct": 0.0,
+ "final_equity": 111896.39,
+ "net_pnl_usd": 11896.39,
+ "total_return_pct": 11.8964,
+ "cagr_pct": 11.9465,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": 0.0,
-  "max_drawdown_usd": 0.0,
-  "peak_date": "2025-09-17",
-  "peak_equity": 100000.0,
-  "trough_date": "2025-09-17",
-  "trough_equity": 100000.0,
-  "recovery_date": "2025-09-17",
-  "sessions_underwater": 0,
-  "never_recovered": false,
-  "sharpe": 0.0,
-  "sortino": 0.0,
-  "calmar": null,
-  "daily_vol_pct": 0.0,
-  "annualised_vol_pct": 0.0,
-  "skew": 0.0,
-  "excess_kurtosis": 0.0,
-  "best_session_pct": 0.0,
-  "worst_session_pct": 0.0,
-  "var_95_pct": 0.0,
-  "cvar_95_pct": 0.0,
-  "var_99_pct": 0.0,
-  "cvar_99_pct": 0.0
+  "max_drawdown_pct": -13.2863,
+  "max_drawdown_usd": -16704.13,
+  "peak_date": "2026-02-02",
+  "peak_equity": 125724.35,
+  "trough_date": "2026-02-10",
+  "trough_equity": 109020.22,
+  "recovery_date": null,
+  "sessions_underwater": 150,
+  "never_recovered": true,
+  "sharpe": 0.4956,
+  "sortino": 0.5999,
+  "calmar": 0.8992,
+  "daily_vol_pct": 1.5423,
+  "annualised_vol_pct": 24.483,
+  "skew": 0.5578,
+  "excess_kurtosis": 10.6973,
+  "best_session_pct": 8.9445,
+  "worst_session_pct": -8.583,
+  "var_95_pct": -1.9634,
+  "cvar_95_pct": -3.7313,
+  "var_99_pct": -4.445,
+  "cvar_99_pct": -5.9272
  },
  "market_relation": {
-  "beta": 0.0,
-  "alpha_annual_pct": 0.0,
-  "r_squared": 0.0,
-  "tracking_error_annual_pct": 0.0,
-  "information_ratio": null,
+  "beta": 0.4169,
+  "alpha_annual_pct": 6.1276,
+  "r_squared": 0.0483,
+  "tracking_error_annual_pct": 23.885,
+  "information_ratio": 0.257,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 0.0,
-  "residual_return_pct": 0.0
+  "beta_contribution_pct": 6.01,
+  "residual_return_pct": 5.886
  },
  "trades": {
-  "closed_trades": 0,
+  "closed_trades": 13,
   "open_trades": 0,
-  "wins": 0,
-  "losses": 0,
-  "win_rate_pct": 0.0,
-  "gross_win_usd": 0,
-  "gross_loss_usd": 0,
-  "profit_factor": null,
-  "avg_win_usd": 0.0,
-  "avg_loss_usd": 0.0,
-  "expectancy_usd_per_trade": 0.0,
-  "best_trade": null,
-  "worst_trade": null,
-  "longest_win_streak": 0,
-  "longest_loss_streak": 0,
-  "avg_sessions_held": 0.0,
-  "median_sessions_held": 0.0,
-  "sessions_in_market": 0,
-  "per_symbol_sessions_in_market": {},
-  "sum_of_tranche_sessions": 0,
-  "tranche_intervals_overlap": false,
-  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot; sessions_in_market is the union of those intervals."
+  "wins": 9,
+  "losses": 4,
+  "win_rate_pct": 69.231,
+  "gross_win_usd": 17100.9,
+  "gross_loss_usd": 5209.38,
+  "profit_factor": 3.2827,
+  "avg_win_usd": 1900.1,
+  "avg_loss_usd": -1302.35,
+  "expectancy_usd_per_trade": 914.73,
+  "best_trade": {
+   "symbol": "MU",
+   "net_pnl": 12338.5,
+   "entry_date": "2026-01-16",
+   "exit_date": "2026-02-17",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "MSFT",
+   "net_pnl": -4484.89,
+   "entry_date": "2025-12-15",
+   "exit_date": "2026-03-23",
+   "direction": "long"
+  },
+  "longest_win_streak": 5,
+  "longest_loss_streak": 1,
+  "avg_sessions_held": 49.85,
+  "median_sessions_held": 18.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "TSLA": 251,
+   "JNJ": 198,
+   "MSFT": 67,
+   "MU": 21
+  },
+  "sum_of_tranche_sessions": 648,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 0,
-  "shares_traded": 0,
-  "traded_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
+  "fills": 22,
+  "shares_traded": 2832,
+  "traded_notional_usd": 976540.99,
+  "spread_cost_usd": 37.1,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
-  "commission_usd": 0.0,
-  "exchange_fee_usd": 0.0,
-  "regulatory_fee_usd": 0.0,
+  "impact_cost_usd": 50.5,
+  "commission_usd": 22.0,
+  "exchange_fee_usd": 16.99,
+  "regulatory_fee_usd": 0.28,
   "rebate_usd": 0.0,
-  "total_cost_usd": 0,
-  "total_cost_bps_of_traded": 0.0,
-  "total_cost_pct_of_starting_cash": 0.0,
-  "net_liquidity_provider": true,
+  "total_cost_usd": 126.87,
+  "total_cost_bps_of_traded": 1.299,
+  "total_cost_pct_of_starting_cash": 0.1269,
+  "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": null,
-   "spread_and_impact_pct": null
+   "explicit_fees_pct": 30.96,
+   "spread_and_impact_pct": 69.04
   },
-  "avg_execution_cost_bps_per_fill": 0.0,
-  "median_execution_cost_bps_per_fill": 0.0,
-  "worst_execution_cost_bps": 0.0,
-  "intraday_drift_usd": 0.0,
-  "avg_price_difference_bps_per_fill": 0.0,
+  "avg_execution_cost_bps_per_fill": 7.35,
+  "median_execution_cost_bps_per_fill": 5.757,
+  "worst_execution_cost_bps": 38.264,
+  "intraday_drift_usd": 3.61,
+  "avg_price_difference_bps_per_fill": 0.618,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 0,
+  "orders": 22,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
+  "paper_notional_usd": 976536.28,
+  "spread_cost_usd": 37.1,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
-  "intraday_drift_usd": 0.0,
-  "fees_usd": 0.0,
+  "impact_cost_usd": 50.5,
+  "intraday_drift_usd": 3.61,
+  "fees_usd": 39.27,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 0.0,
-  "shortfall_bps_of_paper": 0.0,
-  "friction_only_bps_of_paper": 0.0,
-  "worst_single_order_drift_usd": 0.0,
-  "best_single_order_drift_usd": 0.0,
+  "total_shortfall_usd": 130.48,
+  "shortfall_bps_of_paper": 1.336,
+  "friction_only_bps_of_paper": 1.299,
+  "worst_single_order_drift_usd": 2.47,
+  "best_single_order_drift_usd": -1.47,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
-  "dividends_received_usd": 0.0,
+  "dividends_received_usd": 4.89,
   "dividends_in_lieu_paid_usd": 0.0,
   "borrow_fees_paid_usd": 0.0,
-  "net_carry_usd": 0.0,
+  "net_carry_usd": 4.89,
   "margin_calls": [],
   "margin_call_count": 0,
   "day_trades": 0,
   "day_trade_count": 0
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 0.0,
-  "max_gross_pct_of_starting_cash": 0.0,
-  "avg_net_pct_of_starting_cash": 0.0,
-  "max_net_pct_of_starting_cash": 0.0,
-  "avg_leverage": 0.0,
-  "max_leverage": 0.0,
-  "sessions_flat": 251,
-  "avg_open_positions": 0.0
+  "avg_gross_pct_of_starting_cash": 42.88,
+  "max_gross_pct_of_starting_cash": 192.63,
+  "avg_net_pct_of_starting_cash": 42.88,
+  "max_net_pct_of_starting_cash": 192.63,
+  "avg_leverage": 0.393,
+  "max_leverage": 1.833,
+  "sessions_flat": 1,
+  "avg_open_positions": 2.12
  },
  "turnover": {
-  "traded_notional_usd": 0.0,
-  "annualised_turnover_x": 0.0
+  "traded_notional_usd": 976540.99,
+  "annualised_turnover_x": 8.908
  },
- "contribution_by_symbol": [],
+ "contribution_by_symbol": [
+  {
+   "symbol": "MU",
+   "realized_pnl": 12817.08,
+   "open_pnl": 0.0,
+   "total_pnl": 12817.08,
+   "closed_trades": 4,
+   "fees": 9.25,
+   "all_in_cost_usd": 39.32
+  },
+  {
+   "symbol": "TSLA",
+   "realized_pnl": 4004.45,
+   "open_pnl": 0.0,
+   "total_pnl": 4004.45,
+   "closed_trades": 2,
+   "fees": 5.63,
+   "all_in_cost_usd": 18.41
+  },
+  {
+   "symbol": "JNJ",
+   "realized_pnl": 203.27,
+   "open_pnl": 0.0,
+   "total_pnl": 203.27,
+   "closed_trades": 3,
+   "fees": 11.73,
+   "all_in_cost_usd": 29.25
+  },
+  {
+   "symbol": "MSFT",
+   "realized_pnl": -5133.28,
+   "open_pnl": 0.0,
+   "total_pnl": -5133.28,
+   "closed_trades": 4,
+   "fees": 12.65,
+   "all_in_cost_usd": 39.88
+  }
+ ],
  "monthly_returns": [
   {
    "month": "2025-09",
    "sessions": 10,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 102174.98,
+   "end_equity": 106248.74,
+   "return_pct": 3.987
   },
   {
    "month": "2025-10",
    "sessions": 23,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 106248.74,
+   "end_equity": 104103.96,
+   "return_pct": -2.0186
   },
   {
    "month": "2025-11",
    "sessions": 19,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 104103.96,
+   "end_equity": 104077.57,
+   "return_pct": -0.0253
   },
   {
    "month": "2025-12",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 104077.57,
+   "end_equity": 105616.15,
+   "return_pct": 1.4783
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 105616.15,
+   "end_equity": 119800.09,
+   "return_pct": 13.4297
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 119800.09,
+   "end_equity": 114239.03,
+   "return_pct": -4.642
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 114239.03,
+   "end_equity": 111886.59,
+   "return_pct": -2.0592
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111886.59,
+   "end_equity": 111881.88,
+   "return_pct": -0.0042
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111881.88,
+   "end_equity": 111932.86,
+   "return_pct": 0.0456
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111932.86,
+   "end_equity": 111946.31,
+   "return_pct": 0.012
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111946.31,
+   "end_equity": 111839.3,
+   "return_pct": -0.0956
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111839.3,
+   "end_equity": 111906.88,
+   "return_pct": 0.0604
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 111906.88,
+   "end_equity": 111896.39,
+   "return_pct": -0.0094
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": 0,
-  "open_position_pnl_usd": 0,
-  "dividends_usd": 0.0,
+  "realized_trading_pnl_usd": 11891.52,
+  "open_position_pnl_usd": 0.0,
+  "dividends_usd": 4.89,
   "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
-  "execution_costs_already_netted_usd": 0,
-  "total_net_pnl_usd": 0.0,
-  "unexplained_residual_usd": 0.0,
+  "execution_costs_already_netted_usd": -126.87,
+  "total_net_pnl_usd": 11896.39,
+  "unexplained_residual_usd": -0.02,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
-  "verdict": "no trades placed",
-  "headline": "No trades placed: +0.00% total return vs +14.41% for the index, +0.00pp residual after beta, 0.0% max drawdown, 0.00% of capital lost to execution costs.",
+  "verdict": "roughly matched the market",
+  "headline": "Roughly matched the market: +11.90% total return vs +14.41% for the index, +5.89pp residual after beta, -13.3% max drawdown, 0.13% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "Finished at +11.90% versus the S&P 500's +14.41% - effectively in line with simply holding the index."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "kind": "factor",
-    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "kind": "attribution",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +11.90% total, about +6.01pp is explained by carrying beta 0.42 against a +14.41% market (R^2 0.05); the residual +5.89pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "MU contributed +12,817 USD (108% of net P&L) across 4 closed trades; MSFT was the biggest drag at -5,133 USD."
    },
    {
     "kind": "costs",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 127 USD (0.13% of starting capital, 7.3 bp per fill, 1.3 bp of the 976,541 USD traded). 69% of that was spread/depth/impact and 31% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "13 closed round trips, 69.2% winners, profit factor 3.28, average winner +1,900 vs average loser -1,302 USD, median holding 18 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 648 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: MSFT long 2025-12-15 to 2026-03-23, -4,485 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x."
+    "text": "Worst peak-to-trough drawdown -13.29% (-9.10% for the index), trough on 2026-02-10, never recovered. Average gross exposure 43% of starting capital, peak leverage 1.83x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Daily returns were +0.56 skewed with excess kurtosis +10.70; historical 95% VaR -1.96%/day with CVaR -3.73%/day. Worst single session -8.58%, best +8.94%."
    },
    {
     "kind": "caveat",
@@ -291,31 +361,31 @@
   "prose": [
    {
     "title": "Mandate (as declared before the season)",
-    "text": "@InsiderCopycat_Max (Insider Copycat) ran the \"informed-flow following\" archetype. Declared thesis: Form 4 open-market purchases (transaction code P) are the one insider signal that cannot be explained by compensation: an officer or director chose to buy with personal money at a market price. Copy the purchase, size it at the limit, hold for a quarter. Entry: Read every collected Form 4 XML (SEC EDGAR) for the traded issuers; A code-P purchase with a transaction date in the trailing 30 days puts that issuer on the list; Hold the two most recent qualifying issuers at 90% of equity each. Exit: Exit an issuer 60 sessions after its last qualifying purchase; No stop loss. Sizing: 90% of equity per name, maximum two names = 1.8x gross. Leverage: 1.8x gross. Cadence: daily check, horizon one quarter. Aggression 4/5. This participant was built to maximise return, not to manage risk: Concentration in the names with the strongest insider flow."
+    "text": "@InsiderCopycat_Max (Insider Copycat) ran the \"informed-flow following\" archetype. Declared thesis: Form 4 open-market purchases (transaction code P) are the one insider signal that cannot be explained by compensation: an officer or director chose to buy with personal money at a market price. Copy the purchase, size it at the limit, hold while the filing is fresh. Entry: Read every collected Form 4 (SEC EDGAR) for the traded issuers; A code-P purchase whose EDGAR filing date is in the trailing 30 days puts that issuer on the list (the filing date is when the purchase became public; the trade date can be months earlier); Hold the two issuers with the most qualifying purchase lots at 90% of equity each. Exit: Exit an issuer once its trailing 30-day filing window holds no qualifying purchase (about a month after the last filing); No stop loss. Sizing: 90% of equity per name, maximum two names = 1.8x gross. Leverage: 1.8x gross. Cadence: daily check, horizon about one month per filing. Aggression 4/5. This participant was built to maximise return, not to manage risk: Concentration in the names with the strongest insider flow."
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +0.00% over 251 sessions - +0 USD on 100,000 of paper capital, ending at 100,000. Verdict: no trades placed."
+    "text": "Outcome: +11.90% over 251 sessions - +11,896 USD on 100,000 of paper capital, ending at 111,896. Verdict: roughly matched the market."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +11.90% total, about +6.01pp is explained by carrying beta 0.42 against a +14.41% market (R^2 0.05); the residual +5.89pp is everything else - selection, timing, leverage and cost. MU contributed +12,817 USD (108% of net P&L) across 4 closed trades; MSFT was the biggest drag at -5,133 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 127 USD (0.13% of starting capital, 7.3 bp per fill, 1.3 bp of the 976,541 USD traded). 69% of that was spread/depth/impact and 31% was explicit fees and rebates."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": ""
+    "text": "13 closed round trips, 69.2% winners, profit factor 3.28, average winner +1,900 vs average loser -1,302 USD, median holding 18 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 648 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: MSFT long 2025-12-15 to 2026-03-23, -4,485 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x. Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Worst peak-to-trough drawdown -13.29% (-9.10% for the index), trough on 2026-02-10, never recovered. Average gross exposure 43% of starting capital, peak leverage 1.83x. Daily returns were +0.56 skewed with excess kurtosis +10.70; historical 95% VaR -1.96%/day with CVaR -3.73%/day. Worst single session -8.58%, best +8.94%."
    },
    {
     "title": "Regime context (real market data)",
@@ -331,7 +401,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: +0.00% in a market that returned +14.41%, and a residual of +0.00pp after beta - the trading itself destroyed value, not just the market direction. Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "It made money (+11.90%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +11.90% versus the S&P 500's +14.41% - effectively in line with simply holding the index."
    }
   ],
   "failure_modes_fired": [],
@@ -348,5 +418,5 @@
  },
  "errors": [],
  "account_closed_early": false,
- "sessions_with_orders": 0
+ "sessions_with_orders": 17
 }

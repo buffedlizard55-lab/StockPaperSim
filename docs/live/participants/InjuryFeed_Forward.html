@@ -44,11 +44,11 @@ These legacy fills can use SECONDARY prices and modelled bid/ask liquidity. Date
     0.000%</div></div>
   <div class="kpi"><div class="kpi-label">Data status</div>
     <div class="kpi-value"><span class="badge badge-warn">FORWARD-ONLY</span></div>
-    <div class="kpi-sub">Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design.</div></div>
+    <div class="kpi-sub">Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design. A dated snapshot archive (official league documents plus the machine-readable ESPN companion) is collected on a schedule into data/real/sports/official/archive/, so the forward test now accumulates week by week instead of resetting.</div></div>
 </div>
 
 <h2>Why the result is what it is</h2>
-<ul><li>Injury Feed Forward (@InjuryFeed_Forward) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>No trade ever executed, so the +3.87% is cash financing only (3,873.87 USD of official SOFR credit). The status is FORWARD-ONLY: Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design..</li><li>This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked.</li></ul>
+<ul><li>Injury Feed Forward (@InjuryFeed_Forward) planned 0 forward intents and saw 0 of them execute; 0 were refused by the venue or by margin, 0 were superseded by a newer intent for the same session.</li><li>No trade ever executed, so the +3.87% is cash financing only (3,873.87 USD of official SOFR credit). The status is FORWARD-ONLY: Neither league publishes a retrievable archive of past injury designations, so this participant can only ever run forward. It places no backdated intents by design. A dated snapshot archive (official league documents plus the machine-readable ESPN companion) is collected on a schedule into data/real/sports/official/archive/, so the forward test now accumulates week by week instead of resetting..</li><li>This is a *measurement gap*, not a result: the rule was never tested, so nothing here says whether it would have worked.</li></ul>
 
 <h2>The rule as it ran</h2>
 <p><strong>Inputs:</strong> <code>nfl_injury_report</code>, <code>nba_injury_report</code></p>

@@ -93,20 +93,20 @@
   "username": "@InsiderCopycat_Max",
   "display_name": "Insider Copycat",
   "archetype": "informed-flow following",
-  "thesis": "Form 4 open-market purchases (transaction code P) are the one insider signal that cannot be explained by compensation: an officer or director chose to buy with personal money at a market price. Copy the purchase, size it at the limit, hold for a quarter.",
+  "thesis": "Form 4 open-market purchases (transaction code P) are the one insider signal that cannot be explained by compensation: an officer or director chose to buy with personal money at a market price. Copy the purchase, size it at the limit, hold while the filing is fresh.",
   "entry_rules": [
-   "Read every collected Form 4 XML (SEC EDGAR) for the traded issuers",
-   "A code-P purchase with a transaction date in the trailing 30 days puts that issuer on the list",
-   "Hold the two most recent qualifying issuers at 90% of equity each"
+   "Read every collected Form 4 (SEC EDGAR) for the traded issuers",
+   "A code-P purchase whose EDGAR filing date is in the trailing 30 days puts that issuer on the list (the filing date is when the purchase became public; the trade date can be months earlier)",
+   "Hold the two issuers with the most qualifying purchase lots at 90% of equity each"
   ],
   "exit_rules": [
-   "Exit an issuer 60 sessions after its last qualifying purchase",
+   "Exit an issuer once its trailing 30-day filing window holds no qualifying purchase (about a month after the last filing)",
    "No stop loss"
   ],
   "sizing": "90% of equity per name, maximum two names = 1.8x gross",
   "leverage": "1.8x gross",
   "cadence": "daily check",
-  "horizon": "one quarter",
+  "horizon": "about one month per filing",
   "academic_basis": [
    {
     "claim": "Insiders earn abnormal returns on their open-market purchases",
@@ -142,18 +142,18 @@
   "archetype": "informed-flow following",
   "thesis": "A single insider purchase can be noise; several insiders buying the same name inside a month is a coordination signal, and the highest conviction case is the CEO or CFO buying. Cluster participants trade only those.",
   "entry_rules": [
-   "Count code-P purchases per issuer in the trailing 30 days from the collected Form 4 rows",
-   "Trade the issuer at 120% of equity when the count is at least 2, or when the purchase is attributed to a CEO/CFO title",
-   "Maximum two issuers, ranked by count then by recency"
+   "Count distinct reporting persons with a code-P purchase per issuer in the trailing 30 days (by EDGAR filing date) from the collected Form 4 rows - lots are not people, so one filing that reports 25 lots by one insider counts as one buyer",
+   "Trade the issuer at 120% of equity when at least 2 distinct insiders bought, or when a purchase is attributed to a CEO/CFO title",
+   "Maximum two issuers, ranked by distinct buyers plus CEO/CFO purchases"
   ],
   "exit_rules": [
-   "Exit when the count drops to zero and 45 sessions have passed",
+   "Exit when the trailing 30-day filing window no longer holds a cluster or a CEO/CFO purchase for the name (about a month after the last qualifying filing)",
    "No stop loss"
   ],
   "sizing": "120% of equity per name, maximum two names",
   "leverage": "up to 2.0x gross",
   "cadence": "daily check",
-  "horizon": "one to two quarters",
+  "horizon": "about one month per filing",
   "academic_basis": [
    {
     "claim": "Cluster insider buying predicts larger abnormal returns than isolated purchases",
@@ -175,6 +175,7 @@
   },
   "signal_names": [
    "insider_buys_30d",
+   "insider_buyers_30d",
    "insider_buy_ratio_30d"
   ]
  },
@@ -184,18 +185,18 @@
   "archetype": "informed-flow following",
   "thesis": "The brief named a 'CEO' project; no such project exists in the directory (verified against the GitHub API), so the CEO idea is taken from the filing that actually records CEO behaviour: Form 4, filtered to the Chief Executive Officer and Chief Financial Officer titles.",
   "entry_rules": [
-   "Parse the collected Form 4 XML for officerTitle",
-   "A code-P purchase whose title contains 'Chief Executive Officer', 'CEO', 'Chief Financial Officer' or 'CFO' puts the issuer on the list",
-   "Hold a single name - the most recent qualifying purchase - at 190% of equity"
+   "Parse the collected Form 4 for the reporting officer's title",
+   "A code-P purchase whose title contains 'Chief Executive Officer', 'CEO', 'Chief Financial Officer' or 'CFO', with an EDGAR filing date in the trailing 30 days, puts the issuer on the list",
+   "Hold a single name - the issuer with the most qualifying purchase lots in the window - at 190% of equity"
   ],
   "exit_rules": [
-   "Exit 120 sessions after the purchase",
+   "Exit when the trailing 30-day filing window no longer holds a CEO/CFO purchase (about a month after the filing)",
    "No stop loss"
   ],
   "sizing": "190% of equity in one name (Reg T limit)",
   "leverage": "1.9x gross",
   "cadence": "daily check",
-  "horizon": "six months",
+  "horizon": "about one month per filing",
   "academic_basis": [
    {
     "claim": "Top-executive purchases carry more information than rank-and-file or director purchases",
@@ -755,9 +756,9 @@
   "username": "@SportsPred_Forward",
   "display_name": "Sports Pred (forward probe)",
   "archetype": "prediction-performance attention proxy",
-  "thesis": "The SportsPred project publishes pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would test this repository's reimplementation, not the site. The forward rule is declared here, and goes live on dated snapshots of the site's own published predictions collected from now on.",
+  "thesis": "The SportsPred project publishes pre-game probabilities and grades them, but archives nothing, so its past output cannot be backtested without recomputing the model - which would test this repository's reimplementation, not the site. The mapping is now concrete: dated snapshots of the site's own predictions.json / results.json / slate.json, collected weekly from now on. The forward rule goes live on those snapshots.",
   "entry_rules": [
-   "No backtested rule. The declared forward rule: from dated SportsPred snapshots, a 4-week window in which the site's favourites beat the collected ESPN finals at a rate above its trailing mean -> long SRAD and GENI at 75% of equity each"
+   "No backtested rule. The declared forward rule: from dated SportsPred snapshots, a 4-week window in which the site's graded favourites (predictions.json vs results.json) beat their trailing hit rate -> long SRAD and GENI at 75% of equity each"
   ],
   "exit_rules": [
    "Not applicable in the historical window"
@@ -768,20 +769,24 @@
   "horizon": "weeks",
   "academic_basis": [
    {
-    "claim": "SportsPred publishes live predictions with no retrievable archive",
-    "url": "https://buffedlizard55-lab.github.io/SportsPred/",
-    "ref": "The project's own site (the publisher of record for its predictions); the finals used to score them come from the collected ESPN scoreboards, labelled SECONDARY",
+    "claim": "SportsPred's prediction record is data/predictions.json, keyed by OLBG event_id, graded against data/results.json",
+    "url": "https://github.com/buffedlizard55-lab/SportsPred",
+    "ref": "The project's own repository (the publisher of record for its predictions); snapshots are captured into data/real/sportspred/archive/",
     "status": "FETCHED-VERIFIED"
    }
   ],
   "known_failure_modes": [
-   "No archive exists, so nothing about this mapping has been measured",
-   "Scoring predictions against ESPN finals mixes a first-party prediction source with a secondary results source; the mismatch is declared rather than hidden",
+   "No snapshot archive exists yet, so nothing about this mapping has been measured",
+   "predictions.json carries no sourced prices (the site's own IR-01: OLBG exposes no structured odds), so a live rule cannot size from implied probabilities",
+   "Scoring predictions against results mixes a first-party prediction source with a grading source that is itself empty today; the mismatch is declared rather than hidden",
    "Its 0.0% return is an untested strategy, not a flat result"
   ],
   "aggression": 3,
   "why_return_seeking": "Declared but not yet tradable - the honest placeholder for the Sports Pred project in the brief.",
   "factor_exposure": {},
-  "signal_names": []
+  "signal_names": [
+   "sportspred_predictions",
+   "sportspred_graded"
+  ]
  }
 ]

@@ -84,8 +84,10 @@
   "signals": [
    {
     "signal": "insider_buys_30d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
     "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
@@ -95,11 +97,9 @@
    "insider_buys_30d"
   ],
   "signal_dependent": true,
-  "gate_armed": false,
-  "waiting_on": [
-   "insider_buys_30d"
-  ],
-  "idle_reason": "no trades: waiting on insider_buys_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
  },
  {
   "username": "@InsiderCluster_Alpha",
@@ -107,16 +107,30 @@
   "signals": [
    {
     "signal": "insider_buys_30d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
+    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "insider_buyers_30d",
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
     "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    },
    {
     "signal": "insider_buy_ratio_30d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
     "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
@@ -124,15 +138,13 @@
   ],
   "external_signals": [
    "insider_buys_30d",
+   "insider_buyers_30d",
    "insider_buy_ratio_30d"
   ],
   "signal_dependent": true,
-  "gate_armed": false,
-  "waiting_on": [
-   "insider_buys_30d",
-   "insider_buy_ratio_30d"
-  ],
-  "idle_reason": "no trades: waiting on insider_buys_30d, insider_buy_ratio_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
  },
  {
   "username": "@CEO_CFO_Conviction",
@@ -140,16 +152,20 @@
   "signals": [
    {
     "signal": "insider_ceo_buys_30d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
     "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
    },
    {
     "signal": "insider_buys_30d",
-    "state": "MISSING",
-    "files": [],
+    "state": "AVAILABLE",
+    "files": [
+     "data/real/sec_agent/form4_transactions.jsonl"
+    ],
     "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets",
     "sessions_actionable": null,
     "price_derived": false
@@ -160,12 +176,9 @@
    "insider_buys_30d"
   ],
   "signal_dependent": true,
-  "gate_armed": false,
-  "waiting_on": [
-   "insider_ceo_buys_30d",
-   "insider_buys_30d"
-  ],
-  "idle_reason": "no trades: waiting on insider_ceo_buys_30d, insider_buys_30d (MISSING) from https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets - no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)"
+  "gate_armed": true,
+  "waiting_on": [],
+  "idle_reason": null
  },
  {
   "username": "@MLB_Attention_Momo",
@@ -553,11 +566,34 @@
  {
   "username": "@SportsPred_Forward",
   "display_name": "Sports Pred (forward probe)",
-  "signals": [],
-  "external_signals": [],
-  "signal_dependent": false,
+  "signals": [
+   {
+    "signal": "sportspred_predictions",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://github.com/buffedlizard55-lab/SportsPred",
+    "sessions_actionable": null,
+    "price_derived": false
+   },
+   {
+    "signal": "sportspred_graded",
+    "state": "MISSING",
+    "files": [],
+    "url": "https://github.com/buffedlizard55-lab/SportsPred",
+    "sessions_actionable": null,
+    "price_derived": false
+   }
+  ],
+  "external_signals": [
+   "sportspred_predictions",
+   "sportspred_graded"
+  ],
+  "signal_dependent": true,
   "gate_armed": false,
-  "waiting_on": [],
-  "idle_reason": null
+  "waiting_on": [
+   "sportspred_predictions",
+   "sportspred_graded"
+  ],
+  "idle_reason": "no trades: waiting on sportspred_predictions, sportspred_graded (MISSING) from https://github.com/buffedlizard55-lab/SportsPred - the site publishes an append-only prediction record and grading file but archives neither (no dated snapshot captured yet - the weekly archive workflow (injury-archive.yml) collects sportspred_* files on each run), so this signal is forward-only and places no backdated trades"
  }
 ]

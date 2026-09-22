@@ -3,111 +3,125 @@
  "strategy_id": "CEOCFOConviction",
  "archetype": "informed-flow following",
  "starting_cash": 100000.0,
- "final_equity": 100000.0,
- "net_pnl_usd": 0.0,
- "total_return_pct": 0.0,
- "cagr_pct": 0.0,
+ "final_equity": 107468.34,
+ "net_pnl_usd": 7468.34,
+ "total_return_pct": 7.4683,
+ "cagr_pct": 7.4992,
  "sessions": 251,
  "risk": {
-  "max_drawdown_pct": 0.0,
-  "max_drawdown_usd": 0.0,
-  "peak_date": "2025-09-17",
-  "peak_equity": 100000.0,
-  "trough_date": "2025-09-17",
-  "trough_equity": 100000.0,
-  "recovery_date": "2025-09-17",
-  "sessions_underwater": 0,
-  "never_recovered": false,
-  "sharpe": 0.0,
-  "sortino": 0.0,
-  "calmar": null,
-  "daily_vol_pct": 0.0,
-  "annualised_vol_pct": 0.0,
-  "skew": 0.0,
-  "excess_kurtosis": 0.0,
-  "best_session_pct": 0.0,
-  "worst_session_pct": 0.0,
-  "var_95_pct": 0.0,
-  "cvar_95_pct": 0.0,
-  "var_99_pct": 0.0,
-  "cvar_99_pct": 0.0
+  "max_drawdown_pct": -18.8488,
+  "max_drawdown_usd": -22681.09,
+  "peak_date": "2025-10-01",
+  "peak_equity": 120331.85,
+  "trough_date": "2025-10-10",
+  "trough_equity": 97650.76,
+  "recovery_date": null,
+  "sessions_underwater": 233,
+  "never_recovered": true,
+  "sharpe": 0.2375,
+  "sortino": 0.2506,
+  "calmar": 0.3979,
+  "daily_vol_pct": 1.8033,
+  "annualised_vol_pct": 28.627,
+  "skew": 0.3215,
+  "excess_kurtosis": 21.3574,
+  "best_session_pct": 10.6798,
+  "worst_session_pct": -10.1242,
+  "var_95_pct": -0.0261,
+  "cvar_95_pct": -3.9333,
+  "var_99_pct": -8.2465,
+  "cvar_99_pct": -9.361
  },
  "market_relation": {
-  "beta": 0.0,
-  "alpha_annual_pct": 0.0,
-  "r_squared": 0.0,
-  "tracking_error_annual_pct": 0.0,
-  "information_ratio": null,
+  "beta": 0.4041,
+  "alpha_annual_pct": 0.9759,
+  "r_squared": 0.0332,
+  "tracking_error_annual_pct": 28.148,
+  "information_ratio": 0.035,
   "market_return_pct": 14.415,
-  "beta_contribution_pct": 0.0,
-  "residual_return_pct": 0.0
+  "beta_contribution_pct": 5.825,
+  "residual_return_pct": 1.643
  },
  "trades": {
-  "closed_trades": 0,
+  "closed_trades": 11,
   "open_trades": 0,
-  "wins": 0,
-  "losses": 0,
-  "win_rate_pct": 0.0,
-  "gross_win_usd": 0,
-  "gross_loss_usd": 0,
-  "profit_factor": null,
-  "avg_win_usd": 0.0,
-  "avg_loss_usd": 0.0,
-  "expectancy_usd_per_trade": 0.0,
-  "best_trade": null,
-  "worst_trade": null,
-  "longest_win_streak": 0,
-  "longest_loss_streak": 0,
-  "avg_sessions_held": 0.0,
-  "median_sessions_held": 0.0,
-  "sessions_in_market": 0,
-  "per_symbol_sessions_in_market": {},
-  "sum_of_tranche_sessions": 0,
-  "tranche_intervals_overlap": false,
-  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot; sessions_in_market is the union of those intervals."
+  "wins": 10,
+  "losses": 1,
+  "win_rate_pct": 90.909,
+  "gross_win_usd": 7531.46,
+  "gross_loss_usd": 63.13,
+  "profit_factor": 119.3008,
+  "avg_win_usd": 753.15,
+  "avg_loss_usd": -63.13,
+  "expectancy_usd_per_trade": 678.94,
+  "best_trade": {
+   "symbol": "TSLA",
+   "net_pnl": 6339.17,
+   "entry_date": "2025-09-17",
+   "exit_date": "2025-10-16",
+   "direction": "long"
+  },
+  "worst_trade": {
+   "symbol": "TSLA",
+   "net_pnl": -63.13,
+   "entry_date": "2025-09-17",
+   "exit_date": "2026-09-16",
+   "direction": "long"
+  },
+  "longest_win_streak": 10,
+  "longest_loss_streak": 1,
+  "avg_sessions_held": 33.45,
+  "median_sessions_held": 13.0,
+  "sessions_in_market": 251,
+  "per_symbol_sessions_in_market": {
+   "TSLA": 251
+  },
+  "sum_of_tranche_sessions": 368,
+  "tranche_intervals_overlap": true,
+  "holding_period_note": "sessions_held is measured per closed tranche of an average-cost lot, so tranches of the same lot share its entry date and their intervals overlap; they must not be summed. sessions_in_market is the union."
  },
  "costs": {
-  "fills": 0,
-  "shares_traded": 0,
-  "traded_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
+  "fills": 22,
+  "shares_traded": 1100,
+  "traded_notional_usd": 470510.1,
+  "spread_cost_usd": 11.0,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
+  "impact_cost_usd": 10.24,
   "commission_usd": 0.0,
-  "exchange_fee_usd": 0.0,
-  "regulatory_fee_usd": 0.0,
+  "exchange_fee_usd": 3.3,
+  "regulatory_fee_usd": 0.1,
   "rebate_usd": 0.0,
-  "total_cost_usd": 0,
-  "total_cost_bps_of_traded": 0.0,
-  "total_cost_pct_of_starting_cash": 0.0,
-  "net_liquidity_provider": true,
+  "total_cost_usd": 24.64,
+  "total_cost_bps_of_traded": 0.524,
+  "total_cost_pct_of_starting_cash": 0.0246,
+  "net_liquidity_provider": false,
   "market_vs_liquidity_split": {
-   "explicit_fees_pct": null,
-   "spread_and_impact_pct": null
+   "explicit_fees_pct": 13.79,
+   "spread_and_impact_pct": 86.21
   },
-  "avg_execution_cost_bps_per_fill": 0.0,
-  "median_execution_cost_bps_per_fill": 0.0,
-  "worst_execution_cost_bps": 0.0,
-  "intraday_drift_usd": 0.0,
-  "avg_price_difference_bps_per_fill": 0.0,
+  "avg_execution_cost_bps_per_fill": 0.365,
+  "median_execution_cost_bps_per_fill": 0.335,
+  "worst_execution_cost_bps": 0.592,
+  "intraday_drift_usd": -0.98,
+  "avg_price_difference_bps_per_fill": 0.253,
   "note_price_difference": "slippage_bps / price_difference is measured against the decision mid and therefore INCLUDES intraday drift (it can be negative). execution_cost_bps is friction only."
  },
  "implementation_shortfall": {
-  "orders": 0,
+  "orders": 22,
   "fully_unfilled_orders": 0,
   "partially_filled_orders": 0,
-  "paper_notional_usd": 0.0,
-  "spread_cost_usd": 0.0,
+  "paper_notional_usd": 470510.23,
+  "spread_cost_usd": 11.0,
   "depth_cost_usd": 0.0,
-  "impact_cost_usd": 0.0,
-  "intraday_drift_usd": 0.0,
-  "fees_usd": 0.0,
+  "impact_cost_usd": 10.24,
+  "intraday_drift_usd": -0.98,
+  "fees_usd": 3.4,
   "missed_trade_cost_usd": 0.0,
-  "total_shortfall_usd": 0.0,
-  "shortfall_bps_of_paper": 0.0,
-  "friction_only_bps_of_paper": 0.0,
-  "worst_single_order_drift_usd": 0.0,
-  "best_single_order_drift_usd": 0.0,
+  "total_shortfall_usd": 23.66,
+  "shortfall_bps_of_paper": 0.503,
+  "friction_only_bps_of_paper": 0.524,
+  "worst_single_order_drift_usd": 0.17,
+  "best_single_order_drift_usd": -0.83,
   "note": "drift is the mid's own movement between decision and execution; it is a timing outcome, not a fee, and is reported separately from the friction components."
  },
  "carry": {
@@ -121,155 +135,181 @@
   "day_trade_count": 0
  },
  "exposure": {
-  "avg_gross_pct_of_starting_cash": 0.0,
-  "max_gross_pct_of_starting_cash": 0.0,
-  "avg_net_pct_of_starting_cash": 0.0,
-  "max_net_pct_of_starting_cash": 0.0,
-  "avg_leverage": 0.0,
-  "max_leverage": 0.0,
-  "sessions_flat": 251,
-  "avg_open_positions": 0.0
+  "avg_gross_pct_of_starting_cash": 17.59,
+  "max_gross_pct_of_starting_cash": 221.05,
+  "avg_net_pct_of_starting_cash": 17.59,
+  "max_net_pct_of_starting_cash": 221.05,
+  "avg_leverage": 0.163,
+  "max_leverage": 2.044,
+  "sessions_flat": 1,
+  "avg_open_positions": 1.0
  },
  "turnover": {
-  "traded_notional_usd": 0.0,
-  "annualised_turnover_x": 0.0
+  "traded_notional_usd": 470510.1,
+  "annualised_turnover_x": 4.392
  },
- "contribution_by_symbol": [],
+ "contribution_by_symbol": [
+  {
+   "symbol": "TSLA",
+   "realized_pnl": 7468.33,
+   "open_pnl": 0.0,
+   "total_pnl": 7468.33,
+   "closed_trades": 11,
+   "fees": 3.41,
+   "all_in_cost_usd": 24.65
+  }
+ ],
  "monthly_returns": [
   {
    "month": "2025-09",
    "sessions": 10,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 104609.75,
+   "end_equity": 113241.92,
+   "return_pct": 8.2518
   },
   {
    "month": "2025-10",
    "sessions": 23,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 113241.92,
+   "end_equity": 107566.84,
+   "return_pct": -5.0115
   },
   {
    "month": "2025-11",
    "sessions": 19,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107566.84,
+   "end_equity": 107540.45,
+   "return_pct": -0.0245
   },
   {
    "month": "2025-12",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107540.45,
+   "end_equity": 107560.0,
+   "return_pct": 0.0182
   },
   {
    "month": "2026-01",
    "sessions": 20,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107560.0,
+   "end_equity": 107540.69,
+   "return_pct": -0.018
   },
   {
    "month": "2026-02",
    "sessions": 19,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107540.69,
+   "end_equity": 107512.79,
+   "return_pct": -0.0259
   },
   {
    "month": "2026-03",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107512.79,
+   "end_equity": 107482.03,
+   "return_pct": -0.0286
   },
   {
    "month": "2026-04",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107482.03,
+   "end_equity": 107491.91,
+   "return_pct": 0.0092
   },
   {
    "month": "2026-05",
    "sessions": 20,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107491.91,
+   "end_equity": 107546.07,
+   "return_pct": 0.0504
   },
   {
    "month": "2026-06",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107546.07,
+   "end_equity": 107530.88,
+   "return_pct": -0.0141
   },
   {
    "month": "2026-07",
    "sessions": 22,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107530.88,
+   "end_equity": 107421.49,
+   "return_pct": -0.1017
   },
   {
    "month": "2026-08",
    "sessions": 21,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107421.49,
+   "end_equity": 107478.23,
+   "return_pct": 0.0528
   },
   {
    "month": "2026-09",
    "sessions": 11,
-   "start_equity": 100000.0,
-   "end_equity": 100000.0,
-   "return_pct": 0.0
+   "start_equity": 107478.23,
+   "end_equity": 107468.34,
+   "return_pct": -0.0092
   }
  ],
  "pnl_decomposition": {
-  "realized_trading_pnl_usd": 0,
-  "open_position_pnl_usd": 0,
+  "realized_trading_pnl_usd": 7468.33,
+  "open_position_pnl_usd": 0.0,
   "dividends_usd": 0.0,
   "dividends_in_lieu_usd": -0.0,
   "borrow_fees_usd": -0.0,
-  "execution_costs_already_netted_usd": 0,
-  "total_net_pnl_usd": 0.0,
-  "unexplained_residual_usd": 0.0,
+  "execution_costs_already_netted_usd": -24.64,
+  "total_net_pnl_usd": 7468.34,
+  "unexplained_residual_usd": 0.01,
   "note": "Realized and open P&L are net of explicit cash costs (commission, exchange and regulatory fees less rebates), which are the only costs charged to cash separately; spread, depth and impact are already inside the fill prices. The residual is the rounding gap and is reported rather than hidden."
  },
  "narrative": {
-  "verdict": "no trades placed",
-  "headline": "No trades placed: +0.00% total return vs +14.41% for the index, +0.00pp residual after beta, 0.0% max drawdown, 0.00% of capital lost to execution costs.",
+  "verdict": "made money but lagged the index",
+  "headline": "Made money but lagged the index: +7.47% total return vs +14.41% for the index, +1.64pp residual after beta, -18.8% max drawdown, 0.02% of capital lost to execution costs.",
   "clauses": [
    {
     "kind": "verdict",
-    "text": "Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "Finished at +7.47%, profitable but 6.95pp behind the S&P 500's +14.41%."
    },
    {
     "kind": "factor",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "kind": "factor",
-    "text": "The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "kind": "attribution",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +7.47% total, about +5.83pp is explained by carrying beta 0.40 against a +14.41% market (R^2 0.03); the residual +1.64pp is everything else - selection, timing, leverage and cost."
+   },
+   {
+    "kind": "concentration",
+    "text": "TSLA contributed +7,468 USD (100% of net P&L) across 11 closed trades; TSLA was the biggest drag at +7,468 USD."
    },
    {
     "kind": "costs",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 25 USD (0.02% of starting capital, 0.4 bp per fill, 0.5 bp of the 470,510 USD traded). 86% of that was spread/depth/impact and 14% was explicit fees and rebates."
+   },
+   {
+    "kind": "trades",
+    "text": "11 closed round trips, 90.9% winners, profit factor 119.30, average winner +753 vs average loser -63 USD, median holding 13 sessions."
+   },
+   {
+    "kind": "trades",
+    "text": "Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 368 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together)."
+   },
+   {
+    "kind": "trades",
+    "text": "Single worst trade: TSLA long 2025-09-17 to 2026-09-16, -63 USD."
    },
    {
     "kind": "drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x."
+    "text": "Worst peak-to-trough drawdown -18.85% (-9.10% for the index), trough on 2025-10-10, never recovered. Average gross exposure 18% of starting capital, peak leverage 2.04x."
    },
    {
     "kind": "tail",
-    "text": "Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Daily returns were +0.32 skewed with excess kurtosis +21.36; historical 95% VaR -0.03%/day with CVaR -3.93%/day. Worst single session -10.12%, best +10.68%."
    },
    {
     "kind": "caveat",
@@ -291,31 +331,31 @@
   "prose": [
    {
     "title": "Mandate (as declared before the season)",
-    "text": "@CEO_CFO_Conviction (CEO / CFO Conviction) ran the \"informed-flow following\" archetype. Declared thesis: The brief named a 'CEO' project; no such project exists in the directory (verified against the GitHub API), so the CEO idea is taken from the filing that actually records CEO behaviour: Form 4, filtered to the Chief Executive Officer and Chief Financial Officer titles. Entry: Parse the collected Form 4 XML for officerTitle; A code-P purchase whose title contains 'Chief Executive Officer', 'CEO', 'Chief Financial Officer' or 'CFO' puts the issuer on the list; Hold a single name - the most recent qualifying purchase - at 190% of equity. Exit: Exit 120 sessions after the purchase; No stop loss. Sizing: 190% of equity in one name (Reg T limit). Leverage: 1.9x gross. Cadence: daily check, horizon six months. Aggression 5/5. This participant was built to maximise return, not to manage risk: Maximum legal concentration on the narrowest insider signal."
+    "text": "@CEO_CFO_Conviction (CEO / CFO Conviction) ran the \"informed-flow following\" archetype. Declared thesis: The brief named a 'CEO' project; no such project exists in the directory (verified against the GitHub API), so the CEO idea is taken from the filing that actually records CEO behaviour: Form 4, filtered to the Chief Executive Officer and Chief Financial Officer titles. Entry: Parse the collected Form 4 for the reporting officer's title; A code-P purchase whose title contains 'Chief Executive Officer', 'CEO', 'Chief Financial Officer' or 'CFO', with an EDGAR filing date in the trailing 30 days, puts the issuer on the list; Hold a single name - the issuer with the most qualifying purchase lots in the window - at 190% of equity. Exit: Exit when the trailing 30-day filing window no longer holds a CEO/CFO purchase (about a month after the filing); No stop loss. Sizing: 190% of equity in one name (Reg T limit). Leverage: 1.9x gross. Cadence: daily check, horizon about one month per filing. Aggression 5/5. This participant was built to maximise return, not to manage risk: Maximum legal concentration on the narrowest insider signal."
    },
    {
     "title": "Outcome (as measured after the season)",
-    "text": "Outcome: +0.00% over 251 sessions - +0 USD on 100,000 of paper capital, ending at 100,000. Verdict: no trades placed."
+    "text": "Outcome: +7.47% over 251 sessions - +7,468 USD on 100,000 of paper capital, ending at 107,468. Verdict: made money but lagged the index."
    },
    {
     "title": "Why: the style premia that were actually live",
-    "text": "The momentum premium it is built to harvest was live (+22.09%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal. The beta premium it is built to harvest was live (+8.32%) and the account STILL lost 0.00% - so the loss came from implementation, timing or leverage, not from a missing signal."
+    "text": "The momentum premium this participant is built to harvest was live (+22.09% over the season) and the account made money - a tailwind that cannot be separated from skill on one path. The beta premium this participant is built to harvest was live (+8.32% over the season) and the account made money - a tailwind that cannot be separated from skill on one path."
    },
    {
     "title": "Why: attribution of the return",
-    "text": "Of the +0.00% total, about +0.00pp is explained by carrying beta 0.00 against a +14.41% market (R^2 0.00); the residual +0.00pp is everything else - selection, timing, leverage and cost."
+    "text": "Of the +7.47% total, about +5.83pp is explained by carrying beta 0.40 against a +14.41% market (R^2 0.03); the residual +1.64pp is everything else - selection, timing, leverage and cost. TSLA contributed +7,468 USD (100% of net P&L) across 11 closed trades; TSLA was the biggest drag at +7,468 USD."
    },
    {
     "title": "Why: what execution cost",
-    "text": "This participant was a NET LIQUIDITY PROVIDER: rebates (0 USD) exceeded the fees it paid, so all-in execution cost was 0 USD (+0.00% of starting capital) on 0 USD traded. Gross friction was still real: 0 USD of spread, 0 USD of impact and 0 USD of fees - it simply earned 0 USD back for resting orders."
+    "text": "Execution cost 25 USD (0.02% of starting capital, 0.4 bp per fill, 0.5 bp of the 470,510 USD traded). 86% of that was spread/depth/impact and 14% was explicit fees and rebates."
    },
    {
     "title": "Why: trade-level behaviour",
-    "text": ""
+    "text": "11 closed round trips, 90.9% winners, profit factor 119.30, average winner +753 vs average loser -63 USD, median holding 13 sessions. Time in market, measured without double counting: 251 sessions held at least one position (the per-tranche holding periods above sum to 368 sessions because tranches of the same average-cost lot share its entry date, so they overlap and must not be added together). Single worst trade: TSLA long 2025-09-17 to 2026-09-16, -63 USD."
    },
    {
     "title": "What the return-maximising mandate cost in drawdown",
-    "text": "Worst peak-to-trough drawdown 0.00% (-9.10% for the index), trough on 2025-09-17, recovered 2025-09-17. Average gross exposure 0% of starting capital, peak leverage 0.00x. Daily returns were +0.00 skewed with excess kurtosis +0.00; historical 95% VaR 0.00%/day with CVaR 0.00%/day. Worst single session 0.00%, best +0.00%."
+    "text": "Worst peak-to-trough drawdown -18.85% (-9.10% for the index), trough on 2025-10-10, never recovered. Average gross exposure 18% of starting capital, peak leverage 2.04x. Daily returns were +0.32 skewed with excess kurtosis +21.36; historical 95% VaR -0.03%/day with CVaR -3.93%/day. Worst single session -10.12%, best +10.68%."
    },
    {
     "title": "Regime context (real market data)",
@@ -331,7 +371,7 @@
    },
    {
     "title": "Answer: did it work, and why",
-    "text": "It did not work: +0.00% in a market that returned +14.41%, and a residual of +0.00pp after beta - the trading itself destroyed value, not just the market direction. Placed no orders in this window: 0 fills, 0 round trips, ending at 0.00%. That is not a performance result - the entry condition never triggered (its data source was missing, or the rule was never satisfied), so this participant's return carries no information about the strategy itself."
+    "text": "It made money (+7.47%) but under-delivered versus simply holding the index (+14.41%); the signal did not pay for its own costs, drawdown and turnover. Finished at +7.47%, profitable but 6.95pp behind the S&P 500's +14.41%."
    }
   ],
   "failure_modes_fired": [],
@@ -348,5 +388,5 @@
  },
  "errors": [],
  "account_closed_early": false,
- "sessions_with_orders": 0
+ "sessions_with_orders": 21
 }

@@ -71,16 +71,16 @@ history and the Federal Reserve Bank of New York's own API agree on both cross-c
 dates (3.85% on 2026-09-17, 3.62% on 2026-09-16).</p>
 
 <h2>Verification</h2>
-<p><span class="badge badge-ok">PASS</span> 9,377 checks,
+<p><span class="badge badge-ok">PASS</span> 9,392 checks,
 0 failures. The audit re-derives cash and positions from the
 fill tape plus the carry rows without asking the account what it thinks it holds, and
 compares both against the marked equity at the final session.</p>
 <p>cash and positions are re-derived here from the fill tape plus the carry rows, without asking LiveAccount what it thinks it holds; the tolerance is 2 cents, which is the worst case a per-fill rounding of fees to four decimals can produce over a few hundred fills.</p>
 
 <h2>Data efficiency</h2>
-<p>The book stores 13,135 rows in
-526.6 KiB, an average of
-<strong>41.05 bytes per row</strong>, as gzipped
+<p>The book stores 13,142 rows in
+530.6 KiB, an average of
+<strong>41.35 bytes per row</strong>, as gzipped
 JSON Lines with sorted keys and compact separators so two runs produce identical bytes.
 The reference bar is stored once per fill - the fill is the unit a reader queries - and
 file digests live in the provenance document instead of being repeated on every row.

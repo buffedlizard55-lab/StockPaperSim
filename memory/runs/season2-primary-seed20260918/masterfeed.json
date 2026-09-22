@@ -61,6 +61,7 @@
    "id": "Insider-trades",
    "signals": [
     "insider_buys_30d",
+    "insider_buyers_30d",
     "insider_buy_ratio_30d"
    ],
    "requested_as": "insider trades",
@@ -73,10 +74,12 @@
    "mapping": "STRONG-MAPPING",
    "mapping_note": "Form 4 is the primary filing for insider transactions and carries the execution price and date of each trade, so both the signal and the fill are verifiable against the issuer's own filing.",
    "evidence": [
+    "data/real/sec_agent/form4_transactions.jsonl",
+    "data/real/sec_agent/raw/form/*.md",
     "data/real/sec/form4_transactions.jsonl",
     "data/real/sec/form4/*.xml"
    ],
-   "hypothesis": "Cluster purchases - two or more distinct insiders buying in the open market inside ten days - outperform, because insiders trade only when their private valuation gap is large.",
+   "hypothesis": "Cluster purchases - two or more distinct insiders buying in the open market inside a month - outperform, because insiders trade only when their private valuation gap is large.",
    "tradable": [
     "AAPL",
     "MSFT",
@@ -283,17 +286,22 @@
   },
   {
    "id": "SportsPred",
-   "signals": [],
+   "signals": [
+    "sportspred_predictions",
+    "sportspred_graded"
+   ],
    "requested_as": "Sports Pred",
    "repo": "SportsPred",
    "title": "SportsPred - game prediction models",
    "site_url": "https://buffedlizard55-lab.github.io/SportsPred/",
-   "official_url": "https://statsapi.mlb.com/api/v1/schedule",
-   "source_class": "OFFICIAL",
+   "official_url": "https://github.com/buffedlizard55-lab/SportsPred",
+   "source_class": "OFFICIAL-VENDOR",
    "status": "FORWARD-ONLY",
    "mapping": "UNPROVEN-MAPPING",
-   "mapping_note": "SportsPred emits pre-game probabilities. There is no archived, timestamped snapshot of those predictions for the past season, so a backtest would have to recompute them - which would be this project's model, not the site's. Season 2 registers a dedicated forward probe (@SportsPred_Forward): it places no backdated trades and goes live only on dated snapshots of the site's own published predictions collected from now on.",
-   "evidence": [],
+   "mapping_note": "Mapped 2026-09-20 to the site's own files: data/predictions.json is the append-only record of every selection the model has made (keyed by OLBG event_id, graded by the site's own backtest script), data/results.json is its grading record, data/slate.json is the dated OLBG consensus slate, and data/provenance.json carries the site's own collection notes. The site archives none of them, so this repository now collects dated snapshots of all four plus the per-sport slates (collector section 'sportspred', weekly archive workflow) under data/real/sportspred/archive/. Backtesting them would still be recomputing someone else's model, so the forward probe @SportsPred_Forward trades only on the snapshots as they accumulate - never backdated.",
+   "evidence": [
+    "data/real/sportspred/archive"
+   ],
    "hypothesis": "Where a model's probability disagrees materially with the market's implied probability, the sports-data complex is mispriced in the same direction.",
    "tradable": [
     "SRAD",
@@ -413,37 +421,992 @@
    "note": "approvals of original applications with status AP, by decision date",
    "url": "https://api.fda.gov/drug/drugsfda.json"
   },
-  "insider_buys_30d": {
-   "state": "MISSING",
-   "rows": 0,
+  "insider_buys_30d::AAPL": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
    "window": [
-    null,
-    null
+    "2024-06-20",
+    "2026-09-18"
    ],
-   "files": [],
-   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::DKNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::FLUT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::GENI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::GLD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::IBB": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::IWM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::JNJ": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::JPM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::MSFT": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::MU": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::NVDA": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::PENN": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::PG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::QQQ": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::SPY": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::SRAD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::T": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::TLT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::TSLA": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::UNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::XBI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::XLU": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d::XOM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::AAPL": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::DKNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::FLUT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::GENI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::GLD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::IBB": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::IWM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::JNJ": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::JPM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::MSFT": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::MU": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::NVDA": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::PENN": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::PG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::QQQ": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::SPY": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::SRAD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::T": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::TLT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::TSLA": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::UNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::XBI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::XLU": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d::XOM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::AAPL": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::DKNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::FLUT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::GENI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::GLD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::IBB": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::IWM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::JNJ": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::JPM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::MSFT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::MU": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::NVDA": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::PENN": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::PG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::QQQ": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::SPY": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::SRAD": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::T": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::TLT": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::TSLA": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::UNG": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::XBI": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::XLU": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_ceo_buys_30d::XOM": {
+   "state": "NO-OBSERVATIONS",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18; collection landed but contains no open-market purchases (code P) inside the season window, so this series is registered as observed-but-empty",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buys_30d": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
+  },
+  "insider_buyers_30d": {
+   "state": "AVAILABLE",
+   "rows": 216,
+   "window": [
+    "2024-06-20",
+    "2026-09-18"
+   ],
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "insider_ceo_buys_30d": {
-   "state": "MISSING",
-   "rows": 0,
+   "state": "AVAILABLE",
+   "rows": 216,
    "window": [
-    null,
-    null
+    "2024-06-20",
+    "2026-09-18"
    ],
-   "files": [],
-   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "insider_buy_ratio_30d": {
-   "state": "MISSING",
-   "rows": 0,
+   "state": "AVAILABLE",
+   "rows": 216,
    "window": [
-    null,
-    null
+    "2024-06-20",
+    "2026-09-18"
    ],
-   "files": [],
-   "note": "no collected SEC insider file (bulk data sets and the per-filing walk have both been requested; neither has landed in this checkout)",
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "note": "open-market purchases (code P) by ticker; 34 buys and 132 sales, rendered-extraction lane: the SEC's own XSL presentation views, captured through the agent page-fetch route and parsed fail-closed (channel: agent-rendered-extract), dated by EDGAR filing date 2024-06-20..2026-09-18",
    "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "mlb_games_7d": {
@@ -630,10 +1593,10 @@
   },
   "kalshi_settled_30d": {
    "state": "AVAILABLE",
-   "rows": 5,
+   "rows": 612,
    "window": [
     "2026-07-31",
-    "2026-09-12"
+    "2026-09-19"
    ],
    "files": [
     "data/real/kalshi/"
@@ -643,10 +1606,10 @@
   },
   "kalshi_volume_30d": {
    "state": "AVAILABLE",
-   "rows": 5,
+   "rows": 612,
    "window": [
     "2026-07-31",
-    "2026-09-12"
+    "2026-09-19"
    ],
    "files": [
     "data/real/kalshi/"
@@ -738,7 +1701,7 @@
    "note": "official feed resolves (the dated archive holds 2 capture(s) (2026-09-19..2026-09-20), none dated on or before the last session of this window), the league publishes it as a live document with no retrievable history, so it is forward-only and places no backdated trades",
    "url": "https://official.nba.com/nba-injury-report-2025-26-season/"
   },
-  "insider_buys_30d::AAPL": {
+  "sportspred_predictions": {
    "state": "MISSING",
    "rows": 0,
    "window": [
@@ -746,10 +1709,10 @@
     null
    ],
    "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
+   "note": "the site publishes an append-only prediction record and grading file but archives neither (no dated snapshot captured yet - the weekly archive workflow (injury-archive.yml) collects sportspred_* files on each run), so this signal is forward-only and places no backdated trades",
+   "url": "https://github.com/buffedlizard55-lab/SportsPred"
   },
-  "insider_buys_30d::DKNG": {
+  "sportspred_graded": {
    "state": "MISSING",
    "rows": 0,
    "window": [
@@ -757,520 +1720,20 @@
     null
    ],
    "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::FLUT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::GENI": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::GLD": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::IBB": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::IWM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::JNJ": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::JPM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::MSFT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::MU": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::NVDA": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::PENN": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::PG": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::QQQ": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::SPY": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::SRAD": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::T": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::TLT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::TSLA": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::UNG": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::XBI": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::XLU": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_buys_30d::XOM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::AAPL": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::DKNG": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::FLUT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::GENI": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::GLD": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::IBB": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::IWM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::JNJ": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::JPM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::MSFT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::MU": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::NVDA": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::PENN": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::PG": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::QQQ": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::SPY": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::SRAD": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::T": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::TLT": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::TSLA": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::UNG": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::XBI": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::XLU": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
-  },
-  "insider_ceo_buys_30d::XOM": {
-   "state": "MISSING",
-   "rows": 0,
-   "window": [
-    null,
-    null
-   ],
-   "files": [],
-   "note": "array was filled but never registered as sourced - treated as missing on purpose",
-   "url": ""
+   "note": "the site publishes an append-only prediction record and grading file but archives neither (no dated snapshot captured yet - the weekly archive workflow (injury-archive.yml) collects sportspred_* files on each run), so this signal is forward-only and places no backdated trades",
+   "url": "https://github.com/buffedlizard55-lab/SportsPred"
   }
  },
  "provenance": {
   "fda": {
    "file": "data/real/fda/openfda_decisions.jsonl",
    "url": "https://api.fda.gov/drug/drugsfda.json"
+  },
+  "insider": {
+   "files": [
+    "data/real/sec_agent/form4_transactions.jsonl"
+   ],
+   "url": "https://www.sec.gov/data-research/sec-markets-data/insider-transactions-data-sets"
   },
   "mlb": {
    "file": "data/real/sports/mlb_games_2026.jsonl",
@@ -1323,23 +1786,29 @@
    "last_value": 195.0,
    "state": "AVAILABLE"
   },
-  "insider_buy_ratio_30d": {
-   "sessions_actionable": 0,
-   "sessions_in_window": 251,
-   "last_value": 0.0,
-   "state": "MISSING"
-  },
   "insider_buys_30d": {
-   "sessions_actionable": 0,
+   "sessions_actionable": 90,
    "sessions_in_window": 251,
    "last_value": 0.0,
-   "state": "MISSING"
+   "state": "AVAILABLE"
+  },
+  "insider_buyers_30d": {
+   "sessions_actionable": 90,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
   },
   "insider_ceo_buys_30d": {
-   "sessions_actionable": 0,
+   "sessions_actionable": 21,
    "sessions_in_window": 251,
    "last_value": 0.0,
-   "state": "MISSING"
+   "state": "AVAILABLE"
+  },
+  "insider_buy_ratio_30d": {
+   "sessions_actionable": 90,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "AVAILABLE"
   },
   "mlb_games_7d": {
    "sessions_actionable": 120,
@@ -1428,13 +1897,13 @@
   "kalshi_settled_30d": {
    "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 4.0,
+   "last_value": 400.0,
    "state": "AVAILABLE"
   },
   "kalshi_volume_30d": {
    "sessions_actionable": 32,
    "sessions_in_window": 251,
-   "last_value": 30255926.81,
+   "last_value": 725393967.42,
    "state": "AVAILABLE"
   },
   "fred_slope_bps": {
@@ -1468,6 +1937,18 @@
    "state": "MISSING"
   },
   "nba_injury_report": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "sportspred_predictions": {
+   "sessions_actionable": 0,
+   "sessions_in_window": 251,
+   "last_value": 0.0,
+   "state": "MISSING"
+  },
+  "sportspred_graded": {
    "sessions_actionable": 0,
    "sessions_in_window": 251,
    "last_value": 0.0,

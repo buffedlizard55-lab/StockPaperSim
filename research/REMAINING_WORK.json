@@ -376,5 +376,12 @@
   "detail": "equity-pilot.yml runs weekdays 21:10 UTC, commits artifacts to pilot/scheduled and opens/refreshes a PR - the repository's documented compromise between a durable scheduler and the no-unreviewed-commits policy. A maintainer now has to live with that loop: either approve it (and merge the PRs as they arrive, which is what makes the pilot a 'durable collector'), or switch to direct commits, or dispatch-only. Until a human chooses, treat the scheduler as proposed infrastructure with the first rehearsal seeded from the sandbox.",
   "where": ".github/workflows/equity-pilot.yml + repository owner review",
   "effort": "review meeting, not code"
+ },
+ {
+  "priority": "P2",
+  "title": "Review the new MasterSite trading-adjacent projects as signal candidates (2026-09-22 enumeration found 55 public repos vs 42 recorded)",
+  "detail": "The 2026-09-19 signal review covered the thirteen brief-named items (twelve existing projects plus the documented absence of a CEO project) and the Kalshi register item. The 2026-09-22 re-verification (IR-86) found the account at 55 public repositories with new trading-adjacent projects that have NOT been reviewed as signal sources: Commodities (an evidence-first Kalshi forward-test desk - also a methodology reference for this repo's own pilot), MLBComp, NBAComp, NFLComp, NHLComp, NFLPRED, OLBG-Competition, ParlaySports, SocialMediaComp, MLBRainDelay, MLB-Prediction-model-backtest. Next session: fetch each project's page/repo, decide OFFICIAL/SECONDARY/ASSERTED source class and STRONG/WEAK/UNPROVEN mapping per the MASTER_SITE_SIGNALS.md rubric, and either register a hypothesis in research/strict/registry.json with an explicit data blocker or record why it is not a signal. Do not backfill trades from any of them until the review exists.",
+  "where": "research/MASTER_SITE_SIGNALS.md (addendum 2026-09-22) \u00b7 research/strict/registry.json (sources) \u00b7 https://api.github.com/users/buffedlizard55-lab/repos?per_page=100",
+  "effort": "half a day of reading plus registry entries"
  }
 ]

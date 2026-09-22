@@ -905,5 +905,16 @@
   "links": [
    "https://github.com/buffedlizard55-lab/StockPaperSim/blob/main/sim/rollover.py"
   ]
+ },
+ {
+  "id": "IR-86",
+  "severity": "low",
+  "topic": "MasterSite directory drift: 55 public repositories on 2026-09-22 vs 42 recorded on 2026-09-19, with new trading-adjacent projects not yet reviewed as signal sources",
+  "detail": "Re-verified 2026-09-22 via the official GitHub API (users/buffedlizard55-lab/repos, per_page=100): 55 public repositories, up from the 42 recorded in research/strict/registry.json on 2026-09-19 (and 39 at the earlier enumeration in MASTER_SITE_SIGNALS.md). All twelve existing brief-named projects are still present (DrugAnalysis, GOLD, Insider-trades, NFLInjuryReport, NBAInjuryReport, Ncaa-football-alerts, NFL-scoreboard, MLB-Live-PBP, MLB-PBP, SportsPred, SFWeather, TradingViewTheLeap, Tradingview-pinescript-editor - thirteen repositories, since MLB has two), as are the two Kalshi repositories behind register item 14 (KalshiPaperSim, PriceKalshiHistorical), and there is still no repository named CEO, so every 'present/absent' claim in the signal register re-checks. What is new: trading-adjacent repositories created since the review (Commodities, MLBComp, NBAComp, NFLComp, NHLComp, NFLPRED, OLBG-Competition, ParlaySports, SocialMediaComp, MLBRainDelay, MLB-Prediction-model-backtest, among others) have not been reviewed as signal sources, and the MasterSite directory itself now shows 52 verified sites. Repository and site counts in this project are therefore point-in-time figures, not stable identifiers.",
+  "resolution": "Recorded as a dated addendum in research/MASTER_SITE_SIGNALS.md; the new projects are listed as unreviewed candidates in research/REMAINING_WORK.json rather than silently treated as covered or as absent. No signal, participant or number changes in this pass: the register's per-item claims were re-checked against the live API list, not rewritten from memory.",
+  "links": [
+   "https://api.github.com/users/buffedlizard55-lab/repos?per_page=100",
+   "https://buffedlizard55-lab.github.io/MasterSite/"
+  ]
  }
 ]

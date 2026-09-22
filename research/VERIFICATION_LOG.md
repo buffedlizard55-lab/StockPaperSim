@@ -1020,3 +1020,38 @@ its "File Unavailable" maintenance page intermittently; where a rendered
   site rebuilt byte-stable (two consecutive builds hash-identical). Independent
   audits: Season 2 5,513 checks / 0 failures; Season 1 1,374 / 0; official book
   1,871 / 0. Suite: 697 tests, all green.
+
+## 2026-09-22 — External-claim re-verification pass (no number changes)
+
+* **Competition sites re-fetched, all quoted figures re-checked**
+  (`research/COMPETITION_SITES.md` section 6):
+  - TradingView The Leap December 2025 rules page still live; 100,000 virtual
+    USD, 1:1 stock leverage, $1 commission, 3 active days, 60/minute ban,
+    realised-P&L ranking, hourly leaderboard, auto-close counted, 30-day
+    deletion — all identical to the 2026-09-17 transcription.
+  - The Leap hub now runs monthly editions (September 2026 futures edition,
+    $50K pool; champions back to Feb 2025). The quoted December 2025 rules
+    remain the reverse-engineered version.
+  - Trade Ideas leaderboard schema unchanged (ten columns in the same order);
+    "data delayed by 15 minutes" notice still on the page. Row values are
+    login-gated and none are quoted.
+  - CandleCharts now advertising a September 20–25, 2026 Showdown: $50,000
+    paper account, TradingView Community Competitions entry, top-three prizes —
+    same structure as quoted.
+* **MasterSite re-enumerated via the official GitHub API** (55 public repos,
+  up from 42; directory page shows 52 verified sites). All twelve existing
+  brief-named projects still present, plus the two Kalshi repos behind
+  register item 14; still no repo named CEO. New
+  trading-adjacent projects (`Commodities`, `MLBComp`, `NBAComp`, `NFLComp`,
+  `NHLComp`, `NFLPRED`, `OLBG-Competition`, `ParlaySports`,
+  `SocialMediaComp`, `MLBRainDelay`, `MLB-Prediction-model-backtest`) recorded
+  as unreviewed candidates — see the 2026-09-22 addendum in
+  `research/MASTER_SITE_SIGNALS.md`, IR-86, and the new P2 in
+  `research/REMAINING_WORK.json`.
+* **Stale prose fixed:** README's "43 limitations, 44 items of remaining work"
+  (files hold 44 and now 55); COMPETITION_SITES.md section 5 register counts
+  (30/16/16 → 86/44/55).
+* **Re-runs:** full suite 697 tests green; site rebuilt from memory and
+  byte-stability re-checked; independent audits re-run (Season 1, Season 2,
+  official book) with 0 failures. No signals, participants, fills or P&L
+  changed — this pass only re-verified words about the outside world.

@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-01T22:10:00Z",
+  "environment": {
+    "verified_at_utc": "2026-08-31T00:12:00Z",
+    "outbound_network_from_sandbox": "partial",
+    "reachable_from_sandbox": [
+      "api.github.com",
+      "github.com"
+    ],
+    "unreachable_from_sandbox": [
+      "olbg.com",
+      "raw.githubusercontent.com",
+      "atptour.com",
+      "wtatennis.com",
+      "*.github.io"
+    ],
+    "note": "Direct HTTP requests from this sandbox reach api.github.com and github.com only; olbg.com, raw.githubusercontent.com, atptour.com, wtatennis.com and *.github.io return connection failure (HTTP 000). Those hosts were read through the hosted page-fetch tool. Consequence: OLBG collectors are parser-tested against saved fixtures and must run in GitHub Actions; the historical backtest downloads over the GitHub API and runs in both places."
+  },
+  "irregularities": [
+    {
+      "id": "IR-01",
+      "severity": "high",
+      "title": "OLBG exposes no structured odds",
+      "detail": "The tips index and event pages are server-rendered, but prices are injected client-side into the betslip. The only price text observed was inside free-text tipster commentary on event 899350 ('Alcaraz is favored at 1.20, Safiullin 5.50'). Step 1 of the prompt requires odds cross-referenced across at least two bookmakers; that requirement cannot be met from OLBG. An odds aggregator is required and none is reachable without an API key.",
+      "impact": "Odds-dependent scoring factors (implied-probability band, first-set price band, handicap price band, both -500 blocks) are unscoreable. The engine records them as missing rather than estimating.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-02",
+      "severity": "high",
+      "title": "The standard free ATP/WTA match datasets are gone, but verified mirrors exist",
+      "detail": "github.com/JeffSackmann/tennis_atp returns 404 (re-verified 2026-08-31). A GitHub API call to /users/JeffSackmann/repos returned exactly one public repository: tennis_MatchChartingProject. Verified forks/archives of the dataset exist and are reachable via the GitHub API: Kadantte/tennis_atp (ATP) and Aneeshers/tennis-sackmann-archive (ATP + WTA, with the CC BY-NC-SA 4.0 LICENSE). scripts/backtest_historical.mjs uses them for a genuine walk-forward backtest.",
+      "impact": "History/backtest: RESOLVED. Live slate: still open — the mirrors are snapshots (matches through 2026-05-25, rankings through 2026-06-08) and the official ATP/WTA ranking pages are client-side rendered, so current form/rankings remain unsourced (IR-14). UPDATE 2026-08-31: superseded for live use. ESPN's public scoreboard now supplies current-season fixtures, live scores and settled results, and scripts/collect_espn.mjs grades recorded predictions from it. The Sackmann mirrors are still used for the historical backtest and for the surface map.",
+      "status": "MITIGATED"
+    },
+    {
+      "id": "IR-03",
+      "severity": "medium",
+      "title": "Collection cannot run from the development sandbox",
+      "detail": "No outbound network in the sandbox, so scripts/collect_olbg.py and scripts/collect_players.py cannot be executed here. The seed snapshot in data/slate.json was retrieved through the hosted page-fetch tool and transcribed field by field from that response.",
+      "impact": "Parser logic is unit-tested against saved fixtures; live fetch behaviour is unverified until run in CI.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-04",
+      "severity": "medium",
+      "title": "Tournament, tour, round and surface are absent from the OLBG tips index",
+      "detail": "The index lists only player names, kickoff and consensus. The tournament stage and surface factors in Step 2 depend on data OLBG does not publish here. The presence of 'US Open' and 'US Open Women' outright markets on the same page suggests the event, but that is an inference, not a source, so the fields are left null.",
+      "impact": "Tournament stage (10 pts) and surface form (20 pts) are unscoreable until enriched from ATP/WTA.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-05",
+      "severity": "low",
+      "title": "The tips index only lists matches that already have tipster coverage",
+      "detail": "The page paginates with 'Load More Tips' and is ordered by tip volume; matches with zero tips appear only on the All Events index.",
+      "impact": "data/slate.json is not the complete slate. The collector targets both indexes.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-06",
+      "severity": "low",
+      "title": "Two matches have consensus only on an excluded market",
+      "detail": "Events 899314 (Grabher v Cirstea) and 899395 (Mensik v Mochizuki) list Total Games as their consensus market. The prompt excludes set betting and total games entirely, so no win-match consensus is available for them from the index.",
+      "impact": "Those two matches have no consensus signal for the scored markets.",
+      "status": "NOTED"
+    },
+    {
+      "id": "IR-07",
+      "severity": "medium",
+      "title": "Two Step 4 output rules conflict as literally written",
+      "detail": "'The predicted winner must be bolded and obvious within the first 20 words' combined with 'no two tips may open with the same word' cannot both hold if the bolded name is the first word: all three markets for one match would then open identically. Resolved by leading with a distinctive analytical opener and placing the bolded pick inside the 20-word window; the validator enforces both simultaneously.",
+      "impact": "Tip layout differs from a naive reading of the prompt.",
+      "status": "RESOLVED IN CODE"
+    },
+    {
+      "id": "IR-08",
+      "severity": "medium",
+      "title": "The unique-opening rule is not satisfiable for large cards",
+      "detail": "Three markets per match means a 20-match card needs 60 tips. There are 24 distinct hand-written openings. Beyond that the rule cannot be honoured without fabricating filler.",
+      "impact": "writeCard reports openerPoolExhausted and the UI shows a warning instead of silently repeating openings.",
+      "status": "OPEN — documented limitation"
+    },
+    {
+      "id": "IR-09",
+      "severity": "low",
+      "title": "Cached search results disagree with the live page",
+      "detail": "A search-engine cache of the OLBG tennis page listed 'Iga Swiatek v Elena Rybakina' and 'Coco Gauff v Marta Kostyuk' as upcoming, while the live fetch on 2026-08-31 shows Swiatek v Xiyu Wang and Sonmez v Gauff. The cached copy is stale.",
+      "impact": "Only the live fetch was used. Any future collector must not treat cached copies as authoritative.",
+      "status": "NOTED"
+    },
+    {
+      "id": "IR-10",
+      "severity": "low",
+      "title": "Kickoff times carry no explicit timezone on the page",
+      "detail": "OLBG renders UK local time but does not state it per row. Rows reading 'Today'/'Tomorrow' were resolved against the 00:12 UTC fetch time; the literal '01 Sept' rows on the same page are consistent with that resolution, which cross-checks it.",
+      "impact": "Rows carry date_basis: 'observed' or 'derived' so the distinction is visible in the data.",
+      "status": "MITIGATED"
+    },
+    {
+      "id": "IR-11",
+      "severity": "high",
+      "title": "Defects in the prompt's scoring rules",
+      "detail": "See docs/PROMPT_REVIEW.md. In summary: the first-set market inherits the win-match base so its floor sits above its own HIGH threshold; surface form is scored on raw win count with no denominator; the ranking bands omit top-20-vs-top-20 and both-inside-top-50; bonuses can push a 100-point scale past 100; and the odds band is labelled 'value' while measuring implied probability.",
+      "impact": "Each defect is patched behind a named flag in engine/engine.mjs and covered by a test.",
+      "status": "RESOLVED IN CODE"
+    },
+    {
+      "id": "IR-12",
+      "severity": "medium",
+      "title": "The WTA/ATP handicap equivalence is unsourced",
+      "detail": "The prompt states a WTA -3.5 is roughly equivalent to an ATP -5.5. No source is given and nothing reachable here supports or refutes it. The prompt also asserts set betting and total games have 'documented negative expected value' with no citation, while excluding those markets and simultaneously recommending games handicap, which is the same market family.",
+      "impact": "Treated as an assumption, not a fact. The engine does not apply a gender handicap adjustment; it would need the backtest corpus to calibrate.",
+      "status": "OPEN — assumption"
+    },
+    {
+      "id": "IR-13",
+      "severity": "medium",
+      "title": "Two Step 1 requirements are not achievable from free public sources",
+      "detail": "Social-media and analyst sentiment from X requires paid API access or ToS-restricted scraping. Structured injury reporting has no free API. Both are excluded rather than approximated.",
+      "impact": "Sentiment is dropped entirely; physical concerns are scored only when a citable source exists.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-14",
+      "severity": "high",
+      "title": "The Sackmann mirrors are stale snapshots, not a live feed",
+      "detail": "The verified mirrors (Kadantte/tennis_atp, Aneeshers/tennis-sackmann-archive) were last updated in early/mid June 2026: matches stop at 2026-05-25, rankings at 2026-06-08. For a slate on 2026-08-31 that means 'last 5 matches in the last month' and 'current ranking' cannot be honestly computed from them. The mirrors also ship an empty atp_players.csv, and the rankings CSVs key players by ID, so name-to-rank mapping needs a players file these mirrors do not provide.",
+      "impact": "The mirrors unblock backtesting (and a labelled historical rankings fallback), but the live slate still needs a current-season source or a keyed odds/rankings API before its form and ranking factors can be filled.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-15",
+      "severity": "low",
+      "title": "Historical feature builder uses a documented ordering approximation",
+      "detail": "Sackmann's tourney_date is a tournament start date, so matches inside one event, and matches in different events in the same week, share a date. The builder orders strictly by (tourney_date, match_num), so a same-week match in another event may be treated as prior to a match it was actually simultaneous with.",
+      "impact": "A small amount of same-week lookahead in the historical backtest, not a forecast leak across weeks. Documented in scripts/lib/historical.mjs.",
+      "status": "MITIGATED"
+    },
+    {
+      "id": "IR-16",
+      "severity": "high",
+      "title": "ESPN publishes no serve statistics for tennis",
+      "detail": "Every competitor object in the ESPN tennis scoreboard payload carries `statistics: []`. First-serve percentage and aces per match are therefore unavailable from the live source. Verified 2026-08-31 across ATP and WTA scoreboards.",
+      "impact": "The first-set market's +8 serving-advantage modifier can never fire. The prompt calls serve statistics 'the strongest predictor of first set outcomes', so this is a material gap and is reported rather than approximated from set scores.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-17",
+      "severity": "low",
+      "title": "'Beat a higher-ranked player this event' is not derivable",
+      "detail": "Scoring this +3 bonus needs each beaten opponent's ranking AT THE TIME of the match. ESPN's scoreboard carries no per-match ranking, and current rankings cannot be applied retroactively without misstating history.",
+      "impact": "The bonus is permanently unsourced. Using today's ranking as a proxy was rejected as a fabrication.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-18",
+      "severity": "medium",
+      "title": "The missing-factor penalty is shared across all three markets",
+      "detail": "`applyMissingPenalty` subtracts 6 points per DISTINCT missing factor across the whole match, then applies that same total to win-match, first-set and games-handicap alike. A first-set score is therefore reduced by gaps that belong to the handicap market (e.g. an unsourced handicap price).",
+      "impact": "With odds permanently unavailable (IR-01) the shared penalty is large, so first-set scores sit near zero and that market almost always reports LOW/SKIP. The behaviour is conservative — it understates rather than overstates confidence — so it is documented rather than silently retuned. Fixing it properly requires per-market missing sets and a re-run of the backtest to recalibrate the thresholds.",
+      "status": "OPEN"
+    },
+    {
+      "id": "IR-19",
+      "severity": "medium",
+      "title": "ESPN's league slug does not reliably indicate the tour",
+      "detail": "The ATP scoreboard returns Women's Singles groupings (observed at the Nordea Open, competition 178684, 2026-07-06). Treating the requested league as the tour would mislabel those matches.",
+      "impact": "Tour is read from the grouping/competition type text instead of the league slug, and a regression test asserts this using the real payload. Any future collector must not trust the slug.",
+      "status": "RESOLVED IN CODE"
+    },
+    {
+      "id": "IR-20",
+      "severity": "medium",
+      "title": "Arena GitHub auth initially blocked workflow-file push",
+      "detail": "On 2026-09-01 an earlier push of branch arena/01a0558a-sportspred containing .github/workflows/pages.yml and .github/workflows/collect.yml was rejected by GitHub with: refusing to allow a GitHub App to create or update workflow `.github/workflows/collect.yml` without `workflows` permission.",
+      "impact": "That blocker was later cleared enough for the branch to be pushed and PR #7 to be opened. The workflows are now present on the remote feature branch. The remaining deployment step is repository configuration: GitHub Pages is still verified in legacy mode from main until the Pages source is switched to GitHub Actions.",
+      "status": "MITIGATED"
+    }
+  ]
+}

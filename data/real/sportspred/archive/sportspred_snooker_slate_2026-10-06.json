@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "sport": "Snooker",
+  "as_of_utc": "2026-09-04T19:49:57Z",
+  "source": {
+    "name": "OLBG \u2014 Snooker Betting Tips",
+    "url": "https://www.olbg.com/betting-tips/Snooker/8",
+    "indexes": [
+      "https://www.olbg.com/betting-tips/Snooker/8"
+    ],
+    "fetched_at_utc": "2026-09-04T19:49:57Z",
+    "method": "HTTP GET of server-rendered HTML via urllib; no JavaScript execution",
+    "licence_note": "Publicly viewable page. Factual market listing retained for review."
+  },
+  "notes": [
+    "OLBG tipster consensus counts are display-only and are never fed into snooker scoring.",
+    "OLBG does not expose structured odds in server-rendered HTML, so no price fields exist (IR-SNOOKER-01).",
+    "Tournament, round, venue and date are joined from the official WST/snooker.org records in the page/engine layer, never from OLBG alone."
+  ],
+  "collection_warnings": [],
+  "events": []
+}

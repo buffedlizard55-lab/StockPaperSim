@@ -1,0 +1,1265 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-05T08:20:41.482Z",
+  "generator": "scripts/build_league_registry.mjs",
+  "method": "Each league below was proven by calling its ESPN scoreboard endpoint and recording the HTTP status and the league name ESPN returned. Leagues that did not answer 200 are retained with ok:false so the failure is visible rather than silently dropped.",
+  "sports": {
+    "football": {
+      "espnSport": "soccer",
+      "threeWay": true,
+      "leagues": [
+        {
+          "slug": "arg.1",
+          "name": "Argentine Liga Profesional de Fútbol",
+          "candidateName": "Argentine Liga Profesional",
+          "espnLeagueId": "745",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 5,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/arg.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "aus.1",
+          "name": "Australian A-League Men",
+          "candidateName": "Australian A-League Men",
+          "espnLeagueId": "3906",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/aus.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "aut.1",
+          "name": "Austrian Bundesliga",
+          "candidateName": "Austrian Bundesliga",
+          "espnLeagueId": "3907",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/aut.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "bel.1",
+          "name": "Belgian Pro League",
+          "candidateName": "Belgian Pro League",
+          "espnLeagueId": "3901",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/bel.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "bra.1",
+          "name": "Brazilian Serie A",
+          "candidateName": "Brazilian Serie A",
+          "espnLeagueId": "630",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/bra.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "chn.1",
+          "name": "Chinese Super League",
+          "candidateName": "Chinese Super League",
+          "espnLeagueId": "8376",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/chn.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "club.friendly",
+          "name": "Club Friendly",
+          "candidateName": "Club Friendly",
+          "espnLeagueId": "19834",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 2,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/club.friendly/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "concacaf.champions_cup",
+          "name": "CONCACAF Champions Cup",
+          "candidateName": "CONCACAF Champions Cup",
+          "espnLeagueId": "5692",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/concacaf.champions_cup/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "conmebol.libertadores",
+          "name": "CONMEBOL Libertadores",
+          "candidateName": "CONMEBOL Libertadores",
+          "espnLeagueId": "783",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "conmebol.sudamericana",
+          "name": "CONMEBOL Sudamericana",
+          "candidateName": "CONMEBOL Sudamericana",
+          "espnLeagueId": "5454",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "den.1",
+          "name": "Danish Superliga",
+          "candidateName": "Danish Superliga",
+          "espnLeagueId": "3913",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/den.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ned.1",
+          "name": "Dutch Eredivisie",
+          "candidateName": "Dutch Eredivisie",
+          "espnLeagueId": "725",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ned.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.league_cup",
+          "name": "English Carabao Cup",
+          "candidateName": "Carabao Cup",
+          "espnLeagueId": "3920",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.league_cup/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.fa",
+          "name": "English FA Cup",
+          "candidateName": "Emirates FA Cup",
+          "espnLeagueId": "3918",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.fa/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.2",
+          "name": "English League Championship",
+          "candidateName": "EFL Championship",
+          "espnLeagueId": "3914",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 11,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.3",
+          "name": "English League One",
+          "candidateName": "EFL League One",
+          "espnLeagueId": "3915",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 11,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.3/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.4",
+          "name": "English League Two",
+          "candidateName": "EFL League Two",
+          "espnLeagueId": "3916",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 12,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.4/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.5",
+          "name": "English National League",
+          "candidateName": "National League",
+          "espnLeagueId": "3917",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 11,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.5/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "eng.1",
+          "name": "English Premier League",
+          "candidateName": "English Premier League",
+          "espnLeagueId": "700",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 7,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/eng.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "fifa.world",
+          "name": "FIFA World Cup",
+          "candidateName": "FIFA World Cup",
+          "espnLeagueId": "606",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "fifa.worldq.uefa",
+          "name": "FIFA World Cup Qualifying - UEFA",
+          "candidateName": "FIFA World Cup Qualifying - UEFA",
+          "espnLeagueId": "786",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.worldq.uefa/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "fra.1",
+          "name": "French Ligue 1",
+          "candidateName": "French Ligue 1",
+          "espnLeagueId": "710",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/fra.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "fra.2",
+          "name": "French Ligue 2",
+          "candidateName": "French Ligue 2",
+          "espnLeagueId": "3926",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/fra.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ger.2",
+          "name": "German 2. Bundesliga",
+          "candidateName": "German 2. Bundesliga",
+          "espnLeagueId": "3927",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ger.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ger.1",
+          "name": "German Bundesliga",
+          "candidateName": "German Bundesliga",
+          "espnLeagueId": "720",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 6,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ger.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "gre.1",
+          "name": "Greek Super League",
+          "candidateName": "Greek Super League",
+          "espnLeagueId": "3955",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 2,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/gre.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "fifa.friendly",
+          "name": "International Friendly",
+          "candidateName": "International Friendly",
+          "espnLeagueId": "3922",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.friendly/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ita.1",
+          "name": "Italian Serie A",
+          "candidateName": "Italian Serie A",
+          "espnLeagueId": "730",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ita.2",
+          "name": "Italian Serie B",
+          "candidateName": "Italian Serie B",
+          "espnLeagueId": "3931",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ita.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "jpn.1",
+          "name": "Japanese J.League",
+          "candidateName": "Japanese J.League",
+          "espnLeagueId": "750",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/jpn.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "mex.1",
+          "name": "Mexican Liga BBVA MX",
+          "candidateName": "Mexican Liga BBVA MX",
+          "espnLeagueId": "760",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/mex.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "usa.1",
+          "name": "MLS",
+          "candidateName": "Major League Soccer",
+          "espnLeagueId": "770",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 14,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "nor.1",
+          "name": "Norwegian Eliteserien",
+          "candidateName": "Norwegian Eliteserien",
+          "espnLeagueId": "3960",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 2,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/nor.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "usa.nwsl",
+          "name": "NWSL",
+          "candidateName": "NWSL",
+          "espnLeagueId": "8301",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/usa.nwsl/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "por.1",
+          "name": "Portuguese Primeira Liga",
+          "candidateName": "Portuguese Liga",
+          "espnLeagueId": "715",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/por.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ksa.1",
+          "name": "Saudi Pro League",
+          "candidateName": "Saudi Pro League",
+          "espnLeagueId": "21231",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/ksa.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "sco.2",
+          "name": "Scottish Championship",
+          "candidateName": "Scottish Championship",
+          "espnLeagueId": "3940",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/sco.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "sco.1",
+          "name": "Scottish Premiership",
+          "candidateName": "Scottish Premiership",
+          "espnLeagueId": "735",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 4,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/sco.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "esp.1",
+          "name": "Spanish LALIGA",
+          "candidateName": "Spanish LALIGA",
+          "espnLeagueId": "740",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "esp.2",
+          "name": "Spanish LALIGA 2",
+          "candidateName": "Spanish LALIGA 2",
+          "espnLeagueId": "3921",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 5,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/esp.2/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "swe.1",
+          "name": "Swedish Allsvenskan",
+          "candidateName": "Swedish Allsvenskan",
+          "espnLeagueId": "3945",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/swe.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "sui.1",
+          "name": "Swiss Super League",
+          "candidateName": "Swiss Super League",
+          "espnLeagueId": "3944",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/sui.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "tur.1",
+          "name": "Turkish Super Lig",
+          "candidateName": "Turkish Super Lig",
+          "espnLeagueId": "3946",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 2,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/tur.1/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "uefa.champions",
+          "name": "UEFA Champions League",
+          "candidateName": "UEFA Champions League",
+          "espnLeagueId": "775",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.champions/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "uefa.europa.conf",
+          "name": "UEFA Conference League",
+          "candidateName": "UEFA Conference League",
+          "espnLeagueId": "20296",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.europa.conf/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "uefa.europa",
+          "name": "UEFA Europa League",
+          "candidateName": "UEFA Europa League",
+          "espnLeagueId": "776",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.europa/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "uefa.nations",
+          "name": "UEFA Nations League",
+          "candidateName": "UEFA Nations League",
+          "espnLeagueId": "2395",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/soccer/uefa.nations/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "american-football": {
+      "espnSport": "football",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "nfl",
+          "name": "National Football League",
+          "candidateName": "National Football League",
+          "espnLeagueId": "28",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "college-football",
+          "name": "NCAA - Football",
+          "candidateName": "NCAA Football",
+          "espnLeagueId": "23",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 68,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "ufl",
+          "name": "United Football League",
+          "candidateName": "United Football League",
+          "espnLeagueId": "37",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/football/ufl/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "basketball": {
+      "espnSport": "basketball",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "nba",
+          "name": "National Basketball Association",
+          "candidateName": "NBA",
+          "espnLeagueId": "46",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "nba-development",
+          "name": "NBA G League",
+          "candidateName": "NBA G League",
+          "espnLeagueId": "69",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba-development/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "mens-college-basketball",
+          "name": "NCAA Men's Basketball",
+          "candidateName": "NCAA Men's Basketball",
+          "espnLeagueId": "41",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "womens-college-basketball",
+          "name": "NCAA Women's Basketball",
+          "candidateName": "NCAA Women's Basketball",
+          "espnLeagueId": "54",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/womens-college-basketball/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "wnba",
+          "name": "Women's National Basketball Association",
+          "candidateName": "WNBA",
+          "espnLeagueId": "59",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "baseball": {
+      "espnSport": "baseball",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "mlb",
+          "name": "Major League Baseball",
+          "candidateName": "Major League Baseball",
+          "espnLeagueId": "10",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 15,
+          "oddsSeen": true,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "college-baseball",
+          "name": "NCAA Baseball",
+          "candidateName": "NCAA Baseball",
+          "espnLeagueId": "14",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "ice-hockey": {
+      "espnSport": "hockey",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "nhl",
+          "name": "National Hockey League",
+          "candidateName": "National Hockey League",
+          "espnLeagueId": "90",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "mens-college-hockey",
+          "name": "NCAA Men's Ice Hockey",
+          "candidateName": "NCAA Men's Ice Hockey",
+          "espnLeagueId": "91",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/hockey/mens-college-hockey/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "rugby-league": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Rugby League runs on the committed, source-tagged OLBG market slate plus the official NRL and Super League tables, scored by the RUGBY LEAGUE PREDICTION MASTER PROMPT v1.0. The NRL has its own sub-page (nrl.html) scored by the NRL PREDICTION MASTER PROMPT v1.0 over the full season tape, the Origin calendar and an Open-Meteo forecast — keep both: they are different rulesets, not two views of one. No free key-less price feed is used; odds are derived from the official ladders and are cross-referenced where available. Predictions are written as three tips per match (WIN MATCH, HANDICAP, GAME TOTAL) with the league-specific weightings and thresholds documented in docs/RUGBY_LEAGUE_PROMPT_REVIEW.md."
+    },
+    "rugby-union": {
+      "espnSport": "rugby",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "289274",
+          "name": "2020 Tri Nations",
+          "candidateName": "2020 Tri Nations",
+          "espnLeagueId": "19940",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289274/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "236461",
+          "name": "Anglo-Welsh Cup",
+          "candidateName": "Anglo-Welsh Cup",
+          "espnLeagueId": "8009",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/236461/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "268565",
+          "name": "British and Irish Lions Tour",
+          "candidateName": "British and Irish Lions Tour",
+          "espnLeagueId": "8016",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/268565/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "270555",
+          "name": "Currie Cup",
+          "candidateName": "Currie Cup",
+          "espnLeagueId": "8002",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/270555/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "272073",
+          "name": "European Rugby Challenge Cup",
+          "candidateName": "European Rugby Challenge Cup",
+          "espnLeagueId": "8010",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/272073/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "271937",
+          "name": "European Rugby Champions Cup",
+          "candidateName": "European Rugby Champions Cup",
+          "espnLeagueId": "8329",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/271937/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "270559",
+          "name": "French Top 14",
+          "candidateName": "French Top 14",
+          "espnLeagueId": "8005",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 6,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/270559/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "267979",
+          "name": "Gallagher Prem",
+          "candidateName": "Prem Rugby",
+          "espnLeagueId": "8007",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/267979/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289234",
+          "name": "International Test Match",
+          "candidateName": "International Test Match",
+          "espnLeagueId": "10659",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289234/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289262",
+          "name": "Major League Rugby",
+          "candidateName": "Major League Rugby",
+          "espnLeagueId": "19114",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289262/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "270563",
+          "name": "Mitre 10 Cup",
+          "candidateName": "Mitre 10 Cup",
+          "espnLeagueId": "8004",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 3,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/270563/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "17567",
+          "name": "Nations Championship",
+          "candidateName": "Nations Championship",
+          "espnLeagueId": "24400",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/17567/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "282",
+          "name": "Olympic Men's 7s",
+          "candidateName": "Olympic Men's 7s",
+          "espnLeagueId": "10743",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/282/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "283",
+          "name": "Olympic Women's Rugby Sevens",
+          "candidateName": "Olympic Women's Rugby Sevens",
+          "espnLeagueId": "10729",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/283/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "164205",
+          "name": "Rugby World Cup",
+          "candidateName": "Rugby World Cup",
+          "espnLeagueId": "8337",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/164205/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "180659",
+          "name": "Six Nations",
+          "candidateName": "Six Nations",
+          "espnLeagueId": "8323",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/180659/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289271",
+          "name": "Super Rugby Aotearoa",
+          "candidateName": "Super Rugby Aotearoa",
+          "espnLeagueId": "19867",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289271/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289272",
+          "name": "Super Rugby AU",
+          "candidateName": "Super Rugby AU",
+          "espnLeagueId": "19869",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289272/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "242041",
+          "name": "Super Rugby Pacific",
+          "candidateName": "Super Rugby Pacific",
+          "espnLeagueId": "8326",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/242041/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289277",
+          "name": "Super Rugby Trans-Tasman",
+          "candidateName": "Super Rugby Trans-Tasman",
+          "espnLeagueId": "20008",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289277/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "244293",
+          "name": "The Rugby Championship",
+          "candidateName": "The Rugby Championship",
+          "espnLeagueId": "8328",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/244293/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "270557",
+          "name": "United Rugby Championship",
+          "candidateName": "United Rugby Championship",
+          "espnLeagueId": "8331",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/270557/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "2009",
+          "name": "URBA Primera A",
+          "candidateName": "URBA Primera A",
+          "espnLeagueId": "4001",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/2009/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289279",
+          "name": "URBA Top 14",
+          "candidateName": "URBA Top 14",
+          "espnLeagueId": "20113",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 7,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289279/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "289237",
+          "name": "Women's Rugby World Cup",
+          "candidateName": "Women's Rugby World Cup",
+          "espnLeagueId": "17953",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/rugby/289237/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "tennis": {
+      "espnSport": "tennis",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "atp",
+          "name": "ATP",
+          "candidateName": "ATP Tour",
+          "espnLeagueId": "851",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/tennis/atp/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "wta",
+          "name": "WTA",
+          "candidateName": "WTA Tour",
+          "espnLeagueId": "900",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/tennis/wta/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "cricket": {
+      "espnSport": "cricket",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "t20-blast",
+          "name": "Twenty20 Cup (England)",
+          "candidateName": "T20 Blast (Vitality Blast, men)",
+          "espnLeagueId": "8053",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/cricket/1512690/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "motor-racing": {
+      "espnSport": "racing",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "f1",
+          "name": "Formula 1",
+          "candidateName": "Formula 1",
+          "espnLeagueId": "2030",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/racing/f1/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "handball": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "ESPN publishes no handball feed. Handball runs on the committed, source-tagged competition dataset and the specialist handball engine."
+    },
+    "volleyball": {
+      "espnSport": "volleyball",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "mens-college-volleyball",
+          "name": "NCAA Men's Volleyball",
+          "candidateName": "NCAA Men's Volleyball",
+          "espnLeagueId": "401",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/volleyball/mens-college-volleyball/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "womens-college-volleyball",
+          "name": "NCAA Women's Volleyball",
+          "candidateName": "NCAA Women's Volleyball",
+          "espnLeagueId": "402",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 158,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/volleyball/womens-college-volleyball/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "mma": {
+      "espnSport": "mma",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "ufc",
+          "name": "Ultimate Fighting Championship",
+          "candidateName": "UFC",
+          "espnLeagueId": "3321",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/mma/ufc/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "golf": {
+      "espnSport": "golf",
+      "threeWay": false,
+      "leagues": [
+        {
+          "slug": "eur",
+          "name": "DP World Tour",
+          "candidateName": "DP World Tour",
+          "espnLeagueId": "7002",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 1,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/golf/eur/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "lpga",
+          "name": "Ladies Pro Golf Association",
+          "candidateName": "LPGA Tour",
+          "espnLeagueId": "1107",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "pga",
+          "name": "PGA TOUR",
+          "candidateName": "PGA Tour",
+          "espnLeagueId": "1106",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard?dates=20260905"
+        },
+        {
+          "slug": "champions-tour",
+          "name": "PGA TOUR Champions",
+          "candidateName": "PGA Tour Champions",
+          "espnLeagueId": "1105",
+          "ok": true,
+          "status": 200,
+          "error": null,
+          "eventsOnCheckDate": 0,
+          "oddsSeen": false,
+          "checkedUrl": "https://site.api.espn.com/apis/site/v2/sports/golf/champions-tour/scoreboard?dates=20260905"
+        }
+      ]
+    },
+    "gaelic-football": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Gaelic games run on their own specialist page, scored by the GAA PREDICTION MASTER PROMPT v1.1. Football and hurling share the engine with a code filter. The OLBG football (id 25) and hurling (id 26) indexes supply the live club-championship slate; they publish tipster votes, never prices. No key-less GAA price feed exists, so the 30-pt odds factor is recorded as the prompt's 10-pt missing-odds substitute and Step 3 live bets resolve to SKIP. Club championship form has no free structured tape, so those matches carry a data-gap note and confidence is capped at MEDIUM. Inter-county results on the calendar are only matches whose scoreline is printed on the Wikipedia championship pages. Ulster and Tailteann 2026 winners are listed as pedigree, not as invented scorelines."
+    },
+    "darts": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Darts runs on the OLBG market/slate feed plus a committed, source-tagged European Tour results tape (Wikipedia match reports, never reconstructed scores) and the public PDC Order of Merit snapshot from dartsrankings.com. There is no free key-less price feed, so the odds component is scored as missing and Step 3 returns SKIP for live cards (confidence capped); see docs/DARTS_IRREGULARITIES.md. Predictions are written by the DARTS PREDICTION MASTER PROMPT v1.0 writer. Czech Open pairings are never invented (IR-DARTS-06)."
+    },
+    "snooker": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Snooker runs on the OLBG market/slate feed plus the public snooker.org results pages and the official WST ranking table. There is no free key-less price feed, so the odds component is scored as missing and Step 3 returns SKIP for live cards (confidence capped); see docs/SNOOKER_IRREGULARITIES.md. Predictions are written by the SNOOKER PREDICTION MASTER PROMPT v3.0 writer. Championship League Snooker has its own sub-page (championship-league.html) scored by the CHAMPIONSHIP LEAGUE SNOOKER PREDICTION MASTER PROMPT v1.0. It is an overlay, not a replacement: every other snooker event keeps the generic prompt. The overlay covers three markets (match result, correct score, group winner), treats the 2-2 draw as a genuine outcome in the ranking edition, and refuses to score until the edition (ranking or invitational) is stated, because the two use different match formats. Verified tape: data/snooker_cls.json; walk-forward ledger: data/snooker_cls_backtest.json."
+    },
+    "horse-racing": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Field-size, going and form data are not available key-less. Racecards are listed from OLBG for manual review only."
+    },
+    "greyhounds": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Greyhounds run on the official GBGB results API (meetings, draws, results and per-dog histories) plus the Sporting Life racecard index, scored by the GREYHOUND RACING PREDICTION MASTER PROMPT v1.0. Live win odds have no free key-less feed, so the odds component is scored as missing and live confidence is capped at MEDIUM; see docs/GREYHOUND_IRREGULARITIES.md."
+    },
+    "cycling": {
+      "espnSport": null,
+      "leagues": [],
+      "note": "Market rows only."
+    }
+  },
+  "summary": {
+    "checked": 95,
+    "ok": 95,
+    "failed": 0
+  }
+}

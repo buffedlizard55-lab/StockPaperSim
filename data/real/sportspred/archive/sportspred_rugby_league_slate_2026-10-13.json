@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "sport": "Rugby League",
+  "source": {
+    "name": "OLBG \u2014 Rugby League Betting Tips",
+    "url": "https://www.olbg.com/betting-tips/Rugby_League/10",
+    "indexes": [
+      "https://www.olbg.com/betting-tips/Rugby_League/10",
+      "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/10"
+    ],
+    "fetched_at_utc": "2026-09-02T21:55:30Z",
+    "method": "HTTP GET of server-rendered HTML via urllib; no JavaScript execution",
+    "licence_note": "Publicly viewable page. Redistribution limited to this factual fixture/market listing; see docs/SOURCES.md."
+  },
+  "markets_covered": [
+    "To Win (Win Match)",
+    "Handicap (2-way)",
+    "Total Points (Over/Under)",
+    "Win Tournament (outright)"
+  ],
+  "notes": [
+    "Every field was read from the pages listed in source.indexes. Nothing is inferred unless date_basis says \"derived\".",
+    "OLBG renders kickoff times in UK local time (BST, UTC+1 in summer).",
+    "OLBG does not expose structured odds in server-rendered HTML, so no price fields exist in this file. See docs/RUGBY_LEAGUE_IRREGULARITIES.md RL-01.",
+    "Tournament, competition stage and venue are not published on the tips index and are left null unless enriched from event pages. See RL-02.",
+    "Handicap and Total lines are captured from event pages where present; matches without enriched lines list markets_verified=false."
+  ],
+  "collection_warnings": [],
+  "events": [
+    {
+      "event_id": "2751007",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Canterbury Bulldogs",
+      "away": "Brisbane Broncos",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Canterbury_Bulldogs_v_Brisbane_Broncos/10?event_id=2751007",
+      "slug": "Canterbury_Bulldogs_v_Brisbane_Broncos",
+      "display_date": "Tomorrow",
+      "display_time": "05:50",
+      "resolved_date": "2026-09-03",
+      "date_basis": "derived",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Canterbury Bulldogs",
+        "tips_for": 23,
+        "tips_total": 31,
+        "pct": 74,
+        "comments": 11,
+        "experts": 2
+      },
+      "markets_verified": true,
+      "markets_on_event_page": [
+        "To Win",
+        "Handicap (2-way)",
+        "Total Points"
+      ],
+      "handicap_lines": [
+        {
+          "team": "Brisbane Broncos",
+          "line": 10.5
+        },
+        {
+          "team": "Canterbury Bulldogs",
+          "line": -10.5
+        }
+      ],
+      "handicap_selections": [
+        "Brisbane Broncos +10.50",
+        "Canterbury Bulldogs -10.50"
+      ],
+      "total_lines": [
+        {
+          "side": "Over",
+          "line": 53.5
+        },
+        {
+          "side": "Under",
+          "line": 53.5
+        }
+      ],
+      "total_selections": [
+        "Over 53.50",
+        "Under 53.50"
+      ]
+    },
+    {
+      "event_id": "2751059",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Gold Coast Titans",
+      "away": "Dolphins",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Gold_Coast_Titans_v_Dolphins/10?event_id=2751059",
+      "slug": "Gold_Coast_Titans_v_Dolphins",
+      "display_date": "04 Sept",
+      "display_time": "04:00",
+      "resolved_date": "2026-09-04",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Dolphins",
+        "tips_for": 8,
+        "tips_total": 11,
+        "pct": 73,
+        "comments": 4,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2765926",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Bradford Bulls",
+      "away": "Castleford Tigers",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Bradford_Bulls_v_Castleford_Tigers/10?event_id=2765926",
+      "slug": "Bradford_Bulls_v_Castleford_Tigers",
+      "display_date": "Tomorrow",
+      "display_time": "15:00",
+      "resolved_date": "2026-09-03",
+      "date_basis": "derived",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Castleford Tigers",
+        "tips_for": 5,
+        "tips_total": 7,
+        "pct": 71,
+        "comments": 4,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751062",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "South Sydney Rabbitohs",
+      "away": "Sydney Roosters",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/South_Sydney_Rabbitohs_v_Sydney_Roosters/10?event_id=2751062",
+      "slug": "South_Sydney_Rabbitohs_v_Sydney_Roosters",
+      "display_date": "04 Sept",
+      "display_time": "06:00",
+      "resolved_date": "2026-09-04",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Sydney Roosters",
+        "tips_for": 4,
+        "tips_total": 7,
+        "pct": 57,
+        "comments": 1,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751058",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "New Zealand Warriors",
+      "away": "Manly Sea Eagles",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/New_Zealand_Warriors_v_Manly_Sea_Eagles/10?event_id=2751058",
+      "slug": "New_Zealand_Warriors_v_Manly_Sea_Eagles",
+      "display_date": "05 Sept",
+      "display_time": "01:00",
+      "resolved_date": "2026-09-05",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "New Zealand Warriors",
+        "tips_for": 4,
+        "tips_total": 7,
+        "pct": 57,
+        "comments": 1,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751056",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Cronulla Sharks",
+      "away": "Melbourne Storm",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Cronulla_Sharks_v_Melbourne_Storm/10?event_id=2751056",
+      "slug": "Cronulla_Sharks_v_Melbourne_Storm",
+      "display_date": "05 Sept",
+      "display_time": "05:35",
+      "resolved_date": "2026-09-05",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Cronulla Sharks",
+        "tips_for": 4,
+        "tips_total": 5,
+        "pct": 80,
+        "comments": 3,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2765928",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Hull KR",
+      "away": "Huddersfield Giants",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Hull_KR_v_Huddersfield_Giants/10?event_id=2765928",
+      "slug": "Hull_KR_v_Huddersfield_Giants",
+      "display_date": "04 Sept",
+      "display_time": "15:00",
+      "resolved_date": "2026-09-04",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Hull KR",
+        "tips_for": 3,
+        "tips_total": 4,
+        "pct": 75,
+        "comments": 2,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2765929",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Toulouse Olympique",
+      "away": "Hull FC",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Toulouse_Olympique_v_Hull_FC/10?event_id=2765929",
+      "slug": "Toulouse_Olympique_v_Hull_FC",
+      "display_date": "04 Sept",
+      "display_time": "13:00",
+      "resolved_date": "2026-09-04",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Toulouse Olympique",
+        "tips_for": 2,
+        "tips_total": 3,
+        "pct": 67,
+        "comments": 2,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751057",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "North Queensland Cowboys",
+      "away": "Canberra Raiders",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/North_Queensland_Cowboys_v_Canberra_Raiders/10?event_id=2751057",
+      "slug": "North_Queensland_Cowboys_v_Canberra_Raiders",
+      "display_date": "05 Sept",
+      "display_time": "03:30",
+      "resolved_date": "2026-09-05",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Canberra Raiders",
+        "tips_for": 2,
+        "tips_total": 4,
+        "pct": 50,
+        "comments": 0,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751060",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Penrith Panthers",
+      "away": "Wests Tigers",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Penrith_Panthers_v_Wests_Tigers/10?event_id=2751060",
+      "slug": "Penrith_Panthers_v_Wests_Tigers",
+      "display_date": "06 Sept",
+      "display_time": "02:05",
+      "resolved_date": "2026-09-06",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Penrith Panthers",
+        "tips_for": 2,
+        "tips_total": 2,
+        "pct": 100,
+        "comments": 1,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2765927",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Leigh Leopards",
+      "away": "St Helens",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Leigh_Leopards_v_St_Helens/10?event_id=2765927",
+      "slug": "Leigh_Leopards_v_St_Helens",
+      "display_date": "04 Sept",
+      "display_time": "15:00",
+      "resolved_date": "2026-09-04",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "St Helens",
+        "tips_for": 1,
+        "tips_total": 1,
+        "pct": 100,
+        "comments": 0,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2765925",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Catalan Dragons",
+      "away": "York Knights",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Catalan_Dragons_v_York_Knights/10?event_id=2765925",
+      "slug": "Catalan_Dragons_v_York_Knights",
+      "display_date": "05 Sept",
+      "display_time": "13:00",
+      "resolved_date": "2026-09-05",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Catalan Dragons",
+        "tips_for": 1,
+        "tips_total": 1,
+        "pct": 100,
+        "comments": 1,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2766994",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "Leeds Rhinos",
+      "away": "Wigan Warriors",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/Leeds_Rhinos_v_Wigan_Warriors/10?event_id=2766994",
+      "slug": "Leeds_Rhinos_v_Wigan_Warriors",
+      "display_date": "05 Sept",
+      "display_time": "15:00",
+      "resolved_date": "2026-09-05",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "Leeds Rhinos",
+        "tips_for": 1,
+        "tips_total": 1,
+        "pct": 100,
+        "comments": 0,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2751061",
+      "sport": "Rugby League",
+      "type": "match",
+      "home": "St George-Illawarra Dragons",
+      "away": "Parramatta Eels",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/St_George-Illawarra_Dragons_v_Parramatta_Eels/10?event_id=2751061",
+      "slug": "St_George-Illawarra_Dragons_v_Parramatta_Eels",
+      "display_date": "06 Sept",
+      "display_time": "00:00",
+      "resolved_date": "2026-09-06",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "To Win",
+        "selection": "St George/Illawarra Dragons",
+        "tips_for": 1,
+        "tips_total": 2,
+        "pct": 50,
+        "comments": 0,
+        "experts": 0
+      },
+      "markets_verified": false
+    },
+    {
+      "event_id": "2695857",
+      "sport": "Rugby League",
+      "type": "outright",
+      "name": "State of Origin 2027",
+      "url": "https://www.olbg.com/betting-tips/Rugby_League/All_Rugby_League/All_Events/State_of_Origin_2027/10?event_id=2695857",
+      "slug": "State_of_Origin_2027",
+      "display_date": "27 May 2027",
+      "display_time": "06:00",
+      "resolved_date": "2027-05-27",
+      "date_basis": "observed",
+      "consensus": {
+        "market": "Win Tournament",
+        "selection": "New South Wales",
+        "tips_for": 5,
+        "tips_total": 9,
+        "pct": 56,
+        "comments": 2,
+        "experts": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "sport": "Formula 1",
+  "source": {
+    "name": "OLBG — Motor Racing Betting Tips",
+    "url": "https://www.olbg.com/betting-tips/Motor_Racing/14",
+    "indexes": [
+      "https://www.olbg.com/betting-tips/Motor_Racing/14",
+      "https://www.olbg.com/betting-tips/Motor_Racing/All_Motor_Racing/All_Events/14"
+    ],
+    "fetched_at_utc": "2026-09-04T19:49:15Z",
+    "method": "HTTP GET of server-rendered HTML via urllib; no JavaScript execution",
+    "licence_note": "Publicly viewable page. Redistribution limited to this factual fixture/market listing; see docs/F1_SOURCES.md."
+  },
+  "notes": [
+    "Every field was read from the pages listed in source.indexes. Nothing is inferred unless date_basis says \"derived\".",
+    "OLBG does not expose structured odds in server-rendered HTML, so no price fields exist in this file. IR-F1-02.",
+    "Tipster consensus counts are display-only and are never fed into model scoring.",
+    "Track history (past winners / fastest laps) is factual content published on OLBG event pages; it is cross-checked where ESPN publishes the same fact (2025 Monza fastest lap)."
+  ],
+  "collection_warnings": [],
+  "events": [
+    {
+      "event_id": "899",
+      "url": "https://www.olbg.com/betting-tips/Motor_Racing/All_Motor_Racing/All_Events/Italian_Grand_Prix/14?event_id=899",
+      "slug": "Italian_Grand_Prix",
+      "event_name": "Italian Grand Prix",
+      "display_date": "Tomorrow",
+      "display_time": "15:00",
+      "type": "match",
+      "consensus": {
+        "market": "Fastest Qualifier",
+        "selection": "Lando Norris",
+        "tips_for": 15,
+        "tips_total": 35,
+        "pct": 43,
+        "comments": 8,
+        "experts": 1
+      },
+      "markets_verified": true,
+      "track_history": null,
+      "resolved_date": "2026-09-05",
+      "date_basis": "derived",
+      "markets_on_event_page": [
+        "Fastest Qualifier"
+      ]
+    },
+    {
+      "event_id": "900",
+      "url": "https://www.olbg.com/betting-tips/Motor_Racing/All_Motor_Racing/All_Events/Italian_Grand_Prix/14?event_id=900",
+      "slug": "Italian_Grand_Prix",
+      "event_name": "Italian Grand Prix",
+      "display_date": "06 Sept",
+      "display_time": "14:02",
+      "type": "match",
+      "consensus": {
+        "market": "Podium Finish",
+        "selection": "Max Verstappen - Yes",
+        "tips_for": 14,
+        "tips_total": 62,
+        "pct": 23,
+        "comments": 4,
+        "experts": 1
+      },
+      "markets_verified": true,
+      "track_history": null,
+      "resolved_date": "2026-09-06",
+      "date_basis": "observed",
+      "markets_on_event_page": [
+        "Win Race",
+        "Fastest Lap",
+        "Podium Finish"
+      ]
+    }
+  ],
+  "outrights": []
+}
